@@ -1,0 +1,254 @@
+name: Build MiloMultilang Android APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      russian_only:
+        description: 'Build only the Russian learner APK (MiloRussian.apk) and publish it as a release'
+        type: boolean
+        default: false
+  push:
+    branches:
+      - arena/b2da2695-app1
+      - arena/5fd5cd5d-app1
+      - arena/9ecb1f7a-app2
+      - arena/8366eeeb-app2
+      - arena/8290df12-app2
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-android-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      CI: "1"
+      EXPO_NO_TELEMETRY: "1"
+      EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID }}
+      EXPO_PUBLIC_RUSSIAN_ONLY: ${{ ((github.event_name == 'workflow_dispatch' && inputs.russian_only) || (github.event_name == 'push' && contains(github.event.head_commit.message, '[russian-apk]'))) && 'true' || 'false' }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Load and validate public Supabase app settings
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const config = JSON.parse(fs.readFileSync('config/supabase.public.json', 'utf8'));
+          const url = String(config.EXPO_PUBLIC_SUPABASE_URL || '').trim();
+          const key = String(config.EXPO_PUBLIC_SUPABASE_ANON_KEY || '').trim();
+          let parsedUrl;
+          try { parsedUrl = new URL(url); } catch {}
+          if (!parsedUrl || parsedUrl.protocol !== 'https:' || parsedUrl.hostname.includes('example.com') || url.toLowerCase().includes('placeholder')) {
+            throw new Error('Public Supabase app URL is missing or invalid.');
+          }
+          if (!key || key.toLowerCase().includes('placeholder') || key.includes('your-anon-key')) {
+            throw new Error('Public Supabase app key is missing or invalid.');
+          }
+          if (key.startsWith('sb_secret_')) throw new Error('A secret Supabase key cannot be bundled in the app.');
+          if (key.startsWith('eyJ')) {
+            let payload;
+            try { payload = JSON.parse(Buffer.from(key.split('.')[1], 'base64url').toString()); }
+            catch { throw new Error('The public Supabase key is not a valid JWT.'); }
+            if (payload.role !== 'anon') throw new Error('Only a public anon key may be bundled in the app.');
+          }
+          if (url.includes(String.fromCharCode(10)) || key.includes(String.fromCharCode(10))) {
+            throw new Error('Supabase settings must be single-line values.');
+          }
+          fs.appendFileSync(process.env.GITHUB_ENV,
+            `EXPO_PUBLIC_SUPABASE_URL=${url}\nEXPO_PUBLIC_SUPABASE_ANON_KEY=${key}\n`);
+          NODE
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Prepare Android SDK
+        shell: bash
+        run: |
+          SDK_ROOT="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          if [[ ! -d "$SDK_ROOT" ]]; then
+            echo "Android SDK directory was not found at $SDK_ROOT."
+            exit 1
+          fi
+          echo "ANDROID_HOME=$SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK_ROOT" >> "$GITHUB_ENV"
+          echo "$SDK_ROOT/platform-tools" >> "$GITHUB_PATH"
+          SDKMANAGER="$(find "$SDK_ROOT" -type f -name sdkmanager -print -quit 2>/dev/null || true)"
+          if [[ ! -d "$SDK_ROOT/platforms/android-36" || ! -d "$SDK_ROOT/build-tools/36.0.0" ]]; then
+            if [[ -z "$SDKMANAGER" ]]; then
+              echo "Android SDK 36 is missing and sdkmanager was not found."
+              exit 1
+            fi
+            yes | "$SDKMANAGER" --sdk_root="$SDK_ROOT" --licenses >/dev/null || true
+            "$SDKMANAGER" --sdk_root="$SDK_ROOT" --install "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+          fi
+
+      - name: Generate native Android project
+        run: npx expo prebuild --platform android --no-install
+
+      - name: Build standalone release APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+
+      - name: Verify and preserve the learner APK
+        run: |
+          python3 - <<'PY'
+          from zipfile import ZipFile
+          apk = 'android/app/build/outputs/apk/release/app-release.apk'
+          with ZipFile(apk) as archive:
+              names = set(archive.namelist())
+          if 'AndroidManifest.xml' not in names or not any(name.endswith('classes.dex') for name in names):
+              raise SystemExit('APK structure validation failed.')
+          if 'assets/index.android.bundle' not in names:
+              raise SystemExit('Standalone JS bundle is missing; refusing to publish an APK that needs Metro.')
+          print('Standalone learner APK verified.')
+          PY
+          cp android/app/build/outputs/apk/release/app-release.apk MiloMultilang.apk
+
+      - name: Generate and build the private management APK
+        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
+        shell: bash
+        run: |
+          rm -rf android
+          MILO_ADMIN_APP=true EXPO_PUBLIC_MILO_ADMIN_APP=true EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN=true npx expo prebuild --platform android --no-install
+          cd android
+          chmod +x gradlew
+          MILO_ADMIN_APP=true EXPO_PUBLIC_MILO_ADMIN_APP=true EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN=true ./gradlew assembleRelease --no-daemon
+          cd ..
+          cp android/app/build/outputs/apk/release/app-release.apk MiloAdmin.apk
+          python3 - <<'PY'
+          from zipfile import ZipFile
+          with ZipFile('MiloAdmin.apk') as archive:
+              names = set(archive.namelist())
+          if 'assets/index.android.bundle' not in names or not any(name.endswith('classes.dex') for name in names):
+              raise SystemExit('Management APK structure validation failed.')
+          print('Standalone private management APK verified.')
+          PY
+
+      - name: Generate and build the learner login APK
+        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
+        shell: bash
+        run: |
+          rm -rf android
+          EXPO_PUBLIC_LEARNER_LOGIN=true npx expo prebuild --platform android --no-install
+          cd android
+          chmod +x gradlew
+          EXPO_PUBLIC_LEARNER_LOGIN=true ./gradlew assembleRelease --no-daemon
+          cd ..
+          cp android/app/build/outputs/apk/release/app-release.apk MiloMultilang-Login.apk
+          python3 - <<'PY'
+          from zipfile import ZipFile
+          with ZipFile('MiloMultilang-Login.apk') as archive:
+              names = set(archive.namelist())
+          if 'assets/index.android.bundle' not in names or not any(name.endswith('classes.dex') for name in names):
+              raise SystemExit('Login APK structure validation failed.')
+          print('Learner login APK verified.')
+          PY
+
+      - name: Smoke-test both APKs on Android emulator
+        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          arch: x86_64
+          target: default
+          cores: 4
+          ram-size: 3072M
+          heap-size: 512M
+          emulator-boot-timeout: 900
+          disable-animations: true
+          script: bash .github/scripts/android-emulator-smoke-test.sh
+
+      - name: Upload Android emulator diagnostics
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-emulator-smoke-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/milomultilang-emulator-smoke.log
+            ${{ runner.temp }}/milomultilang-emulator-window.xml
+            ${{ runner.temp }}/milomultilang-emulator-screen.png
+          if-no-files-found: warn
+          retention-days: 3
+
+      - name: Confirm both release APKs are ready
+        if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[apk-release]') }}
+        run: test -s MiloMultilang.apk && test -s MiloAdmin.apk && (test '${{ env.EXPO_PUBLIC_RUSSIAN_ONLY }}' = 'true' || test -s MiloMultilang-Login.apk)
+
+      - name: Publish direct APK downloads
+        if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[apk-release]') }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: milomultilang-android-${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
+          name: "MiloMultilang Android build #${{ github.run_number }}"
+          body: Installable learner (no login), learner (with login) and private management Android APKs. All are signed for sideloading.
+          prerelease: true
+          files: |
+            MiloMultilang.apk
+            MiloMultilang-Login.apk
+            MiloAdmin.apk
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Name and publish the Russian-only APK
+        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY == 'true' }}
+        run: |
+          cp MiloMultilang.apk MiloRussian.apk
+          test -s MiloRussian.apk
+
+      - name: Publish Russian-only APK release
+        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY == 'true' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: milo-russian-${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
+          name: "Milo Russian APK #${{ github.run_number }}"
+          body: "Russian-only learner APK (Milo Russian). Sideload on Android."
+          prerelease: true
+          files: MiloRussian.apk
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Upload Russian-only APK artifact
+        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Milo-russian-apk
+          path: MiloRussian.apk
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload APK artifacts
+        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Milo-android-apks
+          path: |
+            MiloMultilang.apk
+            MiloMultilang-Login.apk
+            MiloAdmin.apk
+          if-no-files-found: error
+          retention-days: 7
