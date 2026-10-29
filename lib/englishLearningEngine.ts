@@ -1,5 +1,4 @@
 import {
-  COMMUNICATION_MODULES,
   COURSE_LEVELS,
   SENTENCE_LESSONS,
   type CourseLevelId,
@@ -7,39 +6,13 @@ import {
   type SentenceLesson,
 } from './courseContent';
 
-/** Structural roadmap requested for the English engine; lesson copy stays in courseContent. */
-export const ENGLISH_ENGINE_BLUEPRINT = [
-  {
-    levelId: 0,
-    title: 'Foundation',
-    band: 'Level 0',
-    modules: ['Introducing Yourself & Sounds', 'Asking for Help', 'Shopping & Prices', 'Alphabet & Spelling', 'Pronouns & Be', 'Numbers & Contact Details', 'Family & Possessions', 'Time & Calendar', 'Everyday Routines', 'Objects & Places'],
-  },
-  {
-    levelId: 1,
-    title: 'Survival English',
-    band: 'Level 1 · A1',
-    modules: ['Core Daily Situations', 'Useful Sentence Patterns', 'Basic Vocabulary', 'Basic Grammar Through Sentences', 'Listening Practice', 'Speaking Practice', 'Daily Conversations']
-  },
-  {
-    levelId: 2,
-    title: 'Everyday English',
-    band: 'Level 2 · A2–B1',
-    modules: ['Real-Life Situations', '1000+ Sentence Patterns', 'Vocabulary Expansion', 'Grammar in Context', 'Dialogues', 'Reading', 'Writing Basics', 'Conversation Practice'],
-  },
-  {
-    levelId: 3,
-    title: 'Communication English',
-    band: 'Level 3 · B1–B2',
-    modules: COMMUNICATION_MODULES.map(unit => unit.titleEn),
-  },
-  {
-    levelId: 4,
-    title: 'Advanced English',
-    band: 'Level 4 · برچسب داخلی',
-    modules: ['Work & Decisions', 'Media & Society', 'Science & Environment', 'Travel & Public Safety', 'Personal Growth & Relationships', 'Vocabulary Practice Sets'],
-  },
-] as const satisfies ReadonlyArray<{
+/** Structural roadmap for the English engine: the six CEFR levels of the rewritten course. */
+export const ENGLISH_ENGINE_BLUEPRINT = COURSE_LEVELS.map(level => ({
+  levelId: level.id,
+  title: level.title,
+  band: level.cefr,
+  modules: level.modules,
+})) as ReadonlyArray<{
   levelId: CourseLevelId;
   title: string;
   band: string;
@@ -96,7 +69,7 @@ export function getEnglishLevelMetrics(levelId: CourseLevelId, completedLessonId
 }
 
 export function getAdvancedContentComposition() {
-  const lessons = SENTENCE_LESSONS.filter(lesson => lesson.levelId === 4);
+  const lessons = SENTENCE_LESSONS.filter(lesson => lesson.levelId >= 4);
   const scenarios = lessons.filter(lesson => lesson.contentKind === 'scenario');
   const vocabularyPractice = lessons.filter(lesson => lesson.contentKind === 'vocabulary-practice');
   return {

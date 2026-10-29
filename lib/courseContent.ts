@@ -23,9 +23,11 @@ import {
   COMMUNICATION_MODULES,
 } from './courseContentCommunicationStructure';
 
+import { CEFR_LEVEL_META, CEFR_TOPICS, rewriteLessonForCefr } from './courseContentCefr';
+
 export { COMMUNICATION_COURSE_LESSON_IDS, COMMUNICATION_LESSON_UNIT, COMMUNICATION_MODULES };
 
-export type CourseLevelId = 0 | 1 | 2 | 3 | 4;
+export type CourseLevelId = 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface CourseSentence {
   id: string;
@@ -68,48 +70,14 @@ export interface CourseLevel {
   modules: string[];
 }
 
-export const COURSE_LEVELS: CourseLevel[] = [
-  {
-    id: 0,
-    title: 'Foundation',
-    cefr: 'شروع از صفر',
-    description: 'صداها، الفبا و جمله‌های روزمره برای آغاز از صفر',
-    color: '#6366f1',
-    modules: ['معرفی و صداهای پایه', 'درخواست کمک', 'خرید و قیمت‌ها', 'الفبا و هجی‌کردن', 'ضمیرها و فعل be', 'عددها و اطلاعات تماس', 'خانواده و مالکیت', 'زمان و تقویم', 'کارهای روزمره', 'وسایل و مکان‌ها'],
-  },
-  {
-    id: 1,
-    title: 'Survival English',
-    cefr: 'A1',
-    description: 'مکالمه در موقعیت‌های ضروری روزمره',
-    color: '#0ea5e9',
-    modules: ['موقعیت‌های اصلی', 'الگوهای جمله', 'شنیدن و صحبت‌کردن'],
-  },
-  {
-    id: 2,
-    title: 'Everyday English',
-    cefr: 'A2–B1',
-    description: 'انگلیسی طبیعی برای زندگی روزمره',
-    color: '#10b981',
-    modules: ['موقعیت‌های واقعی', 'گفتگوها', 'خواندن و نوشتن'],
-  },
-  {
-    id: 3,
-    title: 'Communication English',
-    cefr: 'B1–B2',
-    description: 'روانی در گفتگو، نظر دادن و داستان‌گویی',
-    color: '#f59e0b',
-    modules: COMMUNICATION_MODULES.map(unit => unit.titleFa),
-  },
-  {
-    id: 4,
-    title: 'Advanced English',
-    cefr: 'سطح ۴ · داخلی',
-    description: 'سناریوهای حرفه‌ای، اجتماعی و علمی؛ همراه با مرور واژگان پیشرفته',
-    color: '#8b5cf6',
-    modules: ['کار و تصمیم‌گیری', 'رسانه و جامعه', 'علم و محیط زیست', 'سفر و ایمنی', 'رشد فردی و ارتباط', 'مرور واژگان در بافت'],
-  },
-];
+export const COURSE_LEVELS: CourseLevel[] = CEFR_LEVEL_META.map(level => ({
+  id: level.id as CourseLevelId,
+  title: level.title,
+  cefr: level.cefr,
+  description: level.description,
+  color: level.color,
+  modules: CEFR_TOPICS[level.id].map(topic => topic.fa),
+}));
 
 const CORE_SENTENCE_LESSONS: SentenceLesson[] = [
   {
@@ -520,7 +488,7 @@ if (everydayLessonsBeforeCompletion.map(lesson => lesson.id).join('|') !== EVERY
 }
 const originalEverydayLessonIds = new Set<string>(EVERYDAY_COURSE_LESSON_IDS.slice(0, 5));
 
-export const SENTENCE_LESSONS: SentenceLesson[] = COURSE_LESSONS_BEFORE_SURVIVAL_COMPLETION.map(lesson => {
+const BASE_SENTENCE_LESSONS: SentenceLesson[] = COURSE_LESSONS_BEFORE_SURVIVAL_COMPLETION.map(lesson => {
   if (lesson.levelId === 3) {
     const additions = COMMUNICATION_COMPLETION_SENTENCES[lesson.id as keyof typeof COMMUNICATION_COMPLETION_SENTENCES];
     if (!additions || lesson.sentences.length !== 6 || additions.length !== 44) {
@@ -595,5 +563,14 @@ export const SENTENCE_LESSONS: SentenceLesson[] = COURSE_LESSONS_BEFORE_SURVIVAL
 
   return { ...lesson, durationMinutes: 35, sentences };
 });
+
+/**
+ * Published course: the stable lesson records above, with every lesson's
+ * copy rewritten onto the CEFR A1–C2 syllabus. Ids, order, sentence counts,
+ * dialogue shape and vocabulary tagging are inherited unchanged.
+ */
+export const SENTENCE_LESSONS: SentenceLesson[] = [...BASE_SENTENCE_LESSONS]
+  .sort((a, b) => a.order - b.order)
+  .map(lesson => rewriteLessonForCefr(lesson));
 
 export const getSentenceLesson = (id: string) => SENTENCE_LESSONS.find((lesson) => lesson.id === id);

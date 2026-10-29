@@ -24,7 +24,7 @@ const colors = {
   goldSoft: '#FFF4DF',
 };
 
-const ENGLISH_LEVEL_LABELS = ['پایه', 'موقعیت‌های ضروری', 'روزمره', 'ارتباط', 'پیشرفته'] as const;
+const ENGLISH_LEVEL_LABELS = ['A1 · پایه', 'A2 · ارتباط پایه', 'B1 · ارتباط مستقل', 'B2 · ارتباط پیشرفته', 'C1 · پیشرفته', 'C2 · تسلط کامل'] as const;
 
 function getLevelLabel(language: PlacementLanguage, levelId: number) {
   return ENGLISH_LEVEL_LABELS[levelId] ?? COURSE_LEVELS.find(level => level.id === levelId)?.title ?? 'سطح آموزشی';
