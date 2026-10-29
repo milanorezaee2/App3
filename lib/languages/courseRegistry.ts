@@ -287,7 +287,7 @@ export const GERMAN_COURSE: FormatCourse = {
 
 export const RUSSIAN_COURSE: FormatCourse = {
   id: 'ru',
-  brand: { eyebrow: 'LEARN IN CONTEXT', title: 'Russian Journey', courseLabel: 'CORE PATH', nameFa: 'روسی', nativeName: 'Русский' },
+  brand: { eyebrow: 'LEARN IN CONTEXT', title: 'Russian Journey', courseLabel: 'ОСНОВНОЙ ПУТЬ', nameFa: 'روسی', nativeName: 'Русский' },
   theme: { gradients: ENGLISH_LEVEL_GRADIENTS },
   speechLocale: 'ru-RU',
   levels: RUSSIAN_LEVELS.map(level => ({

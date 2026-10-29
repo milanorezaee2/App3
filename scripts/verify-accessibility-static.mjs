@@ -100,12 +100,12 @@ for (const relativePath of files) {
   visit(source);
 }
 
-const backup = readFileSync(path.join(root, 'app/lang/backup.tsx'), 'utf8');
-if (!/accessibilityRole="header"[^>]*>پشتیبان پیشرفت انگلیسی/.test(backup)) problems.push('English backup screen title is not exposed as a semantic heading');
+const backup = readFileSync(path.join(root, 'components/course/CourseBackup.tsx'), 'utf8');
+if (!/accessibilityRole="header"[^>]*>پشتیبان پیشرفت \{course\.brand\.nameFa\}/.test(backup)) problems.push('Backup screen title is not exposed as a semantic heading');
 else checks += 1;
-if (!/accessibilityLiveRegion="polite"[^>]*style=\{styles\.status\}/.test(backup)) problems.push('English backup status is not announced politely');
+if (!/accessibilityLiveRegion="polite"[^>]*style=\{styles\.status\}/.test(backup)) problems.push('Backup status is not announced politely');
 else checks += 1;
-if (!/accessibilityRole="alert"[^>]*style=\{styles\.error\}/.test(backup)) problems.push('English backup errors are not exposed as alerts');
+if (!/accessibilityRole="alert"[^>]*style=\{styles\.error\}/.test(backup)) problems.push('Backup errors are not exposed as alerts');
 else checks += 1;
 
 if (problems.length) {

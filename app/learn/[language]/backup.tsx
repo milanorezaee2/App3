@@ -6,7 +6,7 @@ import { GERMAN_COURSE } from '@/lib/languages/courseRegistry';
 
 /**
  * German backup screen. It keeps the German store adapter but renders the same
- * shared backup layout that Russian (and the other courses) use.
+ * shared backup layout that Russian and English use.
  */
 export default function GermanBackupRoute() {
   const { language } = useLocalSearchParams<{ language: string }>();
@@ -17,6 +17,7 @@ export default function GermanBackupRoute() {
       filePrefix="deutsch-journey"
       exportBackup={() => germanProgress.exportProgress()}
       restoreBackup={importText => germanProgress.restoreProgress(importText)}
+      scopeNote="فایل شامل پیشرفت درس‌ها و زمان‌بندی کارت‌های مرور آلمانی است."
     />
   );
 }

@@ -439,12 +439,13 @@ export { default as asyncStorage } from '${STUBS}/async-storage.js';
 
   section('Multilingual content and progress isolation');
   const englishHomeSource = readFileSync(path.join(APP, 'app/lang/index.tsx'), 'utf8');
+  const sharedHomeSource = readFileSync(path.join(APP, 'components/course/CourseHome.tsx'), 'utf8');
   const englishLibrarySource = readFileSync(path.join(APP, 'app/lang/library.tsx'), 'utf8');
   const englishBottomNavSource = readFileSync(path.join(APP, 'components/AppBottomNav.tsx'), 'utf8');
-  const todayHeaderStyle = englishHomeSource.match(/sectionHeader:\s*\{([^}]+)\}/)?.[1] ?? '';
+  const todayHeaderStyle = sharedHomeSource.match(/sectionTitle:\s*\{([^}]+)\}/)?.[1] ?? '';
   const bottomNavShellStyle = englishBottomNavSource.match(/shell:\s*\{([^}]+)\}/)?.[1] ?? '';
-  check('English Today heading stays right-aligned in RTL without changing its labels', /flexDirection:\s*'row-reverse'/.test(todayHeaderStyle) && englishHomeSource.includes('TODAY AT A GLANCE') && englishHomeSource.includes('برنامهٔ امروز'));
-  check('English level cards show unique vocabulary counts calculated from each level', /metrics\.vocabularyCount/.test(englishHomeSource) && englishHomeSource.includes('واژهٔ یکتا') && /stats\.vocabularyCount/.test(englishLibrarySource) && englishLibrarySource.includes('واژهٔ یکتا'));
+  check('The shared Today heading exists once and stays right-aligned in RTL', /textAlign:\s*'right'/.test(todayHeaderStyle) && sharedHomeSource.includes('TODAY AT A GLANCE') && sharedHomeSource.includes('برنامهٔ امروز') && !englishHomeSource.includes('TODAY AT A GLANCE'));
+  check('Every home shows per-level unique vocabulary counts from the same shared panel', /row\.vocabularyCount/.test(sharedHomeSource) && sharedHomeSource.includes('واژهٔ یکتا') && /stats\.vocabularyCount/.test(englishLibrarySource) && englishLibrarySource.includes('واژهٔ یکتا'));
   check('English bottom navigation places Learning on the right, Conversation in the center, and Review on the left', /flexDirection:\s*'row-reverse'/.test(bottomNavShellStyle) && /path:\s*'\/lang',\s*label:\s*'یادگیری'/.test(englishBottomNavSource) && /path:\s*'\/conversations',\s*label:\s*'مکالمه'/.test(englishBottomNavSource) && /path:\s*'\/review',\s*label:\s*'مرور'/.test(englishBottomNavSource));
   const archivedGerman = app.german.GERMAN_LESSONS;
   check('Archived German legacy source remains isolated from the new course', archivedGerman.length === 12 && archivedGerman.every(l => l.id.startsWith('de-')));

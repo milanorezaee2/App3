@@ -10,6 +10,7 @@ export default function RussianBackupRoute() {
       filePrefix="russkiy-journey"
       exportBackup={() => russianProgress.exportProgress()}
       restoreBackup={importText => russianProgress.restoreProgress(importText)}
+      scopeNote="فایل شامل پیشرفت درس‌ها و زمان‌بندی کارت‌های مرور روسی است."
     />
   );
 }

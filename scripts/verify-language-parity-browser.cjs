@@ -63,6 +63,10 @@ const { chromium } = require('playwright');
       for (const level of await page.getByRole('button', { name: /^فهرست درس‌های / }).all()) positions.push((await level.boundingBox()).x);
       check(positions.length === (course.id === 'de' ? 4 : 5), `${course.id} home shows one rail node per level`);
       check(positions.every((x, index) => index === 0 || positions[index - 1] > x), `${course.id} level rail still reads right to left`);
+      check(text.includes('جمله آماده مرور'), `${course.id} home keeps the shared due-review pill`);
+      const statusRows = (text.match(/واژهٔ یکتا/g) ?? []).length;
+      const publishedLevels = { en: 5, de: 4, ru: 3 }[course.id];
+      check(statusRows === publishedLevels, `${course.id} home lists one status row per published level in the shared today card`);
     }
 
     /* 2. The same library anatomy, including the shared group of five. */
@@ -110,8 +114,16 @@ const { chromium } = require('playwright');
 
       await go(course.backup);
       const backup = await bodyText();
-      for (const section of ['وضعیت فعلی این دستگاه', 'ساخت نسخهٔ پشتیبان', 'بازیابی و ادغام پشتیبان', 'خروجی و بازیابی محلی · بدون همگام‌سازی ابری']) {
+      for (const section of [
+        'وضعیت فعلی این دستگاه', 'ساخت نسخهٔ پشتیبان', 'بازیابی و ادغام پشتیبان',
+        'خروجی و بازیابی محلی · بدون همگام‌سازی ابری',
+        'دانلود فایل JSON', 'انتخاب فایل JSON', 'بررسی و ادغام پیشرفت',
+        `پشتیبان محلی · ${course.name}`, `بازگشت به مسیر ${course.name}`,
+      ]) {
         check(backup.includes(section), `${course.id} backup shows the shared section "${section}"`);
+      }
+      for (const tile of ['درس تکمیل‌شده', 'درصد پیشرفت', 'کارت مرور', 'جمله برای مرور', 'جمله‌های مسیر', 'درس‌های مسیر']) {
+        check(backup.includes(tile), `${course.id} backup shows the shared "${tile}" status tile`);
       }
       check(backup.includes(`پشتیبان پیشرفت ${course.name}`), `${course.id} backup names its own language`);
     }

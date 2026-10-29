@@ -3,7 +3,6 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
-  BookOpen,
   BookOpenCheck,
   Check,
   ChevronDown,
@@ -43,13 +42,11 @@ import { Typography } from '@/lib/theme';
  * calls to action. Only the course content, colours and routes differ.
  */
 export function CourseHome({
-  course, extras, hideToday,
+  course, extras,
 }: {
   course: FormatCourse;
   /** Language-specific guided modules, rendered in the same slot for every course. */
   extras?: ReactNode;
-  /** Courses that ship a richer "today" panel of their own hide the default one. */
-  hideToday?: boolean;
 }) {
   const router = useRouter();
   const [progress, setProgress] = useState<CourseProgress | null>(null);
@@ -80,8 +77,6 @@ export function CourseHome({
   const levelRows = lessonLevelRows(course, completedIds);
   const currentRow = levelRows.find(row => row.level.id === level.id) ?? levelRows[0];
   const lessonCount = course.lessons.length;
-  const totalSentences = levelRows.reduce((total, row) => total + row.sentenceCount, 0);
-  const totalWords = new Set(course.lessons.flatMap(item => item.sentences.flatMap(sentence => sentence.vocabulary.map(word => word.word)))).size;
   const percent = lessonCount ? Math.round((completed / lessonCount) * 100) : 0;
   const isComplete = lessonCount > 0 && completed === lessonCount;
   const firstSentence = lesson.sentences[0];
@@ -261,7 +256,7 @@ export function CourseHome({
             ) : null}
           </View>
 
-          {!hideToday ? <View style={styles.sectionHeader}>
+          <View style={styles.sectionHeader}>
             <View style={styles.sectionHeaderCopy}>
               <Text style={styles.sectionEyebrow}>TODAY AT A GLANCE</Text>
               <Text style={styles.sectionTitle}>برنامهٔ امروز</Text>
@@ -270,9 +265,9 @@ export function CourseHome({
               <Flame size={14} color={Palette.warning} />
               <Text style={styles.todayPillText}>{fa(dueCount)} جمله آماده مرور</Text>
             </View>
-          </View> : null}
+          </View>
 
-          {!hideToday ? <View style={styles.todayCard}>
+          <View style={styles.todayCard}>
             <View style={styles.todayCardTop}>
               <View style={styles.todayMetricCopy}>
                 <Text style={styles.todayValue}>{fa(completed)} از {fa(lessonCount)}</Text>
@@ -286,11 +281,20 @@ export function CourseHome({
                 <EnglishProgressTrack value={percent} color={Palette.primary} trackColor={Palette.border} height={9} />
               </View>
             </View>
-            <View style={styles.todayFootnote}>
-              <BookOpen size={14} color={Palette.teal} />
-              <Text style={styles.todayFootnoteText}>{fa(totalSentences)} جمله · {fa(totalWords)} واژه/عبارت یکتا · {fa(course.levels.length)} سطح</Text>
+            <View style={styles.levelRows}>
+              {levelRows.filter(row => row.lessons.length > 0).map(row => {
+                const latin = !/[\u0600-\u06FF]/.test(row.level.title);
+                return (
+                  <View key={row.level.id} style={styles.levelRow}>
+                    <View style={[styles.levelDot, { backgroundColor: row.level.color }]} />
+                    <Text style={[styles.levelName, latin ? styles.levelNameLatin : styles.levelNameFa]}>{row.level.title}</Text>
+                    <Text style={styles.levelMeta}>{fa(row.completed)} از {fa(row.lessons.length)} درس</Text>
+                    <Text style={styles.levelVocab}>{fa(row.vocabularyCount)} واژهٔ یکتا</Text>
+                  </View>
+                );
+              })}
             </View>
-          </View> : null}
+          </View>
 
           {extras}
 
@@ -429,8 +433,14 @@ const styles = StyleSheet.create({
   todayProgressRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   todayProgressText: { width: 34, fontFamily: Typography.numberFontFamily, color: Palette.primaryDark, fontSize: 11, fontWeight: '800', textAlign: 'right', writingDirection: 'rtl' },
   todayProgressTrack: { flex: 1 },
-  todayFootnote: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 5, paddingTop: 10, borderTopWidth: 1, borderTopColor: Palette.border },
-  todayFootnoteText: { flex: 1, fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 10, textAlign: 'right', writingDirection: 'rtl' },
+  levelRows: { gap: 7, paddingTop: 10, borderTopWidth: 1, borderTopColor: Palette.border },
+  levelRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 7 },
+  levelDot: { width: 6, height: 6, borderRadius: 3 },
+  levelName: { flex: 1, color: Palette.ink, fontSize: 10, fontWeight: '400', textAlign: 'right' },
+  levelNameLatin: { fontFamily: 'Inter-ExtraBold', fontWeight: '800', writingDirection: 'ltr' },
+  levelNameFa: { fontFamily: Typography.fontFamily, writingDirection: 'rtl' },
+  levelMeta: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 9, writingDirection: 'rtl' },
+  levelVocab: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 9, writingDirection: 'rtl' },
   quickList: { gap: 10 },
   quickCard: { minHeight: 70, flexDirection: 'row', alignItems: 'center', gap: 11, paddingHorizontal: 13, paddingVertical: 10, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border },
   quickIcon: { width: 38, height: 38, borderRadius: 13, alignItems: 'center', justifyContent: 'center', backgroundColor: Palette.primarySoft },

@@ -65,6 +65,15 @@ check(englishLesson.includes('LessonHeader') && englishLesson.includes('LessonSt
 for (const file of ['app/learn/[language]/lesson.tsx', 'app/learn/ru/lesson.tsx']) {
   check(read(file).includes('CourseLessonPlayer'), `${file} renders the shared lesson player`);
 }
+const sharedHome = read('components/course/CourseHome.tsx');
+check(sharedHome.includes('TODAY AT A GLANCE') && sharedHome.includes('جمله آماده مرور'),
+  'the shared home renders the same today panel and due pill for every course');
+check(/levelRows\.filter\(row => row\.lessons\.length > 0\)/.test(sharedHome) && sharedHome.includes('واژهٔ یکتا'),
+  'the shared today panel lists one status row per level with its own vocabulary count');
+for (const file of ['app/lang/index.tsx', 'components/GermanSentenceHome.tsx', 'components/RussianHome.tsx']) {
+  check(read(file).includes('<CourseHome') && !read(file).includes('hideToday'),
+    `${file} renders the shared today panel instead of its own`);
+}
 const player = read('components/course/CourseLessonPlayer.tsx');
 check(player.includes('components/course/LessonFormat') && player.includes('LessonHeader') && player.includes('LessonStepper') && player.includes('LessonFooter'),
   'the shared player renders the same header, stepper and footer as the English lesson');
@@ -76,7 +85,17 @@ check(read('components/course/CourseReview.tsx').includes('CourseBottomNav'), 'r
 for (const file of ['app/lang/backup.tsx', 'app/learn/[language]/backup.tsx', 'app/learn/ru/backup.tsx']) {
   const source = read(file);
   check(source.includes('exportEnglishBackup') || source.includes('CourseBackup'), `${file} keeps a local, merge-only backup path`);
+  check(source.includes('CourseBackup'), `${file} renders the shared backup frame instead of its own layout`);
+  check(source.includes('scopeNote='), `${file} supplies its own sentence for the shared export card`);
 }
+const backupFrame = read('components/course/CourseBackup.tsx');
+for (const part of ['PageNavigation', 'ShieldCheck', 'Download', 'FileCheck2', 'RotateCcw', 'AppBottomNav', 'GermanBottomNav', 'RussianBottomNav']) {
+  check(backupFrame.includes(part), `the shared backup frame keeps ${part}`);
+}
+for (const tile of ['درس تکمیل‌شده', 'درصد پیشرفت', 'کارت مرور', 'جمله برای مرور', 'جمله‌های مسیر', 'درس‌های مسیر']) {
+  check(backupFrame.includes(`label="${tile}"`), `the shared backup frame keeps the "${tile}" status tile`);
+}
+check((backupFrame.match(/<Stat /g) ?? []).length === 6, 'the shared backup frame shows exactly six status tiles in every course');
 
 /* 4. One five-slot navigation for all three languages. */
 const navs = {
