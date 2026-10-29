@@ -1,6 +1,7 @@
 import * as Speech from 'expo-speech';
+import { speechTagFor } from './speechLanguage';
 
-type SpeechLocale = 'en-US' | 'de-DE';
+type SpeechLocale = 'en-US';
 
 const warmedLocales = new Set<SpeechLocale>();
 const playCounts = new Map<string, number>();
@@ -12,7 +13,7 @@ let requestId = 0;
  * engines often need one cold-start request before their first audible phrase.
  */
 export function warmSpeech(locale: SpeechLocale) {
-  // Intentionally silent. The previous warm-up spoke "ready" and "bereit" aloud at startup.
+  // Intentionally silent. Avoid audible warm-up phrases at startup.
   if (warmedLocales.has(locale)) return;
   warmedLocales.add(locale);
 }
@@ -43,21 +44,23 @@ export function playResponsiveSpeech({
   const start = () => {
     if (currentRequest !== requestId) return;
     active = true;
-    Speech.speak(text, {
-      language: locale,
-      rate: selectedRate,
-      onDone: () => {
-        if (currentRequest === requestId) active = false;
-        onDone?.();
-      },
-      onStopped: () => {
-        if (currentRequest === requestId) active = false;
-      },
-      onError: () => {
-        if (currentRequest === requestId) active = false;
-        onError?.();
-      },
-    });
+    try {
+      Speech.speak(text, {
+        language: speechTagFor(locale),
+        rate: selectedRate,
+        onDone: () => {
+          if (currentRequest === requestId) { active = false; onDone?.(); }
+        },
+        onStopped: () => {
+          if (currentRequest === requestId) active = false;
+        },
+        onError: () => {
+          if (currentRequest === requestId) { active = false; onError?.(); }
+        },
+      });
+    } catch {
+      if (currentRequest === requestId) { active = false; onError?.(); }
+    }
   };
 
   if (active) {
@@ -72,5 +75,5 @@ export function playResponsiveSpeech({
 export function stopResponsiveSpeech() {
   requestId += 1;
   active = false;
-  return Speech.stop();
+  return Speech.stop().catch(() => undefined);
 }

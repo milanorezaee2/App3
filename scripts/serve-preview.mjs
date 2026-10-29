@@ -6,7 +6,8 @@ import { fileURLToPath } from 'node:url';
 
 const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist');
 const port = parseInt(process.env.PORT || '8081', 10);
-const baseUrl = '/App1';
+const appConfig = JSON.parse(fs.readFileSync(new URL('../app.json', import.meta.url), 'utf8'));
+const baseUrl = (appConfig.expo?.experiments?.baseUrl || '').replace(/\/$/, '');
 
 function contentType(p) {
   if (p.endsWith('.html')) return 'text/html; charset=UTF-8';
@@ -395,8 +396,15 @@ const server = http.createServer((req, res) => {
   try {
     const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
     let pathname = decodeURIComponent(url.pathname);
-    if (pathname === baseUrl) pathname = '/';
-    else if (pathname.startsWith(baseUrl + '/')) pathname = pathname.slice(baseUrl.length);
+    // Expo Router expects to run under the configured base path, including on
+    // the initial visit to the preview server's root URL.
+    if (baseUrl && pathname === '/') {
+      res.writeHead(302, { Location: `${baseUrl}/${url.search}` });
+      res.end();
+      return;
+    }
+    if (baseUrl && pathname === baseUrl) pathname = '/';
+    else if (baseUrl && pathname.startsWith(baseUrl + '/')) pathname = pathname.slice(baseUrl.length);
     pathname = pathname.replace(/\0/g, '');
     let filePath = path.join(dist, pathname);
     let resolved = null;
@@ -414,6 +422,13 @@ const server = http.createServer((req, res) => {
         const indexInFolder = path.join(filePath, 'index.html');
         if (fs.existsSync(indexInFolder)) resolved = indexInFolder;
       }
+    }
+    // Expo's static export stores dynamic language routes under [language].
+    // Serve that shell for valid URL shapes after checking concrete routes first.
+    if (!resolved && /^\/learn\/[^/]+(?:\/(?:lesson|library|review|pronunciation))?\/?$/.test(pathname)) {
+      const dynamicPath = pathname.replace(/^\/learn\/[^/]+/, '/learn/[language]').replace(/\/$/, '');
+      const dynamicFile = path.join(dist, dynamicPath + (dynamicPath.endsWith('[language]') ? '/index.html' : '.html'));
+      if (fs.existsSync(dynamicFile)) resolved = dynamicFile;
     }
     if (!resolved) {
       const notFound = path.join(dist, '+not-found.html');

@@ -41,63 +41,6 @@ const bundle = await esbuild.build({
           return structuredClone(globalThis.__englishExtras);
         }
       `,
-      './languages/germanUnits': `
-        const guide = { id: 'de-guide-1', version: 1, language: 'de', lessons: [], mission: [] };
-        const checkpoint = { id: 'de-checkpoint-a', version: 1, language: 'de', lessons: [], mission: [] };
-        export const GERMAN_UNITS = [guide];
-        export const ALL_GERMAN_PROGRESS_UNITS = [guide, checkpoint];
-      `,
-      './languages/unitProgress': `
-        const blank = () => ({ version: 1, activities: {}, missions: [] });
-        export async function getUnitProgress(unit) { return structuredClone(globalThis.__guidedProgress[unit.id] ?? blank()); }
-        export async function mergeRemoteUnitProgress(unit, remote) {
-          const local = globalThis.__guidedProgress[unit.id] ?? blank();
-          const merged = { version: 1, activities: { ...remote.activities, ...local.activities }, missions: [...remote.missions, ...local.missions] };
-          globalThis.__guidedProgress[unit.id] = merged;
-          return structuredClone(merged);
-        }
-      `,
-      './languages/unitReview': `
-        export function reviewForUnit(unit) {
-          return {
-            async getCourseProgress() { return structuredClone(globalThis.__reviewProgress[unit.id]); },
-            async mergeRemoteProgress(remote) {
-              const local = globalThis.__reviewProgress[unit.id];
-              const merged = { ...local, ...remote,
-                completedLessonIds: [...new Set([...(local.completedLessonIds || []), ...(remote.completedLessonIds || [])])],
-                reviewSentenceIds: [...new Set([...(local.reviewSentenceIds || []), ...(remote.reviewSentenceIds || [])])],
-                reviewCards: [...(local.reviewCards || []), ...(remote.reviewCards || []).filter(card => !(local.reviewCards || []).some(item => item.id === card.id))],
-              };
-              globalThis.__reviewProgress[unit.id] = merged;
-              return structuredClone(merged);
-            },
-          };
-        }
-      `,
-      './languages/a1Workshop': `
-        export async function exportWorkshopChecklistSyncState() { return structuredClone(globalThis.__workshopChecks); }
-        export async function mergeRemoteWorkshopChecklistSyncState(remote) {
-          const local = globalThis.__workshopChecks;
-          const checks = { ...remote.checks, ...local.checks };
-          const resetAt = [remote.resetAt, local.resetAt].filter(Boolean).sort().at(-1) ?? null;
-          globalThis.__workshopChecks = { version: 1, resetAt, checks };
-          return structuredClone(globalThis.__workshopChecks);
-        }
-      `,
-      './languages/catalog': `
-        export const germanProgress = {
-          async getCourseProgress() { return structuredClone(globalThis.__germanStore.progress); },
-          async mergeRemoteProgress(remote) {
-            const current = globalThis.__germanStore.progress;
-            const merged = { ...current, ...remote,
-              completedLessonIds: [...new Set([...(current.completedLessonIds || []), ...(remote.completedLessonIds || [])])].sort(),
-              updatedAt: (Date.parse(current.updatedAt || '') >= Date.parse(remote.updatedAt || '') ? current.updatedAt : remote.updatedAt),
-            };
-            globalThis.__germanStore.progress = merged;
-            return structuredClone(merged);
-          },
-        };
-      `,
       './languages/pronunciationProgress': `
         export async function mergeRemotePronunciationMarks(language, remote) { return globalThis.__mergePronunciation(language, remote); }
         export const loadPronunciationMarks = async language => globalThis.__pronunciationMarks[language];
@@ -161,15 +104,6 @@ globalThis.__englishExtras = {
   study: { version: 1, sessions: { 'en-lesson': { stage: 1, sentenceIndex: 2, revealed: false, evidencePassed: false } }, days: { '2026-10-12': 1800 }, lessonEvidence: {} },
   supplement: { version: 1, evidence: { 'en-task': { correct: true, attempts: 1 } }, drafts: { 'private-answer': 'Keep this only on the device.' }, assessmentAttempts: [], checklists: {} },
 };
-globalThis.__guidedProgress = {
-  'de-guide-1': { version: 1, activities: { 'lesson-1': { id: 'local-activity' } }, missions: [] },
-  'de-checkpoint-a': { version: 1, activities: {}, missions: [{ id: 'local-checkpoint' }] },
-};
-globalThis.__reviewProgress = {
-  'de-guide-1': { completedLessonIds: ['review-local'], currentLessonId: 'lesson-1', reviewSentenceIds: [], reviewCards: [], learnedEssential504Words: [], dailyGoalMinutes: 10, todayMinutes: 0, activityDate: '2026-10-12', currentStreak: 0, longestStreak: 0, lastActiveDate: null, totalMinutes: 0, updatedAt: iso(0) },
-};
-globalThis.__workshopChecks = { version: 1, resetAt: null, checks: { 'intro-0': { checked: true, updatedAt: iso(4) } } };
-globalThis.__germanStore = { progress: { completedLessonIds: ['de-local'], currentLessonId: 'de-start', reviewCards: [], updatedAt: iso(1) } };
 globalThis.__pronunciationMarks = {
   en: { 'en-th': { mark: 'practiced', updatedAt: iso(2) } },
   de: { 'de-ch': { mark: 'review', updatedAt: iso(3) } },
@@ -193,40 +127,22 @@ const verify = (condition, message) => { assert.ok(condition, message); checks +
 const first = await app.sync.syncPersonalLearningData();
 verify(first.status === 'synced' && first.email === 'learner@example.com', 'email-authenticated user can create the personal cloud row');
 verify(db.row.user_id === 'user-otp-1', 'the row is keyed by the authenticated auth.uid');
-verify(db.row.language_progress.de.course.completedLessonIds.includes('de-local'), 'initial local German sentence-course progress is uploaded');
-verify(db.row.language_progress.de.guidedUnits['de-guide-1'].activities['lesson-1'].id === 'local-activity'
-  && db.row.language_progress.de.guidedUnits['de-checkpoint-a'].missions[0].id === 'local-checkpoint', 'completed German unit and checkpoint evidence are uploaded');
-verify(db.row.language_progress.de.reviews['de-guide-1'].completedLessonIds.includes('review-local'), 'German unit review progress is uploaded');
-verify(db.row.language_progress.de.workshopChecks.checks['intro-0'].checked === true
-  && !JSON.stringify(db.row.language_progress.de.workshopChecks).match(/Alex|Winter|Gartenstraße|email/), 'only timestamped German workshop self-checks enter the cloud bundle');
 verify(db.row.language_progress.en.study.days['2026-10-12'] === 1800
   && Object.keys(db.row.language_progress.en.supplement.drafts).length === 0, 'English study time and objective supplement evidence sync without free-text drafts');
 verify(globalThis.__englishExtras.supplement.drafts['private-answer'] === 'Keep this only on the device.', 'English free-text drafts stay in local storage after sync');
-verify(db.row.pronunciation_progress.en['en-th'].mark === 'practiced' && db.row.pronunciation_progress.de['de-ch'].mark === 'review', 'both languages’ self-assessment notes are uploaded');
+verify(db.row.pronunciation_progress.en['en-th'].mark === 'practiced', 'English self-assessment notes are uploaded');
 verify(!Object.hasOwn(db.row, 'service_role'), 'the client payload never contains a service-role credential');
 
-// New device progress is merged with both cloud changes and current local changes.
-globalThis.__germanStore.progress = { ...globalThis.__germanStore.progress, completedLessonIds: ['de-local', 'de-local-new'] };
+// Legacy language data is left untouched, including during a concurrent update.
+db.row.language_progress.de = { course: { completedLessonIds: ['legacy'] }, extra: { retained: true } };
+db.row.pronunciation_progress.de = { legacy: { mark: 'review', updatedAt: iso(3) } };
 globalThis.__pronunciationMarks.en['en-rhythm'] = { mark: 'review', updatedAt: iso(6) };
-db.row.language_progress.de.course.completedLessonIds.push('de-cloud-device');
-db.row.language_progress.de.guidedUnits['de-guide-1'].activities['lesson-cloud'] = { id: 'cloud-activity' };
-db.row.language_progress.de.reviews['de-guide-1'].completedLessonIds.push('review-cloud');
-db.row.language_progress.de.workshopChecks.checks['change-0'] = { checked: true, updatedAt: iso(6) };
-db.row.pronunciation_progress.de['de-umlaut'] = { mark: 'practiced', updatedAt: iso(5) };
 db.conflictOnce = true;
 const second = await app.sync.syncPersonalLearningData();
 verify(second.status === 'synced', 'optimistic retry succeeds after a concurrent-device update');
-verify(db.row.language_progress.de.course.completedLessonIds.includes('de-local-new')
-  && db.row.language_progress.de.course.completedLessonIds.includes('de-cloud-device')
-  && db.row.language_progress.de.course.completedLessonIds.includes('remote-race'), 'German sentence-course progress is union-merged without overwriting either device');
-verify(db.row.language_progress.de.guidedUnits['de-guide-1'].activities['lesson-1'].id === 'local-activity'
-  && db.row.language_progress.de.guidedUnits['de-guide-1'].activities['lesson-cloud'].id === 'cloud-activity', 'German guided-unit results merge across devices');
-verify(db.row.language_progress.de.reviews['de-guide-1'].completedLessonIds.includes('review-local')
-  && db.row.language_progress.de.reviews['de-guide-1'].completedLessonIds.includes('review-cloud'), 'German review schedules and completions merge non-destructively');
-verify(db.row.language_progress.de.workshopChecks.checks['intro-0'].checked === true
-  && db.row.language_progress.de.workshopChecks.checks['change-0'].checked === true, 'German workshop self-checks from both devices are retained');
-verify(db.row.pronunciation_progress.en['en-rhythm'].mark === 'review'
-  && db.row.pronunciation_progress.de['de-umlaut'].mark === 'practiced', 'pronunciation marks merge for English and German');
+verify(db.row.language_progress.de.extra.retained && db.row.language_progress.de.course.completedLessonIds.includes('remote-race'), 'legacy cloud progress survives concurrent sync unchanged');
+verify(db.row.pronunciation_progress.de.legacy.mark === 'review', 'legacy pronunciation data remains untouched');
+verify(db.row.pronunciation_progress.en['en-rhythm'].mark === 'review', 'English pronunciation marks merge');
 verify(globalThis.__englishReads >= 2, 'English progress is kept on its compatible RLS-protected store and participates in sync');
 
 const readsBeforeAnonymous = globalThis.__englishReads;
@@ -308,4 +224,4 @@ try { await sqlDb.query('DELETE FROM public.learning_progress WHERE user_id=$1',
 verify(deleteBlocked, 'client has no delete grant on progress records');
 await sqlDb.close();
 
-console.log(`${checks} checks passed; OTP-gated owner RLS, non-destructive bilingual merging, retries and anonymous-session exclusion verified.`);
+console.log(`${checks} checks passed; OTP-gated owner RLS, non-destructive legacy-data preservation, retries and anonymous-session exclusion verified.`);

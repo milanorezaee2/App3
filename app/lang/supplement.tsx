@@ -3,6 +3,7 @@ import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { PageNavigation } from '@/components/PageNavigation';
 import * as Speech from 'expo-speech';
+import { speechTagFor } from '@/lib/speechLanguage';
 import { ENGLISH_A1_COURSE_UNITS, ENGLISH_FOUNDATION_UNITS, ENGLISH_SUPPLEMENT, SKILLS, type EnglishUnitLevel, type Skill } from '@/lib/englishSupplement/content';
 import {
   a1CoursePassed,
@@ -66,7 +67,7 @@ function RolePlay({ item, initial, initialChecks }: { item: typeof speakingPromp
   const [playing, setPlaying] = useState(false), [busy, setBusy] = useState(false), [message, setMessage] = useState(''), [checks, setChecks] = useState(initialChecks), [notes, setNotes] = useState(initial);
   function speak() {
     setPlaying(true);
-    Speech.speak(item.partner, { language: 'en-US', rate: 0.78, onDone: () => setPlaying(false), onStopped: () => setPlaying(false), onError: () => { setPlaying(false); setMessage('صدا پخش نشد؛ تنظیمات صدای دستگاه را بررسی کنید.'); } });
+    Speech.speak(item.partner, { language: speechTagFor('en-US'), rate: 0.78, onDone: () => setPlaying(false), onStopped: () => setPlaying(false), onError: () => { setPlaying(false); setMessage('صدا پخش نشد؛ تنظیمات صدای دستگاه را بررسی کنید.'); } });
   }
   async function toggle(index: number) {
     const key = String(index), next = !checks[key]; setChecks(current => ({ ...current, [key]: next }));
@@ -173,7 +174,7 @@ export default function EnglishSupplementScreen() {
         <Text style={s.heading}>{selected.title}</Text><Text style={s.text}>{selected.goal}</Text>
         {!testing && <>{selected.teaching.map(section => <View style={s.card} key={section.title}>
           <Text style={s.heading}>{section.title}</Text><Text style={s.text}>{section.text}</Text><Text style={s.english}>{section.example}</Text>
-          <Pressable accessibilityRole="button" style={s.button} onPress={() => { void Speech.stop(); Speech.speak(section.audio ?? section.example.replace(/\/[^/]+\//g, ''), { language: 'en-US', rate: 0.72, onError: () => setError('صدای انگلیسی پخش نشد؛ تنظیمات صدای دستگاه را بررسی کنید.') }); }}><Text style={s.buttonText}>شنیدن الگو و تکرار</Text></Pressable>
+          <Pressable accessibilityRole="button" style={s.button} onPress={() => { void Speech.stop(); Speech.speak(section.audio ?? section.example.replace(/\/[^/]+\//g, ''), { language: speechTagFor('en-US'), rate: 0.72, onError: () => setError('صدای انگلیسی پخش نشد؛ تنظیمات صدای دستگاه را بررسی کنید.') }); }}><Text style={s.buttonText}>شنیدن الگو و تکرار</Text></Pressable>
         </View>)}<Text style={s.heading}>تمرین با بازخورد</Text></>}
         {testing && <Text style={s.heading}>آزمون پایان واحد · چهار سؤال مستقل</Text>}
         {(testing ? selected.checkpoint : selected.practice).map(task => <View key={task.id}>{p.evidence[task.id]?.correct && <Text style={s.success}>آخرین پاسخ ثبت‌شده: درست</Text>}<EnglishSupplementTask task={task} onResult={next => setP(next)} /></View>)}

@@ -1,4 +1,4 @@
-export type PlacementLanguage = 'en' | 'de';
+export type PlacementLanguage = 'en';
 
 export type PlacementQuestion = {
   id: string;
@@ -53,7 +53,7 @@ export const PLACEMENT_QUESTION_BANK: Record<PlacementLanguage, readonly Placeme
     },
     {
       id: 'en-survival-rent', language: 'en', levelId: 1, sourceLessonId: 'survival-renting-a-home', dimension: 'detail',
-      passage: 'The minimum stay is six months.', prompt: 'کمترین مدت اقامت چقدر است؟',
+      passage: 'I can stay for six months.', prompt: 'گوینده می‌تواند چه مدت بماند؟',
       choices: ['یک هفته.', 'یک سال.', 'شش ماه.'], answerIndex: 2,
     },
     {
@@ -67,19 +67,19 @@ export const PLACEMENT_QUESTION_BANK: Record<PlacementLanguage, readonly Placeme
       choices: ['کمک به مشتریان و پاسخ‌دادن به پرسش‌ها.', 'تغییر ساعت کاری دیگران.', 'تعمیر وسایل خانه.'], answerIndex: 0,
     },
     {
-      id: 'en-everyday-devise', language: 'en', levelId: 2, sourceLessonId: 'everyday-making-a-plan', dimension: 'meaning',
-      passage: 'We need to devise a better plan.', prompt: 'در این جمله devise نزدیک‌ترین معنی را به کدام واژه دارد؟',
-      choices: ['رهاکردن.', 'طراحی یا تهیه‌کردن.', 'پنهان‌کردن.'], answerIndex: 1,
+      id: 'en-everyday-plan-v2', language: 'en', levelId: 2, sourceLessonId: 'everyday-making-a-plan', dimension: 'meaning',
+      passage: 'We need to make a better plan.', prompt: 'آن‌ها به چه چیزی نیاز دارند؟',
+      choices: ['رهاکردن سفر.', 'ساختن برنامه‌ای بهتر.', 'پنهان‌کردن برنامه.'], answerIndex: 1,
     },
     {
-      id: 'en-everyday-tact', language: 'en', levelId: 2, sourceLessonId: 'everyday-handling-a-misunderstanding', dimension: 'inference',
-      passage: 'We should discuss this with tact.', prompt: 'گوینده پیشنهاد می‌کند چگونه گفت‌وگو کنند؟',
+      id: 'en-everyday-kindly-v2', language: 'en', levelId: 2, sourceLessonId: 'everyday-handling-a-misunderstanding', dimension: 'inference',
+      passage: 'We should talk about this kindly.', prompt: 'گوینده پیشنهاد می‌کند چگونه گفت‌وگو کنند؟',
       choices: ['با صدای بلند.', 'با عجله و بی‌توجهی.', 'با ملاحظه و سنجیدگی.'], answerIndex: 2,
     },
     {
-      id: 'en-everyday-abandon', language: 'en', levelId: 2, sourceLessonId: 'everyday-facing-a-challenge', dimension: 'meaning',
-      passage: 'We may have to abandon our plan.', prompt: 'احتمالاً چه کاری باید انجام دهند؟',
-      choices: ['از برنامه دست بکشند.', 'برنامه را زودتر شروع کنند.', 'جزئیات بیشتری به برنامه اضافه کنند.'], answerIndex: 0,
+      id: 'en-everyday-change-v2', language: 'en', levelId: 2, sourceLessonId: 'everyday-facing-a-challenge', dimension: 'meaning',
+      passage: 'We may need to change our plan.', prompt: 'شاید لازم باشد چه کاری انجام دهند؟',
+      choices: ['برنامه را عوض کنند.', 'برنامه را زودتر شروع کنند.', 'برنامه را پنهان کنند.'], answerIndex: 0,
     },
     {
       id: 'en-communication-majority', language: 'en', levelId: 3, sourceLessonId: 'communication-university-discussion', dimension: 'meaning',
@@ -112,68 +112,7 @@ export const PLACEMENT_QUESTION_BANK: Record<PlacementLanguage, readonly Placeme
       choices: ['درستی هر ادعا را بررسی می‌کند.', 'هر ادعایی را بدون منبع می‌پذیرد.', 'خبر را فقط بر پایهٔ حدس می‌نویسد.'], answerIndex: 0,
     },
   ],
-  de: [
-    {
-      id: 'de-beginner-name', language: 'de', levelId: 0, sourceLessonId: 'de-v2-name-origin', dimension: 'meaning',
-      passage: 'Ich heiße Mina.', prompt: 'گوینده چه چیزی را می‌گوید؟',
-      choices: ['من در مینا زندگی می‌کنم.', 'من اهل مینا هستم.', 'اسم من مینا است.'], answerIndex: 2,
-    },
-    {
-      id: 'de-beginner-time', language: 'de', levelId: 0, sourceLessonId: 'de-v2-numbers-time', dimension: 'detail',
-      passage: 'Der Kurs beginnt um zehn Uhr.', prompt: 'کلاس چه ساعتی شروع می‌شود؟',
-      choices: ['کلاس ساعت ده شروع می‌شود.', 'ساعت هفت.', 'کلاس ساعت ده تمام می‌شود.'], answerIndex: 0,
-    },
-    {
-      id: 'de-beginner-word', language: 'de', levelId: 0, sourceLessonId: 'de-v2-classroom', dimension: 'meaning',
-      passage: 'Was bedeutet dieses Wort?', prompt: 'گوینده دربارهٔ چه چیزی می‌پرسد؟',
-      choices: ['قیمت این واژه‌نامه.', 'معنای این واژه.', 'زمان شروع کلاس.'], answerIndex: 1,
-    },
-    {
-      id: 'de-a1-routine', language: 'de', levelId: 1, sourceLessonId: 'de-v2-daily-routine', dimension: 'detail',
-      passage: 'Ich stehe um sieben Uhr auf. Danach frühstücke ich.', prompt: 'گوینده بعد از برخاستن چه کار می‌کند؟',
-      choices: ['به ایستگاه می‌رود.', 'صبحانه می‌خورد.', 'با دوستانش قدم می‌زند.'], answerIndex: 1,
-    },
-    {
-      id: 'de-a1-shopping', language: 'de', levelId: 1, sourceLessonId: 'de-v2-shopping', dimension: 'inference',
-      passage: 'Die Jacke ist zu teuer.', prompt: 'چرا ممکن است گوینده این کت را نخرد؟',
-      choices: ['چون بیش از حد گران است.', 'چون رنگ آن را نمی‌داند.', 'چون فروشگاه بسته است.'], answerIndex: 0,
-    },
-    {
-      id: 'de-a1-try-on', language: 'de', levelId: 1, sourceLessonId: 'de-v2-shopping', dimension: 'meaning',
-      passage: 'Kann ich sie anprobieren?', prompt: 'گوینده اجازهٔ انجام چه کاری را می‌پرسد؟',
-      choices: ['پس‌دادن پول.', 'رزروکردن اتاق.', 'پروکردن لباس.'], answerIndex: 2,
-    },
-    {
-      id: 'de-a2-weekend', language: 'de', levelId: 2, sourceLessonId: 'de-v2-weekend-past', dimension: 'detail',
-      passage: 'Am Samstag habe ich meine Freunde besucht. Wir sind im Park spazieren gegangen. Danach haben wir zusammen gegessen.', prompt: 'آن‌ها پس از قدم‌زدن چه کردند؟',
-      choices: ['به محل کار رفتند.', 'یک اتاق رزرو کردند.', 'با هم غذا خوردند.'], answerIndex: 2,
-    },
-    {
-      id: 'de-a2-health', language: 'de', levelId: 2, sourceLessonId: 'de-v2-health-appointment', dimension: 'detail',
-      passage: 'Seit gestern habe ich Kopfschmerzen.', prompt: 'سردرد از چه زمانی شروع شده است؟',
-      choices: ['از هفتهٔ آینده.', 'از دیروز.', 'از یک ماه پیش.'], answerIndex: 1,
-    },
-    {
-      id: 'de-a2-travel', language: 'de', levelId: 2, sourceLessonId: 'de-v2-travel-stay', dimension: 'detail',
-      passage: 'Ich habe ein Zimmer für zwei Nächte reserviert.', prompt: 'اتاق برای چند شب رزرو شده است؟',
-      choices: ['دو هفته.', 'یک شب.', 'دو شب.'], answerIndex: 2,
-    },
-    {
-      id: 'de-b1-opinion', language: 'de', levelId: 3, sourceLessonId: 'de-v2-opinions-reasons', dimension: 'inference',
-      passage: 'Einerseits spart der Bus Zeit, andererseits ist er oft voll.', prompt: 'گوینده به کدام دو ویژگی اتوبوس اشاره می‌کند؟',
-      choices: ['ارزان‌بودن و دیررسیدن.', 'صرفه‌جویی در وقت و شلوغ‌بودن.', 'آرام‌بودن و کم‌بودن مسافر.'], answerIndex: 1,
-    },
-    {
-      id: 'de-b1-work', language: 'de', levelId: 3, sourceLessonId: 'de-v2-work-experience', dimension: 'inference',
-      passage: 'Obwohl der Termin knapp war, haben wir das Projekt abgeschlossen.', prompt: 'با وجود چه چیزی پروژه به پایان رسید؟',
-      choices: ['با وجود کمبود وقت.', 'با وجود آماده‌نبودن پروژه.', 'با وجود تغییر موضوع.'], answerIndex: 0,
-    },
-    {
-      id: 'de-b1-complaint', language: 'de', levelId: 3, sourceLessonId: 'de-v2-complaint-solution', dimension: 'meaning',
-      passage: 'Falls das nicht möglich ist, möchte ich mein Geld zurück.', prompt: 'اگر خواستهٔ گوینده ممکن نباشد، چه می‌خواهد؟',
-      choices: ['قرار را به تعویق بیندازد.', 'محصول دیگری سفارش دهد.', 'پولش را پس بگیرد.'], answerIndex: 2,
-    },
-  ],
+
 };
 
 export function getPlacementQuestions(language: PlacementLanguage): readonly PlacementQuestion[] {

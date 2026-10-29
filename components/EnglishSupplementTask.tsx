@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import * as Speech from 'expo-speech';
+import { speechTagFor } from '@/lib/speechLanguage';
 import { isCorrect, SKILLS, type Task } from '@/lib/englishSupplement/content';
 import { Typography } from '@/lib/theme';
 import { recordEvidence, type SupplementProgress } from '@/lib/englishSupplement/progress';
@@ -52,10 +53,10 @@ export const supplementStyles = StyleSheet.create({
   sentenceCard: { backgroundColor: EnglishPalette.surfaceMuted, borderColor: EnglishPalette.border, borderWidth: 1, borderRadius: 14, paddingHorizontal: 13, paddingVertical: 12, gap: 7 },
   sentenceEnglishRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 10 },
   sentenceSoundButton: { width: 38, height: 38, borderRadius: 12, backgroundColor: EnglishPalette.primarySoft, alignItems: 'center', justifyContent: 'center' },
-  sentenceEnglish: { flex: 1, fontFamily: Typography.latinFontFamily, color: EnglishPalette.ink, fontSize: 14, fontWeight: '800', lineHeight: 25, textAlign: 'right', writingDirection: 'ltr' },
+  sentenceEnglish: { flex: 1, fontFamily: Typography.latinFontFamily, color: EnglishPalette.ink, fontSize: 14, fontWeight: '800', lineHeight: 25, textAlign: 'left', writingDirection: 'ltr' },
   sentencePersian: { fontFamily: Typography.fontFamily, color: EnglishPalette.text, fontSize: 14, lineHeight: 24, textAlign: 'right', writingDirection: 'rtl' },
-  sentencePattern: { fontFamily: Typography.latinFontFamily, color: EnglishPalette.primaryDark, fontSize: 10, fontWeight: '800', lineHeight: 19, textAlign: 'right', writingDirection: 'ltr' },
-  english: { fontFamily: Typography.latinFontFamily, color: EnglishPalette.ink, fontSize: 14, fontWeight: '800', lineHeight: 27, textAlign: 'right', writingDirection: 'ltr' },
+  sentencePattern: { fontFamily: Typography.latinFontFamily, color: EnglishPalette.primaryDark, fontSize: 10, fontWeight: '800', lineHeight: 19, textAlign: 'left', writingDirection: 'ltr' },
+  english: { fontFamily: Typography.latinFontFamily, color: EnglishPalette.ink, fontSize: 14, fontWeight: '800', lineHeight: 27, textAlign: 'left', writingDirection: 'ltr' },
   input: {
     fontFamily: Typography.latinFontFamily,
     color: EnglishPalette.ink,
@@ -66,7 +67,7 @@ export const supplementStyles = StyleSheet.create({
     padding: 13,
     minHeight: 48,
     fontSize: 16,
-    textAlign: 'right',
+    textAlign: 'left',
     writingDirection: 'ltr',
   },
   button: { backgroundColor: EnglishPalette.primary, borderRadius: 13, padding: 13, minHeight: 48, alignItems: 'center', justifyContent: 'center' },
@@ -88,18 +89,26 @@ export const supplementStyles = StyleSheet.create({
 });
 const s = supplementStyles;
 
+// Assessment sources and options may be Persian or English.
+const contentDirection = (value: string) => /[\u0600-\u06FF]/.test(value)
+  ? { textAlign: 'right' as const, writingDirection: 'rtl' as const }
+  : { textAlign: 'left' as const, writingDirection: 'ltr' as const };
+
+
 export function EnglishSupplementTask({
   task,
   onResult,
   onSave,
   lockAfterSave = false,
   deferFeedback = false,
+  showExplanationOnCorrect = false,
 }: {
   task: Task;
   onResult?: (progress: SupplementProgress, correct: boolean) => void;
   onSave?: (task: Task, correct: boolean, heard: boolean) => Promise<unknown>;
   lockAfterSave?: boolean;
   deferFeedback?: boolean;
+  showExplanationOnCorrect?: boolean;
 }) {
   const [answer, setAnswer] = useState('');
   const [heard, setHeard] = useState(false);
@@ -133,7 +142,7 @@ export function EnglishSupplementTask({
       await Speech.stop();
       if (token !== run.current) return;
       timer.current = setTimeout(() => { finish(false); run.current++; void Speech.stop(); }, 60000);
-      Speech.speak(task.audio!, { language: 'en-US', rate: 0.78, onDone: () => finish(true), onError: () => finish(false), onStopped: () => finish(false) });
+      Speech.speak(task.audio!, { language: speechTagFor('en-US'), rate: 0.78, onDone: () => finish(true), onError: () => finish(false), onStopped: () => finish(false) });
     } catch { finish(false); }
   }
 
@@ -164,14 +173,14 @@ export function EnglishSupplementTask({
       <Text style={s.eyebrow}>{SKILLS[task.skill]}</Text>
       {task.audio ? <View style={s.chip}><Text style={s.chipText}>استماع</Text></View> : null}
     </View>
-    {task.source ? <View style={{ backgroundColor: EnglishPalette.surfaceMuted, borderRadius: 12, padding: 12 }}><Text style={s.english}>{task.source}</Text></View> : null}
+    {task.source ? <View style={{ backgroundColor: EnglishPalette.surfaceMuted, borderRadius: 12, padding: 12 }}><Text style={[s.english, contentDirection(task.source)]}>{task.source}</Text></View> : null}
     <Text style={s.heading}>{task.prompt}</Text>
     {task.audio ? <Pressable accessibilityRole="button" accessibilityLabel={playing ? 'در حال پخش فایل شنیداری' : heard ? 'پخش دوبارهٔ فایل شنیداری' : 'شنیدن فایل شنیداری سؤال'} accessibilityState={{ disabled: playing || busy }} disabled={playing || busy} style={[s.secondaryButton, (playing || busy) && s.disabled]} onPress={() => void listen()}><Text style={s.secondaryButtonText}>{playing ? 'در حال پخش…' : heard ? 'پخش دوباره' : 'شنیدن سؤال'}</Text></Pressable> : null}
     {task.options
-      ? task.options.map(option => <Pressable key={option} accessibilityRole="radio" accessibilityState={{ checked: answer === option, disabled: locked }} disabled={locked} style={[s.input, { minHeight: 48, justifyContent: 'center', backgroundColor: answer === option ? EnglishPalette.primarySoft : EnglishPalette.surfaceMuted, borderColor: answer === option ? EnglishPalette.primary : EnglishPalette.border }]} onPress={() => { setAnswer(option); setResult(null); }}><Text style={s.english}>{option}</Text></Pressable>)
-      : <TextInput accessibilityLabel={task.prompt} editable={!locked} style={s.input} value={answer} onChangeText={value => { setAnswer(value); setResult(null); }} placeholder="پاسخ خود را بنویسید" placeholderTextColor={EnglishPalette.muted} autoCapitalize="none" autoCorrect={false} maxLength={500} />}
+      ? task.options.map(option => <Pressable key={option} accessibilityRole="radio" accessibilityState={{ checked: answer === option, disabled: locked }} aria-checked={answer === option} disabled={locked} style={[s.input, { minHeight: 48, justifyContent: 'center', backgroundColor: answer === option ? EnglishPalette.primarySoft : EnglishPalette.surfaceMuted, borderColor: answer === option ? EnglishPalette.primary : EnglishPalette.border }]} onPress={() => { setAnswer(option); setResult(null); }}><Text style={[s.english, contentDirection(option)]}>{option}</Text></Pressable>)
+      : <TextInput accessibilityLabel={task.prompt} editable={!locked} style={[s.input, contentDirection(task.answers[0] ?? "")]} value={answer} onChangeText={value => { setAnswer(value); setResult(null); }} placeholder="پاسخ خود را بنویسید" placeholderTextColor={EnglishPalette.muted} autoCapitalize="none" autoCorrect={false} maxLength={500} />}
     <Pressable accessibilityRole="button" accessibilityState={{ disabled: locked || !answer.trim() || (!!task.audio && !heard) }} disabled={locked || !answer.trim() || (!!task.audio && !heard)} style={[s.button, (locked || !answer.trim() || (!!task.audio && !heard)) && s.disabled]} onPress={() => void submit()}><Text style={s.buttonText}>{busy ? 'در حال ذخیره…' : 'بررسی پاسخ'}</Text></Pressable>
-    {result !== null && !deferFeedback ? <Text accessibilityLiveRegion="polite" style={result ? s.success : s.error}>{result ? 'پاسخ درست ثبت شد.' : `هنوز درست نیست. ${task.explanation} دوباره پاسخ دهید.`}</Text> : null}
+    {result !== null && !deferFeedback ? <Text accessibilityLiveRegion="polite" style={result ? s.success : s.error}>{result ? `پاسخ درست ثبت شد.${showExplanationOnCorrect ? ` ${task.explanation}` : ''}` : `هنوز درست نیست. ${task.explanation} دوباره پاسخ دهید.`}</Text> : null}
     {error ? <Text accessibilityLiveRegion="polite" style={s.error}>{error}</Text> : null}
   </View>;
 }

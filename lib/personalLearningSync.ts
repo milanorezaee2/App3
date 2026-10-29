@@ -1,16 +1,6 @@
 import { supabase } from './supabase';
 import { getCourseProgress } from './courseProgress';
 import { exportEnglishSyncExtras, mergeEnglishSyncExtras, type EnglishSyncExtras } from './englishBackup';
-import { germanProgress } from './languages/catalog';
-import type { CourseProgress as StoreCourseProgress } from './createCourseProgressStore';
-import { ALL_GERMAN_PROGRESS_UNITS, GERMAN_UNITS } from './languages/germanUnits';
-import { getUnitProgress, mergeRemoteUnitProgress, type UnitProgress } from './languages/unitProgress';
-import { reviewForUnit } from './languages/unitReview';
-import {
-  exportWorkshopChecklistSyncState,
-  mergeRemoteWorkshopChecklistSyncState,
-  type WorkshopChecklistSyncState,
-} from './languages/a1Workshop';
 import {
   mergeRemotePronunciationMarks,
   type PronunciationMarks,
@@ -62,83 +52,6 @@ function maxTimestamp(...values: Array<string | null | undefined>) {
     .map(value => Date.parse(value))
     .filter(Number.isFinite);
   return new Date(Math.max(Date.now(), ...times.map(time => time + 1))).toISOString();
-}
-
-const EMPTY_UPDATED_AT = new Date(0).toISOString();
-function hasStoreCourseEvidence(value: StoreCourseProgress) {
-  return value.completedLessonIds.length > 0 || value.reviewSentenceIds.length > 0 || value.reviewCards.length > 0
-    || value.learnedEssential504Words.length > 0 || value.totalMinutes > 0 || value.currentStreak > 0
-    || value.longestStreak > 0 || value.lastActiveDate !== null || value.updatedAt !== EMPTY_UPDATED_AT;
-}
-function hasGuidedUnitEvidence(value: UnitProgress) {
-  return Object.keys(value.activities).length > 0 || value.missions.length > 0;
-}
-
-type RemoteGermanBundle = {
-  course: unknown;
-  guidedUnits: Record<string, unknown>;
-  reviews: Record<string, unknown>;
-  envelope: Record<string, unknown>;
-};
-function splitRemoteGerman(value: unknown): RemoteGermanBundle {
-  if (value === null || value === undefined) return { course: undefined, guidedUnits: {}, reviews: {}, envelope: {} };
-  if (!isRecord(value)) throw new Error('پیشرفت ابری آلمانی معتبر نیست؛ دادهٔ محلی حفظ شد.');
-  if (Object.keys(value).length === 0) return { course: undefined, guidedUnits: {}, reviews: {}, envelope: {} };
-  if ('course' in value) {
-    if (value.course !== null && value.course !== undefined && !isRecord(value.course)) {
-      throw new Error('پیشرفت اصلی آلمانی در حساب معتبر نیست؛ دادهٔ محلی حفظ شد.');
-    }
-    return {
-      course: value.course,
-      guidedUnits: asJsonRecord(value.guidedUnits, 'فعالیت‌های واحدهای آلمانی'),
-      reviews: asJsonRecord(value.reviews, 'مرور واحدهای آلمانی'),
-      envelope: value,
-    };
-  }
-  // Accept the earlier preview shape, which stored the sentence-course progress directly.
-  if ('completedLessonIds' in value || 'reviewCards' in value || 'currentLessonId' in value) {
-    return { course: value, guidedUnits: {}, reviews: {}, envelope: {} };
-  }
-  throw new Error('ساختار پیشرفت آلمانی در حساب شناخته نشد؛ دادهٔ محلی حفظ شد.');
-}
-
-async function mergeGermanProgressBundle(remoteValue: unknown) {
-  const remote = splitRemoteGerman(remoteValue);
-  let course = await germanProgress.getCourseProgress();
-  if (remote.course !== undefined && remote.course !== null) {
-    course = await germanProgress.mergeRemoteProgress(remote.course);
-  }
-  const guidedUnits: Record<string, unknown> = { ...remote.guidedUnits };
-  const reviews: Record<string, unknown> = { ...remote.reviews };
-
-  await Promise.all(ALL_GERMAN_PROGRESS_UNITS.map(async unit => {
-    const remoteUnit = remote.guidedUnits[unit.id];
-    const progress = remoteUnit === undefined
-      ? await getUnitProgress(unit)
-      : await mergeRemoteUnitProgress(unit, remoteUnit);
-    if (remoteUnit !== undefined || hasGuidedUnitEvidence(progress)) guidedUnits[unit.id] = progress;
-  }));
-  await Promise.all(GERMAN_UNITS.map(async unit => {
-    const reviewStore = reviewForUnit(unit);
-    const remoteReview = remote.reviews[unit.id];
-    const review = remoteReview === undefined
-      ? await reviewStore.getCourseProgress()
-      : await reviewStore.mergeRemoteProgress(remoteReview);
-    if (remoteReview !== undefined || hasStoreCourseEvidence(review)) reviews[unit.id] = review;
-  }));
-  const remoteWorkshopChecks = remote.envelope.workshopChecks;
-  const workshopChecks: WorkshopChecklistSyncState = remoteWorkshopChecks === undefined
-    ? await exportWorkshopChecklistSyncState()
-    : await mergeRemoteWorkshopChecklistSyncState(remoteWorkshopChecks);
-
-  return {
-    ...remote.envelope,
-    schemaVersion: 1,
-    course,
-    guidedUnits,
-    reviews,
-    workshopChecks,
-  };
 }
 
 function cloudSafeEnglish(extras: EnglishSyncExtras) {
@@ -195,21 +108,11 @@ async function performSync(): Promise<PersonalSyncResult> {
       : await mergeEnglishSyncExtras(remoteEnglish);
     const mergedEnglish = { ...remoteEnglish, ...cloudSafeEnglish(englishExtras) };
 
-    // Keep the legacy raw CourseProgress shape readable while migrating to a
-    // bundle that also carries completed German guided-unit and review evidence.
-    const mergedGerman = await mergeGermanProgressBundle(remoteLanguageProgress.de);
-    const mergedGermanCourse = mergedGerman.course as StoreCourseProgress;
-
+    // Preserve legacy data for removed languages without reading or modifying it.
     const cloudEnglishMarks = remotePronunciationProgress.en ?? {};
-    const cloudGermanMarks = remotePronunciationProgress.de ?? {};
     const mergedEnglishMarks: PronunciationMarks = await mergeRemotePronunciationMarks('en', cloudEnglishMarks);
-    const mergedGermanMarks: PronunciationMarks = await mergeRemotePronunciationMarks('de', cloudGermanMarks);
-    const mergedLanguages = { ...remoteLanguageProgress, en: mergedEnglish, de: mergedGerman };
-    const mergedPronunciation = {
-      ...remotePronunciationProgress,
-      en: mergedEnglishMarks,
-      de: mergedGermanMarks,
-    };
+    const mergedLanguages = { ...remoteLanguageProgress, en: mergedEnglish };
+    const mergedPronunciation = { ...remotePronunciationProgress, en: mergedEnglishMarks };
 
     const needsWrite = !row
       || !sameJson(mergedLanguages, remoteLanguageProgress)
@@ -220,9 +123,7 @@ async function performSync(): Promise<PersonalSyncResult> {
 
     const updatedAt = maxTimestamp(
       row?.updated_at,
-      mergedGermanCourse.updatedAt,
       ...Object.values(mergedEnglishMarks).map(mark => mark?.updatedAt),
-      ...Object.values(mergedGermanMarks).map(mark => mark?.updatedAt),
     );
     const patch = {
       language_progress: mergedLanguages,

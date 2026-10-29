@@ -46,12 +46,12 @@ const esbuild = require('esbuild');
   const check = (label, value) => { assert(value, label); checks.push(label); };
   const equal = (label, actual, expected) => { assert.deepEqual(actual, expected, label); checks.push(label); };
 
-  equal('four internal CEFR planning bands are ordered A1 through B2', curriculum.RUSSIAN_CEFR_BANDS.map(x => x.id), ['A1', 'A2', 'B1', 'B2']);
-  equal('the five existing Russian UI levels map underneath the four planning bands',
-    Object.values(curriculum.RUSSIAN_LEVEL_TO_CEFR), ['A1', 'A1', 'A2', 'B1', 'B2']);
-  equal('existing five-level Russian UI ids and titles remain unchanged',
+  equal('five internal CEFR planning bands are ordered A1 through C1', curriculum.RUSSIAN_CEFR_BANDS.map(x => x.id), ['A1', 'A2', 'B1', 'B2', 'C1']);
+  equal('the six Russian UI levels map underneath the five planning bands',
+    Object.values(curriculum.RUSSIAN_LEVEL_TO_CEFR), ['A1', 'A1', 'A2', 'B1', 'B2', 'C1']);
+  equal('existing five Russian UI levels remain unchanged and C1 is appended',
     russian.RUSSIAN_LEVELS.map(({ id, title }) => [id, title]),
-    [[0, 'Foundation'], [1, 'Survival Russian'], [2, 'Everyday Russian'], [3, 'Communication Russian'], [4, 'Advanced Russian']]);
+    [[0, 'Foundation'], [1, 'Survival Russian'], [2, 'Everyday Russian'], [3, 'Communication Russian'], [4, 'Advanced Russian'], [5, 'Advanced Communication Russian']]);
   check('CEFR labels are explicitly internal and non-certifying', curriculum.RUSSIAN_CEFR_POLICY.officialLevelClaim === false
     && curriculum.RUSSIAN_CEFR_POLICY.officialAssessment === false
     && curriculum.RUSSIAN_CEFR_POLICY.lessonCompletionMeansMastery === false);
@@ -66,17 +66,30 @@ const esbuild = require('esbuild');
   check('A2 band maps exactly the twenty Everyday lessons as available units', a2.units.length === 20
     && a2.units.map(unit => unit.lessonIds[0]).join('|') === russian.RUSSIAN_LESSONS.filter(lesson => lesson.levelId === 2).map(lesson => lesson.id).join('|')
     && a2.units.every(unit => unit.status === 'available' && unit.lessonCheckCount === 2));
-  check('B1 and B2 remain planned roadmaps with no invented published lessons', curriculum.RUSSIAN_CEFR_BANDS.slice(2).every(band => band.status === 'planned'
-    && band.units.length > 0 && band.units.every(unit => unit.status === 'planned' && unit.lessonIds.length === 0)));
+  const b1 = curriculum.findRussianCefrBand('B1');
+  check('B1 exposes twenty existing lessons as starter units without independent transfer claims', b1.status === 'starter-only'
+    && b1.units.length === 20 && b1.units.every(unit => unit.status === 'available' && unit.lessonIds.length === 1
+      && unit.lessonCheckCount === 2 && unit.independentTransferPrompts === 0)
+    && b1.units.map(unit => unit.lessonIds[0]).join('|') === russian.RUSSIAN_LESSONS.filter(lesson => lesson.levelId === 3).map(lesson => lesson.id).join('|'));
+  const b2 = curriculum.findRussianCefrBand('B2');
+  check('B2 exposes twenty lessons as starter units without independent transfer claims', b2.status === 'starter-only'
+    && b2.units.length === 20 && b2.units.every(unit => unit.status === 'available' && unit.lessonIds.length === 1
+      && unit.lessonCheckCount === 2 && unit.independentTransferPrompts === 0)
+    && b2.units.map(unit => unit.lessonIds[0]).join('|') === russian.RUSSIAN_LESSONS.filter(lesson => lesson.levelId === 4).map(lesson => lesson.id).join('|'));
 
+  const c1 = curriculum.findRussianCefrBand('C1');
+  check('C1 exposes twenty starter units without independent assessment claims', c1.status === 'starter-only'
+    && c1.units.length === 20 && c1.units.every(unit => unit.status === 'available' && unit.lessonIds.length === 1
+      && unit.lessonCheckCount === 2 && unit.independentTransferPrompts === 0)
+    && c1.units.map(unit => unit.lessonIds[0]).join('|') === russian.RUSSIAN_LESSONS.filter(lesson => lesson.levelId === 5).map(lesson => lesson.id).join('|'));
   const sourceSentences = russian.RUSSIAN_LESSONS.flatMap(lesson => lesson.sentences);
-  check('sentence curriculum metadata links all 552 current sentences without rewriting their text',
-    sourceSentences.length === 552 && curriculum.RUSSIAN_SENTENCE_CURRICULUM.length === sourceSentences.length
+  check('sentence curriculum metadata links all 1032 current sentences without rewriting their text',
+    sourceSentences.length === 1032 && curriculum.RUSSIAN_SENTENCE_CURRICULUM.length === sourceSentences.length
       && new Set(curriculum.RUSSIAN_SENTENCE_CURRICULUM.map(entry => entry.sentenceId)).size === sourceSentences.length
       && curriculum.RUSSIAN_SENTENCE_CURRICULUM.every(entry => {
         const source = sourceSentences.find(sentence => sentence.id === entry.sentenceId);
         const owner = russian.RUSSIAN_LESSONS.find(lesson => lesson.sentences.some(item => item.id === entry.sentenceId));
-        const expectedCefr = owner && owner.levelId === 2 ? 'A2' : 'A1';
+        const expectedCefr = owner && curriculum.russianCefrForLegacyLevel(owner.levelId);
         return source && entry.patternFa === (source.pattern ?? null) && entry.cefrLevelId === expectedCefr;
       }));
   check('each vocabulary entry is attached to one or more existing sentence examples', curriculum.RUSSIAN_VOCABULARY.length > 0
@@ -116,7 +129,9 @@ const esbuild = require('esbuild');
   equal('unrecognized responses are sent for review rather than marked wrong', engine.evaluateRussianAnswer('новый ответ', ['Привет']).requiresHumanReview, true);
   equal('empty Russian responses are not treated as mistakes', engine.evaluateRussianAnswer('   ', ['Привет']).outcome, 'empty');
   equal('lesson checks alone do not count as transfer assessment', engine.assessRussianBandReadiness('A1', []).status, 'insufficient-transfer-evidence');
-  equal('unwritten CEFR bands remain unassessable', engine.assessRussianBandReadiness('B1', []).status, 'planned');
+  equal('B1 completion alone is insufficient for independent readiness', engine.assessRussianBandReadiness('B1', []).status, 'insufficient-transfer-evidence');
+  equal('B2 completion alone is insufficient for independent readiness', engine.assessRussianBandReadiness('B2', []).status, 'insufficient-transfer-evidence');
+  equal('C1 completion alone is insufficient for independent readiness', engine.assessRussianBandReadiness('C1', []).status, 'insufficient-transfer-evidence');
 
   const completeEvidence = a1.units.map((unit, index) => ({
     objectiveId: unit.objectiveId,

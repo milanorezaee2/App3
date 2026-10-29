@@ -1,12 +1,12 @@
 import { RUSSIAN_LESSONS, type RussianLevelId } from './russian';
 
-export type RussianCefrLevel = 'A1' | 'A2' | 'B1' | 'B2';
+export type RussianCefrLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
 export type RussianCurriculumStatus = 'starter-only' | 'planned';
 export type RussianUnitStatus = 'available' | 'planned';
 export type RussianGrammarFeatureId = 'grammatical-cases' | 'verb-aspect' | 'agreement';
 
 /**
- * A planning layer over the existing five-level Russian UI. Foundation and Survival
+ * A planning layer over the six-level Russian UI. Foundation and Survival
  * are grouped under the internal A1 band; this is not a certified CEFR placement.
  */
 export const RUSSIAN_LEVEL_TO_CEFR: Readonly<Record<RussianLevelId, RussianCefrLevel>> = {
@@ -15,6 +15,7 @@ export const RUSSIAN_LEVEL_TO_CEFR: Readonly<Record<RussianLevelId, RussianCefrL
   2: 'A2',
   3: 'B1',
   4: 'B2',
+  5: 'C1',
 };
 
 export const RUSSIAN_CEFR_POLICY = {
@@ -73,21 +74,21 @@ const A2_UNITS: readonly RussianCurriculumUnit[] = RUSSIAN_LESSONS
   .filter(lesson => RUSSIAN_LEVEL_TO_CEFR[lesson.levelId] === 'A2')
   .map(lesson => lessonUnit(lesson, 'A2'));
 
-function plannedUnit(levelId: RussianCefrLevel, id: string, titleFa: string, outcomeFa: string): RussianCurriculumUnit {
-  return {
-    id: `unit-${levelId.toLowerCase()}-${id}`,
-    levelId,
-    titleFa,
-    outcomeFa,
-    objectiveId: `objective-${levelId.toLowerCase()}-${id}`,
-    status: 'planned',
-    lessonIds: [],
-    lessonCheckCount: 0,
-    independentTransferPrompts: 0,
-  };
-}
+// B1 uses the same lesson-based metadata and does not imply certification.
+const B1_UNITS: readonly RussianCurriculumUnit[] = RUSSIAN_LESSONS
+  .filter(lesson => RUSSIAN_LEVEL_TO_CEFR[lesson.levelId] === 'B1')
+  .map(lesson => lessonUnit(lesson, 'B1'));
 
-/** Four internal CEFR planning bands; future bands are outlines, not published lessons. */
+// B2, like earlier bands, records available lessons rather than proficiency.
+const B2_UNITS: readonly RussianCurriculumUnit[] = RUSSIAN_LESSONS
+  .filter(lesson => RUSSIAN_LEVEL_TO_CEFR[lesson.levelId] === 'B2')
+  .map(lesson => lessonUnit(lesson, 'B2'));
+
+const C1_UNITS: readonly RussianCurriculumUnit[] = RUSSIAN_LESSONS
+  .filter(lesson => RUSSIAN_LEVEL_TO_CEFR[lesson.levelId] === 'C1')
+  .map(lesson => lessonUnit(lesson, 'C1'));
+
+/** Five internal CEFR planning bands; lessons do not certify proficiency. */
 export const RUSSIAN_CEFR_BANDS: readonly RussianCefrBand[] = [
   {
     id: 'A1',
@@ -110,26 +111,24 @@ export const RUSSIAN_CEFR_BANDS: readonly RussianCefrBand[] = [
     titleFa: 'بیان مستقل منظور',
     goalFa: 'روایت، توضیح دلیل، بیان تجربه، نظر، هدف و ارتباط میان ایده‌ها',
     legacyLevelIds: [3],
-    status: 'planned',
-    units: [
-      plannedUnit('B1', 'narration', 'روایت تجربه', 'بازگویی تجربه‌ها و رویدادها با ترتیب روشن.'),
-      plannedUnit('B1', 'reasons', 'توضیح دلیل', 'بیان دلیل و نتیجه در جمله‌ها و گفت‌وگو.'),
-      plannedUnit('B1', 'opinions-goals', 'نظر و هدف', 'گفتن نظر، تجربه و هدف شخصی.'),
-      plannedUnit('B1', 'idea-links', 'ارتباط ایده‌ها', 'پیوند چند ایده در یک توضیح منسجم.'),
-    ],
+    status: 'starter-only',
+    units: B1_UNITS,
   },
   {
     id: 'B2',
     titleFa: 'بیان دقیق و انعطاف‌پذیر',
     goalFa: 'استدلال، شرط، فرض، ظرافت معنایی، ساختارهای پیچیده و بحث‌های تخصصی‌تر',
     legacyLevelIds: [4],
-    status: 'planned',
-    units: [
-      plannedUnit('B2', 'argument', 'استدلال و بحث', 'پشتیبانی از نظر با دلیل و پاسخ به دیدگاه دیگر.'),
-      plannedUnit('B2', 'conditionals', 'شرط و فرض', 'ساخت و تفسیر جمله‌های شرطی و فرضی.'),
-      plannedUnit('B2', 'nuance', 'ظرافت معنایی', 'انتخاب صورت و لحن متناسب با منظور و بافت.'),
-      plannedUnit('B2', 'complex-sentences', 'ساختارهای پیچیده', 'ترکیب ساختارهای پیچیده در موضوع‌های عمومی و تخصصی.'),
-    ],
+    status: 'starter-only',
+    units: B2_UNITS,
+  },
+  {
+    id: 'C1',
+    titleFa: 'تحلیل و ارتباط پیشرفته',
+    goalFa: 'استدلال، سبک، تحلیل انتقادی و ارتباط اجتماعی و حرفه‌ای دقیق',
+    legacyLevelIds: [5],
+    status: 'starter-only',
+    units: C1_UNITS,
   },
 ];
 
@@ -171,6 +170,7 @@ export const RUSSIAN_GRAMMAR_THREADS: readonly RussianGrammarThread[] = [
       A2: 'مقایسهٔ نقش‌ها و گسترش شکل‌های پرتکرار در جمله‌های تازه.',
       B1: 'به‌کارگیری حالت‌ها در روایت، دلیل‌آوری و جمله‌های پیوسته.',
       B2: 'انتخاب دقیق‌تر حالت در ساختارهای پیچیده و بافت‌های تخصصی.',
+      C1: 'تحلیل وابستگی‌ها و تفاوت نقش‌های معنایی در بافت‌های پیشرفته.',
     },
     currentA1Status: 'in-context',
     candidateSentenceIds: ['ru1-21', 'ru1-22', 'ru1-65', 'ru1-67'],
@@ -185,6 +185,7 @@ export const RUSSIAN_GRAMMAR_THREADS: readonly RussianGrammarThread[] = [
       A2: 'آشنایی هدفمند با جفت‌ها و انتخاب نمود در موقعیت‌های پرتکرار.',
       B1: 'به‌کارگیری نمود در روایت تجربه و بیان توالی یا نتیجهٔ عمل.',
       B2: 'انتخاب دقیق‌تر نمود برای ظرافت معنایی و ساختارهای پیچیده.',
+      C1: 'انتخاب نمود در روایت و تحلیل با توجه به منظور و بافت.',
     },
     currentA1Status: 'not-yet-authored',
     candidateSentenceIds: [],
@@ -199,6 +200,7 @@ export const RUSSIAN_GRAMMAR_THREADS: readonly RussianGrammarThread[] = [
       A2: 'گسترش تطابق در توصیف‌ها و جمله‌های ترکیبی.',
       B1: 'حفظ تطابق در روایت و ارجاع به افراد و اشیا در چند جمله.',
       B2: 'کنترل تطابق در ساختارهای پیچیده و بیان دقیق‌تر.',
+      C1: 'بازبینی تطابق و ارجاع در ساختارهای پیچیده و متن منسجم.',
     },
     currentA1Status: 'in-context',
     candidateSentenceIds: [

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import * as Speech from 'expo-speech';
+import { playResponsiveSpeech, stopResponsiveSpeech } from '@/lib/responsiveSpeech';
 import { ChevronLeft, Volume2 } from 'lucide-react-native';
 import type { SentenceLesson } from '@/lib/courseContent';
 import { EnglishPalette as Palette } from './EnglishSupplementTask';
@@ -23,13 +23,31 @@ export function EnglishDialoguePractice({ dialogue }: { dialogue: SentenceLesson
   }, [dialogue]);
   const [pairIndex, setPairIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
+  const [audioNotice, setAudioNotice] = useState('');
   const current = pairs[pairIndex];
 
   useEffect(() => {
     setPairIndex(0);
     setRevealed(false);
-    return () => { void Speech.stop(); };
+    return () => { void stopResponsiveSpeech(); };
   }, [dialogue]);
+
+  useEffect(() => {
+    if (!current) return;
+    setAudioNotice('');
+    playResponsiveSpeech({
+      text: revealed ? current.learner.text : current.partner.text,
+      locale: 'en-US',
+      rate: 0.76,
+      onError: () => setAudioNotice('پخش خودکار ممکن نشد؛ دکمهٔ شنیدن را بزنید.'),
+    });
+    return () => { void stopResponsiveSpeech(); };
+  }, [current, revealed]);
+
+  const speak = (text: string) => playResponsiveSpeech({
+    text, locale: 'en-US', rate: 0.76,
+    onError: () => setAudioNotice('پخش صدا ممکن نشد؛ صدای دستگاه را بررسی کنید.'),
+  });
 
   if (!current) return <View style={styles.card}><Text style={styles.text}>برای این درس دیالوگ آماده‌ای ثبت نشده است.</Text></View>;
 
@@ -43,7 +61,7 @@ export function EnglishDialoguePractice({ dialogue }: { dialogue: SentenceLesson
       <Text style={styles.speaker}>طرف مقابل</Text>
       <Text style={styles.english}>{current.partner.text}</Text>
       <Text style={styles.persian}>{current.partner.fa}</Text>
-      <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن: ${current.partner.text}`} style={styles.soundButton} onPress={() => Speech.speak(current.partner.text, { language: 'en-US', rate: 0.76 })}>
+      <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن: ${current.partner.text}`} style={styles.soundButton} onPress={() => speak(current.partner.text)}>
         <Volume2 size={17} color={Palette.primary} /><Text style={styles.soundText}>شنیدن</Text>
       </Pressable>
     </View>
@@ -55,7 +73,7 @@ export function EnglishDialoguePractice({ dialogue }: { dialogue: SentenceLesson
       </Pressable> : <>
         <Text style={styles.english}>{current.learner.text}</Text>
         <Text style={styles.persian}>{current.learner.fa}</Text>
-        <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن پاسخ: ${current.learner.text}`} style={styles.soundButton} onPress={() => Speech.speak(current.learner.text, { language: 'en-US', rate: 0.76 })}>
+        <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن پاسخ: ${current.learner.text}`} style={styles.soundButton} onPress={() => speak(current.learner.text)}>
           <Volume2 size={17} color={Palette.primary} /><Text style={styles.soundText}>شنیدن پاسخ</Text>
         </Pressable>
       </>}
@@ -64,6 +82,7 @@ export function EnglishDialoguePractice({ dialogue }: { dialogue: SentenceLesson
       <Text style={styles.nextText}>{pairIndex + 1 === pairs.length ? 'تمرین دوباره از آغاز' : 'موقعیت بعدی'}</Text>
       <ChevronLeft size={18} color="#FFFFFF" />
     </Pressable>}
+    {!!audioNotice && <Text accessibilityLiveRegion="polite" style={styles.note}>{audioNotice}</Text>}
     <Text style={styles.note}>این تمرین از دیالوگ موجود استفاده می‌کند؛ گفتار ضبط یا برای هوش مصنوعی ارسال نمی‌شود.</Text>
   </View>;
 }

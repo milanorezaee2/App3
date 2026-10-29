@@ -138,7 +138,6 @@ export default function RootLayout() {
       player?.remove();
       setIntroComplete(true);
       warmSpeech('en-US');
-      setTimeout(() => warmSpeech('de-DE'), 350);
     }, 3400);
     return () => clearTimeout(finish);
   }, [fontsLoaded, fontError]);

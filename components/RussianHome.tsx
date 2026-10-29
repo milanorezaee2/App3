@@ -127,7 +127,7 @@ export default function RussianHome() {
             <EnglishProgressTrack value={levelLessons.length ? levelCompleted / levelLessons.length * 100 : 0} color={activeLevel.color} />
             <Pressable accessibilityRole="button" accessibilityState={{ expanded: showRoadmap }} style={styles.mapToggle} onPress={() => setShowRoadmap(value => !value)}>
               <View style={styles.mapToggleIcon}><Compass size={16} color={Palette.primary} /></View>
-              <View style={styles.mapToggleText}><Text style={styles.mapToggleTitle}>{showRoadmap ? 'بستن نقشهٔ کامل ۵ سطح' : 'نمایش نقشهٔ کامل ۵ سطح'}</Text><Text style={styles.mapToggleMeta}>{activeLevel.modules.slice(0, 3).map(displayEnglishModuleLabel).join(' · ')}</Text></View>
+              <View style={styles.mapToggleText}><Text style={styles.mapToggleTitle}>{showRoadmap ? 'بستن نقشهٔ کامل ۶ سطح' : 'نمایش نقشهٔ کامل ۶ سطح'}</Text><Text style={styles.mapToggleMeta}>{activeLevel.modules.slice(0, 3).map(displayEnglishModuleLabel).join(' · ')}</Text></View>
               {showRoadmap ? <ChevronUp size={18} color={Palette.primary} /> : <ChevronDown size={18} color={Palette.primary} />}
             </Pressable>
             {showRoadmap && <View style={styles.fullRoadmap}>{RUSSIAN_LEVELS.map(level => {

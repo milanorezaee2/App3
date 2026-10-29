@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import * as Speech from 'expo-speech';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import {
   RecordingPresets,
   requestRecordingPermissionsAsync,
@@ -21,6 +20,10 @@ import { toPersianDigits } from '@/lib/format';
 import { EnglishLessonEvidence } from '@/components/EnglishLessonEvidence';
 import { EnglishSentenceBuilder } from '@/components/EnglishSentenceBuilder';
 import { EnglishDialoguePractice } from '@/components/EnglishDialoguePractice';
+import { EnglishB2TopicPractice } from '@/components/EnglishB2TopicPractice';
+import { EnglishB2Scenario } from '@/components/EnglishB2Scenario';
+import { EnglishC1Reading } from '@/components/EnglishC1Reading';
+import { EnglishC1ExtendedModel } from '@/components/EnglishC1ExtendedModel';
 import { ENGLISH_ENGINE_STEPS, getLessonPatterns, getLessonVocabulary } from '@/lib/englishLearningEngine';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import { PageNavigation } from '@/components/PageNavigation';
@@ -30,13 +33,21 @@ import { loadSupplement } from '@/lib/englishSupplement/progress';
 import { CORE_LESSON_EVIDENCE, isCoreLessonEvidenceComplete } from '@/lib/englishFoundationEvidence';
 import { useEnglishStudyTimer } from '@/components/useEnglishStudyTimer';
 import { PAID_AI_ENABLED, PAID_AI_DISABLED_MESSAGE } from '@/lib/paidAI';
-import { playResponsiveSpeech, warmSpeech } from '@/lib/responsiveSpeech';
+import { playResponsiveSpeech, stopResponsiveSpeech, warmSpeech } from '@/lib/responsiveSpeech';
+import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
+import { B1_INDEPENDENT_UNITS } from '@/lib/courseContentB1Independent';
+import { B2_UPPER_INTERMEDIATE_UNITS } from '@/lib/courseContentB2UpperIntermediate';
+import { C1_ADVANCED_UNITS } from '@/lib/courseContentC1Advanced';
+import { C1_TOPIC_PRACTICE, C1_SCENARIOS, C1_APPLICATION_PRACTICE } from '@/lib/englishC1Practice';
+import { C1_ADDITIONAL_APPLICATION } from '@/lib/englishC1AppliedAssessment';
+import { B2_GUIDANCE, B2_PRODUCTION, B2_PRODUCTION_CHECKLIST } from '@/lib/englishB2Practice';
+import { A2_FOUNDATION_LESSONS } from '@/lib/courseContentA2Foundation';
 
 const stages = ENGLISH_ENGINE_STEPS;
 
 export default function SentenceLessonScreen() {
   const router = useRouter();
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, fromStart } = useLocalSearchParams<{ id: string; fromStart?: string }>();
   const lesson = getSentenceLesson(id || '') ?? SENTENCE_LESSONS[0];
   const courseLevel = COURSE_LEVELS.find(item => item.id === lesson.levelId) ?? COURSE_LEVELS[0];
   const [evidencePassed, setEvidencePassed] = useState(false);
@@ -52,10 +63,16 @@ export default function SentenceLessonScreen() {
   const [sessionError,setSessionError]=useState('');
   const completing=useRef(false);
   const loadedLesson=useRef<string|null>(null);
+  const startFirstLesson = useRef(fromStart === '1');
+  const preserveExistingSession = useRef(false);
+  const [audioNotice, setAudioNotice] = useState('');
   const timer=useEnglishStudyTimer(sessionReady && !!getSentenceLesson(id || ''));
   useEffect(() => {
     let alive = true;
     loadedLesson.current = null;
+    preserveExistingSession.current = false;
+    setAudioNotice('');
+    setSessionError('');
     setSessionReady(false);
     setInvalidLesson(!!id && !getSentenceLesson(id));
     if (id && !getSentenceLesson(id)) return;
@@ -63,9 +80,14 @@ export default function SentenceLessonScreen() {
     void loadStudy().then(async state => {
       if (!alive) return;
       const saved = state.sessions[lesson.id] ?? freshSession();
-      setStage(saved.stage);
-      setSentenceIndex(Math.min(saved.sentenceIndex, lesson.sentences.length - 1));
-      setRevealed(saved.revealed);
+      const startAtFirstSentence = startFirstLesson.current && lesson.id === SENTENCE_LESSONS[0].id;
+      // Replay without overwriting a saved position or any completed evidence.
+      preserveExistingSession.current = startAtFirstSentence && !!state.sessions[lesson.id];
+      startFirstLesson.current = false;
+      if (startAtFirstSentence) router.setParams({ fromStart: undefined });
+      setStage(startAtFirstSentence ? 1 : saved.stage);
+      setSentenceIndex(startAtFirstSentence ? 0 : Math.min(saved.sentenceIndex, lesson.sentences.length - 1));
+      setRevealed(startAtFirstSentence ? false : saved.revealed);
 
       if (CORE_LESSON_EVIDENCE[lesson.id]) {
         setEvidencePassed(isCoreLessonEvidenceComplete(lesson.id, state.lessonEvidence[lesson.id] ?? {}));
@@ -83,9 +105,17 @@ export default function SentenceLessonScreen() {
     }).catch(() => {
       if (alive) setSessionError('جلسه قبلی خوانده نشد؛ برای حفظ اطلاعات، ذخیره متوقف است. صفحه را دوباره باز کنید.');
     });
-    return () => { alive = false; void Speech.stop(); };
+    return () => { alive = false; void stopResponsiveSpeech(); };
   }, [lesson.id, lesson.levelId, lesson.sentences.length, id]);
-  useEffect(()=>{if(sessionReady&&loadedLesson.current===lesson.id&&!completing.current)void saveLessonSession(lesson.id,{stage,sentenceIndex,revealed,evidencePassed}).then(()=>setSessionError('')).catch(()=>setSessionError('جلسه ذخیره نشد؛ دوباره یکی از کنترل‌های درس را بزنید تا ذخیره تکرار شود.'));},[lesson.id,sessionReady,stage,sentenceIndex,revealed,evidencePassed]);
+  useEffect(() => {
+    let currentSave = true;
+    if (sessionReady && loadedLesson.current === lesson.id && !completing.current && !preserveExistingSession.current) {
+      void saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed })
+        .then(() => { if (currentSave) setSessionError(''); })
+        .catch(() => { if (currentSave) setSessionError('جلسه ذخیره نشد؛ دوباره یکی از کنترل‌های درس را بزنید تا ذخیره تکرار شود.'); });
+    }
+    return () => { currentSave = false; };
+  }, [lesson.id, sessionReady, stage, sentenceIndex, revealed, evidencePassed]);
   const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
   const recorderState = useAudioRecorderState(recorder, 250);
   const [evaluatingSpeech, setEvaluatingSpeech] = useState(false);
@@ -94,11 +124,31 @@ export default function SentenceLessonScreen() {
   const current = lesson.sentences[sentenceIndex];
   const vocabulary = getLessonVocabulary(lesson);
   const grammarPatterns = getLessonPatterns(lesson);
+  const lessonTopics = B1_INDEPENDENT_UNITS.find(unit => unit.id === lesson.id)?.topics
+    ?? B2_UPPER_INTERMEDIATE_UNITS.find(unit => unit.id === lesson.id)?.topics
+    ?? C1_ADVANCED_UNITS.find(unit => unit.id === lesson.id)?.topics.map(topic => topic[0]);
+  const c1Unit = C1_ADVANCED_UNITS.find(unit => unit.id === lesson.id);
 
   useEffect(() => warmSpeech('en-US'), []);
 
+  useFocusEffect(useCallback(() => () => { void stopResponsiveSpeech(); }, []));
+
+  // Read the sentence currently visible, without advancing the lesson automatically.
+  useEffect(() => {
+    if (!sessionReady || loadedLesson.current !== lesson.id || !current) return;
+    if (stage !== 1 && stage !== 3) {
+      if (stage !== 7) void stopResponsiveSpeech();
+      return;
+    }
+    setAudioNotice('');
+    playResponsiveSpeech({
+      text: current.en, locale: 'en-US', rate: 0.85,
+      onError: () => setAudioNotice('پخش خودکار ممکن نشد. برای شروع صدا، دکمهٔ بلندگو را بزنید و صدای دستگاه را بررسی کنید.'),
+    });
+  }, [lesson.id, sessionReady, stage, sentenceIndex, current?.en]);
+
   const speak = (text: string, rate?: number) => {
-    playResponsiveSpeech({ text, locale: 'en-US', rate });
+    playResponsiveSpeech({ text, locale: 'en-US', rate, onError: () => setAudioNotice('پخش صدا ممکن نشد. صدای دستگاه و اجازهٔ پخش مرورگر را بررسی کنید.') });
   };
 
   const startSpeechPractice = async () => {
@@ -106,7 +156,7 @@ export default function SentenceLessonScreen() {
     try {
       setSpeechError(null);
       setSpeechResult(null);
-      Speech.stop();
+      await stopResponsiveSpeech();
       const permission = await requestRecordingPermissionsAsync();
       if (!permission.granted) {
         setSpeechError('برای تمرین گفتاری، اجازه استفاده از میکروفن را فعال کنید.');
@@ -142,7 +192,7 @@ export default function SentenceLessonScreen() {
     setSentenceIndex(index);
     setSpeechResult(null);
     setSpeechError(null);
-    speak(lesson.sentences[index].en);
+    if (stage === 2 || index === sentenceIndex) speak(lesson.sentences[index].en);
   };
 
   const next = async () => {
@@ -163,13 +213,23 @@ export default function SentenceLessonScreen() {
     setSaving(true);
     setCompletionError('');
     try {
-    const index = SENTENCE_LESSONS.findIndex((item) => item.id === lesson.id);
-    const nextLesson = SENTENCE_LESSONS[index + 1];
+    const nextLesson = nextLessonInOrder(SENTENCE_LESSONS, lesson.id);
+    // Persist both the completed path and its final session before navigating.
     await completeSentenceLesson(lesson.id, nextLesson?.id);
-    await saveLessonSession(lesson.id,freshSession());
-    router.replace('/lang' as never);
+    await saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed });
+    void stopResponsiveSpeech();
+    if (nextLesson) router.replace({ pathname: '/course/lesson', params: { id: nextLesson.id } } as never);
+    else router.replace('/lang' as never);
     } catch { setCompletionError('پایان درس ذخیره نشد؛ دوباره تلاش کنید.'); }
     finally { completing.current=false; setSaving(false); }
+  };
+
+  const goToPreviousSentence = () => {
+    if (!sessionReady || saving || !!sessionError || stage !== 1) return;
+    setSentenceIndex(previousSentenceIndex(sentenceIndex));
+    setRevealed(false);
+    setSpeechResult(null);
+    setSpeechError(null);
   };
 
   if (invalidLesson) return <View style={styles.root}><PageNavigation backFallback="/lang/library" /><Text style={styles.stageDesc}>درس پیدا نشد.</Text><Pressable accessibilityRole="button" onPress={()=>router.replace('/lang/library' as never)}><Text style={styles.stageTitle}>فهرست درس‌ها</Text></Pressable></View>;
@@ -220,9 +280,13 @@ export default function SentenceLessonScreen() {
             <Text style={styles.stageTitle}>{lesson.title}</Text>
             <Text style={styles.situation}>{lesson.situation}</Text>
             <View style={styles.promiseCard}>
-              <Text style={styles.promiseTitle}>در پایان این درس می‌توانید:</Text>
-              <Text style={styles.promiseText}>با {toPersianDigits(lesson.sentences.length)} جمله کوتاه، این موقعیت را مدیریت کنید.</Text>
+              <Text style={styles.promiseTitle}>{lesson.c1Section ? 'در این درس تمرین می‌کنید:' : 'در پایان این درس می‌توانید:'}</Text>
+              <Text style={styles.promiseText}>{lesson.c1Section ? `کاربرد ${toPersianDigits(lesson.sentences.length)} جمله و گفت‌وگو در این موقعیت؛ پایان درس به‌تنهایی تسلط را تأیید نمی‌کند.` : `با ${toPersianDigits(lesson.sentences.length)} جمله کوتاه، این موقعیت را مدیریت کنید.`}</Text>
             </View>
+            {lessonTopics && <View style={styles.promiseCard}>
+              <Text style={styles.promiseTitle}>موضوع‌های این درس</Text>
+              {lessonTopics.map(topic => <Text key={topic} style={styles.promiseText}>• {topic}</Text>)}
+            </View>}
           </View>
         )}
 
@@ -234,13 +298,14 @@ export default function SentenceLessonScreen() {
                 <Volume2 size={25} color={Colors.onColor} />
               </Pressable>
               <Text style={styles.english}>{current.en}</Text>
-              <Text style={[styles.pronunciation,current.pronunciation.startsWith('/ ')&&{fontFamily:'Inter-ExtraBold',writingDirection:'ltr'}]}>{current.pronunciation}</Text>
-              {lesson.order >= 89 && <Text style={styles.hint}>راهنمای واجی آمریکایی از واژه‌نامه؛ بدون تکیه و پیوند گفتار. واژه داخل کروشه آوانویسی نشده است. برای آهنگ جمله به صدا گوش دهید.</Text>}
+              <Text style={[styles.pronunciation,current.pronunciation.startsWith('/ ')&&{fontFamily:'Inter-ExtraBold',textAlign:'left',writingDirection:'ltr'}]}>{current.pronunciation}</Text>
+              {!lesson.b2Section && !lesson.c1Section && lesson.order >= 89 + B1_INDEPENDENT_UNITS.length + A2_FOUNDATION_LESSONS.length && <Text style={styles.hint}>راهنمای واجی آمریکایی از واژه‌نامه؛ بدون تکیه و پیوند گفتار. واژه داخل کروشه آوانویسی نشده است. برای آهنگ جمله به صدا گوش دهید.</Text>}
               <View style={styles.divider} />
               <Text style={styles.persian}>{current.fa}</Text>
               {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternEnglish}>{current.pattern}</Text></View> : null}
             </View>
-            <Text style={styles.hint}>چند بار گوش دهید و جمله را با صدای بلند تکرار کنید.</Text>
+            <Text style={styles.hint}>جمله به‌صورت خودکار پخش می‌شود. اگر مرورگر صدا را متوقف کرد، دکمهٔ بلندگو را بزنید.</Text>
+            {!!audioNotice && <Text accessibilityLiveRegion="polite" style={styles.speechError}>{audioNotice}</Text>}
           </View>
         )}
 
@@ -268,6 +333,7 @@ export default function SentenceLessonScreen() {
               <Headphones size={18} color={Colors.primary[400]} />
               <Text style={styles.shadowText}>فعلاً فقط به صدا گوش دهید؛ مرحلهٔ بعد برای تکرار و سایه‌خوانی است.</Text>
             </View>
+            {lesson.c1Section && <EnglishC1Reading key={lesson.id} lessonId={lesson.id} />}
           </View>
         )}
 
@@ -350,7 +416,17 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><BookOpenCheck size={33} color={Colors.primary[400]} /></View>
             <Text style={styles.stageTitle}>Grammar Through Usage · دستور در کاربرد</Text>
-            <Text style={styles.stageDesc}>الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به محتوا اضافه نشده است.</Text>
+            <Text style={styles.stageDesc}>{(lesson.b2Section || lesson.c1Section) ? 'نکته‌های کاربردی را بخوانید و سپس الگوها و مثال‌ها را مرور کنید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به محتوا اضافه نشده است.'}</Text>
+            {B2_GUIDANCE[lesson.id]?.map((note, index) => (
+              <View key={`${lesson.id}-guide-${index}`} style={styles.vocabCard}>
+                <Text style={styles.promiseTitle}>{lessonTopics?.[index]}</Text>
+                <Text style={styles.promiseText}>{note}</Text>
+              </View>
+            ))}
+            {c1Unit?.topics.map((topic, index) => <View key={`${lesson.id}-c1-guide-${index}`} style={styles.vocabCard}>
+              <Text style={styles.promiseTitle}>{topic[0]}</Text>
+              <Text style={styles.promiseText}>{topic[5]}</Text>
+            </View>)}
             {grammarPatterns.length ? grammarPatterns.map(item => (
               <View key={item.sentenceId} style={styles.vocabCard}>
                 <Text style={styles.patternEnglish}>{item.pattern}</Text>
@@ -364,6 +440,10 @@ export default function SentenceLessonScreen() {
               <Text style={styles.promiseTitle}>یادگیری در بافت جمله</Text>
               <Text style={styles.promiseText}>برای این درس الگوی دستوری جداگانه‌ای ثبت نشده است؛ جملهٔ اصلی را بشنوید و ساختارش را در کاربرد واقعی ببینید.</Text>
             </View>}
+            {lesson.c1Section && lessonTopics && <EnglishB2TopicPractice key={lesson.id} lessonId={lesson.id} topics={lessonTopics} practice={C1_TOPIC_PRACTICE[lesson.id]} />}
+            {lesson.c1Section && <EnglishB2TopicPractice key={`${lesson.id}-application`} lessonId={lesson.id} topics={['تحلیل موقعیت']} practice={C1_APPLICATION_PRACTICE[lesson.id]} heading="کاربرد در موقعیت تازه · اختیاری" description="با توجه به موقعیت تازه بهترین پاسخ را انتخاب کنید؛ این تمرین شرط پایان درس نیست." />}
+            {lesson.c1Section && <EnglishB2TopicPractice key={`${lesson.id}-application-extra`} lessonId={lesson.id} topics={['سنجش کاربرد در بافت جدید']} practice={C1_ADDITIONAL_APPLICATION[lesson.id]} heading="سنجش کاربردی تکمیلی · اختیاری" description="به موقعیت تازه پاسخ دهید. نتیجه با بازخورد ثبت می‌شود؛ برای حفظ پیشرفت قبلی شرط تازه‌ای برای پایان درس ایجاد نمی‌کند." />}
+            {lesson.b2Section && lessonTopics && <EnglishB2TopicPractice key={lesson.id} lessonId={lesson.id} topics={lessonTopics} />}
           </View>
         )}
 
@@ -373,6 +453,15 @@ export default function SentenceLessonScreen() {
             <Text style={styles.stageTitle}>Conversation Practice · مکالمهٔ هدایت‌شده</Text>
             <Text style={styles.stageDesc}>فعلاً به‌جای سرویس AI آنلاین، از گفت‌وگوی همین درس به شکل تمرین نقش‌آفرینی رایگان استفاده کنید.</Text>
             <EnglishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} />
+            {lesson.c1Section && <EnglishB2Scenario key={lesson.id} lessonId={lesson.id} speak={speak} scenario={C1_SCENARIOS[lesson.id]} />}
+            {lesson.c1Section && <EnglishC1ExtendedModel key={`${lesson.id}-extended`} lessonId={lesson.id} speak={speak} />}
+            {lesson.b2Section && <EnglishB2Scenario key={lesson.id} lessonId={lesson.id} speak={speak} />}
+            {!!B2_PRODUCTION[lesson.id] && <View style={styles.promiseCard}>
+              <Text style={styles.promiseTitle}>تمرین تولید آزاد · اختیاری</Text>
+              <Text style={styles.promiseText}>{B2_PRODUCTION[lesson.id]}</Text>
+              <Text style={styles.promiseText}>{B2_PRODUCTION_CHECKLIST}</Text>
+              <Text style={styles.promiseText}>این فعالیت خودکار تصحیح یا ذخیره نمی‌شود و شرط پایان درس نیست.</Text>
+            </View>}
           </View>
         )}
 
@@ -396,10 +485,15 @@ export default function SentenceLessonScreen() {
       </ScrollView>
 
       <View style={styles.footer}>
-        <Pressable accessibilityRole="button" accessibilityState={{ disabled: saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed) }} disabled={saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed)} style={[styles.nextButton, (saving || (stage === stages.length - 1 && !evidencePassed)) && { opacity: .45 }]} onPress={() => void next()}>
-          <Text style={styles.nextText}>{stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جمله بعدی' : 'ادامه'}</Text>
-          {stage === stages.length - 1 ? <Check size={20} color={Colors.onColor} /> : <ChevronLeft size={20} color={Colors.onColor} />}
-        </Pressable>
+        <View style={styles.footerButtons}>
+          {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && { opacity: .45 }]}>
+            <Text style={styles.secondaryControlText}>جمله قبلی</Text>
+          </Pressable>}
+          <Pressable accessibilityRole="button" accessibilityState={{ disabled: saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed) }} disabled={saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed)} style={[styles.nextButton, stage === 1 && styles.nextButtonBesidePrevious, (saving || (stage === stages.length - 1 && !evidencePassed)) && { opacity: .45 }]} onPress={() => void next()}>
+            <Text style={styles.nextText}>{stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جمله بعدی' : 'ادامه'}</Text>
+            {stage === stages.length - 1 ? <Check size={20} color={Colors.onColor} /> : <ChevronLeft size={20} color={Colors.onColor} />}
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -407,7 +501,7 @@ export default function SentenceLessonScreen() {
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },
-  // Match the German lesson player's 900px canvas and vertical safe area.
+  // Keep the lesson canvas and vertical safe area consistent.
   header: { width: '100%', maxWidth: 900, minHeight: 64, alignSelf: 'center', paddingTop: 12, paddingHorizontal: 15, paddingBottom: 7, gap: 8, borderBottomLeftRadius: 22, borderBottomRightRadius: 22 },
   headerTop: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
   headerText: { flex: 1, alignItems: 'flex-end', gap: 2 },
@@ -447,23 +541,23 @@ const styles = StyleSheet.create({
   counter: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.muted, marginBottom: Spacing.md, alignSelf: 'flex-end', textAlign: 'right', writingDirection: 'rtl' },
   sentenceCard: { width: '100%', borderRadius: Radius.xl, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: Spacing.xl, alignItems: 'center', shadowColor: '#172033', shadowOpacity: 0.05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
   soundButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: Spacing.lg },
-  english: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 25, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
+  english: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 25, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   pronunciation: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'center', writingDirection: 'rtl', marginTop: 8 },
   divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: Spacing.lg },
   persian: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg + 2, fontWeight: '400', color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   pattern: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start', gap: 8, alignSelf: 'flex-end', backgroundColor: Palette.warningSoft, paddingHorizontal: 10, paddingVertical: 6, borderRadius: Radius.full, marginTop: Spacing.md },
   patternLabel: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.warning, writingDirection: 'rtl' },
-  patternEnglish: { fontFamily: 'Inter-ExtraBold', fontSize: Typography.sizes.xs + 2, fontWeight: '800', color: Palette.warning, textAlign: 'right', writingDirection: 'ltr' },
+  patternEnglish: { fontFamily: 'Inter-ExtraBold', fontSize: Typography.sizes.xs + 2, fontWeight: '800', color: Palette.warning, textAlign: 'left', writingDirection: 'ltr' },
   hint: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', lineHeight: 19, marginTop: Spacing.md },
   listenList: { width: '100%', gap: Spacing.sm, marginTop: Spacing.xl },
   listenRow: { minHeight: 62, borderRadius: Radius.lg, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, paddingHorizontal: Spacing.md, flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.sm },
   listenRowActive: { borderColor: Palette.primary, backgroundColor: Palette.primarySoft },
   listenNumber: { width: 30, height: 30, borderRadius: 15, backgroundColor: Palette.primarySoft, alignItems: 'center', justifyContent: 'center' },
   listenNumberText: { fontFamily: Typography.numberFontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.primaryDark, writingDirection: 'rtl' },
-  listenEnglish: { fontFamily: 'Inter-ExtraBold', flex: 1, fontSize: 15, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
+  listenEnglish: { fontFamily: 'Inter-ExtraBold', flex: 1, fontSize: 15, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   speechPractice: { width: '100%', borderRadius: Radius.xl, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: Spacing.lg, alignItems: 'center', marginTop: Spacing.lg, shadowColor: '#172033', shadowOpacity: 0.04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   speechTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.md + 2, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
-  speechSentence: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 19, lineHeight: 28, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr', marginTop: Spacing.sm },
+  speechSentence: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 19, lineHeight: 28, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr', marginTop: Spacing.sm },
   speechHint: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', lineHeight: 19, marginTop: 6 },
   recordButton: { minHeight: 48, minWidth: 155, borderRadius: Radius.full, paddingHorizontal: Spacing.lg, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, marginTop: Spacing.md },
   recordButtonActive: { backgroundColor: Palette.danger },
@@ -474,9 +568,9 @@ const styles = StyleSheet.create({
   scoreLabel: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.muted, textAlign: 'right', writingDirection: 'rtl' },
   scoreValue: { fontFamily: Typography.numberFontFamily, fontSize: Typography.sizes.lg + 2, fontWeight: '400', color: Palette.success, writingDirection: 'rtl' },
   recognizedLabel: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', marginTop: Spacing.sm },
-  recognizedText: { fontFamily: 'Inter-ExtraBold', fontSize: 15, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr', marginTop: 3 },
+  recognizedText: { fontFamily: 'Inter-ExtraBold', fontSize: 15, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr', marginTop: 3 },
   feedbackText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.success, textAlign: 'right', writingDirection: 'rtl', lineHeight: 19, marginTop: Spacing.sm },
-  missingWords: { fontFamily: 'Inter-ExtraBold', fontSize: 12, fontWeight: '800', color: Palette.warning, textAlign: 'right', writingDirection: 'ltr', marginTop: Spacing.sm },
+  missingWords: { fontFamily: 'Inter-ExtraBold', fontSize: 12, fontWeight: '800', color: Palette.warning, textAlign: 'left', writingDirection: 'ltr', marginTop: Spacing.sm },
   speechError: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.danger, textAlign: 'right', writingDirection: 'rtl', lineHeight: 19, marginTop: Spacing.sm },
   shadowTip: { width: '100%', marginTop: Spacing.md, borderRadius: Radius.lg, backgroundColor: Palette.warningSoft, padding: Spacing.md, flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
   shadowText: { flex: 1, fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.text, textAlign: 'right', writingDirection: 'rtl', lineHeight: 19 },
@@ -485,7 +579,7 @@ const styles = StyleSheet.create({
   revealButton: { marginTop: Spacing.xl, minHeight: 44, paddingHorizontal: Spacing.xl, borderRadius: Radius.full, backgroundColor: Palette.primarySoft, alignItems: 'center', justifyContent: 'center' },
   revealText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, writingDirection: 'rtl' },
   answerBox: { marginTop: Spacing.xl, padding: Spacing.md, borderRadius: Radius.lg, backgroundColor: Palette.successSoft, flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
-  answerText: { fontFamily: 'Inter-ExtraBold', flex: 1, fontSize: 18, fontWeight: '800', color: Palette.success, textAlign: 'right', writingDirection: 'ltr' },
+  answerText: { fontFamily: 'Inter-ExtraBold', flex: 1, fontSize: 18, fontWeight: '800', color: Palette.success, textAlign: 'left', writingDirection: 'ltr' },
   dots: { flexDirection: 'row', gap: 8, marginTop: Spacing.lg },
   dot: { width: 9, height: 9, borderRadius: 5, backgroundColor: Palette.border },
   dotActive: { width: 24, backgroundColor: Palette.primary },
@@ -494,16 +588,20 @@ const styles = StyleSheet.create({
   bubblePartner: { alignSelf: 'flex-start', backgroundColor: Palette.surface, borderColor: Palette.border, borderBottomLeftRadius: 5 },
   bubbleLearner: { alignSelf: 'flex-end', backgroundColor: Palette.primarySoft, borderColor: '#DDE2FF', borderBottomRightRadius: 5 },
   bubbleSpeaker: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: Palette.primaryDark, marginBottom: 4, textAlign: 'right', writingDirection: 'rtl' },
-  bubbleEn: { fontFamily: 'Inter-ExtraBold', fontSize: 16, fontWeight: '800', color: Palette.ink, lineHeight: 23, textAlign: 'right', writingDirection: 'ltr' },
+  bubbleEn: { fontFamily: 'Inter-ExtraBold', fontSize: 16, fontWeight: '800', color: Palette.ink, lineHeight: 23, textAlign: 'left', writingDirection: 'ltr' },
   bubbleFa: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', marginTop: 5 },
   bubbleSound: { alignSelf: 'flex-end', marginTop: 6 },
   vocabList: { width: '100%', gap: Spacing.sm, marginTop: Spacing.xl },
   vocabCard: { borderRadius: Radius.lg, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: Spacing.md },
   vocabTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  vocabWord: { fontFamily: 'Inter-ExtraBold', fontSize: 18, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
+  vocabWord: { fontFamily: 'Inter-ExtraBold', fontSize: 18, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   vocabMeaning: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
-  vocabExample: { fontFamily: 'Inter-ExtraBold', fontSize: 13, fontWeight: '800', color: Palette.text, textAlign: 'right', writingDirection: 'ltr', marginTop: 8 },
+  vocabExample: { fontFamily: 'Inter-ExtraBold', fontSize: 13, fontWeight: '800', color: Palette.text, textAlign: 'left', writingDirection: 'ltr', marginTop: 8 },
   footer: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 15, paddingTop: 7, paddingBottom: 30, backgroundColor: Palette.canvas, borderTopWidth: 1, borderTopColor: Palette.border, shadowColor: '#20264A', shadowOpacity: .07, shadowRadius: 12, shadowOffset: { width: 0, height: -4 }, elevation: 5 },
+  footerButtons: { width: '100%', flexDirection: 'row', gap: 8, alignItems: 'center' },
+  previousButton: { flex: 1, minHeight: 54, borderRadius: 17, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
+  secondaryControlText: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 13, textAlign: 'center', writingDirection: 'rtl' },
   nextButton: { width: '100%', maxWidth: 900, alignSelf: 'center', minHeight: 54, borderRadius: 17, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, shadowColor: Palette.primary, shadowOpacity: .2, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
+  nextButtonBesidePrevious: { flex: 1, width: undefined },
   nextText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.md + 2, fontWeight: '400', color: Colors.onColor, writingDirection: 'rtl' },
 });
