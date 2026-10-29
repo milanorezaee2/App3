@@ -1,7 +1,6 @@
 # بازسازی محتوای Survival English
 
 **تاریخ:** ۱۱ اکتبر ۲۰۲۶  
-**دامنهٔ مرحله:** این بازسازی فقط Survival را تکمیل کرد؛ Foundation، سطح‌های دیگر، مسیر مکمل انگلیسی و محتوای آلمانی/روسی در آن مرحله دست‌نخورده بودند.
 
 > پس از ثبت این مرحله، ۸۲۰ مثال به Everyday English افزوده و هر ۲۰ درس آن به ۵۰ نمونه تکمیل شد. مرحلهٔ قبلی Communication، ۳۹۶ مثال به ۹ درس افزود؛ در مرحلهٔ جاری شش درس Communication و ۳۰۰ جملهٔ دیگر اضافه شد و آمار فعال به ۱۷۴ درس/۳٬۸۶۲ جمله (Communication: پانزده/۷۵۰) رسید. جزئیات جاری در `docs/COMMUNICATION-ENGLISH-50-EXAMPLES-REPORT-FA.md` و نقشهٔ مرحله‌ای در `docs/ENGLISH-CURRICULUM-REBUILD-REPORT-FA.md` است. جدول‌ها و خروجی‌های اعتبارسنجی پایین‌تر snapshot پس از Everyday و پیش از گسترش Communication را ثبت می‌کنند؛ شمارهای Survival این گزارش تغییر نکرده‌اند.
 

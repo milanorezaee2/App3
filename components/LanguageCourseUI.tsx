@@ -3,17 +3,15 @@ import type { ReactNode } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams, usePathname } from 'expo-router';
 import { PageNavigation } from '@/components/PageNavigation';
-import { GermanBottomNav } from './GermanBottomNav';
 import { RussianBottomNav } from './RussianBottomNav';
-/** Shared presentation shell for the German and Russian starter routes; English screens remain independent. */
+/** Shared presentation shell for the Russian starter routes; English screens remain independent. */
 export function CoursePage({title,subtitle,children,back='/languages',progress,footer}:{title:string;subtitle?:string;children:ReactNode;back?:string;progress?:number;footer?:ReactNode}){
- const pathname=usePathname();const {language}=useLocalSearchParams<{language?:string}>();const activeLanguage=language??(pathname.startsWith('/learn/ru')?'ru':pathname.startsWith('/learn/de')?'de':undefined);
+ const pathname=usePathname();const {language}=useLocalSearchParams<{language?:string}>();const activeLanguage=language??(pathname.startsWith('/learn/ru')?'ru':undefined);
  return <View style={courseStyles.root}>
   <View style={courseStyles.header}><PageNavigation tone="dark" backFallback={back}/><View style={{flex:1}}><Text style={courseStyles.title}>{title}</Text>{subtitle&&<Text style={courseStyles.description}>{subtitle}</Text>}</View>{progress!==undefined&&<Text style={courseStyles.pill}>{Math.round(progress*100)}٪</Text>}</View>
   {progress!==undefined&&<View style={courseStyles.track}><View style={[courseStyles.fill,{width:`${Math.min(1,Math.max(0,progress))*100}%`}]}/></View>}
   <ScrollView contentContainerStyle={courseStyles.page}><View style={courseStyles.content}>{children}</View></ScrollView>
   {footer&&<View style={courseStyles.footer}>{footer}</View>}
-  {activeLanguage==='de'&&progress===undefined&&<GermanBottomNav/>}
   {activeLanguage==='ru'&&progress===undefined&&<RussianBottomNav/>}
  </View>;
 }

@@ -1,7 +1,7 @@
 /**
  * Rendered tri-language parity check.
  *
- * Walks the same screens in English, German and Russian and asserts that the
+ * Walks the same screens in English and Russian and asserts that the
  * teaching format is identical: same home sections, same library anatomy, the
  * same nine lesson stages in the same order, the same review screen and the
  * same local backup screen. Wording, content and colours stay language-specific.
@@ -42,7 +42,6 @@ const { chromium } = require('playwright');
   try {
     const courses = [
       { id: 'en', home: '/lang', library: '/lang/library', lesson: '/course/lesson?id=foundation-introducing-yourself', review: '/review', backup: '/lang/backup', name: 'انگلیسی' },
-      { id: 'de', home: '/learn/de', library: '/learn/de/library', lesson: '/learn/de/lesson?id=de-v2-greetings', review: '/learn/de/review', backup: '/learn/de/backup', name: 'آلمانی' },
       { id: 'ru', home: '/learn/ru', library: '/learn/ru/library', lesson: '/learn/ru/lesson?id=ru-l1-greetings', review: '/learn/ru/review', backup: '/learn/ru/backup', name: 'روسی' },
     ];
 
@@ -61,11 +60,11 @@ const { chromium } = require('playwright');
       check(navNames.join('|') === 'یادگیری|کتابخانه|تلفظ|مکالمه|مرور', `${course.id} home exposes the shared five navigation slots in order`);
       const positions = [];
       for (const level of await page.getByRole('button', { name: /^فهرست درس‌های / }).all()) positions.push((await level.boundingBox()).x);
-      check(positions.length === (course.id === 'de' ? 4 : 5), `${course.id} home shows one rail node per level`);
+      check(positions.length === 5, `${course.id} home shows one rail node per level`);
       check(positions.every((x, index) => index === 0 || positions[index - 1] > x), `${course.id} level rail still reads right to left`);
       check(text.includes('جمله آماده مرور'), `${course.id} home keeps the shared due-review pill`);
       const statusRows = (text.match(/واژهٔ یکتا/g) ?? []).length;
-      const publishedLevels = { en: 5, de: 4, ru: 3 }[course.id];
+      const publishedLevels = { en: 5, ru: 3 }[course.id];
       check(statusRows === publishedLevels, `${course.id} home lists one status row per published level in the shared today card`);
     }
 
@@ -128,8 +127,8 @@ const { chromium } = require('playwright');
       check(backup.includes(`پشتیبان پیشرفت ${course.name}`), `${course.id} backup names its own language`);
     }
 
-    check(errors.length === 0, `no page errors while walking the three courses: ${errors.slice(0, 3).join(' | ')}`);
-    console.log(`BROWSER PARITY: ${checks} checks passed — English, German and Russian render the same home, library, nine-stage lesson, review and backup format.`);
+    check(errors.length === 0, `no page errors while walking both courses: ${errors.slice(0, 3).join(' | ')}`);
+    console.log(`BROWSER PARITY: ${checks} checks passed — English and Russian render the same home, library, nine-stage lesson, review and backup format.`);
   } finally {
     await browser.close();
   }

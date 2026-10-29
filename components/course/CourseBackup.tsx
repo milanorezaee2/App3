@@ -3,7 +3,6 @@ import { Platform, Pressable, ScrollView, Share, StyleSheet, Text, TextInput, Vi
 import { useRouter } from 'expo-router';
 import { Download, FileCheck2, RotateCcw, ShieldCheck } from 'lucide-react-native';
 import { AppBottomNav } from '@/components/AppBottomNav';
-import { GermanBottomNav } from '@/components/GermanBottomNav';
 import { RussianBottomNav } from '@/components/RussianBottomNav';
 import { PageNavigation } from '@/components/PageNavigation';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
@@ -15,7 +14,7 @@ import type { CourseProgress } from '@/lib/courseProgress';
 /**
  * The local backup screen of every course.
  *
- * One anatomy for German, Russian and English: navigation bar and course chip,
+ * One anatomy for both courses: navigation bar and course chip,
  * page title and intro, privacy notice, the same six-tile device status grid,
  * the export card, the merge-only restore card, the status messages and the
  * return link. Only the store behind `exportBackup`/`restoreBackup` and the
@@ -128,7 +127,7 @@ export function CourseBackup({
     }
   };
 
-  const Nav = course.id === 'de' ? GermanBottomNav : course.id === 'ru' ? RussianBottomNav : AppBottomNav;
+  const Nav = course.id === 'ru' ? RussianBottomNav : AppBottomNav;
   const ready = progress !== null && dueCount !== null;
 
   return (

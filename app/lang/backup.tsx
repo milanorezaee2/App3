@@ -5,7 +5,7 @@ import { exportEnglishBackup, restoreEnglishBackup } from '@/lib/englishBackup';
 /**
  * English backup screen.
  *
- * Renders the shared local-backup layout — the same anatomy as German and
+ * Renders the shared local-backup layout — the same anatomy as the Russian
  * Russian — with the English stores (lessons, study state, supplement) behind
  * export and merge-only restore.
  */

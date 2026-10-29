@@ -396,7 +396,7 @@ async function restoreProgressText(text: string): Promise<CourseProgress> {
 
 async function mergeRemoteProgress(value: unknown): Promise<CourseProgress> {
   if (!validBackup({ schema: 1, courseKey: KEY, progress: value })) {
-    throw new Error('پیشرفت ابری آلمانی معتبر نیست؛ دادهٔ محلی تغییری نکرد.');
+    throw new Error('پیشرفت ابری این دوره معتبر نیست؛ دادهٔ محلی تغییری نکرد.');
   }
   return serial(async () => {
     const local = await getCourseProgress();

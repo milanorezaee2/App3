@@ -5,7 +5,7 @@ import { GuidedModuleCard } from '@/components/course/GuidedModuleCard';
 import { RUSSIAN_COURSE } from '@/lib/languages/courseRegistry';
 
 /**
- * Russian home. Same layout, same slots and same actions as German and English;
+ * Russian home. Same layout, same slots and same actions as the English course;
  * only the Russian course content and routes are different.
  */
 export default function RussianHome() {

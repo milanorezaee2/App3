@@ -6,7 +6,7 @@ import { toPersianDigits as fa } from '@/lib/format';
 
 /**
  * One word-order exercise for every language. It works purely from the target
- * sentence and its Persian meaning, so English, German and Russian show the
+ * sentence and its Persian meaning, so both courses show the
  * exact same interaction in the "Sentence Building" stage.
  */
 function normalizeSentence(value: string) {

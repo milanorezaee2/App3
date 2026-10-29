@@ -1,6 +1,6 @@
 name: Build learner APK
 
-# Builds one installable Android APK of the learner app (English, German and
+# Builds one installable Android APK of the learner app (English and
 # Russian courses together) and keeps it as a downloadable artifact.
 
 on:
@@ -152,7 +152,7 @@ jobs:
           TAG="apk-run-${GITHUB_RUN_NUMBER}"
           gh release create "$TAG" MiloLanguages.apk \
             --title "MiloLanguages APK (build ${GITHUB_RUN_NUMBER})" \
-            --notes "Installable Android APK of the learner app: English, German and Russian courses. Built from ${GITHUB_SHA}." \
+            --notes "Installable Android APK of the learner app: English and Russian courses. Built from ${GITHUB_SHA}." \
             --prerelease \
             --target "${GITHUB_SHA}"
           URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/MiloLanguages.apk"

@@ -3,7 +3,6 @@
 > این سند سابقهٔ همان مرحلهٔ اصلاحات است، نه شمارش جاری دوره. مسیر اصلی انگلیسی اکنون ۱۷۴ درس/۳٬۸۶۲ جمله دارد: Foundation ده/۵۰۰، Survival نوزده/۹۵۰، Everyday بیست/۱٬۰۰۰، Communication پانزده/۷۵۰ (۵۰ نمونه در هر درس) و Advanced صدوده/۶۶۲. این سند سابقهٔ مرحلهٔ اصلاحات و snapshot تاریخی است، نه گزارش محتوای جاری. گزارش فعلی Communication: `docs/COMMUNICATION-ENGLISH-50-EXAMPLES-REPORT-FA.md`؛ گزارش بازبینی و نقشهٔ ادامه: `docs/ENGLISH-CURRICULUM-REBUILD-REPORT-FA.md`. گزارش‌های مرحله‌ای پیشین Everyday و Survival: `docs/EVERYDAY-ENGLISH-EXPANSION-REPORT-FA.md` و `docs/ENGLISH-SURVIVAL-50-EXAMPLES-REPORT-FA.md`؛ سابقهٔ Survival: `docs/SURVIVAL-COMPLETION-REPORT-FA.md`. شناسه‌ها و ترتیب نسبی درس‌های پیشین حفظ شده‌اند.
 
 ## مرز تغییرات
-۱۲۹ درس، شناسه و ترتیب همه درس‌ها، پنج کارت سطح و شش مرحله درس حفظ شده‌اند. آلمانی، مدیریت غیرفعال و امکانات غیرآموزشی تغییر نکرده‌اند. هیچ سابقه کاربر پاک نشده و سرویس پولی فعال نشده است.
 
 ## کیفیت محتوا
 - ۱۱۶ مدخل context/example با لغت موجود در همان جمله و معنی متناسب جایگزین شدند؛ فهرست تغییرات در `english-repairs.json` است.

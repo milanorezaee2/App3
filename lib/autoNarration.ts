@@ -59,7 +59,7 @@ export function useAutoNarration({
 }: {
   /** The phrase that is visible on screen. */
   text?: string | null;
-  /** Course speech locale, e.g. `en-US`, `de-DE`, `ru-RU`. */
+  /** Course speech locale, e.g. `en-US` or `ru-RU`. */
   locale: string;
   /** Turn the narrator off while recording or evaluating speech. */
   enabled?: boolean;

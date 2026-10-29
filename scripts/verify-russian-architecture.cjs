@@ -163,7 +163,7 @@ const esbuild = require('esbuild');
     && memory.has(evidence.RUSSIAN_LEARNING_EVIDENCE_KEY)
     && memory.has('sentence_course_progress_ru_v2')
     && !memory.has('sentence_course_progress_v1')
-    && !memory.has('sentence_course_progress_de_v1'));
+    && !memory.has('sentence_course_progress_xx_v1'));
   const progress = await russian.russianProgress.getCourseProgress();
   const reviewCard = progress.reviewCards.find(card => card.id === `${firstLesson.id}:${firstSentence.id}`);
   check('a reconstruction error increments the existing Russian lapse counter and schedules a retry in ten minutes',

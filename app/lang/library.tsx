@@ -7,7 +7,7 @@ import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 
 /**
- * English library: the same shared library layout as German and Russian, with a
+ * English library: the same shared library layout as the Russian course, with a
  * short English-only summary of unique vocabulary per level.
  */
 export default function EnglishLibraryScreen() {

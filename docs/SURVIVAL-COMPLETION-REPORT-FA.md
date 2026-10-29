@@ -1,7 +1,6 @@
 # گزارش گسترش دورهٔ اصلی Survival
 
 **وضعیت:** پیاده‌سازی و اعتبارسنجی خودکار موفق — ۹ اکتبر ۲۰۲۶  
-**دامنه:** گسترش موقعیت‌محور مسیر اصلی جمله‌محور انگلیسی؛ مسیر مکمل ۲۴واحدی، Foundation، واژگان مرجع، آلمانی و دیگر سطوح خارج از دامنهٔ محتوایی این گسترش‌اند.
 
 > این سند snapshot مرحلهٔ اولیهٔ Survival در ۹ اکتبر است؛ آن زمان ۱۹ درس/۲۳۵ جمله داشت و جزئیات هر ۱۷ درس افزوده را ثبت می‌کند. پس از آن Everyday English گسترش یافت و سپس هر ۱۹ درس Survival به ۵۰ جمله تکمیل شدند. شمار جاری Survival **۹۵۰ جمله و ۱٬۳۱۲ مدخل واژگانی یکتا** است؛ گزارش جاری در `docs/ENGLISH-SURVIVAL-50-EXAMPLES-REPORT-FA.md` و گزارش مرحلهٔ بعدی Everyday در `docs/EVERYDAY-ENGLISH-EXPANSION-REPORT-FA.md` آمده است.
 
@@ -85,7 +84,6 @@
 | `npm run validate:english-engine` | موفق؛ ۱٬۷۸۸ بررسی؛ پنج سطح، ۱۴۶ درس، ۱٬۱۰۰ جمله و ۱۳۲ سنجش Foundation/Survival |
 | `npm run validate:english-four` | موفق؛ ۲٬۰۸۰ بررسی محتوایی و منطقی |
 | `npm run validate:english-supplement` | موفق؛ ۱٬۸۷۷ بررسی؛ مسیر مکمل ۲۴واحدی، ۱۹۲ پرسش واحدها و ۴۴ پرسش جمع‌بندی حفظ شده‌اند |
-| `npm run validate:german-levels` | موفق؛ ۹۴۱ بررسی؛ رگرسیون محتوای آلمانی مشاهده نشد |
 | `npm run build:web` | موفق؛ خروجی وب با ۳۳ مسیر ساخته شد |
 | `node --check scripts/verify-english-four-browser.cjs` | موفق؛ آزمون مرورگر از نظر نحوی معتبر است |
 

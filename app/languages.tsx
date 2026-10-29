@@ -10,7 +10,6 @@ import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
 import { FEATURES, RUSSIAN_ONLY_BUILD } from '@/lib/features';
 import { SENTENCE_LESSONS } from '@/lib/courseContent';
-import { GERMAN_SENTENCE_LESSONS } from '@/lib/languages/germanSentenceCourse';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 
@@ -19,7 +18,6 @@ let welcomeVoicePlayed = false;
 
 const languageMeta = {
   en: { flag: '🇬🇧', code: 'EN', nativeName: 'English', tint: '#EAF2FF', border: '#CFE0FF' },
-  de: { flag: '🇩🇪', code: 'DE', nativeName: 'Deutsch', tint: '#F1F6FF', border: '#D7E4FA' },
   ru: { flag: '🇷🇺', code: 'RU', nativeName: 'Русский', tint: '#EEF4FF', border: '#D5E3FF' },
 } as const;
 
@@ -30,10 +28,9 @@ const learningSteps = [
 ] as const;
 
 const englishSentenceCount = SENTENCE_LESSONS.reduce((sum, lesson) => sum + lesson.sentences.length, 0);
-const germanSentenceCount = GERMAN_SENTENCE_LESSONS.reduce((sum, lesson) => sum + lesson.sentences.length, 0);
 const learningStats = [
-  { value: fa(SENTENCE_LESSONS.length + GERMAN_SENTENCE_LESSONS.length), label: 'درس مرحله‌بندی‌شده' },
-  { value: fa(englishSentenceCount + germanSentenceCount), label: 'جملهٔ کاربردی' },
+  { value: fa(SENTENCE_LESSONS.length), label: 'درس مرحله‌بندی‌شده' },
+  { value: fa(englishSentenceCount), label: 'جملهٔ کاربردی' },
   { value: '۲۴/۷', label: 'دسترسی به یادگیری' },
 ] as const;
 

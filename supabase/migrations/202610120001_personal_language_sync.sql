@@ -1,4 +1,4 @@
--- Persistent English/German course and pronunciation sync for the signed-in learner.
+-- Persistent English course and pronunciation sync for the signed-in learner.
 -- Apply after the learning_progress table exists (202610050001_production_features.sql).
 -- No service-role access is needed; all client writes are protected by auth.uid().
 BEGIN;

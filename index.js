@@ -14,7 +14,7 @@
 import { Alert, I18nManager, Platform } from 'react-native';
 
 // Keep the native tree deterministic and independent of the phone locale.
-// Persian copy receives explicit RTL styles, while English and German receive
+// Persian copy receives explicit RTL styles, while Latin-script languages receive
 // explicit LTR styles. Forcing the whole native tree RTL here used to conflict
 // with app/_layout.tsx and could alternate direction after an app restart.
 try {

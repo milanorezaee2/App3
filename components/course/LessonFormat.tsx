@@ -23,7 +23,7 @@ import { COURSE_LESSON_STAGES, type FormatCheck, type FormatLesson, type FormatS
  * The one lesson player used by every language path.
  *
  * Header, nine-stage stepper, stage frames and footer live here so English,
- * German and Russian cannot drift apart visually or pedagogically. Languages
+ * The courses cannot drift apart visually or pedagogically. Languages
  * only supply their own sentences, builders, dialogues and self-checks.
  */
 export const lessonStyles = StyleSheet.create({

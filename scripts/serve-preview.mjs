@@ -461,7 +461,7 @@ const server = http.createServer((req, res) => {
     }
     if (!resolved) {
       // Single-page fallback: the static export cannot pre-render dynamic routes
-      // (e.g. /learn/de), so let the client router handle in-app deep links.
+      // (e.g. /learn/ru), so let the client router handle in-app deep links.
       const wantsHtml = (req.headers.accept || '').includes('text/html');
       const spaIndex = path.join(dist, 'index.html');
       if (wantsHtml && fs.existsSync(spaIndex)) {

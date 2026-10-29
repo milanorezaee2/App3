@@ -3,7 +3,7 @@ import { BookOpen, BookOpenCheck, MessageCircle, RefreshCw, Volume2 } from 'luci
 import { CourseBottomNav, type CourseNavItem } from '@/components/course/CourseBottomNav';
 import { RUSSIAN_COURSE } from '@/lib/languages/courseRegistry';
 
-/** Russian navigation: identical five slots and order to English and German. */
+/** Russian navigation: identical five slots and order to the English course. */
 export const RUSSIAN_NAV_ITEMS: CourseNavItem[] = [
   { slot: 'home', path: '/learn/ru', label: 'یادگیری', icon: BookOpen },
   { slot: 'library', path: '/learn/ru/library', label: 'کتابخانه', icon: BookOpenCheck },

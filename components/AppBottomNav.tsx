@@ -5,7 +5,7 @@ import { ENGLISH_COURSE } from '@/lib/languages/courseRegistry';
 
 /**
  * English navigation: the same five destinations, in the same RTL order, as the
- * German and Russian courses.
+ * the English course and the Russian course.
  */
 export const ENGLISH_NAV_ITEMS: CourseNavItem[] = [
   { slot: 'home', path: '/lang', label: 'یادگیری', icon: BookOpen },

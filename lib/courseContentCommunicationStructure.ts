@@ -7,7 +7,7 @@ export interface CommunicationCurriculumUnit {
 
 /**
  * Stable unit map for Communication English. It follows the same lesson →
- * thematic-unit relationship used by the German sentence course, while keeping
+ * thematic-unit relationship used by the sentence courses, while keeping
  * every already-published lesson ID and its course order intact.
  */
 export const COMMUNICATION_MODULES: readonly CommunicationCurriculumUnit[] = [

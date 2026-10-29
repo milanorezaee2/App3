@@ -335,8 +335,8 @@ export function CourseHome({
           <View style={styles.tipCard}>
             <View style={styles.tipIcon}><Sparkles size={17} color={Palette.warning} /></View>
             <View style={styles.tipCopy}>
-              <Text style={styles.tipTitle}>جمله‌محور، در هر سه زبان</Text>
-              <Text style={styles.tipText}>English، Deutsch و Русский هر سه با همان نُه مرحله پیش می‌روند: موقعیت، جمله‌های اصلی، شنیدن، سایه‌خوانی، ساخت جمله، واژگان، دستور در کاربرد، مکالمه و مرور هوشمند.</Text>
+              <Text style={styles.tipTitle}>جمله‌محور، در هر دو زبان</Text>
+              <Text style={styles.tipText}>English و Русский هر دو با همان نُه مرحله پیش می‌روند: موقعیت، جمله‌های اصلی، شنیدن، سایه‌خوانی، ساخت جمله، واژگان، دستور در کاربرد، مکالمه و مرور هوشمند.</Text>
             </View>
           </View>
 

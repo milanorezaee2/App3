@@ -2,7 +2,7 @@ import { CourseBackup } from '@/components/course/CourseBackup';
 import { RUSSIAN_COURSE } from '@/lib/languages/courseRegistry';
 import { russianProgress } from '@/lib/languages/russian';
 
-/** Russian backup screen: same layout as German and English, Russian store behind it. */
+/** Russian backup screen: same layout as the English course, Russian store behind it. */
 export default function RussianBackupRoute() {
   return (
     <CourseBackup

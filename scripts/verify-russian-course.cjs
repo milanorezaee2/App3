@@ -10,7 +10,6 @@ const esbuild = require('esbuild');
         "export * from './lib/languages/russian';",
         "export * from './lib/languages/catalog';",
         "export * from './lib/languages/russianStudyState';",
-        "export * from './lib/languages/german';",
         "export * from './lib/courseContent';",
         "export * from './lib/englishLearningEngine';",
       ].join('\n'),
@@ -84,10 +83,8 @@ const esbuild = require('esbuild');
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 2).reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 1000
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 3).length === 15
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 3).reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 750);
-  check('German legacy lesson set remains twelve lessons', app.GERMAN_LESSONS.length === 12);
-  check('language picker registers en/de/ru without changing existing locales', app.LANGUAGES.map(language => language.id).join('|') === 'en|de|ru'
+  check('language picker registers en/ru without changing existing locales', app.LANGUAGES.map(language => language.id).join('|') === 'en|ru'
     && app.LANGUAGES.find(language => language.id === 'en').speechLocale === 'en-US'
-    && app.LANGUAGES.find(language => language.id === 'de').speechLocale === 'de-DE'
     && app.LANGUAGES.find(language => language.id === 'ru').speechLocale === 'ru-RU');
   check('Russian lesson count and home route are registered', app.LANGUAGES.find(language => language.id === 'ru').lessonsCount === 69
     && app.LANGUAGES.find(language => language.id === 'ru').home === '/learn/ru'
@@ -121,7 +118,7 @@ const esbuild = require('esbuild');
     && savedProgress.currentLessonId === app.RUSSIAN_LESSONS[1].id
     && memory.has('sentence_course_progress_ru_v2')
     && !memory.has('sentence_course_progress_v1')
-    && !memory.has('sentence_course_progress_de_v1'));
+    && !memory.has('sentence_course_progress_xx_v1'));
   check('Russian completion enrolls only its eight sentences in local spaced review', (await app.russianProgress.getDueReviewCards()).length === 8
     && (await app.russianProgress.getDueReviewCards()).every(card => card.lessonId === firstLesson.id));
   check('Russian completion does not invent study minutes or English vocabulary mastery', savedProgress.totalMinutes === 0

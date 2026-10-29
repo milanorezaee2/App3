@@ -8,7 +8,6 @@ import { noteManualSpeech, useAutoNarration } from '@/lib/autoNarration';
 import { ArrowLeft, ChevronLeft, ChevronRight, RotateCcw, Volume2 } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { AppBottomNav } from '@/components/AppBottomNav';
-import { GermanBottomNav } from '@/components/GermanBottomNav';
 import { RussianBottomNav } from '@/components/RussianBottomNav';
 import { PageNavigation } from '@/components/PageNavigation';
 import { toPersianDigits as fa } from '@/lib/format';
@@ -40,22 +39,6 @@ const THEMES = {
     locale: 'en-US',
     languageFa: 'انگلیسی',
     brand: 'ENGLISH · PRONUNCIATION',
-  },
-  de: {
-    accent: '#197D70',
-    accentDark: '#124B43',
-    soft: '#E6F5EF',
-    canvas: '#F4F7F4',
-    surface: '#FFFFFF',
-    ink: '#173E34',
-    text: '#435E57',
-    muted: '#71837E',
-    border: '#D8E7E0',
-    gold: '#C6A65D',
-    home: '/learn/de',
-    locale: 'de-DE',
-    languageFa: 'آلمانی',
-    brand: 'DEUTSCH · AUSSPRACHE',
   },
   ru: {
     accent: '#3565B8',
@@ -383,7 +366,7 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
           onPress={next}
         />
       </View>
-      {language === 'de' ? <GermanBottomNav /> : language === 'ru' ? <RussianBottomNav /> : <AppBottomNav />}
+      {language === 'ru' ? <RussianBottomNav /> : <AppBottomNav />}
     </View>
   );
 }

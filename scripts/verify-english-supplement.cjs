@@ -67,7 +67,7 @@ const esbuild = require('esbuild');
   const memory = new Map();
   global.window = { localStorage: { getItem: key => memory.get(key) ?? null, setItem: (key, value) => memory.set(key, value) } };
   memory.set('course_progress', 'untouched');
-  memory.set('learning_de_progress', 'untouched');
+  memory.set('legacy_other_language_progress', 'untouched');
   const legacyEvidence = { 'foundation-1-practice-1': { skill: 'grammar', correct: true, attempts: 3, heard: false } };
   const legacyRecord = app.parseProgress(JSON.stringify({ version: 1, evidence: legacyEvidence, drafts: { message: 'Hi Tom.' } }));
   check(legacyRecord.evidence['foundation-1-practice-1'].attempts === 3);
@@ -92,7 +92,7 @@ const esbuild = require('esbuild');
   await app.saveDraft('message', 'Hi Tom.');
   check((await app.loadSupplement()).drafts.message === 'Hi Tom.');
   check(memory.get('course_progress') === 'untouched');
-  check(memory.get('learning_de_progress') === 'untouched');
+  check(memory.get('legacy_other_language_progress') === 'untouched');
 
   // Legacy v1 progress unlocks Foundation first, then its independent final check gates A1.
   const passUnits = async units => {

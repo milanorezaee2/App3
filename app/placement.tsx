@@ -4,7 +4,6 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ArrowLeft, BookOpenCheck, Check, ChevronLeft, RotateCcw, Sparkles } from 'lucide-react-native';
 import { COURSE_LEVELS } from '@/lib/courseContent';
-import { GERMAN_SENTENCE_LEVELS } from '@/lib/languages/germanSentenceCourse';
 import { getPlacementQuestions, scorePlacement, type PlacementLanguage } from '@/lib/placement';
 import { PageNavigation } from '@/components/PageNavigation';
 import { Typography } from '@/lib/theme';
@@ -26,22 +25,18 @@ const colors = {
 };
 
 const ENGLISH_LEVEL_LABELS = ['پایه', 'موقعیت‌های ضروری', 'روزمره', 'ارتباط', 'پیشرفته'] as const;
-const GERMAN_LEVEL_LABELS = ['مقدماتی', 'پایه', 'روزمره', 'بیان و ارتباط'] as const;
 
 function getLevelLabel(language: PlacementLanguage, levelId: number) {
-  if (language === 'en') return ENGLISH_LEVEL_LABELS[levelId] ?? COURSE_LEVELS.find(level => level.id === levelId)?.title ?? 'سطح آموزشی';
-  return GERMAN_LEVEL_LABELS[levelId] ?? GERMAN_SENTENCE_LEVELS.find(level => level.id === levelId)?.title ?? 'سطح آموزشی';
+  return ENGLISH_LEVEL_LABELS[levelId] ?? COURSE_LEVELS.find(level => level.id === levelId)?.title ?? 'سطح آموزشی';
 }
 
 function getLevelRoute(language: PlacementLanguage, levelId: number) {
-  return language === 'en'
-    ? { pathname: '/lang/library', params: { level: String(levelId) } }
-    : { pathname: '/learn/de/library', params: { level: String(levelId) } };
+  return { pathname: '/lang/library', params: { level: String(levelId) } };
 }
 
 export default function PlacementScreen() {
   const { language: requestedLanguage } = useLocalSearchParams<{ language?: string }>();
-  const language: PlacementLanguage = requestedLanguage === 'de' ? 'de' : 'en';
+  const language: PlacementLanguage = 'en';
   const router = useRouter();
   const { width } = useWindowDimensions();
   const compact = width < 620;
@@ -56,7 +51,7 @@ export default function PlacementScreen() {
   }, [language]);
   const question = questions[questionIndex];
   const result = useMemo(() => finished ? scorePlacement(language, answers) : null, [answers, finished, language]);
-  const languageName = language === 'en' ? 'انگلیسی' : 'آلمانی';
+  const languageName = 'انگلیسی';
   const selectedAnswer = answers[question.id];
   const hasAnswer = Object.prototype.hasOwnProperty.call(answers, question.id);
 
@@ -75,7 +70,7 @@ export default function PlacementScreen() {
   const openSuggestedLevel = () => {
     if (result) router.replace(getLevelRoute(language, result.recommendedLevelId) as never);
   };
-  const openLanguageHome = () => router.replace((language === 'en' ? '/lang' : '/learn/de') as never);
+  const openLanguageHome = () => router.replace('/lang' as never);
 
   return (
     <View style={styles.root}>
@@ -125,7 +120,7 @@ export default function PlacementScreen() {
 
               <Text style={styles.questionPrompt}>{question.prompt}</Text>
               <View style={styles.passageCard}>
-                <Text style={styles.passageLabel}>{language === 'en' ? 'ENGLISH EXAMPLE' : 'GERMAN EXAMPLE'}</Text>
+                <Text style={styles.passageLabel}>ENGLISH EXAMPLE</Text>
                 <Text style={styles.passageText}>{question.passage}</Text>
               </View>
 

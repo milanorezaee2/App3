@@ -5,8 +5,8 @@ import type { CourseProgress, ReviewRating, SentenceReviewCard } from '../course
  *
  * Each language keeps its own content (sentences, translations, pronunciation
  * guides, grammar notes, vocabulary), but the shape of a lesson, the order of
- * its stages and the screens around it are defined once here so English,
- * German and Russian always walk the learner through the identical flow.
+ * its stages and the screens around it are defined once here so English and
+ * Russian always walk the learner through the identical flow.
  */
 export const COURSE_LESSON_STAGES = [
   { id: 'situation', labelFa: 'موقعیت', labelEn: 'Situation' },
@@ -20,7 +20,7 @@ export const COURSE_LESSON_STAGES = [
   { id: 'review', labelFa: 'مرور هوشمند', labelEn: 'Spaced Review' },
 ] as const;
 
-export type CourseLanguageId = 'en' | 'de' | 'ru';
+export type CourseLanguageId = 'en' | 'ru';
 
 export interface FormatVocabulary {
   word: string;
@@ -227,8 +227,8 @@ export function resumeFormatLesson(course: FormatCourse, currentLessonId: string
 
 /**
  * Builds a self-check from the lesson's own sentences. Used by courses that ship
- * no hand-written questions (German) so every lesson ends with the same
- * "what does this sentence mean?" review as English and Russian.
+ * no hand-written questions, so every lesson ends with the same
+ * "what does this sentence mean?" review.
  */
 export function buildSentenceChecks(lesson: FormatLesson, count = 4): FormatCheck[] {
   const sentences = lesson.sentences.filter(sentence => sentence.fa.trim() && sentence.text.trim());

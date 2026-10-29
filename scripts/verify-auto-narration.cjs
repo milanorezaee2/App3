@@ -8,7 +8,7 @@
  *   1. opening a language home reads its key sentence,
  *   2. opening a lesson reads the sentence on screen,
  *   3. the next sentence is read again, in the course's own language,
- *   4. German and Russian are read with their own locales,
+ *   4. Each course reads with its own locale,
  *   5. the narrator never raises a page error when the engine is silent.
  *
  * Usage: BROWSER_BASE_URL=http://127.0.0.1:8081/App3 node scripts/verify-auto-narration.cjs
@@ -75,7 +75,6 @@ const { chromium } = require('playwright');
     /* 1. A language home reads its key sentence when it opens. */
     for (const [route, locale, label] of [
       ['/lang', 'en-US', 'English'],
-      ['/learn/de', 'de-DE', 'German'],
       ['/learn/ru', 'ru-RU', 'Russian'],
     ]) {
       await go(route);
@@ -110,7 +109,6 @@ const { chromium } = require('playwright');
     /* 3b. The pronunciation workshop narrates its first example as well. */
     for (const [route, locale, label] of [
       ['/learn/en/pronunciation', 'en-US', 'English'],
-      ['/learn/de/pronunciation', 'de-DE', 'German'],
       ['/learn/ru/pronunciation', 'ru-RU', 'Russian'],
     ]) {
       await go(route);
@@ -120,9 +118,8 @@ const { chromium } = require('playwright');
       check(said.some(item => item.lang === locale), `the ${label} pronunciation workshop uses ${locale}`);
     }
 
-    /* 4. German and Russian keep their own voice and script. */
+    /* 4. Russian keeps its own voice and script. */
     for (const [route, locale, pattern, label] of [
-      ['/learn/de/lesson?id=de-v2-greetings', 'de-DE', /[A-Za-zÄÖÜäöüß]/, 'German'],
       ['/learn/ru/lesson?id=ru-l1-greetings', 'ru-RU', /[А-Яа-яЁё]/, 'Russian'],
     ]) {
       await go(route);
@@ -137,7 +134,7 @@ const { chromium } = require('playwright');
     /* 5. A silent engine must never break the screens. */
     check(errors.length === 0, `the narrator raised no page errors: ${errors.slice(0, 3).join(' | ')}`);
 
-    console.log(`${checks} automatic narration checks passed: every language home and lesson reads the visible phrase aloud with its own voice, without a tap.`);
+    console.log(`${checks} automatic narration checks passed: every home, lesson and pronunciation workshop reads the visible phrase aloud with its own voice, without a tap.`);
   } finally {
     await context.close();
     await browser.close();

@@ -57,7 +57,7 @@ function memoryStorage(seed = {}) {
 const keys = app.backup.ENGLISH_BACKUP_STORAGE_KEYS;
 check(keys.length === 3, 'backup covers exactly the three local English stores');
 check(keys.includes('sentence_course_progress_v1') && keys.includes('english_study_state_v1') && keys.includes('english_supplement_evidence_v1'), 'all required legacy keys are included');
-check(!keys.some(key => /de_|russian|german/i.test(key)), 'other languages are excluded');
+check(!keys.some(key => /_ru_|russian/i.test(key)), 'other language stores are excluded');
 
 const [lesson1, lesson2] = app.content.SENTENCE_LESSONS;
 const today = new Date();

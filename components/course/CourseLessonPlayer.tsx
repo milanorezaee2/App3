@@ -37,7 +37,7 @@ import { noteManualSpeech, useAutoNarration } from '@/lib/autoNarration';
 const PAGE_SIZE = 5;
 
 /**
- * German and Russian share this player with English: same nine stages, same
+ * Both courses share this player: same nine stages, same
  * frames, same footer. Only the sentences, builders and dialogues differ.
  */
 export function CourseLessonPlayer({
