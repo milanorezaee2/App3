@@ -128,6 +128,16 @@ jobs:
           sha256sum MiloLanguages.apk | tee MiloLanguages.apk.sha256
           ls -lh MiloLanguages.apk
 
+      - name: Upload the APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: MiloLanguages-apk
+          path: |
+            MiloLanguages.apk
+            MiloLanguages.apk.sha256
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Enable KVM acceleration
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -146,16 +156,6 @@ jobs:
           emulator-boot-timeout: 900
           disable-animations: true
           script: bash .github/scripts/apk-learner-smoke.sh MiloLanguages.apk
-
-      - name: Upload the APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: MiloLanguages-apk
-          path: |
-            MiloLanguages.apk
-            MiloLanguages.apk.sha256
-          if-no-files-found: error
-          retention-days: 14
 
       - name: Keep the emulator diagnostics
         if: always()
