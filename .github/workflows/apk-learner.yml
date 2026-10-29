@@ -20,7 +20,7 @@ on:
       - 'package-lock.json'
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: learner-apk-${{ github.ref }}
@@ -120,3 +120,17 @@ jobs:
           path: MiloLanguages.apk
           if-no-files-found: error
           retention-days: 14
+
+      - name: Publish the APK as a public release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="apk-run-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" MiloLanguages.apk \
+            --title "MiloLanguages APK (build ${GITHUB_RUN_NUMBER})" \
+            --notes "Installable Android APK of the learner app: English, German and Russian courses. Built from ${GITHUB_SHA}." \
+            --prerelease \
+            --target "${GITHUB_SHA}"
+          URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/MiloLanguages.apk"
+          echo "### APK download: ${URL}" >> "$GITHUB_STEP_SUMMARY"
+          echo "${URL}" 
