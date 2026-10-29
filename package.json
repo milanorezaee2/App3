@@ -32,6 +32,7 @@
     "validate:backup": "node scripts/verify-english-backup.mjs",
     "validate:a11y": "node scripts/verify-accessibility-static.mjs",
     "validate:pronunciation": "node scripts/verify-pronunciation-course.mjs",
+    "validate:parity": "node scripts/verify-language-parity.mjs",
     "validate:personal-sync": "node scripts/verify-personal-sync.mjs",
     "validate:english-four": "node scripts/verify-english-four.cjs",
     "prebuild:web": "node scripts/check-public-connection.mjs"

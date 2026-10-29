@@ -5,12 +5,14 @@ import { GERMAN_SENTENCE_LESSONS } from './germanSentenceCourse';
 export const GERMAN_SENTENCE_SESSION_PREFIX = 'german_sentence_session_v1:';
 const PAGE_SIZE = 5;
 
-export type GermanSentenceStage = 0 | 1 | 2 | 3 | 4 | 5;
+// Stages follow the shared nine-stage lesson format; the older six-stage flow
+// stored 0..5, and every one of those indices stays valid here.
+export type GermanSentenceStage = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
 export interface GermanSentenceSession {
   schemaVersion: 1;
   lessonId: string;
-  /** Sentence index for stages 1/3; five-sentence page index for stages 2/5. */
+  /** Sentence index for stages 1/3/4; five-sentence page index for stages 2/5. */
   stage: GermanSentenceStage;
   index: number;
   updatedAt: string;
@@ -25,15 +27,15 @@ export function validGermanSentenceSession(value: unknown, lessonId: string): va
   const session = value as Partial<GermanSentenceSession>;
   const lesson = GERMAN_SENTENCE_LESSONS.find(item => item.id === lessonId);
   if (!lesson || session.schemaVersion !== 1 || session.lessonId !== lessonId
-    || !Number.isInteger(session.stage) || session.stage! < 0 || session.stage! > 5
+    || !Number.isInteger(session.stage) || session.stage! < 0 || session.stage! > 8
     || !Number.isInteger(session.index) || session.index! < 0
     || typeof session.updatedAt !== 'string' || !Number.isFinite(Date.parse(session.updatedAt))) return false;
 
   const stage = session.stage as GermanSentenceStage;
   const index = session.index!;
   const pageCount = Math.ceil(lesson.sentences.length / PAGE_SIZE);
-  if (stage === 0 || stage === 4) return index === 0;
-  if (stage === 1 || stage === 3) return index < lesson.sentences.length;
+  if (stage === 0 || stage === 6 || stage === 7 || stage === 8) return index === 0;
+  if (stage === 1 || stage === 3 || stage === 4) return index < lesson.sentences.length;
   return index < pageCount;
 }
 

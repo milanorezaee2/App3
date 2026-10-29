@@ -113,7 +113,7 @@ export default function EnglishBackupScreen() {
           </View>
 
           <Text accessibilityRole="header" style={styles.title}>پشتیبان پیشرفت انگلیسی</Text>
-          <Text style={styles.intro}>خروجی و بازیابیِ سه مخزن محلی این مسیر، بدون درخواست ابری هنگام ساخت یا بازیابی فایل.</Text>
+          <Text style={styles.intro}>خروجی و بازیابی محلی · بدون همگام‌سازی ابری؛ سه مخزن این مسیر یک‌جا بررسی می‌شود.</Text>
 
           <View style={styles.privacyCard}>
             <ShieldCheck size={19} color={Palette.warning} />
@@ -121,7 +121,7 @@ export default function EnglishBackupScreen() {
           </View>
 
           <View style={styles.card}>
-            <Text accessibilityRole="header" style={styles.heading}>وضعیت همین دستگاه</Text>
+            <Text accessibilityRole="header" style={styles.heading}>وضعیت فعلی این دستگاه</Text>
             {loadError ? (
               <>
                 <Text accessibilityRole="alert" style={styles.error}>{loadError}</Text>
@@ -140,7 +140,7 @@ export default function EnglishBackupScreen() {
           </View>
 
           <View style={styles.card}>
-            <View style={styles.headingRow}><Download size={18} color={Palette.primary} /><Text accessibilityRole="header" style={styles.heading}>ساخت فایل پشتیبان</Text></View>
+            <View style={styles.headingRow}><Download size={18} color={Palette.primary} /><Text accessibilityRole="header" style={styles.heading}>ساخت نسخهٔ پشتیبان</Text></View>
             <Text style={styles.body}>نسخهٔ JSON یک‌جا شامل پیشرفت دوره، وضعیت جلسه/شواهد مطالعه و دورهٔ تکمیلی است. ساخت آن فقط از همین دستگاه می‌خواند و مستقیم به سرور چیزی نمی‌فرستد.</Text>
             <Pressable accessibilityRole="button" accessibilityState={{ disabled: busy !== null }} disabled={busy !== null} onPress={() => void exportBackup()} style={({ pressed }) => [styles.primaryButton, (pressed || busy !== null) && styles.pressed]}>
               <Text style={styles.primaryButtonText}>{busy === 'export' ? 'در حال آماده‌سازی…' : Platform.OS === 'web' ? 'دانلود فایل JSON' : 'اشتراک‌گذاری فایل پشتیبان'}</Text>
@@ -150,7 +150,7 @@ export default function EnglishBackupScreen() {
           </View>
 
           <View style={styles.card}>
-            <View style={styles.headingRow}><FileCheck2 size={18} color={Palette.teal} /><Text accessibilityRole="header" style={styles.heading}>بررسی و ادغام پشتیبان</Text></View>
+            <View style={styles.headingRow}><FileCheck2 size={18} color={Palette.teal} /><Text accessibilityRole="header" style={styles.heading}>بازیابی و ادغام پشتیبان</Text></View>
             <Text style={styles.body}>فایل فقط پس از بررسی نسخه، مسیر، ساختار و هر سه مخزن پذیرفته می‌شود. ادغام غیرحذفی است: درس‌ها و سوابق یکتا حفظ می‌شوند؛ دادهٔ جاری در برخورد پیش‌نویس‌ها اولویت دارد؛ زمان مرور جدیدتر انتخاب می‌شود.</Text>
             {Platform.OS === 'web' ? <Pressable accessibilityRole="button" accessibilityState={{ disabled: busy !== null }} disabled={busy !== null} onPress={chooseBackupFile} style={styles.secondaryButton}><Text style={styles.secondaryButtonText}>انتخاب فایل JSON</Text></Pressable> : null}
             <TextInput

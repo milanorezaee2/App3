@@ -111,7 +111,9 @@ export function EnglishSectionHeading({
 const styles = StyleSheet.create({
   progressTrack: { width: '100%', borderRadius: 999, overflow: 'hidden', backgroundColor: '#E7EAF2' },
   progressFill: { height: '100%', borderRadius: 999, alignSelf: 'flex-start' },
-  rail: { width: '100%', flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 2 },
+  // The page is RTL, so the rail pins its own LTR direction and reverses the
+  // row itself; this keeps every language reading right-to-left.
+  rail: { width: '100%', flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 2, direction: 'ltr' },
   railRtl: { flexDirection: 'row-reverse' },
   railItem: { flex: 1, flexDirection: 'row', alignItems: 'center' },
   railItemRtl: { flexDirection: 'row-reverse' },
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
   railNodeDone: { backgroundColor: Palette.success, borderColor: Palette.success },
   railNodeText: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 11, fontWeight: '800', writingDirection: 'rtl' },
   railNodeTextActive: { color: '#FFFFFF' },
-  railLabel: { fontFamily: 'Inter-ExtraBold', maxWidth: 42, color: Palette.muted, fontSize: 6, fontWeight: '800', textAlign: 'center', writingDirection: 'ltr' },
+  railLabel: { fontFamily: Typography.fontFamily, maxWidth: 46, color: Palette.muted, fontSize: 8, fontWeight: '400', textAlign: 'center', writingDirection: 'rtl' },
   railLabelActive: { color: Palette.primaryDark },
   railConnector: { height: 3, flex: 1, borderRadius: 99, backgroundColor: Palette.border, marginTop: 15 },
   railConnectorActive: { backgroundColor: Palette.success },
