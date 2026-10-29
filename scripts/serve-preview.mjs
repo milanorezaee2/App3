@@ -4,9 +4,27 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const dist = path.join(root, 'dist');
 const port = parseInt(process.env.PORT || '8081', 10);
-const baseUrl = '/App1';
+
+// The exported bundle references assets under the Expo `experiments.baseUrl`
+// (e.g. `/App3/_expo/...`). Read it from app.json so this preview server always
+// matches the build instead of hardcoding a stale prefix.
+function readBaseUrl() {
+  let configured = process.env.PREVIEW_BASE_URL || '';
+  if (!configured) {
+    try {
+      const appJson = JSON.parse(fs.readFileSync(path.join(root, 'app.json'), 'utf8'));
+      configured = appJson?.expo?.experiments?.baseUrl || '/';
+    } catch {}
+  }
+  if (!configured || configured === '/') return '';
+  return '/' + configured.replace(/^\/+/, '').replace(/\/+$/, '');
+}
+
+const baseUrl = readBaseUrl();
+const legacyBasePattern = /^\/App\d+(?=\/|$)/;
 
 function contentType(p) {
   if (p.endsWith('.html')) return 'text/html; charset=UTF-8';
@@ -29,7 +47,7 @@ try {
     var FRAME_W=360, FRAME_H=800, BP=520;
     var html=document.documentElement;
     try { if(localStorage.getItem('arena-mobile-frame-disabled')==='1') html.classList.add('arena-frame-disabled'); } catch(e){}
-    try { var _k=null; try{_k=localStorage.getItem('arena-keep-desktop');}catch(e){} if(_k===null || _k==='1') html.classList.add('arena-keep-desktop'); } catch(e){}
+    try { var _k=null; try{_k=localStorage.getItem('arena-keep-desktop');}catch(e){} if(_k==='1') html.classList.add('arena-keep-desktop'); } catch(e){}
     var winProto=Object.getPrototypeOf(window);
     var origWDesc=Object.getOwnPropertyDescriptor(winProto,'innerWidth');
     var origHDesc=Object.getOwnPropertyDescriptor(winProto,'innerHeight');
@@ -333,7 +351,7 @@ try {
       if (isDisabled) document.documentElement.classList.add('arena-frame-disabled');
       var KEY2 = 'arena-keep-desktop';
       var _k2=null; try{ _k2=localStorage.getItem(KEY2); }catch(e){}
-      var keepDesktop = _k2===null || _k2==='1';
+      var keepDesktop = _k2==='1';
       if (keepDesktop) document.documentElement.classList.add('arena-keep-desktop');
       document.addEventListener('DOMContentLoaded', function() {
         var btn = document.createElement('button');
@@ -395,8 +413,9 @@ const server = http.createServer((req, res) => {
   try {
     const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
     let pathname = decodeURIComponent(url.pathname);
-    if (pathname === baseUrl) pathname = '/';
-    else if (pathname.startsWith(baseUrl + '/')) pathname = pathname.slice(baseUrl.length);
+    if (baseUrl && pathname === baseUrl) pathname = '/';
+    else if (baseUrl && pathname.startsWith(baseUrl + '/')) pathname = pathname.slice(baseUrl.length);
+    else if (legacyBasePattern.test(pathname)) pathname = pathname.replace(legacyBasePattern, '') || '/';
     pathname = pathname.replace(/\0/g, '');
     let filePath = path.join(dist, pathname);
     let resolved = null;
@@ -416,6 +435,17 @@ const server = http.createServer((req, res) => {
       }
     }
     if (!resolved) {
+      // Single-page fallback: the static export cannot pre-render dynamic routes
+      // (e.g. /learn/de), so let the client router handle in-app deep links.
+      const wantsHtml = (req.headers.accept || '').includes('text/html');
+      const spaIndex = path.join(dist, 'index.html');
+      if (wantsHtml && fs.existsSync(spaIndex)) {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+        res.setHeader('Cache-Control', 'public, max-age=0');
+        res.end(injectMobileFrame(fs.readFileSync(spaIndex, 'utf8')));
+        return;
+      }
       const notFound = path.join(dist, '+not-found.html');
       if (fs.existsSync(notFound)) {
         res.statusCode = 404;
@@ -454,5 +484,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, '0.0.0.0', () => {
-  console.log(`Preview server running at http://0.0.0.0:${port} serving ${dist} with baseUrl ${baseUrl} (also /) + mobile frame 360×800 dp (xhdpi 720×1600 px) polished`);
+  console.log(`Preview server running at http://0.0.0.0:${port} serving ${dist} with baseUrl ${baseUrl || '/'} (also /) + mobile frame 360×800 dp (xhdpi 720×1600 px) polished`);
 });
