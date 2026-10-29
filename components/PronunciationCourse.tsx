@@ -4,6 +4,7 @@ import type { ViewStyle } from 'react-native';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import * as Speech from 'expo-speech';
+import { noteManualSpeech, useAutoNarration } from '@/lib/autoNarration';
 import { ArrowLeft, ChevronLeft, ChevronRight, RotateCcw, Volume2 } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { AppBottomNav } from '@/components/AppBottomNav';
@@ -131,7 +132,17 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
     });
   };
 
+  // The narrator reads the first example of the unit that is on screen, so the
+  // pronunciation workshop starts speaking as soon as it opens.
+  useAutoNarration({
+    text: unit?.examples[0]?.text,
+    locale: theme.locale,
+    enabled: storageReady,
+    identity: `${language}:${unit?.id ?? ''}`,
+  });
+
   const speak = async (text: string, rate: 'slow' | 'normal') => {
+    noteManualSpeech(text, theme.locale);
     const request = ++speechGeneration.current;
     setSpeaking(true);
     setSpeechMessage(`درخواست پخش ${rate === 'slow' ? 'آهسته' : 'عادی'} ارسال شد؛ منتظر صدای دستگاه هستیم.`);

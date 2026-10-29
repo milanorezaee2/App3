@@ -32,6 +32,7 @@ import {
   type FormatSession,
 } from '@/lib/languages/courseFormat';
 import { toPersianDigits as fa } from '@/lib/format';
+import { noteManualSpeech, useAutoNarration } from '@/lib/autoNarration';
 
 const PAGE_SIZE = 5;
 
@@ -106,7 +107,20 @@ export function CourseLessonPlayer({
     return () => { alive = false; };
   }, [course, lesson, store, session, stage, sentenceIndex, answers, showCheckAnswers]);
 
+  /**
+   * The narrator reads the phrase that is on screen. Stage one shows the whole
+   * situation, so the lesson's key sentence is read there; every other stage
+   * reads the sentence the learner is currently on.
+   */
+  useAutoNarration({
+    text: stage === 0 ? lesson.sentences[0]?.text : sentence?.text,
+    locale: course.speechLocale,
+    enabled: session === 'ready',
+    identity: `${course.id}:${lesson.id}:${stage === 0 ? 'intro' : 'study'}`,
+  });
+
   const speak = (text: string, rate = 0.85) => {
+    noteManualSpeech(text, course.speechLocale);
     setError('');
     void Speech.stop();
     Speech.speak(text, {

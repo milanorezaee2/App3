@@ -46,6 +46,7 @@ import { CORE_LESSON_EVIDENCE, isCoreLessonEvidenceComplete } from '@/lib/englis
 import { useEnglishStudyTimer } from '@/components/useEnglishStudyTimer';
 import { PAID_AI_ENABLED, PAID_AI_DISABLED_MESSAGE } from '@/lib/paidAI';
 import { playResponsiveSpeech, warmSpeech } from '@/lib/responsiveSpeech';
+import { noteManualSpeech, useAutoNarration } from '@/lib/autoNarration';
 
 const stages = ENGLISH_ENGINE_STEPS;
 
@@ -113,7 +114,17 @@ export default function SentenceLessonScreen() {
 
   useEffect(() => warmSpeech('en-US'), []);
 
+  // The narrator reads the visible phrase automatically: the lesson's key
+  // sentence on the situation stage, then whatever sentence is on screen.
+  useAutoNarration({
+    text: stage === 0 ? lesson.sentences[0]?.en : current.en,
+    locale: 'en-US',
+    enabled: sessionReady && !recorderState.isRecording && !evaluatingSpeech,
+    identity: `${lesson.id}:${stage === 0 ? 'intro' : 'study'}`,
+  });
+
   const speak = (text: string, rate?: number) => {
+    noteManualSpeech(text, 'en-US');
     playResponsiveSpeech({ text, locale: 'en-US', rate });
   };
 

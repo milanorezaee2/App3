@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -24,6 +24,7 @@ import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { EnglishLevelRail, EnglishProgressTrack } from '@/components/EnglishUI';
 import { CourseBottomNav } from '@/components/course/CourseBottomNav';
 import { PageNavigation } from '@/components/PageNavigation';
+import { narrateOnce } from '@/lib/autoNarration';
 import type { CourseProgress } from '@/lib/courseProgress';
 import type { CourseLevelId } from '@/lib/courseContent';
 import {
@@ -81,6 +82,15 @@ export function CourseHome({
   const isComplete = lessonCount > 0 && completed === lessonCount;
   const firstSentence = lesson.sentences[0];
   const counts = Object.fromEntries(levelRows.map(row => [row.level.id, { completed: row.completed, total: row.lessons.length }])) as Partial<Record<CourseLevelId, { completed: number; total: number }>>;
+
+  /**
+   * Opening a language reads its key sentence once, so the narrator starts the
+   * moment the learner picks a course — not only inside a lesson.
+   */
+  useEffect(() => {
+    if (!progress) return;
+    return narrateOnce({ text: lesson.sentences[0]?.text, locale: course.speechLocale });
+  }, [course.speechLocale, lesson.id, lesson.sentences, progress]);
 
   const openLevel = (levelId: number) => router.push(`${course.routes.library}?level=${levelId}` as never);
   const openLesson = (lessonId: string) => router.push(course.routes.lesson(lessonId) as never);
