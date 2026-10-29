@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Alert, Image, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { createAudioPlayer } from 'expo-audio';
 import { MiloLogoMotion } from '@/components/MiloLogoMotion';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -51,6 +51,9 @@ export default function LanguagesHome() {
     if (welcomeVoicePlayed) return;
     welcomeVoicePlayed = true;
     // Start after the intro chime has fully finished, so the two never overlap.
+    // Browsers block autoplay before a user gesture, so the web build stays
+    // silent here instead of raising a play() rejection.
+    if (Platform.OS === 'web') return;
     const start = setTimeout(() => {
       try {
         const player = createAudioPlayer(require('../assets/audio/welcome-voice.wav'));

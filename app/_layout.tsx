@@ -130,6 +130,8 @@ export default function RootLayout() {
     try {
       player = createAudioPlayer(require('../assets/audio/welcome-chime.wav'));
       player.volume = 0.28;
+      // Web returns above (autoplay is blocked before a user gesture), so this
+      // only runs on native devices.
       player.play();
     } catch {
       // A device without playback support still receives the same visual intro.

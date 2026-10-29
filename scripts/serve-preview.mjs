@@ -26,6 +26,24 @@ function readBaseUrl() {
 const baseUrl = readBaseUrl();
 const legacyBasePattern = /^\/App\d+(?=\/|$)/;
 
+// `dist/` is a build artifact and may be absent in a fresh checkout. Build the
+// static web export on the fly instead of serving an empty 404 preview.
+let building = !fs.existsSync(path.join(dist, 'index.html')) && process.env.PREVIEW_SKIP_BUILD !== '1';
+
+function buildingPage() {
+  return `<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="4">
+<title>در حال آماده‌سازی پیش‌نمایش</title>
+<style>html,body{height:100%;margin:0}body{display:flex;align-items:center;justify-content:center;
+background:#f5faff;color:#0f172a;font-family:Vazirmatn,system-ui,sans-serif;text-align:center}
+.box{max-width:320px;padding:28px}.spin{width:38px;height:38px;margin:0 auto 18px;border-radius:50%;
+border:3px solid #dbeafe;border-top-color:#2878de;animation:r 1s linear infinite}
+@keyframes r{to{transform:rotate(360deg)}}p{color:#64748b;font-size:14px;line-height:1.9;margin:8px 0 0}</style>
+</head><body><div class="box"><div class="spin"></div><h2 style="margin:0;font-size:18px">پیش‌نمایش در حال ساخت است</h2>
+<p>نسخهٔ وب اپ یک بار ساخته می‌شود و بعد از چند لحظه خودکار باز می‌شود.</p></div></body></html>`;
+}
+
 function contentType(p) {
   if (p.endsWith('.html')) return 'text/html; charset=UTF-8';
   if (p.endsWith('.js')) return 'application/javascript; charset=UTF-8';
@@ -404,6 +422,13 @@ function injectMobileFrame(html) {
 }
 
 const server = http.createServer((req, res) => {
+  if (building) {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+    res.setHeader('Cache-Control', 'no-store');
+    res.end(buildingPage());
+    return;
+  }
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, HEAD');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, expo-platform');
@@ -483,6 +508,24 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(port, '0.0.0.0', () => {
+server.listen(port, '0.0.0.0', async () => {
   console.log(`Preview server running at http://0.0.0.0:${port} serving ${dist} with baseUrl ${baseUrl || '/'} (also /) + mobile frame 360×800 dp (xhdpi 720×1600 px) polished`);
+  if (!building) return;
+  console.log('dist/ is missing — exporting the web build first (this can take a minute)...');
+  const { spawn } = await import('node:child_process');
+  const code = await new Promise((resolve) => {
+    const child = spawn(process.execPath, ['scripts/run-expo.mjs', 'export', '--platform', 'web'], {
+      cwd: root,
+      stdio: 'inherit',
+      env: { ...process.env, EXPO_NO_TELEMETRY: '1' },
+    });
+    child.on('error', () => resolve(1));
+    child.on('exit', (exitCode) => resolve(exitCode ?? 1));
+  });
+  if (code === 0 && fs.existsSync(path.join(dist, 'index.html'))) {
+    building = false;
+    console.log('Web build ready — the preview is live.');
+  } else {
+    console.error('Web build failed. Run `npm run build:web` manually and retry.');
+  }
 });
