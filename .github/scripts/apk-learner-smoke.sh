@@ -39,8 +39,13 @@ adb install -r "$apk_path"
 adb logcat -c
 phase='launch app'
 adb shell am start -W -n "$package/.MainActivity"
-wait_for_text 'English'
-wait_for_text 'Русский'
+wait_for_text 'آمادهٔ یادگیری'
+python3 - <<'PY2'
+import xml.etree.ElementTree as ET
+root = ET.parse('/tmp/window.xml').getroot()
+if not any(node.attrib.get('package') == 'com.devicecontrol.companion' for node in root.iter()):
+    raise SystemExit('Learner package is not visible.')
+PY2
 
 phase='open English lesson'
 adb shell am start -W -a android.intent.action.VIEW -d 'companionenglish:///course/lesson?id=foundation-introducing-yourself&fromStart=1' "$package"
