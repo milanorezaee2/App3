@@ -21,8 +21,8 @@ const esbuild = require('esbuild');
   const normalize = value => value.normalize('NFC').replace(/\s+/g, ' ').trim();
   const englishLessons = new Map(app.SENTENCE_LESSONS.map(lesson => [lesson.id, lesson]));
 
-  check(app.getPlacementQuestions('en').length === 18);
-  check(new Set(app.getPlacementQuestions('en').map(question => question.id)).size === 18);
+  check(app.getPlacementQuestions('en').length === 15);
+  check(new Set(app.getPlacementQuestions('en').map(question => question.id)).size === 15);
 
   for (const language of ['en']) {
     const questions = app.getPlacementQuestions(language);
@@ -72,6 +72,6 @@ const esbuild = require('esbuild');
   }
 
   const partiallyAnswered = app.scorePlacement('en', {});
-  check(partiallyAnswered.questionCount === 18 && partiallyAnswered.answeredCount === 0 && partiallyAnswered.unknownCount === 0);
-  console.log(`${checks} placement checks passed; 18 English items, three per internal level, all sourced from existing course examples, with scoring, unknown answers, non-monotonic results and invalid input covered.`);
+  check(partiallyAnswered.questionCount === 15 && partiallyAnswered.answeredCount === 0 && partiallyAnswered.unknownCount === 0);
+  console.log(`${checks} placement checks passed; 15 English items, three per internal level, all sourced from existing course examples, with scoring, unknown answers, non-monotonic results and invalid input covered.`);
 })().catch(error => { console.error(error); process.exit(1); });

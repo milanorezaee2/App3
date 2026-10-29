@@ -60,11 +60,11 @@ const { chromium } = require('playwright');
       check(navNames.join('|') === 'یادگیری|کتابخانه|تلفظ|مکالمه|مرور', `${course.id} home exposes the shared five navigation slots in order`);
       const positions = [];
       for (const level of await page.getByRole('button', { name: /^فهرست درس‌های / }).all()) positions.push((await level.boundingBox()).x);
-      check(positions.length === { en: 6, ru: 5 }[course.id], `${course.id} home shows one rail node per level`);
+      check(positions.length === 5, `${course.id} home shows one rail node per level`);
       check(positions.every((x, index) => index === 0 || positions[index - 1] > x), `${course.id} level rail still reads right to left`);
       check(text.includes('جمله آماده مرور'), `${course.id} home keeps the shared due-review pill`);
       const statusRows = (text.match(/واژهٔ یکتا/g) ?? []).length;
-      const publishedLevels = { en: 6, ru: 3 }[course.id];
+      const publishedLevels = { en: 5, ru: 3 }[course.id];
       check(statusRows === publishedLevels, `${course.id} home lists one status row per published level in the shared today card`);
     }
 

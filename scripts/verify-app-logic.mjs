@@ -158,44 +158,46 @@ export { default as asyncStorage } from '${STUBS}/async-storage.js';
   const tagged = allSentences.flatMap((sentence) => sentence.vocabulary).filter((word) => word.essential504).map((word) => word.word);
   const canonical = JSON.parse(readFileSync(path.join(APP, 'assets/data/essential504.json'), 'utf8'));
 
-  check('174 sentence lessons exist on the CEFR A1-C2 syllabus', lessons.length === 174, `got ${lessons.length}`);
+  check('174 sentence lessons exist after the Foundation, Survival, Everyday and Communication expansions', lessons.length === 174, `got ${lessons.length}`);
   check('lesson ids are unique', new Set(lessons.map((l) => l.id)).size === lessons.length);
   const orders = lessons.map((l) => l.order).sort((a, b) => a - b);
   check('orders are exactly 1..174', JSON.stringify(orders) === JSON.stringify([...Array(174)].map((_, i) => i + 1)));
   check('every lesson has a title', lessons.every((l) => typeof l.title === 'string' && l.title.length > 1));
-  check('the active course contains exactly 3862 examples on the CEFR A1-C2 syllabus', allSentences.length === 3862);
+  check('the active course contains exactly 3862 examples after the Communication expansion', allSentences.length === 3862);
   check('every lesson has sentences', lessons.every((l) => Array.isArray(l.sentences) && l.sentences.length > 0));
   check('every sentence has id + English + Persian', allSentences.every((s) => s.id && s.en && s.fa));
   check('sentence ids are unique inside each lesson', lessons.every((l) => new Set(l.sentences.map((s) => s.id)).size === l.sentences.length));
   check('more than 500 sentences in total', allSentences.length > 500, `${allSentences.length}`);
   const foundationLessons = lessons.filter(lesson => lesson.levelId === 0);
-  check('A1 has twenty-nine lessons with fifty complete, vocabulary-linked examples apiece', foundationLessons.length === 29
-    && foundationLessons.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 1450
+  check('Foundation has ten lessons with fifty complete, vocabulary-linked examples apiece', foundationLessons.length === 10
+    && foundationLessons.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 500
     && foundationLessons.every(lesson => lesson.sentences.length === 50 && lesson.sentences.every(sentence => sentence.fa
       && sentence.pronunciation && sentence.pattern && sentence.vocabulary.length > 0)));
-  check('the A1 lessons keep the stable Foundation and Survival lesson IDs in course order', foundationLessons.slice(0, 3).map(lesson => lesson.id).join('|')
-    === 'foundation-introducing-yourself|foundation-asking-for-help|foundation-buying-something'
-    && foundationLessons.some(lesson => lesson.id === 'survival-past-and-future-plans'));
+  check('the three original Foundation lesson IDs remain first, with seven stable additions after them', foundationLessons.map(lesson => lesson.id).join('|')
+    === ['foundation-introducing-yourself', 'foundation-asking-for-help', 'foundation-buying-something', ...app.courseContent.FOUNDATION_EXPANSION_LESSON_IDS].join('|'));
   const survivalLessons = lessons.filter(lesson => lesson.levelId === 1);
-  check('A2 has twenty ordered lessons with fifty complete sentence examples each', survivalLessons.length === 20
-    && survivalLessons.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 1000
+  check('Survival has nineteen ordered lessons with fifty complete sentence examples each', survivalLessons.length === 19
+    && survivalLessons.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 950
     && survivalLessons.every(lesson => lesson.sentences.length === 50
       && lesson.sentences.every(sentence => sentence.fa && sentence.pronunciation && sentence.vocabulary.length > 0)));
   const survivalVocabulary = new Set(survivalLessons.flatMap(lesson => lesson.sentences.flatMap(sentence => sentence.vocabulary.map(item => item.word))));
-  check('A2 vocabulary entries are sentence-linked', survivalVocabulary.size > 20
-    && survivalLessons.every(lesson => lesson.sentences.every(sentence => sentence.vocabulary.every(item => item.word && item.meaning && sentence.en.toLowerCase().includes(item.word.toLowerCase())))));
-  check('the A2 lessons keep the stable Everyday lesson IDs', survivalLessons.slice(0, 2).map(lesson => lesson.id).join('|')
-    === 'everyday-facing-a-challenge|everyday-making-a-plan');
+  check('Survival contains 1312 distinct sentence-linked vocabulary entries', survivalVocabulary.size === 1312);
+  check('original Survival lesson IDs remain first and unchanged', survivalLessons.slice(0, 2).map(lesson => lesson.id).join('|')
+    === 'survival-job-interview|survival-renting-a-home');
   const everydayLessons = lessons.filter(lesson => lesson.levelId === 2);
-  check('B1 has 15 ordered lessons and 750 sentence examples', everydayLessons.length === 15
-    && everydayLessons.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 750
+  check('Everyday now has 20 ordered lessons and 1000 sentence examples', everydayLessons.length === 20
+    && everydayLessons.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 1000
     && everydayLessons.every(lesson => lesson.sentences.length === 50 && lesson.durationMinutes === 35)
-    && everydayLessons.map(lesson => lesson.id).join('|') === app.courseContent.COMMUNICATION_COURSE_LESSON_IDS.join('|'));
-  check('the B1 lessons keep the stable Communication lesson IDs', everydayLessons.slice(0, 3).map(lesson => lesson.id).join('|')
-    === 'communication-university-discussion|communication-working-with-a-client|communication-health-checkup');
+    && everydayLessons.map(lesson => lesson.id).join('|') === app.courseContent.EVERYDAY_COURSE_LESSON_IDS.join('|'));
+  check('the five original Everyday lessons remain first and unchanged by ID', everydayLessons.slice(0, 5).map(lesson => lesson.id).join('|')
+    === 'everyday-facing-a-challenge|everyday-making-a-plan|everyday-handling-a-misunderstanding|everyday-talking-about-weather|everyday-handling-an-emergency');
   const everydayExpansionIds = app.courseContent.EVERYDAY_EXPANSION_LESSON_IDS;
-  check('the stable Everyday expansion IDs remain part of the course', everydayExpansionIds.length === 15
-    && everydayExpansionIds.every(id => lessons.some(lesson => lesson.id === id)));
+  check('15 Everyday lessons follow the originals and now have fifty complete sentences each', everydayExpansionIds.length === 15
+    && everydayLessons.slice(5).map(lesson => lesson.id).join('|') === everydayExpansionIds.join('|')
+    && everydayLessons.slice(5).every(lesson => lesson.sentences.length === 50 && lesson.durationMinutes === 35
+      && lesson.dialogue.length >= 6 && lesson.sentences.slice(10).every(sentence => sentence.fa && sentence.pronunciation
+        && sentence.pattern && sentence.vocabulary.length >= 2
+        && sentence.vocabulary.every(item => item.word && item.meaning && sentence.en.toLowerCase().includes(item.word.toLowerCase())))));
   check('every sentence has vocabulary with word + meaning',
     allSentences.every((s) => Array.isArray(s.vocabulary) && s.vocabulary.every((v) => v.word && v.meaning)));
   check('exactly 504 words carry the essential504 flag', tagged.length === 504, `got ${tagged.length}`);

@@ -104,7 +104,7 @@ export default function RussianLibrary() {
             <View style={styles.levelRailCard}>
               <EnglishSectionHeading eyebrow="YOUR CURRENT STEP" title="پیشرفت در پنج سطح" detail="این برچسب‌ها نقشهٔ آموزشی داخلی‌اند و گواهی یا ارزیابی رسمی سطح نیستند." />
               <View style={styles.railWrap}>
-                <EnglishLevelRail activeLevelId={activeLevelId} counts={Object.fromEntries(RUSSIAN_LEVELS.map(item => [item.id, countFor(item.id)]))} levels={RUSSIAN_LEVELS} onSelect={levelId => openLevel(levelId as RussianLevelId)} />
+                <EnglishLevelRail activeLevelId={activeLevelId} counts={Object.fromEntries(RUSSIAN_LEVELS.map(item => [item.id, countFor(item.id)]))} levels={RUSSIAN_LEVELS} onSelect={openLevel} />
               </View>
               <Text style={styles.railCurrent}>اکنون · {RUSSIAN_LEVELS.find(item => item.id === activeLevelId)?.title} · سطح {fa(activeLevelId)}</Text>
             </View>

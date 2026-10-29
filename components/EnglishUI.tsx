@@ -11,7 +11,6 @@ export const ENGLISH_LEVEL_GRADIENTS: Record<CourseLevelId, [string, string]> = 
   2: ['#19A88B', '#0D5A53'],
   3: ['#E4A436', '#99501D'],
   4: ['#9A68E8', '#4C318A'],
-  5: ['#E84393', '#7A1F4B'],
 };
 
 export function displayEnglishModuleLabel(label: string) {
