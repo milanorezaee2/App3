@@ -124,38 +124,7 @@ jobs:
           heap-size: 512M
           emulator-boot-timeout: 900
           disable-animations: true
-          script: |
-            set -Eeuo pipefail
-            adb install -r MiloLanguages.apk
-            adb shell am start -W -n com.devicecontrol.companion/.MainActivity
-            sleep 25
-            echo '--- resumed activity ---'
-            adb shell dumpsys activity activities | grep -E 'mResumedActivity|topResumedActivity' | tail -n 3
-            adb shell uiautomator dump /sdcard/window.xml >/dev/null 2>&1 || true
-            adb pull /sdcard/window.xml /tmp/window.xml >/dev/null 2>&1 || true
-            python3 - <<'PYEOF'
-            import xml.etree.ElementTree as ET
-            try:
-                root = ET.parse('/tmp/window.xml').getroot()
-            except Exception:
-                print('no UI hierarchy available')
-                raise SystemExit(0)
-            texts = []
-            for node in root.iter():
-                for name in ('text', 'content-desc'):
-                    value = node.attrib.get(name, '').strip()
-                    if value and value not in texts:
-                        texts.append(value)
-            print('UI TEXT:', ' | '.join(texts)[:600] or '(none)')
-            if not texts:
-                raise SystemExit('The app rendered no accessible text - it likely crashed on start.')
-            PYEOF
-            adb exec-out screencap -p > /tmp/milo-screen.png || true
-            if adb logcat -d | grep -E 'FATAL EXCEPTION|Unable to load script'; then
-              echo 'The app crashed during start.'
-              exit 1
-            fi
-            echo 'The app started without a crash.'
+          script: bash .github/scripts/apk-smoke-test.sh MiloLanguages.apk
 
       - name: Upload the APK
         uses: actions/upload-artifact@v4
