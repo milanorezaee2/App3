@@ -13,6 +13,8 @@ import { SENTENCE_LESSONS } from '@/lib/courseContent';
 import { RUSSIAN_LESSONS } from '@/lib/languages/russian';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
+import { getSavedPlacementRecommendation, type PlacementRecommendation } from '@/lib/placementProfile';
+import type { PlacementLanguage } from '@/lib/placement';
 
 // The welcome voice plays once per app session, when the main language screen appears.
 let welcomeVoicePlayed = false;
@@ -37,6 +39,21 @@ const productFeatures = [
 export default function LanguagesHome() {
   const router = useRouter();
   const [openingSupport, setOpeningSupport] = useState(false);
+  const [openingLanguage, setOpeningLanguage] = useState<PlacementLanguage | null>(null);
+  const [savedPlacements, setSavedPlacements] = useState<Partial<Record<PlacementLanguage, PlacementRecommendation>>>({});
+
+  useEffect(() => {
+    let mounted = true;
+    const visibleLanguages = LANGUAGES.filter(language => (language.id === 'ru' ? FEATURES.russianCourse : !RUSSIAN_ONLY_BUILD));
+    void Promise.all(visibleLanguages.map(async language => {
+      try { return [language.id, await getSavedPlacementRecommendation(language.id)] as const; }
+      catch { return [language.id, null] as const; }
+    })).then(entries => {
+      if (!mounted) return;
+      setSavedPlacements(Object.fromEntries(entries.filter((entry): entry is readonly [PlacementLanguage, PlacementRecommendation] => !!entry[1])));
+    });
+    return () => { mounted = false; };
+  }, []);
 
   useEffect(() => {
     if (welcomeVoicePlayed) return;
@@ -70,6 +87,28 @@ export default function LanguagesHome() {
   const compact = !ready || width < 680;
   const tiny = !ready || width < 370;
   const languages = LANGUAGES.filter(language => (language.id === 'ru' ? FEATURES.russianCourse : !RUSSIAN_ONLY_BUILD));
+
+  const openLanguage = async (languageId: PlacementLanguage) => {
+    if (openingLanguage) return;
+    setOpeningLanguage(languageId);
+    try {
+      const recommendation = await getSavedPlacementRecommendation(languageId);
+      if (recommendation) {
+        setSavedPlacements(current => ({ ...current, [languageId]: recommendation }));
+        const destination = languageId === 'ru'
+          ? { pathname: '/learn/ru/library', params: { level: String(recommendation.levelId) } }
+          : { pathname: '/lang/library', params: { level: String(recommendation.levelId) } };
+        router.push(destination as never);
+      } else {
+        router.push({ pathname: '/placement', params: { language: languageId } } as never);
+      }
+    } catch {
+      // If the optional profile lookup is unavailable, let the learner complete the local screen.
+      router.push({ pathname: '/placement', params: { language: languageId } } as never);
+    } finally {
+      setOpeningLanguage(null);
+    }
+  };
   const includedLessons = [
     ...(languages.some(language => language.id === 'en') ? SENTENCE_LESSONS : []),
     ...(languages.some(language => language.id === 'ru') ? RUSSIAN_LESSONS : []),
@@ -155,32 +194,46 @@ export default function LanguagesHome() {
             <View style={styles.sectionCopy}>
               <Text style={styles.sectionEyebrow}>CHOOSE A LANGUAGE</Text>
               <Text style={styles.sectionTitle}>می‌خواهی کدام زبان را یاد بگیری؟</Text>
-              <Text style={styles.sectionDetail}>برای ورود، یکی از زبان‌ها را انتخاب کن.</Text>
+              <Text style={styles.sectionDetail}>اولین‌بار یک سنجش کوتاه انجام می‌دهی؛ بعد از آن مستقیم به سطح پیشنهادی می‌روی.</Text>
             </View>
 
             <View style={styles.languageRow}>
               {languages.map(language => {
                 const meta = languageMeta[language.id as keyof typeof languageMeta];
                 return (
-                  <Pressable
-                    key={language.id}
-                    accessibilityRole="button"
-                    accessibilityLabel={`ورود به زبان ${language.name}`}
-                    onPress={() => router.push(language.home as never)}
-                    style={({ pressed }) => [
-                      styles.languageCard,
-                      { backgroundColor: meta.tint, borderColor: meta.border },
-                      tiny && styles.languageCardTiny,
-                      pressed && styles.pressed,
-                    ]}
-                  >
-                    <Text style={styles.flag}>{meta.flag}</Text>
-                    <View style={styles.languageIdentity}>
-                      <Text style={styles.languageCode} numberOfLines={1}>{meta.code}</Text>
-                      <Text style={styles.languageName} numberOfLines={1}>{meta.nativeName}</Text>
-                    </View>
-                    <View style={styles.languageArrow}><ArrowLeft size={14} color="#1769D2" strokeWidth={2.5} /></View>
-                  </Pressable>
+                  <View key={language.id} style={styles.languageChoice}>
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel={`سنجش و ورود به زبان ${language.name}`}
+                      accessibilityState={{ disabled: openingLanguage !== null }}
+                      disabled={openingLanguage !== null}
+                      onPress={() => void openLanguage(language.id)}
+                      style={({ pressed }) => [
+                        styles.languageCard,
+                        { backgroundColor: meta.tint, borderColor: meta.border },
+                        tiny && styles.languageCardTiny,
+                        pressed && styles.pressed,
+                      ]}
+                    >
+                      <Text style={styles.flag}>{meta.flag}</Text>
+                      <View style={styles.languageIdentity}>
+                        <Text style={styles.languageCode} numberOfLines={1}>{meta.code}</Text>
+                        <Text style={styles.languageName} numberOfLines={1}>{meta.nativeName}</Text>
+                      </View>
+                      <View style={styles.languageArrow}><ArrowLeft size={14} color="#1769D2" strokeWidth={2.5} /></View>
+                    </Pressable>
+                    {savedPlacements[language.id] ? (
+                      <Pressable
+                        accessibilityRole="button"
+                        accessibilityLabel={`ارزیابی دوبارهٔ سطح زبان ${language.name}`}
+                        onPress={() => router.push({ pathname: '/placement', params: { language: language.id } } as never)}
+                        style={({ pressed }) => [styles.retakePlacement, pressed && styles.pressed]}
+                      >
+                        <RefreshCw size={12} color="#1769D2" />
+                        <Text style={styles.retakePlacementText}>بازسنجی سطح</Text>
+                      </Pressable>
+                    ) : null}
+                  </View>
                 );
               })}
             </View>
@@ -297,8 +350,11 @@ const styles = StyleSheet.create({
   sectionTitle: { fontFamily: 'Vazir', color: '#102A56', fontSize: 21, lineHeight: 31, fontWeight: '400', textAlign: 'center', writingDirection: 'rtl' },
   sectionDetail: { fontFamily: 'Vazir', color: '#6A7F9B', fontSize: 12, lineHeight: 20, textAlign: 'center', writingDirection: 'rtl' },
   languageRow: { width: '100%', flexDirection: 'row-reverse', justifyContent: 'center', gap: 12, alignItems: 'stretch' },
+  languageChoice: { flex: 1, minWidth: 0, maxWidth: 190, gap: 7 },
   languageCard: { flex: 1, minWidth: 0, maxWidth: 190, minHeight: 92, borderRadius: 18, borderWidth: 1, paddingHorizontal: 12, paddingVertical: 12, alignItems: 'center', justifyContent: 'center', gap: 6, shadowColor: '#174B86', shadowOpacity: .045, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
   languageCardTiny: { minHeight: 84, paddingHorizontal: 7, paddingVertical: 9, borderRadius: 15 },
+  retakePlacement: { minHeight: 36, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6, paddingHorizontal: 8, borderRadius: 11, borderWidth: 1, borderColor: '#D9E8F7', backgroundColor: '#FFFFFF' },
+  retakePlacementText: { fontFamily: 'Vazir', color: '#1769D2', fontSize: 9, fontWeight: '400', writingDirection: 'rtl' },
   flag: { fontSize: 27, lineHeight: 33 },
   languageIdentity: { alignItems: 'center', gap: 0 },
   languageCode: { flexShrink: 0, textAlign: 'center', fontFamily: 'Inter-ExtraBold', color: '#102A56', fontSize: 12, lineHeight: 17, fontWeight: '800', letterSpacing: 1.2, writingDirection: 'ltr' },

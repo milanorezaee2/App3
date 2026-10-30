@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ArrowLeft, BookOpenCheck, Check, ChevronLeft, RotateCcw, Sparkles } from 'lucide-react-native';
 import { COURSE_LEVELS } from '@/lib/courseContent';
-import { getPlacementQuestions, scorePlacement, type PlacementLanguage } from '@/lib/placement';
+import { RUSSIAN_ONLY_BUILD } from '@/lib/features';
+import { evaluatePlacementLevel, getPlacementLevelIds, getPlacementQuestionForLevel, getPlacementQuestions, placementTransition, scorePlacement, type PlacementDirection, type PlacementLanguage } from '@/lib/placement';
+import { savePlacementRecommendation } from '@/lib/placementProfile';
 import { PageNavigation } from '@/components/PageNavigation';
 import { Typography } from '@/lib/theme';
 import { toPersianDigits } from '@/lib/format';
@@ -24,51 +26,198 @@ const colors = {
   goldSoft: '#FFF4DF',
 };
 
-const ENGLISH_LEVEL_LABELS = ['پایه', 'موقعیت‌های ضروری', 'روزمره', 'ارتباط', 'پیشرفته'] as const;
-function getLevelLabel(_language: PlacementLanguage, levelId: number) {
-  return ENGLISH_LEVEL_LABELS[levelId] ?? COURSE_LEVELS.find(level => level.id === levelId)?.title ?? 'سطح آموزشی';
+const ENGLISH_LEVEL_LABELS = ['شروع از صفر', 'موقعیت‌های ضروری', 'انگلیسی روزمره', 'ارتباط روان', 'پیشرفته (B2)', 'ارتباط تحلیلی (C1)'] as const;
+const RUSSIAN_LEVEL_LABELS = ['شروع از صفر', 'روسی کاربردی', 'روسی روزمره (A2)', 'ارتباط روسی (B1)', 'روسی پیشرفته (B2)', 'ارتباط پیشرفته (C1)'] as const;
+const LEVEL_SELF_DESCRIPTIONS = [
+  'تازه شروع می‌کنم یا فقط چند واژهٔ پراکنده می‌دانم.',
+  'سلام‌واحوال‌پرسی و چند نیاز ساده را می‌فهمم.',
+  'از پس گفت‌وگوهای معمول و موقعیت‌های روزمره برمی‌آیم.',
+  'می‌توانم تجربه و نظر خودم را در گفت‌وگوی معمول توضیح بدهم.',
+  'متن‌های نسبتاً پیشرفته و گفت‌وگوهای چندمرحله‌ای را دنبال می‌کنم.',
+  'موضوع‌های تخصصی را تحلیل می‌کنم و دقیق و حرفه‌ای بحث می‌کنم.',
+] as const;
+
+function getLevelLabel(language: PlacementLanguage, levelId: number) {
+  const labels = language === 'ru' ? RUSSIAN_LEVEL_LABELS : ENGLISH_LEVEL_LABELS;
+  return labels[levelId] ?? COURSE_LEVELS.find(level => level.id === levelId)?.title ?? 'سطح آموزشی';
 }
 
-function getLevelRoute(_language: PlacementLanguage, levelId: number) {
-  return { pathname: '/lang/library', params: { level: String(levelId) } };
+function getLevelDescription(language: PlacementLanguage, levelId: number) {
+  if (levelId === 0) return language === 'ru' ? 'شناخت جمله‌های بسیار ساده و واژه‌های پایهٔ روسی.' : 'شناخت عبارت‌های بسیار ساده و واژه‌های پایهٔ انگلیسی.';
+  return LEVEL_SELF_DESCRIPTIONS[levelId] ?? 'می‌خواهم سطح مناسب خودم را پیدا کنم.';
+}
+
+function getLevelRoute(language: PlacementLanguage, levelId: number) {
+  return language === 'ru'
+    ? { pathname: '/learn/ru/library', params: { level: String(levelId) } }
+    : { pathname: '/lang/library', params: { level: String(levelId) } };
+}
+
+function getLevelListRoute(language: PlacementLanguage) {
+  return language === 'ru' ? '/learn/ru/library' : '/lang/library';
 }
 
 export default function PlacementScreen() {
-  const language: PlacementLanguage = 'en';
   const router = useRouter();
+  const params = useLocalSearchParams<{ language?: string | string[] }>();
+  const routeLanguage = Array.isArray(params.language) ? params.language[0] : params.language;
+  const language: PlacementLanguage = routeLanguage === 'ru' || (!routeLanguage && RUSSIAN_ONLY_BUILD) ? 'ru' : 'en';
   const { width } = useWindowDimensions();
   const compact = width < 620;
   const questions = getPlacementQuestions(language);
+  const levelIds = getPlacementLevelIds(language);
+  const [selectedLevelId, setSelectedLevelId] = useState<number | null>(null);
+  const [currentLevelId, setCurrentLevelId] = useState<number | null>(null);
+  const [direction, setDirection] = useState<PlacementDirection>('initial');
+  const [questionDirections, setQuestionDirections] = useState<Record<string, PlacementDirection>>({});
+  const [questionIds, setQuestionIds] = useState<string[]>([]);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [finished, setFinished] = useState(false);
-  useEffect(() => {
-    setQuestionIndex(0);
-    setAnswers({});
-    setFinished(false);
-  }, [language]);
-  const question = questions[questionIndex];
-  const result = useMemo(() => finished ? scorePlacement(language, answers) : null, [answers, finished, language]);
-  const languageName = 'انگلیسی';
-  const selectedAnswer = answers[question.id];
-  const hasAnswer = Object.prototype.hasOwnProperty.call(answers, question.id);
+  const [recommendedLevelId, setRecommendedLevelId] = useState<number | null>(null);
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'local'>('idle');
+  const autoRouteTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const choose = (answerIndex: number) => setAnswers(current => ({ ...current, [question.id]: answerIndex }));
-  const previous = () => setQuestionIndex(current => Math.max(0, current - 1));
-  const next = () => {
-    if (!hasAnswer) return;
-    if (questionIndex === questions.length - 1) setFinished(true);
-    else setQuestionIndex(current => Math.min(questions.length - 1, current + 1));
-  };
-  const restart = () => {
+  useEffect(() => {
+    setSelectedLevelId(null);
+    setCurrentLevelId(null);
+    setDirection('initial');
+    setQuestionDirections({});
+    setQuestionIds([]);
     setQuestionIndex(0);
     setAnswers({});
     setFinished(false);
+    setRecommendedLevelId(null);
+    setSaveStatus('idle');
+  }, [language]);
+
+  const currentQuestionId = questionIds[questionIndex] ?? null;
+  const question = currentQuestionId ? questions.find(item => item.id === currentQuestionId) ?? null : null;
+  const activeLevelId = question?.levelId ?? currentLevelId;
+  const activeDirection = question ? questionDirections[question.id] ?? direction : direction;
+  const result = useMemo(
+    () => finished && recommendedLevelId !== null ? scorePlacement(language, answers, recommendedLevelId) : null,
+    [answers, finished, language, recommendedLevelId],
+  );
+  const languageName = language === 'ru' ? 'روسی' : 'انگلیسی';
+  const hasAnswer = !!question && Object.prototype.hasOwnProperty.call(answers, question.id);
+  const selectedAnswer = question ? answers[question.id] : undefined;
+  const currentLevelQuestions = activeLevelId === null ? [] : questions.filter(item => item.levelId === activeLevelId);
+  const currentBandQuestionNumber = question ? Math.max(1, currentLevelQuestions.findIndex(item => item.id === question.id) + 1) : 1;
+  const queuedQuestion = activeLevelId === null ? null : getPlacementQuestionForLevel(language, activeLevelId, answers);
+  const bandOutcome = activeLevelId === null ? 'incomplete' : evaluatePlacementLevel(language, activeLevelId, answers);
+  const transition = bandOutcome === 'pass' || bandOutcome === 'fail'
+    ? placementTransition(language, activeLevelId!, activeDirection, bandOutcome)
+    : null;
+  const nextButtonLabel = queuedQuestion
+    ? 'پرسش بعدی'
+    : bandOutcome === 'incomplete'
+      ? 'ادامهٔ سنجش'
+      : transition && transition.nextLevelId !== null
+        ? 'بررسی سطح دیگر'
+        : 'دیدن پیشنهاد';
+
+  useEffect(() => {
+    if (!result) return;
+    let mounted = true;
+    setSaveStatus('saving');
+    void savePlacementRecommendation(language, result)
+      .then(({ synced }) => { if (mounted) setSaveStatus(synced ? 'saved' : 'local'); })
+      .catch(() => { if (mounted) setSaveStatus('local'); });
+    autoRouteTimer.current = setTimeout(() => {
+      router.replace(getLevelRoute(language, result.recommendedLevelId) as never);
+    }, 4500);
+    return () => {
+      mounted = false;
+      if (autoRouteTimer.current) clearTimeout(autoRouteTimer.current);
+    };
+  }, [language, result, router]);
+
+  const startAtLevel = (levelId: number) => {
+    const firstQuestion = getPlacementQuestionForLevel(language, levelId, {});
+    if (!firstQuestion) return;
+    setSelectedLevelId(levelId);
+    setCurrentLevelId(levelId);
+    setDirection('initial');
+    setQuestionDirections({ [firstQuestion.id]: 'initial' });
+    setQuestionIds([firstQuestion.id]);
+    setQuestionIndex(0);
+    setAnswers({});
+    setRecommendedLevelId(null);
+    setFinished(false);
+  };
+
+  const choose = (answerIndex: number) => {
+    if (!question) return;
+    const futureIds = questionIds.slice(questionIndex + 1);
+    setAnswers(current => {
+      const nextAnswers = { ...current, [question.id]: answerIndex };
+      futureIds.forEach(id => { delete nextAnswers[id]; });
+      return nextAnswers;
+    });
+    setQuestionIds(current => current.slice(0, questionIndex + 1));
+  };
+
+  const next = () => {
+    if (!hasAnswer || !question || activeLevelId === null) return;
+    if (questionIndex + 1 < questionIds.length) {
+      setQuestionIndex(index => index + 1);
+      return;
+    }
+
+    const nextInLevel = getPlacementQuestionForLevel(language, activeLevelId, answers);
+    if (nextInLevel) {
+      setQuestionIds(ids => [...ids.slice(0, questionIndex + 1), nextInLevel.id]);
+      setQuestionDirections(current => ({ ...current, [nextInLevel.id]: activeDirection }));
+      setQuestionIndex(index => index + 1);
+      return;
+    }
+
+    const outcome = evaluatePlacementLevel(language, activeLevelId, answers);
+    if (outcome === 'incomplete') return;
+    const move = placementTransition(language, activeLevelId, activeDirection, outcome);
+    if (move.nextLevelId !== null) {
+      const firstQuestion = getPlacementQuestionForLevel(language, move.nextLevelId, answers);
+      if (!firstQuestion) {
+        setRecommendedLevelId(move.recommendedLevelId ?? move.nextLevelId);
+        setFinished(true);
+        return;
+      }
+      setCurrentLevelId(move.nextLevelId);
+      setDirection(move.nextDirection);
+      setQuestionIds(ids => [...ids.slice(0, questionIndex + 1), firstQuestion.id]);
+      setQuestionDirections(current => ({ ...current, [firstQuestion.id]: move.nextDirection }));
+      setQuestionIndex(index => index + 1);
+      return;
+    }
+    setRecommendedLevelId(move.recommendedLevelId ?? 0);
+    setFinished(true);
+  };
+
+  const previous = () => setQuestionIndex(index => Math.max(0, index - 1));
+  const restart = () => {
+    if (autoRouteTimer.current) clearTimeout(autoRouteTimer.current);
+    setSelectedLevelId(null);
+    setCurrentLevelId(null);
+    setDirection('initial');
+    setQuestionDirections({});
+    setQuestionIds([]);
+    setQuestionIndex(0);
+    setAnswers({});
+    setFinished(false);
+    setRecommendedLevelId(null);
+    setSaveStatus('idle');
   };
   const openSuggestedLevel = () => {
+    if (autoRouteTimer.current) clearTimeout(autoRouteTimer.current);
     if (result) router.replace(getLevelRoute(language, result.recommendedLevelId) as never);
   };
-  const openLanguageHome = () => router.replace('/lang' as never);
+  const openLanguageHome = () => {
+    if (autoRouteTimer.current) clearTimeout(autoRouteTimer.current);
+    router.replace(getLevelListRoute(language) as never);
+  };
+  const introStage = selectedLevelId === null && !finished;
+  const totalLevelCount = levelIds.length;
 
   return (
     <View style={styles.root}>
@@ -82,50 +231,78 @@ export default function PlacementScreen() {
           <LinearGradient colors={['#26204F', '#51458B', '#7558D8']} start={{ x: .96, y: .05 }} end={{ x: .08, y: 1 }} style={[styles.hero, compact && styles.heroCompact]}>
             <View pointerEvents="none" style={styles.heroOrb} />
             <View style={styles.heroIcon}><Sparkles size={17} color="#FFF1B9" /></View>
-            <Text style={styles.heroTitle}>{finished ? 'نقشهٔ شروع تو آماده است' : 'با یک بررسی کوتاه شروع کنیم'}</Text>
+            <Text style={styles.heroTitle}>{finished ? 'نقشهٔ شروع تو آماده است' : introStage ? 'از نقطهٔ آشنای خودت شروع کنیم' : 'چند پرسش کوتاه از دوره'}</Text>
             <Text style={styles.heroDescription}>
               {finished
-                ? 'این نتیجه فقط یک پیشنهاد آموزشی بر اساس چند پرسش از محتوای موجود است؛ هر زمان می‌توانی سطح دیگری را انتخاب کنی.'
-                : `برای پیدا کردن نقطهٔ شروع مناسب در مسیر ${languageName}، هر پرسش را بخوان و بهترین پاسخ را انتخاب کن.`}
+                ? 'پیشنهاد بر پایهٔ پاسخ‌های واقعی به جمله‌های همین دوره آماده شده؛ پس از چند ثانیه خودکار وارد سطح پیشنهادی می‌شوی.'
+                : introStage
+                  ? `برای ${languageName} سطحی را انتخاب کن که به آشنایی فعلی‌ات نزدیک‌تر است؛ سنجش کوتاه بعدی این انتخاب را بررسی و در صورت نیاز اصلاح می‌کند.`
+                  : `نمونه‌های کوتاه ${languageName} را بخوان و بهترین پاسخ را انتخاب کن. آزمون با توجه به پاسخ‌ها بالا یا پایین می‌رود تا زودتر به سطح مناسب برسد.`}
             </Text>
             {!finished ? (
               <View style={styles.heroMetaRow}>
-                <Text style={styles.heroMeta}>{toPersianDigits(questions.length)} پرسش</Text>
+                <Text style={styles.heroMeta}>{introStage ? `${toPersianDigits(totalLevelCount)} نقطهٔ آغاز` : `حداکثر ${toPersianDigits(questions.length)} پرسش`}</Text>
                 <View style={styles.heroMetaDot} />
-                <Text style={styles.heroMeta}>حدود ۵ دقیقه</Text>
+                <Text style={styles.heroMeta}>{introStage ? '۲ تا ۸ پرسش معمولاً' : 'سؤال سوم فقط برای پاسخ مرزی'}</Text>
                 <View style={styles.heroMetaDot} />
-                <Text style={styles.heroMeta}>بدون ذخیرهٔ پاسخ</Text>
+                <Text style={styles.heroMeta}>پاسخ خام ذخیره نمی‌شود</Text>
               </View>
             ) : null}
           </LinearGradient>
 
-          {!finished ? (
+          {introStage ? (
+            <View style={styles.questionCard}>
+              <Text style={styles.questionPrompt}>کدام توصیف به آشنایی امروزت با {languageName} نزدیک‌تر است؟</Text>
+              <Text style={styles.introExplanation}>این انتخاب فقط نقطهٔ شروع آزمون است؛ اگر پاسخ‌های محتوایی نشان دهند سطح دیگری مناسب‌تر است، پیشنهاد تغییر می‌کند.</Text>
+              <View style={styles.options}>
+                {levelIds.map(levelId => (
+                  <Pressable
+                    key={levelId}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${getLevelLabel(language, levelId)}. ${getLevelDescription(language, levelId)}`}
+                    onPress={() => startAtLevel(levelId)}
+                    style={({ pressed }) => [styles.levelChoice, pressed && styles.pressed]}
+                  >
+                    <View style={styles.optionNumber}><Text style={styles.optionNumberText}>{toPersianDigits(levelId + 1)}</Text></View>
+                    <View style={styles.levelChoiceCopy}>
+                      <Text style={styles.levelChoiceTitle}>{getLevelLabel(language, levelId)}</Text>
+                      <Text style={styles.levelChoiceDescription}>{getLevelDescription(language, levelId)}</Text>
+                    </View>
+                    <ChevronLeft size={16} color={colors.violet} />
+                  </Pressable>
+                ))}
+              </View>
+              <Text style={styles.introHint}>اگر مطمئن نیستی، «شروع از صفر» را انتخاب کن؛ آزمون در صورت نیاز سطح را بالاتر می‌برد.</Text>
+            </View>
+          ) : !finished && question ? (
             <View style={styles.questionCard}>
               <View style={styles.questionTop}>
                 <View style={styles.questionCounter}>
-                  <Text style={styles.questionCounterText}>پرسش {toPersianDigits(questionIndex + 1)} از {toPersianDigits(questions.length)}</Text>
+                  <Text style={styles.questionCounterText}>پرسش {toPersianDigits(questionIndex + 1)} · سطح {toPersianDigits((activeLevelId ?? 0) + 1)} از {toPersianDigits(totalLevelCount)}</Text>
                 </View>
                 <Text style={styles.questionLevel}>{getLevelLabel(language, question.levelId)}</Text>
               </View>
               <View
                 accessibilityRole="progressbar"
-                accessibilityLabel="پیشرفت در سنجش آغازین"
-                accessibilityValue={{ min: 1, max: questions.length, now: questionIndex + 1 }}
+                accessibilityLabel="پیشرفت در سنجش سطح جاری"
+                accessibilityValue={{ min: 1, max: 3, now: currentBandQuestionNumber }}
                 style={styles.progressTrack}
               >
-                <View style={[styles.progressFill, { width: `${((questionIndex + 1) / questions.length) * 100}%` }]} />
+                <View style={[styles.progressFill, { width: `${(currentBandQuestionNumber / 3) * 100}%` }]} />
               </View>
 
               <Text style={styles.questionPrompt}>{question.prompt}</Text>
-              <View style={styles.passageCard}>
-                <Text style={styles.passageLabel}>ENGLISH EXAMPLE</Text>
-                <Text style={styles.passageText}>{question.passage}</Text>
-              </View>
+              {language === 'en' ? (
+                <View style={styles.passageCard}>
+                  <Text style={styles.passageLabel}>ENGLISH EXAMPLE</Text>
+                  <Text style={styles.passageText}>{question.passage}</Text>
+                </View>
+              ) : null}
 
               <View style={styles.options}>
                 {question.choices.map((choice, index) => {
                   const selected = selectedAnswer === index;
-                  const latinChoice = /[A-Za-z]/.test(choice) && !/[آ-ی]/.test(choice);
+                  const ltrChoice = /[A-Za-zА-Яа-яЁё]/.test(choice) && !/[آ-ی]/.test(choice);
                   return (
                     <Pressable
                       key={`${question.id}-${index}`}
@@ -138,7 +315,7 @@ export default function PlacementScreen() {
                       <View style={[styles.optionNumber, selected && styles.optionNumberSelected]}>
                         {selected ? <Check size={14} color="#FFFFFF" strokeWidth={3} /> : <Text style={styles.optionNumberText}>{toPersianDigits(index + 1)}</Text>}
                       </View>
-                      <Text style={[styles.optionText, latinChoice && styles.optionTextLtr, selected && styles.optionTextSelected]}>{choice}</Text>
+                      <Text style={[styles.optionText, ltrChoice && styles.optionTextLtr, selected && styles.optionTextSelected]}>{choice}</Text>
                     </Pressable>
                   );
                 })}
@@ -160,7 +337,7 @@ export default function PlacementScreen() {
                   <Text style={[styles.backButtonText, questionIndex === 0 && styles.disabledText]}>قبلی</Text>
                 </Pressable>
                 <Pressable accessibilityRole="button" accessibilityState={{ disabled: !hasAnswer }} disabled={!hasAnswer} onPress={next} style={({ pressed }) => [styles.nextButton, !hasAnswer && styles.nextButtonDisabled, pressed && styles.pressed]}>
-                  <Text style={[styles.nextButtonText, !hasAnswer && styles.nextButtonTextDisabled]}>{questionIndex === questions.length - 1 ? 'دیدن پیشنهاد' : 'پرسش بعدی'}</Text>
+                  <Text style={[styles.nextButtonText, !hasAnswer && styles.nextButtonTextDisabled]}>{nextButtonLabel}</Text>
                   <ArrowLeft size={16} color={hasAnswer ? '#FFFFFF' : '#AAA7B8'} />
                 </Pressable>
               </View>
@@ -176,7 +353,7 @@ export default function PlacementScreen() {
               </Text>
 
               <View style={styles.bandResults}>
-                <Text style={styles.bandHeading}>نمای کلی بر اساس سطح‌های داخلی دوره</Text>
+                <Text style={styles.bandHeading}>نمای کلی پاسخ‌ها در سطح‌های بررسی‌شده</Text>
                 {result.perLevel.map(level => (
                   <View key={level.levelId} style={styles.bandRow}>
                     <Text style={styles.bandName}>{getLevelLabel(language, level.levelId)}</Text>
@@ -188,16 +365,17 @@ export default function PlacementScreen() {
 
               {result.nonMonotonicPattern ? (
                 <View style={styles.cautionBox}>
-                  <Text style={styles.cautionText}>پاسخ‌ها در چند سطح الگوی یکنواختی ندارند؛ نتیجه را فقط راهنما بدان و اگر لازم است از فهرست، سطح دیگری را خودت انتخاب کن.</Text>
+                  <Text style={styles.cautionText}>الگوی پاسخ‌ها یکدست نیست؛ پیشنهاد را راهنما بدان و در صورت نیاز از فهرست، سطح دیگری را انتخاب کن.</Text>
                 </View>
               ) : null}
 
               <View style={styles.methodNote}>
-                <Text style={styles.methodNoteText}>قاعدهٔ پیشنهادی: دست‌کم ۲ پاسخ درست از ۳ پرسش در سطح‌های پیاپی. این غربال کوتاه فقط خواندن و درک معنا را نمونه‌گیری می‌کند؛ آزمون رسمی، ارزیابی گفتار/شنیدن/نوشتن یا گواهی CEFR نیست.</Text>
+                <Text style={styles.methodNoteText}>قاعدهٔ تطبیقی: نقطهٔ شروع از خوداظهاری انتخاب می‌شود؛ هر سطح با ۲ پرسش بررسی می‌شود و در صورت نتیجهٔ مرزی یک پرسش سوم می‌آید. این غربال فقط خواندن و درک معنا را نمونه‌گیری می‌کند؛ آزمون رسمی، ارزیابی گفتار/شنیدن/نوشتن یا گواهی CEFR نیست.</Text>
+                <Text style={styles.methodNoteText}>{saveStatus === 'saving' ? 'در حال ذخیرهٔ پیشنهاد برای همین حساب…' : saveStatus === 'saved' ? 'پیشنهاد برای ورود بعدی ذخیره شد؛ پاسخ‌های خام ذخیره نمی‌شوند.' : 'پاسخ‌های خام ذخیره نمی‌شوند؛ اگر همگام‌سازی در دسترس نباشد، پیشنهاد تا زمانی که روی همین دستگاه بمانی حفظ می‌شود.'}</Text>
               </View>
               <View style={styles.resultActions}>
                 <Pressable accessibilityRole="button" onPress={openSuggestedLevel} style={({ pressed }) => [styles.primaryAction, pressed && styles.pressed]}>
-                  <Text style={styles.primaryActionText}>رفتن به درس‌های «{getLevelLabel(language, result.recommendedLevelId)}»</Text>
+                  <Text style={styles.primaryActionText}>ورود به «{getLevelLabel(language, result.recommendedLevelId)}»</Text>
                   <ChevronLeft size={17} color="#FFFFFF" />
                 </Pressable>
                 <View style={styles.secondaryActions}>
@@ -213,7 +391,7 @@ export default function PlacementScreen() {
           ) : null}
 
           <View style={styles.privacyNote}>
-            <Text style={styles.privacyText}>پاسخ‌ها فقط هنگام بازبودن همین صفحه در حافظهٔ موقت هستند؛ این سنجش داده‌ای را به سرور نمی‌فرستد و پیشرفت درس‌ها را تغییر نمی‌دهد.</Text>
+            <Text style={styles.privacyText}>پاسخ خام آزمون به سرور ارسال نمی‌شود. فقط سطح پیشنهادی، زمان سنجش و خلاصهٔ امتیاز برای همین زبان در فرادادهٔ حساب ذخیره می‌شود تا ورود بعدی مستقیم به همان سطح هدایت شوی؛ هیچ جدول، محتوای درس یا روند پیشرفت تغییر نمی‌کند.</Text>
           </View>
         </View>
       </ScrollView>
@@ -246,6 +424,12 @@ const styles = StyleSheet.create({
   progressTrack: { height: 6, overflow: 'hidden', borderRadius: 999, backgroundColor: '#EFEDF4' },
   progressFill: { height: '100%', alignSelf: 'flex-end', borderRadius: 999, backgroundColor: colors.violet },
   questionPrompt: { fontFamily: Typography.fontFamily, color: colors.ink, fontSize: 17, lineHeight: 28, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
+  introExplanation: { fontFamily: Typography.fontFamily, color: colors.text, fontSize: 11, lineHeight: 19, textAlign: 'right', writingDirection: 'rtl' },
+  levelChoice: { minHeight: 62, flexDirection: 'row-reverse', alignItems: 'center', gap: 10, paddingHorizontal: 12, paddingVertical: 9, borderRadius: 15, borderWidth: 1, borderColor: colors.border, backgroundColor: '#FFFFFF' },
+  levelChoiceCopy: { flex: 1, gap: 3 },
+  levelChoiceTitle: { fontFamily: Typography.fontFamily, color: colors.ink, fontSize: 12, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
+  levelChoiceDescription: { fontFamily: Typography.fontFamily, color: colors.muted, fontSize: 9, lineHeight: 16, textAlign: 'right', writingDirection: 'rtl' },
+  introHint: { fontFamily: Typography.fontFamily, color: colors.muted, fontSize: 9, lineHeight: 17, textAlign: 'right', writingDirection: 'rtl' },
   passageCard: { padding: 14, borderRadius: 15, backgroundColor: '#F8F7FC', borderWidth: 1, borderColor: '#EBE8F4', gap: 6 },
   passageLabel: { fontFamily: 'Inter-ExtraBold', color: colors.violet, fontSize: 6, letterSpacing: 1.1, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
   passageText: { fontFamily: 'Inter-ExtraBold', color: colors.ink, fontSize: 14, lineHeight: 25, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
