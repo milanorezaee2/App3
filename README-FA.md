@@ -12,7 +12,7 @@
 
 ## امکانات اصلی
 
-- مسیر اصلی انگلیسی: ۱۷۴ درس/۳٬۸۶۲ جمله؛ Foundation: ۱۰/۵۰۰، Survival: ۱۹/۹۵۰، Everyday English: ۲۰/۱٬۰۰۰، Communication English: ۱۵/۷۵۰ (هر درس ۵۰ نمونه)، و Advanced English: ۱۱۰/۶۶۲. واژگان یکتای Survival برابر ۱٬۳۱۲، Everyday برابر ۱٬۷۷۴ و Communication برابر ۱٬۴۱۰ مدخل/عبارت پیوندخورده است. این مرحله شش درس Communication و ۳۰۰ جمله افزود و ۹ درس قبلی را با شناسه و ترتیب نسبی حفظ کرد؛ Foundation، Survival، Everyday و Advanced تغییر نکردند. گزارش فارسی بازبینی دوره و برنامهٔ مرحله‌ای: `docs/ENGLISH-CURRICULUM-REBUILD-REPORT-FA.md`؛ گزارش جزئی Communication: `docs/COMMUNICATION-ENGLISH-50-EXAMPLES-REPORT-FA.md`. جزئیات Everyday: `docs/EVERYDAY-ENGLISH-EXPANSION-REPORT-FA.md` و Survival: `docs/ENGLISH-SURVIVAL-50-EXAMPLES-REPORT-FA.md`. پوشش مرجع ۵۰۴ واژه حفظ شده است.
+- مسیر اصلی انگلیسی: ۲۱۲ درس/۴٬۲۴۲ جمله؛ Foundation: ۱۰/۵۰۰، Survival: ۱۹/۹۵۰، جسر A2: ۲۷/۲۱۵، Everyday English: ۲۰/۱٬۰۰۰، Communication English: ۱۵/۷۵۰ (هر درس ۵۰ نمونه)، و Advanced English: ۱۲۱/۸۲۷. واژگان یکتای Survival برابر ۱٬۳۰۳، عبارت‌های پیوندخوردهٔ Everyday برابر ۱٬۷۴۹ و Communication برابر ۱٬۴۱۰ است. پوشش فعالِ برچسب‌خوردهٔ فهرست مرجع ۵۰۴ واژه، ۴۷۷ مدخل است؛ ۲۷ واژهٔ تأییدشده عمداً از این پوشش جمله‌ای کنار گذاشته شده‌اند. گزارش فارسی بازبینی دوره و برنامهٔ مرحله‌ای: `docs/ENGLISH-CURRICULUM-REBUILD-REPORT-FA.md`؛ گزارش جزئی Communication: `docs/COMMUNICATION-ENGLISH-50-EXAMPLES-REPORT-FA.md`. جزئیات Everyday: `docs/EVERYDAY-ENGLISH-EXPANSION-REPORT-FA.md` و Survival: `docs/ENGLISH-SURVIVAL-50-EXAMPLES-REPORT-FA.md`.
 - مرور فاصله‌دار، تمرین تلفظ و Emma متنی/صوتی
 - مخاطبان واقعی، پیام متنی و پیام صوتی خصوصی
 - ترجمه، اصلاح و پیشنهاد پاسخ خصوصی قبل از ارسال
@@ -72,6 +72,10 @@ eas build --platform android --profile production
 ```
 
 پروفایل production در `eas.json` خروجی APK می‌سازد، onboarding واقعی را فعال نگه می‌دارد و از امضای مدیریت‌شده EAS استفاده می‌کند.
+
+## راهنمای استقرار و انتشار
+
+مراحل انتشار وب در GitHub Pages، ساخت APK از GitHub Actions یا EAS، و استقرار امن backend در [راهنمای استقرار فارسی](docs/DEPLOYMENT-FA.md) آمده است.
 
 ## نکات رضایت و امنیت
 

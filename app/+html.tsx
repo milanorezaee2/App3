@@ -17,7 +17,7 @@ export default function Root({ children }: PropsWithChildren) {
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
         {/* Disables body scrolling so ScrollView behaves like it does on native. */}
         <ScrollViewStyleReset />
         <style dangerouslySetInnerHTML={{ __html: pageBackground }} />
@@ -29,7 +29,7 @@ export default function Root({ children }: PropsWithChildren) {
 
 const pageBackground = `
 body { background-color: #f6f8fb; }
-#root { background-color: #f6f8fb; direction: ltr; }
-/* Layouts use row-reverse for RTL; text follows its own script: Persian starts right, English starts left. */
+#root { background-color: #f6f8fb; direction: rtl; }
+/* Follow each text's own script while keeping the Persian app layout RTL. */
 #root [dir="auto"] { text-align: start !important; }
 `;

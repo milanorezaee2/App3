@@ -33,7 +33,8 @@
     "validate:personal-sync": "node scripts/verify-personal-sync.mjs",
     "validate:english-four": "node scripts/verify-english-four.cjs",
     "prebuild:web": "node scripts/check-public-connection.mjs",
-    "validate:english-lesson-flow": "node scripts/verify-english-lesson-flow.cjs"
+    "validate:english-lesson-flow": "node scripts/verify-english-lesson-flow.cjs",
+    "validate:web-shell": "node scripts/verify-web-shell.mjs"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.4.2",
