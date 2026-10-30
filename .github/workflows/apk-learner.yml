@@ -74,6 +74,10 @@ jobs:
           npm run validate:english-lesson-flow
           npm run validate:speech-policy
           npm run validate:pronunciation
+          npm run validate:registration-admin
+          npm run validate:placement
+          npm run validate:a11y
+          npm run validate:requested-updates
 
       - name: Set up Java
         uses: actions/setup-java@v5

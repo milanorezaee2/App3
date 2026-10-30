@@ -8,10 +8,8 @@ import { Typography } from '@/lib/theme';
 /**
  * Login / registration entry screen.
  *
- * Presentation only: every string, every field and every action is owned by
- * RegistrationGate, which keeps the existing learner session logic untouched.
- * Copy is reused verbatim from the current gate and from the language home
- * header, so no content is added to or removed from the app.
+ * Presentation only: RegistrationGate owns OTP requests, verification,
+ * session state and profile completion.
  */
 
 const HERO_STEPS = ['بشنو', 'تکرار کن', 'به‌خاطر بسپار'] as const;
@@ -25,8 +23,6 @@ type LoginScreenProps = {
   onChangeFullName: (value: string) => void;
   email: string;
   onChangeEmail: (value: string) => void;
-  code: string;
-  onChangeCode: (value: string) => void;
   onSubmit: () => void;
   busy: boolean;
   error: string;
@@ -34,9 +30,23 @@ type LoginScreenProps = {
 };
 
 type LoginCodeScreenProps = {
+  email: string;
   code: string;
-  actionLabel: string;
-  onAction: () => void;
+  onChangeCode: (value: string) => void;
+  onSubmit: () => void;
+  onResend: () => void;
+  onEditEmail: () => void;
+  busy: boolean;
+  error: string;
+  notice: string;
+};
+
+type LoginProfileScreenProps = {
+  email: string;
+  fullName: string;
+  onChangeFullName: (value: string) => void;
+  onSubmit: () => void;
+  busy: boolean;
   error: string;
   notice: string;
 };
@@ -116,14 +126,12 @@ export function LoginScreen({
   onChangeFullName,
   email,
   onChangeEmail,
-  code,
-  onChangeCode,
   onSubmit,
   busy,
   error,
   notice,
 }: LoginScreenProps) {
-  const [focus, setFocus] = useState<'name' | 'email' | 'code' | null>(null);
+  const [focus, setFocus] = useState<'name' | 'email' | null>(null);
   const registering = mode === 'register';
 
   return (
@@ -133,8 +141,8 @@ export function LoginScreen({
       </Text>
       <Text style={styles.subtitle}>
         {registering
-          ? 'فقط نام و ایمیل را وارد کنید؛ کد ورود ۶ رقمی به‌صورت خودکار ساخته می‌شود.'
-          : 'ایمیل و کد ۶ رقمی خود را وارد کنید. رمزهای قدیمی نیز همچنان قابل استفاده‌اند.'}
+          ? 'نام و ایمیل خود را وارد کنید؛ کد یک‌بارمصرف برای تأیید به ایمیل شما ارسال می‌شود.'
+          : 'نشانی Gmail، Outlook/Microsoft یا ایمیل معتبر دیگری را وارد کنید تا کد ورود برایتان ارسال شود.'}
       </Text>
 
       <View style={styles.switcher}>
@@ -169,7 +177,7 @@ export function LoginScreen({
                 onBlur={() => setFocus(null)}
                 style={styles.input}
                 placeholder="مثلاً سارا احمدی"
-                placeholderTextColor="#8799B2"
+                placeholderTextColor="#52657D"
                 textAlign="right"
               />
               <View pointerEvents="none" style={styles.fieldIcon}>
@@ -191,9 +199,11 @@ export function LoginScreen({
             onBlur={() => setFocus(null)}
             style={[styles.input, styles.ltr]}
             placeholder="name@example.com"
-            placeholderTextColor="#8799B2"
+            placeholderTextColor="#52657D"
             autoCapitalize="none"
             autoCorrect={false}
+            autoComplete="email"
+            textContentType="emailAddress"
             keyboardType="email-address"
           />
           <View pointerEvents="none" style={styles.fieldIcon}>
@@ -201,33 +211,6 @@ export function LoginScreen({
           </View>
         </View>
       </View>
-
-      {!registering ? (
-        <>
-          <Text style={styles.label}>کد ورود</Text>
-          <View style={[styles.fieldRing, focus === 'code' && styles.fieldRingActive]}>
-            <View style={styles.field}>
-              <TextInput
-                accessibilityLabel="کد ورود حساب"
-                value={code}
-                onChangeText={onChangeCode}
-                onFocus={() => setFocus('code')}
-                onBlur={() => setFocus(null)}
-                style={[styles.input, styles.codeInput]}
-                placeholder="کد ۶ رقمی یا رمز قبلی"
-                placeholderTextColor="#5E6E82"
-                keyboardType="default"
-                autoCapitalize="none"
-                autoCorrect={false}
-                onSubmitEditing={onSubmit}
-              />
-              <View pointerEvents="none" style={styles.fieldIcon}>
-                <LockKeyhole size={16} color="#6C87A6" />
-              </View>
-            </View>
-          </View>
-        </>
-      ) : null}
 
       {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
       {notice ? <Text style={styles.notice}>{notice}</Text> : null}
@@ -251,7 +234,7 @@ export function LoginScreen({
         </View>
         {busy
           ? <ActivityIndicator color="#FFFFFF" />
-          : <Text style={styles.ctaText}>{registering ? 'ساخت حساب و دریافت کد' : 'ورود به اپ'}</Text>}
+          : <Text style={styles.ctaText}>{registering ? 'ساخت حساب و ارسال کد' : 'ارسال کد ورود به ایمیل'}</Text>}
       </Pressable>
 
       <View style={styles.privacy}>
@@ -264,23 +247,46 @@ export function LoginScreen({
   );
 }
 
-/* -------------------------------------------------------- generated code */
+/* ------------------------------------------------------------ email OTP */
 
-export function LoginCodeScreen({ code, actionLabel, onAction, error, notice }: LoginCodeScreenProps) {
+export function LoginCodeScreen({ email, code, onChangeCode, onSubmit, onResend, onEditEmail, busy, error, notice }: LoginCodeScreenProps) {
+  const [focus, setFocus] = useState(false);
   return (
     <LoginScaffold>
-      <Text accessibilityRole="header" style={styles.title}>کد ورود شما آماده است</Text>
-      <Text style={styles.subtitle}>این کد را برای ورودهای بعدی یادداشت کنید. اکنون بدون تایپ دوباره وارد اپ می‌شوید.</Text>
-
-      <Text selectable accessibilityLabel={`کد ورود ${code}`} style={styles.code}>{code}</Text>
+      <Text accessibilityRole="header" style={styles.title}>کد ایمیل را وارد کنید</Text>
+      <Text style={styles.subtitle}>کد ۶ رقمی یک‌بارمصرف به {email} ارسال شد. پوشهٔ هرزنامه را هم بررسی کنید.</Text>
+      <Text style={styles.label}>کد یک‌بارمصرف</Text>
+      <View style={[styles.fieldRing, focus && styles.fieldRingActive]}>
+        <View style={styles.field}>
+          <TextInput
+            accessibilityLabel="کد یک‌بارمصرف ایمیل"
+            value={code}
+            onChangeText={onChangeCode}
+            onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
+            style={[styles.input, styles.codeInput, styles.otpInput]}
+            placeholder="کد ۶ رقمی"
+            placeholderTextColor="#52657D"
+            keyboardType="number-pad"
+            autoComplete="one-time-code"
+            textContentType="oneTimeCode"
+            maxLength={6}
+            onSubmitEditing={onSubmit}
+          />
+          <View pointerEvents="none" style={styles.fieldIcon}>
+            <LockKeyhole size={16} color="#52657D" />
+          </View>
+        </View>
+      </View>
 
       {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
       {notice ? <Text style={styles.notice}>{notice}</Text> : null}
 
       <Pressable
         accessibilityRole="button"
-        onPress={onAction}
-        style={({ pressed }) => [styles.cta, pressed && styles.ctaPressed]}
+        disabled={busy}
+        onPress={onSubmit}
+        style={({ pressed }) => [styles.cta, pressed && !busy && styles.ctaPressed, busy && styles.disabled]}
       >
         <LinearGradient
           colors={['#3C9AFF', '#1769D2', '#0E428A']}
@@ -292,7 +298,50 @@ export function LoginCodeScreen({ code, actionLabel, onAction, error, notice }: 
         <View pointerEvents="none" style={styles.ctaArrow}>
           <ArrowLeft size={17} color="#FFFFFF" strokeWidth={2.4} />
         </View>
-        <Text style={styles.ctaText}>{actionLabel}</Text>
+        {busy ? <ActivityIndicator color="#FFFFFF" /> : <Text style={styles.ctaText}>تأیید کد و ورود</Text>}
+      </Pressable>
+
+      <View style={styles.otpActions}>
+        <Pressable accessibilityRole="button" disabled={busy} onPress={onResend} style={styles.otpLinkButton}>
+          <Text style={styles.otpLinkText}>ارسال دوبارهٔ کد</Text>
+        </Pressable>
+        <Pressable accessibilityRole="button" disabled={busy} onPress={onEditEmail} style={styles.otpLinkButton}>
+          <Text style={styles.otpLinkText}>ویرایش ایمیل</Text>
+        </Pressable>
+      </View>
+    </LoginScaffold>
+  );
+}
+
+export function LoginProfileScreen({ email, fullName, onChangeFullName, onSubmit, busy, error, notice }: LoginProfileScreenProps) {
+  const [focus, setFocus] = useState(false);
+  return (
+    <LoginScaffold>
+      <Text accessibilityRole="header" style={styles.title}>تکمیل حساب</Text>
+      <Text style={styles.subtitle}>ایمیل {email} تأیید شد. برای ساخت پروفایل آموزشی، نام خود را وارد کنید.</Text>
+      <Text style={styles.label}>نام و نام خانوادگی</Text>
+      <View style={[styles.fieldRing, focus && styles.fieldRingActive]}>
+        <View style={styles.field}>
+          <TextInput
+            accessibilityLabel="نام و نام خانوادگی"
+            value={fullName}
+            onChangeText={onChangeFullName}
+            onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
+            style={styles.input}
+            placeholder="مثلاً سارا احمدی"
+            placeholderTextColor="#52657D"
+            textAlign="right"
+            autoComplete="name"
+          />
+          <View pointerEvents="none" style={styles.fieldIcon}><UserRound size={16} color="#52657D" /></View>
+        </View>
+      </View>
+      {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
+      {notice ? <Text style={styles.notice}>{notice}</Text> : null}
+      <Pressable accessibilityRole="button" disabled={busy} onPress={onSubmit} style={({ pressed }) => [styles.cta, pressed && !busy && styles.ctaPressed, busy && styles.disabled]}>
+        <LinearGradient colors={['#3C9AFF', '#1769D2', '#0E428A']} locations={[0, 0.5, 1]} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} style={StyleSheet.absoluteFill} />
+        {busy ? <ActivityIndicator color="#FFFFFF" /> : <Text style={styles.ctaText}>تکمیل پروفایل و ورود</Text>}
       </Pressable>
     </LoginScaffold>
   );
@@ -433,8 +482,8 @@ const styles = StyleSheet.create({
     minHeight: 52,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#E1EBF8',
-    backgroundColor: '#F5F9FF',
+    borderColor: '#AFC2D9',
+    backgroundColor: '#EAF1FA',
     justifyContent: 'center',
   },
   input: {
@@ -443,12 +492,16 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     fontFamily: Typography.mediumFontFamily,
     fontSize: 13.5,
-    color: '#111111',
+    color: '#102A56',
     writingDirection: 'rtl',
   },
   ltr: { fontFamily: Typography.latinFontFamily, textAlign: 'right', writingDirection: 'ltr', fontSize: 12.6 },
   codeInput: { fontFamily: Typography.numberFontFamily, letterSpacing: 3, fontSize: 14.5 },
+  otpInput: { textAlign: 'center', writingDirection: 'ltr' },
   fieldIcon: { position: 'absolute', left: 16, top: 0, bottom: 0, justifyContent: 'center' },
+  otpActions: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', marginTop: 14 },
+  otpLinkButton: { paddingHorizontal: 6, paddingVertical: 8 },
+  otpLinkText: { fontFamily: Typography.mediumFontFamily, color: '#1769D2', fontSize: 11, writingDirection: 'rtl' },
 
   error: {
     marginTop: 12,

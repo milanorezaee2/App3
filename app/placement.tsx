@@ -42,6 +42,11 @@ function getLevelLabel(language: PlacementLanguage, levelId: number) {
   return labels[levelId] ?? COURSE_LEVELS.find(level => level.id === levelId)?.title ?? 'سطح آموزشی';
 }
 
+function getStartingLevelId(language: PlacementLanguage) {
+  const ids = getPlacementLevelIds(language);
+  return ids[Math.floor((ids.length - 1) / 2)] ?? ids[0] ?? 0;
+}
+
 function getLevelDescription(language: PlacementLanguage, levelId: number) {
   if (levelId === 0) return language === 'ru' ? 'شناخت جمله‌های بسیار ساده و واژه‌های پایهٔ روسی.' : 'شناخت عبارت‌های بسیار ساده و واژه‌های پایهٔ انگلیسی.';
   return LEVEL_SELF_DESCRIPTIONS[levelId] ?? 'می‌خواهم سطح مناسب خودم را پیدا کنم.';
@@ -66,11 +71,13 @@ export default function PlacementScreen() {
   const compact = width < 620;
   const questions = getPlacementQuestions(language);
   const levelIds = getPlacementLevelIds(language);
-  const [selectedLevelId, setSelectedLevelId] = useState<number | null>(null);
-  const [currentLevelId, setCurrentLevelId] = useState<number | null>(null);
+  const startingLevelId = getStartingLevelId(language);
+  const initialQuestion = getPlacementQuestionForLevel(language, startingLevelId, {});
+  const [selectedLevelId, setSelectedLevelId] = useState<number | null>(startingLevelId);
+  const [currentLevelId, setCurrentLevelId] = useState<number | null>(startingLevelId);
   const [direction, setDirection] = useState<PlacementDirection>('initial');
-  const [questionDirections, setQuestionDirections] = useState<Record<string, PlacementDirection>>({});
-  const [questionIds, setQuestionIds] = useState<string[]>([]);
+  const [questionDirections, setQuestionDirections] = useState<Record<string, PlacementDirection>>(initialQuestion ? { [initialQuestion.id]: 'initial' } : {});
+  const [questionIds, setQuestionIds] = useState<string[]>(initialQuestion ? [initialQuestion.id] : []);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [finished, setFinished] = useState(false);
@@ -79,11 +86,13 @@ export default function PlacementScreen() {
   const autoRouteTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    setSelectedLevelId(null);
-    setCurrentLevelId(null);
+    const startLevelId = getStartingLevelId(language);
+    const firstQuestion = getPlacementQuestionForLevel(language, startLevelId, {});
+    setSelectedLevelId(startLevelId);
+    setCurrentLevelId(startLevelId);
     setDirection('initial');
-    setQuestionDirections({});
-    setQuestionIds([]);
+    setQuestionDirections(firstQuestion ? { [firstQuestion.id]: 'initial' } : {});
+    setQuestionIds(firstQuestion ? [firstQuestion.id] : []);
     setQuestionIndex(0);
     setAnswers({});
     setFinished(false);
@@ -197,15 +206,7 @@ export default function PlacementScreen() {
   const previous = () => setQuestionIndex(index => Math.max(0, index - 1));
   const restart = () => {
     if (autoRouteTimer.current) clearTimeout(autoRouteTimer.current);
-    setSelectedLevelId(null);
-    setCurrentLevelId(null);
-    setDirection('initial');
-    setQuestionDirections({});
-    setQuestionIds([]);
-    setQuestionIndex(0);
-    setAnswers({});
-    setFinished(false);
-    setRecommendedLevelId(null);
+    startAtLevel(getStartingLevelId(language));
     setSaveStatus('idle');
   };
   const openSuggestedLevel = () => {
@@ -218,6 +219,8 @@ export default function PlacementScreen() {
   };
   const introStage = selectedLevelId === null && !finished;
   const totalLevelCount = levelIds.length;
+  const startingLevelIndex = Math.max(0, levelIds.indexOf(startingLevelId));
+  const maxQuestionCount = Math.max(levelIds.length - startingLevelIndex, startingLevelIndex + 1) * 3;
 
   return (
     <View style={styles.root}>
@@ -235,13 +238,11 @@ export default function PlacementScreen() {
             <Text style={styles.heroDescription}>
               {finished
                 ? 'پیشنهاد بر پایهٔ پاسخ‌های واقعی به جمله‌های همین دوره آماده شده؛ پس از چند ثانیه خودکار وارد سطح پیشنهادی می‌شوی.'
-                : introStage
-                  ? `برای ${languageName} سطحی را انتخاب کن که به آشنایی فعلی‌ات نزدیک‌تر است؛ سنجش کوتاه بعدی این انتخاب را بررسی و در صورت نیاز اصلاح می‌کند.`
-                  : `نمونه‌های کوتاه ${languageName} را بخوان و بهترین پاسخ را انتخاب کن. آزمون با توجه به پاسخ‌ها بالا یا پایین می‌رود تا زودتر به سطح مناسب برسد.`}
+                : `سنجش ${languageName} از سطح میانی شروع شده است. نمونه‌های کوتاه را بخوان و پاسخ بده؛ آزمون با توجه به پاسخ‌ها به سطح بالاتر یا پایین‌تر می‌رود.`}
             </Text>
             {!finished ? (
               <View style={styles.heroMetaRow}>
-                <Text style={styles.heroMeta}>{introStage ? `${toPersianDigits(totalLevelCount)} نقطهٔ آغاز` : `حداکثر ${toPersianDigits(questions.length)} پرسش`}</Text>
+                <Text style={styles.heroMeta}>حداکثر {toPersianDigits(maxQuestionCount)} پرسش</Text>
                 <View style={styles.heroMetaDot} />
                 <Text style={styles.heroMeta}>{introStage ? '۲ تا ۸ پرسش معمولاً' : 'سؤال سوم فقط برای پاسخ مرزی'}</Text>
                 <View style={styles.heroMetaDot} />
@@ -370,7 +371,7 @@ export default function PlacementScreen() {
               ) : null}
 
               <View style={styles.methodNote}>
-                <Text style={styles.methodNoteText}>قاعدهٔ تطبیقی: نقطهٔ شروع از خوداظهاری انتخاب می‌شود؛ هر سطح با ۲ پرسش بررسی می‌شود و در صورت نتیجهٔ مرزی یک پرسش سوم می‌آید. این غربال فقط خواندن و درک معنا را نمونه‌گیری می‌کند؛ آزمون رسمی، ارزیابی گفتار/شنیدن/نوشتن یا گواهی CEFR نیست.</Text>
+                <Text style={styles.methodNoteText}>قاعدهٔ تطبیقی: سنجش از سطح میانی آغاز می‌شود؛ هر سطح با ۲ پرسش بررسی می‌شود و در صورت نتیجهٔ مرزی یک پرسش سوم می‌آید. این غربال فقط خواندن و درک معنا را نمونه‌گیری می‌کند؛ آزمون رسمی، ارزیابی گفتار/شنیدن/نوشتن یا گواهی CEFR نیست.</Text>
                 <Text style={styles.methodNoteText}>{saveStatus === 'saving' ? 'در حال ذخیرهٔ پیشنهاد برای همین حساب…' : saveStatus === 'saved' ? 'پیشنهاد برای ورود بعدی ذخیره شد؛ پاسخ‌های خام ذخیره نمی‌شوند.' : 'پاسخ‌های خام ذخیره نمی‌شوند؛ اگر همگام‌سازی در دسترس نباشد، پیشنهاد تا زمانی که روی همین دستگاه بمانی حفظ می‌شود.'}</Text>
               </View>
               <View style={styles.resultActions}>

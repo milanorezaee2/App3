@@ -1,9 +1,9 @@
-import { type PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
+import { type PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, AppState, StyleSheet, Text, View } from 'react-native';
 import Constants from 'expo-constants';
 import { supabase } from '@/lib/supabase';
-import { LoginCodeScreen, LoginScreen, type LoginMode } from '@/components/LoginScreen';
-import { generateLoginCode, getRegisteredSession, loginLearner, registerLearner, registrationError, touchLearnerActivity } from '@/lib/userRegistration';
+import { LoginCodeScreen, LoginProfileScreen, LoginScreen, type LoginMode } from '@/components/LoginScreen';
+import { completeLearnerProfile, getRegisteredSession, normalizeOtpDigits, registrationError, requestLearnerOtp, touchLearnerActivity, verifyLearnerOtp, type LearnerOtpType } from '@/lib/userRegistration';
 import { Colors, Typography } from '@/lib/theme';
 import { FEATURES } from '@/lib/features';
 
@@ -13,28 +13,35 @@ const IS_ADMIN_APP = Constants.expoConfig?.extra?.appRole === 'admin'
 const BYPASS_GATE: boolean = IS_ADMIN_APP || !FEATURES.learnerLogin;
 
 type Mode = LoginMode;
+type AuthStep = 'request' | 'verify' | 'profile';
 
 export function RegistrationGate({ children }: PropsWithChildren) {
   const [checking, setChecking] = useState(!BYPASS_GATE);
   const [ready, setReady] = useState(BYPASS_GATE);
+  const [step, setStep] = useState<AuthStep>('request');
   const [mode, setMode] = useState<Mode>('login');
+  const [otpType, setOtpType] = useState<LearnerOtpType>('email');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
-  const [generatedCode, setGeneratedCode] = useState('');
-  const [registrationReady, setRegistrationReady] = useState(false);
-  const holdForCode = useRef(false);
 
   const inspect = useCallback(async () => {
     if (BYPASS_GATE) return;
     try {
       const state = await getRegisteredSession();
       const complete = !!state.session && !!state.profile;
-      setReady(complete && !holdForCode.current);
-      if (complete) void touchLearnerActivity();
+      setReady(complete);
+      if (complete) {
+        void touchLearnerActivity();
+      } else if (state.session) {
+        setEmail(state.session.user.email ?? '');
+        setFullName(String(state.session.user.user_metadata?.full_name ?? ''));
+        setStep('profile');
+        setNotice('ایمیل تأیید شده است؛ برای تکمیل ورود، نام خود را ثبت کنید.');
+      }
     } catch {
       setReady(false);
     } finally {
@@ -52,51 +59,106 @@ export function RegistrationGate({ children }: PropsWithChildren) {
     return () => { data.subscription.unsubscribe(); appState.remove(); };
   }, [inspect]);
 
-  async function submit() {
+  const requestCode = async () => {
     if (busy) return;
     setBusy(true); setError(''); setNotice('');
     try {
-      if (mode === 'register') {
-        const code = await generateLoginCode();
-        holdForCode.current = true;
-        await registerLearner(fullName, email, code);
-        setPassword(code);
-        setGeneratedCode(code);
-        setRegistrationReady(true);
-        setNotice('حساب شما ساخته شد. هیچ تأیید ایمیلی لازم نیست؛ کد را وارد کنید و مستقیم وارد اپ شوید.');
-      } else {
-        await loginLearner(email, password);
-        await inspect();
-      }
+      const cleanEmail = email.trim().toLowerCase();
+      const requestedType = await requestLearnerOtp(cleanEmail, mode, mode === 'register' ? fullName : '');
+      setEmail(cleanEmail);
+      setCode('');
+      setOtpType(requestedType);
+      setStep('verify');
+      setNotice(`کد یک‌بارمصرف به ${cleanEmail} ارسال شد. پوشهٔ هرزنامه را هم بررسی کنید.`);
     } catch (reason) {
-      holdForCode.current = false;
       setError(registrationError(reason));
     } finally {
       setBusy(false);
     }
-  }
+  };
+
+  const verifyCode = async () => {
+    if (busy) return;
+    setBusy(true); setError(''); setNotice('');
+    try {
+      await verifyLearnerOtp(email, code, mode === 'register' ? fullName : '', otpType);
+      const state = await getRegisteredSession();
+      if (state.session && state.profile) {
+        setReady(true);
+        void touchLearnerActivity();
+      } else if (state.session) {
+        setStep('profile');
+        setNotice('ایمیل تأیید شد؛ برای تکمیل پروفایل نام خود را وارد کنید.');
+      } else {
+        throw new Error('PROFILE_INCOMPLETE');
+      }
+    } catch (reason) {
+      setError(registrationError(reason));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const resendCode = async () => {
+    if (busy) return;
+    setBusy(true); setError(''); setNotice('');
+    try {
+      const requestedType = await requestLearnerOtp(email, mode, mode === 'register' ? fullName : '');
+      setCode('');
+      setOtpType(requestedType);
+      setNotice(`کد تازه به ${email} ارسال شد. کد قبلی ممکن است دیگر معتبر نباشد.`);
+    } catch (reason) {
+      setError(registrationError(reason));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const finishProfile = async () => {
+    if (busy) return;
+    setBusy(true); setError(''); setNotice('');
+    try {
+      await completeLearnerProfile(fullName);
+      const state = await getRegisteredSession();
+      if (!state.session || !state.profile) throw new Error('PROFILE_INCOMPLETE');
+      setReady(true);
+      void touchLearnerActivity();
+    } catch (reason) {
+      setError(registrationError(reason));
+    } finally {
+      setBusy(false);
+    }
+  };
 
   if (BYPASS_GATE || ready) return <>{children}</>;
   if (checking) return <View style={styles.loading}><ActivityIndicator size="large" color={Colors.primary[600]} /><Text style={styles.loadingText}>در حال بررسی حساب…</Text></View>;
 
-  if (generatedCode) {
+  if (step === 'verify') {
     return (
       <LoginCodeScreen
-        code={generatedCode}
-        actionLabel={registrationReady ? 'ورود مستقیم به اپ' : 'رفتن به صفحه ورود'}
+        email={email}
+        code={code}
+        onChangeCode={value => setCode(normalizeOtpDigits(value))}
+        onSubmit={() => void verifyCode()}
+        onResend={() => void resendCode()}
+        onEditEmail={() => { setStep('request'); setCode(''); setOtpType('email'); setError(''); setNotice(''); }}
+        busy={busy}
         error={error}
         notice={notice}
-        onAction={() => {
-          if (!registrationReady) {
-            holdForCode.current = false;
-            setGeneratedCode('');
-            setMode('login');
-            return;
-          }
-          holdForCode.current = false;
-          setGeneratedCode('');
-          void inspect();
-        }}
+      />
+    );
+  }
+
+  if (step === 'profile') {
+    return (
+      <LoginProfileScreen
+        email={email}
+        fullName={fullName}
+        onChangeFullName={setFullName}
+        onSubmit={() => void finishProfile()}
+        busy={busy}
+        error={error}
+        notice={notice}
       />
     );
   }
@@ -109,9 +171,7 @@ export function RegistrationGate({ children }: PropsWithChildren) {
       onChangeFullName={setFullName}
       email={email}
       onChangeEmail={setEmail}
-      code={password}
-      onChangeCode={setPassword}
-      onSubmit={() => void submit()}
+      onSubmit={() => void requestCode()}
       busy={busy}
       error={error}
       notice={notice}

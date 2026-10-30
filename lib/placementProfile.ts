@@ -2,8 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from './supabase';
 import type { PlacementLanguage, PlacementResult } from './placement';
 
-const PLACEMENT_METADATA_KEY = 'milo_language_placement_v1';
-const PLACEMENT_CACHE_PREFIX = 'milo_language_placement_v1:';
+// Bump the onboarding key so existing users receive the new source-backed quiz once.
+// Previous recommendations are left intact; learning progress and old metadata are not deleted.
+const PLACEMENT_METADATA_KEY = 'milo_language_placement_v2';
+const PLACEMENT_CACHE_PREFIX = 'milo_language_placement_v2:';
 
 export type PlacementRecommendation = {
   levelId: number;

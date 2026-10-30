@@ -138,11 +138,12 @@ if ! timeout 30s adb exec-out screencap -p > "$screenshot_file"; then
   echo 'Warning: screenshot capture failed; continuing with the UI hierarchy check.'
 fi
 
-failed_step="verifying the mandatory learner registration rendered"
+failed_step="verifying the mandatory learner OTP gate rendered"
 registration_gate=false
-if grep -Fq 'ساخت حساب زبان‌آموز' "$ui_file" && grep -Fq 'ساخت حساب و دریافت کد' "$ui_file"; then
+if { grep -Fq 'ورود به حساب' "$ui_file" && grep -Fq 'ارسال کد ورود به ایمیل' "$ui_file"; } \
+  || { grep -Fq 'ساخت حساب زبان‌آموز' "$ui_file" && grep -Fq 'ساخت حساب و ارسال کد' "$ui_file"; }; then
   registration_gate=true
-  echo 'Android emulator opened MiloMultilang and rendered its mandatory registration gate.'
+  echo 'Android emulator opened MiloMultilang and rendered its email OTP login or registration gate.'
 elif (grep -Fq 'MILO' "$ui_file" || grep -Fq 'Milo' "$ui_file") && grep -Fq 'هر روز، یک قدم' "$ui_file"; then
   echo 'Android emulator restored an authenticated learner and rendered the language home.'
 else

@@ -37,9 +37,10 @@ PY
 phase='install APK'
 adb install -r "$apk_path"
 adb logcat -c
-phase='launch app'
+phase='launch learner login screen'
 adb shell am start -W -n "$package/.MainActivity"
-wait_for_text 'آمادهٔ یادگیری'
+wait_for_text 'ورود به حساب'
+wait_for_text 'ارسال کد ورود به ایمیل'
 python3 - <<'PY2'
 import xml.etree.ElementTree as ET
 root = ET.parse('/tmp/window.xml').getroot()
@@ -47,41 +48,9 @@ if not any(node.attrib.get('package') == 'com.devicecontrol.companion' for node 
     raise SystemExit('Learner package is not visible.')
 PY2
 
-tap_continue() {
-  capture_screen
-  local coords
-  coords=$(python3 - <<'PY2'
-import re, xml.etree.ElementTree as ET
-root = ET.parse('/tmp/window.xml').getroot()
-for node in root.iter():
-    if node.attrib.get('text') == 'ادامه' or node.attrib.get('content-desc') == 'ادامه':
-        nums = list(map(int, re.findall(r'\d+', node.attrib.get('bounds', ''))))
-        if len(nums) == 4:
-            print((nums[0] + nums[2]) // 2, (nums[1] + nums[3]) // 2)
-            break
-else:
-    raise SystemExit('Continue button not found on screen')
-PY2
-  )
-  adb shell input tap $coords
-}
-
-phase='open English lesson'
-adb shell am start -W -a android.intent.action.VIEW -d 'companionenglish:///course/lesson?id=foundation-introducing-yourself' "$package"
-wait_for_text 'معرفی خود'
-tap_continue
-wait_for_text 'Hello, my name is Sara.'
-
-phase='open Russian lesson'
-adb shell am start -W -a android.intent.action.VIEW -d 'companionenglish:///learn/ru/lesson?id=ru-l1-greetings' "$package"
-wait_for_text 'سلام و خداحافظی'
-tap_continue
-wait_for_text 'Приве́т!'
-
 phase='inspect app errors'
-adb exec-out screencap -p > /tmp/milo-screen.png || true
 if adb logcat -d | grep -E 'FATAL EXCEPTION|Unable to load script'; then
   echo 'A native crash or bundle load error occurred.'
   exit 1
 fi
-echo 'Android emulator: app opened; English and Russian lesson screens rendered. TTS audibility not verified.'
+echo 'Android emulator: learner OTP login screen rendered without a native crash. Authenticated routes and mailbox delivery are covered separately because CI has no test mailbox.'

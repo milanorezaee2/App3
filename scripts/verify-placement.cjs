@@ -1,5 +1,6 @@
 const assert = require('node:assert/strict');
 const path = require('node:path');
+const fs = require('node:fs');
 const esbuild = require('esbuild');
 
 (async () => {
@@ -29,6 +30,14 @@ const esbuild = require('esbuild');
   let checks = 0;
   const check = (condition, message = 'placement invariant failed') => { assert.ok(condition, message); checks += 1; };
   const normalize = value => value.normalize('NFC').replace(/\s+/g, ' ').trim();
+  const placementScreen = fs.readFileSync(path.resolve('app/placement.tsx'), 'utf8');
+  const languageScreen = fs.readFileSync(path.resolve('app/languages.tsx'), 'utf8');
+  const placementProfile = fs.readFileSync(path.resolve('lib/placementProfile.ts'), 'utf8');
+  check(/getStartingLevelId\(language\)/.test(placementScreen)
+    && /useState<string\[]>\(initialQuestion \? \[initialQuestion\.id\] : \[\]\)/.test(placementScreen), 'placement starts with a content question instead of an extra self-rating screen');
+  check(/شروع سنجش سطح/.test(languageScreen)
+    && /pathname: '\/placement', params: \{ language: languageId \}/.test(languageScreen), 'language selection visibly routes first-time learners into the quiz');
+  check(/milo_language_placement_v2/.test(placementProfile) && !/milo_language_placement_v1/.test(placementProfile), 'the new assessment appears once even when an older recommendation exists, without deleting prior data');
   const englishLessons = new Map(app.SENTENCE_LESSONS.map(lesson => [lesson.id, lesson]));
   const russianLessons = new Map(app.RUSSIAN_LESSONS.map(lesson => [lesson.id, lesson]));
 

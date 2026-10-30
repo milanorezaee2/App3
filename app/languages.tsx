@@ -194,7 +194,7 @@ export default function LanguagesHome() {
             <View style={styles.sectionCopy}>
               <Text style={styles.sectionEyebrow}>CHOOSE A LANGUAGE</Text>
               <Text style={styles.sectionTitle}>می‌خواهی کدام زبان را یاد بگیری؟</Text>
-              <Text style={styles.sectionDetail}>اولین‌بار یک سنجش کوتاه انجام می‌دهی؛ بعد از آن مستقیم به سطح پیشنهادی می‌روی.</Text>
+              <Text style={styles.sectionDetail}>پس از ورود، زبان را انتخاب کن تا پرسش‌های سنجش بلافاصله شروع شوند؛ اگر قبلاً سنجیده‌ای، «بازسنجی سطح» را بزن.</Text>
             </View>
 
             <View style={styles.languageRow}>
@@ -220,6 +220,7 @@ export default function LanguagesHome() {
                         <Text style={styles.languageCode} numberOfLines={1}>{meta.code}</Text>
                         <Text style={styles.languageName} numberOfLines={1}>{meta.nativeName}</Text>
                       </View>
+                      <Text style={styles.languageAction}>{savedPlacements[language.id] ? 'ورود به سطح پیشنهادی' : 'شروع سنجش سطح'}</Text>
                       <View style={styles.languageArrow}><ArrowLeft size={14} color="#1769D2" strokeWidth={2.5} /></View>
                     </Pressable>
                     {savedPlacements[language.id] ? (
@@ -288,7 +289,7 @@ export default function LanguagesHome() {
           </View>
 
           <View style={styles.footer}>
-            <Text style={styles.footerText}>آماده‌ای شروع کنی؟ زبانت را انتخاب کن و اولین درس را بساز.</Text>
+            <Text style={styles.footerText}>آماده‌ای شروع کنی؟ زبانت را انتخاب کن تا سنجش کوتاهت آغاز شود.</Text>
             <Text style={styles.footerBrand}>MILO · LEARN A LITTLE, EVERY DAY</Text>
           </View>
         </View>
@@ -351,14 +352,15 @@ const styles = StyleSheet.create({
   sectionDetail: { fontFamily: 'Vazir', color: '#6A7F9B', fontSize: 12, lineHeight: 20, textAlign: 'center', writingDirection: 'rtl' },
   languageRow: { width: '100%', flexDirection: 'row-reverse', justifyContent: 'center', gap: 12, alignItems: 'stretch' },
   languageChoice: { flex: 1, minWidth: 0, maxWidth: 190, gap: 7 },
-  languageCard: { flex: 1, minWidth: 0, maxWidth: 190, minHeight: 92, borderRadius: 18, borderWidth: 1, paddingHorizontal: 12, paddingVertical: 12, alignItems: 'center', justifyContent: 'center', gap: 6, shadowColor: '#174B86', shadowOpacity: .045, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
-  languageCardTiny: { minHeight: 84, paddingHorizontal: 7, paddingVertical: 9, borderRadius: 15 },
+  languageCard: { flex: 1, minWidth: 0, maxWidth: 190, minHeight: 106, borderRadius: 18, borderWidth: 1, paddingHorizontal: 12, paddingVertical: 12, alignItems: 'center', justifyContent: 'center', gap: 6, shadowColor: '#174B86', shadowOpacity: .045, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
+  languageCardTiny: { minHeight: 98, paddingHorizontal: 7, paddingVertical: 9, borderRadius: 15 },
   retakePlacement: { minHeight: 36, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6, paddingHorizontal: 8, borderRadius: 11, borderWidth: 1, borderColor: '#D9E8F7', backgroundColor: '#FFFFFF' },
   retakePlacementText: { fontFamily: 'Vazir', color: '#1769D2', fontSize: 9, fontWeight: '400', writingDirection: 'rtl' },
   flag: { fontSize: 27, lineHeight: 33 },
   languageIdentity: { alignItems: 'center', gap: 0 },
   languageCode: { flexShrink: 0, textAlign: 'center', fontFamily: 'Inter-ExtraBold', color: '#102A56', fontSize: 12, lineHeight: 17, fontWeight: '800', letterSpacing: 1.2, writingDirection: 'ltr' },
   languageName: { fontFamily: 'Inter-ExtraBold', color: '#6680A5', fontSize: 7, lineHeight: 12, fontWeight: '800', writingDirection: 'ltr' },
+  languageAction: { fontFamily: 'Vazir', color: '#1769D2', fontSize: 9, lineHeight: 15, fontWeight: '400', textAlign: 'center', writingDirection: 'rtl' },
   languageArrow: { position: 'absolute', left: 8, bottom: 8, width: 23, height: 23, borderRadius: 8, backgroundColor: 'rgba(255,255,255,.8)', alignItems: 'center', justifyContent: 'center' },
   pressed: { opacity: .82, transform: [{ scale: .98 }] },
   flowCard: { borderRadius: 24, padding: 20, gap: 19, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#DCE8F8', shadowColor: '#174B86', shadowOpacity: .05, shadowRadius: 14, shadowOffset: { width: 0, height: 5 }, elevation: 2 },

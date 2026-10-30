@@ -74,6 +74,14 @@ jobs:
             `EXPO_PUBLIC_SUPABASE_URL=${url}\nEXPO_PUBLIC_SUPABASE_ANON_KEY=${key}\n`);
           NODE
 
+      - name: Validate learner OTP, placement and accessibility
+        run: |
+          npm run typecheck
+          npm run validate:registration-admin
+          npm run validate:placement
+          npm run validate:a11y
+          npm run validate:requested-updates
+
       - name: Set up Java
         uses: actions/setup-java@v5
         with:

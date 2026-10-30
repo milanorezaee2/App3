@@ -31,6 +31,10 @@ jobs:
         run: |
           npm run typecheck
           npm run validate:web-shell
+          npm run validate:registration-admin
+          npm run validate:placement
+          npm run validate:a11y
+          npm run validate:requested-updates
       - name: Load public Supabase credentials
         run: |
           URL=$(node -e "const c=require('./config/supabase.public.json');process.stdout.write(c.EXPO_PUBLIC_SUPABASE_URL||'')")

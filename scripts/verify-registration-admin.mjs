@@ -18,18 +18,16 @@ const appConfig = read('app.config.js');
 const workflow = read('.github/workflows/android-build.yml');
 
 check(/<RegistrationGate>/.test(layout), 'learner routes are protected by the registration gate');
-check(/signUp/.test(registration) && /signInWithPassword/.test(registration) && /updateUser/.test(registration), 'new, returning, and existing anonymous learners are supported');
-check(/full_name/.test(gate) || /fullName/.test(gate), 'registration captures the learner name');
-check(/generateLoginCode/.test(gate) && /کد ورود/.test(loginFlow) && /ایمیل/.test(loginFlow), 'registration automatically creates a simple login code');
-check(/getRandomBytesAsync/.test(registration) && /\\d\{6\}/.test(registration), 'login codes are cryptographically random six-digit values');
-check(/color: '#111111'/.test(loginFlow) && /numberFontFamily/.test(loginFlow), 'registration inputs and generated digits are explicitly black');
-// Both screens now share one keyboard-aware scaffold, so the wrapper appears
-// once per screen instead of once per inline form.
-check((loginFlow.match(/KeyboardAvoidingView/g) || []).length >= 2
-  && (loginFlow.match(/KeyboardAwareScrollView/g) || []).length >= 2
-  && /bottomOffset=\{24\}/.test(loginFlow), 'registration and login forms dynamically follow and scroll above the keyboard');
-check(/EMAIL_CONFIRMATION_ENABLED/.test(registration) && !/ابتدا ایمیل تأیید/.test(registration), 'the learner flow never asks users to confirm email');
-check(/ورود مستقیم به اپ/.test(loginFlow) && /toAuthPassword/.test(registration), 'new learners enter directly while retaining a hardened six-digit login code');
+check(/signInWithOtp\(/.test(registration) && /verifyOtp\(/.test(registration) && /shouldCreateUser/.test(registration), 'login and registration request and verify real Supabase email OTPs');
+check(/full_name/.test(registration) && /completeLearnerProfile/.test(gate), 'registration captures the learner name and repairs older incomplete profiles');
+check(/requestLearnerOtp/.test(gate) && /verifyLearnerOtp/.test(gate) && /onResend/.test(loginFlow), 'the gate separates OTP request, verification, and resend');
+check(!/generateLoginCode|signInWithPassword|toAuthPassword/.test(registration + gate), 'the learner gate no longer invents local codes or uses password login');
+check(/color: '#102A56'/.test(loginFlow) && /backgroundColor: '#EAF1FA'/.test(loginFlow)
+  && /borderColor: '#AFC2D9'/.test(loginFlow) && /placeholderTextColor="#52657D"/.test(loginFlow), 'email and OTP fields use high-contrast text, fill, border and placeholder colors');
+check(/KeyboardAvoidingView/.test(loginFlow) && /KeyboardAwareScrollView/.test(loginFlow)
+  && /bottomOffset=\{24\}/.test(loginFlow), 'auth screens follow and scroll above the keyboard');
+check(/LearnerOtpType = 'email'/.test(registration) && /email_change/.test(registration)
+  && /rate limit/.test(registration), 'the learner flow verifies email OTPs, preserves anonymous upgrades and handles Supabase send limits');
 check(/app_user_profiles/.test(migration) && /ENABLE ROW LEVEL SECURITY/.test(migration), 'registered profiles are protected by RLS');
 check(/user_id = auth\.uid\(\)/.test(migration), 'learners can only access their own profile');
 check(/admin_registered_users/.test(migration) && /is_education_admin/.test(migration), 'the registered-user directory verifies server-side manager authorization');
@@ -43,7 +41,7 @@ check(/com\.devicecontrol\.miloadmin/.test(appConfig) && /com\.devicecontrol\.co
 check(/MiloAdmin\.apk/.test(workflow) && /MiloMultilang\.apk/.test(workflow), 'CI builds and publishes both standalone APKs');
 check(/EXPO_PUBLIC_MILO_ADMIN_APP/.test(read('app/index.tsx')), 'the management APK boots directly into its protected panel');
 check(/پیام‌های خصوصی/.test(loginFlow) && /پیام‌های خصوصی/.test(admin), 'both apps disclose and preserve private-message boundaries');
-check(/learnerLogin: process\.env\.EXPO_PUBLIC_LEARNER_LOGIN === 'true'/.test(read('lib/features.ts')), 'learner login is a build-time switch that defaults to off');
+check(/learnerLogin: true/.test(read('lib/features.ts')), 'learner routes keep the requested login gate enabled');
 check(/MiloMultilang-Login\.apk/.test(workflow) && /EXPO_PUBLIC_LEARNER_LOGIN=true/.test(workflow), 'CI builds and publishes the learner login APK');
 check(/com\.devicecontrol\.milomultilang/.test(appConfig) && /name: 'MiloMultiLanguage Admin'/.test(appConfig), 'login APK keeps its own package and management branding includes MiloMultiLanguage');
 check(/is_education_admin/.test(read('supabase/functions/admin-delete-user/index.ts')) && /deleteUser\(/.test(read('supabase/functions/admin-delete-user/index.ts')), 'account deletion is manager-only and runs on the server');
