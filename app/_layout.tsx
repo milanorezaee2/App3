@@ -14,6 +14,7 @@ import { Vazirmatn_400Regular, Vazirmatn_500Medium, Vazirmatn_700Bold, Vazirmatn
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AppLockGate } from '@/components/AppLockGate';
+import { WebStatusBarSpacer } from '@/components/WebStatusBarSpacer';
 import { ChatNotificationBridge } from '@/components/ChatNotificationBridge';
 import { AppResumeGuard } from '@/components/AppResumeGuard';
 import { RegistrationGate } from '@/components/RegistrationGate';
@@ -159,6 +160,9 @@ export default function RootLayout() {
       <KeyboardProvider>
       <ErrorBoundary>
         <SafeAreaView style={{ flex: 1, ...RtlDirection }} edges={['top', 'bottom']}>
+          {/* Web preview/browsers have no top inset: reserve the notch height so
+              no header row is ever painted under the camera cut-out. */}
+          <WebStatusBarSpacer />
           <AppLockGate>
             <RegistrationGate>
               {!IS_ADMIN_APP && <RuntimeGate />}

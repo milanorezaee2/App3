@@ -9,5 +9,15 @@ assert.match(html, /name="viewport"[^>]*viewport-fit=cover/, 'The mobile viewpor
 assert.match(html, /#root\s*\{[^}]*direction:\s*rtl\s*;/s, 'The application root must inherit RTL layout.');
 assert.match(html, /#root\s*\[dir="auto"\]/, 'Mixed-script text must retain per-element direction handling.');
 assert.match(layout, /<SafeAreaView[^>]*edges=\{\['top',\s*'bottom'\]\}/, 'The shared layout must apply top and bottom safe-area edges.');
+assert.match(
+  layout,
+  /<SafeAreaView[^>]*>[\s\S]{0,400}?<WebStatusBarSpacer\s*\/>/,
+  'The shared layout must reserve the web status-bar/notch height above the header row.',
+);
+assert.match(
+  await readFile(new URL('../components/WebStatusBarSpacer.tsx', import.meta.url), 'utf8'),
+  /Platform\.OS !== 'web' \|\| insets\.top > 0/,
+  'The web notch spacer must stand aside when a real device inset exists.',
+);
 
-console.log('Web shell checks passed: Persian RTL, mixed-script handling, viewport-fit and safe-area edges.');
+console.log('Web shell checks passed: Persian RTL, mixed-script handling, viewport-fit, safe-area edges and the web notch spacer.');
