@@ -101,6 +101,10 @@ export default function RussianHome() {
               </Pressable>
               <View style={styles.sentenceCount}><Text style={styles.sentenceCountValue}>{fa(heroLesson.sentences.length)}</Text><Text style={styles.sentenceCountLabel}>جملهٔ همین درس</Text></View>
             </View>
+            <Pressable accessibilityRole="button" accessibilityLabel="گوش دادن از ابتدای آموزش روسی" style={styles.startFromBeginningButton} onPress={() => router.push({ pathname: '/learn/ru/lesson', params: { id: RUSSIAN_LESSONS[0].id, fromStart: '1' } } as never)}>
+              <Volume2 size={17} color="#FFFFFF" />
+              <Text style={styles.startFromBeginningText}>گوش دادن از ابتدا</Text>
+            </Pressable>
           </LinearGradient>
 
           {!!error && <View style={styles.errorCard}><Text accessibilityRole="alert" style={styles.errorText}>{error}</Text><Pressable accessibilityRole="button" onPress={() => setRetry(value => value + 1)}><Text style={styles.retryText}>تلاش دوباره</Text></Pressable></View>}
@@ -199,6 +203,8 @@ const styles = StyleSheet.create({
   wordChipFa: { fontFamily: Typography.fontFamily, color: '#E4E6FF', fontSize: 10, writingDirection: 'rtl' },
   heroActions: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   continueButton: { minHeight: 48, flex: 1, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, borderRadius: 15, backgroundColor: '#FFFFFF', paddingHorizontal: 13 },
+  startFromBeginningButton: { minHeight: 44, alignSelf: 'flex-end', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, paddingHorizontal: 14, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.14)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.35)' },
+  startFromBeginningText: { fontFamily: Typography.fontFamily, color: '#FFFFFF', fontSize: 12, writingDirection: 'rtl' },
   continueButtonText: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 12, fontWeight: '400', writingDirection: 'rtl' },
   sentenceCount: { alignItems: 'flex-end', minWidth: 76 },
   sentenceCountValue: { fontFamily: Typography.numberFontFamily, color: '#FFFFFF', fontSize: 17, fontWeight: '800' },

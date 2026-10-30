@@ -5,9 +5,9 @@ import { findRussianLesson } from '@/lib/languages/russian';
 import { FEATURES } from '@/lib/features';
 
 export default function RussianLessonRoute() {
-  const { id } = useLocalSearchParams<{ id?: string }>();
+  const { id, fromStart } = useLocalSearchParams<{ id?: string; fromStart?: string }>();
   if (!FEATURES.russianCourse) return <Redirect href={'/languages' as never} />;
   const lesson = findRussianLesson(id);
   if (!lesson) return <CoursePage title="درس روسی پیدا نشد" subtitle="از کتابخانه یک درس معتبر انتخاب کنید." back="/learn/ru">{null}</CoursePage>;
-  return <RussianLesson key={lesson.id} lesson={lesson} />;
+  return <RussianLesson key={lesson.id} lesson={lesson} fromStart={fromStart === '1'} />;
 }

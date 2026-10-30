@@ -8,13 +8,13 @@ import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import RussianSentenceBuilder from '@/components/RussianSentenceBuilder';
 import RussianDialoguePractice from '@/components/RussianDialoguePractice';
-import { clearRussianLessonSession, loadRussianLessonSession, saveRussianLessonSession } from '@/lib/languages/russianStudyState';
-import { findLanguage } from '@/lib/languages/catalog';
+import { clearRussianLessonSession, loadRussianLessonSessionWithPresence, saveRussianLessonSession } from '@/lib/languages/russianStudyState';
 import { RUSSIAN_LESSONS, RUSSIAN_LEVELS, RUSSIAN_LESSON_STAGES, russianProgress, type RussianCourseLesson } from '@/lib/languages/russian';
 import type { RussianLessonSession } from '@/lib/languages/russianStudyState';
 import { toPersianDigits as fa } from '@/lib/format';
-import { speechTagFor } from '@/lib/speechLanguage';
+import { playRussianSpeech, stopRussianSpeech } from '@/lib/russianSpeech';
 import { Typography } from '@/lib/theme';
+import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
 
 const stages = RUSSIAN_LESSON_STAGES;
 
@@ -22,7 +22,7 @@ const stages = RUSSIAN_LESSON_STAGES;
 const NORMAL_SPEECH_RATE = 0.85;
 const SLOW_SPEECH_RATE = 0.5;
 
-export default function RussianLesson({ lesson }: { lesson: RussianCourseLesson }) {
+export default function RussianLesson({ lesson, fromStart = false }: { lesson: RussianCourseLesson; fromStart?: boolean }) {
   const router = useRouter();
   const courseLevel = RUSSIAN_LEVELS.find(item => item.id === lesson.levelId) ?? RUSSIAN_LEVELS[0];
   const [stage, setStage] = useState(0);
@@ -38,6 +38,8 @@ export default function RussianLesson({ lesson }: { lesson: RussianCourseLesson 
   const [saveRetry, setSaveRetry] = useState(0);
   const [saving, setSaving] = useState(false);
   const completing = useRef(false);
+  const startFirstLesson = useRef(fromStart);
+  const preserveExistingSession = useRef(false);
   const current = lesson.sentences[sentenceIndex];
   const checks = lesson.checks ?? [];
   const allChecksPassed = checks.every((question, index) => answers[String(index)] === question.correctIndex);
@@ -62,22 +64,26 @@ export default function RussianLesson({ lesson }: { lesson: RussianCourseLesson 
     setSessionReady(false);
     setSessionError('');
     setCompletionError('');
-    void loadRussianLessonSession(lesson.id).then(saved => {
+    void loadRussianLessonSessionWithPresence(lesson.id).then(({ session: saved, hasSavedSession }) => {
       if (!alive) return;
-      setStage(saved.stage);
-      setSentenceIndex(Math.min(saved.sentenceIndex, lesson.sentences.length - 1));
-      setRevealed(saved.revealed);
+      const replay = startFirstLesson.current && lesson.id === RUSSIAN_LESSONS[0].id;
+      startFirstLesson.current = false;
+      preserveExistingSession.current = replay && hasSavedSession;
+      if (replay) router.setParams({ fromStart: undefined });
+      setStage(replay ? 1 : saved.stage);
+      setSentenceIndex(replay ? 0 : Math.min(saved.sentenceIndex, lesson.sentences.length - 1));
+      setRevealed(replay ? false : saved.revealed);
       setAnswers(saved.answers);
       setShowCheckAnswers(saved.showCheckAnswers);
       setSessionReady(true);
     }).catch(() => {
       if (alive) setSessionError('جلسهٔ قبلی خوانده نشد؛ برای حفظ اطلاعات، ذخیره متوقف است. دوباره تلاش کنید.');
     });
-    return () => { alive = false; void Speech.stop(); };
+    return () => { alive = false; void stopRussianSpeech(); };
   }, [lesson.id, lesson.sentences.length, loadingRetry]);
 
   useEffect(() => {
-    if (!sessionReady || completing.current) return;
+    if (!sessionReady || completing.current || preserveExistingSession.current) return;
     const nextSession: RussianLessonSession = { stage, sentenceIndex, revealed, answers, showCheckAnswers };
     void saveRussianLessonSession(lesson.id, nextSession)
       .then(() => setSessionError(''))
@@ -86,13 +92,14 @@ export default function RussianLesson({ lesson }: { lesson: RussianCourseLesson 
 
   const speak = useCallback((text: string, rate = 0.78) => {
     setSpeechError('');
-    void Speech.stop();
-    Speech.speak(text, {
-      language: speechTagFor(findLanguage('ru')!.speechLocale),
-      rate,
-      onError: () => setSpeechError('صدای روسی دستگاه در دسترس نیست؛ متن و راهنمای خوانش همچنان دیده می‌شوند.'),
-    });
+    void playRussianSpeech(text, rate, () => setSpeechError('صدای روسی دستگاه در دسترس نیست؛ متن و راهنمای خوانش همچنان دیده می‌شوند.'));
   }, []);
+
+  // Read the visible main sentence on entry, resume, and each sentence change.
+  useEffect(() => {
+    if (!sessionReady || stage !== 1 || !current) return;
+    speak(current.text, NORMAL_SPEECH_RATE);
+  }, [lesson.id, sessionReady, stage, sentenceIndex, current?.text, speak]);
 
   const selectSentence = (index: number, rate = 0.72) => {
     setSentenceIndex(index);
@@ -101,15 +108,20 @@ export default function RussianLesson({ lesson }: { lesson: RussianCourseLesson 
     speak(lesson.sentences[index].text, rate);
   };
 
+  const goToPreviousSentence = () => {
+    if (!sessionReady || saving || sessionError || stage !== 1 || sentenceIndex === 0) return;
+    setSentenceIndex(previousSentenceIndex(sentenceIndex));
+    setRevealed(false);
+    setSpeechError('');
+  };
+
   const next = async () => {
     if (!sessionReady || sessionError || completing.current || saving) return;
-    void Speech.stop();
     setCompletionError('');
     if (stage === 1 && sentenceIndex < lesson.sentences.length - 1) {
       const nextIndex = sentenceIndex + 1;
       setSentenceIndex(nextIndex);
       setRevealed(false);
-      speak(lesson.sentences[nextIndex].text, NORMAL_SPEECH_RATE);
       return;
     }
     if (stage < stages.length - 1) {
@@ -117,19 +129,25 @@ export default function RussianLesson({ lesson }: { lesson: RussianCourseLesson 
       setStage(nextStage);
       setSentenceIndex(0);
       setRevealed(false);
-      // Entering a sentence stage speaks its first sentence automatically.
-      if (nextStage === 1 || nextStage === 3) speak(lesson.sentences[0].text, NORMAL_SPEECH_RATE);
+      // Main sentences are spoken by the effect; practice keeps its existing behavior.
+      if (nextStage === 3) speak(lesson.sentences[0].text, NORMAL_SPEECH_RATE);
+      else if (nextStage !== 1) void stopRussianSpeech();
       return;
     }
     if (!allChecksPassed && !showCheckAnswers) return;
+    void stopRussianSpeech();
     completing.current = true;
     setSaving(true);
     try {
-      const index = RUSSIAN_LESSONS.findIndex(item => item.id === lesson.id);
-      const nextLesson = RUSSIAN_LESSONS[index + 1];
-      await russianProgress.completeSentenceLesson(lesson.id, nextLesson?.id);
-      await clearRussianLessonSession(lesson.id);
-      router.replace('/learn/ru' as never);
+      const nextLesson = nextLessonInOrder(RUSSIAN_LESSONS, lesson.id);
+      const progress = await russianProgress.getCourseProgress();
+      const currentProgressIndex = RUSSIAN_LESSONS.findIndex(item => item.id === progress.currentLessonId);
+      const nextIndex = nextLesson ? RUSSIAN_LESSONS.findIndex(item => item.id === nextLesson.id) : -1;
+      const progressTarget = currentProgressIndex > nextIndex ? progress.currentLessonId : nextLesson?.id;
+      await russianProgress.completeSentenceLesson(lesson.id, progressTarget);
+      if (!preserveExistingSession.current) await clearRussianLessonSession(lesson.id);
+      if (nextLesson) router.replace({ pathname: '/learn/ru/lesson', params: { id: nextLesson.id } } as never);
+      else router.replace('/learn/ru' as never);
     } catch {
       completing.current = false;
       setCompletionError('پایان درس ذخیره نشد؛ دوباره تلاش کنید.');
@@ -287,10 +305,15 @@ export default function RussianLesson({ lesson }: { lesson: RussianCourseLesson 
       </ScrollView>
 
       <View style={styles.footer}>
-        <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === stages.length - 1 && !allChecksPassed && !showCheckAnswers)} style={[styles.nextButton, (saving || (stage === stages.length - 1 && !allChecksPassed && !showCheckAnswers)) && styles.nextButtonDisabled]} onPress={() => void next()}>
-          <Text style={styles.nextText}>{saving ? 'در حال ذخیره…' : stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جملهٔ بعدی' : 'ادامه'}</Text>
-          {stage === stages.length - 1 ? <Check size={20} color="#FFFFFF" /> : <ChevronLeft size={20} color="#FFFFFF" />}
-        </Pressable>
+        <View style={styles.footerActions}>
+          {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && styles.nextButtonDisabled]}>
+            <Text style={styles.previousButtonText}>جمله قبلی</Text>
+          </Pressable>}
+          <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === stages.length - 1 && !allChecksPassed && !showCheckAnswers)} style={[styles.nextButton, stage === 1 && styles.nextButtonBesidePrevious, (saving || (stage === stages.length - 1 && !allChecksPassed && !showCheckAnswers)) && styles.nextButtonDisabled]} onPress={() => void next()}>
+            <Text style={styles.nextText}>{saving ? 'در حال ذخیره…' : stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جملهٔ بعدی' : 'ادامه'}</Text>
+            {stage === stages.length - 1 ? <Check size={20} color="#FFFFFF" /> : <ChevronLeft size={20} color="#FFFFFF" />}
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -403,6 +426,10 @@ const styles = StyleSheet.create({
   showAnswersText: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 12, fontWeight: '400', writingDirection: 'rtl' },
   evidenceNote: { fontFamily: Typography.fontFamily, color: Palette.success, fontSize: 11, lineHeight: 19, textAlign: 'right', writingDirection: 'rtl' },
   footer: { paddingHorizontal: 18, paddingTop: 11, paddingBottom: 14, backgroundColor: 'rgba(255,255,255,0.96)', borderTopWidth: 1, borderTopColor: Palette.border, shadowColor: '#20264A', shadowOpacity: .07, shadowRadius: 12, shadowOffset: { width: 0, height: -4 }, elevation: 5 },
+  footerActions: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', gap: 10 },
+  previousButton: { flex: 1, minHeight: 54, borderRadius: 17, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8, transform: [{ translateY: -30 }] },
+  previousButtonText: { fontFamily: Typography.fontFamily, color: Palette.primary, fontSize: 12, writingDirection: 'rtl' },
+  nextButtonBesidePrevious: { flex: 1, width: undefined },
   nextButton: { width: '100%', maxWidth: 820, alignSelf: 'center', minHeight: 54, borderRadius: 17, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, shadowColor: Palette.primary, shadowOpacity: .2, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 3, transform: [{ translateY: -30 }] },
   replayRow: { flexDirection: 'row', gap: 10, justifyContent: 'center', marginTop: 12 },
   replayButton: { flexDirection: 'row', alignItems: 'center', gap: 6, minHeight: 44, paddingHorizontal: 18, borderRadius: 14, borderWidth: 1, borderColor: Palette.primary, backgroundColor: '#FFFFFF' },

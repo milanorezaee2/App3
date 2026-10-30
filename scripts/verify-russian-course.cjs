@@ -1,5 +1,6 @@
 const assert = require('node:assert/strict');
 const path = require('node:path');
+const fs = require('node:fs');
 const esbuild = require('esbuild');
 
 (async () => {
@@ -10,6 +11,7 @@ const esbuild = require('esbuild');
         "export * from './lib/languages/russian';",
         "export * from './lib/languages/catalog';",
         "export * from './lib/languages/russianStudyState';",
+        "export * from './lib/englishLessonNavigation';",
         "export * from './lib/courseContent';",
         "export * from './lib/englishLearningEngine';",
       ].join('\n'),
@@ -296,6 +298,18 @@ const esbuild = require('esbuild');
     && app.russianProgress && typeof app.russianProgress.completeSentenceLesson === 'function');
   check('Russian has independent progress and draft/session storage namespaces', app.RUSSIAN_STUDY_STORAGE_KEY === 'russian_lesson_sessions_v1'
     && app.RUSSIAN_STUDY_STORAGE_KEY !== 'sentence_course_progress_ru_v2');
+  check('Russian lesson navigation follows all course boundaries and stops at the end', app.RUSSIAN_LESSONS.every((lesson, index) =>
+    app.nextLessonInOrder(app.RUSSIAN_LESSONS, lesson.id)?.id === app.RUSSIAN_LESSONS[index + 1]?.id)
+    && app.nextLessonInOrder(app.RUSSIAN_LESSONS, 'unknown') === undefined);
+  check('previous sentence is bounded at the start', app.previousSentenceIndex(0) === 0 && app.previousSentenceIndex(4) === 3);
+  const russianHome = fs.readFileSync('components/RussianHome.tsx', 'utf8');
+  const russianLesson = fs.readFileSync('components/RussianLesson.tsx', 'utf8');
+  const russianRoute = fs.readFileSync('app/learn/ru/lesson.tsx', 'utf8');
+  check('Russian home opens the first lesson in replay mode through the actual route', russianHome.includes("fromStart: '1'")
+    && russianHome.includes('RUSSIAN_LESSONS[0].id') && russianRoute.includes("fromStart === '1'"));
+  check('Russian replay protects saved sessions and completion navigates after saving', russianLesson.includes('preserveExistingSession.current')
+    && russianLesson.includes('await russianProgress.completeSentenceLesson') && russianLesson.includes('params: { id: nextLesson.id }')
+    && russianLesson.includes('currentProgressIndex > nextIndex') && russianLesson.includes('جملهٔ قبلی'));
 
   const memory = new Map();
   global.__russianSupabaseCalls = 0;
@@ -305,11 +319,15 @@ const esbuild = require('esbuild');
     removeItem(key) { memory.delete(key); },
   } };
   const firstLesson = app.RUSSIAN_LESSONS[0];
+  const firstLoad = await app.loadRussianLessonSessionWithPresence(firstLesson.id);
+  check('new Russian session reports no saved session', !firstLoad.hasSavedSession && firstLoad.session.stage === 0);
   const fresh = await app.loadRussianLessonSession(firstLesson.id);
   check('new Russian session starts at stage one without writing another language key', fresh.stage === 0 && memory.size === 0);
   const saved = { stage: 4, sentenceIndex: 2, revealed: true, answers: { '0': 1 }, showCheckAnswers: false };
   await app.saveRussianLessonSession(firstLesson.id, saved);
   const restored = await app.loadRussianLessonSession(firstLesson.id);
+  const savedLoad = await app.loadRussianLessonSessionWithPresence(firstLesson.id);
+  check('saved Russian session presence is detected without changing stored data', savedLoad.hasSavedSession && JSON.stringify(savedLoad.session) === JSON.stringify(saved));
   check('Russian session resumes its stage, sentence and local check answer', JSON.stringify(restored) === JSON.stringify(saved));
   check('session data is stored only under the Russian session key', memory.size === 1 && memory.has(app.RUSSIAN_STUDY_STORAGE_KEY));
   const invalid = { ...saved, stage: 9 };
