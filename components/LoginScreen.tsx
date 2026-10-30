@@ -28,7 +28,6 @@ type LoginScreenProps = {
   code: string;
   onChangeCode: (value: string) => void;
   onSubmit: () => void;
-  onGuest: () => void;
   busy: boolean;
   error: string;
   notice: string;
@@ -120,7 +119,6 @@ export function LoginScreen({
   code,
   onChangeCode,
   onSubmit,
-  onGuest,
   busy,
   error,
   notice,
@@ -254,10 +252,6 @@ export function LoginScreen({
         {busy
           ? <ActivityIndicator color="#FFFFFF" />
           : <Text style={styles.ctaText}>{registering ? 'ساخت حساب و دریافت کد' : 'ورود به اپ'}</Text>}
-      </Pressable>
-
-      <Pressable accessibilityRole="button" onPress={onGuest} style={styles.guest}>
-        <Text style={styles.guestText}>ادامه بدون حساب کاربری</Text>
       </Pressable>
 
       <View style={styles.privacy}>
@@ -503,14 +497,6 @@ const styles = StyleSheet.create({
   },
   ctaArrow: { position: 'absolute', left: 22, top: 0, bottom: 0, justifyContent: 'center' },
   disabled: { opacity: 0.55 },
-
-  guest: { marginTop: 12, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
-  guestText: {
-    fontFamily: Typography.mediumFontFamily,
-    color: '#1769D2',
-    fontSize: 12,
-    writingDirection: 'rtl',
-  },
 
   privacy: {
     marginTop: 8,

@@ -10,11 +10,10 @@ export const RUSSIAN_ONLY_BUILD = process.env.EXPO_PUBLIC_RUSSIAN_ONLY === 'true
 
 export const FEATURES = Object.freeze({
   /**
-   * Learner login/registration screen. Temporarily OFF: the app opens directly.
-   * Set to true to restore the registration gate (code is kept intact).
+   * Learner builds must authenticate before entering the app. The private
+   * management build is bypassed separately above.
    */
-  // Build-time switch: EXPO_PUBLIC_LEARNER_LOGIN=true builds the login version for learners.
-  learnerLogin: process.env.EXPO_PUBLIC_LEARNER_LOGIN === 'true',
+  learnerLogin: true,
   adminPanel: educationAdminEnabled,
   educationEnrollment: educationAdminEnabled,
   // Roadmap modules are not implemented yet. Enabling a boolean cannot build them.

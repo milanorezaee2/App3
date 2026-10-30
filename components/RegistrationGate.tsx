@@ -17,7 +17,7 @@ type Mode = LoginMode;
 export function RegistrationGate({ children }: PropsWithChildren) {
   const [checking, setChecking] = useState(!BYPASS_GATE);
   const [ready, setReady] = useState(BYPASS_GATE);
-  const [mode, setMode] = useState<Mode>('register');
+  const [mode, setMode] = useState<Mode>('login');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +26,6 @@ export function RegistrationGate({ children }: PropsWithChildren) {
   const [notice, setNotice] = useState('');
   const [generatedCode, setGeneratedCode] = useState('');
   const [registrationReady, setRegistrationReady] = useState(false);
-  const [guest, setGuest] = useState(false);
   const holdForCode = useRef(false);
 
   const inspect = useCallback(async () => {
@@ -77,7 +76,7 @@ export function RegistrationGate({ children }: PropsWithChildren) {
     }
   }
 
-  if (BYPASS_GATE || ready || guest) return <>{children}</>;
+  if (BYPASS_GATE || ready) return <>{children}</>;
   if (checking) return <View style={styles.loading}><ActivityIndicator size="large" color={Colors.primary[600]} /><Text style={styles.loadingText}>در حال بررسی حساب…</Text></View>;
 
   if (generatedCode) {
@@ -113,7 +112,6 @@ export function RegistrationGate({ children }: PropsWithChildren) {
       code={password}
       onChangeCode={setPassword}
       onSubmit={() => void submit()}
-      onGuest={() => setGuest(true)}
       busy={busy}
       error={error}
       notice={notice}
