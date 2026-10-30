@@ -90,7 +90,7 @@ export default function RussianLibrary() {
 
             <LinearGradient colors={['#19204C', '#343B8A', '#5148C8']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
               <View pointerEvents="none" style={styles.heroOrb} />
-              <View style={styles.heroTopRow}><View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View><View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۵ سطح در نقشهٔ روسی</Text></View></View>
+              <View style={styles.heroTopRow}><View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View><View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۶ سطح در نقشهٔ روسی</Text></View></View>
               <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
               <Text style={styles.overviewTitle}>از الفبا؛{ '\n' }جمله به جمله</Text>
               <Text style={styles.overviewText}>محتوای موجود از پایه آغاز می‌شود. آمار فقط درس‌ها و جمله‌های منتشرشده را می‌شمارد؛ سطح‌های آینده محتوای ساختگی ندارند.</Text>
@@ -102,7 +102,7 @@ export default function RussianLibrary() {
             </LinearGradient>
 
             <View style={styles.levelRailCard}>
-              <EnglishSectionHeading eyebrow="YOUR CURRENT STEP" title="پیشرفت در پنج سطح" detail="این برچسب‌ها نقشهٔ آموزشی داخلی‌اند و گواهی یا ارزیابی رسمی سطح نیستند." />
+              <EnglishSectionHeading eyebrow="YOUR CURRENT STEP" title="پیشرفت در شش سطح" detail="این برچسب‌ها نقشهٔ آموزشی داخلی‌اند و گواهی یا ارزیابی رسمی سطح نیستند." />
               <View style={styles.railWrap}>
                 <EnglishLevelRail activeLevelId={activeLevelId} counts={Object.fromEntries(RUSSIAN_LEVELS.map(item => [item.id, countFor(item.id)]))} levels={RUSSIAN_LEVELS} onSelect={openLevel} />
               </View>

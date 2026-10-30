@@ -6,7 +6,6 @@ const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8'
 let checks = 0;
 const verify = (condition, message) => { assert.ok(condition, message); checks += 1; };
 const ruNav = read('components/RussianBottomNav.tsx');
-const deNav = read('components/GermanBottomNav.tsx');
 const logo = read('components/MiloLogoMotion.tsx');
 const root = read('app/_layout.tsx');
 const entry = read('app/index.tsx');
@@ -18,8 +17,7 @@ const migration = read('supabase/migrations/202610190001_multi_contact_chat_mode
 const copySql = read('supabase/SETUP-MULTI-CONTACT-ADMIN-ONCE.sql');
 
 verify(ruNav.includes("'/learn/ru/pronunciation'") && ruNav.includes("'/conversations'"), 'Russian navigation links to pronunciation and real conversations');
-verify(/flexDirection: 'row-reverse'/.test(ruNav) && /flexDirection: 'row-reverse'/.test(deNav), 'Russian and German navigation remain RTL');
-verify(deNav.includes("'/conversations'"), 'German navigation links to real conversations');
+verify(/flexDirection: 'row-reverse'/.test(ruNav), 'Russian navigation remains RTL');
 verify(logo.includes("const SUBTITLE = 'MULTILANGUAGE'"), 'startup logo displays the full MiloMultiLanguage wordmark');
 verify(/}, 3400\)/.test(root), 'startup wordmark remains visible until its animation completes');
 verify(/"name": "MiloMultiLanguage"/.test(appConfig), 'application display name uses the full brand');

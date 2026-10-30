@@ -9,7 +9,7 @@ import { FEATURES } from '@/lib/features';
 export default function LanguageLayout(){
  const {language}=useLocalSearchParams<{language?:string}>();
  const [ready,setReady]=useState(false);useEffect(()=>setReady(true),[]);
- if(language==='ru'&&!FEATURES.russianCourse)return <Redirect href={'/languages' as never}/>;
+ if(language==='de'||(language==='ru'&&!FEATURES.russianCourse))return <Redirect href={'/languages' as never}/>;
  if(!ready)return <View style={{flex:1,backgroundColor:Colors.neutral[950],alignItems:'center',justifyContent:'center',gap:12}}><ActivityIndicator color={Colors.primary[400]}/><Text style={{fontFamily:Typography.fontFamily,color:Colors.neutral[300]}}>در حال آماده‌کردن صفحه…</Text></View>;
  return <Slot/>;
 }

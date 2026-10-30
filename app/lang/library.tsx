@@ -73,12 +73,20 @@ export default function EnglishLessonList() {
   const blueprint = selected ? ENGLISH_ENGINE_BLUEPRINT.find(item => item.levelId === selected.id) : null;
   const advancedComposition = getAdvancedContentComposition();
   const lessonGroups = useMemo(() => {
-    const collections = selected?.id === 4
+    const collections = selected?.id === 5
+      ? [lessons.filter(item => item.c1Section === 'foundation'), lessons.filter(item => item.c1Section === 'survival')]
+      : selected?.id === 4
       ? [
+          lessons.filter(item => item.b2Section === 'foundation'),
+          lessons.filter(item => item.b2Section === 'survival'),
           lessons.filter(item => item.contentKind === 'scenario'),
           lessons.filter(item => item.contentKind === 'vocabulary-practice'),
         ]
-      : [lessons];
+      : selected?.id === 2
+        ? [lessons.filter(item => item.a2Section === 'foundation'), lessons.filter(item => item.a2Section === 'survival'), lessons.filter(item => item.a2Section === 'legacy')]
+      : selected?.id === 3
+        ? [lessons.filter(item => item.b1Section === 'foundation'), lessons.filter(item => item.b1Section === 'survival'), lessons.filter(item => !item.b1Section)]
+        : [lessons];
     const groups: typeof lessons[] = [];
     for (const collection of collections) {
       for (let index = 0; index < collection.length; index += LESSONS_PER_GROUP) {
@@ -129,7 +137,7 @@ export default function EnglishLessonList() {
               </LinearGradient>
 
               <View style={styles.levelRailCard}>
-                <EnglishSectionHeading eyebrow="YOUR CURRENT STEP" title="پیشرفت در پنج سطح" detail="برای شروع فقط یک سطح را باز کنید؛ لازم نیست همهٔ مسیر را یک‌باره ببینید." />
+                <EnglishSectionHeading eyebrow="YOUR CURRENT STEP" title="پیشرفت در سطح‌ها" detail="برای شروع فقط یک سطح را باز کنید؛ لازم نیست همهٔ مسیر را یک‌باره ببینید." />
                 <View style={styles.railWrap}><EnglishLevelRail activeLevelId={activeLevelId} counts={counts} direction="rtl" onSelect={openLevel} /></View>
                 <Text style={styles.railCurrent}>{COURSE_LEVELS.find(item => item.id === activeLevelId)?.title}</Text>
               </View>
@@ -221,10 +229,14 @@ export default function EnglishLessonList() {
                     </View>
                   ))}
                 </View>
-                {selected.id === 4 ? (
+                {selected.id === 5 ? (
+                  <Text style={styles.focusFootnote}>این درس‌ها برای ۵۵ محور درخواست‌شده دو نمونه، توضیح و تمرین دارند. تعیین سطح فعلی C1 را ارزیابی نمی‌کند و این تمرین‌ها گواهی مهارت C1 نیستند.</Text>
+                ) : selected.id === 4 ? (
                   <Text style={styles.focusFootnote}>
-                    در دادهٔ فعلی {toPersianDigits(advancedComposition.scenarioLessonCount)} درس سناریومحور و {toPersianDigits(advancedComposition.vocabularyPracticeLessonCount)} مجموعهٔ مرور واژگان وجود دارد. مجموعه‌های مرور شامل مثال‌های مستقل‌اند و گفت‌وگوی پیوسته یا سنجش رسمی محسوب نمی‌شوند؛ برچسب سطح داخلی است.
+                    بخش‌های B2 برای هر محور سه نمونه، نکته و یک تمرین اختیاری دارند؛ هر درس یک موقعیت کاربردی نیز دارد. محتوای پیشین شامل {toPersianDigits(advancedComposition.scenarioLessonCount)} درس سناریومحور و {toPersianDigits(advancedComposition.vocabularyPracticeLessonCount)} مجموعهٔ مرور واژگان وجود دارد. مجموعه‌های مرور شامل مثال‌های مستقل‌اند و گفت‌وگوی پیوسته یا سنجش رسمی محسوب نمی‌شوند و سطح یکسان B2 آن‌ها تأیید نشده است.
                   </Text>
+                ) : selected.id === 2 ? (
+                  <Text style={styles.focusFootnote}>درس‌های پایه تازه‌اند؛ بعضی درس‌های موقعیتی قدیمی برای A2–B1 نوشته شده‌اند و در حال ساده‌سازی‌اند.</Text>
                 ) : (
                   <Text style={styles.focusFootnote}>موضوعات نقشه، هدف مسیرند؛ شمار درس‌ها، جمله‌ها و واژه‌های یکتای این سطح از محتوای موجود محاسبه شده است.</Text>
                 )}
@@ -249,7 +261,27 @@ export default function EnglishLessonList() {
                   const groupNumber = advancedGroup
                     ? lessonGroups.slice(0, index + 1).filter(items => items[0]?.contentKind === groupKind).length
                     : index + 1;
-                  const groupTitle = advancedGroup && groupKind === 'scenario'
+                  const groupTitle = first.c1Section === 'foundation'
+                    ? 'C1 Advanced Communication · Foundation'
+                    : first.c1Section === 'survival'
+                      ? 'C1 Advanced Communication · Survival'
+                    : first.b2Section === 'foundation'
+                    ? 'B2 Upper-Intermediate Communication · Foundation'
+                    : first.b2Section === 'survival'
+                      ? 'B2 Upper-Intermediate Communication · Survival'
+                    : first.a2Section === 'foundation'
+                    ? 'A2 Foundation · پایهٔ سطح ۲'
+                    : first.a2Section === 'survival'
+                      ? `A2 Survival · موقعیت‌های موجود A2–B1 · بخش ${toPersianDigits(index)}`
+                      : first.a2Section === 'legacy'
+                        ? 'درس‌های موقعیتی پیشین · A2–B1'
+                    : first.b1Section === 'foundation'
+                    ? 'B1 Independent Communication · Foundation'
+                    : first.b1Section === 'survival'
+                      ? 'B1 Independent Communication · Survival'
+                      : selected?.id === 3
+                        ? `درس‌های Communication موجود · بخش ${toPersianDigits(groupNumber - 2)}`
+                    : advancedGroup && groupKind === 'scenario'
                     ? `سناریوهای پیشرفته · بستهٔ ${toPersianDigits(groupNumber)}`
                     : advancedGroup && groupKind === 'vocabulary-practice'
                       ? `مرور واژگان · بستهٔ ${toPersianDigits(groupNumber)}`
@@ -259,7 +291,7 @@ export default function EnglishLessonList() {
                       <Pressable accessibilityRole="button" accessibilityLabel={groupTitle} accessibilityState={{ expanded: open }} style={styles.groupHeader} onPress={() => setExpandedGroup(open ? -1 : index)}>
                         <View style={[styles.groupNumber, open && styles.groupNumberActive]}><Text style={[styles.groupNumberText, open && styles.groupNumberTextActive]}>{toPersianDigits(groupNumber)}</Text></View>
                         <View style={styles.groupHeaderCopy}>
-                          <Text style={styles.groupTitle}>{groupTitle}</Text>
+                          <Text style={[styles.groupTitle, (first.b1Section || first.b2Section || first.c1Section) && { textAlign: 'left', writingDirection: 'ltr' }]}>{groupTitle}</Text>
                           <Text style={styles.groupMeta}>{toPersianDigits(group.length)} درس · {toPersianDigits(groupCompleted)} تکمیل‌شده · درس‌های {toPersianDigits(first.order)} تا {toPersianDigits(last.order)}</Text>
                         </View>
                         {open ? <ChevronUp size={18} color={Palette.primary} /> : <ChevronDown size={18} color={Palette.muted} />}
@@ -364,14 +396,14 @@ const styles = StyleSheet.create({
   overviewMetricDivider: { width: 1, height: 30, backgroundColor: 'rgba(255,255,255,0.18)' },
   levelRailCard: { padding: 16, gap: 12, borderRadius: 21, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border },
   railWrap: { paddingVertical: 5 },
-  railCurrent: { fontFamily: Typography.latinFontFamily, color: Palette.primaryDark, fontSize: 10, fontWeight: '800', textAlign: 'right', writingDirection: 'ltr' },
+  railCurrent: { fontFamily: Typography.latinFontFamily, color: Palette.primaryDark, fontSize: 10, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
   levelList: { gap: 9 },
   levelOption: { minHeight: 96, flexDirection: 'row-reverse', alignItems: 'center', gap: 12, padding: 14, borderRadius: 20, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, shadowColor: '#20264A', shadowOpacity: .035, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   levelOptionMark: { width: 44, height: 44, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
   levelOptionNumber: { fontFamily: 'Vazir', color: '#FFFFFF', fontSize: 17, fontWeight: '800', writingDirection: 'rtl' },
   levelOptionContent: { flex: 1, gap: 5 },
   levelOptionTitleRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
-  levelOptionTitle: { flexShrink: 1, fontFamily: Typography.latinFontFamily, color: Palette.ink, fontSize: 12, fontWeight: '800', textAlign: 'right', writingDirection: 'ltr' },
+  levelOptionTitle: { flexShrink: 1, fontFamily: Typography.latinFontFamily, color: Palette.ink, fontSize: 12, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
   levelOptionBand: { fontFamily: 'Inter-ExtraBold', fontSize: 7, fontWeight: '800', writingDirection: 'ltr' },
   levelOptionDescription: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 11, textAlign: 'right', writingDirection: 'rtl' },
   levelOptionMeta: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, flexWrap: 'wrap' },
@@ -384,7 +416,7 @@ const styles = StyleSheet.create({
   levelHeroTag: { borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.16)', paddingHorizontal: 10, paddingVertical: 5 },
   levelHeroTagText: { fontFamily: 'Inter-ExtraBold', color: '#FFFFFF', fontSize: 7, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
   levelHeroBand: { fontFamily: 'Inter-ExtraBold', color: 'rgba(255,255,255,0.85)', fontSize: 8, fontWeight: '800', writingDirection: 'ltr' },
-  selectedTitle: { fontFamily: Typography.latinFontFamily, color: '#FFFFFF', fontSize: 25, lineHeight: 37, fontWeight: '800', textAlign: 'right', writingDirection: 'ltr', marginTop: 4 },
+  selectedTitle: { fontFamily: Typography.latinFontFamily, color: '#FFFFFF', fontSize: 25, lineHeight: 37, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr', marginTop: 4 },
   selectedDescription: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.8)', fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
   selectedProgressHeading: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 },
   selectedProgressLabel: { fontFamily: Typography.fontFamily, color: '#DCE0FF', fontSize: 10, writingDirection: 'rtl' },
@@ -406,7 +438,7 @@ const styles = StyleSheet.create({
   moduleGrid: { flexDirection: 'row-reverse', flexWrap: 'wrap', gap: 7 },
   moduleChip: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, maxWidth: '100%', paddingHorizontal: 10, paddingVertical: 8, borderRadius: 12, backgroundColor: Palette.surfaceMuted, borderWidth: 1, borderColor: Palette.border },
   moduleDot: { width: 6, height: 6, borderRadius: 3 },
-  moduleText: { fontFamily: Typography.latinFontFamily, color: Palette.text, fontSize: 8, fontWeight: '800', textAlign: 'right', writingDirection: 'ltr' },
+  moduleText: { fontFamily: Typography.latinFontFamily, color: Palette.text, fontSize: 8, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
   focusFootnote: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 9, lineHeight: 16, textAlign: 'right', writingDirection: 'rtl' },
   lessonSectionHeading: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginTop: 2 },
   lessonSectionTitle: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 20, lineHeight: 29, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },

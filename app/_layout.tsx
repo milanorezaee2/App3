@@ -15,6 +15,7 @@ import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AppLockGate } from '@/components/AppLockGate';
 import { ChatNotificationBridge } from '@/components/ChatNotificationBridge';
+import { AppResumeGuard } from '@/components/AppResumeGuard';
 import { RegistrationGate } from '@/components/RegistrationGate';
 import { getPairingState, isOnboardingComplete } from '@/lib/storage';
 import { isSupabaseConfigured } from '@/lib/pairing';
@@ -138,7 +139,6 @@ export default function RootLayout() {
       player?.remove();
       setIntroComplete(true);
       warmSpeech('en-US');
-      setTimeout(() => warmSpeech('de-DE'), 350);
     }, 3400);
     return () => clearTimeout(finish);
   }, [fontsLoaded, fontError]);
@@ -171,6 +171,7 @@ export default function RootLayout() {
                 <Stack.Screen name="lang/index" />
                 <Stack.Screen name="+not-found" />
               </Stack>
+              <AppResumeGuard />
               <ChatNotificationBridge />
             </RegistrationGate>
           </AppLockGate>

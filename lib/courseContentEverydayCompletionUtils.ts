@@ -1,6 +1,6 @@
 import type { CourseSentence } from './courseContent';
 
-export type EverydayCompletionVocabulary = readonly [word: string, meaning: string];
+export type EverydayCompletionVocabulary = readonly [word: string, meaning: string, essential504?: boolean];
 export type EverydayCompletionRow = readonly [
   en: string,
   fa: string,
@@ -21,6 +21,6 @@ export function buildEverydayCompletion(
     fa,
     pronunciation,
     pattern,
-    vocabulary: vocabulary.map(([word, meaning]) => ({ word, meaning })),
+    vocabulary: vocabulary.map(([word, meaning, essential504]) => ({ word, meaning, ...(essential504 ? { essential504: true } : {}) })),
   }));
 }

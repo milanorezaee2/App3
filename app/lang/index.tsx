@@ -223,6 +223,10 @@ export default function LearningHome() {
                 <Text style={styles.lessonCountLabel}>جمله</Text>
               </View>
             </View>
+            <Pressable accessibilityRole="button" accessibilityLabel="گوش دادن از ابتدای آموزش انگلیسی" style={styles.startFromBeginningButton} onPress={() => router.push({ pathname: '/course/lesson', params: { id: SENTENCE_LESSONS[0].id, fromStart: '1' } } as never)}>
+              <Volume2 size={17} color={HomeColors.accent} />
+              <Text style={styles.startFromBeginningText}>گوش دادن از ابتدا</Text>
+            </Pressable>
           </View>
 
           <View style={styles.sectionHeader}>
@@ -296,7 +300,7 @@ export default function LearningHome() {
             <Pressable accessibilityRole="button" accessibilityState={{ expanded: showRoadmap }} style={styles.mapToggle} onPress={() => setShowRoadmap(value => !value)}>
               <View style={styles.mapToggleIcon}><Compass size={16} color={HomeColors.accent} /></View>
               <View style={styles.mapToggleText}>
-                <Text style={styles.mapToggleTitle}>{showRoadmap ? 'بستن نقشهٔ کامل' : 'دیدن جزئیات پنج سطح'}</Text>
+                <Text style={styles.mapToggleTitle}>{showRoadmap ? 'بستن نقشهٔ کامل' : 'دیدن جزئیات سطح‌ها'}</Text>
                 <Text style={styles.mapToggleMeta}>{currentBlueprint?.modules.slice(0, 3).map(displayEnglishModuleLabel).join(' · ')}</Text>
               </View>
               {showRoadmap ? <ChevronUp size={18} color={HomeColors.accent} /> : <ChevronDown size={18} color={HomeColors.muted} />}
@@ -422,7 +426,7 @@ const styles = StyleSheet.create({
   brandLockup: { flexDirection: 'row-reverse', alignItems: 'center', gap: 11 },
   brandMark: { width: 46, height: 46, borderRadius: 16, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: 'rgba(216,183,110,0.4)', shadowColor: '#38306F', shadowOpacity: 0.2, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
   brandCopy: { gap: 2 },
-  brandEyebrow: { fontFamily: 'Inter-ExtraBold', color: '#8C7BB8', fontSize: 6, fontWeight: '800', letterSpacing: 1.45, textAlign: 'right', writingDirection: 'ltr' },
+  brandEyebrow: { fontFamily: 'Inter-ExtraBold', color: '#8C7BB8', fontSize: 6, fontWeight: '800', letterSpacing: 1.45, textAlign: 'left', writingDirection: 'ltr' },
   headerTitle: { fontFamily: Typography.fontFamily, fontSize: 16, lineHeight: 24, fontWeight: '400', color: HomeColors.ink, textAlign: 'right', writingDirection: 'rtl' },
   welcomeBlock: { position: 'relative', minHeight: 202, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 18, overflow: 'hidden', padding: 18, borderRadius: 27, borderWidth: 1, borderColor: '#D4E5FA', shadowColor: '#174B86', shadowOpacity: 0.08, shadowRadius: 23, shadowOffset: { width: 0, height: 11 }, elevation: 6 },
   welcomeBlockCompact: { flexDirection: 'column', alignItems: 'stretch', gap: 15, padding: 16 },
@@ -430,7 +434,7 @@ const styles = StyleSheet.create({
   welcomeGlowTwo: { position: 'absolute', bottom: -142, left: -90, width: 280, height: 280, borderRadius: 140, backgroundColor: 'rgba(33,167,192,0.12)' },
   welcomeCopy: { flex: 1, gap: 7, alignItems: 'stretch', zIndex: 1 },
   welcomeEyebrowRow: { flexDirection: 'row-reverse', alignItems: 'center', alignSelf: 'flex-end', gap: 6, paddingHorizontal: 9, paddingVertical: 5, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.82)', borderWidth: 1, borderColor: '#D5E6FA' },
-  welcomeEyebrow: { fontFamily: 'Inter-ExtraBold', color: '#1769D2', fontSize: 6, fontWeight: '800', letterSpacing: 1.35, textAlign: 'right', writingDirection: 'ltr' },
+  welcomeEyebrow: { fontFamily: 'Inter-ExtraBold', color: '#1769D2', fontSize: 6, fontWeight: '800', letterSpacing: 1.35, textAlign: 'left', writingDirection: 'ltr' },
   welcomeTitle: { fontFamily: Typography.fontFamily, color: HomeColors.ink, fontSize: 23, lineHeight: 35, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   welcomeDescription: { fontFamily: Typography.fontFamily, color: HomeColors.text, fontSize: 11, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
   welcomeTags: { flexDirection: 'row-reverse', flexWrap: 'wrap', gap: 6, marginTop: 4 },
@@ -441,16 +445,16 @@ const styles = StyleSheet.create({
   welcomeImage: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, width: '100%', height: '100%' },
   welcomeImageShade: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 },
   welcomeImageStamp: { position: 'absolute', bottom: 9, left: 9, minWidth: 44, alignItems: 'center', paddingHorizontal: 7, paddingVertical: 5, borderRadius: 10, backgroundColor: 'rgba(20,22,48,0.83)', borderWidth: 1, borderColor: 'rgba(216,183,110,0.45)' },
-  welcomeImageStampMain: { fontFamily: 'Inter-ExtraBold', color: '#F2D99C', fontSize: 11, fontWeight: '800', letterSpacing: 1.2, textAlign: 'right', writingDirection: 'ltr' },
+  welcomeImageStampMain: { fontFamily: 'Inter-ExtraBold', color: '#F2D99C', fontSize: 11, fontWeight: '800', letterSpacing: 1.2, textAlign: 'left', writingDirection: 'ltr' },
   welcomeImageStampLine: { width: 23, height: 1, backgroundColor: 'rgba(216,183,110,0.8)', marginVertical: 2 },
-  welcomeImageStampSub: { fontFamily: 'Inter-ExtraBold', color: '#FFFFFF', fontSize: 6, fontWeight: '800', letterSpacing: 1, textAlign: 'right', writingDirection: 'ltr' },
+  welcomeImageStampSub: { fontFamily: 'Inter-ExtraBold', color: '#FFFFFF', fontSize: 6, fontWeight: '800', letterSpacing: 1, textAlign: 'left', writingDirection: 'ltr' },
   lessonCard: { position: 'relative', overflow: 'hidden', borderRadius: 25, padding: 18, gap: 15, backgroundColor: HomeColors.surface, borderWidth: 1, borderColor: '#E5DDEB', shadowColor: '#30254E', shadowOpacity: 0.09, shadowRadius: 20, shadowOffset: { width: 0, height: 8 }, elevation: 4 },
   lessonCardAccent: { position: 'absolute', top: 0, right: 0, height: 4, width: '46%' },
   lessonMetaRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 8, paddingTop: 4 },
   levelTag: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, borderRadius: Radius.full, backgroundColor: '#FBF8F0', borderWidth: 1, borderColor: '#EADCB9', paddingHorizontal: 10, paddingVertical: 7 },
 
   levelTagDot: { width: 6, height: 6, borderRadius: 3 },
-  levelTagName: { fontFamily: 'Inter-ExtraBold', color: HomeColors.accentDeep, fontSize: 7, fontWeight: '800', textAlign: 'right', writingDirection: 'ltr' },
+  levelTagName: { fontFamily: 'Inter-ExtraBold', color: HomeColors.accentDeep, fontSize: 7, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
   levelTagDivider: { color: '#A89CB3', fontSize: 9, fontWeight: '700' },
   levelTagText: { fontFamily: Typography.fontFamily, fontSize: 9, fontWeight: '400', textAlign: 'right' },
   lessonOrder: { fontFamily: Typography.fontFamily, color: HomeColors.muted, fontSize: 9, textAlign: 'right', writingDirection: 'rtl' },
@@ -474,6 +478,8 @@ const styles = StyleSheet.create({
   levelProgressMeta: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
   levelProgressLabel: { fontFamily: Typography.fontFamily, color: HomeColors.text, fontSize: 9, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   levelProgressValue: { fontFamily: Typography.numberFontFamily, color: HomeColors.muted, fontSize: 9, textAlign: 'right', writingDirection: 'rtl' },
+  startFromBeginningButton: { minHeight: 48, marginTop: 10, borderRadius: 14, borderWidth: 1, borderColor: HomeColors.border, backgroundColor: HomeColors.surfaceSoft, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8 },
+  startFromBeginningText: { fontFamily: Typography.fontFamily, color: HomeColors.accentDeep, fontSize: 13, textAlign: 'center', writingDirection: 'rtl' },
   lessonFooter: { flexDirection: 'row-reverse', alignItems: 'center', gap: 9 },
   continueButton: { minHeight: 50, flex: 1, borderRadius: 16, overflow: 'hidden' },
   continueButtonGradient: { minHeight: 50, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, paddingHorizontal: 13 },
@@ -485,7 +491,7 @@ const styles = StyleSheet.create({
   sectionHeading: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
   sectionHeader: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
   sectionTitleBlock: { alignItems: 'stretch', gap: 2 },
-  sectionEyebrow: { fontFamily: 'Inter-ExtraBold', color: '#9B8559', fontSize: 6, fontWeight: '800', letterSpacing: 1.2, textAlign: 'right', writingDirection: 'ltr' },
+  sectionEyebrow: { fontFamily: 'Inter-ExtraBold', color: '#9B8559', fontSize: 6, fontWeight: '800', letterSpacing: 1.2, textAlign: 'left', writingDirection: 'ltr' },
   sectionTitle: { fontFamily: Typography.fontFamily, color: HomeColors.ink, fontSize: 18, lineHeight: 27, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   dailyGoalPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, borderRadius: Radius.full, backgroundColor: HomeColors.goldSoft, borderWidth: 1, borderColor: '#E9DDBF', paddingHorizontal: 10, paddingVertical: 7 },
   dailyGoalText: { fontFamily: Typography.fontFamily, color: HomeColors.amber, fontSize: 8, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
@@ -507,7 +513,7 @@ const styles = StyleSheet.create({
   pathPanel: { borderRadius: 24, padding: 17, backgroundColor: HomeColors.surface, borderWidth: 1, borderColor: '#E4DCEB', gap: 14, shadowColor: '#30254E', shadowOpacity: 0.065, shadowRadius: 18, shadowOffset: { width: 0, height: 7 }, elevation: 3 },
   panelHeadingRow: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', gap: 10 },
   panelHeadingText: { flex: 1, alignItems: 'stretch' },
-  panelEyebrow: { fontFamily: 'Inter-ExtraBold', color: '#9B8559', fontSize: 6, fontWeight: '800', letterSpacing: 1.2, textAlign: 'right', writingDirection: 'ltr' },
+  panelEyebrow: { fontFamily: 'Inter-ExtraBold', color: '#9B8559', fontSize: 6, fontWeight: '800', letterSpacing: 1.2, textAlign: 'left', writingDirection: 'ltr' },
   panelTitle: { fontFamily: Typography.fontFamily, color: HomeColors.ink, fontSize: 19, lineHeight: 29, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   libraryLink: { minHeight: 38, flexDirection: 'row-reverse', alignItems: 'center', gap: 2, paddingHorizontal: 10, borderRadius: 13, backgroundColor: HomeColors.goldSoft, borderWidth: 1, borderColor: '#E9DDBF' },
   libraryLinkText: { fontFamily: Typography.fontFamily, color: HomeColors.accentDeep, fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
@@ -516,7 +522,7 @@ const styles = StyleSheet.create({
   levelNumber: { width: 35, height: 35, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
   levelNumberText: { fontFamily: Typography.numberFontFamily, writingDirection: 'rtl', fontSize: 14, fontWeight: '900' },
   currentLevelCopy: { flex: 1, alignItems: 'stretch', gap: 1 },
-  currentLevelName: { fontFamily: Typography.latinFontFamily, color: HomeColors.ink, fontSize: 9, fontWeight: '800', textAlign: 'right', writingDirection: 'ltr' },
+  currentLevelName: { fontFamily: Typography.latinFontFamily, color: HomeColors.ink, fontSize: 9, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
   currentLevelDescription: { fontFamily: Typography.fontFamily, color: HomeColors.muted, fontSize: 8, textAlign: 'right', writingDirection: 'rtl' },
   currentLevelCount: { alignItems: 'center', minWidth: 45 },
   levelCountValue: { fontFamily: Typography.numberFontFamily, fontSize: 12, fontWeight: '900', writingDirection: 'rtl' },
@@ -525,13 +531,13 @@ const styles = StyleSheet.create({
   mapToggleIcon: { width: 31, height: 31, borderRadius: 11, alignItems: 'center', justifyContent: 'center', backgroundColor: HomeColors.goldSoft },
   mapToggleText: { flex: 1, gap: 2 },
   mapToggleTitle: { fontFamily: Typography.fontFamily, color: HomeColors.ink, fontSize: 10, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
-  mapToggleMeta: { fontFamily: Typography.latinFontFamily, color: HomeColors.muted, fontSize: 6, fontWeight: '800', textAlign: 'right', writingDirection: 'ltr' },
+  mapToggleMeta: { fontFamily: Typography.latinFontFamily, color: HomeColors.muted, fontSize: 6, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
   fullRoadmap: { gap: 8 },
   levelCard: { minHeight: 70, flexDirection: 'row-reverse', alignItems: 'center', gap: 10, padding: 11, borderRadius: 16, backgroundColor: HomeColors.surface, borderWidth: 1, borderColor: HomeColors.border, shadowColor: '#30254E', shadowOpacity: 0.035, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   levelCardActive: { borderColor: '#D6BD81', backgroundColor: '#FCF9F1' },
   levelText: { flex: 1, gap: 2 },
   levelTitleRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6 },
-  levelTitle: { fontFamily: Typography.latinFontFamily, flexShrink: 1, color: HomeColors.ink, fontSize: 8, fontWeight: '800', textAlign: 'right', writingDirection: 'ltr' },
+  levelTitle: { fontFamily: Typography.latinFontFamily, flexShrink: 1, color: HomeColors.ink, fontSize: 8, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
   levelCefr: { fontFamily: 'Inter-ExtraBold', fontSize: 6, fontWeight: '800', writingDirection: 'ltr' },
   levelDesc: { fontFamily: Typography.fontFamily, color: HomeColors.text, fontSize: 8, textAlign: 'right', writingDirection: 'rtl' },
   levelStats: { fontFamily: Typography.fontFamily, color: HomeColors.muted, fontSize: 8, textAlign: 'right', writingDirection: 'rtl' },

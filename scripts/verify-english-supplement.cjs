@@ -18,7 +18,7 @@ const esbuild = require('esbuild');
   const ids = new Set();
 
   check(app.ENGLISH_SUPPLEMENT.length === 24);
-  check(app.SENTENCE_LESSONS.length === 174);
+  check(app.SENTENCE_LESSONS.length === 212);
   const survivalLessons = app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 1);
   check(survivalLessons.length === 19 && survivalLessons.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 950
     && survivalLessons.every(lesson => lesson.sentences.length === 50));
@@ -153,5 +153,5 @@ const esbuild = require('esbuild');
   check(app.ENGLISH_SUPPLEMENT.every(unit => !mainLessonIds.has(unit.id)));
   check(supplementTaskIds.every(id => !mainSentenceIds.has(id)));
   check(app.SUPPLEMENT_KEY === 'english_supplement_evidence_v1' && app.SUPPLEMENT_KEY !== 'sentence_course_progress_v1');
-  console.log(`${checks} checks passed; 24 supplement units (4 Foundation + 20 A1), 192 unit questions and 44 final-check questions; 174 main lessons including 10 Foundation, 19 Survival lessons / 950 sentences, 20 Everyday lessons / 1000 sentences, and 15 Communication lessons / 750 sentences; the supplement remains separate.`);
+  console.log(`${checks} checks passed; 24 supplement units (4 Foundation + 20 A1), 192 unit questions and 44 final-check questions; 212 main lessons including 10 Foundation, 19 Survival lessons / 950 sentences, 20 Everyday lessons / 1000 sentences, and 15 Communication lessons / 750 sentences; the supplement remains separate.`);
 })().catch(error => { console.error(error); process.exit(1); });

@@ -6,7 +6,7 @@ const esbuild = require('esbuild');
   const output = path.resolve('node_modules/.cache/placement-test.cjs');
   await esbuild.build({
     stdin: {
-      contents: "export * from './lib/placement'; export { SENTENCE_LESSONS } from './lib/courseContent'; export { GERMAN_SENTENCE_LESSONS } from './lib/languages/germanSentenceCourse';",
+      contents: "export * from './lib/placement'; export { SENTENCE_LESSONS } from './lib/courseContent';",
       resolveDir: process.cwd(),
     },
     bundle: true,
@@ -20,13 +20,10 @@ const esbuild = require('esbuild');
   const check = condition => { assert(condition); checks += 1; };
   const normalize = value => value.normalize('NFC').replace(/\s+/g, ' ').trim();
   const englishLessons = new Map(app.SENTENCE_LESSONS.map(lesson => [lesson.id, lesson]));
-  const germanLessons = new Map(app.GERMAN_SENTENCE_LESSONS.map(lesson => [lesson.id, lesson]));
 
   check(app.getPlacementQuestions('en').length === 15);
-  check(app.getPlacementQuestions('de').length === 12);
-  check(new Set(['en', 'de'].flatMap(language => app.getPlacementQuestions(language).map(question => question.id))).size === 27);
 
-  for (const language of ['en', 'de']) {
+  for (const language of ['en']) {
     const questions = app.getPlacementQuestions(language);
     const levelIds = [...new Set(questions.map(question => question.levelId))].sort((a, b) => a - b);
     check(levelIds.every((levelId, index) => levelId === index));
@@ -39,7 +36,7 @@ const esbuild = require('esbuild');
     check(new Set(questions.map(question => question.answerIndex)).size >= 2);
 
     for (const question of questions) {
-      const courseLessons = language === 'en' ? englishLessons : germanLessons;
+      const courseLessons = englishLessons;
       const sourceLesson = courseLessons.get(question.sourceLessonId);
       check(!!sourceLesson);
       check(sourceLesson.levelId === question.levelId);
@@ -75,5 +72,5 @@ const esbuild = require('esbuild');
 
   const partiallyAnswered = app.scorePlacement('en', {});
   check(partiallyAnswered.questionCount === 15 && partiallyAnswered.answeredCount === 0 && partiallyAnswered.unknownCount === 0);
-  console.log(`${checks} placement checks passed; 15 English and 12 German items, three per internal level, all sourced from existing course examples, with scoring, unknown answers, non-monotonic results and invalid input covered.`);
+  console.log(`${checks} placement checks passed; 15 English items, three per screened internal level 0–4 (C1 is not screened), all sourced from existing course examples, with scoring, unknown answers, non-monotonic results and invalid input covered.`);
 })().catch(error => { console.error(error); process.exit(1); });

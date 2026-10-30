@@ -10,7 +10,7 @@ import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
 import { FEATURES, RUSSIAN_ONLY_BUILD } from '@/lib/features';
 import { SENTENCE_LESSONS } from '@/lib/courseContent';
-import { GERMAN_SENTENCE_LESSONS } from '@/lib/languages/germanSentenceCourse';
+import { RUSSIAN_LESSONS } from '@/lib/languages/russian';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 
@@ -19,7 +19,6 @@ let welcomeVoicePlayed = false;
 
 const languageMeta = {
   en: { flag: '🇬🇧', code: 'EN', nativeName: 'English', tint: '#EAF2FF', border: '#CFE0FF' },
-  de: { flag: '🇩🇪', code: 'DE', nativeName: 'Deutsch', tint: '#F1F6FF', border: '#D7E4FA' },
   ru: { flag: '🇷🇺', code: 'RU', nativeName: 'Русский', tint: '#EEF4FF', border: '#D5E3FF' },
 } as const;
 
@@ -27,14 +26,6 @@ const learningSteps = [
   { icon: Headphones, number: '۰۱', title: 'بشنو', detail: 'جمله را با صدای طبیعی بشنو' },
   { icon: Mic2, number: '۰۲', title: 'تکرار کن', detail: 'با سرعت خودت تمرین کن' },
   { icon: Target, number: '۰۳', title: 'به‌خاطر بسپار', detail: 'با مرور هوشمند تثبیت کن' },
-] as const;
-
-const englishSentenceCount = SENTENCE_LESSONS.reduce((sum, lesson) => sum + lesson.sentences.length, 0);
-const germanSentenceCount = GERMAN_SENTENCE_LESSONS.reduce((sum, lesson) => sum + lesson.sentences.length, 0);
-const learningStats = [
-  { value: fa(SENTENCE_LESSONS.length + GERMAN_SENTENCE_LESSONS.length), label: 'درس مرحله‌بندی‌شده' },
-  { value: fa(englishSentenceCount + germanSentenceCount), label: 'جملهٔ کاربردی' },
-  { value: '۲۴/۷', label: 'دسترسی به یادگیری' },
 ] as const;
 
 const productFeatures = [
@@ -79,6 +70,15 @@ export default function LanguagesHome() {
   const compact = !ready || width < 680;
   const tiny = !ready || width < 370;
   const languages = LANGUAGES.filter(language => (language.id === 'ru' ? FEATURES.russianCourse : !RUSSIAN_ONLY_BUILD));
+  const includedLessons = [
+    ...(languages.some(language => language.id === 'en') ? SENTENCE_LESSONS : []),
+    ...(languages.some(language => language.id === 'ru') ? RUSSIAN_LESSONS : []),
+  ];
+  const learningStats = [
+    { value: fa(includedLessons.length), label: 'درس مرحله‌بندی‌شده' },
+    { value: fa(includedLessons.reduce((sum, lesson) => sum + lesson.sentences.length, 0)), label: 'جملهٔ کاربردی' },
+    { value: '۲۴/۷', label: 'دسترسی به یادگیری' },
+  ] as const;
 
   return (
     <View style={styles.root}>
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   header: { minHeight: 48, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
   brand: { flexDirection: 'row-reverse', alignItems: 'center', gap: 10 },
   brandIcon: { width: 38, height: 38, borderRadius: 12, backgroundColor: '#1769D2', alignItems: 'center', justifyContent: 'center', shadowColor: '#1769D2', shadowOpacity: .2, shadowRadius: 8, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
-  brandName: { fontFamily: 'Inter-ExtraBold', color: '#102A56', fontSize: 16, lineHeight: 20, fontWeight: '800', textAlign: 'right', letterSpacing: 2, writingDirection: 'ltr' },
+  brandName: { fontFamily: 'Inter-ExtraBold', color: '#102A56', fontSize: 16, lineHeight: 20, fontWeight: '800', textAlign: 'left', letterSpacing: 2, writingDirection: 'ltr' },
   brandCaption: { fontFamily: 'Inter-ExtraBold', color: '#6680A5', fontSize: 6, fontWeight: '800', letterSpacing: 1.35, writingDirection: 'ltr' },
   headerActions: { flexDirection: 'row-reverse', alignItems: 'center', gap: 7 },
   heroBackground: { ...StyleSheet.absoluteFillObject, opacity: .55 },

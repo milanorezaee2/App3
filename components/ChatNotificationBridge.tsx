@@ -79,6 +79,20 @@ export function ChatNotificationBridge() {
       void Notifications.clearLastNotificationResponseAsync().catch(() => undefined);
       const data = response.notification.request.content.data;
       const targetConversationId = typeof data.conversationId === 'string' ? data.conversationId : null;
+      // Learners always return to their saved page, even when opened via an
+      // alert. Keep the alert available as a banner for an explicit later tap.
+      if (!MANAGEMENT_BUILD) {
+        setBanner({
+          eventId: asText(data.eventId) || `expo:${responseId}`,
+          title: asText(response.notification.request.content.title) || 'اعلان تازه',
+          body: asText(response.notification.request.content.body) || 'برای مشاهده، اعلان را باز کنید.',
+          conversationId: targetConversationId || undefined,
+          route: asText(data.route) || undefined,
+        });
+        if (timerRef.current) clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => setBanner(null), 6500);
+        return;
+      }
       setBanner(null);
       if (timerRef.current) clearTimeout(timerRef.current);
       void clearChatUnreadCount().then(() => Notifications.setBadgeCountAsync(0).catch(() => undefined));

@@ -3,6 +3,7 @@ import { ActivityIndicator, Alert, Platform, Pressable, ScrollView, StyleSheet, 
 import { KeyboardStickyView } from '@/components/KeyboardRuntime';
 
 import * as Speech from 'expo-speech';
+import { speechTagFor } from '@/lib/speechLanguage';
 import { RecordingPresets, requestRecordingPermissionsAsync, setAudioModeAsync, useAudioRecorder, useAudioRecorderState } from 'expo-audio';
 import { Bot, Languages, Lightbulb, Mic, Send, Sparkles, Square, Trash2, Volume2 } from 'lucide-react-native';
 import { askEmma, getEmmaPracticeContext, type EmmaCorrection, type EmmaPracticeContext } from '@/lib/emma';
@@ -68,7 +69,7 @@ export default function EmmaChat() {
       });
       setSuggestions(result.suggestions);
       setCorrection(result.correction);
-      if (speakReply) Speech.speak(result.reply, { language: 'en-US', rate: .82 });
+      if (speakReply) Speech.speak(result.reply, { language: speechTagFor('en-US'), rate: .82 });
       requestAnimationFrame(() => scrollRef.current?.scrollToEnd({ animated: true }));
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'پاسخ Emma دریافت نشد.');
@@ -174,7 +175,7 @@ export default function EmmaChat() {
             <Text style={styles.messageText}>{message.text}</Text>
             {message.translation ? <Text style={styles.translation}>{message.translation}</Text> : null}
             {message.from === 'emma' ? (
-              <Pressable accessibilityRole="button" accessibilityLabel={`پخش پیام انگلیسی Emma: ${message.text}`} style={styles.listen} onPress={() => Speech.speak(message.text, { language: 'en-US', rate: .78 })}>
+              <Pressable accessibilityRole="button" accessibilityLabel={`پخش پیام انگلیسی Emma: ${message.text}`} style={styles.listen} onPress={() => Speech.speak(message.text, { language: speechTagFor('en-US'), rate: .78 })}>
                 <Volume2 size={14} color={Colors.primary[300]} /><Text style={styles.listenText}>پخش</Text>
               </Pressable>
             ) : null}

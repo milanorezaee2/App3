@@ -13,7 +13,7 @@ export const ENGLISH_ENGINE_BLUEPRINT = [
     levelId: 0,
     title: 'Foundation',
     band: 'Level 0',
-    modules: ['Introducing Yourself & Sounds', 'Asking for Help', 'Shopping & Prices', 'Alphabet & Spelling', 'Pronouns & Be', 'Numbers & Contact Details', 'Family & Possessions', 'Time & Calendar', 'Everyday Routines', 'Objects & Places'],
+    modules: ['Introducing Yourself & Greetings', 'Asking for Help', 'Shopping & Prices', 'Alphabet & Spelling', 'Pronouns & Be', 'Numbers & Contact Details', 'Family & Possessions', 'Time & Calendar', 'Everyday Routines', 'Objects & Places'],
   },
   {
     levelId: 1,
@@ -35,9 +35,13 @@ export const ENGLISH_ENGINE_BLUEPRINT = [
   },
   {
     levelId: 4,
-    title: 'Advanced English',
-    band: 'Level 4 · برچسب داخلی',
-    modules: ['Work & Decisions', 'Media & Society', 'Science & Environment', 'Travel & Public Safety', 'Personal Growth & Relationships', 'Vocabulary Practice Sets'],
+    title: 'B2 — Upper-Intermediate Communication',
+    band: 'Level 4 · B2 و درس‌های پیشین',
+    modules: ['Advanced Tenses & Narratives', 'Hypotheses & Mixed Conditionals', 'Reporting, Passive & Causative', 'Arguments, Synthesis & Writing', 'Professional & Social Communication', 'Previous Advanced Lessons'],
+  },
+  {
+    levelId: 5, title: 'C1 — Advanced Communication', band: 'Level 5 · C1',
+    modules: ['Abstract Concepts & Complex Narratives', 'Advanced Structures & Nuance', 'Argument, Sources & Synthesis', 'Professional Negotiation & Presentations', 'Research, Media & Intercultural Communication'],
   },
 ] as const satisfies ReadonlyArray<{
   levelId: CourseLevelId;

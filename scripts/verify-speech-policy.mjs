@@ -20,9 +20,13 @@ const bundle = await esbuild.build({
   entryPoints: [entry], bundle: true, write: false, format: 'esm', platform: 'node', target: 'node22', logLevel: 'silent',
   plugins: [{ name: 'network-observation-stubs', setup(build) {
     build.onResolve({ filter: /^react-native$/ }, () => ({ path: 'react-native', namespace: 'guard-stub' }));
-    build.onResolve({ filter: /^\.\/(conversations|errors|supabase)$/, namespace: 'file' }, args => ({ path: args.path.slice(2), namespace: 'guard-stub' }));
+    // features.ts reads build-time Expo config; avoid loading native modules in Node.
+    build.onResolve({ filter: /^expo-constants$/ }, () => ({ path: 'expo-constants', namespace: 'guard-stub' }));
+    build.onResolve({ filter: /^\.\/(conversations|errors|supabase|educationAdmin)$/, namespace: 'file' }, args => ({ path: args.path.slice(2), namespace: 'guard-stub' }));
     build.onLoad({ filter: /.*/, namespace: 'guard-stub' }, args => {
       if (args.path === 'react-native') return { contents: "export const Platform={OS:'web'};", loader: 'js' };
+      if (args.path === 'expo-constants') return { contents: 'export default { expoConfig: { extra: {} } };', loader: 'js' };
+      if (args.path === 'educationAdmin') return { contents: 'export function adminClient() { throw new Error("Unexpected admin access in speech policy test"); }', loader: 'js' };
       if (args.path === 'conversations') return { contents: `
         export async function ensureChatIdentity(){ globalThis.__identityCalls++; return { id: 'test-user' }; }
         export function readableSupabaseError(value){ return String(value); }
@@ -81,9 +85,9 @@ check(/requestRecordingPermissionsAsync\(\)[\s\S]*?prepareToRecordAsync\(\)[\s\S
 check(/recorder\.stop\(\)[\s\S]*?sendVoiceMessage\(conversationId,\s*recorder\.uri,\s*duration\)/.test(human), 'stopping a recording uploads and sends the real audio file');
 check(/disabled=\{sending\s*\|\|\s*!ONLINE_AUDIO_ENABLED\}/.test(human), 'human voice-message control remains protected by the explicit online-audio policy');
 check(/requireOnlineAudioEnabled\(\);\s*const user = await ensureChatIdentity\(\);/.test(read('lib/conversations.ts')), 'lower-level voice upload API retains its product-policy gate before identity or upload work');
-check(/playResponsiveSpeech\(\{\s*text,\s*locale:\s*'en-US',\s*rate\s*\}\)/.test(lesson), 'device/platform speech playback remains available');
-check(/KeyboardStickyView style=\{styles\.composer\}/.test(human)
-  && /KeyboardStickyView style=\{styles\.composer\}/.test(emma),
+check(/playResponsiveSpeech\(\{\s*text,\s*locale:\s*'en-US',\s*rate(?:\s*,|\s*\})/.test(lesson), 'device/platform speech playback remains available');
+const stickyComposer = /<KeyboardStickyView\b[^>]*>\s*<View style=\{styles\.composer\}>/;
+check(stickyComposer.test(human) && stickyComposer.test(emma),
   'both chat composers animate as complete units with the keyboard');
 check(!/Platform\.OS === 'android' \? 'height'/.test(human) && !/Platform\.OS === 'android' \? 'height'/.test(emma),
   'Android avoids the double keyboard-height subtraction that clipped the composer');

@@ -71,11 +71,15 @@ function validateSession(lessonId: string, value: unknown): RussianLessonSession
   };
 }
 
-export async function loadRussianLessonSession(lessonId: string): Promise<RussianLessonSession> {
+export async function loadRussianLessonSessionWithPresence(lessonId: string): Promise<{ session: RussianLessonSession; hasSavedSession: boolean }> {
   if (!RUSSIAN_LESSONS.some(item => item.id === lessonId)) throw new Error('درس روسی پیدا نشد.');
   const state = parseState(await readRaw());
   const saved = state.sessions[lessonId];
-  return saved === undefined ? freshRussianLessonSession() : validateSession(lessonId, saved);
+  return { session: saved === undefined ? freshRussianLessonSession() : validateSession(lessonId, saved), hasSavedSession: saved !== undefined };
+}
+
+export async function loadRussianLessonSession(lessonId: string): Promise<RussianLessonSession> {
+  return (await loadRussianLessonSessionWithPresence(lessonId)).session;
 }
 
 let queue: Promise<unknown> = Promise.resolve();

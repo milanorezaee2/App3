@@ -1,0 +1,169 @@
+name: Build learner APK
+
+# Builds one installable Android APK of the learner app (English and
+# Russian courses together) and keeps it as a downloadable artifact.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/940e66ab-app3
+    paths:
+      - '.github/workflows/apk-learner.yml'
+      - '.github/scripts/apk-learner-smoke.sh'
+      - 'scripts/**'
+      - 'app/**'
+      - 'components/**'
+      - 'lib/**'
+      - 'assets/**'
+      - 'app.json'
+      - 'app.config.js'
+      - 'package.json'
+      - 'package-lock.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: learner-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-learner-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+      NODE_OPTIONS: '--max-old-space-size=8192'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Read the public app settings into the build environment
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const config = JSON.parse(fs.readFileSync('config/supabase.public.json', 'utf8'));
+          const url = String(config.EXPO_PUBLIC_SUPABASE_URL || '').trim();
+          const key = String(config.EXPO_PUBLIC_SUPABASE_ANON_KEY || '').trim();
+          if (!/^https:\/\//.test(url)) throw new Error('The public app URL is missing.');
+          if (!key) throw new Error('The public app key is missing.');
+          if (key.startsWith('sb_secret_')) throw new Error('A secret key cannot be bundled.');
+          fs.appendFileSync(process.env.GITHUB_ENV,
+            `EXPO_PUBLIC_SUPABASE_URL=${url}\nEXPO_PUBLIC_SUPABASE_ANON_KEY=${key}\n`);
+          NODE
+
+      - name: Verify core curricula and speech policy
+        run: |
+          npm run typecheck
+          npm run validate:content
+          npm run validate:russian
+          npm run validate:russian-architecture
+          npm run validate:english-engine
+          npm run validate:english-lesson-flow
+          npm run validate:speech-policy
+          npm run validate:pronunciation
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Prepare the Android SDK
+        shell: bash
+        run: |
+          SDK_ROOT="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          if [[ ! -d "$SDK_ROOT" ]]; then
+            echo "Android SDK directory was not found at $SDK_ROOT."
+            exit 1
+          fi
+          echo "ANDROID_HOME=$SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK_ROOT" >> "$GITHUB_ENV"
+          SDKMANAGER="$(find "$SDK_ROOT" -type f -name sdkmanager -print -quit 2>/dev/null || true)"
+          if [[ ! -d "$SDK_ROOT/platforms/android-36" || ! -d "$SDK_ROOT/build-tools/36.0.0" ]]; then
+            if [[ -z "$SDKMANAGER" ]]; then
+              echo "Android SDK 36 is missing and sdkmanager was not found."
+              exit 1
+            fi
+            yes | "$SDKMANAGER" --sdk_root="$SDK_ROOT" --licenses >/dev/null || true
+            "$SDKMANAGER" --sdk_root="$SDK_ROOT" --install "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+          fi
+
+      - name: Generate the native Android project
+        run: npx expo prebuild --platform android --no-install --non-interactive
+
+      - name: Build the release APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon --stacktrace
+
+      - name: Verify the APK is standalone
+        run: |
+          python3 - <<'PY'
+          from zipfile import ZipFile
+          apk = 'android/app/build/outputs/apk/release/app-release.apk'
+          with ZipFile(apk) as archive:
+              names = set(archive.namelist())
+          if 'AndroidManifest.xml' not in names or not any(n.endswith('classes.dex') for n in names):
+              raise SystemExit('APK structure validation failed.')
+          if 'assets/index.android.bundle' not in names:
+              raise SystemExit('The JS bundle is missing; the APK would need Metro.')
+          print('Standalone APK verified.')
+          PY
+          cp android/app/build/outputs/apk/release/app-release.apk MiloLanguages.apk
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs MiloLanguages.apk
+          sha256sum MiloLanguages.apk | tee MiloLanguages.apk.sha256
+          ls -lh MiloLanguages.apk
+
+      - name: Upload the APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: MiloLanguages-apk
+          path: |
+            MiloLanguages.apk
+            MiloLanguages.apk.sha256
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Enable KVM acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Boot an emulator and check that the app starts
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          arch: x86_64
+          target: default
+          cores: 4
+          ram-size: 3072M
+          heap-size: 512M
+          emulator-boot-timeout: 900
+          disable-animations: true
+          script: bash .github/scripts/apk-learner-smoke.sh MiloLanguages.apk
+
+      - name: Keep the emulator diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: emulator-diagnostics
+          path: |
+            /tmp/milo-screen.png
+            /tmp/window.xml
+          if-no-files-found: warn
+          retention-days: 3

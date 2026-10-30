@@ -6,6 +6,9 @@ import { createRequire } from 'node:module';
 
 const root = process.cwd();
 const canonical = JSON.parse(fs.readFileSync(path.join(root, 'assets/data/essential504.json'), 'utf8'));
+// These targets were removed from the sentence course at the learner's request.
+const intentionallyRemoved = JSON.parse(fs.readFileSync(path.join(root, 'assets/data/essential504-removed-level2.json'), 'utf8'));
+const sameWords = (a, b) => JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
 const bundle = path.join(root, 'node_modules/.cache/course-validation.cjs');
 
 // Validate executed course data, not a formatting-dependent source regex.
@@ -28,8 +31,9 @@ const tagged = SENTENCE_LESSONS.flatMap(lesson => lesson.sentences
 const lessonRecords = SENTENCE_LESSONS.map(({ id, order }) => ({ id, order }));
 const foundation = SENTENCE_LESSONS.filter(lesson => lesson.levelId === 0);
 const survival = SENTENCE_LESSONS.filter(lesson => lesson.levelId === 1);
-const everyday = SENTENCE_LESSONS.filter(lesson => lesson.levelId === 2);
-const communication = SENTENCE_LESSONS.filter(lesson => lesson.levelId === 3);
+const a2Bridge = SENTENCE_LESSONS.filter(lesson => lesson.a2Section === 'foundation');
+const everyday = EVERYDAY_COURSE_LESSON_IDS.map(id => SENTENCE_LESSONS.find(lesson => lesson.id === id));
+const communication = SENTENCE_LESSONS.filter(lesson => lesson.levelId === 3 && !lesson.b1Section);
 const sentenceCount = SENTENCE_LESSONS.reduce((sum, lesson) => sum + lesson.sentences.length, 0);
 const foundationSentenceCount = foundation.reduce((sum, lesson) => sum + lesson.sentences.length, 0);
 const survivalSentenceCount = survival.reduce((sum, lesson) => sum + lesson.sentences.length, 0);
@@ -50,7 +54,7 @@ const duplicateLessonIds = [...new Set(lessonRecords.map(lesson => lesson.id)
 const duplicateOrders = [...new Set(lessonRecords.map(lesson => lesson.order)
   .filter((order, index, orders) => orders.indexOf(order) !== index))];
 const lessonOrders = lessonRecords.map(lesson => lesson.order).sort((a, b) => a - b);
-const expectedOrders = Array.from({ length: 174 }, (_, index) => index + 1);
+const expectedOrders = Array.from({ length: 212 }, (_, index) => index + 1);
 const hasExactOrders = JSON.stringify(lessonOrders) === JSON.stringify(expectedOrders);
 const activeSentencesById = new Map(SENTENCE_LESSONS.flatMap(lesson => lesson.sentences.map(sentence => [sentence.id, sentence])));
 const reviewedEditorialExamples = [
@@ -144,7 +148,7 @@ const communicationModulesAreComplete = COMMUNICATION_MODULES.length === 8
       && lesson.unitTitleEn === unit.titleEn;
   });
 
-console.log(`Lessons: ${lessonRecords.length}/174; sentences: ${sentenceCount}/3862`);
+console.log(`Lessons: ${lessonRecords.length}/212; sentences: ${sentenceCount}/4242`);
 console.log(`Foundation: ${foundation.length}/10 lessons; ${foundationSentenceCount}/500 sentences`);
 console.log(`Survival: ${survival.length}/19 lessons; ${survivalSentenceCount}/950 sentences; ${survivalVocabulary.size} unique vocabulary entries`);
 console.log(`Everyday: ${everyday.length}/20 lessons; ${everydaySentenceCount}/1000 sentences; ${everydayVocabulary.size} linked vocabulary phrases`);
@@ -158,13 +162,13 @@ console.log(`Remaining: ${missing.length}`);
 const problems = [];
 if (duplicateWords.length) problems.push(`Duplicate tagged words: ${duplicateWords.join(', ')}`);
 if (outside.length) problems.push(`Words outside canonical list: ${outside.join(', ')}`);
-if (missing.length) problems.push(`Missing canonical words: ${missing.join(', ')}`);
+if (!sameWords(missing, intentionallyRemoved)) problems.push(`Unexpected change to canonical coverage: ${missing.join(', ')}`);
 if (duplicateLessonIds.length) problems.push(`Duplicate lesson IDs: ${duplicateLessonIds.join(', ')}`);
 if (duplicateOrders.length) problems.push(`Duplicate lesson orders: ${duplicateOrders.join(', ')}`);
-if (!hasExactOrders) problems.push('Lesson orders must be exactly 1 through 174.');
-if (tagged.length !== 504) problems.push(`Expected exactly 504 tagged words, found ${tagged.length}.`);
-if (lessonRecords.length !== 174) problems.push(`Expected exactly 174 lessons, found ${lessonRecords.length}.`);
-if (sentenceCount !== 3862) problems.push(`Expected 3862 active sentence examples, found ${sentenceCount}.`);
+if (!hasExactOrders) problems.push('Lesson orders must be exactly 1 through 212.');
+if (tagged.length !== canonical.length - intentionallyRemoved.length) problems.push(`Unexpected number of tagged canonical words: ${tagged.length}.`);
+if (lessonRecords.length !== 212) problems.push(`Expected exactly 212 lessons, found ${lessonRecords.length}.`);
+if (sentenceCount !== 4242) problems.push(`Expected 4242 active sentence examples, found ${sentenceCount}.`);
 if (foundation.length !== 10 || foundationSentenceCount !== 500
   || foundation.some(lesson => lesson.sentences.length !== 50)) {
   problems.push('Foundation must contain ten lessons with exactly fifty sentences each.');
@@ -202,6 +206,9 @@ if (duplicateGroupsInvolvingCommunicationAdditions.length) {
 }
 if (!communicationAdditionsAreComplete) {
   problems.push('Communication additions must add forty-four per lesson with Persian, pronunciation, patterns, and two or more literally linked vocabulary phrases.');
+}
+if (a2Bridge.length !== 5 || a2Bridge.some(lesson => lesson.sentences.length !== 10 || lesson.dialogue.length !== 6 || lesson.sentences.some(sentence => !sentence.en || !sentence.fa || !sentence.pronunciation || !sentence.pattern || sentence.vocabulary.length !== 2 || sentence.vocabulary.some(v => !v.meaning || !sentence.en.toLowerCase().includes(v.word.toLowerCase()))))) {
+  problems.push('The five A2 bridge lessons must have ten fully linked sentences and six dialogue turns.');
 }
 if (everyday.length !== 20 || everydaySentenceCount !== 1000
   || everyday.some(lesson => lesson.sentences.length !== 50 || lesson.durationMinutes !== 35)) {

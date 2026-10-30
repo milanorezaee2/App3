@@ -48,7 +48,7 @@ export default function PersonalSyncScreen() {
       }
       setAccountEmail(result.email);
       setLastSynced(result.updatedAt);
-      setMessage('پیشرفت آموزشی تکمیل‌شدهٔ انگلیسی و آلمانی و یادداشت‌های تلفظ با حساب شما همگام شد.');
+      setMessage('پیشرفت آموزشی تکمیل‌شدهٔ انگلیسی و یادداشت‌های تلفظ با حساب شما همگام شد.');
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'همگام‌سازی انجام نشد؛ سابقهٔ محلی حفظ شده است.');
       setMessage('همگام‌سازی کامل نشد؛ دادهٔ محلی روی همین دستگاه محفوظ است.');
@@ -164,7 +164,7 @@ export default function PersonalSyncScreen() {
             <View style={styles.hero}>
               <View style={styles.heroIcon}><Cloud size={24} color="#FFFFFF" strokeWidth={2} /></View>
               <Text accessibilityRole="header" style={styles.title}>حساب شخصی و همگام‌سازی</Text>
-              <Text style={styles.subtitle}>یک ورود ایمیلی برای همگام‌سازی پیشرفت آموزشی و خودارزیابی تلفظ انگلیسی و آلمانی میان دستگاه‌های شما.</Text>
+              <Text style={styles.subtitle}>یک ورود ایمیلی برای همگام‌سازی پیشرفت آموزشی و خودارزیابی تلفظ انگلیسی میان دستگاه‌های شما.</Text>
               <View style={styles.privacyPill}><ShieldCheck size={15} color="#D6F2E6" /><Text style={styles.privacyText}>خصوصی برای حساب واردشده · بدون رمز عبور</Text></View>
             </View>
 
@@ -253,7 +253,7 @@ export default function PersonalSyncScreen() {
             </View>
             <View style={styles.mergeNote}>
               <Text style={styles.mergeTitle}>داده‌های قبلی محفوظ می‌مانند</Text>
-              <Text style={styles.mergeText}>هنگام ورود، شواهد و نتیجه‌های آموزشی محلی با دادهٔ حساب ادغام می‌شوند. پیش‌نویس پاسخ‌های آزاد، متن و فرم کارگاه آلمانی و جلسه‌های ناتمام فقط روی همین دستگاه می‌مانند؛ چک‌باکس‌های خودارزیابی کارگاه بدون انتقال متن همگام می‌شوند. اگر نسخه‌ای فقط در حساب ناشناسِ دستگاه دیگری باشد، همان دستگاه باید یک‌بار با این ایمیل وارد و همگام شود؛ ورود، دادهٔ محلی را پاک نمی‌کند.</Text>
+              <Text style={styles.mergeText}>هنگام ورود، شواهد و نتیجه‌های آموزشی محلی با دادهٔ حساب ادغام می‌شوند. پیش‌نویس پاسخ‌های آزاد و جلسه‌های ناتمام فقط روی همین دستگاه می‌مانند. اگر نسخه‌ای فقط در حساب ناشناسِ دستگاه دیگری باشد، همان دستگاه باید یک‌بار با این ایمیل وارد و همگام شود؛ ورود، دادهٔ محلی را پاک نمی‌کند.</Text>
             </View>
             {!configured && <Text style={styles.configHint}>اتصال Supabase هنوز در این اجرا تنظیم نشده است. پس از افزودن URL پروژه و کلید عمومی anon، برنامه را دوباره اجرا کنید؛ کلید service_role یا رمز لازم نیست.</Text>}
           </View>

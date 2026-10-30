@@ -1,6 +1,11 @@
 import type { Skill, Task } from './englishSupplement/content';
 import { SURVIVAL_EXPANSION_EVIDENCE } from './englishSurvivalEvidence';
 import { EVERYDAY_LESSON_EVIDENCE } from './englishEverydayEvidence';
+import { B1_INDEPENDENT_EVIDENCE } from './englishB1IndependentEvidence';
+import { C1_EVIDENCE } from './englishC1Evidence';
+import { B2_UPPER_INTERMEDIATE_EVIDENCE } from './englishB2UpperIntermediateEvidence';
+import { A2_FOUNDATION_EVIDENCE } from './englishA2FoundationEvidence';
+import { A2_SITUATIONS_EVIDENCE } from './englishA2SituationsEvidence';
 
 /** Goal-based checks for all ten active Foundation lessons. */
 const task = (
@@ -16,50 +21,25 @@ const foundationTask = (lessonId: string, id: string) => `foundation-core-${less
 
 export const FOUNDATION_LESSON_EVIDENCE: Readonly<Record<string, readonly Task[]>> = {
   'foundation-introducing-yourself': [
-    task(
-      foundationTask('introducing-yourself', 'spell-listening'), 'listening',
-      'کدام نام هجی شد؟', 'Sara',
-      'حروف S، A، R، A نام Sara را می‌سازند.',
-      { audio: 'S. A. R. A.', options: ['Sara', 'Sarah', 'Sam'] },
-    ),
-    task(
-      foundationTask('introducing-yourself', 'vowels'), 'grammar',
-      'حروف واکه را انتخاب کنید.', 'A, E, I, O, and U',
-      'پنج حرف واکهٔ انگلیسی A، E، I، O و U هستند.',
-      { options: ['A, E, I, O, and U', 'B, C, D, F, and G', 'A, B, C, D, and E'] },
-    ),
-    task(
-      foundationTask('introducing-yourself', 'letter-sounds-reading'), 'reading',
-      'کدام گزینه با متن درس مطابقت دارد؟',
-      'A is short in cat and long in name; C sounds like K in cat and S in city; SH makes one sound in ship.',
-      'A در cat کوتاه و در name کشیده است؛ C در cat صدای K و در city صدای S می‌دهد؛ SH در ship یک صدا دارد.',
-      {
-        source: 'The letter A has a short sound in cat. The letter A has a long sound in name. C can sound like K in cat and like S in city. The letters S and H make one sound in ship.',
-        options: [
-          'A is short in cat and long in name; C sounds like K in cat and S in city; SH makes one sound in ship.',
-          'A is long in cat and short in name; C sounds like K in cat and S in city; SH makes one sound in ship.',
-          'A is short in cat and long in name; C sounds like K in cat and S in city; SH makes two sounds in ship.',
-        ],
-      },
-    ),
-    task(
-      foundationTask('introducing-yourself', 'family-reading'), 'reading',
-      'چه کسی در خانه است؟', 'Her mother',
-      'در متن گفته شده مادر سارا در خانه است.',
-      { source: 'Sara has one brother and one sister. Her mother is at home.', options: ['Her mother', 'Her sister', 'Her father'] },
-    ),
-    task(
-      foundationTask('introducing-yourself', 'routine-listening'), 'listening',
-      'گوینده چه ساعتی صبحانه می‌خورد؟', '7:00',
-      'seven یعنی ساعت هفت.',
-      { audio: 'I usually have breakfast at seven. I go to work at eight.', options: ['6:00', '7:00', '8:00'] },
-    ),
-    task(
-      foundationTask('introducing-yourself', 'family-and-routine-writing'), 'writing',
-      'طبق الگوی درس، هر دو جمله را به انگلیسی بنویسید: یک برادر و یک خواهر دارم؛ هر روز ساعت شش بیدار می‌شوم.',
-      'I have one brother and one sister. I get up at six every day.',
-      'پاسخ باید یک جمله دربارهٔ خانواده و یک جمله دربارهٔ روتین روزانه داشته باشد.',
-    ),
+    task(foundationTask('introducing-yourself', 'spell-listening'), 'listening',
+      'کدام نام هجی شد؟', 'Sara', 'حروف S، A، R، A نام Sara را می‌سازند.',
+      { audio: 'S. A. R. A.', options: ['Sara', 'Sarah', 'Sam'] }),
+    task(foundationTask('introducing-yourself', 'name-listening'), 'listening',
+      'اسم دوست گوینده چیست؟', 'Reza', 'گوینده دوستش را رضا معرفی می‌کند.',
+      { audio: 'This is my friend, Reza.', options: ['Reza', 'Ali', 'Sara'] }),
+    task(foundationTask('introducing-yourself', 'introduction-reading'), 'reading',
+      'سارا اهل کجاست؟', 'Iran', 'عبارت from Iran یعنی اهل ایران.',
+      { source: 'Hello, my name is Sara. I am from Iran.', options: ['Iran', 'Turkey', 'Canada'] }),
+    task(foundationTask('introducing-yourself', 'possessive-grammar'), 'grammar',
+      'جمله را کامل کنید: Reza is my friend. ___ name is Reza.', 'His',
+      'برای اشاره به نام یک مرد در این مثال از his استفاده می‌کنیم.',
+      { options: ['His', 'Her', 'My'] }),
+    task(foundationTask('introducing-yourself', 'name-writing'), 'writing',
+      'به انگلیسی بنویسید: «اسم من سارا است.»', 'My name is Sara.',
+      'برای معرفی نام از My name is و سپس نام استفاده کنید.'),
+    task(foundationTask('introducing-yourself', 'origin-writing'), 'writing',
+      'به انگلیسی بپرسید: «شما اهل کجا هستید؟»', 'Where are you from?',
+      'برای پرسیدن زادگاه یا کشور از Where are you from? استفاده کنید.'),
   ],
   'foundation-asking-for-help': [
     task(
@@ -184,7 +164,7 @@ export const FOUNDATION_LESSON_EVIDENCE: Readonly<Record<string, readonly Task[]
     ),
     task(
       foundationTask('pronouns-and-be', 'place-reading'), 'reading',
-      'او کجا است؟', 'She is in the library.',
+      'شخصی که با She معرفی شده کجاست؟', 'She is in the library.',
       'در متن گفته شده او در کتابخانه است.',
       { source: 'He is at school. She is in the library.', options: ['She is at school.', 'She is in the library.', 'She is at home.'] },
     ),
@@ -344,9 +324,9 @@ export const FOUNDATION_LESSON_EVIDENCE: Readonly<Record<string, readonly Task[]
       'از I walk my dog … برای گفتن این کار روزانه استفاده کنید.',
     ),
     task(
-      foundationTask('everyday-routine', 'friday-writing'), 'writing',
-      'به انگلیسی بنویسید: «آن‌ها جمعه فیلم تماشا می‌کنند.»', 'They watch a movie on Friday.',
-      'با they از فعل سادهٔ watch استفاده می‌کنیم.',
+      foundationTask('everyday-routine', 'action-now-writing'), 'writing',
+      'به انگلیسی بنویسید: «من الان دارم مطالعه می‌کنم.»', 'I am reading now.',
+      'برای کاری که الان در حال انجام است از am و فعلِ دارای ing استفاده می‌کنیم.',
     ),
   ],
   'foundation-objects-and-places': [
@@ -375,9 +355,9 @@ export const FOUNDATION_LESSON_EVIDENCE: Readonly<Record<string, readonly Task[]
       { options: ['There is two windows in the room.', 'There are two windows in the room.', 'There are a window in the room.'] },
     ),
     task(
-      foundationTask('objects-and-places', 'bank-question-writing'), 'writing',
-      'به انگلیسی بپرسید: «اینجا نزدیک بانک هست؟»', 'Is there a bank near here?',
-      'برای پرسیدن دربارهٔ وجود یک مکان از Is there a …? استفاده کنید.',
+      foundationTask('objects-and-places', 'shape-writing'), 'writing',
+      'به انگلیسی بنویسید: «ساعت گرد است.»', 'The clock is round.',
+      'round یعنی گرد؛ برای یک ساعت از is استفاده کنید.',
     ),
     task(
       foundationTask('objects-and-places', 'object-direction-writing'), 'writing',
@@ -495,6 +475,11 @@ export const CORE_LESSON_EVIDENCE: Readonly<Record<string, readonly Task[]>> = {
   ...FOUNDATION_LESSON_EVIDENCE,
   ...SURVIVAL_LESSON_EVIDENCE,
   ...EVERYDAY_LESSON_EVIDENCE,
+  ...A2_FOUNDATION_EVIDENCE,
+  ...A2_SITUATIONS_EVIDENCE,
+  ...B1_INDEPENDENT_EVIDENCE,
+  ...B2_UPPER_INTERMEDIATE_EVIDENCE,
+  ...C1_EVIDENCE,
 };
 
 function isLessonEvidenceComplete(

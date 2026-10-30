@@ -22,6 +22,5 @@ export const FEATURES = Object.freeze({
   assignments: false,
   announcements: false,
   billing: false,
-  germanAI: false,
   russianCourse: true,
 });

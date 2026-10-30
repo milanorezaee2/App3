@@ -5,6 +5,7 @@
 import React from 'react';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import * as Speech from 'expo-speech';
+import { speechTagFor } from '@/lib/speechLanguage';
 import {
   Volume2,
   Sparkles,
@@ -51,7 +52,7 @@ export async function speakEnglish(text: string): Promise<void> {
     }
     speaking = true;
     Speech.speak(text, {
-      language: 'en-US',
+      language: speechTagFor('en-US'),
       rate: Platform.OS === 'ios' ? 0.45 : 0.85,
       onDone: () => {
         speaking = false;

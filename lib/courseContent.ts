@@ -18,6 +18,10 @@ import {
   COMMUNICATION_COURSE_LESSON_IDS,
 } from './courseContentCommunicationCompletion';
 import { COMMUNICATION_NEW_LESSONS } from './courseContentCommunicationNewLessons';
+import { B1_INDEPENDENT_LESSONS } from './courseContentB1Independent';
+import { A2_FOUNDATION_LESSONS } from './courseContentA2Foundation';
+import { B2_UPPER_INTERMEDIATE_LESSONS } from './courseContentB2UpperIntermediate';
+import { C1_ADVANCED_LESSONS } from './courseContentC1Advanced';
 import {
   COMMUNICATION_LESSON_UNIT,
   COMMUNICATION_MODULES,
@@ -25,7 +29,7 @@ import {
 
 export { COMMUNICATION_COURSE_LESSON_IDS, COMMUNICATION_LESSON_UNIT, COMMUNICATION_MODULES };
 
-export type CourseLevelId = 0 | 1 | 2 | 3 | 4;
+export type CourseLevelId = 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface CourseSentence {
   id: string;
@@ -47,6 +51,12 @@ export interface SentenceLesson {
   order: number;
   /** Honest distinction between the contextual Advanced lessons and legacy vocabulary sets. */
   contentKind?: 'scenario' | 'vocabulary-practice';
+  /** Additive B1 curriculum section; absent for pre-existing lessons. */
+  b1Section?: 'foundation' | 'survival';
+  a2Section?: 'foundation' | 'survival' | 'legacy';
+  /** Additive B2 course; older advanced material remains separately labelled. */
+  b2Section?: 'foundation' | 'survival';
+  c1Section?: 'foundation' | 'survival';
   title: string;
   subtitle: string;
   situation: string;
@@ -75,7 +85,7 @@ export const COURSE_LEVELS: CourseLevel[] = [
     cefr: 'شروع از صفر',
     description: 'صداها، الفبا و جمله‌های روزمره برای آغاز از صفر',
     color: '#6366f1',
-    modules: ['معرفی و صداهای پایه', 'درخواست کمک', 'خرید و قیمت‌ها', 'الفبا و هجی‌کردن', 'ضمیرها و فعل be', 'عددها و اطلاعات تماس', 'خانواده و مالکیت', 'زمان و تقویم', 'کارهای روزمره', 'وسایل و مکان‌ها'],
+    modules: ['معرفی و احوال‌پرسی', 'درخواست کمک', 'خرید و قیمت‌ها', 'الفبا و هجی‌کردن', 'ضمیرها و فعل be', 'عددها و اطلاعات تماس', 'خانواده و مالکیت', 'زمان و تقویم', 'کارهای روزمره', 'وسایل و مکان‌ها'],
   },
   {
     id: 1,
@@ -103,11 +113,16 @@ export const COURSE_LEVELS: CourseLevel[] = [
   },
   {
     id: 4,
-    title: 'Advanced English',
-    cefr: 'سطح ۴ · داخلی',
-    description: 'سناریوهای حرفه‌ای، اجتماعی و علمی؛ همراه با مرور واژگان پیشرفته',
+    title: 'B2 — Upper-Intermediate Communication',
+    cefr: 'B2 · سطح ۴',
+    description: 'ارتباط پیشرفته‌تر، گفت‌وگو و استدلال؛ همراه با درس‌های پیشین پیشرفته',
     color: '#8b5cf6',
-    modules: ['کار و تصمیم‌گیری', 'رسانه و جامعه', 'علم و محیط زیست', 'سفر و ایمنی', 'رشد فردی و ارتباط', 'مرور واژگان در بافت'],
+    modules: ['روایت و زمان‌های پیشرفته', 'فرضیه و شرط ترکیبی', 'بازگویی، مجهول و سببی', 'استدلال و نگارش', 'ارتباط حرفه‌ای و اجتماعی', 'درس‌های پیشین پیشرفته'],
+  },
+  {
+    id: 5, title: 'C1 — Advanced Communication', cefr: 'C1 · سطح ۵',
+    description: 'ارتباط دقیق، تحلیل و استدلال در موقعیت‌های تخصصی و حرفه‌ای', color: '#b55369',
+    modules: ['مفاهیم انتزاعی و روایت', 'ساختارهای پیشرفته و دقت بیان', 'تحلیل و ترکیب منابع', 'مذاکره، ارائه و حل تعارض', 'رسانه، پژوهش و ارتباط بین‌فرهنگی'],
   },
 ];
 
@@ -187,9 +202,18 @@ const CORE_SENTENCE_LESSONS: SentenceLesson[] = [
       { id: 's5', en: 'Thank you for your help.', fa: 'برای کمکتان ممنونم.', pronunciation: 'تَنک یو فُر یور هِلپ', vocabulary: [{ word: 'thank you', meaning: 'متشکرم' }] },
     ],
     dialogue: [
-      { speaker: 'learner', text: 'Excuse me. Can you help me?', fa: 'ببخشید. می‌توانید کمکم کنید؟' },
-      { speaker: 'partner', text: 'Of course. What do you need?', fa: 'البته. چه چیزی لازم دارید؟' },
-      { speaker: 'learner', text: 'Please speak slowly. I do not understand.', fa: 'لطفاً آهسته صحبت کنید. متوجه نمی‌شوم.' },
+      { speaker: 'partner', text: 'Hello. How can I help you?', fa: 'سلام. چطور می‌توانم کمکتان کنم؟' },
+      { speaker: 'learner', text: 'Excuse me. Where is the station?', fa: 'ببخشید. ایستگاه کجاست؟' },
+      { speaker: 'partner', text: 'It is next to the bank.', fa: 'کنار بانک است.' },
+      { speaker: 'learner', text: 'Is it far from here?', fa: 'از اینجا دور است؟' },
+      { speaker: 'partner', text: 'No. It is a short walk.', fa: 'نه. کمی پیاده‌روی دارد.' },
+      { speaker: 'learner', text: 'Could you show me on the map?', fa: 'ممکن است روی نقشه به من نشان دهید؟' },
+      { speaker: 'partner', text: 'Of course. Here is the station.', fa: 'حتماً. ایستگاه اینجاست.' },
+      { speaker: 'learner', text: 'Thank you. What time is it?', fa: 'ممنون. ساعت چند است؟' },
+      { speaker: 'partner', text: 'It is half past seven.', fa: 'ساعت هفت‌ونیم است.' },
+      { speaker: 'learner', text: 'What time does the bus leave?', fa: 'اتوبوس چه ساعتی حرکت می‌کند؟' },
+      { speaker: 'partner', text: 'The bus leaves at eight.', fa: 'اتوبوس ساعت هشت حرکت می‌کند.' },
+      { speaker: 'learner', text: 'Thank you for your help.', fa: 'برای کمکتان ممنونم.' },
     ],
   },
   {
@@ -208,9 +232,18 @@ const CORE_SENTENCE_LESSONS: SentenceLesson[] = [
       { id: 's5', en: 'That is all, thank you.', fa: 'همین است، متشکرم.', pronunciation: 'ذَت ایز آل، تَنک یو', vocabulary: [{ word: 'all', meaning: 'همه / تمام' }] },
     ],
     dialogue: [
-      { speaker: 'learner', text: 'Excuse me, how much is this?', fa: 'ببخشید، این چقدر است؟' },
+      { speaker: 'partner', text: 'Hello. Can I help you?', fa: 'سلام. می‌توانم کمکتان کنم؟' },
+      { speaker: 'learner', text: 'Yes, please. How much is this shirt?', fa: 'بله، لطفاً. این پیراهن چقدر است؟' },
       { speaker: 'partner', text: 'It is ten dollars.', fa: 'ده دلار است.' },
-      { speaker: 'learner', text: 'Great. I would like this one.', fa: 'عالی است. این یکی را می‌خواهم.' },
+      { speaker: 'learner', text: 'Do you have it in blue?', fa: 'آن را به رنگ آبی دارید؟' },
+      { speaker: 'partner', text: 'Yes, here is a blue one.', fa: 'بله، این هم یک پیراهن آبی.' },
+      { speaker: 'learner', text: 'Can I try it on?', fa: 'می‌توانم آن را پرو کنم؟' },
+      { speaker: 'partner', text: 'Of course. Does it fit?', fa: 'حتماً. اندازه‌تان است؟' },
+      { speaker: 'learner', text: 'Yes. I would like this one.', fa: 'بله. این یکی را می‌خواهم.' },
+      { speaker: 'partner', text: 'How would you like to pay?', fa: 'چطور می‌خواهید پرداخت کنید؟' },
+      { speaker: 'learner', text: 'Can I pay by card?', fa: 'می‌توانم با کارت پرداخت کنم؟' },
+      { speaker: 'partner', text: 'Yes. Here is your receipt.', fa: 'بله. این هم رسید شما.' },
+      { speaker: 'learner', text: 'Thank you. Goodbye.', fa: 'ممنون. خداحافظ.' },
     ],
   },
   {
@@ -222,18 +255,30 @@ const CORE_SENTENCE_LESSONS: SentenceLesson[] = [
     situation: 'در یک مصاحبه کوتاه می‌خواهید درباره علاقه، تجربه و توانایی‌های خود صحبت کنید.',
     durationMinutes: 11,
     sentences: [
-      { id: 'job-keen', en: 'I am keen to learn new skills.', fa: 'من مشتاق یادگیری مهارت‌های جدید هستم.', pronunciation: 'آی اَم کین تو لِرن نیو اِسکیلز', pattern: 'I am keen to + verb', vocabulary: [{ word: 'keen', meaning: 'مشتاق', essential504: true }] },
-      { id: 'job-qualify', en: 'My experience qualifies me for this job.', fa: 'تجربه‌ام من را برای این شغل واجد شرایط می‌کند.', pronunciation: 'مای اِکسپیریِنس کوالیفایز می فُر ذیس جاب', vocabulary: [{ word: 'qualify', meaning: 'واجد شرایط کردن', essential504: true }] },
-      { id: 'job-data', en: 'I use data to make better decisions.', fa: 'من برای تصمیم‌های بهتر از داده‌ها استفاده می‌کنم.', pronunciation: 'آی یوز دِیتا تو مِیک بِتِر دِسیژِنز', vocabulary: [{ word: 'data', meaning: 'داده‌ها / اطلاعات', essential504: true }] },
-      { id: 'job-talent', en: 'My main talent is solving problems.', fa: 'استعداد اصلی من حل‌کردن مشکلات است.', pronunciation: 'مای مِین تَلِنت ایز سالوینگ پرابلِمز', vocabulary: [{ word: 'talent', meaning: 'استعداد', essential504: true }] },
+      { id: 'job-keen', en: 'I want to learn.', fa: 'من می‌خواهم یاد بگیرم.', pronunciation: 'آی وانت تو لِرن', pattern: 'I want to + verb', vocabulary: [{ word: 'learn', meaning: 'یاد گرفتن' }] },
+      { id: 'job-qualify', en: 'I want this job.', fa: 'من این کار را می‌خواهم.', pronunciation: 'آی وانت ذیس جاب', vocabulary: [{ word: 'job', meaning: 'کار / شغل' }] },
+      { id: 'job-data', en: 'I use a phone at work.', fa: 'من در محل کار از تلفن استفاده می‌کنم.', pronunciation: 'آی یوز اَ فون اَت وِرک', vocabulary: [{ word: 'phone', meaning: 'تلفن' }] },
+      { id: 'job-talent', en: 'I can cook well.', fa: 'من می‌توانم خوب آشپزی کنم.', pronunciation: 'آی کَن کوک وِل', vocabulary: [{ word: 'cook', meaning: 'آشپزی کردن' }] },
       { id: 'job-team', en: 'I work well with a team.', fa: 'من با یک تیم به‌خوبی کار می‌کنم.', pronunciation: 'آی وِرک وِل ویذ اَ تیم', vocabulary: [{ word: 'team', meaning: 'تیم' }] },
       { id: 'job-ready', en: 'I am ready to start.', fa: 'من آماده شروع هستم.', pronunciation: 'آی اَم رِدی تو اِستارت', vocabulary: [{ word: 'ready', meaning: 'آماده' }] },
     ],
     dialogue: [
-      { speaker: 'partner', text: 'Why do you want this job?', fa: 'چرا این شغل را می‌خواهید؟' },
-      { speaker: 'learner', text: 'I am keen to learn new skills.', fa: 'من مشتاق یادگیری مهارت‌های جدید هستم.' },
-      { speaker: 'partner', text: 'What is your main talent?', fa: 'استعداد اصلی شما چیست؟' },
-      { speaker: 'learner', text: 'My main talent is solving problems.', fa: 'استعداد اصلی من حل‌کردن مشکلات است.' },
+      { speaker: 'partner', text: 'Hello. Please tell me your name.', fa: 'سلام. لطفاً نامتان را بگویید.' },
+      { speaker: 'learner', text: 'My name is Sara.', fa: 'اسم من سارا است.' },
+      { speaker: 'partner', text: 'Can you use a computer?', fa: 'می‌توانید از رایانه استفاده کنید؟' },
+      { speaker: 'learner', text: 'Yes, I can use a computer.', fa: 'بله، می‌توانم از رایانه استفاده کنم.' },
+      { speaker: 'partner', text: 'Can you work with a team?', fa: 'می‌توانید با یک تیم کار کنید؟' },
+      { speaker: 'learner', text: 'Yes, I work well with a team.', fa: 'بله، من با تیم خوب کار می‌کنم.' },
+      { speaker: 'partner', text: 'Do you have work experience?', fa: 'تجربهٔ کاری دارید؟' },
+      { speaker: 'learner', text: 'Yes. I have one year of experience.', fa: 'بله. یک سال تجربه دارم.' },
+      { speaker: 'partner', text: 'Can you work on weekends?', fa: 'می‌توانید آخر هفته‌ها کار کنید؟' },
+      { speaker: 'learner', text: 'Yes, I can work on weekends.', fa: 'بله، می‌توانم آخر هفته‌ها کار کنم.' },
+      { speaker: 'partner', text: 'When can you start?', fa: 'چه زمانی می‌توانید شروع کنید؟' },
+      { speaker: 'learner', text: 'I can start next Monday.', fa: 'می‌توانم دوشنبهٔ آینده شروع کنم.' },
+      { speaker: 'partner', text: 'Do you have a question?', fa: 'سؤالی دارید؟' },
+      { speaker: 'learner', text: 'What are the working hours?', fa: 'ساعت‌های کاری چگونه است؟' },
+      { speaker: 'partner', text: 'We work from nine to five.', fa: 'از نه تا پنج کار می‌کنیم.' },
+      { speaker: 'learner', text: 'Thank you for your time.', fa: 'از وقتی که گذاشتید ممنونم.' },
     ],
   },
   {
@@ -245,17 +290,30 @@ const CORE_SENTENCE_LESSONS: SentenceLesson[] = [
     situation: 'برای دیدن یک خانه رفته‌اید و می‌خواهید درباره قیمت، مدت قرارداد و شرایط آن سؤال کنید.',
     durationMinutes: 11,
     sentences: [
-      { id: 'home-vacant', en: 'Is this apartment still vacant?', fa: 'آیا این آپارتمان هنوز خالی است؟', pronunciation: 'ایز ذیس اَپارت‌مِنت اِستیل وِیکِنت؟', vocabulary: [{ word: 'vacant', meaning: 'خالی / بدون استفاده', essential504: true }] },
+      { id: 'home-vacant', en: 'Is this apartment empty?', fa: 'آیا این آپارتمان خالی است؟', pronunciation: 'ایز ذیس اَپارت‌مِنت اِمپتی؟', vocabulary: [{ word: 'empty', meaning: 'خالی' }] },
       { id: 'home-expensive', en: 'The apartment is too expensive for me.', fa: 'این آپارتمان برای من خیلی گران است.', pronunciation: 'ذی اَپارت‌مِنت ایز تو اِکسپِنسیو فُر می', vocabulary: [{ word: 'expensive', meaning: 'گران', essential504: true }] },
-      { id: 'home-minimum', en: 'The minimum stay is six months.', fa: 'حداقل مدت اقامت شش ماه است.', pronunciation: 'ذِ مینیمِم اِستِی ایز سیکس مانتس', vocabulary: [{ word: 'minimum', meaning: 'حداقل', essential504: true }] },
-      { id: 'home-annual', en: 'Is there an annual fee?', fa: 'آیا هزینه سالانه‌ای وجود دارد؟', pronunciation: 'ایز ذِر اَن اَنیوئِل فی؟', vocabulary: [{ word: 'annual', meaning: 'سالانه', essential504: true }] },
+      { id: 'home-minimum', en: 'I can stay for six months.', fa: 'می‌توانم شش ماه بمانم.', pronunciation: 'آی کَن اِستِی فُر سیکس مانتس', vocabulary: [{ word: 'stay', meaning: 'ماندن' }] },
+      { id: 'home-annual', en: 'Do I pay every year?', fa: 'آیا هر سال پرداخت می‌کنم؟', pronunciation: 'دو آی پِی اِوری ییر؟', vocabulary: [{ word: 'year', meaning: 'سال' }] },
       { id: 'home-bills', en: 'Are the bills included?', fa: 'آیا هزینه قبض‌ها حساب شده است؟', pronunciation: 'آر ذِ بیلز اینکلودِد؟', vocabulary: [{ word: 'included', meaning: 'شامل‌شده' }] },
       { id: 'home-see', en: 'I would like to see the rooms.', fa: 'می‌خواهم اتاق‌ها را ببینم.', pronunciation: 'آی وود لایک تو سی ذِ رومز', vocabulary: [{ word: 'room', meaning: 'اتاق' }] },
     ],
     dialogue: [
-      { speaker: 'learner', text: 'Is this apartment still vacant?', fa: 'آیا این آپارتمان هنوز خالی است؟' },
-      { speaker: 'partner', text: 'Yes, it is. The minimum stay is six months.', fa: 'بله. حداقل مدت اقامت شش ماه است.' },
-      { speaker: 'learner', text: 'Thank you. Is there an annual fee?', fa: 'ممنون. آیا هزینه سالانه‌ای وجود دارد؟' },
+      { speaker: 'partner', text: 'Hello. How can I help you?', fa: 'سلام. چطور می‌توانم کمکتان کنم؟' },
+      { speaker: 'learner', text: 'I would like to see the apartment.', fa: 'می‌خواهم آپارتمان را ببینم.' },
+      { speaker: 'partner', text: 'Of course. What would you like to know?', fa: 'حتماً. دوست دارید چه چیزی بدانید؟' },
+      { speaker: 'learner', text: 'How much is the rent?', fa: 'اجاره چقدر است؟' },
+      { speaker: 'partner', text: 'It is eight hundred dollars a month.', fa: 'ماهی هشتصد دلار است.' },
+      { speaker: 'learner', text: 'Are the bills included?', fa: 'آیا هزینهٔ قبض‌ها حساب شده است؟' },
+      { speaker: 'partner', text: 'Water is included, but electricity is not.', fa: 'هزینهٔ آب حساب شده، اما برق نه.' },
+      { speaker: 'learner', text: 'How long is the lease?', fa: 'مدت قرارداد اجاره چقدر است؟' },
+      { speaker: 'partner', text: 'The lease is for twelve months.', fa: 'مدت قرارداد دوازده ماه است.' },
+      { speaker: 'learner', text: 'Is the apartment furnished?', fa: 'آپارتمان مبله است؟' },
+      { speaker: 'partner', text: 'Yes, it is furnished.', fa: 'بله، مبله است.' },
+      { speaker: 'learner', text: 'Is there a bus stop nearby?', fa: 'نزدیک اینجا ایستگاه اتوبوس هست؟' },
+      { speaker: 'partner', text: 'Yes. The bus stop is near the apartment.', fa: 'بله. ایستگاه اتوبوس نزدیک آپارتمان است.' },
+      { speaker: 'learner', text: 'Can I see the rooms, please?', fa: 'ممکن است لطفاً اتاق‌ها را ببینم؟' },
+      { speaker: 'partner', text: 'Yes. Please come in.', fa: 'بله. لطفاً داخل بیایید.' },
+      { speaker: 'learner', text: 'Thank you.', fa: 'ممنون.' },
     ],
   },
   {
@@ -267,18 +325,20 @@ const CORE_SENTENCE_LESSONS: SentenceLesson[] = [
     situation: 'در سفر با شرایط سختی روبه‌رو شده‌اید و باید مشکل را واضح توضیح دهید و برای ادامه تصمیم بگیرید.',
     durationMinutes: 12,
     sentences: [
-      { id: 'challenge-hardship', en: 'The bad weather caused great hardship.', fa: 'هوای بد سختی زیادی ایجاد کرد.', pronunciation: 'ذِ بَد وِذِر کازد گریت هاردشیپ', vocabulary: [{ word: 'hardship', meaning: 'سختی / دشواری', essential504: true }] },
-      { id: 'challenge-abandon', en: 'We may have to abandon our plan.', fa: 'ممکن است مجبور شویم برنامه‌مان را رها کنیم.', pronunciation: 'وی مِی هَو تو اَبَندِن آور پِلَن', pattern: 'have to + verb', vocabulary: [{ word: 'abandon', meaning: 'رها کردن', essential504: true }] },
-      { id: 'challenge-unaccustomed', en: 'I am unaccustomed to this cold weather.', fa: 'من به این هوای سرد عادت ندارم.', pronunciation: 'آی اَم اَناِکاستِمد تو ذیس کُلد وِذِر', pattern: 'be unaccustomed to + noun', vocabulary: [{ word: 'unaccustomed', meaning: 'عادت‌نداشته', essential504: true }] },
-      { id: 'challenge-scarce', en: 'Clean water is scarce in this area.', fa: 'آب پاک در این منطقه کمیاب است.', pronunciation: 'کلین واتِر ایز اِسکِرس این ذیس اِریا', vocabulary: [{ word: 'scarce', meaning: 'کمیاب', essential504: true }] },
+      { id: "challenge-hardship", en: "The bad weather made our trip hard.", fa: "هوای بد سفرمان را سخت کرد.", pronunciation: "ذِ بَد وِذِر مِید آور تریپ هارد.", pattern: "The + noun + made + object + adjective.", vocabulary: [{ word: "bad weather", meaning: "هوای بد" }, { word: "trip", meaning: "سفر" }] },
+      { id: "challenge-abandon", en: "We may need to change our plan.", fa: "شاید لازم باشد برنامه‌مان را عوض کنیم.", pronunciation: "وی مِی نید تو چِینج آور پِلَن.", pattern: "We may need to + verb.", vocabulary: [{ word: "change", meaning: "عوض کردن" }, { word: "plan", meaning: "برنامه" }] },
+      { id: "challenge-unaccustomed", en: "I am not used to cold weather.", fa: "من به هوای سرد عادت ندارم.", pronunciation: "آی اَم نات یوست تو کُلد وِذِر.", pattern: "I am not used to + noun.", vocabulary: [{ word: "not used to", meaning: "عادت نداشتن به" }, { word: "cold weather", meaning: "هوای سرد" }] },
+      { id: "challenge-scarce", en: "There is not much clean water here.", fa: "اینجا آب تمیز زیادی وجود ندارد.", pronunciation: "ذِر ایز نات ماچ کلین واتِر هیر.", pattern: "There is not much + uncountable noun.", vocabulary: [{ word: "clean water", meaning: "آب تمیز" }, { word: "not much", meaning: "نه‌چندان زیاد" }] },
       { id: 'challenge-safe', en: 'We need to find a safe place.', fa: 'باید یک مکان امن پیدا کنیم.', pronunciation: 'وی نید تو فایند اَ سِیف پِلِیس', vocabulary: [{ word: 'safe', meaning: 'امن' }] },
       { id: 'challenge-together', en: 'We can solve this problem together.', fa: 'می‌توانیم این مشکل را با هم حل کنیم.', pronunciation: 'وی کَن سالو ذیس پرابلِم توگِذِر', vocabulary: [{ word: 'together', meaning: 'با هم' }] },
     ],
     dialogue: [
-      { speaker: 'partner', text: 'Do we have enough clean water?', fa: 'آیا آب پاک کافی داریم؟' },
-      { speaker: 'learner', text: 'No. Clean water is scarce in this area.', fa: 'نه. آب پاک در این منطقه کمیاب است.' },
-      { speaker: 'partner', text: 'Should we abandon our plan?', fa: 'آیا باید برنامه‌مان را رها کنیم؟' },
-      { speaker: 'learner', text: 'Not yet. We can solve this problem together.', fa: 'هنوز نه. می‌توانیم این مشکل را با هم حل کنیم.' },
+      { speaker: "partner", text: "Do we have enough water?", fa: "آیا آب کافی داریم؟" },
+      { speaker: "learner", text: "No, we need more water.", fa: "نه، به آب بیشتری نیاز داریم." },
+      { speaker: "partner", text: "Should we change our plan?", fa: "آیا بهتر است برنامه‌مان را عوض کنیم؟" },
+      { speaker: "learner", text: "Yes. Let us find a safe place.", fa: "بله. بیایید جای امنی پیدا کنیم." },
+      { speaker: "partner", text: "Can I help you?", fa: "می‌توانم کمکت کنم؟" },
+      { speaker: "learner", text: "Yes, let us work together.", fa: "بله، بیایید با هم کار کنیم." },
     ],
   },
   {
@@ -290,17 +350,20 @@ const CORE_SENTENCE_LESSONS: SentenceLesson[] = [
     situation: 'با دوستان یا همکاران خود درباره یک برنامه صحبت می‌کنید و می‌خواهید یک راه‌حل خوب پیشنهاد دهید.',
     durationMinutes: 12,
     sentences: [
-      { id: 'plan-essential', en: 'A clear plan is essential for success.', fa: 'یک برنامه روشن برای موفقیت ضروری است.', pronunciation: 'اَ کلیر پِلَن ایز اِسِنشِل فُر ساکسِس', vocabulary: [{ word: 'essential', meaning: 'ضروری', essential504: true }] },
-      { id: 'plan-devise', en: 'We need to devise a better plan.', fa: 'باید برنامه بهتری طراحی کنیم.', pronunciation: 'وی نید تو دِوایز اَ بِتِر پِلَن', vocabulary: [{ word: 'devise', meaning: 'طراحی کردن / ابداع کردن', essential504: true }] },
-      { id: 'plan-persuade', en: 'I will try to persuade the team.', fa: 'تلاش می‌کنم تیم را متقاعد کنم.', pronunciation: 'آی ویل تِرای تو پِرسوِید ذِ تیم', pattern: 'persuade + person', vocabulary: [{ word: 'persuade', meaning: 'متقاعد کردن', essential504: true }] },
-      { id: 'plan-typical', en: 'This is a typical problem for new teams.', fa: 'این یک مشکل معمول برای تیم‌های جدید است.', pronunciation: 'ذیس ایز اَ تیپیکِل پرابلِم فُر نیو تیمز', vocabulary: [{ word: 'typical', meaning: 'معمول / نمونه‌وار', essential504: true }] },
+      { id: "plan-essential", en: "A clear plan is very important.", fa: "یک برنامهٔ روشن خیلی مهم است.", pronunciation: "اَ کلیر پِلَن ایز وِری ایمپورتِنت.", pattern: "A + noun + is very + adjective.", vocabulary: [{ word: "clear plan", meaning: "برنامهٔ روشن" }, { word: "important", meaning: "مهم" }] },
+      { id: "plan-devise", en: "We need to make a better plan.", fa: "باید برنامهٔ بهتری درست کنیم.", pronunciation: "وی نید تو مِیک اَ بِتِر پِلَن.", pattern: "We need to + verb + object.", vocabulary: [{ word: "make a plan", meaning: "برنامه درست کردن" }, { word: "better", meaning: "بهتر" }] },
+      { id: "plan-persuade", en: "I will try to get the team to agree.", fa: "سعی می‌کنم تیم را به موافقت برسانم.", pronunciation: "آی ویل تِرای تو گِت ذِ تیم تو اَگری.", pattern: "I will try to get + person + to + verb.", vocabulary: [{ word: "team", meaning: "تیم" }, { word: "agree", meaning: "موافقت کردن" }] },
+      { id: "plan-typical", en: "New teams often have this problem.", fa: "تیم‌های تازه اغلب این مشکل را دارند.", pronunciation: "نیو تیمز آفِن هَو ذیس پرابْلِم.", pattern: "People often have + noun.", vocabulary: [{ word: "new teams", meaning: "تیم‌های تازه" }, { word: "problem", meaning: "مشکل" }] },
       { id: 'plan-share', en: 'Let me share my idea.', fa: 'اجازه دهید ایده‌ام را مطرح کنم.', pronunciation: 'لِت می شِر مای آیدیا', vocabulary: [{ word: 'idea', meaning: 'ایده' }] },
       { id: 'plan-agree', en: 'Do you agree with this plan?', fa: 'آیا با این برنامه موافقید؟', pronunciation: 'دو یو اَگری ویذ ذیس پِلَن؟', vocabulary: [{ word: 'agree', meaning: 'موافق بودن' }] },
     ],
     dialogue: [
-      { speaker: 'learner', text: 'We need to devise a better plan.', fa: 'باید برنامه بهتری طراحی کنیم.' },
-      { speaker: 'partner', text: 'Why is that essential?', fa: 'چرا این کار ضروری است؟' },
-      { speaker: 'learner', text: 'This is a typical problem, and a clear plan can help us.', fa: 'این مشکلی معمول است و یک برنامه روشن می‌تواند کمکمان کند.' },
+      { speaker: "partner", text: "What is your idea?", fa: "ایدهٔ تو چیست؟" },
+      { speaker: "learner", text: "We can make a new plan.", fa: "می‌توانیم برنامهٔ تازه‌ای درست کنیم." },
+      { speaker: "partner", text: "Why do we need a new plan?", fa: "چرا به برنامهٔ تازه نیاز داریم؟" },
+      { speaker: "learner", text: "The old plan did not work.", fa: "برنامهٔ قبلی جواب نداد." },
+      { speaker: "partner", text: "Can we talk to the team?", fa: "می‌توانیم با تیم صحبت کنیم؟" },
+      { speaker: "learner", text: "Yes, let us talk to them.", fa: "بله، بیایید با آن‌ها صحبت کنیم." },
     ],
   },
 ];
@@ -520,7 +583,7 @@ if (everydayLessonsBeforeCompletion.map(lesson => lesson.id).join('|') !== EVERY
 }
 const originalEverydayLessonIds = new Set<string>(EVERYDAY_COURSE_LESSON_IDS.slice(0, 5));
 
-export const SENTENCE_LESSONS: SentenceLesson[] = COURSE_LESSONS_BEFORE_SURVIVAL_COMPLETION.map(lesson => {
+export const EXISTING_SENTENCE_LESSONS: SentenceLesson[] = COURSE_LESSONS_BEFORE_SURVIVAL_COMPLETION.map(lesson => {
   if (lesson.levelId === 3) {
     const additions = COMMUNICATION_COMPLETION_SENTENCES[lesson.id as keyof typeof COMMUNICATION_COMPLETION_SENTENCES];
     if (!additions || lesson.sentences.length !== 6 || additions.length !== 44) {
@@ -595,5 +658,25 @@ export const SENTENCE_LESSONS: SentenceLesson[] = COURSE_LESSONS_BEFORE_SURVIVAL
 
   return { ...lesson, durationMinutes: 35, sentences };
 });
+
+// Keep the old IDs and examples while placing the A2 bridge first. The five
+// original situation lessons remain accessible after the everyday scenarios.
+const previousA2Lessons = EXISTING_SENTENCE_LESSONS.filter(lesson => lesson.levelId === 2);
+const arrangedBeforeB1 = [
+  ...EXISTING_SENTENCE_LESSONS.filter(lesson => lesson.levelId < 2),
+  ...A2_FOUNDATION_LESSONS,
+  ...previousA2Lessons.slice(5).map(lesson => ({ ...lesson, a2Section: 'survival' as const })),
+  ...previousA2Lessons.slice(0, 5).map(lesson => ({ ...lesson, a2Section: 'legacy' as const })),
+  ...EXISTING_SENTENCE_LESSONS.filter(lesson => lesson.levelId > 2),
+];
+const advancedStart = arrangedBeforeB1.findIndex(lesson => lesson.levelId === 4);
+if (advancedStart < 0) throw new Error('Advanced lesson boundary is missing.');
+export const SENTENCE_LESSONS: SentenceLesson[] = [
+  ...arrangedBeforeB1.slice(0, advancedStart),
+  ...B1_INDEPENDENT_LESSONS,
+  ...B2_UPPER_INTERMEDIATE_LESSONS,
+  ...arrangedBeforeB1.slice(advancedStart),
+  ...C1_ADVANCED_LESSONS,
+].map((lesson, index) => ({ ...lesson, order: index + 1 }));
 
 export const getSentenceLesson = (id: string) => SENTENCE_LESSONS.find((lesson) => lesson.id === id);

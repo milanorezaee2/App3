@@ -11,6 +11,7 @@ export const ENGLISH_LEVEL_GRADIENTS: Record<CourseLevelId, [string, string]> = 
   2: ['#19A88B', '#0D5A53'],
   3: ['#E4A436', '#99501D'],
   4: ['#9A68E8', '#4C318A'],
+  5: ['#C55F76', '#78364F'],
 };
 
 export function displayEnglishModuleLabel(label: string) {
@@ -30,11 +31,11 @@ export function EnglishProgressTrack({ value, color = Palette.primary, height = 
   );
 }
 
-export function EnglishLevelRail({
+export function EnglishLevelRail<T extends CourseLevelId = CourseLevelId>({
   activeLevelId,
   counts,
   onSelect,
-  levels = COURSE_LEVELS,
+  levels,
   startLabel = 'START',
   accessibilityLabelPrefix,
   direction = 'ltr',
@@ -43,10 +44,10 @@ export function EnglishLevelRail({
   activeLabelColor = Palette.primaryDark,
   numberOffset = 0,
 }: {
-  activeLevelId: CourseLevelId;
-  counts?: Partial<Record<CourseLevelId, { completed: number; total: number }>>;
-  onSelect: (levelId: CourseLevelId) => void;
-  levels?: ReadonlyArray<{ id: CourseLevelId; title: string; cefr: string }>;
+  activeLevelId: T;
+  counts?: Partial<Record<T, { completed: number; total: number }>>;
+  onSelect: (levelId: T) => void;
+  levels?: ReadonlyArray<{ id: T; title: string; cefr: string }>;
   startLabel?: string;
   accessibilityLabelPrefix?: string;
   direction?: 'ltr' | 'rtl';
@@ -57,7 +58,7 @@ export function EnglishLevelRail({
 }) {
   return (
     <View style={[styles.rail, direction === 'rtl' && styles.railRtl]}>
-      {levels.map((level, index) => {
+      {(levels ?? COURSE_LEVELS as unknown as ReadonlyArray<{ id: T; title: string; cefr: string }>).map((level, index, allLevels) => {
         const count = counts?.[level.id];
         const done = !!count && count.total > 0 && count.completed === count.total;
         const active = level.id === activeLevelId;
@@ -80,7 +81,7 @@ export function EnglishLevelRail({
                 {level.id === 0 ? startLabel : level.cefr}
               </Text>
             </Pressable>
-            {index < levels.length - 1 ? <View style={[styles.railConnector, reached && styles.railConnectorActive, reached && { backgroundColor: successColor }]} /> : null}
+            {index < allLevels.length - 1 ? <View style={[styles.railConnector, reached && styles.railConnectorActive, reached && { backgroundColor: successColor }]} /> : null}
           </View>
         );
       })}
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
   railConnector: { height: 3, flex: 1, borderRadius: 99, backgroundColor: Palette.border, marginTop: 15 },
   railConnectorActive: { backgroundColor: Palette.success },
   sectionHeading: { gap: 3, alignItems: 'flex-end' },
-  sectionEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 8, fontWeight: '800', letterSpacing: 1, textAlign: 'right', writingDirection: 'ltr' },
+  sectionEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 8, fontWeight: '800', letterSpacing: 1, textAlign: 'left', writingDirection: 'ltr' },
   sectionTitle: { fontFamily: 'Vazir', color: Palette.ink, fontSize: 19, lineHeight: 28, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   sectionDetail: { fontFamily: 'Vazir', color: Palette.muted, fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
 });

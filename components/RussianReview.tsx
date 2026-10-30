@@ -129,7 +129,7 @@ export default function RussianReview() {
       </LinearGradient>
       <Text style={styles.sectionTitle}>مرور چگونه تنظیم می‌شود؟</Text>
       <View style={styles.methodList}><Method num="۱" title="معنی را ببین و جمله را بگو" desc="پیش از دیدن پاسخ، جملهٔ روسی را با صدای بلند به یاد بیاورید." /><Method num="۲" title="پاسخ را ببین و بشنو" desc="متن روسی و آوانویسی تقریبی را با پاسخ خود مقایسه کنید." /><Method num="۳" title="میزان سختی را انتخاب کن" desc="برنامه زمان مرور بعدی را روی همین دستگاه تنظیم می‌کند." /></View>
-      <View style={styles.note}><CheckCircle2 size={18} color={Palette.success} /><Text style={styles.noteText}>مرور روسی جدا از پیشرفت انگلیسی و آلمانی، فقط در حافظهٔ همین دستگاه ذخیره می‌شود.</Text></View>
+      <View style={styles.note}><CheckCircle2 size={18} color={Palette.success} /><Text style={styles.noteText}>مرور روسی جدا از پیشرفت انگلیسی، فقط در حافظهٔ همین دستگاه ذخیره می‌شود.</Text></View>
     </ScrollView>
     <RussianBottomNav />
   </View>;

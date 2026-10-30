@@ -16,8 +16,6 @@
     "ios": "node scripts/run-expo.mjs run:ios",
     "validate:logic": "node scripts/verify-app-logic.mjs",
     "validate:admin": "node scripts/verify-education-admin.mjs",
-    "validate:a1": "node scripts/verify-a1-editorial.cjs",
-    "validate:german-levels": "node scripts/verify-german-completion.cjs",
     "validate:russian": "node scripts/verify-russian-course.cjs",
     "validate:russian-architecture": "node scripts/verify-russian-architecture.cjs",
     "validate:english-supplement": "node scripts/verify-english-supplement.cjs",
@@ -34,7 +32,8 @@
     "validate:pronunciation": "node scripts/verify-pronunciation-course.mjs",
     "validate:personal-sync": "node scripts/verify-personal-sync.mjs",
     "validate:english-four": "node scripts/verify-english-four.cjs",
-    "prebuild:web": "node scripts/check-public-connection.mjs"
+    "prebuild:web": "node scripts/check-public-connection.mjs",
+    "validate:english-lesson-flow": "node scripts/verify-english-lesson-flow.cjs"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.4.2",

@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect } from 'expo-router';
 import { Brain, Check, CheckCircle2, Clock3, RefreshCw, Sparkles, Volume2 } from 'lucide-react-native';
 import * as Speech from 'expo-speech';
+import { speechTagFor } from '@/lib/speechLanguage';
 import { AppBottomNav } from '@/components/AppBottomNav';
 import { PageNavigation } from '@/components/PageNavigation';
 import { SENTENCE_LESSONS } from '@/lib/courseContent';
@@ -114,7 +115,7 @@ export default function ReviewHome() {
                 <Text style={styles.reviewEn}>{sentence.en}</Text>
                 <Text style={[styles.reviewPronunciation,sentence.pronunciation.startsWith('/ ')&&{fontFamily:'Inter-ExtraBold',writingDirection:'ltr'}]}>{sentence.pronunciation}</Text>
                 {sentence.pronunciation.startsWith('/ ')&&<Text style={styles.reviewPronunciation}>راهنمای واجی بدون تکیه؛ واژه‌های داخل کروشه آوانویسی نشده‌اند.</Text>}
-                <Pressable style={styles.soundButton} onPress={() => Speech.speak(sentence.en, { language: 'en-US', rate: .78 })}>
+                <Pressable style={styles.soundButton} onPress={() => Speech.speak(sentence.en, { language: speechTagFor('en-US'), rate: .78 })}>
                   <Volume2 size={18} color={Colors.primary[400]} />
                   <Text style={styles.soundText}>پخش جمله</Text>
                 </Pressable>
@@ -244,7 +245,7 @@ const styles = StyleSheet.create({
   revealButtonText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, fontWeight: Typography.weights.bold, color: Colors.onColor, writingDirection: 'rtl' },
   answerArea: { width: '100%', alignItems: 'center' },
   answerDivider: { width: '75%', height: 1, backgroundColor: Palette.border, marginVertical: Spacing.lg },
-  reviewEn: { fontFamily: 'Inter-ExtraBold', alignSelf: 'stretch', fontSize: 21, lineHeight: 34, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
+  reviewEn: { fontFamily: 'Inter-ExtraBold', alignSelf: 'stretch', fontSize: 21, lineHeight: 34, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   reviewPronunciation: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, color: Palette.primaryDark, textAlign: 'center', writingDirection: 'rtl', marginTop: 7 },
   soundButton: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, padding: Spacing.sm, marginTop: Spacing.sm },
   soundText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Palette.primary, writingDirection: 'rtl' },

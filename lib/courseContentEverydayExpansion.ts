@@ -222,7 +222,7 @@ export const EVERYDAY_EXPANSION_LESSONS: SentenceLesson[] = [
     sentence('s5', 'You should drink enough water during the day.', 'بهتر است در طول روز به‌اندازهٔ کافی آب بنوشی.', 'یو شود درینک ایناف واتِر دورینگ ذِ دِی.', 'You should + base verb + amount/time.', [['should', 'بهتر است / باید'], ['enough', 'به‌اندازهٔ کافی']]),
     sentence('s6', 'You do not have to change everything at once.', 'لازم نیست همه‌چیز را یک‌باره تغییر بدهی.', 'یو دو نات هَو تو چِینج اِوری‌ثینگ اَت وانس.', 'You do not have to + base verb + at once.', [['have to', 'مجبور بودن / لازم بودن'], ['at once', 'یک‌باره']]),
     sentence('s7', 'A short walk can help you relax.', 'یک پیاده‌روی کوتاه می‌تواند به آرامشت کمک کند.', 'اَ شورت واک کَن هِلپ یو ریلَکس.', 'A + activity + can help + person + base verb.', [['relax', 'آرام شدن'], ['short walk', 'پیاده‌روی کوتاه']]),
-    sentence('s8', 'I have been sleeping better this month.', 'این ماه بهتر خوابیده‌ام.', 'آی هَو بین اِسلیپینگ بِتِر ذیس مانث.', 'I have been + verb-ing + time.', [['sleep', 'خوابیدن'], ['this month', 'این ماه']]),
+    sentence('s8', 'I sleep better these days.', 'این روزها بهتر می‌خوابم.', 'آی اِسلیپ بِتِر ذیز دِیز.', 'I + base verb + comparative + time.', [['sleep', 'خوابیدن'], ['these days', 'این روزها']]),
     sentence('s9', 'Small habits are easier to keep.', 'حفظ عادت‌های کوچک آسان‌تر است.', 'اِسمال هَبیتس آر ایزیِر تو کیپ.', 'Noun + is/are + comparative + to + verb.', [['habit', 'عادت'], ['keep', 'حفظ کردن']]),
     sentence('s10', 'How do you stay active on busy days?', 'در روزهای شلوغ چطور فعال می‌مانی؟', 'هاو دو یو اِستِی اَکتیو آن بیزی دِیز؟', 'How do you stay + adjective + time?', [['stay active', 'فعال ماندن'], ['busy', 'شلوغ']]),
   ], [

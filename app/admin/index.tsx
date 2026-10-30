@@ -10,6 +10,7 @@ import { listRealContacts, listSupportRequestStatuses, loadAdminChatModeration, 
 import { downloadRegisteredUsers } from '@/lib/userExport';
 import { registerAdminPushToken } from '@/lib/adminPush';
 import { COURSE_LEVELS, SENTENCE_LESSONS } from '@/lib/courseContent';
+import { getEssential504Coverage } from '@/lib/essential504';
 import { toPersianDigits as fa } from '@/lib/format';
 
 type Tab = 'overview' | 'registered' | 'support' | 'students' | 'invites' | 'content';
@@ -21,6 +22,7 @@ const tabs = [
   { id: 'invites' as Tab, title: 'دعوت‌نامه‌ها', icon: Ticket },
   { id: 'content' as Tab, title: 'محتوای آموزشی', icon: BookOpen },
 ];
+const sentenceCourse504 = getEssential504Coverage();
 const dates = (value: string | null) => value && Number.isFinite(Date.parse(value)) ? new Date(value).toLocaleDateString('fa-IR') : 'هنوز همگام نشده';
 
 export default function AdminRoute() {
@@ -208,7 +210,7 @@ function EducationAdmin() {
         </View>}
         {(tab === 'overview' || tab === 'students') && <>
           <View style={s.stats}>
-            {[['کاربران ثبت‌شده', demo ? 3 : registeredUsers.length, 'حساب‌های اپ زبان'], ['زبان‌آموزان', rows.length, 'عضویت با رضایت'], ['اشتراک فعال', active.length, 'گزارش آموزشی فعال'], ['میانگین پیشرفت', `${fa(avg)}٪`, `${fa(synced.length)} نفر با گزارش همگام‌شده`], ['درس‌های دوره', SENTENCE_LESSONS.length, 'پوشش ۵۰۴ واژه مرجع']].map(([name,value,hint]) => <View key={name} style={s.stat}><Text style={s.statLabel}>{name}</Text><Text style={s.statNumber}>{typeof value === 'number' ? fa(value) : value}</Text><Text style={s.small}>{hint}</Text></View>)}
+            {[['کاربران ثبت‌شده', demo ? 3 : registeredUsers.length, 'حساب‌های اپ زبان'], ['زبان‌آموزان', rows.length, 'عضویت با رضایت'], ['اشتراک فعال', active.length, 'گزارش آموزشی فعال'], ['میانگین پیشرفت', `${fa(avg)}٪`, `${fa(synced.length)} نفر با گزارش همگام‌شده`], ['درس‌های دوره', SENTENCE_LESSONS.length, `${fa(sentenceCourse504.introducedCount)} از ${fa(sentenceCourse504.totalTarget)} واژه در دورهٔ جمله‌محور`]].map(([name,value,hint]) => <View key={name} style={s.stat}><Text style={s.statLabel}>{name}</Text><Text style={s.statNumber}>{typeof value === 'number' ? fa(value) : value}</Text><Text style={s.small}>{hint}</Text></View>)}
           </View>
           {tab === 'overview' && <View style={s.hero}><View style={{ flex: 1 }}><Text style={s.heroTitle}>مسیر یادگیری از یک دعوت شروع می‌شود.</Text><Text style={s.heroText}>یک دعوت اختصاصی بسازید؛ زبان‌آموز نام شما و نوع اطلاعات قابل اشتراک را می‌بیند و خودش تصمیم می‌گیرد.</Text></View>{button('دعوت زبان‌آموز جدید', () => setTab('invites'))}</View>}
           <View style={s.card}>
@@ -289,7 +291,7 @@ function EducationAdmin() {
           {!invites.length && <Text style={s.emptyText}>{demo ? 'برای ساخت دعوت واقعی وارد حساب مدیر شوید.' : 'هنوز دعوتی ساخته نشده است.'}</Text>}
           {invites.map(inv => <View key={inv.id} style={s.inviteRow}><Text style={s.cardTitle}>{inv.label}</Text><Text selectable style={s.code}>{inv.code}</Text><Text style={s.small}>{inv.claimed_at ? 'مصرف‌شده' : Date.parse(inv.expires_at) < Date.now() ? 'منقضی‌شده' : 'آماده استفاده'} · پایان اعتبار: {dates(inv.expires_at)}</Text>{!inv.claimed_at && button('لغو دعوت',()=>void task(async()=>{const {error}=await adminClient().from('education_invites').delete().eq('id',inv.id);if(error) throw error;await refresh();}),true)}</View>)}
         </View>}
-        {tab === 'content' && <View style={s.card}><Text style={s.cardTitle}>کتابخانه محتوای فعلی</Text><Text style={s.subtitle}>{fa(SENTENCE_LESSONS.length)} درس · {fa(SENTENCE_LESSONS.reduce((total, lesson) => total + lesson.sentences.length, 0))} جمله · ۵۰۴ واژه مرجع</Text><Text style={s.small}>این بخش فعلاً فقط خواندنی است. ویرایش و انتشار محتوای جدید از پنل هنوز پیاده‌سازی نشده است.</Text>{COURSE_LEVELS.map(l => <View key={l.id} style={s.contentRow}><View style={[s.levelDot,{backgroundColor:l.color}]} /><View style={{flex:1}}><Text style={s.studentName}>{l.title}</Text><Text style={s.small}>{l.description}</Text></View><Text style={s.badge}>{fa(SENTENCE_LESSONS.filter(x=>x.levelId===l.id).length)} درس</Text></View>)}</View>}
+        {tab === 'content' && <View style={s.card}><Text style={s.cardTitle}>کتابخانه محتوای فعلی</Text><Text style={s.subtitle}>{fa(SENTENCE_LESSONS.length)} درس · {fa(SENTENCE_LESSONS.reduce((total, lesson) => total + lesson.sentences.length, 0))} جمله · {fa(sentenceCourse504.introducedCount)} از {fa(sentenceCourse504.totalTarget)} واژهٔ مرجع در دوره</Text><Text style={s.small}>این بخش فعلاً فقط خواندنی است. ویرایش و انتشار محتوای جدید از پنل هنوز پیاده‌سازی نشده است.</Text>{COURSE_LEVELS.map(l => <View key={l.id} style={s.contentRow}><View style={[s.levelDot,{backgroundColor:l.color}]} /><View style={{flex:1}}><Text style={s.studentName}>{l.title}</Text><Text style={s.small}>{l.description}</Text></View><Text style={s.badge}>{fa(SENTENCE_LESSONS.filter(x=>x.levelId===l.id).length)} درس</Text></View>)}</View>}
         <View style={s.footer}><ShieldCheck size={16} color="#7a899b" /><Text style={s.small}>مدیریت آموزشی • بدون نظارت بر گوشی • داده آفلاین پس از همگام‌سازی دیده می‌شود</Text></View>
         {Constants.expoConfig?.extra?.appRole !== 'admin' && button('بازگشت به اپ آموزشی',()=>router.replace('/lang'),true)}
       </ScrollView>
