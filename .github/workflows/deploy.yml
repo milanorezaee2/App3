@@ -32,7 +32,7 @@ jobs:
           npm run typecheck
           npm run validate:web-shell
           npm run validate:registration-admin
-          npm run validate:placement
+          npm run validate:language-entry
           npm run validate:a11y
           npm run validate:requested-updates
       - name: Load public Supabase credentials

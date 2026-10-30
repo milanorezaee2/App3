@@ -14,7 +14,7 @@ export interface ResumeSnapshot {
 
 // Save only parameters required to reconstruct screens; never replay one-shot actions.
 const allowedParams = new Set(['id', 'lessonId', 'level', 'name', 'language']);
-const allowedPaths = /^\/(?:languages|lang(?:\/[^?#]*)?|course(?:\/[^?#]*)?|review(?:\/[^?#]*)?|placement|personal-sync|app-lock|learning-access|permissions|agent(?:\/[^?#]*)?|admin(?:\/[^?#]*)?|learn\/(?:en|ru)(?:\/[^?#]*)?|conversations(?:\/[^?#]*)?)$/;
+const allowedPaths = /^\/(?:languages|lang(?:\/[^?#]*)?|course(?:\/[^?#]*)?|review(?:\/[^?#]*)?|personal-sync|app-lock|learning-access|permissions|agent(?:\/[^?#]*)?|admin(?:\/[^?#]*)?|learn\/(?:en|ru)(?:\/[^?#]*)?|conversations(?:\/[^?#]*)?)$/;
 
 export function resumeHref(pathname: string, params: ResumeParams): string | null {
   if (!allowedPaths.test(pathname) || pathname.includes('//') || /[\x00-\x1f\\]/.test(pathname)) return null;
@@ -29,9 +29,8 @@ export function resumeHref(pathname: string, params: ResumeParams): string | nul
   return pathname + (query.length ? `?${query.join('&')}` : '');
 }
 
-export function languageForResume(pathname: string, previous: ResumeLanguage, routeLanguage?: string): ResumeLanguage {
+export function languageForResume(pathname: string, previous: ResumeLanguage): ResumeLanguage {
   if (pathname === '/learn/ru' || pathname.startsWith('/learn/ru/')) return 'ru';
-  if (pathname === '/placement') return routeLanguage === 'ru' || routeLanguage === 'en' ? routeLanguage : previous ?? 'en';
   if (pathname === '/lang' || pathname.startsWith('/lang/') || pathname.startsWith('/course/')
     || pathname === '/review' || pathname.startsWith('/review/')
     || pathname === '/learn/en' || pathname.startsWith('/learn/en/') || pathname === '/conversations/emma') return 'en';
@@ -68,7 +67,6 @@ export function parseResumeSnapshot(raw: string | null): ResumeSnapshot | null {
 export function resumeDestination(snapshot: ResumeSnapshot, now: number): string {
   const awaySince = snapshot.backgroundAt ?? snapshot.updatedAt;
   if (now - awaySince > RESUME_MAX_INACTIVE_MS) {
-    if (snapshot.href.split('?')[0] === '/placement') return '/languages';
     return snapshot.language === 'ru' ? '/learn/ru' : snapshot.language === 'en' ? '/lang' : '/languages';
   }
   return snapshot.href;

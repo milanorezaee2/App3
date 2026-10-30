@@ -20,7 +20,7 @@
     "validate:russian-architecture": "node scripts/verify-russian-architecture.cjs",
     "validate:english-supplement": "node scripts/verify-english-supplement.cjs",
     "validate:english-engine": "node scripts/verify-english-engine.cjs",
-    "validate:placement": "node scripts/verify-placement.cjs",
+    "validate:language-entry": "node scripts/verify-language-entry.cjs",
     "validate:speech-policy": "node scripts/verify-speech-policy.mjs",
     "validate:app-lock": "node scripts/verify-app-lock.mjs",
     "validate:typography": "node scripts/verify-typography-stability.mjs",

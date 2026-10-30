@@ -46,7 +46,6 @@ const HomeColors = {
   sage: '#168451',
   sageSoft: '#ECF9F2',
   amber: '#A65C14',
-  amberSoft: '#FFF6E8',
   gold: '#2878DE',
   goldSoft: '#EAF3FF',
 } as const;
@@ -374,14 +373,6 @@ export default function LearningHome() {
               <View style={styles.quickCopy}>
                 <Text style={styles.quickTitle}>کارگاه تلفظ انگلیسی</Text>
                 <Text style={styles.quickDesc}>تمرین صداها، تکیه و آهنگ جمله؛ خودارزیابی و همگام‌سازی حساب</Text>
-              </View>
-              <ChevronLeft size={17} color={HomeColors.muted} />
-            </Pressable>
-            <Pressable accessibilityRole="button" accessibilityLabel="سنجش آغازین انگلیسی برای انتخاب نقطهٔ شروع" style={({ pressed }) => [styles.quickCard, pressed && styles.buttonPressed]} onPress={() => router.push({ pathname: '/placement', params: { language: 'en' } } as never)}>
-              <View style={[styles.quickIcon, { backgroundColor: HomeColors.amberSoft }]}><Compass size={18} color={HomeColors.amber} /></View>
-              <View style={styles.quickCopy}>
-                <Text style={styles.quickTitle}>پیداکردن نقطهٔ شروع</Text>
-                <Text style={styles.quickDesc}>سنجش کوتاه و اختیاری برای انتخاب سطح انگلیسی</Text>
               </View>
               <ChevronLeft size={17} color={HomeColors.muted} />
             </Pressable>

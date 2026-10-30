@@ -3,7 +3,6 @@ import { ActivityIndicator, AppState, Platform, StyleSheet, View } from 'react-n
 import { useGlobalSearchParams, useNavigationContainerRef, usePathname, useRouter } from 'expo-router';
 import { MANAGEMENT_BUILD } from '@/lib/features';
 import { languageForResume, readResumeSnapshot, resumeDestination, resumeHref, writeResumeSnapshot, type ResumeParams, type ResumeSnapshot } from '@/lib/appResume';
-import { getSavedPlacementRecommendation } from '@/lib/placementProfile';
 
 /** Keep learner navigation stable across Android/iOS background and process restarts. */
 export function AppResumeGuard() {
@@ -11,7 +10,6 @@ export function AppResumeGuard() {
   const navigation = useNavigationContainerRef();
   const pathname = usePathname();
   const params = useGlobalSearchParams() as ResumeParams;
-  const placementLanguageParam = Array.isArray(params.language) ? params.language[0] : params.language;
   const href = resumeHref(pathname, params);
   const disabled = Platform.OS === 'web' || MANAGEMENT_BUILD;
   const [loaded, setLoaded] = useState(false);
@@ -30,29 +28,10 @@ export function AppResumeGuard() {
   useEffect(() => {
     if (disabled) return;
     let mounted = true;
-    void readResumeSnapshot().then(async savedValue => {
+    void readResumeSnapshot().then(savedValue => {
       if (!mounted) return;
-      let value = savedValue;
-      if (value) {
-        const savedPath = value.href.split('?')[0];
-        const isLearningPath = savedPath === '/lang' || savedPath.startsWith('/lang/')
-          || savedPath.startsWith('/course/') || savedPath === '/review' || savedPath.startsWith('/review/')
-          || savedPath === '/learn/ru' || savedPath.startsWith('/learn/ru/')
-          || savedPath === '/learn/en' || savedPath.startsWith('/learn/en/');
-        const inferredLanguage = value.language ?? (savedPath.startsWith('/learn/ru') ? 'ru'
-          : savedPath.startsWith('/lang') || savedPath.startsWith('/course/') ? 'en' : null);
-        if (isLearningPath) {
-          let hasPlacement = false;
-          if (inferredLanguage) {
-            try { hasPlacement = !!await getSavedPlacementRecommendation(inferredLanguage); } catch { /* continue to onboarding on lookup errors */ }
-          }
-          if (!mounted) return;
-          if (!hasPlacement) value = { ...value, href: '/languages', language: null, backgroundAt: null, updatedAt: Date.now() };
-        }
-      }
-      if (!mounted) return;
-      initial.current = value;
-      snapshot.current = value;
+      initial.current = savedValue;
+      snapshot.current = savedValue;
       setLoaded(true);
     }).catch(() => { if (mounted) setLoaded(true); });
     return () => { mounted = false; };
@@ -95,7 +74,7 @@ export function AppResumeGuard() {
       pendingHref.current = null;
     }
     const next: ResumeSnapshot = {
-      version: 1, href, language: languageForResume(pathname, snapshot.current?.language ?? null, placementLanguageParam),
+      version: 1, href, language: languageForResume(pathname, snapshot.current?.language ?? null),
       backgroundAt: null, updatedAt: Date.now(),
     };
     snapshot.current = next;

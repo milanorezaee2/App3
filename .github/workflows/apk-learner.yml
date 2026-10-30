@@ -75,7 +75,7 @@ jobs:
           npm run validate:speech-policy
           npm run validate:pronunciation
           npm run validate:registration-admin
-          npm run validate:placement
+          npm run validate:language-entry
           npm run validate:a11y
           npm run validate:requested-updates
 

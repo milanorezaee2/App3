@@ -13,7 +13,6 @@ const files = [
   'app/course/lesson.tsx',
   'app/conversations/emma.tsx',
   'app/conversations/human/[conversationId].tsx',
-  'app/placement.tsx',
   'app/lang/index.tsx',
   'app/lang/supplement.tsx',
   'app/lang/quiz.tsx',
@@ -112,4 +111,4 @@ if (problems.length) {
   console.error(problems.map(item => `FAIL  ${item}`).join('\n'));
   process.exit(1);
 }
-console.log(`${checks} static accessibility checks passed across ${files.length} English learning, conversation, backup and placement screens/components. No screen-reader or physical-device test is implied.`);
+console.log(`${checks} static accessibility checks passed across ${files.length} English learning, conversation and backup screens/components. No screen-reader or physical-device test is implied.`);

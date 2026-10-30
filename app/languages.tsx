@@ -4,7 +4,7 @@ import { createAudioPlayer } from 'expo-audio';
 import { MiloLogoMotion } from '@/components/MiloLogoMotion';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { ArrowLeft, BarChart3, BookOpenCheck, Check, Headphones, LifeBuoy, LockKeyhole, Mic2, RefreshCw, ShieldCheck, Sparkles, Target, Volume2 } from 'lucide-react-native';
+import { ArrowLeft, BarChart3, Check, Headphones, LifeBuoy, LockKeyhole, Mic2, RefreshCw, ShieldCheck, Sparkles, Target, Volume2 } from 'lucide-react-native';
 import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
@@ -13,8 +13,6 @@ import { SENTENCE_LESSONS } from '@/lib/courseContent';
 import { RUSSIAN_LESSONS } from '@/lib/languages/russian';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
-import { getSavedPlacementRecommendation, type PlacementRecommendation } from '@/lib/placementProfile';
-import type { PlacementLanguage } from '@/lib/placement';
 
 // The welcome voice plays once per app session, when the main language screen appears.
 let welcomeVoicePlayed = false;
@@ -39,21 +37,6 @@ const productFeatures = [
 export default function LanguagesHome() {
   const router = useRouter();
   const [openingSupport, setOpeningSupport] = useState(false);
-  const [savedPlacements, setSavedPlacements] = useState<Partial<Record<PlacementLanguage, PlacementRecommendation>>>({});
-
-  useEffect(() => {
-    let mounted = true;
-    const visibleLanguages = LANGUAGES.filter(language => (language.id === 'ru' ? FEATURES.russianCourse : !RUSSIAN_ONLY_BUILD));
-    void Promise.all(visibleLanguages.map(async language => {
-      try { return [language.id, await getSavedPlacementRecommendation(language.id)] as const; }
-      catch { return [language.id, null] as const; }
-    })).then(entries => {
-      if (!mounted) return;
-      setSavedPlacements(Object.fromEntries(entries.filter((entry): entry is readonly [PlacementLanguage, PlacementRecommendation] => !!entry[1])));
-    });
-    return () => { mounted = false; };
-  }, []);
-
   useEffect(() => {
     if (welcomeVoicePlayed) return;
     welcomeVoicePlayed = true;
@@ -87,18 +70,6 @@ export default function LanguagesHome() {
   const tiny = !ready || width < 370;
   const languages = LANGUAGES.filter(language => (language.id === 'ru' ? FEATURES.russianCourse : !RUSSIAN_ONLY_BUILD));
 
-  const openLanguage = (languageId: PlacementLanguage) => {
-    router.push({ pathname: '/placement', params: { language: languageId } } as never);
-  };
-
-  const continueLanguage = (languageId: PlacementLanguage) => {
-    const recommendation = savedPlacements[languageId];
-    if (!recommendation) return;
-    const destination = languageId === 'ru'
-      ? { pathname: '/learn/ru/library', params: { level: String(recommendation.levelId) } }
-      : { pathname: '/lang/library', params: { level: String(recommendation.levelId) } };
-    router.push(destination as never);
-  };
   const includedLessons = [
     ...(languages.some(language => language.id === 'en') ? SENTENCE_LESSONS : []),
     ...(languages.some(language => language.id === 'ru') ? RUSSIAN_LESSONS : []),
@@ -134,46 +105,33 @@ export default function LanguagesHome() {
           <View style={styles.languageSection}>
             <View style={styles.sectionCopy}>
               <Text style={styles.sectionEyebrow}>CHOOSE A LANGUAGE</Text>
-              <Text style={styles.sectionTitle}>برای شروع، زبانت را انتخاب کن</Text>
-              <Text style={styles.sectionDetail}>با انتخاب کارت زبان، سنجش همان لحظه با پرسش‌های پایهٔ همان زبان شروع می‌شود و با پاسخ‌ها تطبیق پیدا می‌کند. برای ادامه از نتیجهٔ قبلی، دکمهٔ جداگانهٔ زیر کارت را بزن.</Text>
+              <Text style={styles.sectionTitle}>می‌خواهی کدام زبان را یاد بگیری؟</Text>
+              <Text style={styles.sectionDetail}>برای ورود، یکی از زبان‌ها را انتخاب کن.</Text>
             </View>
 
             <View style={styles.languageRow}>
               {languages.map(language => {
                 const meta = languageMeta[language.id as keyof typeof languageMeta];
                 return (
-                  <View key={language.id} style={styles.languageChoice}>
-                    <Pressable
-                      accessibilityRole="button"
-                      accessibilityLabel={`شروع پرسش‌های سنجش زبان ${language.name}`}
-                      onPress={() => void openLanguage(language.id)}
-                      style={({ pressed }) => [
-                        styles.languageCard,
-                        { backgroundColor: meta.tint, borderColor: meta.border },
-                        tiny && styles.languageCardTiny,
-                        pressed && styles.pressed,
-                      ]}
-                    >
-                      <Text style={styles.flag}>{meta.flag}</Text>
-                      <View style={styles.languageIdentity}>
-                        <Text style={styles.languageCode} numberOfLines={1}>{meta.code}</Text>
-                        <Text style={styles.languageName} numberOfLines={1}>{meta.nativeName}</Text>
-                      </View>
-                      <Text style={styles.languageAction}>شروع پرسش‌های سنجش</Text>
-                      <View style={styles.languageArrow}><ArrowLeft size={14} color="#1769D2" strokeWidth={2.5} /></View>
-                    </Pressable>
-                    {savedPlacements[language.id] ? (
-                      <Pressable
-                        accessibilityRole="button"
-                        accessibilityLabel={`ادامهٔ یادگیری زبان ${language.name} از سطح پیشنهادی`}
-                        onPress={() => continueLanguage(language.id)}
-                        style={({ pressed }) => [styles.retakePlacement, pressed && styles.pressed]}
-                      >
-                        <BookOpenCheck size={12} color="#1769D2" />
-                        <Text style={styles.retakePlacementText}>ادامه از سطح پیشنهادی</Text>
-                      </Pressable>
-                    ) : null}
-                  </View>
+                  <Pressable
+                    key={language.id}
+                    accessibilityRole="button"
+                    accessibilityLabel={`ورود به زبان ${language.name}`}
+                    onPress={() => router.push(language.home as never)}
+                    style={({ pressed }) => [
+                      styles.languageCard,
+                      { backgroundColor: meta.tint, borderColor: meta.border },
+                      tiny && styles.languageCardTiny,
+                      pressed && styles.pressed,
+                    ]}
+                  >
+                    <Text style={styles.flag}>{meta.flag}</Text>
+                    <View style={styles.languageIdentity}>
+                      <Text style={styles.languageCode} numberOfLines={1}>{meta.code}</Text>
+                      <Text style={styles.languageName} numberOfLines={1}>{meta.nativeName}</Text>
+                    </View>
+                    <View style={styles.languageArrow}><ArrowLeft size={14} color="#1769D2" strokeWidth={2.5} /></View>
+                  </Pressable>
                 );
               })}
             </View>
@@ -339,16 +297,12 @@ const styles = StyleSheet.create({
   sectionTitle: { fontFamily: 'Vazir', color: '#102A56', fontSize: 21, lineHeight: 31, fontWeight: '400', textAlign: 'center', writingDirection: 'rtl' },
   sectionDetail: { fontFamily: 'Vazir', color: '#6A7F9B', fontSize: 12, lineHeight: 20, textAlign: 'center', writingDirection: 'rtl' },
   languageRow: { width: '100%', flexDirection: 'row-reverse', justifyContent: 'center', gap: 12, alignItems: 'stretch' },
-  languageChoice: { flex: 1, minWidth: 0, maxWidth: 190, gap: 7 },
   languageCard: { flex: 1, minWidth: 0, maxWidth: 190, minHeight: 106, borderRadius: 18, borderWidth: 1, paddingHorizontal: 12, paddingVertical: 12, alignItems: 'center', justifyContent: 'center', gap: 6, shadowColor: '#174B86', shadowOpacity: .045, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
   languageCardTiny: { minHeight: 98, paddingHorizontal: 7, paddingVertical: 9, borderRadius: 15 },
-  retakePlacement: { minHeight: 36, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6, paddingHorizontal: 8, borderRadius: 11, borderWidth: 1, borderColor: '#D9E8F7', backgroundColor: '#FFFFFF' },
-  retakePlacementText: { fontFamily: 'Vazir', color: '#1769D2', fontSize: 9, fontWeight: '400', writingDirection: 'rtl' },
   flag: { fontSize: 27, lineHeight: 33 },
   languageIdentity: { alignItems: 'center', gap: 0 },
   languageCode: { flexShrink: 0, textAlign: 'center', fontFamily: 'Inter-ExtraBold', color: '#102A56', fontSize: 12, lineHeight: 17, fontWeight: '800', letterSpacing: 1.2, writingDirection: 'ltr' },
   languageName: { fontFamily: 'Inter-ExtraBold', color: '#6680A5', fontSize: 7, lineHeight: 12, fontWeight: '800', writingDirection: 'ltr' },
-  languageAction: { fontFamily: 'Vazir', color: '#1769D2', fontSize: 9, lineHeight: 15, fontWeight: '400', textAlign: 'center', writingDirection: 'rtl' },
   languageArrow: { position: 'absolute', left: 8, bottom: 8, width: 23, height: 23, borderRadius: 8, backgroundColor: 'rgba(255,255,255,.8)', alignItems: 'center', justifyContent: 'center' },
   pressed: { opacity: .82, transform: [{ scale: .98 }] },
   flowCard: { borderRadius: 24, padding: 20, gap: 19, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#DCE8F8', shadowColor: '#174B86', shadowOpacity: .05, shadowRadius: 14, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
