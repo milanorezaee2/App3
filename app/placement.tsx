@@ -44,7 +44,7 @@ function getLevelLabel(language: PlacementLanguage, levelId: number) {
 
 function getStartingLevelId(language: PlacementLanguage) {
   const ids = getPlacementLevelIds(language);
-  return ids[Math.floor((ids.length - 1) / 2)] ?? ids[0] ?? 0;
+  return ids[0] ?? 0;
 }
 
 function getLevelDescription(language: PlacementLanguage, levelId: number) {
@@ -238,7 +238,7 @@ export default function PlacementScreen() {
             <Text style={styles.heroDescription}>
               {finished
                 ? 'پیشنهاد بر پایهٔ پاسخ‌های واقعی به جمله‌های همین دوره آماده شده؛ پس از چند ثانیه خودکار وارد سطح پیشنهادی می‌شوی.'
-                : `سنجش ${languageName} از سطح میانی شروع شده است. نمونه‌های کوتاه را بخوان و پاسخ بده؛ آزمون با توجه به پاسخ‌ها به سطح بالاتر یا پایین‌تر می‌رود.`}
+                : `سنجش ${languageName} از ساده‌ترین پرسش‌های همین دوره شروع می‌شود. اگر پاسخ‌ها درست باشند، پرسش‌ها مرحله‌به‌مرحله دشوارتر می‌شوند تا سطح مناسب پیدا شود.`}
             </Text>
             {!finished ? (
               <View style={styles.heroMetaRow}>
@@ -371,7 +371,7 @@ export default function PlacementScreen() {
               ) : null}
 
               <View style={styles.methodNote}>
-                <Text style={styles.methodNoteText}>قاعدهٔ تطبیقی: سنجش از سطح میانی آغاز می‌شود؛ هر سطح با ۲ پرسش بررسی می‌شود و در صورت نتیجهٔ مرزی یک پرسش سوم می‌آید. این غربال فقط خواندن و درک معنا را نمونه‌گیری می‌کند؛ آزمون رسمی، ارزیابی گفتار/شنیدن/نوشتن یا گواهی CEFR نیست.</Text>
+                <Text style={styles.methodNoteText}>قاعدهٔ تطبیقی: سنجش از ساده‌ترین سطح آغاز می‌شود؛ هر سطح با ۲ پرسش بررسی می‌شود و فقط در صورت نتیجهٔ مرزی یک پرسش سوم می‌آید. پاسخ‌های درست به‌تدریج آزمون را به سطح‌های بالاتر می‌برند. این غربال فقط خواندن و درک معنا را نمونه‌گیری می‌کند؛ آزمون رسمی، ارزیابی گفتار/شنیدن/نوشتن یا گواهی CEFR نیست.</Text>
                 <Text style={styles.methodNoteText}>{saveStatus === 'saving' ? 'در حال ذخیرهٔ پیشنهاد برای همین حساب…' : saveStatus === 'saved' ? 'پیشنهاد برای ورود بعدی ذخیره شد؛ پاسخ‌های خام ذخیره نمی‌شوند.' : 'پاسخ‌های خام ذخیره نمی‌شوند؛ اگر همگام‌سازی در دسترس نباشد، پیشنهاد تا زمانی که روی همین دستگاه بمانی حفظ می‌شود.'}</Text>
               </View>
               <View style={styles.resultActions}>

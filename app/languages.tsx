@@ -135,7 +135,7 @@ export default function LanguagesHome() {
             <View style={styles.sectionCopy}>
               <Text style={styles.sectionEyebrow}>CHOOSE A LANGUAGE</Text>
               <Text style={styles.sectionTitle}>برای شروع، زبانت را انتخاب کن</Text>
-              <Text style={styles.sectionDetail}>با انتخاب کارت زبان، پرسش‌های سنجش همان لحظه آغاز می‌شوند. برای ادامه از نتیجهٔ قبلی، دکمهٔ جداگانهٔ زیر کارت را بزن.</Text>
+              <Text style={styles.sectionDetail}>با انتخاب کارت زبان، سنجش همان لحظه با پرسش‌های پایهٔ همان زبان شروع می‌شود و با پاسخ‌ها تطبیق پیدا می‌کند. برای ادامه از نتیجهٔ قبلی، دکمهٔ جداگانهٔ زیر کارت را بزن.</Text>
             </View>
 
             <View style={styles.languageRow}>

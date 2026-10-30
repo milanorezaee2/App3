@@ -33,11 +33,13 @@ const esbuild = require('esbuild');
   const placementScreen = fs.readFileSync(path.resolve('app/placement.tsx'), 'utf8');
   const languageScreen = fs.readFileSync(path.resolve('app/languages.tsx'), 'utf8');
   const placementProfile = fs.readFileSync(path.resolve('lib/placementProfile.ts'), 'utf8');
-  check(/getStartingLevelId\(language\)/.test(placementScreen)
-    && /useState<string\[]>\(initialQuestion \? \[initialQuestion\.id\] : \[\]\)/.test(placementScreen), 'placement starts with a content question instead of an extra self-rating screen');
+  const startingLevelHelper = placementScreen.slice(placementScreen.indexOf('function getStartingLevelId'), placementScreen.indexOf('function getLevelDescription'));
+  check(startingLevelHelper.includes('return ids[0] ?? 0;')
+    && /const startingLevelId = getStartingLevelId\(language\)/.test(placementScreen)
+    && /useState<string\[]>\(initialQuestion \? \[initialQuestion\.id\] : \[\]\)/.test(placementScreen), 'placement begins directly with a source-backed question from the easiest level');
   check(/<Text style=\{styles\.languageAction\}>شروع پرسش‌های سنجش<\/Text>/.test(languageScreen)
     && /const openLanguage = \(languageId: PlacementLanguage\) => \{\s*router\.push\(\{ pathname: '\/placement', params: \{ language: languageId \} \}/.test(languageScreen)
-    && /continueLanguage/.test(languageScreen) && /ادامه از سطح پیشنهادی/.test(languageScreen)
+    && /پرسش‌های پایه/.test(languageScreen) && /continueLanguage/.test(languageScreen) && /ادامه از سطح پیشنهادی/.test(languageScreen)
     && languageScreen.indexOf('style={styles.languageSection}') < languageScreen.indexOf('style={[styles.hero'), 'language selection is prominent, always starts the quiz, and saved-level continuation is separate');
   check(/milo_language_placement_v2/.test(placementProfile) && !/milo_language_placement_v1/.test(placementProfile), 'the new assessment appears once even when an older recommendation exists, without deleting prior data');
   const englishLessons = new Map(app.SENTENCE_LESSONS.map(lesson => [lesson.id, lesson]));
@@ -46,6 +48,8 @@ const esbuild = require('esbuild');
   for (const language of ['en', 'ru']) {
     const questions = app.getPlacementQuestions(language);
     const levelIds = app.getPlacementLevelIds(language);
+    const firstQuestion = app.getPlacementQuestionForLevel(language, levelIds[0], {});
+    check(firstQuestion?.language === language && firstQuestion.levelId === 0, `${language}: first question comes from the easiest band for the selected language`);
     check(questions.length === 18, `${language}: expected 18 bank items`);
     check(levelIds.length === 6 && levelIds.every((levelId, index) => levelId === index), `${language}: six ordered internal levels`);
     check(levelIds.every(levelId => questions.filter(question => question.levelId === levelId).length === 3), `${language}: three items per band`);
@@ -125,6 +129,10 @@ const esbuild = require('esbuild');
     move = app.placementTransition(language, 5, 'initial', 'pass');
     check(move.nextLevelId === null && move.recommendedLevelId === 5, `${language}: top level is a valid recommendation`);
   }
+
+  check(/pathname: '\/learn\/ru\/library', params: \{ level: String\(levelId\) \}/.test(placementScreen)
+    && /pathname: '\/lang\/library', params: \{ level: String\(levelId\) \}/.test(placementScreen)
+    && /router\.replace\(getLevelRoute\(language, result\.recommendedLevelId\) as never\)/.test(placementScreen), 'completed assessment automatically opens the recommended content level for the selected language');
 
   const partial = app.scorePlacement('en', {});
   check(partial.questionCount === 0 && partial.answeredCount === 0 && partial.unknownCount === 0 && partial.recommendedLevelId === 0);
