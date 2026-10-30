@@ -1,14 +1,18 @@
-import { type PropsWithChildren, useCallback, useEffect, useState } from 'react';
+import { type PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, AppState, StyleSheet, Text, View } from 'react-native';
 import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
 import { supabase } from '@/lib/supabase';
 import { LoginCodeScreen, LoginProfileScreen, LoginScreen, type LoginMode } from '@/components/LoginScreen';
 import { completeLearnerProfile, getRegisteredSession, normalizeOtpDigits, registrationError, requestLearnerOtp, touchLearnerActivity, verifyLearnerOtp, type LearnerOtpType } from '@/lib/userRegistration';
+import { writeResumeSnapshot } from '@/lib/appResume';
 import { Colors, Typography } from '@/lib/theme';
 import { FEATURES } from '@/lib/features';
 
 const IS_ADMIN_APP = Constants.expoConfig?.extra?.appRole === 'admin'
   || process.env.EXPO_PUBLIC_MILO_ADMIN_APP === 'true';
+const PLACEMENT_ENTRY_KEY = 'milo_post_login_assessment_entry_v1:';
 // When the learner login screen is disabled in lib/features.ts, skip the gate entirely.
 const BYPASS_GATE: boolean = IS_ADMIN_APP || !FEATURES.learnerLogin;
 
@@ -16,6 +20,8 @@ type Mode = LoginMode;
 type AuthStep = 'request' | 'verify' | 'profile';
 
 export function RegistrationGate({ children }: PropsWithChildren) {
+  const router = useRouter();
+  const routingAfterAuth = useRef(false);
   const [checking, setChecking] = useState(!BYPASS_GATE);
   const [ready, setReady] = useState(BYPASS_GATE);
   const [step, setStep] = useState<AuthStep>('request');
@@ -28,15 +34,37 @@ export function RegistrationGate({ children }: PropsWithChildren) {
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
 
+  const routeToAssessmentEntry = useCallback(async (userId: string) => {
+    try {
+      await writeResumeSnapshot({ version: 1, href: '/languages', language: null, backgroundAt: null, updatedAt: Date.now() });
+    } catch {
+      // Keep login usable even when local resume storage is unavailable.
+    }
+    try { await AsyncStorage.setItem(`${PLACEMENT_ENTRY_KEY}${userId}`, '1'); } catch { /* route to onboarding anyway */ }
+    router.replace('/languages' as never);
+    setReady(true);
+    routingAfterAuth.current = false;
+  }, [router]);
+
   const inspect = useCallback(async () => {
-    if (BYPASS_GATE) return;
+    if (BYPASS_GATE || routingAfterAuth.current) return;
     try {
       const state = await getRegisteredSession();
       const complete = !!state.session && !!state.profile;
-      setReady(complete);
       if (complete) {
+        const userId = state.session?.user.id;
+        const entrySeen = userId ? await AsyncStorage.getItem(`${PLACEMENT_ENTRY_KEY}${userId}`).catch(() => null) : '1';
+        if (userId && entrySeen !== '1') {
+          routingAfterAuth.current = true;
+          await routeToAssessmentEntry(userId);
+        } else {
+          setReady(true);
+        }
         void touchLearnerActivity();
-      } else if (state.session) {
+      } else {
+        setReady(false);
+      }
+      if (!complete && state.session) {
         setEmail(state.session.user.email ?? '');
         setFullName(String(state.session.user.user_metadata?.full_name ?? ''));
         setStep('profile');
@@ -47,7 +75,7 @@ export function RegistrationGate({ children }: PropsWithChildren) {
     } finally {
       setChecking(false);
     }
-  }, []);
+  }, [routeToAssessmentEntry]);
 
   useEffect(() => {
     if (BYPASS_GATE) return;
@@ -80,19 +108,22 @@ export function RegistrationGate({ children }: PropsWithChildren) {
   const verifyCode = async () => {
     if (busy) return;
     setBusy(true); setError(''); setNotice('');
+    routingAfterAuth.current = true;
     try {
       await verifyLearnerOtp(email, code, mode === 'register' ? fullName : '', otpType);
       const state = await getRegisteredSession();
       if (state.session && state.profile) {
-        setReady(true);
+        await routeToAssessmentEntry(state.session.user.id);
         void touchLearnerActivity();
       } else if (state.session) {
+        routingAfterAuth.current = false;
         setStep('profile');
-        setNotice('ایمیل تأیید شد؛ برای تکمیل پروفایل نام خود را وارد کنید.');
+        setNotice('ایمیل تأیید شد؛ برای تکمیل پروفایل نام خود را ثبت کنید.');
       } else {
         throw new Error('PROFILE_INCOMPLETE');
       }
     } catch (reason) {
+      routingAfterAuth.current = false;
       setError(registrationError(reason));
     } finally {
       setBusy(false);
@@ -117,13 +148,15 @@ export function RegistrationGate({ children }: PropsWithChildren) {
   const finishProfile = async () => {
     if (busy) return;
     setBusy(true); setError(''); setNotice('');
+    routingAfterAuth.current = true;
     try {
       await completeLearnerProfile(fullName);
       const state = await getRegisteredSession();
       if (!state.session || !state.profile) throw new Error('PROFILE_INCOMPLETE');
-      setReady(true);
+      await routeToAssessmentEntry(state.session.user.id);
       void touchLearnerActivity();
     } catch (reason) {
+      routingAfterAuth.current = false;
       setError(registrationError(reason));
     } finally {
       setBusy(false);

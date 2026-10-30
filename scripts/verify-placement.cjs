@@ -35,8 +35,10 @@ const esbuild = require('esbuild');
   const placementProfile = fs.readFileSync(path.resolve('lib/placementProfile.ts'), 'utf8');
   check(/getStartingLevelId\(language\)/.test(placementScreen)
     && /useState<string\[]>\(initialQuestion \? \[initialQuestion\.id\] : \[\]\)/.test(placementScreen), 'placement starts with a content question instead of an extra self-rating screen');
-  check(/شروع سنجش سطح/.test(languageScreen)
-    && /pathname: '\/placement', params: \{ language: languageId \}/.test(languageScreen), 'language selection visibly routes first-time learners into the quiz');
+  check(/<Text style=\{styles\.languageAction\}>شروع پرسش‌های سنجش<\/Text>/.test(languageScreen)
+    && /const openLanguage = \(languageId: PlacementLanguage\) => \{\s*router\.push\(\{ pathname: '\/placement', params: \{ language: languageId \} \}/.test(languageScreen)
+    && /continueLanguage/.test(languageScreen) && /ادامه از سطح پیشنهادی/.test(languageScreen)
+    && languageScreen.indexOf('style={styles.languageSection}') < languageScreen.indexOf('style={[styles.hero'), 'language selection is prominent, always starts the quiz, and saved-level continuation is separate');
   check(/milo_language_placement_v2/.test(placementProfile) && !/milo_language_placement_v1/.test(placementProfile), 'the new assessment appears once even when an older recommendation exists, without deleting prior data');
   const englishLessons = new Map(app.SENTENCE_LESSONS.map(lesson => [lesson.id, lesson]));
   const russianLessons = new Map(app.RUSSIAN_LESSONS.map(lesson => [lesson.id, lesson]));

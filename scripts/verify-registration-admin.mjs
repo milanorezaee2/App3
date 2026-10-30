@@ -20,6 +20,8 @@ const workflow = read('.github/workflows/android-build.yml');
 check(/<RegistrationGate>/.test(layout), 'learner routes are protected by the registration gate');
 check(/signInWithOtp\(/.test(registration) && /verifyOtp\(/.test(registration) && /shouldCreateUser/.test(registration), 'login and registration request and verify real Supabase email OTPs');
 check(/full_name/.test(registration) && /completeLearnerProfile/.test(gate), 'registration captures the learner name and repairs older incomplete profiles');
+check(/routeToAssessmentEntry/.test(gate) && /writeResumeSnapshot\(\{ version: 1, href: '\/languages'/.test(gate)
+  && /router\.replace\('\/languages'/.test(gate) && /PLACEMENT_ENTRY_KEY/.test(gate), 'OTP completion sends learners to the language assessment entry and stores that resume destination');
 check(/requestLearnerOtp/.test(gate) && /verifyLearnerOtp/.test(gate) && /onResend/.test(loginFlow), 'the gate separates OTP request, verification, and resend');
 check(!/generateLoginCode|signInWithPassword|toAuthPassword/.test(registration + gate), 'the learner gate no longer invents local codes or uses password login');
 check(/color: '#102A56'/.test(loginFlow) && /backgroundColor: '#EAF1FA'/.test(loginFlow)

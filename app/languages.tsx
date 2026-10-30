@@ -39,7 +39,6 @@ const productFeatures = [
 export default function LanguagesHome() {
   const router = useRouter();
   const [openingSupport, setOpeningSupport] = useState(false);
-  const [openingLanguage, setOpeningLanguage] = useState<PlacementLanguage | null>(null);
   const [savedPlacements, setSavedPlacements] = useState<Partial<Record<PlacementLanguage, PlacementRecommendation>>>({});
 
   useEffect(() => {
@@ -88,26 +87,17 @@ export default function LanguagesHome() {
   const tiny = !ready || width < 370;
   const languages = LANGUAGES.filter(language => (language.id === 'ru' ? FEATURES.russianCourse : !RUSSIAN_ONLY_BUILD));
 
-  const openLanguage = async (languageId: PlacementLanguage) => {
-    if (openingLanguage) return;
-    setOpeningLanguage(languageId);
-    try {
-      const recommendation = await getSavedPlacementRecommendation(languageId);
-      if (recommendation) {
-        setSavedPlacements(current => ({ ...current, [languageId]: recommendation }));
-        const destination = languageId === 'ru'
-          ? { pathname: '/learn/ru/library', params: { level: String(recommendation.levelId) } }
-          : { pathname: '/lang/library', params: { level: String(recommendation.levelId) } };
-        router.push(destination as never);
-      } else {
-        router.push({ pathname: '/placement', params: { language: languageId } } as never);
-      }
-    } catch {
-      // If the optional profile lookup is unavailable, let the learner complete the local screen.
-      router.push({ pathname: '/placement', params: { language: languageId } } as never);
-    } finally {
-      setOpeningLanguage(null);
-    }
+  const openLanguage = (languageId: PlacementLanguage) => {
+    router.push({ pathname: '/placement', params: { language: languageId } } as never);
+  };
+
+  const continueLanguage = (languageId: PlacementLanguage) => {
+    const recommendation = savedPlacements[languageId];
+    if (!recommendation) return;
+    const destination = languageId === 'ru'
+      ? { pathname: '/learn/ru/library', params: { level: String(recommendation.levelId) } }
+      : { pathname: '/lang/library', params: { level: String(recommendation.levelId) } };
+    router.push(destination as never);
   };
   const includedLessons = [
     ...(languages.some(language => language.id === 'en') ? SENTENCE_LESSONS : []),
@@ -138,6 +128,54 @@ export default function LanguagesHome() {
                 <View style={styles.statusDot} />
                 <Text style={styles.statusText}>آمادهٔ یادگیری</Text>
               </View>
+            </View>
+          </View>
+
+          <View style={styles.languageSection}>
+            <View style={styles.sectionCopy}>
+              <Text style={styles.sectionEyebrow}>CHOOSE A LANGUAGE</Text>
+              <Text style={styles.sectionTitle}>برای شروع، زبانت را انتخاب کن</Text>
+              <Text style={styles.sectionDetail}>با انتخاب کارت زبان، پرسش‌های سنجش همان لحظه آغاز می‌شوند. برای ادامه از نتیجهٔ قبلی، دکمهٔ جداگانهٔ زیر کارت را بزن.</Text>
+            </View>
+
+            <View style={styles.languageRow}>
+              {languages.map(language => {
+                const meta = languageMeta[language.id as keyof typeof languageMeta];
+                return (
+                  <View key={language.id} style={styles.languageChoice}>
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel={`شروع پرسش‌های سنجش زبان ${language.name}`}
+                      onPress={() => void openLanguage(language.id)}
+                      style={({ pressed }) => [
+                        styles.languageCard,
+                        { backgroundColor: meta.tint, borderColor: meta.border },
+                        tiny && styles.languageCardTiny,
+                        pressed && styles.pressed,
+                      ]}
+                    >
+                      <Text style={styles.flag}>{meta.flag}</Text>
+                      <View style={styles.languageIdentity}>
+                        <Text style={styles.languageCode} numberOfLines={1}>{meta.code}</Text>
+                        <Text style={styles.languageName} numberOfLines={1}>{meta.nativeName}</Text>
+                      </View>
+                      <Text style={styles.languageAction}>شروع پرسش‌های سنجش</Text>
+                      <View style={styles.languageArrow}><ArrowLeft size={14} color="#1769D2" strokeWidth={2.5} /></View>
+                    </Pressable>
+                    {savedPlacements[language.id] ? (
+                      <Pressable
+                        accessibilityRole="button"
+                        accessibilityLabel={`ادامهٔ یادگیری زبان ${language.name} از سطح پیشنهادی`}
+                        onPress={() => continueLanguage(language.id)}
+                        style={({ pressed }) => [styles.retakePlacement, pressed && styles.pressed]}
+                      >
+                        <BookOpenCheck size={12} color="#1769D2" />
+                        <Text style={styles.retakePlacementText}>ادامه از سطح پیشنهادی</Text>
+                      </Pressable>
+                    ) : null}
+                  </View>
+                );
+              })}
             </View>
           </View>
 
@@ -187,56 +225,6 @@ export default function LanguagesHome() {
                   {index < learningStats.length - 1 ? <View style={styles.statDivider} /> : null}
                 </View>
               ))}
-            </View>
-          </View>
-
-          <View style={styles.languageSection}>
-            <View style={styles.sectionCopy}>
-              <Text style={styles.sectionEyebrow}>CHOOSE A LANGUAGE</Text>
-              <Text style={styles.sectionTitle}>می‌خواهی کدام زبان را یاد بگیری؟</Text>
-              <Text style={styles.sectionDetail}>پس از ورود، زبان را انتخاب کن تا پرسش‌های سنجش بلافاصله شروع شوند؛ اگر قبلاً سنجیده‌ای، «بازسنجی سطح» را بزن.</Text>
-            </View>
-
-            <View style={styles.languageRow}>
-              {languages.map(language => {
-                const meta = languageMeta[language.id as keyof typeof languageMeta];
-                return (
-                  <View key={language.id} style={styles.languageChoice}>
-                    <Pressable
-                      accessibilityRole="button"
-                      accessibilityLabel={`سنجش و ورود به زبان ${language.name}`}
-                      accessibilityState={{ disabled: openingLanguage !== null }}
-                      disabled={openingLanguage !== null}
-                      onPress={() => void openLanguage(language.id)}
-                      style={({ pressed }) => [
-                        styles.languageCard,
-                        { backgroundColor: meta.tint, borderColor: meta.border },
-                        tiny && styles.languageCardTiny,
-                        pressed && styles.pressed,
-                      ]}
-                    >
-                      <Text style={styles.flag}>{meta.flag}</Text>
-                      <View style={styles.languageIdentity}>
-                        <Text style={styles.languageCode} numberOfLines={1}>{meta.code}</Text>
-                        <Text style={styles.languageName} numberOfLines={1}>{meta.nativeName}</Text>
-                      </View>
-                      <Text style={styles.languageAction}>{savedPlacements[language.id] ? 'ورود به سطح پیشنهادی' : 'شروع سنجش سطح'}</Text>
-                      <View style={styles.languageArrow}><ArrowLeft size={14} color="#1769D2" strokeWidth={2.5} /></View>
-                    </Pressable>
-                    {savedPlacements[language.id] ? (
-                      <Pressable
-                        accessibilityRole="button"
-                        accessibilityLabel={`ارزیابی دوبارهٔ سطح زبان ${language.name}`}
-                        onPress={() => router.push({ pathname: '/placement', params: { language: language.id } } as never)}
-                        style={({ pressed }) => [styles.retakePlacement, pressed && styles.pressed]}
-                      >
-                        <RefreshCw size={12} color="#1769D2" />
-                        <Text style={styles.retakePlacementText}>بازسنجی سطح</Text>
-                      </Pressable>
-                    ) : null}
-                  </View>
-                );
-              })}
             </View>
           </View>
 
