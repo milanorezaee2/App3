@@ -17,6 +17,7 @@ const files = [
   'app/lang/supplement.tsx',
   'app/lang/quiz.tsx',
   'app/lang/library.tsx',
+  'app/onboarding.tsx',
   'app/personal-sync.tsx',
   'components/EnglishSentenceBuilder.tsx',
   'components/EnglishDialoguePractice.tsx',

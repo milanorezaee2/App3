@@ -14,7 +14,7 @@ export interface ResumeSnapshot {
 
 // Save only parameters required to reconstruct screens; never replay one-shot actions.
 const allowedParams = new Set(['id', 'lessonId', 'level', 'name', 'language']);
-const allowedPaths = /^\/(?:languages|lang(?:\/[^?#]*)?|course(?:\/[^?#]*)?|review(?:\/[^?#]*)?|personal-sync|app-lock|learning-access|permissions|agent(?:\/[^?#]*)?|admin(?:\/[^?#]*)?|learn\/(?:en|ru)(?:\/[^?#]*)?|conversations(?:\/[^?#]*)?)$/;
+const allowedPaths = /^\/(?:languages|onboarding|lang(?:\/[^?#]*)?|course(?:\/[^?#]*)?|review(?:\/[^?#]*)?|personal-sync|app-lock|learning-access|permissions|agent(?:\/[^?#]*)?|admin(?:\/[^?#]*)?|learn\/(?:en|ru)(?:\/[^?#]*)?|conversations(?:\/[^?#]*)?)$/;
 
 export function resumeHref(pathname: string, params: ResumeParams): string | null {
   if (!allowedPaths.test(pathname) || pathname.includes('//') || /[\x00-\x1f\\]/.test(pathname)) return null;
@@ -65,6 +65,7 @@ export function parseResumeSnapshot(raw: string | null): ResumeSnapshot | null {
 }
 
 export function resumeDestination(snapshot: ResumeSnapshot, now: number): string {
+  if (snapshot.href.startsWith('/onboarding')) return snapshot.href;
   const awaySince = snapshot.backgroundAt ?? snapshot.updatedAt;
   if (now - awaySince > RESUME_MAX_INACTIVE_MS) {
     return snapshot.language === 'ru' ? '/learn/ru' : snapshot.language === 'en' ? '/lang' : '/languages';

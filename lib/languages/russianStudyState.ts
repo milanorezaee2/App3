@@ -82,6 +82,11 @@ export async function loadRussianLessonSession(lessonId: string): Promise<Russia
   return (await loadRussianLessonSessionWithPresence(lessonId)).session;
 }
 
+export async function hasAnyRussianLessonSession(): Promise<boolean> {
+  const state = parseState(await readRaw());
+  return Object.keys(state.sessions).length > 0;
+}
+
 let queue: Promise<unknown> = Promise.resolve();
 function serial<T>(job: () => Promise<T>): Promise<T> {
   const next = queue.then(job, job);

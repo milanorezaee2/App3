@@ -13,6 +13,7 @@ import { SENTENCE_LESSONS } from '@/lib/courseContent';
 import { RUSSIAN_LESSONS } from '@/lib/languages/russian';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
+import { getLearningOnboardingRecord, hasPriorLearningActivity, rememberExistingLearner, type OnboardingLanguage } from '@/lib/learningOnboarding';
 
 // The welcome voice plays once per app session, when the main language screen appears.
 let welcomeVoicePlayed = false;
@@ -37,6 +38,7 @@ const productFeatures = [
 export default function LanguagesHome() {
   const router = useRouter();
   const [openingSupport, setOpeningSupport] = useState(false);
+  const [openingLanguage, setOpeningLanguage] = useState<OnboardingLanguage | null>(null);
   useEffect(() => {
     if (welcomeVoicePlayed) return;
     welcomeVoicePlayed = true;
@@ -61,6 +63,30 @@ export default function LanguagesHome() {
       .then((conversationId) => router.push({ pathname: '/conversations/human/[conversationId]', params: { conversationId, name: 'پشتیبانی Milo' } } as never))
       .catch((cause) => Alert.alert('پشتیبانی', readableSupabaseError(cause)))
       .finally(() => setOpeningSupport(false));
+  };
+
+  const selectLanguage = async (language: typeof LANGUAGES[number]) => {
+    if (openingLanguage) return;
+    setOpeningLanguage(language.id);
+    try {
+      const onboarding = await getLearningOnboardingRecord();
+      if (onboarding) {
+        router.push(language.home as never);
+        return;
+      }
+      if (await hasPriorLearningActivity(language.id)) {
+        await rememberExistingLearner(language.id).catch(() => undefined);
+        router.push(language.home as never);
+        return;
+      }
+      router.push({ pathname: '/onboarding', params: { language: language.id } } as never);
+    } catch {
+      // A failed profile read must not prevent entry; the assessment's start
+      // pointer is guarded independently and never overwrites saved progress.
+      router.push({ pathname: '/onboarding', params: { language: language.id } } as never);
+    } finally {
+      setOpeningLanguage(null);
+    }
   };
 
   const { width } = useWindowDimensions();
@@ -117,7 +143,9 @@ export default function LanguagesHome() {
                     key={language.id}
                     accessibilityRole="button"
                     accessibilityLabel={`ورود به زبان ${language.name}`}
-                    onPress={() => router.push(language.home as never)}
+                    accessibilityState={{ disabled: openingLanguage !== null }}
+                    disabled={openingLanguage !== null}
+                    onPress={() => void selectLanguage(language)}
                     style={({ pressed }) => [
                       styles.languageCard,
                       { backgroundColor: meta.tint, borderColor: meta.border },

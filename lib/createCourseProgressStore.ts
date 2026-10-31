@@ -264,6 +264,22 @@ async function completeSentenceLesson(lessonId: string, nextLessonId?: string): 
   return saveProgress(next);
 }
 
+async function setInitialLesson(lessonId: string): Promise<CourseProgress> {
+  if (!SENTENCE_LESSONS.some(lesson => lesson.id === lessonId)) {
+    throw new Error('Unknown starting lesson for this language');
+  }
+  return serial(async () => {
+    const current = await getCourseProgress();
+    const hasCourseProgress = current.completedLessonIds.length > 0
+      || current.currentLessonId !== SENTENCE_LESSONS[0].id
+      || current.totalMinutes > 0
+      || current.reviewCards.length > 0;
+    if (hasCourseProgress) return current;
+    const next = { ...current, currentLessonId: lessonId, updatedAt: new Date().toISOString() };
+    return saveProgress(next);
+  });
+}
+
 async function getDueReviewCards(now = new Date()): Promise<SentenceReviewCard[]> {
   const progress = await getCourseProgress();
   const validIds = new Set(
@@ -408,6 +424,7 @@ async function mergeRemoteProgress(value: unknown): Promise<CourseProgress> {
 }
 
 return { getCourseProgress, syncCourseProgress, mergeRemoteProgress,
+ setInitialLesson,
  completeSentenceLesson:(id:string,next?:string)=>serial(()=>completeSentenceLesson(id,next)),
  getDueReviewCards, rateReviewCard:(id:string,rating:ReviewRating,now?:Date)=>serial(()=>rateReviewCard(id,rating,now)),
  addSentenceToReview:(id:string,lesson?:string)=>serial(()=>addSentenceToReview(id,lesson)),

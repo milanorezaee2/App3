@@ -301,6 +301,19 @@ export async function getCourseProgress(): Promise<CourseProgress> {
   }
 }
 
+export async function setInitialCourseLesson(lessonId: string): Promise<CourseProgress> {
+  if (!SENTENCE_LESSONS.some(lesson => lesson.id === lessonId)) {
+    throw new Error('Unknown starting lesson for this course');
+  }
+  const current = await getCourseProgress();
+  const hasCourseProgress = current.completedLessonIds.length > 0
+    || current.currentLessonId !== SENTENCE_LESSONS[0].id
+    || current.totalMinutes > 0
+    || current.reviewCards.length > 0;
+  if (hasCourseProgress) return current;
+  return saveProgress({ ...current, currentLessonId: lessonId, updatedAt: new Date().toISOString() });
+}
+
 export async function completeSentenceLesson(lessonId: string, nextLessonId?: string): Promise<CourseProgress> {
   const current = await getCourseProgress();
   const cardMap = new Map(current.reviewCards.map((card) => [card.id, card]));
