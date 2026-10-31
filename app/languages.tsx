@@ -13,7 +13,7 @@ import { SENTENCE_LESSONS } from '@/lib/courseContent';
 import { RUSSIAN_LESSONS } from '@/lib/languages/russian';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
-import { getLearningOnboardingRecord, hasPriorLearningActivity, rememberExistingLearner, type OnboardingLanguage } from '@/lib/learningOnboarding';
+import { getLearningOnboardingRecord, type OnboardingLanguage } from '@/lib/learningOnboarding';
 
 // The welcome voice plays once per app session, when the main language screen appears.
 let welcomeVoicePlayed = false;
@@ -70,12 +70,7 @@ export default function LanguagesHome() {
     setOpeningLanguage(language.id);
     try {
       const onboarding = await getLearningOnboardingRecord();
-      if (onboarding) {
-        router.push(language.home as never);
-        return;
-      }
-      if (await hasPriorLearningActivity(language.id)) {
-        await rememberExistingLearner(language.id).catch(() => undefined);
+      if (onboarding?.status === 'assessed') {
         router.push(language.home as never);
         return;
       }

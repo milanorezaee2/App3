@@ -66,11 +66,15 @@ export async function getLearningOnboardingRecord(): Promise<LearningOnboardingR
   if (error) throw error;
   const user = data.session?.user;
   const fromProfile = parseOnboardingRecord(user?.user_metadata?.[LEARNING_ONBOARDING_METADATA_KEY]);
-  if (fromProfile) return fromProfile;
+  if (fromProfile?.status === 'assessed') return fromProfile;
   const localKey = `${LOCAL_ONBOARDING_PREFIX}${user?.id ?? 'local'}`;
   try {
     const raw = await AsyncStorage.getItem(localKey);
-    return raw ? parseOnboardingRecord(JSON.parse(raw)) : null;
+    const localRecord = raw ? parseOnboardingRecord(JSON.parse(raw)) : null;
+    // Older builds marked anyone with course history as "existing-learner" and
+    // skipped the assessment. That marker did not mean the learner had answered
+    // the onboarding questions, so let them complete it once now.
+    return localRecord?.status === 'assessed' ? localRecord : null;
   } catch {
     return null;
   }

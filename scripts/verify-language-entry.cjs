@@ -23,7 +23,8 @@ const workflowFiles = [
   '.github/workflows/android-build.yml',
 ];
 
-check(/getLearningOnboardingRecord\(\)/.test(languageScreen) && /hasPriorLearningActivity\(language\.id\)/.test(languageScreen), 'language selection checks one-time onboarding and existing learning history');
+check(/getLearningOnboardingRecord\(\)/.test(languageScreen) && !/hasPriorLearningActivity|rememberExistingLearner/.test(languageScreen), 'language selection gates only on a completed assessment, not legacy course history or network sync');
+check(/fromProfile\?\.status === 'assessed'/.test(onboarding) && /localRecord\?\.status === 'assessed'/.test(onboarding), 'legacy existing-learner markers do not suppress the first real assessment');
 check(/pathname: '\/onboarding', params: \{ language: language\.id \}/.test(languageScreen), 'new learners continue from language selection to the chosen-language onboarding');
 check(/router\.push\(language\.home as never\)/.test(languageScreen), 'returning learners keep the existing direct course-home destinations');
 check(/home: '\/lang'/.test(catalog) && /home: '\/learn\/ru'/.test(catalog), 'English and Russian cards keep the original course destinations');
