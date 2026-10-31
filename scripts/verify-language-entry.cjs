@@ -23,18 +23,19 @@ const workflowFiles = [
   '.github/workflows/android-build.yml',
 ];
 
-check(/getLearningOnboardingRecord\(\)/.test(languageScreen) && !/hasPriorLearningActivity|rememberExistingLearner/.test(languageScreen), 'language selection gates only on a completed assessment, not legacy course history or network sync');
-check(/fromProfile\?\.status === 'assessed'/.test(onboarding) && /localRecord\?\.status === 'assessed'/.test(onboarding), 'legacy existing-learner markers do not suppress the first real assessment');
+check(/getLearningOnboardingRecord\(language\.id\)/.test(languageScreen) && !/hasPriorLearningActivity|rememberExistingLearner/.test(languageScreen), 'language selection checks completion for the selected course, not course history or network sync');
+check(/parseOnboardingRecords\(user\?\.user_metadata/.test(onboarding) && /parseOnboardingRecords\(JSON\.parse\(raw\)\)\[language\]/.test(onboarding), 'assessment completion is stored and read independently for each language');
+check(/Как дела́\?/.test(onboardingScreen) && /Я уже два года живу здесь\./.test(onboardingScreen), 'Russian placement has its own Cyrillic basic and intermediate questions');
 check(/pathname: '\/onboarding', params: \{ language: language\.id \}/.test(languageScreen), 'new learners continue from language selection to the chosen-language onboarding');
 check(/router\.push\(language\.home as never\)/.test(languageScreen), 'returning learners keep the existing direct course-home destinations');
 check(/home: '\/lang'/.test(catalog) && /home: '\/learn\/ru'/.test(catalog), 'English and Russian cards keep the original course destinations');
 check(/می‌خواهی کدام زبان را یاد بگیری؟/.test(languageScreen), 'the original language-selection screen and copy remain');
 check(/چند پرسش کوتاه برای شروع درست/.test(onboardingScreen) && /writingDirection: 'rtl'/.test(onboardingScreen), 'the new onboarding is Persian-first and explicitly RTL');
 check(/پرسش \{fa\(questionNumber\)\} از \{fa\(3\)\}/.test(onboardingScreen), 'the onboarding has at most three short questions after language selection');
-check(/stage === 'familiarity'/.test(onboardingScreen) && /chooseFamiliarity\('new'\)/.test(onboardingScreen), 'learners can self-identify as new and skip the diagnostic questions');
+check(/stage === 'familiarity'/.test(onboardingScreen) && /chooseFamiliarity\('new'\)/.test(onboardingScreen) && /if \(answer === 'new'\) \{\s*setStage\('basic'\)/.test(onboardingScreen), 'new learners still see one question specific to their selected language');
 check(/if \(!correct\)[\s\S]*recommendedLevelId: 0/.test(onboardingScreen), 'a missed basic item places the learner conservatively at the foundation start');
 check(/nextCorrectAnswers === 2 \? 2 : 1/.test(onboardingScreen), 'the second adaptive item distinguishes the two available short-assessment bands');
-check(/milo_learning_onboarding_v1/.test(onboarding) && /user_metadata/.test(onboarding) && /auth\.updateUser/.test(onboarding), 'the one-time onboarding result syncs through the authenticated profile without a new database table');
+check(/milo_learning_onboarding_by_language_v2/.test(onboarding) && /user_metadata/.test(onboarding) && /auth\.updateUser/.test(onboarding), 'per-language onboarding results sync through the authenticated profile without a new database table');
 check(/hasPriorLearningActivity/.test(onboarding) && /hasAnyRussianLessonSession/.test(onboarding), 'existing course progress and saved lesson sessions are protected from repositioning');
 check(/setInitialCourseLesson/.test(onboarding) && /setInitialLesson/.test(onboarding), 'new learners use existing course lesson IDs as their suggested starting point');
 check(/completedLessonIds\.length > 0/.test(englishProgress) && /completedLessonIds\.length > 0/.test(sharedProgress), 'starting-point helpers refuse to move learners with completed progress');

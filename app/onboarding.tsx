@@ -76,7 +76,7 @@ export default function LearningOnboardingScreen() {
   const chooseFamiliarity = (answer: OnboardingFamiliarity) => {
     setFamiliarity(answer);
     if (answer === 'new') {
-      void finish({ familiarity: 'new', questionCount: 0, correctAnswers: 0, recommendedLevelId: 0 });
+      setStage('basic');
       return;
     }
     setStage('basic');
@@ -86,6 +86,15 @@ export default function LearningOnboardingScreen() {
     if (!content || busy) return;
     if (stage === 'basic') {
       const correct = index === content.basic.correctIndex;
+      if (familiarity === 'new') {
+        void finish({
+          familiarity,
+          questionCount: 1,
+          correctAnswers: correct ? 1 : 0,
+          recommendedLevelId: correct ? 1 : 0,
+        });
+        return;
+      }
       if (!correct) {
         void finish({ familiarity, questionCount: 1, correctAnswers: 0, recommendedLevelId: 0 });
         return;

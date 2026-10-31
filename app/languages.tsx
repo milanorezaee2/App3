@@ -69,7 +69,7 @@ export default function LanguagesHome() {
     if (openingLanguage) return;
     setOpeningLanguage(language.id);
     try {
-      const onboarding = await getLearningOnboardingRecord();
+      const onboarding = await getLearningOnboardingRecord(language.id);
       if (onboarding?.status === 'assessed') {
         router.push(language.home as never);
         return;
