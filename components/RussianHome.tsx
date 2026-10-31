@@ -7,6 +7,7 @@ import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel, ENGL
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { RussianBottomNav } from '@/components/RussianBottomNav';
 import { RUSSIAN_LEVELS, RUSSIAN_LESSONS, russianProgress, type RussianLevelId } from '@/lib/languages/russian';
+import { loadRussianLessonSessionWithPresence } from '@/lib/languages/russianStudyState';
 import type { CourseProgress } from '@/lib/courseProgress';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
@@ -18,15 +19,24 @@ export default function RussianHome() {
   const [showRoadmap, setShowRoadmap] = useState(false);
   const [error, setError] = useState('');
   const [retry, setRetry] = useState(0);
+  const [hasStartedCourse, setHasStartedCourse] = useState(false);
 
   useFocusEffect(useCallback(() => {
     let alive = true;
     void Promise.all([russianProgress.getCourseProgress(), russianProgress.getDueReviewCards()])
-      .then(([nextProgress, cards]) => {
+      .then(async ([nextProgress, cards]) => {
         if (!alive) return;
         setProgress(nextProgress);
         setDueCount(cards.length);
         setError('');
+        const completed = new Set(nextProgress.completedLessonIds);
+        const currentLesson = RUSSIAN_LESSONS.find(lesson => lesson.id === nextProgress.currentLessonId && !completed.has(lesson.id))
+          ?? RUSSIAN_LESSONS.find(lesson => !completed.has(lesson.id));
+        const savedSession = currentLesson
+          ? await loadRussianLessonSessionWithPresence(currentLesson.id).catch(() => null)
+          : null;
+        if (!alive) return;
+        setHasStartedCourse(nextProgress.completedLessonIds.length > 0 || !!savedSession?.hasSavedSession);
       })
       .catch(() => { if (alive) setError('پیشرفت روسی خوانده نشد؛ اطلاعات قبلی تغییر نکرده است. دوباره تلاش کنید.'); });
     return () => { alive = false; };
@@ -35,8 +45,10 @@ export default function RussianHome() {
   const completedIds = progress?.completedLessonIds ?? [];
   const completedSet = useMemo(() => new Set(completedIds), [completedIds]);
   const nextLesson = RUSSIAN_LESSONS.find(lesson => !completedSet.has(lesson.id));
-  const heroLesson = nextLesson ?? RUSSIAN_LESSONS[RUSSIAN_LESSONS.length - 1];
-  const activeLevel = RUSSIAN_LEVELS.find(level => level.id === (nextLesson?.levelId ?? heroLesson.levelId)) ?? RUSSIAN_LEVELS[0];
+  const savedCurrentLesson = RUSSIAN_LESSONS.find(lesson => lesson.id === progress?.currentLessonId && !completedSet.has(lesson.id));
+  const resumeLesson = savedCurrentLesson ?? nextLesson;
+  const heroLesson = resumeLesson ?? RUSSIAN_LESSONS[RUSSIAN_LESSONS.length - 1];
+  const activeLevel = RUSSIAN_LEVELS.find(level => level.id === (resumeLesson?.levelId ?? heroLesson.levelId)) ?? RUSSIAN_LEVELS[0];
   const completedCount = RUSSIAN_LESSONS.filter(lesson => completedSet.has(lesson.id)).length;
   const levelLessons = RUSSIAN_LESSONS.filter(lesson => lesson.levelId === activeLevel.id);
   const levelCompleted = levelLessons.filter(lesson => completedSet.has(lesson.id)).length;
@@ -51,7 +63,7 @@ export default function RussianHome() {
 
   const openLevel = (levelId: RussianLevelId) => router.push(`/learn/ru/library?level=${levelId}` as never);
   const openNextLesson = () => {
-    if (nextLesson) router.push(`/learn/ru/lesson?id=${encodeURIComponent(nextLesson.id)}` as never);
+    if (resumeLesson) router.push(`/learn/ru/lesson?id=${encodeURIComponent(resumeLesson.id)}` as never);
     else openLevel(2);
   };
 
@@ -96,7 +108,7 @@ export default function RussianHome() {
             <View style={styles.heroActions}>
               <Pressable accessibilityRole="button" style={styles.continueButton} onPress={openNextLesson}>
                 <Play size={16} color={Palette.primaryDark} fill={Palette.primaryDark} />
-                <Text style={styles.continueButtonText}>{nextLesson ? completedCount ? 'ادامه یادگیری' : 'شروع از پایه' : 'مشاهدهٔ سطح‌های بعدی'}</Text>
+                <Text style={styles.continueButtonText}>{resumeLesson ? hasStartedCourse ? 'ادامهٔ آموزش' : 'شروع اولین درس' : 'مشاهدهٔ سطح‌های بعدی'}</Text>
                 <ChevronLeft size={17} color={Palette.primaryDark} />
               </Pressable>
               <View style={styles.sentenceCount}><Text style={styles.sentenceCountValue}>{fa(heroLesson.sentences.length)}</Text><Text style={styles.sentenceCountLabel}>جملهٔ همین درس</Text></View>

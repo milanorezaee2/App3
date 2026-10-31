@@ -58,6 +58,7 @@ export default function LearningHome() {
   const [measuredMinutes, setMeasuredMinutes] = useState(0);
   const [timeError, setTimeError] = useState(false);
   const [progress, setProgress] = useState<CourseProgress | null>(null);
+  const [hasStartedCourse, setHasStartedCourse] = useState(false);
 
   useFocusEffect(useCallback(() => {
     let alive = true;
@@ -72,7 +73,17 @@ export default function LearningHome() {
 
   useFocusEffect(useCallback(() => {
     let alive = true;
-    const refreshCourse = () => getCourseProgress().then(next => { if (alive) setProgress(next); });
+    const refreshCourse = async () => {
+      const next = await getCourseProgress();
+      if (!alive) return;
+      setProgress(next);
+      try {
+        const study = await loadStudy();
+        if (alive) setHasStartedCourse(next.completedLessonIds.length > 0 || !!study.sessions[next.currentLessonId]);
+      } catch {
+        if (alive) setHasStartedCourse(next.completedLessonIds.length > 0);
+      }
+    };
     void refreshCourse();
     void syncPersonalLearningData().then(result => {
       if (result.status === 'synced') return refreshCourse();
@@ -207,13 +218,13 @@ export default function LearningHome() {
             <View style={styles.lessonFooter}>
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel={completed ? 'ادامهٔ درس انگلیسی' : 'شروع اولین درس انگلیسی'}
+                accessibilityLabel={hasStartedCourse ? 'ادامهٔ آموزش انگلیسی' : 'شروع اولین درس انگلیسی'}
                 style={({ pressed }) => [styles.continueButton, pressed && styles.buttonPressed]}
                 onPress={openCurrentLesson}
               >
                 <LinearGradient colors={['#2878DE', '#1259B5']} start={{ x: .96, y: 0 }} end={{ x: .04, y: 1 }} style={styles.continueButtonGradient}>
                   <Play size={16} color="#F5E7BC" fill="#F5E7BC" />
-                  <Text style={styles.continueButtonText}>{completed ? 'ادامهٔ درس' : 'شروع اولین درس'}</Text>
+                  <Text style={styles.continueButtonText}>{hasStartedCourse ? 'ادامهٔ آموزش' : 'شروع اولین درس'}</Text>
                   <ArrowLeft size={17} color="#FFFFFF" />
                 </LinearGradient>
               </Pressable>
