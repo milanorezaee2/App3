@@ -5,6 +5,23 @@ import { SUPABASE_PUBLIC_ANON_KEY, SUPABASE_PUBLIC_URL } from '@/lib/supabaseCon
 
 const FALLBACK_URL = 'https://placeholder.supabase.co';
 const FALLBACK_KEY = 'placeholder-anon-key';
+const SUPABASE_REQUEST_TIMEOUT_MS = 15_000;
+
+const platformFetch = globalThis.fetch.bind(globalThis);
+const fetchWithTimeout: typeof fetch = async (input, init) => {
+  const controller = new AbortController();
+  const upstreamSignal = init?.signal;
+  const abortFromUpstream = () => controller.abort();
+  if (upstreamSignal?.aborted) controller.abort();
+  else upstreamSignal?.addEventListener('abort', abortFromUpstream, { once: true });
+  const timer = setTimeout(() => controller.abort(), SUPABASE_REQUEST_TIMEOUT_MS);
+  try {
+    return await platformFetch(input, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+    upstreamSignal?.removeEventListener('abort', abortFromUpstream);
+  }
+};
 
 const rawUrl = SUPABASE_PUBLIC_URL;
 const rawKey = SUPABASE_PUBLIC_ANON_KEY;
@@ -67,6 +84,7 @@ function createSafeClient() {
   try {
     return createClient(supabaseUrl, supabaseAnonKey, {
       auth: authOptions,
+      global: { fetch: fetchWithTimeout },
     });
   } catch (error) {
     console.error(
@@ -75,6 +93,7 @@ function createSafeClient() {
     );
     return createClient(FALLBACK_URL, FALLBACK_KEY, {
       auth: authOptions,
+      global: { fetch: fetchWithTimeout },
     });
   }
 }

@@ -60,8 +60,9 @@ export function RegistrationGate({ children }: PropsWithChildren) {
         setStep('profile');
         setNotice('ایمیل تأیید شده است؛ برای تکمیل ورود، نام خود را ثبت کنید.');
       }
-    } catch {
+    } catch (reason) {
       setReady(false);
+      setError(registrationError(reason));
     } finally {
       setChecking(false);
     }

@@ -10,6 +10,7 @@ const gate = read('components/RegistrationGate.tsx');
 const loginUi = read('components/LoginScreen.tsx');
 const loginFlow = gate + loginUi;
 const registration = read('lib/userRegistration.ts');
+const supabaseClient = read('lib/supabase.ts');
 const layout = read('app/_layout.tsx');
 const migration = read('supabase/migrations/202610140002_registered_users_admin.sql');
 const admin = read('app/admin/index.tsx');
@@ -19,6 +20,10 @@ const workflow = read('.github/workflows/android-build.yml');
 
 check(/<RegistrationGate>/.test(layout), 'learner routes are protected by the registration gate');
 check(/signInWithOtp\(/.test(registration) && /verifyOtp\(/.test(registration) && /shouldCreateUser/.test(registration), 'login and registration request and verify real Supabase email OTPs');
+check(/SUPABASE_REQUEST_TIMEOUT_MS/.test(supabaseClient) && /fetchWithTimeout/.test(supabaseClient) && /global: \{ fetch: fetchWithTimeout \}/.test(supabaseClient), 'unreachable Supabase requests have a bounded timeout instead of holding startup indefinitely');
+check(/PROFILE_LOOKUP_TIMEOUT_MS/.test(registration) && /abortSignal\(controller\.signal\)/.test(registration), 'registered-profile lookup is bounded and cancellable');
+check(/PROFILE_CACHE_PREFIX/.test(registration) && /getCachedRegisteredProfile/.test(registration) && /verifiedName/.test(registration), 'previously verified learners can open from an account-matched local profile when network access fails');
+check(/setError\(registrationError\(reason\)\)/.test(gate) && /برنامه باز می‌ماند/.test(registration), 'network failures show a Persian recovery message rather than leaving an indefinite loader');
 check(/full_name/.test(registration) && /completeLearnerProfile/.test(gate), 'registration captures the learner name and repairs older incomplete profiles');
 check(/routeToLanguageSelection/.test(gate) && /writeResumeSnapshot\(\{ version: 1, href: '\/languages'/.test(gate)
   && /router\.replace\('\/languages'/.test(gate) && !/PLACEMENT_ENTRY_KEY|AssessmentEntry/.test(gate), 'OTP completion sends learners to language selection without an assessment gate');
