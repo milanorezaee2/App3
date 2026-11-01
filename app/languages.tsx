@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Alert, Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { createAudioPlayer } from 'expo-audio';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -9,7 +9,7 @@ import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
 import { FEATURES, RUSSIAN_ONLY_BUILD } from '@/lib/features';
-import { LtrDirection } from '@/lib/theme';
+import { DesignTokens, LtrDirection } from '@/lib/theme';
 
 let welcomeVoicePlayed = false;
 
@@ -62,7 +62,7 @@ export default function LanguagesHome() {
     <View style={styles.root}>
       <View pointerEvents="none" style={StyleSheet.absoluteFillObject}>
         <LinearGradient
-          colors={['#F5FAFF', '#EAF5FD', '#F8FBFF']}
+          colors={[DesignTokens.surface.canvas, DesignTokens.brand.primarySoft, DesignTokens.surface.card]}
           start={{ x: 0.95, y: 0 }}
           end={{ x: 0.05, y: 1 }}
           style={StyleSheet.absoluteFillObject}
@@ -99,7 +99,14 @@ export default function LanguagesHome() {
             <MiloLanguageBrand />
           </View>
 
-          <View style={[styles.hero, compact && styles.heroCompact]}>
+          <ImageBackground source={{ uri: '/App3/assets/language-hero-background.jpg' }} imageStyle={styles.heroImage} style={[styles.hero, compact && styles.heroCompact]}>
+            <LinearGradient
+              pointerEvents="none"
+              colors={['rgba(55,48,163,0.94)', 'rgba(55,48,163,0.72)', 'rgba(15,159,154,0.60)']}
+              start={{ x: 0.95, y: 0.1 }}
+              end={{ x: 0.05, y: 0.95 }}
+              style={StyleSheet.absoluteFillObject}
+            />
             <Text accessibilityRole="header" style={[styles.title, tiny && styles.titleTiny]}>
               می‌خواهی کدام زبان را یاد بگیری؟
             </Text>
@@ -107,7 +114,7 @@ export default function LanguagesHome() {
               برای ورود به دورهٔ جدید، یکی از زبان‌ها را انتخاب کن.
             </Text>
             <Text style={styles.eyebrow}>CHOOSE A LANGUAGE</Text>
-          </View>
+          </ImageBackground>
 
           <View style={styles.languageList}>
             {languages.map((language, index) => {
@@ -177,39 +184,40 @@ export default function LanguagesHome() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#F5FAFF' },
+  root: { flex: 1, backgroundColor: DesignTokens.surface.canvas },
   scrollContent: { flexGrow: 1, paddingBottom: 32 },
   backgroundCloudTop: { position: 'absolute', width: 250, height: 250, borderRadius: 125, top: -132, left: -125, backgroundColor: 'rgba(93,169,239,0.08)' },
   backgroundCloudLeft: { position: 'absolute', width: 370, height: 370, borderRadius: 185, top: 260, left: -290, backgroundColor: 'rgba(108,194,238,0.09)' },
   backgroundCloudBottom: { position: 'absolute', width: 420, height: 420, borderRadius: 210, bottom: -275, right: -175, backgroundColor: 'rgba(58,131,221,0.07)' },
   backgroundArc: { position: 'absolute', width: 520, height: 520, borderRadius: 260, borderWidth: 22, borderColor: 'rgba(54,132,223,0.035)', top: 230, right: -445 },
-  page: { width: '100%', maxWidth: 760, alignSelf: 'center', paddingHorizontal: 28, paddingTop: 20, gap: 20 },
+  page: { width: '100%', maxWidth: 880, alignSelf: 'center', paddingHorizontal: 24, paddingTop: 24, gap: 24 },
   pageCompact: { paddingHorizontal: 18, paddingTop: 14, gap: 17 },
   header: { minHeight: 64, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
   headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  headerButton: { width: 40, height: 40, borderRadius: 15, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.8)', borderWidth: 1, borderColor: '#DCEBFA', shadowColor: '#28609A', shadowOpacity: 0.05, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
-  hero: { alignItems: 'flex-end', gap: 9, paddingTop: 20, paddingBottom: 3 },
+  headerButton: { width: 44, height: 44, borderRadius: 16, alignItems: 'center', justifyContent: 'center', backgroundColor: DesignTokens.surface.card, borderWidth: 1, borderColor: DesignTokens.border.default, shadowColor: '#28609A', shadowOpacity: 0.05, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  hero: { alignItems: 'flex-end', gap: 10, padding: 22, borderRadius: 24, overflow: 'hidden', backgroundColor: DesignTokens.brand.primaryStrong, shadowColor: DesignTokens.brand.primaryStrong, shadowOpacity: 0.16, shadowRadius: 20, shadowOffset: { width: 0, height: 10 }, elevation: 4 },
+  heroImage: { borderRadius: 24 },
   heroCompact: { paddingTop: 8, gap: 8 },
-  title: { width: '100%', fontFamily: 'Vazir-Bold', color: '#102A56', fontSize: 30, lineHeight: 46, textAlign: 'right', writingDirection: 'rtl' },
+  title: { width: '100%', fontFamily: 'Vazir-Bold', color: '#FFFFFF', fontSize: 30, lineHeight: 46, textAlign: 'right', writingDirection: 'rtl' },
   titleTiny: { fontSize: 26, lineHeight: 40 },
-  subtitle: { width: '100%', fontFamily: 'Vazir', color: '#7185A3', fontSize: 14, lineHeight: 24, textAlign: 'right', writingDirection: 'rtl' },
-  eyebrow: { alignSelf: 'center', marginTop: 12, fontFamily: 'Inter-ExtraBold', color: '#7290B4', fontSize: 10, lineHeight: 16, letterSpacing: 2.1, writingDirection: 'ltr' },
+  subtitle: { width: '100%', fontFamily: 'Vazir', color: 'rgba(255,255,255,0.78)', fontSize: 14, lineHeight: 24, textAlign: 'right', writingDirection: 'rtl' },
+  eyebrow: { alignSelf: 'flex-start', marginTop: 12, fontFamily: 'Inter-ExtraBold', color: '#C7D2FE', fontSize: 10, lineHeight: 16, letterSpacing: 2.1, writingDirection: 'ltr' },
   languageList: { gap: 13 },
-  languageCard: { width: '100%', minHeight: 91, borderRadius: 22, borderWidth: 1, borderColor: '#D4E7F8', paddingHorizontal: 15, paddingVertical: 12, flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: 'rgba(255,255,255,0.87)', shadowColor: '#2B69A7', shadowOpacity: 0.065, shadowRadius: 13, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
+  languageCard: { width: '100%', minHeight: 102, borderRadius: 20, borderWidth: 1, borderColor: DesignTokens.border.default, paddingHorizontal: 15, paddingVertical: 12, flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: DesignTokens.surface.card, shadowColor: '#2B69A7', shadowOpacity: 0.065, shadowRadius: 13, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
   flagCircle: { width: 62, height: 62, borderRadius: 31, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'rgba(255,255,255,0.92)' },
   languageFlagBlue: { backgroundColor: '#E7F2FF' },
   languageFlagAqua: { backgroundColor: '#E5F9FC' },
   flagText: { fontSize: 38, lineHeight: 48, textAlign: 'center' },
   languageCopy: { flex: 1, minWidth: 0, alignItems: 'center', justifyContent: 'center', gap: 1 },
-  languageCode: { fontFamily: 'Inter-ExtraBold', color: '#102A56', fontSize: 17, lineHeight: 22, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
-  languageNativeName: { maxWidth: '100%', fontFamily: 'Inter', color: '#7185A3', fontSize: 14, lineHeight: 21, textAlign: 'center', writingDirection: 'ltr' },
-  languageArrow: { width: 40, height: 40, borderRadius: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(241,248,255,0.92)' },
+  languageCode: { fontFamily: 'Inter-ExtraBold', color: DesignTokens.text.primary, fontSize: 17, lineHeight: 22, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
+  languageNativeName: { maxWidth: '100%', fontFamily: 'Inter', color: DesignTokens.text.secondary, fontSize: 14, lineHeight: 21, textAlign: 'center', writingDirection: 'ltr' },
+  languageArrow: { width: 42, height: 42, borderRadius: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: DesignTokens.brand.primarySoft },
   pathDivider: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 16, paddingVertical: 1, marginTop: 1 },
   dividerLine: { flex: 1, height: 1, backgroundColor: '#D6E6F5' },
   dividerOrnament: { width: 42, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, transform: [{ rotate: '-12deg' }] },
   dividerDot: { width: 5, height: 5, borderRadius: 3, backgroundColor: '#B9D7F3' },
   dividerDiamond: { width: 10, height: 10, borderWidth: 1.5, borderColor: '#9CCBF0', transform: [{ rotate: '45deg' }] },
-  learningPath: { position: 'relative', gap: 4, paddingVertical: 4, paddingHorizontal: 8 },
+  learningPath: { position: 'relative', gap: 4, padding: 18, borderRadius: 22, backgroundColor: DesignTokens.surface.card, borderWidth: 1, borderColor: DesignTokens.border.default },
   pathRail: { position: 'absolute', left: 18, top: 38, bottom: 38, width: 2, borderRadius: 1, backgroundColor: '#9AC8EE' },
   stepRow: { minHeight: 96, flexDirection: 'row', alignItems: 'center', gap: 14 },
   pathNodeWrap: { width: 20, height: 20, alignItems: 'center', justifyContent: 'center' },
@@ -218,7 +226,7 @@ const styles = StyleSheet.create({
   stepIcon: { width: 66, height: 66, borderRadius: 24, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.85)', borderWidth: 1, borderColor: '#DCEBFA', shadowColor: '#2775C4', shadowOpacity: 0.075, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
   stepIconAqua: { backgroundColor: '#F0FCFE', borderColor: '#CDEFF4' },
   stepCopy: { flex: 1, minWidth: 0, alignItems: 'flex-end', gap: 3 },
-  stepTitle: { fontFamily: 'Vazir-Bold', color: '#102A56', fontSize: 17, lineHeight: 26, textAlign: 'right', writingDirection: 'rtl' },
-  stepDetail: { fontFamily: 'Vazir', color: '#7185A3', fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
+  stepTitle: { fontFamily: 'Vazir-Bold', color: DesignTokens.text.primary, fontSize: 17, lineHeight: 26, textAlign: 'right', writingDirection: 'rtl' },
+  stepDetail: { fontFamily: 'Vazir', color: DesignTokens.text.secondary, fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
   pressed: { opacity: 0.82, transform: [{ scale: 0.985 }] },
 });
