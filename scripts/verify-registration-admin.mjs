@@ -52,6 +52,6 @@ check(/MANAGEMENT_BUILD \? adminClient\(\) : supabase/.test(read('lib/conversati
 check(/Intentionally silent/.test(read('lib/responsiveSpeech.ts')) && !/Speech\.speak\(locale/.test(read('lib/responsiveSpeech.ts')), 'startup warm-up never speaks words aloud');
 check(/welcome-chime\.wav/.test(read('app/_layout.tsx')), 'the original startup sound is kept');
 check(/ensureSupportConversation/.test(read('app/languages.tsx')) && /ensureSupportConversation/.test(read('app/conversations/index.tsx')), 'learners reach the manager through the support button');
-check(/MiloLogoMotion/.test(read('app/_layout.tsx')) && /MiloLanguageBrand/.test(read('app/languages.tsx')) && /MILO/.test(read('components/MiloLanguageBrand.tsx')), 'startup branding remains while the language home uses the new MILO symbol and wordmark');
+check(/MiloLogoMotion/.test(read('app/_layout.tsx')) && /MiloLanguageBrand/.test(read('app/languages.tsx')) && /Milo/.test(read('components/MiloLanguageBrand.tsx')), 'startup branding remains while the language home uses the selected Milo wordmark');
 check(/welcome-voice\.wav/.test(read('app/languages.tsx')) && /welcome-chime\.wav/.test(read('app/_layout.tsx')), 'Welcome plays on the main screen and the startup sound is kept');
 console.log(`${count} registration and private management checks passed.`);

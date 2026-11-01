@@ -1,30 +1,27 @@
 import { useEffect, useState } from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { createAudioPlayer } from 'expo-audio';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { ArrowLeft, Headphones, LifeBuoy, LockKeyhole, Mic2, Sparkles, Target } from 'lucide-react-native';
+import { ArrowRight, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
 import { MiloLanguageBrand } from '@/components/MiloLanguageBrand';
 import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
 import { FEATURES, RUSSIAN_ONLY_BUILD } from '@/lib/features';
-import { toPersianDigits as fa } from '@/lib/format';
+import { LtrDirection } from '@/lib/theme';
 
-// The welcome voice plays once per app session, when the main language screen appears.
 let welcomeVoicePlayed = false;
 
-const languageTones = [
-  { soft: '#E4EBE2', ink: '#315843', border: '#D4DED1' },
-  { soft: '#F3E2D9', ink: '#A75D47', border: '#E8D0C5' },
-  { soft: '#E6E5F0', ink: '#5B5B83', border: '#D7D5E6' },
-  { soft: '#E8E8D9', ink: '#666B3D', border: '#DADCCB' },
-] as const;
+const languageFlags: Record<string, string> = {
+  en: '🇬🇧',
+  ru: '🇷🇺',
+};
 
 const learningSteps = [
-  { number: '01', icon: Headphones, title: 'گوش بده', detail: 'جمله‌ها را با صدای طبیعی دنبال کن.' },
-  { number: '02', icon: Mic2, title: 'تمرین کن', detail: 'با تکرار کوتاه، زبان را به‌کار بگیر.' },
-  { number: '03', icon: Target, title: 'ادامه بده', detail: 'قدم‌به‌قدم مسیرت را جلو ببر.' },
+  { icon: Headphones, title: 'بشنو', detail: 'بدون ترجمه، معنای جمله را دریاب.' },
+  { icon: MessageCircle, title: 'تکرار کن', detail: 'پیشرفت ذخیره می‌شود.' },
+  { icon: BookOpen, title: 'به‌خاطر بسپار', detail: 'آمادهٔ یادگیری.' },
 ] as const;
 
 export default function LanguagesHome() {
@@ -37,7 +34,6 @@ export default function LanguagesHome() {
   useEffect(() => {
     if (welcomeVoicePlayed) return;
     welcomeVoicePlayed = true;
-    // Start after the intro chime has fully finished, so the two never overlap.
     const start = setTimeout(() => {
       try {
         const player = createAudioPlayer(require('../assets/audio/welcome-voice.wav'));
@@ -45,7 +41,7 @@ export default function LanguagesHome() {
         player.play();
         setTimeout(() => player.remove(), 4000);
       } catch {
-        // Devices without audio playback still show the screen normally.
+        // The screen remains usable when audio playback is unavailable.
       }
     }, 400);
     void start;
@@ -66,20 +62,20 @@ export default function LanguagesHome() {
     <View style={styles.root}>
       <View pointerEvents="none" style={StyleSheet.absoluteFillObject}>
         <LinearGradient
-          colors={['#F5F1E8', '#ECEDE4', '#F8F5ED']}
+          colors={['#F5FAFF', '#EAF5FD', '#F8FBFF']}
           start={{ x: 0.95, y: 0 }}
           end={{ x: 0.05, y: 1 }}
           style={StyleSheet.absoluteFillObject}
         />
-        <View style={styles.backgroundOrbTop} />
-        <View style={styles.backgroundOrbBottom} />
+        <View style={styles.backgroundCloudTop} />
+        <View style={styles.backgroundCloudLeft} />
+        <View style={styles.backgroundCloudBottom} />
         <View style={styles.backgroundArc} />
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         <View style={[styles.page, compact && styles.pageCompact]}>
           <View style={styles.header}>
-            <MiloLanguageBrand />
             <View style={styles.headerActions}>
               <Pressable
                 accessibilityRole="button"
@@ -89,7 +85,7 @@ export default function LanguagesHome() {
                 style={({ pressed }) => [styles.headerButton, pressed && styles.pressed]}
                 onPress={openSupport}
               >
-                <LifeBuoy size={18} color="#315843" strokeWidth={1.9} />
+                <LifeBuoy size={18} color="#2878DE" strokeWidth={1.9} />
               </Pressable>
               <Pressable
                 accessibilityRole="button"
@@ -97,107 +93,82 @@ export default function LanguagesHome() {
                 style={({ pressed }) => [styles.headerButton, pressed && styles.pressed]}
                 onPress={() => router.push('/app-lock' as never)}
               >
-                <LockKeyhole size={18} color="#315843" strokeWidth={1.9} />
+                <LockKeyhole size={18} color="#2878DE" strokeWidth={1.9} />
               </Pressable>
             </View>
+            <MiloLanguageBrand />
           </View>
 
-          <View style={[styles.intro, compact && styles.introCompact]}>
-            <View style={styles.introKicker}>
-              <View style={styles.introKickerLine} />
-              <Text style={styles.introKickerText}>شروع یک مسیر تازه</Text>
-            </View>
+          <View style={[styles.hero, compact && styles.heroCompact]}>
             <Text accessibilityRole="header" style={[styles.title, tiny && styles.titleTiny]}>
-              زبان تازه‌ات را انتخاب کن
+              می‌خواهی کدام زبان را یاد بگیری؟
             </Text>
             <Text style={styles.subtitle}>
-              یک انتخاب ساده؛ آغاز مسیری پیوسته برای یادگیری.
+              برای ورود به دورهٔ جدید، یکی از زبان‌ها را انتخاب کن.
             </Text>
+            <Text style={styles.eyebrow}>CHOOSE A LANGUAGE</Text>
           </View>
 
-          <View style={styles.languageSection}>
-            <View style={styles.sectionHeading}>
-              <View style={styles.sectionHeadingCopy}>
-                <Text style={styles.sectionTitle}>زبان‌های موجود</Text>
-                <Text style={styles.sectionDetail}>برای ادامه، یک زبان را انتخاب کن.</Text>
-              </View>
-              <View style={styles.sectionMark}>
-                <Sparkles size={16} color="#B86C50" strokeWidth={1.8} />
-              </View>
-            </View>
+          <View style={styles.languageList}>
+            {languages.map((language, index) => {
+              const displayName = language.nativeName || language.name;
+              const fallbackFlag = [...displayName.trim()][0] ?? language.id[0]?.toUpperCase() ?? '•';
+              const flag = languageFlags[language.id] ?? fallbackFlag;
+              const tone = index % 2 === 0 ? styles.languageFlagBlue : styles.languageFlagAqua;
 
-            <View style={styles.languageList}>
-              {languages.map((language, index) => {
-                const tone = languageTones[index % languageTones.length];
-                const displayName = language.nativeName || language.name;
-                const glyph = [...displayName.trim()][0] ?? language.id[0]?.toUpperCase() ?? '•';
-                const code = language.id.slice(0, 2).toUpperCase();
-
-                return (
-                  <Pressable
-                    key={language.id}
-                    accessibilityRole="button"
-                    accessibilityLabel={`ورود به زبان ${language.name}`}
-                    accessibilityHint="برای بازکردن دورهٔ این زبان انتخاب کنید"
-                    onPress={() => router.push(language.home as never)}
-                    style={({ pressed }) => [
-                      styles.languageCard,
-                      { borderColor: tone.border },
-                      pressed && styles.pressed,
-                    ]}
-                  >
-                    <View style={styles.languageCardIdentity}>
-                      <View style={[styles.languageGlyph, { backgroundColor: tone.soft }]}>
-                        <Text style={[styles.languageGlyphText, { color: tone.ink }]}>{glyph}</Text>
-                      </View>
-                      <View style={styles.languageCopy}>
-                        <Text numberOfLines={1} style={styles.languageNativeName}>{displayName}</Text>
-                        <Text numberOfLines={1} style={styles.languageLocalName}>{language.name}</Text>
-                      </View>
-                    </View>
-                    <View style={styles.languageCardAction}>
-                      <Text style={styles.languageCode}>{code}</Text>
-                      <ArrowLeft size={19} color="#315843" strokeWidth={2.1} />
-                    </View>
-                  </Pressable>
-                );
-              })}
-            </View>
-          </View>
-
-          <View style={styles.pathCard}>
-            <View style={styles.pathHeader}>
-              <View style={styles.pathHeaderIcon}>
-                <Sparkles size={17} color="#A75D47" strokeWidth={1.8} />
-              </View>
-              <View style={styles.pathHeaderCopy}>
-                <Text style={styles.pathEyebrow}>بعد از انتخاب زبان</Text>
-                <Text style={styles.pathTitle}>مسیر یادگیری تو</Text>
-              </View>
-            </View>
-
-            <View style={styles.stepsList}>
-              {learningSteps.map((step, index) => {
-                const Icon = step.icon;
-                return (
-                  <View key={step.number} style={styles.stepRow}>
-                    <View style={styles.timelineColumn}>
-                      <View style={styles.stepNumberBadge}>
-                        <Text style={styles.stepNumber}>{fa(step.number)}</Text>
-                      </View>
-                      {index < learningSteps.length - 1 ? <View style={styles.timelineConnector} /> : null}
-                    </View>
-                    <View style={styles.stepIcon}>
-                      <Icon size={18} color="#315843" strokeWidth={1.8} />
-                    </View>
-                    <View style={styles.stepCopy}>
-                      <Text style={styles.stepTitle}>{step.title}</Text>
-                      <Text style={styles.stepDetail}>{step.detail}</Text>
-                    </View>
+              return (
+                <Pressable
+                  key={language.id}
+                  accessibilityRole="button"
+                  accessibilityLabel={`ورود به زبان ${language.name}`}
+                  accessibilityHint="برای بازکردن دورهٔ این زبان انتخاب کنید"
+                  onPress={() => router.push(language.home as never)}
+                  style={({ pressed }) => [styles.languageCard, LtrDirection, pressed && styles.pressed]}
+                >
+                  <View style={[styles.flagCircle, tone]}>
+                    <Text style={styles.flagText}>{flag}</Text>
                   </View>
-                );
-              })}
+                  <View style={styles.languageCopy}>
+                    <Text style={styles.languageCode}>{language.id.toUpperCase()}</Text>
+                    <Text numberOfLines={1} style={styles.languageNativeName}>{displayName}</Text>
+                  </View>
+                  <View style={styles.languageArrow}>
+                    <ArrowRight size={20} color="#2878DE" strokeWidth={2.1} />
+                  </View>
+                </Pressable>
+              );
+            })}
+          </View>
+
+          <View style={styles.pathDivider}>
+            <View style={styles.dividerLine} />
+            <View style={styles.dividerOrnament}>
+              <View style={styles.dividerDot} />
+              <View style={styles.dividerDiamond} />
+              <View style={styles.dividerDot} />
             </View>
+            <View style={styles.dividerLine} />
+          </View>
+
+          <View style={styles.learningPath}>
+            <View pointerEvents="none" style={styles.pathRail} />
+            {learningSteps.map((step, index) => {
+              const Icon = step.icon;
+              return (
+                <View key={step.title} style={[styles.stepRow, LtrDirection]}>
+                  <View style={styles.pathNodeWrap}>
+                    <View style={[styles.pathNode, index === 1 && styles.pathNodeAqua]} />
+                  </View>
+                  <View style={[styles.stepIcon, index === 1 && styles.stepIconAqua]}>
+                    <Icon size={24} color={index === 1 ? '#16A9C1' : '#2878DE'} strokeWidth={1.9} />
+                  </View>
+                  <View style={styles.stepCopy}>
+                    <Text style={styles.stepTitle}>{step.title}</Text>
+                    <Text style={styles.stepDetail}>{step.detail}</Text>
+                  </View>
+                </View>
+              );
+            })}
           </View>
         </View>
       </ScrollView>
@@ -206,55 +177,48 @@ export default function LanguagesHome() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#F5F1E8' },
-  scrollContent: { flexGrow: 1, paddingBottom: 34 },
-  backgroundOrbTop: { position: 'absolute', width: 300, height: 300, borderRadius: 150, top: -150, right: -105, backgroundColor: 'rgba(185,108,80,0.10)' },
-  backgroundOrbBottom: { position: 'absolute', width: 340, height: 340, borderRadius: 170, bottom: -205, left: -145, backgroundColor: 'rgba(49,88,67,0.08)' },
-  backgroundArc: { position: 'absolute', width: 410, height: 410, borderRadius: 205, borderWidth: 1, borderColor: 'rgba(49,88,67,0.09)', top: 270, left: -330 },
-  page: { width: '100%', maxWidth: 760, alignSelf: 'center', paddingHorizontal: 28, paddingTop: 20, gap: 26 },
-  pageCompact: { paddingHorizontal: 18, paddingTop: 14, gap: 22 },
-  header: { minHeight: 48, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
-  headerActions: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
-  headerButton: { width: 40, height: 40, borderRadius: 15, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,253,248,0.86)', borderWidth: 1, borderColor: '#E1DED3', shadowColor: '#293C32', shadowOpacity: 0.05, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
-  intro: { alignItems: 'flex-end', gap: 10, paddingTop: 12, paddingBottom: 2 },
-  introCompact: { paddingTop: 5, gap: 8 },
-  introKicker: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
-  introKickerLine: { width: 28, height: 2, borderRadius: 1, backgroundColor: '#B86C50' },
-  introKickerText: { fontFamily: 'Vazir-Medium', color: '#A75D47', fontSize: 12, writingDirection: 'rtl' },
-  title: { fontFamily: 'Vazir-Bold', color: '#203B31', fontSize: 31, lineHeight: 46, textAlign: 'right', writingDirection: 'rtl' },
-  titleTiny: { fontSize: 27, lineHeight: 40 },
-  subtitle: { maxWidth: 600, fontFamily: 'Vazir', color: '#68746A', fontSize: 14, lineHeight: 25, textAlign: 'right', writingDirection: 'rtl' },
-  languageSection: { gap: 14 },
-  sectionHeading: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 12, paddingHorizontal: 2 },
-  sectionHeadingCopy: { alignItems: 'flex-end', gap: 2 },
-  sectionTitle: { fontFamily: 'Vazir-Bold', color: '#203B31', fontSize: 17, lineHeight: 26, writingDirection: 'rtl' },
-  sectionDetail: { fontFamily: 'Vazir', color: '#7B837A', fontSize: 11, lineHeight: 18, writingDirection: 'rtl' },
-  sectionMark: { width: 34, height: 34, borderRadius: 12, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F3E3DB' },
-  languageList: { gap: 11 },
-  languageCard: { width: '100%', minHeight: 88, borderRadius: 21, borderWidth: 1, paddingHorizontal: 16, paddingVertical: 13, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'rgba(255,253,248,0.92)', shadowColor: '#263D32', shadowOpacity: 0.055, shadowRadius: 12, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
-  languageCardIdentity: { flex: 1, minWidth: 0, flexDirection: 'row-reverse', alignItems: 'center', gap: 13 },
-  languageGlyph: { width: 54, height: 54, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
-  languageGlyphText: { fontFamily: 'Inter-ExtraBold', fontSize: 24, lineHeight: 30, fontWeight: '800', writingDirection: 'ltr' },
-  languageCopy: { flex: 1, minWidth: 0, alignItems: 'flex-end', gap: 2 },
-  languageNativeName: { maxWidth: '100%', fontFamily: 'Inter-ExtraBold', color: '#203B31', fontSize: 17, lineHeight: 24, fontWeight: '800', textAlign: 'right', writingDirection: 'ltr' },
-  languageLocalName: { fontFamily: 'Vazir', color: '#7B837A', fontSize: 11, lineHeight: 18, textAlign: 'right', writingDirection: 'rtl' },
-  languageCardAction: { flexDirection: 'row-reverse', alignItems: 'center', gap: 10, marginLeft: 9 },
-  languageCode: { minWidth: 34, borderRadius: 9, overflow: 'hidden', paddingHorizontal: 7, paddingVertical: 4, backgroundColor: '#F1EEE5', color: '#6C756A', fontFamily: 'Inter-ExtraBold', fontSize: 9, lineHeight: 13, fontWeight: '800', letterSpacing: 0.7, textAlign: 'center', writingDirection: 'ltr' },
-  pathCard: { borderRadius: 24, paddingHorizontal: 21, paddingVertical: 21, gap: 20, backgroundColor: 'rgba(255,253,248,0.74)', borderWidth: 1, borderColor: '#E4E0D5', shadowColor: '#263D32', shadowOpacity: 0.045, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 1 },
-  pathHeader: { flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
-  pathHeaderIcon: { width: 39, height: 39, borderRadius: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F3E3DB' },
-  pathHeaderCopy: { alignItems: 'flex-end', gap: 1 },
-  pathEyebrow: { fontFamily: 'Vazir', color: '#A75D47', fontSize: 10, lineHeight: 16, writingDirection: 'rtl' },
-  pathTitle: { fontFamily: 'Vazir-Bold', color: '#203B31', fontSize: 18, lineHeight: 27, writingDirection: 'rtl' },
-  stepsList: { gap: 0 },
-  stepRow: { minHeight: 78, flexDirection: 'row-reverse', alignItems: 'stretch', gap: 12 },
-  timelineColumn: { width: 25, alignItems: 'center' },
-  stepNumberBadge: { width: 23, height: 23, borderRadius: 8, alignItems: 'center', justifyContent: 'center', backgroundColor: '#E4EBE2', zIndex: 1 },
-  stepNumber: { fontFamily: 'Vazir-Black', color: '#315843', fontSize: 9, lineHeight: 13, writingDirection: 'rtl' },
-  timelineConnector: { flex: 1, width: 2, minHeight: 42, marginTop: 4, marginBottom: 2, borderRadius: 1, backgroundColor: '#D9DFD4' },
-  stepIcon: { width: 40, height: 40, borderRadius: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F1EEE5', borderWidth: 1, borderColor: '#E5E0D5' },
-  stepCopy: { flex: 1, minWidth: 0, alignItems: 'flex-end', justifyContent: 'flex-start', paddingTop: 1, paddingBottom: 15, gap: 2 },
-  stepTitle: { fontFamily: 'Vazir-Bold', color: '#203B31', fontSize: 14, lineHeight: 22, textAlign: 'right', writingDirection: 'rtl' },
-  stepDetail: { fontFamily: 'Vazir', color: '#737C72', fontSize: 11, lineHeight: 19, textAlign: 'right', writingDirection: 'rtl' },
+  root: { flex: 1, backgroundColor: '#F5FAFF' },
+  scrollContent: { flexGrow: 1, paddingBottom: 32 },
+  backgroundCloudTop: { position: 'absolute', width: 250, height: 250, borderRadius: 125, top: -132, left: -125, backgroundColor: 'rgba(93,169,239,0.08)' },
+  backgroundCloudLeft: { position: 'absolute', width: 370, height: 370, borderRadius: 185, top: 260, left: -290, backgroundColor: 'rgba(108,194,238,0.09)' },
+  backgroundCloudBottom: { position: 'absolute', width: 420, height: 420, borderRadius: 210, bottom: -275, right: -175, backgroundColor: 'rgba(58,131,221,0.07)' },
+  backgroundArc: { position: 'absolute', width: 520, height: 520, borderRadius: 260, borderWidth: 22, borderColor: 'rgba(54,132,223,0.035)', top: 230, right: -445 },
+  page: { width: '100%', maxWidth: 760, alignSelf: 'center', paddingHorizontal: 28, paddingTop: 20, gap: 20 },
+  pageCompact: { paddingHorizontal: 18, paddingTop: 14, gap: 17 },
+  header: { minHeight: 64, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
+  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  headerButton: { width: 40, height: 40, borderRadius: 15, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.8)', borderWidth: 1, borderColor: '#DCEBFA', shadowColor: '#28609A', shadowOpacity: 0.05, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  hero: { alignItems: 'flex-end', gap: 9, paddingTop: 20, paddingBottom: 3 },
+  heroCompact: { paddingTop: 8, gap: 8 },
+  title: { width: '100%', fontFamily: 'Vazir-Bold', color: '#102A56', fontSize: 30, lineHeight: 46, textAlign: 'right', writingDirection: 'rtl' },
+  titleTiny: { fontSize: 26, lineHeight: 40 },
+  subtitle: { width: '100%', fontFamily: 'Vazir', color: '#7185A3', fontSize: 14, lineHeight: 24, textAlign: 'right', writingDirection: 'rtl' },
+  eyebrow: { alignSelf: 'center', marginTop: 12, fontFamily: 'Inter-ExtraBold', color: '#7290B4', fontSize: 10, lineHeight: 16, letterSpacing: 2.1, writingDirection: 'ltr' },
+  languageList: { gap: 13 },
+  languageCard: { width: '100%', minHeight: 91, borderRadius: 22, borderWidth: 1, borderColor: '#D4E7F8', paddingHorizontal: 15, paddingVertical: 12, flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: 'rgba(255,255,255,0.87)', shadowColor: '#2B69A7', shadowOpacity: 0.065, shadowRadius: 13, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
+  flagCircle: { width: 62, height: 62, borderRadius: 31, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'rgba(255,255,255,0.92)' },
+  languageFlagBlue: { backgroundColor: '#E7F2FF' },
+  languageFlagAqua: { backgroundColor: '#E5F9FC' },
+  flagText: { fontSize: 38, lineHeight: 48, textAlign: 'center' },
+  languageCopy: { flex: 1, minWidth: 0, alignItems: 'center', justifyContent: 'center', gap: 1 },
+  languageCode: { fontFamily: 'Inter-ExtraBold', color: '#102A56', fontSize: 17, lineHeight: 22, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
+  languageNativeName: { maxWidth: '100%', fontFamily: 'Inter', color: '#7185A3', fontSize: 14, lineHeight: 21, textAlign: 'center', writingDirection: 'ltr' },
+  languageArrow: { width: 40, height: 40, borderRadius: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(241,248,255,0.92)' },
+  pathDivider: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 16, paddingVertical: 1, marginTop: 1 },
+  dividerLine: { flex: 1, height: 1, backgroundColor: '#D6E6F5' },
+  dividerOrnament: { width: 42, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, transform: [{ rotate: '-12deg' }] },
+  dividerDot: { width: 5, height: 5, borderRadius: 3, backgroundColor: '#B9D7F3' },
+  dividerDiamond: { width: 10, height: 10, borderWidth: 1.5, borderColor: '#9CCBF0', transform: [{ rotate: '45deg' }] },
+  learningPath: { position: 'relative', gap: 4, paddingVertical: 4, paddingHorizontal: 8 },
+  pathRail: { position: 'absolute', left: 18, top: 38, bottom: 38, width: 2, borderRadius: 1, backgroundColor: '#9AC8EE' },
+  stepRow: { minHeight: 96, flexDirection: 'row', alignItems: 'center', gap: 14 },
+  pathNodeWrap: { width: 20, height: 20, alignItems: 'center', justifyContent: 'center' },
+  pathNode: { width: 13, height: 13, borderRadius: 7, backgroundColor: '#2D83E8', borderWidth: 2, borderColor: '#F7FBFF' },
+  pathNodeAqua: { backgroundColor: '#28C1D5' },
+  stepIcon: { width: 66, height: 66, borderRadius: 24, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.85)', borderWidth: 1, borderColor: '#DCEBFA', shadowColor: '#2775C4', shadowOpacity: 0.075, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
+  stepIconAqua: { backgroundColor: '#F0FCFE', borderColor: '#CDEFF4' },
+  stepCopy: { flex: 1, minWidth: 0, alignItems: 'flex-end', gap: 3 },
+  stepTitle: { fontFamily: 'Vazir-Bold', color: '#102A56', fontSize: 17, lineHeight: 26, textAlign: 'right', writingDirection: 'rtl' },
+  stepDetail: { fontFamily: 'Vazir', color: '#7185A3', fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
   pressed: { opacity: 0.82, transform: [{ scale: 0.985 }] },
 });
