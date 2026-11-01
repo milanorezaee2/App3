@@ -70,6 +70,7 @@ jobs:
           npm run validate:content
           npm run validate:russian
           npm run validate:russian-architecture
+          npm run validate:turkish
           npm run validate:english-engine
           npm run validate:english-lesson-flow
           npm run validate:speech-policy

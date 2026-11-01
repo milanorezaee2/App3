@@ -5,6 +5,7 @@
 - ورود عمومی: `/languages`
 - مسیر انگلیسی: `/lang`
 - داشبورد روسی: `/learn/ru`؛ کتابخانه: `/learn/ru/library`
+- داشبورد ترکی استانبولی: `/learn/tr`؛ کتابخانه: `/learn/tr/library`؛ مرور: `/learn/tr/review`
 - جزئیات انگلیسی: `docs/ENGLISH-BEGINNER-A1-COMPLETION-FA.md`
 - طرح مسیر روسی: `docs/RUSSIAN-STARTER-PLAN-FA.md`
 
@@ -27,6 +28,7 @@ npm run typecheck
 npm run validate:content   # ۱۷۴ درس، ۳٬۸۶۲ جمله و پوشش ۵۰۴ واژه
 npm run validate:russian   # محتوای آغازین روسی، جریان ۹مرحله‌ای و جداسازی
 npm run validate:russian-architecture  # نقشهٔ A1–B2، چرخهٔ جمله‌محور و شواهد محلی
+npm run validate:turkish          # ۱۸ درس و ۱۴۳ جملهٔ ترکی، تفکیک ذخیره‌سازی و مسیرها
 npm run validate:english-supplement  # ۲۴ واحد، پاسخ‌ها و نگهداشت سابقه
 npm run validate:backup            # ادغام ایمن بکاپ انگلیسی و حفظ پیش‌نویس محلی
 npm run validate:personal-sync     # OTP/RLS و ادغام پیشرفت ابری

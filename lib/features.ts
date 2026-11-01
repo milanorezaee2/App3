@@ -8,12 +8,19 @@ export const MANAGEMENT_BUILD = privateAdminBuild || process.env.EXPO_PUBLIC_MIL
 /** Build-time switch: a learner APK that contains only the Russian course. */
 export const RUSSIAN_ONLY_BUILD = process.env.EXPO_PUBLIC_RUSSIAN_ONLY === 'true';
 
+/**
+ * Local preview only: the learner login gate can be bypassed for a web build
+ * with EXPO_PUBLIC_LEARNER_LOGIN=false. The default stays enabled, so APK and
+ * production builds keep requiring email OTP unless a build explicitly opts out.
+ */
+const previewLoginBypass = process.env.EXPO_PUBLIC_LEARNER_LOGIN === 'false';
+
 export const FEATURES = Object.freeze({
   /**
    * Learner builds must authenticate before entering the app. The private
    * management build is bypassed separately above.
    */
-  learnerLogin: true,
+  learnerLogin: !previewLoginBypass,
   adminPanel: educationAdminEnabled,
   educationEnrollment: educationAdminEnabled,
   // Roadmap modules are not implemented yet. Enabling a boolean cannot build them.
@@ -22,4 +29,5 @@ export const FEATURES = Object.freeze({
   announcements: false,
   billing: false,
   russianCourse: true,
+  turkishCourse: true,
 });

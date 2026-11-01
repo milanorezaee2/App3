@@ -16,6 +16,7 @@ let welcomeVoicePlayed = false;
 const languageFlags: Record<string, string> = {
   en: '🇬🇧',
   ru: '🇷🇺',
+  tr: '🇹🇷',
 };
 
 const learningSteps = [
@@ -184,7 +185,7 @@ export default function LanguagesHome() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: DesignTokens.surface.canvas },
+  root: { flex: 1, backgroundColor: DesignTokens.surface.canvas, overflow: 'hidden' },
   scrollContent: { flexGrow: 1, paddingBottom: 32 },
   backgroundCloudTop: { position: 'absolute', width: 250, height: 250, borderRadius: 125, top: -132, left: -125, backgroundColor: 'rgba(93,169,239,0.08)' },
   backgroundCloudLeft: { position: 'absolute', width: 370, height: 370, borderRadius: 185, top: 260, left: -290, backgroundColor: 'rgba(108,194,238,0.09)' },

@@ -485,7 +485,7 @@ export { default as asyncStorage } from '${STUBS}/async-storage.js';
   check('English Today heading stays right-aligned in RTL without changing its labels', /flexDirection:\s*'row-reverse'/.test(todayHeaderStyle) && englishHomeSource.includes('TODAY AT A GLANCE') && englishHomeSource.includes('برنامهٔ امروز'));
   check('English level cards show unique vocabulary counts calculated from each level', /metrics\.vocabularyCount/.test(englishHomeSource) && englishHomeSource.includes('واژهٔ یکتا') && /stats\.vocabularyCount/.test(englishLibrarySource) && englishLibrarySource.includes('واژهٔ یکتا'));
   check('English bottom navigation places Learning on the right, Conversation in the center, and Review on the left', /flexDirection:\s*'row-reverse'/.test(bottomNavShellStyle) && /path:\s*'\/lang',\s*label:\s*'یادگیری'/.test(englishBottomNavSource) && /path:\s*'\/conversations',\s*label:\s*'مکالمه'/.test(englishBottomNavSource) && /path:\s*'\/review',\s*label:\s*'مرور'/.test(englishBottomNavSource));
-  check('Only English and Russian are selectable', app.languages.LANGUAGES.map(language => language.id).join('|') === 'en|ru');
+  check('English, Russian and Turkish are selectable', app.languages.LANGUAGES.map(language => language.id).join('|') === 'en|ru|tr');
 
   // ---------------------------------------- F. config detection + guards -----
   section('F. Supabase configuration detection & fail-fast guards');
