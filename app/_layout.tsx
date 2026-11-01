@@ -166,15 +166,7 @@ export default function RootLayout() {
           <AppLockGate>
             <RegistrationGate>
               {!IS_ADMIN_APP && <RuntimeGate />}
-              <Stack screenOptions={{ headerShown: false }} initialRouteName="index">
-                <Stack.Screen name="index" />
-                <Stack.Screen name="admin/index" />
-                <Stack.Screen name="agent" />
-                <Stack.Screen name="permissions" />
-                <Stack.Screen name="app-lock" />
-                <Stack.Screen name="lang/index" />
-                <Stack.Screen name="+not-found" />
-              </Stack>
+              <Stack screenOptions={{ headerShown: false }} />
               <AppResumeGuard />
               <ChatNotificationBridge />
             </RegistrationGate>
