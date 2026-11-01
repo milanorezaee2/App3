@@ -164,3 +164,26 @@ export const RtlDirection: DirectionStyle =
 
 export const LtrDirection: DirectionStyle =
   Platform.OS === 'web' ? { writingDirection: 'ltr' } : { direction: 'ltr' };
+
+/**
+ * DesignTokens used by the language selector (app/languages.tsx).
+ * Added to fix the broken 1a4c40a commit that imported DesignTokens without defining it.
+ * Values are aligned with existing Colors + LearningHomeColors so the UI stays consistent.
+ */
+export const DesignTokens = {
+  surface: {
+    canvas: '#F6F8FB', // Colors.neutral[950] - page background
+    card: '#FFFFFF',   // Colors.neutral[850] - card surface
+  },
+  brand: {
+    primarySoft: '#E2EFFF',   // Colors.primary[100]
+    primaryStrong: '#2878DE', // Colors.primary[400]
+  },
+  border: {
+    default: '#DCE8F7', // LearningHomeColors.border / Colors.neutral[800] blended
+  },
+  text: {
+    primary: '#102A56',   // Colors.primary[900] - ink
+    secondary: '#64748B', // Colors.neutral[400] - muted
+  },
+} as const;
