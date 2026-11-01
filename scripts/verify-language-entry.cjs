@@ -21,7 +21,10 @@ const workflowFiles = [
 
 check(/onPress=\{\(\) => router\.push\(language\.home as never\)\}/.test(languageScreen), 'language cards navigate directly to their existing home route');
 check(/home: '\/lang'/.test(catalog) && /home: '\/learn\/ru'/.test(catalog), 'English and Russian cards keep the original course destinations');
-check(/می‌خواهی کدام زبان را یاد بگیری؟/.test(languageScreen) && /برای ورود، یکی از زبان‌ها را انتخاب کن/.test(languageScreen), 'language chooser shows the original non-assessment copy');
+check(/زبان تازه‌ات را انتخاب کن/.test(languageScreen) && /یک انتخاب ساده؛ آغاز مسیری پیوسته برای یادگیری/.test(languageScreen), 'language chooser uses the new Persian copy');
+check(/MiloLanguageBrand/.test(languageScreen) && !/MiloLogoMotion/.test(languageScreen) && !/hero-background\.jpg|splash-learning-light\.png/.test(languageScreen), 'language chooser uses the new mark and removes legacy hero imagery');
+check(/languages\.map\(\(language, index\)/.test(languageScreen) && /styles\.languageCard/.test(languageScreen), 'language choices are catalog-driven reusable vertical cards');
+check(/learningSteps\.map/.test(languageScreen) && /styles\.stepRow/.test(languageScreen), 'language chooser contains the selected step-by-step path');
 check(!/\/placement|PlacementLanguage|PlacementRecommendation|سنجش همان لحظه|شروع پرسش‌های سنجش/.test(languageScreen), 'language chooser contains no assessment route, bank, or CTA');
 check(!/\/placement|سنجش آغازین انگلیسی برای انتخاب نقطهٔ شروع|پیداکردن نقطهٔ شروع/.test(englishHome), 'English home contains no remaining placement-assessment shortcut');
 check(!fs.existsSync(path.join(root, 'app/placement.tsx'))

@@ -14,6 +14,7 @@ const files = [
   'app/conversations/emma.tsx',
   'app/conversations/human/[conversationId].tsx',
   'app/lang/index.tsx',
+  'app/languages.tsx',
   'app/lang/supplement.tsx',
   'app/lang/quiz.tsx',
   'app/lang/library.tsx',
