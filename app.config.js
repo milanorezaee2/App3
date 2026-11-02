@@ -2,7 +2,20 @@ const base = require('./app.json').expo;
 
 const build = () => {
   const admin = process.env.MILO_ADMIN_APP === 'true' || process.env.EXPO_PUBLIC_MILO_ADMIN_APP === 'true';
-  if (process.env.EXPO_PUBLIC_RUSSIAN_ONLY === 'true' && !admin) {
+  const russianOnly = process.env.EXPO_PUBLIC_RUSSIAN_ONLY === 'true';
+  const learnerAuthMode = process.env.EXPO_PUBLIC_LEARNER_AUTH_MODE === 'optional'
+    ? 'optional'
+    : process.env.EXPO_PUBLIC_LEARNER_AUTH_MODE === 'none'
+      ? 'none'
+      : 'required';
+  const enabledLanguages = (process.env.EXPO_PUBLIC_ENABLED_LANGUAGES || (russianOnly ? 'ru' : 'en,ru,tr'))
+    .split(',')
+    .map(language => language.trim().toLowerCase())
+    .filter(Boolean)
+    .sort()
+    .join(',');
+
+  if (russianOnly && !admin) {
     return {
       ...base,
       name: 'MiloMultiLanguage Russian',
@@ -18,15 +31,29 @@ const build = () => {
       },
     };
   }
-  const learnerLogin = process.env.EXPO_PUBLIC_LEARNER_LOGIN === 'true';
-  if (!admin && learnerLogin) {
+
+  if (!admin && enabledLanguages === 'en,tr' && learnerAuthMode === 'required') {
     return {
       ...base,
-      name: 'MiloMultiLanguage Login',
-      android: { ...base.android, package: 'com.devicecontrol.milomultilang' },
-      ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.milomultilang' },
+      name: 'Milo English Turkish',
+      slug: 'milo-english-turkish',
+      scheme: 'miloenglishturkish',
+      android: { ...base.android, package: 'com.devicecontrol.miloenglishturkish' },
+      ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.miloenglishturkish' },
     };
   }
+
+  if (!admin && enabledLanguages === 'en,ru' && learnerAuthMode === 'optional') {
+    return {
+      ...base,
+      name: 'Milo English Russian',
+      slug: 'milo-english-russian',
+      scheme: 'miloenglishrussian',
+      android: { ...base.android, package: 'com.devicecontrol.miloenglishrussian' },
+      ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.miloenglishrussian' },
+    };
+  }
+
   if (!admin) return base;
   return {
     ...base,

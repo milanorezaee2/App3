@@ -265,8 +265,8 @@ const EXPECTED_B1_SURVIVAL_TITLES = [
 ];
 
 // 1. Preserve English and Russian untouched baselines
-check(english.SENTENCE_LESSONS.length === 222, 'English baseline lesson count (222 incl. additive Pre-A1) holds');
-check(english.SENTENCE_LESSONS.reduce((n, l) => n + l.sentences.length, 0) === 4322, 'English baseline sentence count (4322 incl. additive Pre-A1) holds');
+check(english.SENTENCE_LESSONS.length === 237, 'English baseline lesson count (237 incl. additive Pre-A1) holds');
+check(english.SENTENCE_LESSONS.reduce((n, l) => n + l.sentences.length, 0) === 4442, 'English baseline sentence count (4442 incl. additive Pre-A1) holds');
 check(russian.RUSSIAN_LESSONS.length === 129, 'Russian baseline lesson count (129) is untouched');
 check(russian.RUSSIAN_LESSONS.reduce((n, l) => n + l.sentences.length, 0) === 1032, 'Russian baseline sentence count (1032) is untouched');
 

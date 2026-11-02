@@ -34,11 +34,24 @@ import { PageNavigation } from '@/components/PageNavigation';
 const LESSONS_PER_GROUP = 10;
 const sentenceTotal = SENTENCE_LESSONS.reduce((total, lesson) => total + lesson.sentences.length, 0);
 
+function lessonUnitLabel(lesson: SentenceLesson) {
+  return lesson.learningMode === 'words' ? 'واژه' : lesson.learningMode === 'chunks' ? 'ترکیب' : 'جمله';
+}
+
+function lessonUnitPlural(lesson: SentenceLesson) {
+  return lesson.learningMode === 'words' ? 'واژه‌ها' : lesson.learningMode === 'chunks' ? 'ترکیب‌ها' : 'جمله‌ها';
+}
+
+function lessonUnitWithEzafe(lesson: SentenceLesson) {
+  const label = lessonUnitLabel(lesson);
+  return lesson.learningMode === 'chunks' ? label : `${label}ٔ`;
+}
+
 function lessonStatus(lesson: SentenceLesson, progress: CourseProgress | null, study: StudyState | null) {
   if (progress?.completedLessonIds.includes(lesson.id)) return 'تکمیل‌شده · قابل مرور';
   const session = study?.sessions[lesson.id];
   if (session && (session.stage > 0 || session.sentenceIndex > 0)) {
-    return `ادامه از مرحله ${toPersianDigits(session.stage + 1)}، جمله ${toPersianDigits(session.sentenceIndex + 1)}`;
+    return `ادامه از مرحله ${toPersianDigits(session.stage + 1)}، ${lessonUnitWithEzafe(lesson)} ${toPersianDigits(session.sentenceIndex + 1)}`;
   }
   return 'شروع درس';
 }
@@ -123,22 +136,22 @@ export default function EnglishLessonList() {
                 <PageNavigation backFallback="/lang" />
                 <Text style={styles.brandEyebrow}>ENGLISH PATH · MAIN COURSE</Text>
                 <Text style={styles.pageTitle}>مسیر یادگیری انگلیسی</Text>
-                <Text style={styles.pageIntro}>یک سطح را انتخاب کنید؛ درس‌ها بر اساس موقعیت و جمله پیش می‌روند و واژگان زیر جملهٔ مربوط می‌مانند.</Text>
+                <Text style={styles.pageIntro}>یک سطح را انتخاب کنید؛ مسیر از واژه‌های مستقل به ترکیب‌ها، جمله‌ها و گفت‌وگوها می‌رسد.</Text>
               </View>
 
               <LinearGradient colors={['#19204C', '#343B8A', '#5148C8']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
                 <View pointerEvents="none" style={styles.heroOrb} />
                 <View style={styles.heroTopRow}>
                   <View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View>
-                  <View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۵ سطح آموزشی</Text></View>
+                  <View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۷ سطح آموزشی</Text></View>
                 </View>
-                <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
-                <Text style={styles.overviewTitle}>یک مسیر روشن؛{ '\n' }جمله به جمله</Text>
-                <Text style={styles.overviewText}>ساختار سطح‌ها را ببینید و با محتوای واقعاً موجود در هر مرحله پیش بروید.</Text>
+                <Text style={styles.overviewEyebrow}>FROM WORDS TO SENTENCES</Text>
+                <Text style={styles.overviewTitle}>یک مسیر روشن؛{ '\n' }از واژه تا جمله</Text>
+                <Text style={styles.overviewText}>در Pre-A1 ابتدا واژه‌های مستقل، سپس ترکیب‌های کوتاه و در ادامه جمله‌ها و مکالمه را یاد می‌گیرید.</Text>
                 <View style={styles.overviewMetrics}>
                   <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{toPersianDigits(SENTENCE_LESSONS.length)}</Text><Text style={styles.overviewMetricLabel}>درس موجود</Text></View>
                   <View style={styles.overviewMetricDivider} />
-                  <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{toPersianDigits(sentenceTotal)}</Text><Text style={styles.overviewMetricLabel}>جملهٔ اصلی</Text></View>
+                  <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{toPersianDigits(sentenceTotal)}</Text><Text style={styles.overviewMetricLabel}>نمونهٔ آموزشی</Text></View>
                   <View style={styles.overviewMetricDivider} />
                   <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{toPersianDigits(allWords.size)}</Text><Text style={styles.overviewMetricLabel}>واژهٔ یکتا</Text></View>
                 </View>
@@ -150,7 +163,7 @@ export default function EnglishLessonList() {
                 <Text style={styles.railCurrent}>{COURSE_LEVELS.find(item => item.id === activeLevelId)?.title}</Text>
               </View>
 
-              <EnglishSectionHeading eyebrow="CHOOSE A LEVEL" title="انتخاب سطح" detail="آمار هر کارت از درس‌ها، جمله‌ها و واژه‌های یکتای همان سطح محاسبه می‌شود." />
+              <EnglishSectionHeading eyebrow="CHOOSE A LEVEL" title="انتخاب سطح" detail="آمار هر کارت از محتوای واقعی همان سطح محاسبه می‌شود؛ Pre-A1 از واژه، ترکیب و جمله تشکیل شده است." />
               <View style={styles.levelList}>
                 {COURSE_LEVELS.map(item => {
                   const stats = getEnglishLevelMetrics(item.id, completedIds);
@@ -175,7 +188,7 @@ export default function EnglishLessonList() {
                         <View style={styles.levelOptionMeta}>
                           <Text style={styles.levelOptionMetaText}>{toPersianDigits(stats.lessonCount)} درس</Text>
                           <View style={styles.metaDot} />
-                          <Text style={styles.levelOptionMetaText}>{toPersianDigits(stats.sentenceCount)} جمله</Text>
+                          <Text style={styles.levelOptionMetaText}>{toPersianDigits(stats.sentenceCount)} {item.id === -1 ? 'نمونه' : 'جمله'}</Text>
                           <View style={styles.metaDot} />
                           <Text style={styles.levelOptionMetaText}>{toPersianDigits(stats.vocabularyCount)} واژهٔ یکتا</Text>
                           <View style={styles.metaDot} />
@@ -211,7 +224,7 @@ export default function EnglishLessonList() {
                   </View>
                   <View style={styles.selectedProgressTrack}><View style={[styles.selectedProgressFill, { width: `${lessons.length ? (completed / lessons.length) * 100 : 0}%` }]} /></View>
                   <View style={styles.metricGrid}>
-                    <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{toPersianDigits(metrics.sentenceCount)}</Text><Text style={styles.heroMetricLabel}>جمله</Text></View>
+                    <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{toPersianDigits(metrics.sentenceCount)}</Text><Text style={styles.heroMetricLabel}>{selected.id === -1 ? 'نمونه' : 'جمله'}</Text></View>
                     <View style={styles.heroMetricDivider} />
                     <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{toPersianDigits(metrics.patternCount)}</Text><Text style={styles.heroMetricLabel}>الگوی ثبت‌شده</Text></View>
                     <View style={styles.heroMetricDivider} />
@@ -242,7 +255,9 @@ export default function EnglishLessonList() {
                     </View>
                   ))}
                 </View>
-                {selected.id === 5 ? (
+                {selected.id === -1 ? (
+                  <Text style={styles.focusFootnote}>مسیر پیش‌روندهٔ ۲۵ درس: ۱۴ درس واژه‌محور، ۵ درس ترکیب‌محور و ۶ درس جمله‌محور؛ ابتدا واژه‌ها، سپس ترکیب‌ها و در پایان جمله‌ها و مکالمه‌ها.</Text>
+                ) : selected.id === 5 ? (
                   <Text style={styles.focusFootnote}>این درس‌ها برای ۵۵ محور درخواست‌شده دو نمونه، توضیح و تمرین دارند. تعیین سطح فعلی C1 را ارزیابی نمی‌کند و این تمرین‌ها گواهی مهارت C1 نیستند.</Text>
                 ) : selected.id === 4 ? (
                   <Text style={styles.focusFootnote}>
@@ -257,7 +272,7 @@ export default function EnglishLessonList() {
 
               <View style={styles.lessonSectionHeading}>
                 <View>
-                  <Text style={styles.brandEyebrow}>SENTENCE-BASED LESSONS</Text>
+                  <Text style={styles.brandEyebrow}>{selected.id === -1 ? 'WORDS → CHUNKS → SENTENCES' : 'SENTENCE-BASED LESSONS'}</Text>
                   <Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text>
                 </View>
                 <View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{toPersianDigits(lessons.length)} درس</Text></View>
@@ -320,7 +335,7 @@ export default function EnglishLessonList() {
                               <Pressable
                                 key={item.id}
                                 accessibilityRole="button"
-                                accessibilityLabel={`${item.order}. ${item.title}${item.contentKind === 'vocabulary-practice' ? '، مرور واژگان از مثال‌های مستقل' : ''}`}
+                                accessibilityLabel={`${item.order}. ${item.title}، ${lessonUnitLabel(item)}-محور${item.contentKind === 'vocabulary-practice' ? '، مرور واژگان از مثال‌های مستقل' : ''}`}
                                 style={({ pressed }) => [styles.lessonCard, pressed && styles.pressed]}
                                 onPress={() => router.push({ pathname: '/course/lesson', params: { id: item.id } } as never)}
                               >
@@ -335,12 +350,14 @@ export default function EnglishLessonList() {
                                     </View>
                                   </View>
                                   <Text style={styles.lessonSubtitle}>{item.subtitle}</Text>
-                                  {item.contentKind === 'vocabulary-practice' ? (
+                                  {item.learningMode ? (
+                                    <Text style={styles.contentKindNote}>{lessonUnitPlural(item)} · {lessonUnitLabel(item)}‌محور</Text>
+                                  ) : item.contentKind === 'vocabulary-practice' ? (
                                     <Text style={styles.contentKindNote}>مجموعهٔ مرجع واژگان · مثال‌های مستقل</Text>
                                   ) : null}
                                   {previewSentence ? (
                                     <View style={styles.lessonSentencePreview}>
-                                      <View style={styles.lessonSentenceHeader}><Volume2 size={12} color={Palette.primary} /><Text style={styles.lessonSentenceEyebrow}>جملهٔ آغازین</Text></View>
+                                      <View style={styles.lessonSentenceHeader}><Volume2 size={12} color={Palette.primary} /><Text style={styles.lessonSentenceEyebrow}>{lessonUnitWithEzafe(item)} آغازین</Text></View>
                                       <Text style={styles.lessonSentenceEn}>{previewSentence.en}</Text>
                                       <Text style={styles.lessonSentenceFa}>{previewSentence.fa}</Text>
                                       {!!previewSentence.vocabulary.length && (
@@ -353,7 +370,7 @@ export default function EnglishLessonList() {
                                   <View style={styles.lessonFooter}>
                                     <View style={styles.lessonFooterItem}><Clock3 size={12} color={Palette.muted} /><Text style={styles.lessonFooterText}>{toPersianDigits(item.durationMinutes)} دقیقه</Text></View>
                                     <Text style={styles.lessonFooterDot}>·</Text>
-                                    <Text style={styles.lessonFooterText}>{toPersianDigits(item.sentences.length)} جملهٔ اصلی</Text>
+                                    <Text style={styles.lessonFooterText}>{toPersianDigits(item.sentences.length)} {lessonUnitWithEzafe(item)} اصلی</Text>
                                   </View>
                                 </View>
                                 <View style={styles.lessonPlayIcon}><Play size={13} color={Palette.primary} fill={Palette.primary} /></View>

@@ -135,11 +135,11 @@ export default function LearningHome() {
                 <Text style={styles.welcomeEyebrow}>YOUR NEXT STEP</Text>
               </View>
               <Text style={styles.welcomeTitle}>سلام! آماده‌ای ادامه بدی؟</Text>
-              <Text style={styles.welcomeDescription}>یک جملهٔ کاربردی، یک قدم دیگر در مسیر یادگیری.</Text>
+              <Text style={styles.welcomeDescription}>از واژه‌های مستقل تا جمله‌های کاربردی، یک قدم دیگر در مسیر یادگیری.</Text>
               <View style={styles.welcomeTags}>
                 <View style={styles.welcomeTag}>
                   <BookOpen size={12} color={HomeColors.gold} />
-                  <Text style={styles.welcomeTagText}>یادگیری جمله‌محور</Text>
+                  <Text style={styles.welcomeTagText}>از واژه تا جمله</Text>
                 </View>
                 <View style={styles.welcomeTag}>
                   <Sparkles size={12} color="#B8E3D5" />

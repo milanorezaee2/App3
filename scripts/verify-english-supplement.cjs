@@ -18,7 +18,7 @@ const esbuild = require('esbuild');
   const ids = new Set();
 
   check(app.ENGLISH_SUPPLEMENT.length === 24);
-  check(app.SENTENCE_LESSONS.length === 222);
+  check(app.SENTENCE_LESSONS.length === 237);
   const survivalLessons = app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 1);
   check(survivalLessons.length === 19 && survivalLessons.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 950
     && survivalLessons.every(lesson => lesson.sentences.length === 50));

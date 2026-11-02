@@ -64,11 +64,12 @@ const esbuild = require('esbuild');
   check(global.__utterances.at(-1).options.language === 'en-US' && speechTagFor('ru-RU') === 'ru-RU', 'web retains full locale tags');
   await stop();
   const screen = fs.readFileSync('app/course/lesson.tsx', 'utf8');
-  check(screen.includes("params: { id: nextLesson.id }") && screen.includes('await completeSentenceLesson') && screen.includes('await saveLessonSession'), 'navigation occurs after durable progress and session saves');
+  check(screen.includes("params: { id: destination.id }") && screen.includes('await completeSentenceLesson') && screen.includes('await saveLessonSession')
+    && screen.includes('getSentenceLesson(updatedProgress.currentLessonId)'), 'navigation occurs after durable progress and returns to the saved position when needed');
   check(!screen.includes('saveLessonSession(lesson.id,freshSession())'), 'completion does not erase the saved session');
   const home = fs.readFileSync('app/lang/index.tsx', 'utf8');
   check(home.includes('گوش دادن از ابتدا') && home.includes("fromStart: '1'") && home.includes('SENTENCE_LESSONS[0].id'), 'home button opens the first lesson');
-  check(screen.includes('جمله قبلی') && screen.includes('stage === 1') && !screen.includes('گوش‌دادن از ابتدا'), 'previous sentence is beside next, and old replay control is removed');
+  check(screen.includes('unitLabelWithEzafe} قبلی') && screen.includes('stage === 1') && !screen.includes('گوش‌دادن از ابتدا'), 'previous learning unit is beside next, and old replay control is removed');
   check(screen.includes('preserveExistingSession.current') && screen.includes('!preserveExistingSession.current'), 'replay does not overwrite an existing saved session');
   console.log(`${checks} lesson navigation and speech lifecycle checks passed.`);
 })().catch(error => { console.error(error); process.exit(1); });

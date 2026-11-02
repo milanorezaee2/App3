@@ -13,7 +13,7 @@ export const ENGLISH_ENGINE_BLUEPRINT = [
     levelId: -1,
     title: 'Absolute Beginner',
     band: 'Pre-A1 · شروع از صفر',
-    modules: ['سلام!', 'خداحافظ!', 'بله و نه', 'من هستم (I am)', 'اعداد ۱ تا ۱۰', 'حال شما چطور است؟', 'من دارم (I have)', 'لطفاً و ممنون', 'این ... است (This is)', 'مرور چیزهای یادگرفته'],
+    modules: COURSE_LEVELS.find(level => level.id === -1)?.modules ?? [],
   },
   {
     levelId: 0,
@@ -93,7 +93,8 @@ export interface EnglishLevelMetrics {
 export function getEnglishLevelMetrics(levelId: CourseLevelId, completedLessonIds: readonly string[] = []): EnglishLevelMetrics {
   const lessons = SENTENCE_LESSONS.filter(lesson => lesson.levelId === levelId);
   const sentences = lessons.flatMap(lesson => lesson.sentences);
-  const words = new Set(sentences.flatMap(sentence => sentence.vocabulary.map(item => item.word)));
+  const vocabularySource = levelId === -1 ? lessons.filter(lesson => lesson.learningMode === 'words') : lessons;
+  const words = new Set(vocabularySource.flatMap(lesson => lesson.sentences.flatMap(sentence => sentence.vocabulary.map(item => item.word.toLocaleLowerCase('en-US')))));
   const completed = new Set(completedLessonIds);
   return {
     levelId,

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-apk_path="MiloMultilang.apk"
+apk_path="Milo-English-Turkish-Login.apk"
 admin_apk_path="MiloAdmin.apk"
 diag_dir="${RUNNER_TEMP:-/tmp}"
 log_file="$diag_dir/milomultilang-emulator-smoke.log"
@@ -89,7 +89,7 @@ failed_step="clearing Android logcat"
 adb logcat -c
 
 failed_step="launching the main activity"
-timeout 90s adb shell am start -W -n com.devicecontrol.companion/.MainActivity
+timeout 90s adb shell am start -W -n com.devicecontrol.miloenglishturkish/.MainActivity
 
 failed_step="allowing the first screen to finish rendering"
 sleep 30
@@ -193,7 +193,7 @@ fi
 # first install we verify the account gate and continue with the separate admin APK.
 if [[ "$registration_gate" == false ]]; then
 failed_step="opening the Emma chat keyboard test route"
-timeout 60s adb shell am start -W -a android.intent.action.VIEW -d 'companionenglish:///conversations/emma' com.devicecontrol.companion
+timeout 60s adb shell am start -W -a android.intent.action.VIEW -d 'miloenglishturkish:///conversations/emma' com.devicecontrol.miloenglishturkish
 sleep 8
 capture_ui
 
@@ -281,7 +281,7 @@ echo 'Android emulator verified the full-height Emma composer with the software 
 
 failed_step="opening the human chat keyboard test route"
 adb shell input keyevent KEYCODE_BACK
-adb shell am start -W -a android.intent.action.VIEW -d 'companionenglish:///conversations/human/00000000-0000-0000-0000-000000000001?name=Test' com.devicecontrol.companion
+adb shell am start -W -a android.intent.action.VIEW -d 'miloenglishturkish:///conversations/human/00000000-0000-0000-0000-000000000001?name=Test' com.devicecontrol.miloenglishturkish
 sleep 8
 capture_ui
 
@@ -393,27 +393,27 @@ if grep -Fq 'ساخت حساب زبان‌آموز' "$ui_file"; then
 fi
 
 
-login_apk_path="MiloMultilang-Login.apk"
+login_apk_path="Milo-English-Russian-Optional-Login.apk"
 if [[ -s "$login_apk_path" ]]; then
-  failed_step="installing the learner login APK"
+  failed_step="installing the English-Russian optional-login APK"
   adb install -r "$login_apk_path"
-  failed_step="verifying the learner login APK package"
-  adb shell pm path com.devicecontrol.milomultilang
-  adb shell am force-stop com.devicecontrol.milomultilang
-  failed_step="launching the learner login APK"
-  timeout 90s adb shell am start -W -n com.devicecontrol.milomultilang/.MainActivity
-  failed_step="allowing the learner login APK to render"
+  failed_step="verifying the English-Russian optional-login APK package"
+  adb shell pm path com.devicecontrol.miloenglishrussian
+  adb shell am force-stop com.devicecontrol.miloenglishrussian
+  failed_step="launching the English-Russian optional-login APK"
+  timeout 90s adb shell am start -W -n com.devicecontrol.miloenglishrussian/.MainActivity
+  failed_step="allowing the English-Russian optional-login APK to render"
   sleep 25
   capture_ui
-  failed_step="verifying the learner login APK rendered"
+  failed_step="verifying the English-Russian optional-login APK rendered"
   # Same tolerance as the management check above: on a loaded hosted emulator the
   # accessibility tree can still be empty while the first screen is animating, so
   # re-dump before deciding the login variant failed to render.
   login_rendered=false
   for login_attempt in 1 2 3; do
-    if grep -Fq 'ساخت حساب زبان‌آموز' "$ui_file" || grep -Fq 'هر روز، یک قدم' "$ui_file"; then
+    if grep -Fq 'ساخت حساب زبان‌آموز' "$ui_file" || (grep -Fq 'هر روز، یک قدم' "$ui_file" && grep -Fq 'ورود یا ثبت‌نام حساب' "$ui_file"); then
       login_rendered=true
-      echo 'Android emulator launched the learner login APK and rendered its first screen.'
+      echo 'Android emulator launched the English-Russian optional-login APK and rendered its first screen.'
       break
     fi
     if [[ "$login_attempt" == 3 ]]; then
@@ -424,7 +424,7 @@ if [[ -s "$login_apk_path" ]]; then
     capture_ui
   done
   if [[ "$login_rendered" != true ]]; then
-    echo 'The learner login APK did not render the registration gate or the language home.'
+    echo 'The English-Russian optional-login APK did not render the registration gate or the language home.'
     exit 1
   fi
 fi

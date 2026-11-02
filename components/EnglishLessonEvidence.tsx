@@ -10,6 +10,8 @@ import { loadStudy, recordLessonEvidence } from '@/lib/englishStudyState';
 export function EnglishLessonEvidence({ lesson, onPassed }: { lesson: SentenceLesson; onPassed: () => void }) {
   const goalTasks = CORE_LESSON_EVIDENCE[lesson.id];
   const isCoreEvidence = !!goalTasks;
+  const itemLabel = lesson.learningMode === 'words' ? 'واژه' : lesson.learningMode === 'chunks' ? 'ترکیب' : 'جمله';
+  const itemLabelWithEzafe = lesson.learningMode === 'chunks' ? 'ترکیب' : `${itemLabel}ٔ`;
   const tasks = useMemo(() => {
     if (goalTasks) return [...goalTasks];
     const sentence = lesson.sentences[0];
@@ -21,11 +23,11 @@ export function EnglishLessonEvidence({ lesson, onPassed }: { lesson: SentenceLe
     options.push(...options.splice(0, offset));
     return [
       {
-        id: `legacy-${lesson.id}-listening`, skill: 'listening', prompt: 'جمله را بشنوید و معنی آن را انتخاب کنید.',
-        audio: sentence.en, options, answers: [sentence.fa], explanation: 'به واژه‌ها و معنی جمله در همین درس برگردید.',
+        id: `legacy-${lesson.id}-listening`, skill: 'listening', prompt: `${itemLabel} را بشنوید و معنی آن را انتخاب کنید.`,
+        audio: sentence.en, options, answers: [sentence.fa], explanation: `به ${itemLabel}ها و معنی نمونه در همین درس برگردید.`,
       },
       {
-        id: `legacy-${lesson.id}-writing`, skill: 'writing', prompt: 'جملهٔ انگلیسیِ مربوط به این معنی را مطابق متن همین درس بنویسید.',
+        id: `legacy-${lesson.id}-writing`, skill: 'writing', prompt: `${itemLabelWithEzafe} انگلیسیِ مربوط به این معنی را مطابق متن همین درس بنویسید.`,
         source: other.fa, answers: [other.en], explanation: `الگوی درس: ${other.en}`,
       },
     ] satisfies Task[];

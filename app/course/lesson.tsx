@@ -19,6 +19,7 @@ import { toPersianDigits } from '@/lib/format';
 
 import { EnglishLessonEvidence } from '@/components/EnglishLessonEvidence';
 import { EnglishSentenceBuilder } from '@/components/EnglishSentenceBuilder';
+import { EnglishWordRecall } from '@/components/EnglishWordRecall';
 import { EnglishDialoguePractice } from '@/components/EnglishDialoguePractice';
 import { EnglishB2TopicPractice } from '@/components/EnglishB2TopicPractice';
 import { EnglishB2Scenario } from '@/components/EnglishB2Scenario';
@@ -50,6 +51,19 @@ export default function SentenceLessonScreen() {
   const { id, fromStart } = useLocalSearchParams<{ id: string; fromStart?: string }>();
   const lesson = getSentenceLesson(id || '') ?? SENTENCE_LESSONS[0];
   const courseLevel = COURSE_LEVELS.find(item => item.id === lesson.levelId) ?? COURSE_LEVELS[0];
+  const learningMode = lesson.learningMode ?? 'sentences';
+  const unitLabel = learningMode === 'words' ? 'واژه' : learningMode === 'chunks' ? 'ترکیب' : 'جمله';
+  const unitLabelWithEzafe = learningMode === 'chunks' ? 'ترکیب' : `${unitLabel}ٔ`;
+  const unitLabelPlural = learningMode === 'words' ? 'واژه‌ها' : learningMode === 'chunks' ? 'ترکیب‌ها' : 'جمله‌ها';
+  const learningPathLabel = learningMode === 'words' ? 'واژه‌محور' : learningMode === 'chunks' ? 'ترکیب‌محور' : 'جمله‌محور';
+  const stagePresentation = stages.map((step, index) => {
+    if (index === 1) return { ...step, labelFa: learningMode === 'words' ? 'واژه‌های اصلی' : learningMode === 'chunks' ? 'ترکیب‌های اصلی' : step.labelFa, labelEn: learningMode === 'words' ? 'Core Words' : learningMode === 'chunks' ? 'Core Chunks' : step.labelEn };
+    if (index === 4) return { ...step, labelFa: learningMode === 'words' ? 'یادآوری واژه' : learningMode === 'chunks' ? 'ساخت ترکیب' : step.labelFa, labelEn: learningMode === 'words' ? 'Word Recall' : learningMode === 'chunks' ? 'Chunk Building' : step.labelEn };
+    if (index === 5) return { ...step, labelFa: learningMode === 'words' ? 'واژه‌های این درس' : learningMode === 'chunks' ? 'واژگان ترکیب‌ها' : step.labelFa, labelEn: learningMode === 'words' ? 'Lesson Words' : learningMode === 'chunks' ? 'Chunk Vocabulary' : step.labelEn };
+    if (index === 6) return { ...step, labelFa: learningMode === 'words' ? 'نقش واژه‌ها' : learningMode === 'chunks' ? 'الگوی ترکیب' : step.labelFa, labelEn: learningMode === 'words' ? 'Word Roles' : learningMode === 'chunks' ? 'Chunk Patterns' : step.labelEn };
+    if (index === 7 && learningMode !== 'sentences') return { ...step, labelFa: learningMode === 'words' ? 'یادآوری واژه' : 'یادآوری ترکیب', labelEn: 'Active Recall' };
+    return step;
+  });
   const [evidencePassed, setEvidencePassed] = useState(false);
   const [completionError, setCompletionError] = useState('');
   const [saving, setSaving] = useState(false);
@@ -214,11 +228,12 @@ export default function SentenceLessonScreen() {
     setCompletionError('');
     try {
     const nextLesson = nextLessonInOrder(SENTENCE_LESSONS, lesson.id);
-    // Persist both the completed path and its final session before navigating.
-    await completeSentenceLesson(lesson.id, nextLesson?.id);
+    // Completion may return a migrating learner to their saved position rather than a completed neighbour.
+    const updatedProgress = await completeSentenceLesson(lesson.id, nextLesson?.id);
     await saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed });
     void stopResponsiveSpeech();
-    if (nextLesson) router.replace({ pathname: '/course/lesson', params: { id: nextLesson.id } } as never);
+    const destination = getSentenceLesson(updatedProgress.currentLessonId) ?? nextLesson;
+    if (destination) router.replace({ pathname: '/course/lesson', params: { id: destination.id } } as never);
     else router.replace('/lang' as never);
     } catch { setCompletionError('پایان درس ذخیره نشد؛ دوباره تلاش کنید.'); }
     finally { completing.current=false; setSaving(false); }
@@ -242,7 +257,7 @@ export default function SentenceLessonScreen() {
           <View style={styles.headerText}>
             <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
-            <Text style={styles.headerSub}>{stages[stage].labelFa} · مرحله {toPersianDigits(stage + 1)} از {toPersianDigits(stages.length)}</Text>
+            <Text style={styles.headerSub}>{stagePresentation[stage].labelFa} · مرحله {toPersianDigits(stage + 1)} از {toPersianDigits(stages.length)}</Text>
           </View>
           <View style={styles.percentBadge}>
             <Text style={styles.percent}>{toPersianDigits(progressPercent)}٪</Text>
@@ -250,8 +265,8 @@ export default function SentenceLessonScreen() {
           </View>
         </View>
         <View style={styles.headerBottom}>
-          <View style={styles.headerInfoChip}><BookOpenCheck size={13} color="#D9DBFF" /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View>
-          <Text style={styles.headerInfoText}>{toPersianDigits(lesson.sentences.length)} جملهٔ اصلی</Text>
+          <View style={styles.headerInfoChip}><BookOpenCheck size={13} color="#D9DBFF" /><Text style={styles.headerInfoText}>مسیر اصلی {learningPathLabel}</Text></View>
+          <Text style={styles.headerInfoText}>{toPersianDigits(lesson.sentences.length)} {unitLabelWithEzafe} اصلی</Text>
         </View>
       </LinearGradient>
       <View style={styles.stepperCard}>
@@ -261,12 +276,12 @@ export default function SentenceLessonScreen() {
             <Text style={styles.stepperTitle}>جریان این درس</Text>
           </View>
           <View style={styles.stepperNow}>
-            <Text style={styles.stepperNowEn}>{stages[stage].labelEn}</Text>
-            <Text style={styles.stepperNowFa}>{stages[stage].labelFa}</Text>
+            <Text style={styles.stepperNowEn}>{stagePresentation[stage].labelEn}</Text>
+            <Text style={styles.stepperNowFa}>{stagePresentation[stage].labelFa}</Text>
           </View>
         </View>
         <View style={styles.stepSegments}>
-          {stages.map((item, index) => <View key={item.id} accessibilityLabel={`${item.labelEn} ${index + 1} از ${stages.length}`} style={[styles.stepSegment, index <= stage && styles.stepSegmentDone, index === stage && styles.stepSegmentCurrent]} />)}
+          {stagePresentation.map((item, index) => <View key={item.id} accessibilityLabel={`${item.labelEn} ${index + 1} از ${stages.length}`} style={[styles.stepSegment, index <= stage && styles.stepSegmentDone, index === stage && styles.stepSegmentCurrent]} />)}
         </View>
         <View style={styles.stepperEnds}><Text style={styles.stepperEndText}>Situation</Text><Text style={styles.stepperEndText}>Spaced Review</Text></View>
       </View>
@@ -281,7 +296,11 @@ export default function SentenceLessonScreen() {
             <Text style={styles.situation}>{lesson.situation}</Text>
             <View style={styles.promiseCard}>
               <Text style={styles.promiseTitle}>{lesson.c1Section ? 'در این درس تمرین می‌کنید:' : 'در پایان این درس می‌توانید:'}</Text>
-              <Text style={styles.promiseText}>{lesson.c1Section ? `کاربرد ${toPersianDigits(lesson.sentences.length)} جمله و گفت‌وگو در این موقعیت؛ پایان درس به‌تنهایی تسلط را تأیید نمی‌کند.` : `با ${toPersianDigits(lesson.sentences.length)} جمله کوتاه، این موقعیت را مدیریت کنید.`}</Text>
+              <Text style={styles.promiseText}>{learningMode === 'words'
+                ? `هشت واژهٔ مستقل را بشناسید، بشنوید و از روی معنی فارسی به یاد بیاورید؛ هنوز گفت‌وگو یا جمله‌سازی نداریم.`
+                : lesson.c1Section
+                  ? `کاربرد ${toPersianDigits(lesson.sentences.length)} جمله و گفت‌وگو در این موقعیت؛ پایان درس به‌تنهایی تسلط را تأیید نمی‌کند.`
+                  : `با ${toPersianDigits(lesson.sentences.length)} ${unitLabelWithEzafe} کوتاه، این موقعیت را مدیریت کنید.`}</Text>
             </View>
             {lessonTopics && <View style={styles.promiseCard}>
               <Text style={styles.promiseTitle}>موضوع‌های این درس</Text>
@@ -292,9 +311,9 @@ export default function SentenceLessonScreen() {
 
         {stage === 1 && (
           <View style={styles.sentenceStage}>
-            <Text style={styles.counter}>جمله {toPersianDigits(sentenceIndex + 1)} از {toPersianDigits(lesson.sentences.length)}</Text>
+            <Text style={styles.counter}>{unitLabelWithEzafe} {toPersianDigits(sentenceIndex + 1)} از {toPersianDigits(lesson.sentences.length)}</Text>
             <View style={styles.sentenceCard}>
-              <Pressable accessibilityRole="button" accessibilityLabel={`پخش نمونهٔ صوتی جمله: ${current.en}`} accessibilityHint="فقط نمونهٔ گفتاری پخش می‌شود؛ میکروفن فعال نیست." style={styles.soundButton} onPress={() => speak(current.en)}>
+              <Pressable accessibilityRole="button" accessibilityLabel={`پخش نمونهٔ صوتی ${unitLabel}: ${current.en}`} accessibilityHint="فقط نمونهٔ گفتاری پخش می‌شود؛ میکروفن فعال نیست." style={styles.soundButton} onPress={() => speak(current.en)}>
                 <Volume2 size={25} color={Colors.onColor} />
               </Pressable>
               <Text style={styles.english}>{current.en}</Text>
@@ -304,7 +323,7 @@ export default function SentenceLessonScreen() {
               <Text style={styles.persian}>{current.fa}</Text>
               {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternEnglish}>{current.pattern}</Text></View> : null}
             </View>
-            <Text style={styles.hint}>جمله به‌صورت خودکار پخش می‌شود. اگر مرورگر صدا را متوقف کرد، دکمهٔ بلندگو را بزنید.</Text>
+            <Text style={styles.hint}>{unitLabelWithEzafe} انتخاب‌شده به‌صورت خودکار پخش می‌شود. اگر پخش متوقف شد، دکمهٔ بلندگو را بزنید.</Text>
             {!!audioNotice && <Text accessibilityLiveRegion="polite" style={styles.speechError}>{audioNotice}</Text>}
           </View>
         )}
@@ -312,14 +331,14 @@ export default function SentenceLessonScreen() {
         {stage === 2 && (
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><Headphones size={34} color={Colors.primary[400]} /></View>
-            <Text style={styles.stageTitle}>شنیدن جمله‌ها</Text>
-            <Text style={styles.stageDesc}>هر جمله را جداگانه گوش دهید و معنی همان جمله را به یاد بیاورید. واژه‌ها همیشه کنار جملهٔ اصلی می‌مانند.</Text>
+            <Text style={styles.stageTitle}>شنیدن {unitLabelPlural}</Text>
+            <Text style={styles.stageDesc}>{unitLabelPlural} را جداگانه گوش دهید و معنی هرکدام را به یاد بیاورید. محتوای این مرحله همان نمونه‌های اصلی درس است.</Text>
             <View style={styles.listenList}>
               {lesson.sentences.map((sentence, index) => (
                 <Pressable
                   key={sentence.id}
                   accessibilityRole="button"
-                  accessibilityLabel={`پخش جملهٔ ${toPersianDigits(index + 1)} از ${toPersianDigits(lesson.sentences.length)}: ${sentence.en}`}
+                  accessibilityLabel={`پخش ${unitLabelWithEzafe} ${toPersianDigits(index + 1)} از ${toPersianDigits(lesson.sentences.length)}: ${sentence.en}`}
                   style={[styles.listenRow, index === sentenceIndex && styles.listenRowActive]}
                   onPress={() => selectListeningSentence(index)}
                 >
@@ -341,16 +360,16 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><Mic2 size={34} color={Colors.success[400]} /></View>
             <Text style={styles.stageTitle}>سایه‌خوانی · Shadowing</Text>
-            <Text style={styles.stageDesc}>یک جمله را پخش کنید، مکث کنید و با همان آهنگ تکرار کنید. این تمرین بدون ضبط صدا هم کامل است.</Text>
+            <Text style={styles.stageDesc}>{unitLabelWithEzafe} را پخش کنید، مکث کنید و با همان آهنگ تکرار کنید. این تمرین بدون ضبط صدا هم کامل است.</Text>
             <View style={styles.speechPractice}>
-              <Text style={styles.speechTitle}>جملهٔ انتخاب‌شده</Text>
+              <Text style={styles.speechTitle}>{unitLabelWithEzafe} انتخاب‌شده</Text>
               <Text style={styles.speechSentence}>{current.en}</Text>
               <Pressable accessibilityRole="button" style={styles.recordButton} onPress={() => speak(current.en, 0.5)}>
                 <Volume2 size={18} color={Colors.onColor} /><Text style={styles.recordButtonText}>پخش آهستهٔ نمونه</Text>
               </Pressable>
-              <Text style={styles.speechHint}>{recorderState.isRecording ? `در حال ضبط · ${toPersianDigits(Math.max(1, Math.round(recorderState.durationMillis / 1000)))} ثانیه` : evaluatingSpeech ? 'در حال بررسی…' : PAID_AI_ENABLED ? 'در صورت فعال‌بودن سرویس، می‌توانید ضبط و بررسی آنلاین را هم انتخاب کنید.' : 'میکروفن و ارسال آنلاین در حالت بدون هزینه غیرفعال‌اند؛ جمله را با صدای بلند تکرار کنید.'}</Text>
+              <Text style={styles.speechHint}>{recorderState.isRecording ? `در حال ضبط · ${toPersianDigits(Math.max(1, Math.round(recorderState.durationMillis / 1000)))} ثانیه` : evaluatingSpeech ? 'در حال بررسی…' : PAID_AI_ENABLED ? 'در صورت فعال‌بودن سرویس، می‌توانید ضبط و بررسی آنلاین را هم انتخاب کنید.' : `میکروفن و ارسال آنلاین در حالت بدون هزینه غیرفعال‌اند؛ ${unitLabelWithEzafe} را با صدای بلند تکرار کنید.`}</Text>
               <Pressable accessibilityRole="button"
-                accessibilityLabel={PAID_AI_ENABLED ? recorderState.isRecording ? 'توقف ضبط و بررسی آنلاین جمله' : 'شروع ضبط اختیاری جمله' : 'ضبط و بررسی آنلاین گفتار غیرفعال است'}
+                accessibilityLabel={PAID_AI_ENABLED ? recorderState.isRecording ? `توقف ضبط و بررسی آنلاین ${unitLabel}` : `شروع ضبط اختیاری ${unitLabel}` : 'ضبط و بررسی آنلاین گفتار غیرفعال است'}
                 accessibilityHint={!PAID_AI_ENABLED ? PAID_AI_DISABLED_MESSAGE : 'در صورت فعال‌سازی و رضایت جداگانه، صدا برای بررسی فرستاده می‌شود.'}
                 accessibilityState={{ disabled: !PAID_AI_ENABLED || evaluatingSpeech }}
                 disabled={!PAID_AI_ENABLED || evaluatingSpeech}
@@ -381,12 +400,18 @@ export default function SentenceLessonScreen() {
         {stage === 4 && (
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><RotateCcw size={33} color={Colors.success[400]} /></View>
-            <Text style={styles.stageTitle}>ساخت جمله</Text>
-            <Text style={styles.stageDesc}>معنی جمله را بخوانید و واژه‌های همان جمله را به ترتیب بچینید.</Text>
-            <EnglishSentenceBuilder sentence={current} />
+            <Text style={styles.stageTitle}>{learningMode === 'words' ? 'یادآوری واژه' : learningMode === 'chunks' ? 'ساخت ترکیب کوتاه' : 'ساخت جمله'}</Text>
+            <Text style={styles.stageDesc}>{learningMode === 'words'
+              ? 'معنی فارسی را بخوانید، واژهٔ انگلیسی را به یاد بیاورید و سپس پاسخ را ببینید.'
+              : learningMode === 'chunks'
+                ? 'معنی را بخوانید و واژه‌های آشنا را برای ساخت ترکیب انگلیسی به ترتیب بچینید.'
+                : 'معنی جمله را بخوانید و واژه‌های همان جمله را به ترتیب بچینید.'}</Text>
+            {learningMode === 'words'
+              ? <EnglishWordRecall key={current.id} item={current} />
+              : <EnglishSentenceBuilder sentence={current} mode={learningMode} />}
             <View style={styles.dots}>
               {lesson.sentences.map((sentence, index) => (
-                <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`جمله ${index + 1}`} onPress={() => setSentenceIndex(index)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />
+                <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`${unitLabelWithEzafe} ${index + 1}`} onPress={() => setSentenceIndex(index)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />
               ))}
             </View>
           </View>
@@ -395,8 +420,12 @@ export default function SentenceLessonScreen() {
         {stage === 5 && (
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><Sparkles size={34} color={Colors.warning[400]} /></View>
-            <Text style={styles.stageTitle}>واژگان از دل جمله‌ها</Text>
-            <Text style={styles.stageDesc}>هر واژه در کنار معنی و همان جمله‌ای دیده می‌شود که از آن آمده است.</Text>
+            <Text style={styles.stageTitle}>{learningMode === 'words' ? 'واژه‌های این درس' : learningMode === 'chunks' ? 'واژگانِ ترکیب‌ها' : 'واژگان از دل جمله‌ها'}</Text>
+            <Text style={styles.stageDesc}>{learningMode === 'words'
+              ? 'هر واژهٔ مستقل را با معنی فارسی و راهنمای تلفظ مرور کنید.'
+              : learningMode === 'chunks'
+                ? 'واژه‌ها کنار معنی و همان ترکیبی دیده می‌شوند که در آن آمده‌اند.'
+                : 'هر واژه در کنار معنی و همان جمله‌ای دیده می‌شود که از آن آمده است.'}</Text>
             <View style={styles.vocabList}>
               {vocabulary.map(item => (
                 <View key={item.word} style={styles.vocabCard}>
@@ -415,8 +444,14 @@ export default function SentenceLessonScreen() {
         {stage === 6 && (
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><BookOpenCheck size={33} color={Colors.primary[400]} /></View>
-            <Text style={styles.stageTitle}>Grammar Through Usage · دستور در کاربرد</Text>
-            <Text style={styles.stageDesc}>{(lesson.b2Section || lesson.c1Section) ? 'نکته‌های کاربردی را بخوانید و سپس الگوها و مثال‌ها را مرور کنید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به محتوا اضافه نشده است.'}</Text>
+            <Text style={styles.stageTitle}>{learningMode === 'words' ? 'نقش واژه‌ها' : learningMode === 'chunks' ? 'الگوی ترکیب‌ها' : 'Grammar Through Usage · دستور در کاربرد'}</Text>
+            <Text style={styles.stageDesc}>{learningMode === 'words'
+              ? 'این مرحله دستور تازه‌ای معرفی نمی‌کند؛ نقش و دستهٔ هر واژه را همراه با مثال اصلی می‌بینید.'
+              : learningMode === 'chunks'
+                ? 'ترکیب‌ها را در قالب‌های کوتاه مرور کنید؛ هر توضیح به نمونهٔ ثبت‌شدهٔ همین درس متصل است.'
+                : (lesson.b2Section || lesson.c1Section)
+                  ? 'نکته‌های کاربردی را بخوانید و سپس الگوها و مثال‌ها را مرور کنید.'
+                  : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به محتوا اضافه نشده است.'}</Text>
             {B2_GUIDANCE[lesson.id]?.map((note, index) => (
               <View key={`${lesson.id}-guide-${index}`} style={styles.vocabCard}>
                 <Text style={styles.promiseTitle}>{lessonTopics?.[index]}</Text>
@@ -449,19 +484,32 @@ export default function SentenceLessonScreen() {
 
         {stage === 7 && (
           <View style={styles.centerStage}>
-            <View style={styles.bigIcon}><MessageCircle size={34} color={Colors.accent[400]} /></View>
-            <Text style={styles.stageTitle}>Conversation Practice · مکالمهٔ هدایت‌شده</Text>
-            <Text style={styles.stageDesc}>فعلاً به‌جای سرویس AI آنلاین، از گفت‌وگوی همین درس به شکل تمرین نقش‌آفرینی رایگان استفاده کنید.</Text>
-            <EnglishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} />
-            {lesson.c1Section && <EnglishB2Scenario key={lesson.id} lessonId={lesson.id} speak={speak} scenario={C1_SCENARIOS[lesson.id]} />}
-            {lesson.c1Section && <EnglishC1ExtendedModel key={`${lesson.id}-extended`} lessonId={lesson.id} speak={speak} />}
-            {lesson.b2Section && <EnglishB2Scenario key={lesson.id} lessonId={lesson.id} speak={speak} />}
-            {!!B2_PRODUCTION[lesson.id] && <View style={styles.promiseCard}>
-              <Text style={styles.promiseTitle}>تمرین تولید آزاد · اختیاری</Text>
-              <Text style={styles.promiseText}>{B2_PRODUCTION[lesson.id]}</Text>
-              <Text style={styles.promiseText}>{B2_PRODUCTION_CHECKLIST}</Text>
-              <Text style={styles.promiseText}>این فعالیت خودکار تصحیح یا ذخیره نمی‌شود و شرط پایان درس نیست.</Text>
-            </View>}
+            {learningMode !== 'sentences' ? (
+              <>
+                <View style={styles.bigIcon}><RotateCcw size={33} color={Colors.success[400]} /></View>
+                <Text style={styles.stageTitle}>{learningMode === 'words' ? 'یادآوری فعال واژه · بدون دیالوگ' : 'یادآوری فعال ترکیب · بدون دیالوگ'}</Text>
+                <Text style={styles.stageDesc}>{learningMode === 'words'
+                  ? 'واژه‌ها را از روی معنی فارسی به یاد بیاورید و فقط پس از پاسخ‌دادن، کارت را باز کنید. این درس واژه‌محور است و گفت‌وگوی زودهنگام ندارد.'
+                  : 'ترکیب‌ها را از روی معنی فارسی به یاد بیاورید و فقط پس از پاسخ‌دادن، کارت را باز کنید. در این مرحله هنوز دیالوگ معرفی نمی‌شود.'}</Text>
+                {lesson.sentences.map(item => <EnglishWordRecall key={item.id} item={item} itemLabel={learningMode === 'words' ? 'واژه' : 'ترکیب'} />)}
+              </>
+            ) : (
+              <>
+                <View style={styles.bigIcon}><MessageCircle size={34} color={Colors.accent[400]} /></View>
+                <Text style={styles.stageTitle}>Conversation Practice · مکالمهٔ هدایت‌شده</Text>
+                <Text style={styles.stageDesc}>از گفت‌وگوی کوتاه همین درس برای تمرین نقش‌آفرینی استفاده کنید.</Text>
+                <EnglishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} />
+                {lesson.c1Section && <EnglishB2Scenario key={lesson.id} lessonId={lesson.id} speak={speak} scenario={C1_SCENARIOS[lesson.id]} />}
+                {lesson.c1Section && <EnglishC1ExtendedModel key={`${lesson.id}-extended`} lessonId={lesson.id} speak={speak} />}
+                {lesson.b2Section && <EnglishB2Scenario key={lesson.id} lessonId={lesson.id} speak={speak} />}
+                {!!B2_PRODUCTION[lesson.id] && <View style={styles.promiseCard}>
+                  <Text style={styles.promiseTitle}>تمرین تولید آزاد · اختیاری</Text>
+                  <Text style={styles.promiseText}>{B2_PRODUCTION[lesson.id]}</Text>
+                  <Text style={styles.promiseText}>{B2_PRODUCTION_CHECKLIST}</Text>
+                  <Text style={styles.promiseText}>این فعالیت خودکار تصحیح یا ذخیره نمی‌شود و شرط پایان درس نیست.</Text>
+                </View>}
+              </>
+            )}
           </View>
         )}
 
@@ -469,10 +517,10 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><RefreshCw size={33} color={Colors.success[400]} /></View>
             <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
-            <Text style={styles.stageDesc}>با ثبت پایان درس، جمله‌ها و واژه‌های وابسته به آن وارد برنامهٔ مرور می‌شوند؛ مرور بر اساس پاسخ شما فاصله‌گذاری می‌شود.</Text>
+            <Text style={styles.stageDesc}>با ثبت پایان درس، {unitLabelPlural} و واژه‌های وابسته به آن وارد برنامهٔ مرور می‌شوند؛ مرور بر اساس پاسخ شما فاصله‌گذاری می‌شود.</Text>
             <View style={styles.promiseCard}>
               <Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text>
-              <Text style={styles.promiseText}>{toPersianDigits(lesson.sentences.length)} جمله و {toPersianDigits(vocabulary.length)} واژهٔ یکتا؛ محتوا همان محتوای اصلی درس است.</Text>
+              <Text style={styles.promiseText}>{toPersianDigits(lesson.sentences.length)} {unitLabelPlural} و {toPersianDigits(vocabulary.length)} واژهٔ یکتا؛ محتوا همان نمونه‌های اصلی درس است.</Text>
             </View>
             {evidencePassed
               ? CORE_LESSON_EVIDENCE[lesson.id]
@@ -486,11 +534,11 @@ export default function SentenceLessonScreen() {
 
       <View style={styles.footer}>
         <View style={styles.footerButtons}>
-          {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && { opacity: .45 }]}>
-            <Text style={styles.secondaryControlText}>جمله قبلی</Text>
+          {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel={`${unitLabelWithEzafe} قبلی`} accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && { opacity: .45 }]}>
+            <Text style={styles.secondaryControlText}>{unitLabelWithEzafe} قبلی</Text>
           </Pressable>}
           <Pressable accessibilityRole="button" accessibilityState={{ disabled: saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed) }} disabled={saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed)} style={[styles.nextButton, stage === 1 && styles.nextButtonBesidePrevious, (saving || (stage === stages.length - 1 && !evidencePassed)) && { opacity: .45 }]} onPress={() => void next()}>
-            <Text style={styles.nextText}>{stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جمله بعدی' : 'ادامه'}</Text>
+            <Text style={styles.nextText}>{stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? `${unitLabelWithEzafe} بعدی` : 'ادامه'}</Text>
             {stage === stages.length - 1 ? <Check size={20} color={Colors.onColor} /> : <ChevronLeft size={20} color={Colors.onColor} />}
           </Pressable>
         </View>

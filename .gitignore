@@ -4,6 +4,7 @@ node_modules/
 # expo
 .expo/
 dist/
+apk-downloads/
 web-build/
 expo-env.d.ts
 android/

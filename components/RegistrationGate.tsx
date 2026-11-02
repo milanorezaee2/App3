@@ -11,8 +11,6 @@ import { FEATURES } from '@/lib/features';
 
 const IS_ADMIN_APP = Constants.expoConfig?.extra?.appRole === 'admin'
   || process.env.EXPO_PUBLIC_MILO_ADMIN_APP === 'true';
-// When the learner login screen is disabled in lib/features.ts, skip the gate entirely.
-const BYPASS_GATE: boolean = IS_ADMIN_APP || !FEATURES.learnerLogin;
 const SESSION_INSPECT_TIMEOUT_MS = 5000;
 
 function isWebPreviewHost(): boolean {
@@ -33,11 +31,12 @@ function isWebPreviewHost(): boolean {
 type Mode = LoginMode;
 type AuthStep = 'request' | 'verify' | 'profile';
 
-export function RegistrationGate({ children }: PropsWithChildren) {
+export function RegistrationGate({ children, forceAuth = false }: PropsWithChildren<{ forceAuth?: boolean }>) {
   const router = useRouter();
+  const bypassGate = IS_ADMIN_APP || (!FEATURES.learnerLogin && !forceAuth);
   const routingAfterAuth = useRef(false);
-  const [checking, setChecking] = useState(!BYPASS_GATE);
-  const [ready, setReady] = useState(BYPASS_GATE);
+  const [checking, setChecking] = useState(!bypassGate);
+  const [ready, setReady] = useState(bypassGate);
   const [step, setStep] = useState<AuthStep>('request');
   const [mode, setMode] = useState<Mode>('login');
   const [otpType, setOtpType] = useState<LearnerOtpType>('email');
@@ -60,7 +59,7 @@ export function RegistrationGate({ children }: PropsWithChildren) {
   }, [router]);
 
   const inspect = useCallback(async () => {
-    if (BYPASS_GATE || routingAfterAuth.current) return;
+    if (bypassGate || routingAfterAuth.current) return;
     if (isWebPreviewHost()) {
       setReady(true);
       setChecking(false);
@@ -93,10 +92,10 @@ export function RegistrationGate({ children }: PropsWithChildren) {
       if (timer) clearTimeout(timer);
       setChecking(false);
     }
-  }, []);
+  }, [bypassGate]);
 
   useEffect(() => {
-    if (BYPASS_GATE) return;
+    if (bypassGate) return;
     void inspect();
     const { data } = supabase.auth.onAuthStateChange(() => { void inspect(); });
     const appState = AppState.addEventListener('change', state => {
@@ -181,7 +180,7 @@ export function RegistrationGate({ children }: PropsWithChildren) {
     }
   };
 
-  if (BYPASS_GATE || ready) return <>{children}</>;
+  if (bypassGate || ready) return <>{children}</>;
   if (checking) return <View style={styles.loading}><ActivityIndicator size="large" color={Colors.primary[600]} /><Text style={styles.loadingText}>در حال بررسی حساب…</Text></View>;
 
   if (step === 'verify') {

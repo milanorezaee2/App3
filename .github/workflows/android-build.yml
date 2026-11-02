@@ -1,4 +1,4 @@
-name: Build MiloMultilang Android APK
+name: Build Milo learner and management Android APKs
 
 on:
   workflow_dispatch:
@@ -31,6 +31,8 @@ jobs:
       EXPO_NO_TELEMETRY: "1"
       EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID }}
       EXPO_PUBLIC_RUSSIAN_ONLY: ${{ ((github.event_name == 'workflow_dispatch' && inputs.russian_only) || (github.event_name == 'push' && contains(github.event.head_commit.message, '[russian-apk]'))) && 'true' || 'false' }}
+      EXPO_PUBLIC_ENABLED_LANGUAGES: ${{ ((github.event_name == 'workflow_dispatch' && inputs.russian_only) || (github.event_name == 'push' && contains(github.event.head_commit.message, '[russian-apk]'))) && 'ru' || 'en,tr' }}
+      EXPO_PUBLIC_LEARNER_AUTH_MODE: required
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
@@ -78,6 +80,7 @@ jobs:
         run: |
           npm run typecheck
           npm run validate:registration-admin
+          npm run validate:apk-variants
           npm run validate:language-entry
           npm run validate:a11y
           npm run validate:requested-updates
@@ -131,7 +134,7 @@ jobs:
               raise SystemExit('Standalone JS bundle is missing; refusing to publish an APK that needs Metro.')
           print('Standalone learner APK verified.')
           PY
-          cp android/app/build/outputs/apk/release/app-release.apk MiloMultilang.apk
+          cp android/app/build/outputs/apk/release/app-release.apk Milo-English-Turkish-Login.apk
 
       - name: Generate and build the private management APK
         if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
@@ -153,20 +156,20 @@ jobs:
           print('Standalone private management APK verified.')
           PY
 
-      - name: Generate and build the learner login APK
+      - name: Generate and build the English-Russian optional-login APK
         if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
         shell: bash
         run: |
           rm -rf android
-          EXPO_PUBLIC_LEARNER_LOGIN=true npx expo prebuild --platform android --no-install
+          EXPO_PUBLIC_ENABLED_LANGUAGES=en,ru EXPO_PUBLIC_LEARNER_AUTH_MODE=optional npx expo prebuild --platform android --no-install
           cd android
           chmod +x gradlew
-          EXPO_PUBLIC_LEARNER_LOGIN=true ./gradlew assembleRelease --no-daemon
+          EXPO_PUBLIC_ENABLED_LANGUAGES=en,ru EXPO_PUBLIC_LEARNER_AUTH_MODE=optional ./gradlew assembleRelease --no-daemon
           cd ..
-          cp android/app/build/outputs/apk/release/app-release.apk MiloMultilang-Login.apk
+          cp android/app/build/outputs/apk/release/app-release.apk Milo-English-Russian-Optional-Login.apk
           python3 - <<'PY'
           from zipfile import ZipFile
-          with ZipFile('MiloMultilang-Login.apk') as archive:
+          with ZipFile('Milo-English-Russian-Optional-Login.apk') as archive:
               names = set(archive.namelist())
           if 'assets/index.android.bundle' not in names or not any(name.endswith('classes.dex') for name in names):
               raise SystemExit('Login APK structure validation failed.')
@@ -201,7 +204,7 @@ jobs:
 
       - name: Confirm both release APKs are ready
         if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[apk-release]') }}
-        run: test -s MiloMultilang.apk && test -s MiloAdmin.apk && (test '${{ env.EXPO_PUBLIC_RUSSIAN_ONLY }}' = 'true' || test -s MiloMultilang-Login.apk)
+        run: test -s Milo-English-Turkish-Login.apk && test -s MiloAdmin.apk && (test '${{ env.EXPO_PUBLIC_RUSSIAN_ONLY }}' = 'true' || test -s Milo-English-Russian-Optional-Login.apk)
 
       - name: Publish direct APK downloads
         if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[apk-release]') }}
@@ -210,11 +213,11 @@ jobs:
           tag_name: milomultilang-android-${{ github.run_number }}
           target_commitish: ${{ github.sha }}
           name: "MiloMultilang Android build #${{ github.run_number }}"
-          body: Installable learner (no login), learner (with login) and private management Android APKs. All are signed for sideloading.
+          body: English-Turkish learner with required login, English-Russian guest learner with optional login, and private management APKs. All are signed for sideloading.
           prerelease: true
           files: |
-            MiloMultilang.apk
-            MiloMultilang-Login.apk
+            Milo-English-Turkish-Login.apk
+            Milo-English-Russian-Optional-Login.apk
             MiloAdmin.apk
           fail_on_unmatched_files: true
         env:
@@ -223,7 +226,7 @@ jobs:
       - name: Name and publish the Russian-only APK
         if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY == 'true' }}
         run: |
-          cp MiloMultilang.apk MiloRussian.apk
+          cp Milo-English-Turkish-Login.apk MiloRussian.apk
           test -s MiloRussian.apk
 
       - name: Publish Russian-only APK release
@@ -255,8 +258,8 @@ jobs:
         with:
           name: Milo-android-apks
           path: |
-            MiloMultilang.apk
-            MiloMultilang-Login.apk
+            Milo-English-Turkish-Login.apk
+            Milo-English-Russian-Optional-Login.apk
             MiloAdmin.apk
           if-no-files-found: error
           retention-days: 7

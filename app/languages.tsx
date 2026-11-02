@@ -3,12 +3,12 @@ import { Alert, Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text,
 import { createAudioPlayer } from 'expo-audio';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { ArrowRight, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
+import { ArrowRight, BookOpen, Headphones, LifeBuoy, LockKeyhole, LogIn, MessageCircle } from 'lucide-react-native';
 import { MiloLanguageBrand } from '@/components/MiloLanguageBrand';
 import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
-import { FEATURES, RUSSIAN_ONLY_BUILD } from '@/lib/features';
+import { FEATURES, isLanguageEnabled } from '@/lib/features';
 import { DesignTokens, LtrDirection } from '@/lib/theme';
 
 let welcomeVoicePlayed = false;
@@ -60,7 +60,7 @@ export default function LanguagesHome() {
       .finally(() => setOpeningSupport(false));
   };
 
-  const languages = LANGUAGES.filter(language => (language.id === 'ru' ? FEATURES.russianCourse : !RUSSIAN_ONLY_BUILD));
+  const languages = LANGUAGES.filter(language => isLanguageEnabled(language.id));
 
 
   return (
@@ -100,6 +100,18 @@ export default function LanguagesHome() {
               >
                 <LockKeyhole size={18} color="#2878DE" strokeWidth={1.9} />
               </Pressable>
+              {FEATURES.learnerLoginEntry && (
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="ورود یا ثبت‌نام حساب"
+                  accessibilityHint="ورود اختیاری برای همگام‌سازی حساب کاربری"
+                  style={({ pressed }) => [styles.optionalLoginButton, pressed && styles.pressed]}
+                  onPress={() => router.push('/login' as never)}
+                >
+                  <LogIn size={16} color="#2878DE" strokeWidth={1.9} />
+                  <Text style={styles.optionalLoginText}>ورود</Text>
+                </Pressable>
+              )}
             </View>
             <MiloLanguageBrand />
           </View>
@@ -200,6 +212,8 @@ const styles = StyleSheet.create({
   header: { minHeight: 64, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
   headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   headerButton: { width: 44, height: 44, borderRadius: 16, alignItems: 'center', justifyContent: 'center', backgroundColor: DesignTokens.surface.card, borderWidth: 1, borderColor: DesignTokens.border.default, shadowColor: '#28609A', shadowOpacity: 0.05, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  optionalLoginButton: { minWidth: 72, height: 44, borderRadius: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, paddingHorizontal: 10, backgroundColor: DesignTokens.surface.card, borderWidth: 1, borderColor: DesignTokens.border.default, shadowColor: '#28609A', shadowOpacity: 0.05, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  optionalLoginText: { fontFamily: 'Vazir-Medium', fontSize: 12, color: '#2878DE' },
   hero: { alignItems: 'flex-end', gap: 10, padding: 22, borderRadius: 24, overflow: 'hidden', backgroundColor: DesignTokens.brand.primaryStrong, shadowColor: DesignTokens.brand.primaryStrong, shadowOpacity: 0.16, shadowRadius: 20, shadowOffset: { width: 0, height: 10 }, elevation: 4 },
   heroImage: { borderRadius: 24 },
   heroCompact: { paddingTop: 8, gap: 8 },

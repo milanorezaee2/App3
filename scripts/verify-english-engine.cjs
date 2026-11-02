@@ -23,11 +23,29 @@ const esbuild = require('esbuild');
   check(app.ENGLISH_ENGINE_STEPS.length === 9);
   check(app.ENGLISH_ENGINE_BLUEPRINT.map(item => item.title).join('|') === app.COURSE_LEVELS.map(item => item.title).join('|'));
   check(app.ENGLISH_ENGINE_BLUEPRINT.every((item, index) => item.levelId === index - 1 && item.modules.length > 0));
-  check(app.ENGLISH_ENGINE_BLUEPRINT[0].modules.length === 10 && app.COURSE_LEVELS[0].modules.length === 10);
-  check(app.SENTENCE_LESSONS.length === 222);
+  check(app.ENGLISH_ENGINE_BLUEPRINT[0].modules.length === 25 && app.COURSE_LEVELS[0].modules.length === 25);
+  const preA1 = app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === -1);
+  const wordLessons = preA1.filter(lesson => lesson.learningMode === 'words');
+  const chunkLessons = preA1.filter(lesson => lesson.learningMode === 'chunks');
+  const sentenceLessons = preA1.filter(lesson => lesson.learningMode === 'sentences');
+  const independentHeadwords = new Set(wordLessons.flatMap(lesson => lesson.sentences.flatMap(sentence => sentence.vocabulary.map(item => item.word.toLowerCase()))));
+  check(preA1.length === 25 && wordLessons.length === 14 && chunkLessons.length === 5 && sentenceLessons.length === 6);
+  check(preA1.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 200
+    && wordLessons.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 112
+    && chunkLessons.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 40
+    && sentenceLessons.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 48);
+  check(independentHeadwords.size === 112 && wordLessons.every(lesson => lesson.dialogue.length === 0
+    && lesson.sentences.every(sentence => !sentence.en.trim().includes(' ') && sentence.vocabulary.length === 1)));
+  check(chunkLessons.every(lesson => lesson.dialogue.length === 0
+    && lesson.sentences.every(sentence => sentence.en.trim().includes(' ') && sentence.vocabulary.length > 1)));
+  check(preA1.every((lesson, index) => lesson.sentences.length === 8 && lesson.sentences.every((sentence, sentenceIndex) =>
+    sentence.id === `${lesson.id.slice(0, 8)}-s${sentenceIndex + 1}`
+      && sentence.fa && sentence.pronunciation && sentence.pattern && sentence.vocabulary.length > 0)));
+  check(preA1.slice(0, 10).map(lesson => lesson.id).join('|') === 'prea1-01-hello|prea1-02-bye|prea1-03-yes-no|prea1-04-i-am|prea1-05-numbers|prea1-06-how-are-you|prea1-07-i-have|prea1-08-please-thankyou|prea1-09-this-is|prea1-10-review');
+  check(app.SENTENCE_LESSONS.length === 237);
   check(app.EXISTING_SENTENCE_LESSONS.length === 174 && app.EXISTING_SENTENCE_LESSONS.every(lesson => { const actual = app.SENTENCE_LESSONS.find(item => item.id === lesson.id); if (!actual) return false; const { a2Section, ...rest } = actual; return JSON.stringify({ ...rest, order: lesson.order }) === JSON.stringify(lesson); }));
   check(app.B1_INDEPENDENT_UNITS.length === 11 && app.B1_INDEPENDENT_UNITS.reduce((n, unit) => n + unit.topics.length, 0) === 55 && app.B1_INDEPENDENT_UNITS.every(unit => unit.topics.length === unit.rows.length));
-  check(app.SENTENCE_LESSONS.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 4322);
+  check(app.SENTENCE_LESSONS.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 4442);
   check(app.ENGLISH_CORE_DATABASE_FLOW.map(item => item.entity).join('|') === 'Situations|Sentence Patterns|Vocabulary|Grammar Through Usage|Dialogues|Exercises|User Progress|Spaced Repetition');
 
   const foundation = app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 0);
@@ -345,10 +363,10 @@ const esbuild = require('esbuild');
 
   const completed = [app.SENTENCE_LESSONS[0].id];
   const counts = app.COURSE_LEVELS.map(level => app.getEnglishLevelMetrics(level.id, completed));
-  check(counts.reduce((sum, item) => sum + item.lessonCount, 0) === 222);
+  check(counts.reduce((sum, item) => sum + item.lessonCount, 0) === 237);
   check(counts.reduce((sum, item) => sum + item.completedLessonCount, 0) === 1);
   check(counts.every(item => item.patternCount <= item.sentenceCount && item.vocabularyCount > 0));
-  check(counts.reduce((sum, item) => sum + item.patternCount, 0) === 3487);
+  check(counts.reduce((sum, item) => sum + item.patternCount, 0) === 3607);
   check(counts.find(item => item.levelId === 0).vocabularyCount === 483);
   check(counts.find(item => item.levelId === 2).sentenceCount === 1050
     && counts.find(item => item.levelId === 2).vocabularyCount === 1819);
@@ -356,7 +374,8 @@ const esbuild = require('esbuild');
     && counts.find(item => item.levelId === 3).sentenceCount === 805
     && counts.find(item => item.levelId === 3).vocabularyCount === 1458);
   check(counts.find(item => item.levelId === 5).vocabularyCount === 110);
-  check(counts.filter(item => item.levelId !== 5).reduce((sum, item) => sum + item.vocabularyCount, 0) === 5847);
+  check(counts.find(item => item.levelId === -1).lessonCount === 25 && counts.find(item => item.levelId === -1).sentenceCount === 200 && counts.find(item => item.levelId === -1).vocabularyCount === 112);
+  check(counts.filter(item => item.levelId !== 5).reduce((sum, item) => sum + item.vocabularyCount, 0) === 5909);
 
   for (const lesson of app.SENTENCE_LESSONS) {
     const core = app.buildEnglishLessonCore(lesson);
@@ -381,5 +400,5 @@ const esbuild = require('esbuild');
     check(app.getLessonPatterns(lesson).length === lesson.sentences.filter(sentence => !!sentence.pattern).length);
   }
 
-  console.log(`${checks} engine checks passed; 7 levels, 9 ordered lesson stages, 222 lesson records (existing lessons retained), 4322 sentences (500 Foundation with 483 distinct linked words, 950 Survival across 19 fifty-example lessons with ${survivalVocabulary.size} unique vocabulary entries, 1050 A2 sentences across 5 bridge and 20 preserved lessons with 1819 unique linked vocabulary entries, and 750 Communication across 15 original lessons plus 55 B1 examples across 11 new lessons), 489 required checks across Foundation, Survival, Everyday, B1, B2 and C1, plus C1 optional practices and sentence-linked vocabulary/review mappings.`);
+  console.log(`${checks} engine checks passed; 7 levels, 9 ordered lesson stages, 237 lesson records (existing lessons retained), 4442 learning examples (Pre-A1: 14 word, 5 chunk and 6 sentence lessons; 112 independent words, 40 chunks and 48 sentences; 500 Foundation, 950 Survival, 1050 A2, 805 B1/Communication, 827 B2 and legacy examples, 110 C1), 489 required checks across Foundation, Survival, Everyday, B1, B2 and C1, plus C1 optional practices and sentence-linked vocabulary/review mappings.`);
 })().catch(error => { console.error(error); process.exit(1); });

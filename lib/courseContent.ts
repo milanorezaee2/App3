@@ -23,6 +23,8 @@ import { A2_FOUNDATION_LESSONS } from './courseContentA2Foundation';
 import { B2_UPPER_INTERMEDIATE_LESSONS } from './courseContentB2UpperIntermediate';
 import { C1_ADVANCED_LESSONS } from './courseContentC1Advanced';
 import { PRE_A1_LESSONS } from './courseContentPreA1';
+
+export type EnglishLearningMode = 'words' | 'chunks' | 'sentences';
 import {
   COMMUNICATION_LESSON_UNIT,
   COMMUNICATION_MODULES,
@@ -50,6 +52,8 @@ export interface SentenceLesson {
   id: string;
   levelId: CourseLevelId;
   order: number;
+  /** Pre-A1 advances from isolated words to chunks and then sentences. */
+  learningMode?: EnglishLearningMode;
   /** Honest distinction between the contextual Advanced lessons and legacy vocabulary sets. */
   contentKind?: 'scenario' | 'vocabulary-practice';
   /** Additive B1 curriculum section; absent for pre-existing lessons. */
@@ -84,7 +88,7 @@ export const COURSE_LEVELS: CourseLevel[] = [
     id: -1,
     title: 'Absolute Beginner',
     cefr: 'Pre-A1 · شروع از صفر',
-    description: 'بخش پیش‌مقدمهٔ کاملاً جدید برای کسانی که هیچ چیز بلد نیستند: حروف، سلام، اعداد، ضمیرها و افعال خیلی رایج',
+    description: 'مسیر شروع از صفر: واژه‌های مستقل، ترکیب‌های کوتاه و سپس جمله‌ها و گفت‌وگوهای ساده؛ همه با راهنمای فارسی.',
     color: '#94a3b8',
     modules: PRE_A1_LESSONS.map(lesson => lesson.title),
   },

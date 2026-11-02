@@ -282,8 +282,8 @@ const esbuild = require('esbuild');
     && app.RUSSIAN_LESSON_STAGES.every((stage, index) => stage.id === app.ENGLISH_ENGINE_STEPS[index].id
       && stage.labelFa === app.ENGLISH_ENGINE_STEPS[index].labelFa
       && stage.labelEn === app.ENGLISH_ENGINE_STEPS[index].labelEn));
-  check('English lesson scope includes the original material and the new A2, B1 and B2 lessons', app.SENTENCE_LESSONS.length === 222
-    && app.SENTENCE_LESSONS.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 4322
+  check('English lesson scope includes the original material and the new A2, B1 and B2 lessons', app.SENTENCE_LESSONS.length === 237
+    && app.SENTENCE_LESSONS.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 4442
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 0).length === 10
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 0).reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 500
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 2).length === 25

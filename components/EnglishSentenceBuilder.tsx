@@ -14,7 +14,7 @@ function shuffleByRotation(tokens: string[]) {
   return rotated.every((token, index) => token === tokens[index]) ? [...tokens].reverse() : rotated;
 }
 
-export function EnglishSentenceBuilder({ sentence }: { sentence: CourseSentence }) {
+export function EnglishSentenceBuilder({ sentence, mode = 'sentences' }: { sentence: CourseSentence; mode?: 'chunks' | 'sentences' }) {
   const tokens = useMemo(() => sentence.en.trim().split(/\s+/).filter(Boolean), [sentence.en]);
   const shuffled = useMemo(() => shuffleByRotation(tokens), [tokens]);
   const [chosen, setChosen] = useState<number[]>([]);
@@ -40,7 +40,7 @@ export function EnglishSentenceBuilder({ sentence }: { sentence: CourseSentence 
   };
 
   return <View style={styles.card}>
-    <Text style={styles.kicker}>ساخت جمله از واژه‌های همین درس</Text>
+    <Text style={styles.kicker}>{mode === 'chunks' ? 'ساخت ترکیب از واژه‌های آشنا' : 'ساخت جمله از واژه‌های همین درس'}</Text>
     <Text style={styles.translation}>{sentence.fa}</Text>
     <View accessibilityLabel="جملهٔ ساخته‌شده" style={styles.answerArea}>
       {chosen.length ? chosen.map((tokenIndex, position) => <Pressable key={`${tokenIndex}-${position}`} accessibilityRole="button" accessibilityLabel={`حذف واژهٔ ${shuffled[tokenIndex]}`} onPress={() => remove(position)} style={styles.answerChip}>
@@ -64,7 +64,7 @@ export function EnglishSentenceBuilder({ sentence }: { sentence: CourseSentence 
       </Pressable>
     </View>
     {checked && <Text accessibilityLiveRegion="polite" style={[styles.feedback, correct ? styles.success : styles.tryAgain]}>
-      {correct ? 'جمله درست ساخته شد.' : complete ? 'ترتیب را دوباره بررسی کنید؛ می‌توانید واژه‌ها را از بخش پاسخ بردارید.' : `هنوز ${shuffled.length - chosen.length} واژه باقی مانده است.`}
+      {correct ? mode === 'chunks' ? 'ترکیب درست ساخته شد.' : 'جمله درست ساخته شد.' : complete ? 'ترتیب را دوباره بررسی کنید؛ می‌توانید واژه‌ها را از بخش پاسخ بردارید.' : `هنوز ${shuffled.length - chosen.length} واژه باقی مانده است.`}
     </Text>}
   </View>;
 }

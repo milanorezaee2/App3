@@ -35,6 +35,19 @@ function contentForCard(card: SentenceReviewCard) {
   return lesson && sentence ? { lesson, sentence } : null;
 }
 
+function unitLabel(mode: 'words' | 'chunks' | 'sentences' | undefined) {
+  return mode === 'words' ? 'واژه' : mode === 'chunks' ? 'ترکیب' : 'جمله';
+}
+
+function unitPlural(mode: 'words' | 'chunks' | 'sentences' | undefined) {
+  return mode === 'words' ? 'واژه‌ها' : mode === 'chunks' ? 'ترکیب‌ها' : 'جمله‌ها';
+}
+
+function unitWithEzafe(mode: 'words' | 'chunks' | 'sentences' | undefined) {
+  const label = unitLabel(mode);
+  return mode === 'chunks' ? label : `${label}ٔ`;
+}
+
 export default function ReviewHome() {
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [dueCards, setDueCards] = useState<SentenceReviewCard[]>([]);
@@ -57,6 +70,9 @@ export default function ReviewHome() {
   const currentCard = sessionCards[cardIndex];
   const currentContent = useMemo(() => currentCard ? contentForCard(currentCard) : null, [currentCard]);
   const reviewCount = dueCards.length;
+  const dueModes = new Set(dueCards.map(card => contentForCard(card)?.lesson.learningMode ?? 'sentences'));
+  const reviewMode = dueModes.size === 1 ? [...dueModes][0] : undefined;
+  const reviewUnitPlural = dueModes.size > 1 ? 'نمونه‌ها' : unitPlural(reviewMode);
 
   const startSession = () => {
     if (!dueCards.length) return;
@@ -84,6 +100,8 @@ export default function ReviewHome() {
 
   if (sessionActive && currentContent) {
     const { lesson, sentence } = currentContent;
+    const currentUnit = unitLabel(lesson.learningMode);
+    const currentUnitWithEzafe = unitWithEzafe(lesson.learningMode);
     const vocabulary = sentence.vocabulary.map((item) => `${item.word} · ${item.meaning}`).join('   ');
     return (
       <View style={styles.root} onTouchStart={timer.interact}>
@@ -99,7 +117,7 @@ export default function ReviewHome() {
       </View>
         <View style={styles.sessionProgress}><View style={[styles.sessionProgressFill, { width: `${((cardIndex + 1) / sessionCards.length) * 100}%` }]} /></View>
         <ScrollView contentContainerStyle={styles.sessionContent}>
-          <Text style={styles.recallLabel}>جمله انگلیسی را به یاد بیاورید</Text>
+          <Text style={styles.recallLabel}>{currentUnitWithEzafe} انگلیسی را به یاد بیاورید</Text>
           <View style={styles.reviewCard}>
             <Text style={styles.reviewFa}>{sentence.fa}</Text>
             {!revealed ? (
@@ -117,7 +135,7 @@ export default function ReviewHome() {
                 {sentence.pronunciation.startsWith('/ ')&&<Text style={styles.reviewPronunciation}>راهنمای واجی بدون تکیه؛ واژه‌های داخل کروشه آوانویسی نشده‌اند.</Text>}
                 <Pressable style={styles.soundButton} onPress={() => Speech.speak(sentence.en, { language: speechTagFor('en-US'), rate: .78 })}>
                   <Volume2 size={18} color={Colors.primary[400]} />
-                  <Text style={styles.soundText}>پخش جمله</Text>
+                  <Text style={styles.soundText}>پخش {currentUnit}</Text>
                 </Pressable>
                 {vocabulary ? <View style={styles.vocabChip}><Sparkles size={13} color={Colors.warning[400]} /><Text style={styles.vocabText}>{vocabulary}</Text></View> : null}
               </View>
@@ -126,7 +144,7 @@ export default function ReviewHome() {
 
           {revealed ? (
             <View style={styles.ratingArea}>
-              <Text style={styles.ratingTitle}>یادآوری این جمله چطور بود؟</Text>
+              <Text style={styles.ratingTitle}>یادآوری این {currentUnit} چطور بود؟</Text>
               <View style={styles.ratingGrid}>
                 {ratingOptions.map((option) => (
                   <Pressable key={option.id} disabled={saving} style={[styles.ratingButton, { borderColor: option.color + '55' }]} onPress={() => void rate(option.id)}>
@@ -159,7 +177,7 @@ export default function ReviewHome() {
           <View style={styles.finishedCard}>
             <View style={styles.finishedIcon}><Check size={32} color={Colors.success[400]} /></View>
             <Text style={styles.finishedTitle}>مرور امروز تمام شد</Text>
-            <Text style={styles.finishedDesc}>زمان مرور بعدی هر جمله بر اساس پاسخ شما تنظیم شد.</Text>
+            <Text style={styles.finishedDesc}>زمان مرور بعدی هر مورد بر اساس پاسخ شما تنظیم شد.</Text>
           </View>
         ) : null}
 
@@ -169,8 +187,8 @@ export default function ReviewHome() {
             <View style={styles.brain}><Brain size={23} color="#D5D7FF" /></View>
             <View style={styles.summaryTag}><RefreshCw size={12} color="#C8CAFF" /><Text style={styles.summaryTagText}>SPACED REVIEW</Text></View>
           </View>
-          <Text style={styles.summaryTitle}>{reviewCount ? `${toPersianDigits(reviewCount)} جمله برای مرور` : 'فعلاً مروری ندارید'}</Text>
-          <Text style={styles.summaryDesc}>{reviewCount ? 'جمله‌های دشوار زودتر و جمله‌های آسان دیرتر برمی‌گردند.' : progress?.completedLessonIds.length ? 'مرور بعدی در زمان مناسب به‌طور خودکار اینجا ظاهر می‌شود.' : 'پس از پایان اولین درس، جمله‌های آن وارد برنامه مرور می‌شوند.'}</Text>
+          <Text style={styles.summaryTitle}>{reviewCount ? `${toPersianDigits(reviewCount)} ${reviewUnitPlural} برای مرور` : 'فعلاً مروری ندارید'}</Text>
+          <Text style={styles.summaryDesc}>{reviewCount ? 'موردهای دشوار زودتر و موردهای آسان دیرتر برمی‌گردند.' : progress?.completedLessonIds.length ? 'مرور بعدی در زمان مناسب به‌طور خودکار اینجا ظاهر می‌شود.' : 'پس از پایان اولین درس، محتوای آن وارد برنامهٔ مرور می‌شود.'}</Text>
           <View style={styles.summaryActions}>
             <Pressable style={[styles.startButton, !reviewCount && styles.disabled]} disabled={!reviewCount} onPress={startSession}>
               <RefreshCw size={16} color={Palette.primaryDark} />
@@ -182,12 +200,12 @@ export default function ReviewHome() {
 
         <Text style={styles.sectionTitle}>مرور چگونه تنظیم می‌شود؟</Text>
         <View style={styles.methodList}>
-          <Method num="۱" title="معنی را ببین و جمله را بگو" desc="پیش از دیدن پاسخ، جمله را با صدای بلند به یاد بیاورید." />
-          <Method num="۲" title="پاسخ را ببین و بشنو" desc="جمله صحیح را با پاسخ خودتان مقایسه کنید." />
+          <Method num="۱" title="معنی را ببین و انگلیسی را بگو" desc="پیش از دیدن پاسخ، واژه، ترکیب یا جمله را با صدای بلند به یاد بیاورید." />
+          <Method num="۲" title="پاسخ را ببین و بشنو" desc="نمونهٔ انگلیسی را با پاسخ خودتان مقایسه کنید." />
           <Method num="۳" title="میزان سختی را انتخاب کن" desc="برنامه زمان دقیق مرور بعدی را محاسبه می‌کند." />
         </View>
 
-        <View style={styles.note}><CheckCircle2 size={18} color={Colors.success[400]} /><Text style={styles.noteText}>لغات، از جمله واژه‌های ۵۰۴، همیشه همراه جمله اصلی مرور می‌شوند.</Text></View>
+        <View style={styles.note}><CheckCircle2 size={18} color={Colors.success[400]} /><Text style={styles.noteText}>هر واژه، از جمله واژه‌های ۵۰۴، همراه نمونهٔ اصلیِ وابسته به خودش مرور می‌شود.</Text></View>
       </ScrollView>
       <AppBottomNav />
     </View>

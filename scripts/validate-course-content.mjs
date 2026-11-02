@@ -54,7 +54,7 @@ const duplicateLessonIds = [...new Set(lessonRecords.map(lesson => lesson.id)
 const duplicateOrders = [...new Set(lessonRecords.map(lesson => lesson.order)
   .filter((order, index, orders) => orders.indexOf(order) !== index))];
 const lessonOrders = lessonRecords.map(lesson => lesson.order).sort((a, b) => a - b);
-const expectedOrders = Array.from({ length: 222 }, (_, index) => index + 1);
+const expectedOrders = Array.from({ length: 237 }, (_, index) => index + 1);
 const hasExactOrders = JSON.stringify(lessonOrders) === JSON.stringify(expectedOrders);
 const activeSentencesById = new Map(SENTENCE_LESSONS.flatMap(lesson => lesson.sentences.map(sentence => [sentence.id, sentence])));
 const reviewedEditorialExamples = [
@@ -148,7 +148,7 @@ const communicationModulesAreComplete = COMMUNICATION_MODULES.length === 8
       && lesson.unitTitleEn === unit.titleEn;
   });
 
-console.log(`Lessons: ${lessonRecords.length}/222; sentences: ${sentenceCount}/4322`);
+console.log(`Lessons: ${lessonRecords.length}/237; sentences: ${sentenceCount}/4442`);
 console.log(`Foundation: ${foundation.length}/10 lessons; ${foundationSentenceCount}/500 sentences`);
 console.log(`Survival: ${survival.length}/19 lessons; ${survivalSentenceCount}/950 sentences; ${survivalVocabulary.size} unique vocabulary entries`);
 console.log(`Everyday: ${everyday.length}/20 lessons; ${everydaySentenceCount}/1000 sentences; ${everydayVocabulary.size} linked vocabulary phrases`);
@@ -165,10 +165,10 @@ if (outside.length) problems.push(`Words outside canonical list: ${outside.join(
 if (!sameWords(missing, intentionallyRemoved)) problems.push(`Unexpected change to canonical coverage: ${missing.join(', ')}`);
 if (duplicateLessonIds.length) problems.push(`Duplicate lesson IDs: ${duplicateLessonIds.join(', ')}`);
 if (duplicateOrders.length) problems.push(`Duplicate lesson orders: ${duplicateOrders.join(', ')}`);
-if (!hasExactOrders) problems.push('Lesson orders must be exactly 1 through 222.');
+if (!hasExactOrders) problems.push('Lesson orders must be exactly 1 through 237.');
 if (tagged.length !== canonical.length - intentionallyRemoved.length) problems.push(`Unexpected number of tagged canonical words: ${tagged.length}.`);
-if (lessonRecords.length !== 222) problems.push(`Expected exactly 222 lessons, found ${lessonRecords.length}.`);
-if (sentenceCount !== 4322) problems.push(`Expected 4322 active sentence examples, found ${sentenceCount}.`);
+if (lessonRecords.length !== 237) problems.push(`Expected exactly 237 lessons, found ${lessonRecords.length}.`);
+if (sentenceCount !== 4442) problems.push(`Expected 4442 active course examples, found ${sentenceCount}.`);
 if (foundation.length !== 10 || foundationSentenceCount !== 500
   || foundation.some(lesson => lesson.sentences.length !== 50)) {
   problems.push('Foundation must contain ten lessons with exactly fifty sentences each.');

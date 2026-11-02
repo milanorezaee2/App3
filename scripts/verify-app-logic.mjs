@@ -162,12 +162,12 @@ export { default as asyncStorage } from '${STUBS}/async-storage.js';
   const canonical = JSON.parse(readFileSync(path.join(APP, 'assets/data/essential504.json'), 'utf8'));
   const removed504 = JSON.parse(readFileSync(path.join(APP, 'assets/data/essential504-removed-level2.json'), 'utf8'));
 
-  check('222 sentence lessons include the Pre-A1, A2, B1 and B2 additions', lessons.length === 222, `got ${lessons.length}`);
+  check('237 lesson records include the Pre-A1, A2, B1 and B2 additions', lessons.length === 237, `got ${lessons.length}`);
   check('lesson ids are unique', new Set(lessons.map((l) => l.id)).size === lessons.length);
   const orders = lessons.map((l) => l.order).sort((a, b) => a - b);
-  check('orders are exactly 1..222', JSON.stringify(orders) === JSON.stringify([...Array(222)].map((_, i) => i + 1)));
+  check('orders are exactly 1..237', JSON.stringify(orders) === JSON.stringify([...Array(237)].map((_, i) => i + 1)));
   check('every lesson has a title', lessons.every((l) => typeof l.title === 'string' && l.title.length > 1));
-  check('the active course contains 4322 examples', allSentences.length === 4322);
+  check('the active course contains 4442 examples', allSentences.length === 4442);
   check('every lesson has sentences', lessons.every((l) => Array.isArray(l.sentences) && l.sentences.length > 0));
   check('every sentence has id + English + Persian', allSentences.every((s) => s.id && s.en && s.fa));
   check('sentence ids are unique inside each lesson', lessons.every((l) => new Set(l.sentences.map((s) => s.id)).size === l.sentences.length));
@@ -479,6 +479,9 @@ export { default as asyncStorage } from '${STUBS}/async-storage.js';
   section('Multilingual content and progress isolation');
   const englishHomeSource = readFileSync(path.join(APP, 'app/lang/index.tsx'), 'utf8');
   const englishLibrarySource = readFileSync(path.join(APP, 'app/lang/library.tsx'), 'utf8');
+  const englishLessonSource = readFileSync(path.join(APP, 'app/course/lesson.tsx'), 'utf8');
+  const englishReviewSource = readFileSync(path.join(APP, 'app/review/index.tsx'), 'utf8');
+  const preA1ContentSource = readFileSync(path.join(APP, 'lib/courseContentPreA1.ts'), 'utf8');
   const russianLibrarySource = readFileSync(path.join(APP, 'components/RussianLibrary.tsx'), 'utf8');
   const turkishLibrarySource = readFileSync(path.join(APP, 'components/TurkishLibrary.tsx'), 'utf8');
   const englishBottomNavSource = readFileSync(path.join(APP, 'components/AppBottomNav.tsx'), 'utf8');
@@ -487,6 +490,9 @@ export { default as asyncStorage } from '${STUBS}/async-storage.js';
   const bottomNavShellStyle = englishBottomNavSource.match(/shell:\s*\{([^}]+)\}/)?.[1] ?? '';
   check('English Today heading stays right-aligned in RTL without changing its labels', /flexDirection:\s*'row-reverse'/.test(todayHeaderStyle) && englishHomeSource.includes('TODAY AT A GLANCE') && englishHomeSource.includes('برنامهٔ امروز'));
   check('English level cards show unique vocabulary counts calculated from each level', /metrics\.vocabularyCount/.test(englishHomeSource) && englishHomeSource.includes('واژهٔ یکتا') && /stats\.vocabularyCount/.test(englishLibrarySource) && englishLibrarySource.includes('واژهٔ یکتا'));
+  check('Pre-A1 is authored independently and its word/chunk lessons skip dialogues', preA1ContentSource.includes('learningMode === \'sentences\' ? dialogue : []') && englishLessonSource.includes('learningMode !== \'sentences\'') && englishLessonSource.includes('EnglishWordRecall'));
+  check('Finishing migrated lessons returns to the learner’s saved currentLessonId', englishLessonSource.includes('const updatedProgress = await completeSentenceLesson') && englishLessonSource.includes('getSentenceLesson(updatedProgress.currentLessonId)'));
+  check('Spaced review labels Pre-A1 cards as words or chunks instead of sentences', englishReviewSource.includes('function unitLabel(mode') && englishReviewSource.includes('currentUnitWithEzafe} انگلیسی را به یاد بیاورید') && englishReviewSource.includes('reviewUnitPlural'));
   check('English bottom navigation places Learning on the right, Conversation in the center, and Review on the left', /flexDirection:\s*'row-reverse'/.test(bottomNavShellStyle) && /path:\s*'\/lang',\s*label:\s*'یادگیری'/.test(englishBottomNavSource) && /path:\s*'\/conversations',\s*label:\s*'مکالمه'/.test(englishBottomNavSource) && /path:\s*'\/review',\s*label:\s*'مرور'/.test(englishBottomNavSource));
   check('Learners can start or resume directly from any selected English, Russian, or Turkish level',
     englishLibrarySource.includes('levelStartButton') && englishLibrarySource.includes('startSelectedLevel') && englishLibrarySource.includes('levelStartLesson')
