@@ -2,12 +2,14 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 
 const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist');
 const port = parseInt(process.env.PORT || '8081', 10);
 const appConfig = JSON.parse(fs.readFileSync(new URL('../app.json', import.meta.url), 'utf8'));
 const baseUrl = (appConfig.expo?.experiments?.baseUrl || '').replace(/\/$/, '');
+const gzipCache = new Map();
 
 function contentType(p) {
   if (p.endsWith('.html')) return 'text/html; charset=UTF-8';
@@ -16,11 +18,43 @@ function contentType(p) {
   if (p.endsWith('.json')) return 'application/json';
   if (p.endsWith('.ico')) return 'image/x-icon';
   if (p.endsWith('.png')) return 'image/png';
+  if (p.endsWith('.jpg') || p.endsWith('.jpeg')) return 'image/jpeg';
   if (p.endsWith('.svg')) return 'image/svg+xml';
+  if (p.endsWith('.wav')) return 'audio/wav';
+  if (p.endsWith('.mp3')) return 'audio/mpeg';
   if (p.endsWith('.ttf')) return 'font/ttf';
   if (p.endsWith('.woff2')) return 'font/woff2';
   if (p.endsWith('.woff')) return 'font/woff';
   return 'application/octet-stream';
+}
+
+function isCompressible(p) {
+  return /\.(?:html|js|css|json|svg|ttf)$/i.test(p);
+}
+
+function acceptsGzip(req) {
+  return /\bgzip\b/i.test(String(req.headers['accept-encoding'] || ''));
+}
+
+function findSingleHashedFallback(pathname) {
+  const jsMatch = /^\/_expo\/static\/js\/web\/index-[0-9a-f]+\.js$/.test(pathname);
+  if (jsMatch) {
+    const dir = path.join(dist, '_expo/static/js/web');
+    try {
+      const files = fs.readdirSync(dir).filter(name => /^index-[0-9a-f]+\.js$/.test(name));
+      if (files.length === 1) return path.join(dir, files[0]);
+    } catch {}
+  }
+  const cssMatch = pathname.match(/^\/_expo\/static\/css\/([a-z0-9._-]+)-[0-9a-f]+\.css$/i);
+  if (cssMatch) {
+    const dir = path.join(dist, '_expo/static/css');
+    const prefix = cssMatch[1] + '-';
+    try {
+      const files = fs.readdirSync(dir).filter(name => name.startsWith(prefix) && name.endsWith('.css'));
+      if (files.length === 1) return path.join(dir, files[0]);
+    } catch {}
+  }
+  return null;
 }
 
 const MOBILE_FRAME_INJECTION = `
@@ -430,18 +464,28 @@ const server = http.createServer((req, res) => {
       const dynamicFile = path.join(dist, dynamicPath + (dynamicPath.endsWith('[language]') ? '/index.html' : '.html'));
       if (fs.existsSync(dynamicFile)) resolved = dynamicFile;
     }
+    if (!resolved && /^\/conversations\/human\/[^/]+\/?$/.test(pathname)) {
+      const dynamicConv = path.join(dist, 'conversations/human/[conversationId].html');
+      if (fs.existsSync(dynamicConv)) resolved = dynamicConv;
+    }
     if (!resolved) {
+      resolved = findSingleHashedFallback(pathname);
+    }
+    if (!resolved) {
+      const isStaticAsset = /\.(?:js|mjs|cjs|css|map|json|png|jpg|jpeg|gif|svg|ico|ttf|woff2?|wav|mp3)$/i.test(pathname);
       const notFound = path.join(dist, '+not-found.html');
-      if (fs.existsSync(notFound)) {
+      if (!isStaticAsset && fs.existsSync(notFound)) {
         res.statusCode = 404;
         res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
         let html = fs.readFileSync(notFound, 'utf8');
         html = injectMobileFrame(html);
-        res.end(html);
+        res.end(req.method === 'HEAD' ? undefined : html);
         return;
       }
       res.statusCode = 404;
-      res.end('Not Found');
+      res.setHeader('Content-Type', 'text/plain; charset=UTF-8');
+      res.end(req.method === 'HEAD' ? undefined : 'Not Found');
       return;
     }
     if (!resolved.startsWith(dist)) { res.statusCode = 403; res.end('Forbidden'); return; }
@@ -449,17 +493,42 @@ const server = http.createServer((req, res) => {
     if (isHtml) {
       let html = fs.readFileSync(resolved, 'utf8');
       html = injectMobileFrame(html);
+      const rawBuf = Buffer.from(html, 'utf8');
+      const useGzip = acceptsGzip(req);
+      const body = useGzip ? zlib.gzipSync(rawBuf, { level: 6 }) : rawBuf;
       res.statusCode = 200;
       res.setHeader('Content-Type', 'text/html; charset=UTF-8');
-      res.setHeader('Cache-Control', 'public, max-age=0');
-      res.end(html);
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+      res.setHeader('Vary', 'Accept-Encoding');
+      if (useGzip) res.setHeader('Content-Encoding', 'gzip');
+      res.setHeader('Content-Length', String(body.length));
+      res.end(req.method === 'HEAD' ? undefined : body);
       return;
     }
-    const stream = fs.createReadStream(resolved);
+    const resolvedStat = fs.statSync(resolved);
     res.statusCode = 200;
     res.setHeader('Content-Type', contentType(resolved));
     if (resolved.includes('/_expo/')) res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     else res.setHeader('Cache-Control', 'public, max-age=0');
+    if (isCompressible(resolved)) {
+      res.setHeader('Vary', 'Accept-Encoding');
+      if (acceptsGzip(req)) {
+        const cacheKey = `${resolved}:${resolvedStat.mtimeMs}:${resolvedStat.size}`;
+        let gz = gzipCache.get(cacheKey);
+        if (!gz) {
+          gz = zlib.gzipSync(fs.readFileSync(resolved), { level: 6 });
+          if (gzipCache.size > 64) gzipCache.clear();
+          gzipCache.set(cacheKey, gz);
+        }
+        res.setHeader('Content-Encoding', 'gzip');
+        res.setHeader('Content-Length', String(gz.length));
+        res.end(req.method === 'HEAD' ? undefined : gz);
+        return;
+      }
+    }
+    res.setHeader('Content-Length', String(resolvedStat.size));
+    if (req.method === 'HEAD') { res.end(); return; }
+    const stream = fs.createReadStream(resolved);
     stream.on('error', () => { res.statusCode = 500; res.end('Internal Server Error'); });
     stream.pipe(res);
   } catch (e) {

@@ -9,6 +9,7 @@ import { ArrowLeft, ChevronLeft, ChevronRight, RotateCcw, Volume2 } from 'lucide
 import { useRouter } from 'expo-router';
 import { AppBottomNav } from '@/components/AppBottomNav';
 import { RussianBottomNav } from '@/components/RussianBottomNav';
+import { TurkishBottomNav } from '@/components/TurkishBottomNav';
 import { PageNavigation } from '@/components/PageNavigation';
 import { toPersianDigits as fa } from '@/lib/format';
 import {
@@ -39,6 +40,22 @@ const THEMES = {
     locale: 'en-US',
     languageFa: 'انگلیسی',
     brand: 'ENGLISH · PRONUNCIATION',
+  },
+  tr: {
+    accent: '#C94F62',
+    accentDark: '#74303D',
+    soft: '#FBECEF',
+    canvas: '#FCF6F7',
+    surface: '#FFFFFF',
+    ink: '#43242B',
+    text: '#74545B',
+    muted: '#96797F',
+    border: '#EED9DE',
+    gold: '#D8B76E',
+    home: '/learn/tr',
+    locale: 'tr-TR',
+    languageFa: 'ترکی استانبولی',
+    brand: 'İSTANBUL TÜRKÇESİ · TELAFFUZ',
   },
   ru: {
     accent: '#3565B8',
@@ -74,7 +91,7 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
   const [speaking, setSpeaking] = useState(false);
   const [speechMessage, setSpeechMessage] = useState('نمونه با موتور گفتار دستگاه پخش می‌شود؛ در صورت نیاز صدای این زبان را در تنظیمات دستگاه فعال کنید.');
   const unit = units[index];
-  const mark = marks[unit.id]?.mark ?? undefined;
+  const mark = unit ? marks[unit.id]?.mark ?? undefined : undefined;
   const practicedCount = Object.values(marks).filter(value => value?.mark === 'practiced').length;
   const reviewCount = Object.values(marks).filter(value => value?.mark === 'review').length;
 
@@ -152,7 +169,7 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
   };
 
   const saveMark = async (nextMark: PronunciationMark | null) => {
-    if (!storageReady || saving) return;
+    if (!unit || !storageReady || saving) return;
     setSaving(true);
     setStorageMessage('');
     try {
@@ -183,6 +200,44 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
       router.replace(theme.home as never);
     }
   };
+
+  const bottomNav = language === 'ru' ? <RussianBottomNav /> : language === 'tr' ? <TurkishBottomNav /> : <AppBottomNav />;
+
+  if (!unit) {
+    return (
+      <View style={[styles.root, { backgroundColor: theme.canvas }]}>
+        <StatusBar style="dark" />
+        <View style={[styles.header, { borderBottomColor: theme.border }]}>
+          <PageNavigation backFallback={theme.home} accentColor={theme.accent} borderColor={theme.border} />
+          <View style={styles.headerCopy}>
+            <Text style={[styles.brand, { color: theme.accent }]}>{theme.brand}</Text>
+            <Text style={[styles.headerTitle, { color: theme.ink }]}>کارگاه تلفظ {theme.languageFa}</Text>
+          </View>
+          <View style={[styles.headerCount, { backgroundColor: theme.soft }]}>
+            <Text style={[styles.headerCountText, { color: theme.accentDark }]}>{fa(0)} / {fa(0)}</Text>
+          </View>
+        </View>
+        <View style={[styles.track, { backgroundColor: theme.border }]} accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: 0, now: 0 }}>
+          <View style={[styles.trackFill, { width: '0%', backgroundColor: theme.accent }]} />
+        </View>
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+          <View style={styles.content}>
+            <View style={[styles.hero, { backgroundColor: theme.accentDark }]}>
+              <View style={styles.heroTop}><View style={styles.heroIcon}><Volume2 size={20} color={theme.gold} /></View><Text style={styles.heroEyebrow}>ساختار کارگاه تلفظ</Text></View>
+              <Text accessibilityRole="header" style={styles.heroTitle}>هنوز تمرینی اضافه نشده است</Text>
+              <Text style={styles.heroFocus}>کارگاه تلفظ {theme.languageFa} آمادهٔ دریافت محتوای آینده است.</Text>
+              <Text style={styles.heroProgress}>{fa(0)} تمرین · {fa(0)} نمونه · {fa(0)} جمله</Text>
+            </View>
+            <View style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+              <Text style={[styles.sectionTitle, { color: theme.ink }]}>محتوای تلفظ خالی است</Text>
+              <Text style={[styles.body, { color: theme.text }]}>هیچ تمرین، مثال یا جملهٔ ساختگی برای این زبان نمایش داده نمی‌شود.</Text>
+            </View>
+          </View>
+        </ScrollView>
+        {bottomNav}
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.root, { backgroundColor: theme.canvas }]}>
@@ -356,7 +411,7 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
           onPress={next}
         />
       </View>
-      {language === 'ru' ? <RussianBottomNav /> : <AppBottomNav />}
+      {bottomNav}
     </View>
   );
 }

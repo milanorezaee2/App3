@@ -21,6 +21,7 @@
     "validate:english-supplement": "node scripts/verify-english-supplement.cjs",
     "validate:english-engine": "node scripts/verify-english-engine.cjs",
     "validate:language-entry": "node scripts/verify-language-entry.cjs",
+    "validate:turkish-structure": "node scripts/verify-turkish-structure.mjs",
     "validate:speech-policy": "node scripts/verify-speech-policy.mjs",
     "validate:app-lock": "node scripts/verify-app-lock.mjs",
     "validate:typography": "node scripts/verify-typography-stability.mjs",

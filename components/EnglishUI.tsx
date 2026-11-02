@@ -6,6 +6,7 @@ import { toPersianDigits } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 
 export const ENGLISH_LEVEL_GRADIENTS: Record<CourseLevelId, [string, string]> = {
+  [-1]: ['#94A3B8', '#475569'],
   0: ['#6555E9', '#29246F'],
   1: ['#27A1D6', '#164D8C'],
   2: ['#19A88B', '#0D5A53'],

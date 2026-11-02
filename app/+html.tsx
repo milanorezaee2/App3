@@ -18,6 +18,7 @@ export default function Root({ children }: PropsWithChildren) {
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
+        <script dangerouslySetInnerHTML={{ __html: safeStorageBootstrap }} />
         {/* Disables body scrolling so ScrollView behaves like it does on native. */}
         <ScrollViewStyleReset />
         <style dangerouslySetInnerHTML={{ __html: pageBackground }} />
@@ -26,6 +27,28 @@ export default function Root({ children }: PropsWithChildren) {
     </html>
   );
 }
+
+const safeStorageBootstrap = `
+(function(){
+  try {
+    var s = window.localStorage;
+    var k = '__milo_ls_probe__';
+    s.setItem(k, k);
+    s.removeItem(k);
+  } catch (e) {
+    var m = Object.create(null);
+    var shim = {
+      get length() { return Object.keys(m).length; },
+      key: function(i) { return Object.keys(m)[i] || null; },
+      getItem: function(k) { return Object.prototype.hasOwnProperty.call(m, k) ? m[k] : null; },
+      setItem: function(k, v) { m[String(k)] = String(v); },
+      removeItem: function(k) { delete m[String(k)]; },
+      clear: function() { m = Object.create(null); }
+    };
+    try { Object.defineProperty(window, 'localStorage', { configurable: true, get: function() { return shim; } }); } catch (_) {}
+  }
+})();
+`;
 
 const pageBackground = `
 body { background-color: #f6f8fb; }

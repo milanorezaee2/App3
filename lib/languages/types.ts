@@ -1,4 +1,4 @@
-export type LanguageId = 'en' | 'ru';
+export type LanguageId = 'en' | 'ru' | 'tr';
 export interface LearningSentence {
   id: string;
   text: string;
@@ -25,6 +25,6 @@ export interface LanguageDefinition {
   accent: string;
   lessonsCount: number;
   description: string;
-  status: 'available' | 'starter';
-  home: '/lang' | '/learn/ru';
+  status: 'available' | 'starter' | 'planned';
+  home: '/lang' | '/learn/ru' | '/learn/tr';
 }

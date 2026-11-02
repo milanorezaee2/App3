@@ -16,6 +16,7 @@ let welcomeVoicePlayed = false;
 const languageFlags: Record<string, string> = {
   en: '🇬🇧',
   ru: '🇷🇺',
+  tr: '🇹🇷',
 };
 
 const learningSteps = [
@@ -38,7 +39,10 @@ export default function LanguagesHome() {
       try {
         const player = createAudioPlayer(require('../assets/audio/welcome-voice.wav'));
         player.volume = 0.9;
-        player.play();
+        const playback = player.play() as unknown;
+        if (playback && typeof (playback as Promise<unknown>).catch === 'function') {
+          (playback as Promise<unknown>).catch(() => undefined);
+        }
         setTimeout(() => player.remove(), 4000);
       } catch {
         // The screen remains usable when audio playback is unavailable.
@@ -57,6 +61,7 @@ export default function LanguagesHome() {
   };
 
   const languages = LANGUAGES.filter(language => (language.id === 'ru' ? FEATURES.russianCourse : !RUSSIAN_ONLY_BUILD));
+
 
   return (
     <View style={styles.root}>

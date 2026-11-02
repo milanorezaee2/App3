@@ -47,7 +47,7 @@ const localDateKey = (date = new Date()) =>
 function initialProgress(): CourseProgress {
   return {
     completedLessonIds: [],
-    currentLessonId: 'foundation-introducing-yourself',
+    currentLessonId: SENTENCE_LESSONS[0]?.id ?? 'foundation-introducing-yourself',
     reviewSentenceIds: [],
     reviewCards: [],
     learnedEssential504Words: [],
@@ -299,6 +299,13 @@ export async function getCourseProgress(): Promise<CourseProgress> {
       return initialProgress();
     }
   }
+}
+
+/** Reset the resume point to a lesson without touching any content (used by "start over from the beginner level"). */
+export async function setCurrentLesson(lessonId: string): Promise<CourseProgress> {
+  if (!SENTENCE_LESSONS.some(lesson => lesson.id === lessonId)) throw new Error('Unknown lesson for this course');
+  const current = await getCourseProgress();
+  return saveProgress({ ...current, currentLessonId: lessonId });
 }
 
 export async function completeSentenceLesson(lessonId: string, nextLessonId?: string): Promise<CourseProgress> {

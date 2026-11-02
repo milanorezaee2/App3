@@ -49,9 +49,11 @@ export interface ProgressStoreOptions {
   explicitCloudSync?: boolean;
   /** Best-effort personal cloud sync after a successful local write; local storage remains authoritative. */
   afterLocalSave?: () => void;
+  /** Allow a language scaffold to persist an empty course before lessons are authored. */
+  allowEmpty?: boolean;
 }
 export function createCourseProgressStore(options: ProgressStoreOptions) {
-  if (!options.lessons.length) throw new Error('Progress store requires a curriculum');
+  if (!options.lessons.length && !options.allowEmpty) throw new Error('Progress store requires a curriculum');
   if (options.cloudSync && options.key !== 'sentence_course_progress_v1') throw new Error('Multilingual cloud sync is not configured');
   const KEY = options.key;
   const SENTENCE_LESSONS = options.lessons;
@@ -62,7 +64,7 @@ const localDateKey = (date = new Date()) =>
 function initialProgress(): CourseProgress {
   return {
     completedLessonIds: [],
-    currentLessonId: SENTENCE_LESSONS[0].id,
+    currentLessonId: SENTENCE_LESSONS[0]?.id ?? '',
     reviewSentenceIds: [],
     reviewCards: [],
     learnedEssential504Words: [],
@@ -348,7 +350,9 @@ function validBackup(value: unknown): value is { schema: 1; courseKey: string; p
   if (envelope.schema !== 1 || envelope.courseKey !== KEY || !envelope.progress || typeof envelope.progress !== 'object' || Array.isArray(envelope.progress)) return false;
   const progress = envelope.progress as Record<string, unknown>;
   const lessonIds = new Set(SENTENCE_LESSONS.map(lesson => lesson.id));
-  if (typeof progress.currentLessonId !== 'string' || !lessonIds.has(progress.currentLessonId)
+  const validCurrentLessonId = typeof progress.currentLessonId === 'string'
+    && (lessonIds.has(progress.currentLessonId) || (options.allowEmpty === true && SENTENCE_LESSONS.length === 0 && progress.currentLessonId === ''));
+  if (!validCurrentLessonId
     || !Array.isArray(progress.completedLessonIds)
     || !progress.completedLessonIds.every((id: unknown) => typeof id === 'string' && lessonIds.has(id))
     || !Array.isArray(progress.reviewCards)) return false;
@@ -408,6 +412,7 @@ async function mergeRemoteProgress(value: unknown): Promise<CourseProgress> {
 }
 
 return { getCourseProgress, syncCourseProgress, mergeRemoteProgress,
+ setCurrentLesson:async(id:string)=>{ if(!SENTENCE_LESSONS.some(l=>l.id===id)) throw new Error('Unknown lesson for this language'); const current=await getCourseProgress(); return serial(()=>saveProgress({...current,currentLessonId:id})); },
  completeSentenceLesson:(id:string,next?:string)=>serial(()=>completeSentenceLesson(id,next)),
  getDueReviewCards, rateReviewCard:(id:string,rating:ReviewRating,now?:Date)=>serial(()=>rateReviewCard(id,rating,now)),
  addSentenceToReview:(id:string,lesson?:string)=>serial(()=>addSentenceToReview(id,lesson)),
