@@ -177,6 +177,20 @@ jobs:
           print('Learner login APK verified.')
           PY
 
+      # Save the requested deliverables before the slower emulator smoke test so
+      # they remain downloadable even if hosted emulator startup is delayed.
+      - name: Upload APK artifacts
+        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Milo-android-apks
+          path: |
+            Milo-English-Turkish-Login.apk
+            Milo-English-Russian-Optional-Login.apk
+            MiloAdmin.apk
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Smoke-test both APKs on Android emulator
         if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
         uses: reactivecircus/android-emulator-runner@v2
@@ -250,17 +264,5 @@ jobs:
         with:
           name: Milo-russian-apk
           path: MiloRussian.apk
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Upload APK artifacts
-        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: Milo-android-apks
-          path: |
-            Milo-English-Turkish-Login.apk
-            Milo-English-Russian-Optional-Login.apk
-            MiloAdmin.apk
           if-no-files-found: error
           retention-days: 7
