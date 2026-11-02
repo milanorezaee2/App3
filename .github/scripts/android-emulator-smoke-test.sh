@@ -29,7 +29,7 @@ on_exit() {
     activity_summary="$(adb shell dumpsys activity activities 2>&1 | grep -E 'mResumedActivity|topResumedActivity|ResumedActivity' | tail -n 8 | tr '\n' ' ' || true)"
     printf '%s\n' "${activity_summary:-'(no resumed activity reported)'}"
     printf '\n--- Relevant recent logcat ---\n'
-    log_summary="$(adb logcat -d -t 3000 2>&1 | grep -E 'FATAL EXCEPTION|Unable to load script|AppStartupError|ReactNativeJS|AndroidRuntime|ReactNative|SoLoader|ActivityTaskManager' | tail -n 80 || true)"
+    log_summary="$(adb logcat -d -t 6000 2>&1 | grep -E 'FATAL EXCEPTION|Fatal signal|ANR in|has died|Unable to load script|AppStartupError|ReactNativeJS|AndroidRuntime|ReactNative|SoLoader|ActivityTaskManager|NativeCrash|libc:' | tail -n 60 || true)"
     printf '%s\n' "${log_summary:-'(no matching Android or React Native errors)'}"
     ui_summary='(UI hierarchy unavailable)'
     if [[ -f "$ui_file" ]]; then
@@ -51,7 +51,7 @@ print(' | '.join(values)[:1800] or '(no accessible text nodes)')
 PY
 )"
     fi
-    annotation="${failed_step} (exit ${status}); UI=${ui_summary}; ACTIVITY=${activity_summary:-none}; LOGCAT=$(printf '%s' "$log_summary" | tail -n 12 | tr '\n' ' ' | cut -c1-1800)"
+    annotation="${failed_step} (exit ${status}); UI=${ui_summary}; ACTIVITY=${activity_summary:-none}; LOGCAT=$(printf '%s' "$log_summary" | tail -n 40 | tr '\n' ' ' | cut -c1-6500)"
     annotation="${annotation//'%'/'%25'}"
     annotation="${annotation//$'\r'/'%0D'}"
     annotation="${annotation//$'\n'/'%0A'}"

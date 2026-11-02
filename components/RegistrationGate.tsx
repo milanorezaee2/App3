@@ -97,12 +97,26 @@ export function RegistrationGate({ children, forceAuth = false }: PropsWithChild
   useEffect(() => {
     if (bypassGate) return;
     void inspect();
-    const { data } = supabase.auth.onAuthStateChange(() => { void inspect(); });
+    let authInspectionTimer: ReturnType<typeof setTimeout> | undefined;
+    const { data } = supabase.auth.onAuthStateChange(() => {
+      // Supabase invokes auth listeners while its auth lock is held. Defer all
+      // getSession/profile reads until after the callback returns to avoid a
+      // lock re-entry that can leave the native login gate spinning forever.
+      if (authInspectionTimer) clearTimeout(authInspectionTimer);
+      authInspectionTimer = setTimeout(() => {
+        authInspectionTimer = undefined;
+        void inspect();
+      }, 0);
+    });
     const appState = AppState.addEventListener('change', state => {
       if (state === 'active') void inspect();
     });
-    return () => { data.subscription.unsubscribe(); appState.remove(); };
-  }, [inspect]);
+    return () => {
+      if (authInspectionTimer) clearTimeout(authInspectionTimer);
+      data.subscription.unsubscribe();
+      appState.remove();
+    };
+  }, [bypassGate, inspect]);
 
   const requestCode = async () => {
     if (busy) return;

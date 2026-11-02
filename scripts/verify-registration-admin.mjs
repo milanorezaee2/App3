@@ -23,6 +23,7 @@ check(/full_name/.test(registration) && /completeLearnerProfile/.test(gate), 're
 check(/routeToLanguageSelection/.test(gate) && /writeResumeSnapshot\(\{ version: 1, href: '\/languages'/.test(gate)
   && /router\.replace\('\/languages'/.test(gate) && !/PLACEMENT_ENTRY_KEY|AssessmentEntry/.test(gate), 'OTP completion sends learners to language selection without an assessment gate');
 check(/requestLearnerOtp/.test(gate) && /verifyLearnerOtp/.test(gate) && /onResend/.test(loginFlow), 'the gate separates OTP request, verification, and resend');
+check(/auth listeners while its auth lock is held/.test(gate) && /authInspectionTimer = setTimeout/.test(gate), 'Supabase session checks are deferred outside the auth listener lock to avoid a frozen native login gate');
 check(!/generateLoginCode|signInWithPassword|toAuthPassword/.test(registration + gate), 'the learner gate no longer invents local codes or uses password login');
 check(/color: '#102A56'/.test(loginFlow) && /backgroundColor: '#EAF1FA'/.test(loginFlow)
   && /borderColor: '#AFC2D9'/.test(loginFlow) && /placeholderTextColor="#52657D"/.test(loginFlow), 'email and OTP fields use high-contrast text, fill, border and placeholder colors');
