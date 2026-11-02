@@ -69,6 +69,11 @@ export default function EnglishLessonList() {
   const lessons = useMemo(() => selected ? SENTENCE_LESSONS.filter(item => item.levelId === selected.id) : [], [selected?.id]);
   const completedIds = progress?.completedLessonIds ?? [];
   const completed = lessons.filter(item => completedIds.includes(item.id)).length;
+  const levelStartLesson = lessons.find(item => !completedIds.includes(item.id) && !!study?.sessions[item.id])
+    ?? lessons.find(item => !completedIds.includes(item.id))
+    ?? lessons[0];
+  const levelFullyCompleted = lessons.length > 0 && completed === lessons.length;
+  const levelStartLabel = levelFullyCompleted ? 'بازبینی این سطح' : levelStartLesson && study?.sessions[levelStartLesson.id] ? 'ادامهٔ درس این سطح' : 'شروع یادگیری از این سطح';
   const metrics = selected ? getEnglishLevelMetrics(selected.id, completedIds) : null;
   const blueprint = selected ? ENGLISH_ENGINE_BLUEPRINT.find(item => item.levelId === selected.id) : null;
   const advancedComposition = getAdvancedContentComposition();
@@ -104,6 +109,9 @@ export default function EnglishLessonList() {
   const allWords = new Set(SENTENCE_LESSONS.flatMap(item => item.sentences.flatMap(sentence => sentence.vocabulary.map(word => word.word))));
 
   const openLevel = (levelId: CourseLevelId) => router.push({ pathname: '/lang/library', params: { level: String(levelId) } } as never);
+  const startSelectedLevel = () => {
+    if (levelStartLesson) router.push({ pathname: '/course/lesson', params: { id: levelStartLesson.id } } as never);
+  };
 
   return (
     <View style={styles.root}>
@@ -209,6 +217,11 @@ export default function EnglishLessonList() {
                     <View style={styles.heroMetricDivider} />
                     <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{toPersianDigits(metrics.vocabularyCount)}</Text><Text style={styles.heroMetricLabel}>واژهٔ یکتا</Text></View>
                   </View>
+                  <Pressable accessibilityRole="button" accessibilityLabel={`${levelStartLabel}: ${selected.title}`} accessibilityState={{ disabled: !levelStartLesson }} disabled={!levelStartLesson} style={({ pressed }) => [styles.levelStartButton, pressed && styles.pressed, !levelStartLesson && styles.levelStartButtonDisabled]} onPress={startSelectedLevel}>
+                    <Play size={16} color={selected.color} fill={selected.color} />
+                    <Text style={styles.levelStartButtonText}>{levelStartLabel}</Text>
+                    <ChevronLeft size={18} color={selected.color} />
+                  </Pressable>
                 </LinearGradient>
               )}
 
@@ -423,6 +436,9 @@ const styles = StyleSheet.create({
   selectedProgressValue: { fontFamily: Typography.numberFontFamily, color: '#FFFFFF', fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
   selectedProgressTrack: { height: 7, borderRadius: 999, overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.22)' },
   selectedProgressFill: { height: '100%', alignSelf: 'flex-end', borderRadius: 999, backgroundColor: '#B8F28F' },
+  levelStartButton: { minHeight: 48, marginTop: 5, paddingHorizontal: 15, borderRadius: 15, backgroundColor: '#FFFFFF', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 9 },
+  levelStartButtonDisabled: { opacity: 0.55 },
+  levelStartButtonText: { flex: 1, fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 12, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   metricGrid: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', paddingTop: 12, marginTop: 2, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.18)' },
   heroMetric: { flex: 1, alignItems: 'center', gap: 1 },
   heroMetricValue: { fontFamily: Typography.numberFontFamily, color: '#FFFFFF', fontSize: 17, fontWeight: '800', writingDirection: 'rtl' },

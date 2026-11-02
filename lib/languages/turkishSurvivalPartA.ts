@@ -519,16 +519,16 @@ const SURVIVAL_PART_A_SEEDS: readonly TurkishLessonSeed[] = [
     title: 'دعوت‌کردن، پذیرفتن و ردکردن دعوت',
     subtitle: 'دعوت به قهوه، شام یا سینما، پذیرش گرم و رد محترمانهٔ دعوت با دلیل',
     situation: 'دوستی را به شام یا برنامهٔ آخر هفته دعوت می‌کنید و یاد می‌گیرید چطور صمیمانه بپذیرید یا مؤدبانه عذرخواهی کنید.',
-    teachingFa: 'برای دعوت کردن در ترکی دو ساخت بسیار دلنشین وجود دارد: ۱) Bu akşam bize yemeğe gelir misin? (امشب برای شام پیش ما می‌آیی؟) یا Birlikte kahve içelim mi? (با هم قهوه بنوشیم؟ — پسوند -alım/-elim یعنی «بیایید ... کنیم»). ۲) عبارت Ne dersin? (نظرت چیه؟ / چی می‌گی؟). برای پذیرفتن: Çok sevinirim! (خیلی خوشحال می‌شوم!)، Harika olur! (عالی می‌شود!). و برای رد مؤدبانه: Çok isterdim ama başka bir planım var (خیلی دوست داشتم اما برنامهٔ دیگری دارم).',
+    teachingFa: "برای دعوت و پاسخ‌دادن از عبارت‌های آماده استفاده کنید: Birlikte kahve içelim mi? (با هم قهوه بنوشیم؟)، Gelir misin? (می‌آیی؟)، Memnuniyetle (با کمال میل) و Üzgünüm, bugün çalışıyorum (متأسفم، امروز کار می‌کنم). فعلاً لازم نیست عبارت‌هایی مثل «خیلی دوست داشتم اما باید...» را بسازید.",
     rows: [
       ['Bu akşam birlikte bir kahve içelim mi?', 'امشب با هم یک قهوه بنوشیم؟', 'بو آکشام بیرلیکته بیر کاهوه ایچِلیم می', 'içelim mi', 'بنوشیم؟ (پیشنهاد دو یا چندنفره)', 'ریشه + -(y)AlIm mI? = با هم ... کنیم؟'],
       ['Cumartesi akşamı bize yemeğe gelir misiniz?', 'شنبه شب برای شام به خانهٔ ما می‌آیید؟', 'جومارتِسی آکشامِی بیزه یِمَئه گِلیر میسینیز', 'yemeğe', 'برای غذا / به شام'],
       ['Yarın sahilde yürüyüşe ne dersin?', 'نظرت دربارهٔ پیاده‌روی فردا در ساحل چیست؟', 'یارِین ساهیلده یورویوشه نِ دَرسین', 'ne dersin', 'نظرت چیه؟'],
-      ['Çok sevinirim, saat kaçta geleyim?', 'خیلی خوشحال می‌شوم، ساعت چند بیایم؟', 'چوک سِوینیریم، ساعات کاچتا گِلِییم', 'çok sevinirim', 'خیلی خوشحال می‌شوم'],
-      ['Harika bir fikir, memnuniyetle katılırım!', 'فکر فوق‌العاده‌ای است، با کمال میل شرکت می‌کنم!', 'هاریکا بیر فیکیر، مَمنونییَتله کاتِیلِیرِیم', 'memnuniyetle', 'با کمال میل'],
+      ['Çok güzel! Saat kaçta buluşuyoruz?', 'چه خوب! ساعت چند همدیگر را می‌بینیم؟', 'چوک گوزَل! ساعات کاچتا بولوشویوروز', 'buluşuyoruz', 'همدیگر را می‌بینیم'],
+      ['Güzel! Memnuniyetle.', 'خوب است! با کمال میل.', 'گوزَل! مَمنونییَتله', 'memnuniyetle', 'با کمال میل'],
       ['Davetin için çok teşekkür ederim.', 'بابت دعوتت خیلی متشکرم.', 'داوِتین ایچین چوک تِشَکّور اِدِریم', 'davetin', 'دعوتت'],
-      ['Çok isterdim ama bu akşam çalışmam gerekiyor.', 'خیلی دلم می‌خواست اما امشب باید کار کنم.', 'چوک ایستَردیم آما بو آکشام چالِیشمام گِرِکییور', 'çok isterdim', 'خیلی دوست داشتم (برای عذرخواهی مؤدبانه)'],
-      ['Belki başka bir akşam telafi ederiz.', 'شاید یک شب دیگر جبران کنیم.', 'بَلکی باشکا بیر آکشام تِلافی اِدِریز', 'telafi ederiz', 'جبران می‌کنیم'],
+      ["Üzgünüm, bu akşam çalışıyorum.", "متأسفم، امشب کار می‌کنم.", "اوزگونوم، بو آکشام چالِیشِییوروم", "çalışıyorum", "کار می‌کنم"],
+      ["Belki başka gün buluşuruz.", "شاید روز دیگری همدیگر را ببینیم.", "بَلکی باشکا گون بولوشوروز", "başka gün", "روز دیگری"],
     ],
     dialogue: [
       ['دنیز', 'Sara, Cuma akşamı evde küçük bir yemek veriyoruz. Sen de gelir misin?', 'سارا، جمعه شب در خانه یک شام کوچک می‌دهیم. تو هم می‌آیی؟'],
@@ -537,14 +537,14 @@ const SURVIVAL_PART_A_SEEDS: readonly TurkishLessonSeed[] = [
     ],
     checks: [
       {
-        promptFa: 'کدام عبارت برای رد کردنِ مؤدبانهٔ یک دعوت مناسب است؟',
+        promptFa: 'کدام عبارت برای عذرخواهی و رد سادهٔ دعوت مناسب است؟',
         choices: [
-          'Çok isterdim ama başka bir planım var.',
+          'Üzgünüm, bu akşam çalışıyorum.',
           'Memnuniyetle katılırım!',
           'Saat kaçta geleyim?',
         ],
         correctIndex: 0,
-        explanationFa: 'Çok isterdim ama... («خیلی دلم می‌خواست اما...») محترمانه‌ترین الگو برای نپذیرفتن دعوت همراه با دلیل است.',
+        explanationFa: 'Üzgünüm, bu akşam çalışıyorum یعنی «متأسفم، امشب کار می‌کنم».',
       },
       {
         promptFa: 'در جملهٔ «Bir kahve içelim mi?» پسوند «-elim» چه مفهومی دارد؟',
@@ -561,11 +561,11 @@ const SURVIVAL_PART_A_SEEDS: readonly TurkishLessonSeed[] = [
     title: 'درخواست مؤدبانه و اجازه‌گرفتن',
     subtitle: 'درجات ادب با rica etsem، sakıncası var mı و پاسخ‌های مثبت و منفی محترمانه',
     situation: 'در محیط‌های رسمی یا در جمع غریبه‌ها با بالاترین سطح احترام درخواستی مطرح می‌کنید یا اجازه می‌گیرید.',
-    teachingFa: 'برای اینکه درخواست شما در ترکی کاملاً محترمانه و طبیعی شنیده شود، سه ساختار طلایی را بشناسید: ۱) «Rica etsem ... -(y)abilir misiniz?» (اگر خواهش کنم، ممکن است ... کنید؟)، ۲) «...-(y)abilir miyim?» (اجازه هست ... کنم؟) و ۳) «Sakıncası var mı?» (آیا اشکالی دارد؟ — که پاسخ موافقِ آن Hayır, hiç sakıncası yok یعنی «نه، هیچ اشکالی ندارد» یا Tabii, buyurun است!).',
+    teachingFa: "برای درخواست مؤدبانه از چند عبارت آماده استفاده کنید: Lütfen kapıyı kapatın (لطفاً در را ببندید)، Bakar mısınız? (ببخشید، توجه می‌کنید؟) و Oturabilir miyim? (می‌توانم بنشینم؟). عبارت Hiç sakıncası yok (هیچ اشکالی ندارد) را می‌توانید به‌صورت یک پاسخ ثابت یاد بگیرید؛ فعلاً مصدر ملکی و عبارت‌های رسمیِ چندبخشی لازم نیست.",
     rows: [
-      ['Rica etsem kapıyı kapatabilir misiniz?', 'اگر خواهش کنم، ممکن است در را ببندید؟', 'ریجا اَتسَم کاپِییِی کاپاتابیلیر میسینیز', 'rica etsem', 'اگر خواهش کنم / بی‌زحمت', 'Rica etsem + -(y)Abilir misiniz?'],
+      ["Lütfen kapıyı kapatır mısınız?", "لطفاً در را می‌بندید؟", "لوتفَن کاپِییِی کاپاتِیر مِیسینیز", "kapıyı kapatır mısınız", "در را می‌بندید؟", "درخواست مؤدبانه: Lütfen + جملهٔ پرسشی"],
       ['Müsaadenizle bir soru sorabilir miyim?', 'با اجازه‌تان می‌توانم یک سؤال بپرسم؟', 'موساآدِنیزله بیر سورو سورابیلیر میییم', 'müsaadenizle', 'با اجازهٔ شما'],
-      ['Burada oturmamın bir sakıncası var mı?', 'نشستن من اینجا اشکالی دارد؟', 'بورادا اوتورمامِین بیر ساکِینجاسِی وار مِی', 'sakıncası', 'اشکال / مانع'],
+      ["Burada oturabilir miyim?", "می‌توانم اینجا بنشینم؟", "بورادا اوتورابیلیر میییم", "oturabilir miyim", "می‌توانم بنشینم؟"],
       ['Hayır, hiç sakıncası yok; lütfen buyurun.', 'خیر، هیچ اشکالی ندارد؛ لطفاً بفرمایید.', 'هایِیر، هیچ ساکِینجاسِی یوک؛ لوتفَن بویورون', 'buyurun', 'بفرمایید'],
       ['Telefonunuzu bir dakikalığına kullanabilir miyim?', 'می‌توانم یک دقیقه از تلفنتان استفاده کنم؟', 'تِلِفونونوزو بیر داکیکالِیئِینا کوللانابیلیر میییم', 'kullanabilir miyim', 'می‌توانم استفاده کنم؟'],
       ['Zahmet olmazsa bana da bir çay verir misiniz?', 'اگر زحمتی نیست به من هم یک چای می‌دهید؟', 'زاهمَت اولمازسا بانا دا بیر چای وِریر میسینیز', 'zahmet olmazsa', 'اگر زحمت نباشد'],
@@ -579,14 +579,10 @@ const SURVIVAL_PART_A_SEEDS: readonly TurkishLessonSeed[] = [
     ],
     checks: [
       {
-        promptFa: 'در پاسخ موافق به پرسشِ «Sakıncası var mı?» (آیا اشکالی دارد؟) چه می‌گوییم؟',
-        choices: [
-          'Evet, yasak.',
-          'Hayır, hiç sakıncası yok.',
-          'Maalesef olmaz.',
-        ],
-        correctIndex: 1,
-        explanationFa: 'چون پرسش می‌پرسد «آیا مانعی هست؟»، پاسخ موافق «Hayır, hiç sakıncası yok» (نه، هیچ اشکالی ندارد) است.',
+        promptFa: 'کدام جمله یک درخواست مؤدبانه برای بستن در است؟',
+        choices: ['Lütfen kapıyı kapatır mısınız?', 'Kapıyı kapat!', 'Kapıyı aç!'],
+        correctIndex: 0,
+        explanationFa: 'Lütfen kapıyı kapatır mısınız? یک درخواست مؤدبانه به معنی «لطفاً در را می‌بندید؟» است.',
       },
       {
         promptFa: 'عبارت مؤدبانهٔ «zahmet olmazsa» به چه معنی است؟',

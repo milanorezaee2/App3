@@ -20,6 +20,9 @@ import { TURKISH_C1_FOUNDATION_PART_A } from './turkishC1FoundationPartA';
 import { TURKISH_C1_FOUNDATION_PART_B } from './turkishC1FoundationPartB';
 import { TURKISH_C1_SURVIVAL_PART_A } from './turkishC1SurvivalPartA';
 import { TURKISH_C1_SURVIVAL_PART_B } from './turkishC1SurvivalPartB';
+import { TURKISH_PRE_A1_LESSONS } from './turkishPreA1';
+import type { TurkishLearningMode } from './turkishSeed';
+export { TURKISH_PRE_A1_LESSONS };
 
 /** الفبای ۲۹حرفی ترکی استانبولی (İstanbul Türkçesi). */
 export const TURKISH_ALPHABET = [...'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ'] as const;
@@ -37,7 +40,7 @@ export const TURKISH_LESSON_STAGES = [
   { id: 'review', labelFa: 'مرور هوشمند', labelEn: 'Spaced Review' },
 ] as const;
 
-export type TurkishLevelId = 0 | 1 | 2 | 3 | 4 | 5;
+export type TurkishLevelId = -1 | 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface TurkishCourseLevel {
   id: TurkishLevelId;
@@ -53,6 +56,7 @@ export interface TurkishCourseLesson extends LearningLesson {
   levelId: TurkishLevelId;
   order: number;
   subtitle: string;
+  learningMode: TurkishLearningMode;
 }
 
 const FOUNDATION_RAW = [
@@ -94,6 +98,15 @@ const ADVANCED_COMMUNICATION_C1_RAW = [
 ] as const;
 
 export const TURKISH_LEVELS: readonly TurkishCourseLevel[] = [
+  {
+    id: -1,
+    title: 'Absolute Beginner',
+    cefr: 'Pre-A1 · شروع از صفر',
+    description: 'مسیر مستقل ترکی استانبولی برای شروع از صفر: واژه‌های منفرد و دسته‌بندی‌شده، سپس ترکیب‌های کوتاه و در پایان جمله و مکالمه؛ بدون وابستگی به محتوای انگلیسی',
+    color: '#94a3b8',
+    modules: TURKISH_PRE_A1_LESSONS.map(item => item.title),
+    status: 'available',
+  },
   {
     id: 0,
     title: 'Foundation',
@@ -151,35 +164,40 @@ export const TURKISH_LEVELS: readonly TurkishCourseLevel[] = [
 ];
 
 export const TURKISH_LESSONS: readonly TurkishCourseLesson[] = [
+  ...TURKISH_PRE_A1_LESSONS.map((lesson, idx): TurkishCourseLesson => ({
+    ...lesson,
+    levelId: -1,
+    order: idx + 1,
+  })),
   ...FOUNDATION_RAW.map((lesson, idx): TurkishCourseLesson => ({
     ...lesson,
     levelId: 0,
-    order: idx + 1,
+    order: TURKISH_PRE_A1_LESSONS.length + idx + 1,
   })),
   ...SURVIVAL_RAW.map((lesson, idx): TurkishCourseLesson => ({
     ...lesson,
     levelId: 1,
-    order: FOUNDATION_RAW.length + idx + 1,
+    order: TURKISH_PRE_A1_LESSONS.length + FOUNDATION_RAW.length + idx + 1,
   })),
   ...EVERYDAY_A2_RAW.map((lesson, idx): TurkishCourseLesson => ({
     ...lesson,
     levelId: 2,
-    order: FOUNDATION_RAW.length + SURVIVAL_RAW.length + idx + 1,
+    order: TURKISH_PRE_A1_LESSONS.length + FOUNDATION_RAW.length + SURVIVAL_RAW.length + idx + 1,
   })),
   ...COMMUNICATION_B1_RAW.map((lesson, idx): TurkishCourseLesson => ({
     ...lesson,
     levelId: 3,
-    order: FOUNDATION_RAW.length + SURVIVAL_RAW.length + EVERYDAY_A2_RAW.length + idx + 1,
+    order: TURKISH_PRE_A1_LESSONS.length + FOUNDATION_RAW.length + SURVIVAL_RAW.length + EVERYDAY_A2_RAW.length + idx + 1,
   })),
   ...UPPER_INTERMEDIATE_B2_RAW.map((lesson, idx): TurkishCourseLesson => ({
     ...lesson,
     levelId: 4,
-    order: FOUNDATION_RAW.length + SURVIVAL_RAW.length + EVERYDAY_A2_RAW.length + COMMUNICATION_B1_RAW.length + idx + 1,
+    order: TURKISH_PRE_A1_LESSONS.length + FOUNDATION_RAW.length + SURVIVAL_RAW.length + EVERYDAY_A2_RAW.length + COMMUNICATION_B1_RAW.length + idx + 1,
   })),
   ...ADVANCED_COMMUNICATION_C1_RAW.map((lesson, idx): TurkishCourseLesson => ({
     ...lesson,
     levelId: 5,
-    order: FOUNDATION_RAW.length + SURVIVAL_RAW.length + EVERYDAY_A2_RAW.length + COMMUNICATION_B1_RAW.length + UPPER_INTERMEDIATE_B2_RAW.length + idx + 1,
+    order: TURKISH_PRE_A1_LESSONS.length + FOUNDATION_RAW.length + SURVIVAL_RAW.length + EVERYDAY_A2_RAW.length + COMMUNICATION_B1_RAW.length + UPPER_INTERMEDIATE_B2_RAW.length + idx + 1,
   })),
 ];
 
