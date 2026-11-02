@@ -132,7 +132,10 @@ export default function RootLayout() {
     try {
       player = createAudioPlayer(require('../assets/audio/welcome-chime.wav'));
       player.volume = 0.28;
-      player.play();
+      const playback = player.play() as unknown;
+      if (playback && typeof (playback as Promise<unknown>).catch === 'function') {
+        (playback as Promise<unknown>).catch(() => undefined);
+      }
     } catch {
       // A device without playback support still receives the same visual intro.
     }
@@ -144,7 +147,7 @@ export default function RootLayout() {
     return () => clearTimeout(finish);
   }, [fontsLoaded, fontError]);
 
-  if (!fontsLoaded && !fontError) return null;
+  if (Platform.OS !== 'web' && !fontsLoaded && !fontError) return null;
   if (!introComplete) {
     return (
       <View style={introStyles.root}>

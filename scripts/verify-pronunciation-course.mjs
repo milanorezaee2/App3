@@ -41,6 +41,9 @@ for (const language of ['en']) {
 }
 verify(PRONUNCIATION_COURSES.ru.length >= 3, 'Russian has a focused pronunciation course without altering its core lesson catalog');
 verify(PRONUNCIATION_COURSES.ru.every(unit => unit.examples.length >= 2 && unit.practiceText), 'Russian pronunciation units include TTS-ready practice examples');
+verify(PRONUNCIATION_COURSES.tr.length >= 4, 'Turkish has a focused Istanbul Turkish pronunciation course');
+verify(new Set(PRONUNCIATION_COURSES.tr.map(unit => unit.id)).size === PRONUNCIATION_COURSES.tr.length, 'Turkish pronunciation unit IDs are unique');
+verify(PRONUNCIATION_COURSES.tr.every(unit => unit.title && unit.explanationFa && unit.practiceFa && unit.practiceText && unit.examples.length >= 3), 'Turkish pronunciation units include instruction, examples, and a practice sentence');
 verify(PRONUNCIATION_COURSES.en.some(unit => /thin و this/.test(unit.title)), 'English course teaches the two TH sounds');
 verify(PRONUNCIATION_COURSES.en.some(unit => /s و ed/.test(unit.title)), 'English course teaches common suffix pronunciations');
 
@@ -49,12 +52,15 @@ await storage.clear();
 const englishKey = app.progress.PRONUNCIATION_PROGRESS_KEYS.en;
 const enUnit = PRONUNCIATION_COURSES.en[0];
 const ruUnit = PRONUNCIATION_COURSES.ru[0];
+const trUnit = PRONUNCIATION_COURSES.tr[0];
 verify(Object.keys(await app.progress.loadPronunciationMarks('en')).length === 0, 'missing English local marks start empty');
 await app.progress.savePronunciationMark('en', enUnit.id, 'practiced');
 await app.progress.savePronunciationMark('ru', ruUnit.id, 'practiced');
+await app.progress.savePronunciationMark('tr', trUnit.id, 'practiced');
 verify((await app.progress.loadPronunciationMarks('en'))[enUnit.id]?.mark === 'practiced', 'English self-review status persists locally');
 verify((await app.progress.loadPronunciationMarks('ru'))[ruUnit.id]?.mark === 'practiced', 'Russian pronunciation progress persists locally');
-verify(Object.keys(await app.progress.loadPronunciationMarks('en')).length === 1, 'English and Russian progress remain separate');
+verify((await app.progress.loadPronunciationMarks('tr'))[trUnit.id]?.mark === 'practiced', 'Turkish pronunciation progress persists locally');
+verify(Object.keys(await app.progress.loadPronunciationMarks('en')).length === 1, 'English, Russian, and Turkish progress remain separate');
 await app.progress.savePronunciationMark('en', enUnit.id, null);
 verify((await app.progress.loadPronunciationMarks('en'))[enUnit.id]?.mark === null, 'cleared marks persist as cross-device tombstones');
 

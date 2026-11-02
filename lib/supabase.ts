@@ -43,16 +43,38 @@ if (!supabaseAnonKey) {
 const serverMemoryStorage = new Map<string, string>();
 const webSafeStorage = {
   async getItem(key: string) {
-    if (typeof window !== 'undefined') return window.localStorage.getItem(key);
+    if (typeof window !== 'undefined') {
+      try {
+        return window.localStorage.getItem(key);
+      } catch {
+        return serverMemoryStorage.get(key) ?? null;
+      }
+    }
     return serverMemoryStorage.get(key) ?? null;
   },
   async setItem(key: string, value: string) {
-    if (typeof window !== 'undefined') window.localStorage.setItem(key, value);
-    else serverMemoryStorage.set(key, value);
+    if (typeof window !== 'undefined') {
+      try {
+        window.localStorage.setItem(key, value);
+        return;
+      } catch {
+        serverMemoryStorage.set(key, value);
+        return;
+      }
+    }
+    serverMemoryStorage.set(key, value);
   },
   async removeItem(key: string) {
-    if (typeof window !== 'undefined') window.localStorage.removeItem(key);
-    else serverMemoryStorage.delete(key);
+    if (typeof window !== 'undefined') {
+      try {
+        window.localStorage.removeItem(key);
+        return;
+      } catch {
+        serverMemoryStorage.delete(key);
+        return;
+      }
+    }
+    serverMemoryStorage.delete(key);
   },
 };
 

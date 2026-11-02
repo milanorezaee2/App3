@@ -1,5 +1,5 @@
 import { type PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, AppState, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, AppState, Platform, StyleSheet, Text, View } from 'react-native';
 import Constants from 'expo-constants';
 import { useRouter } from 'expo-router';
 import { supabase } from '@/lib/supabase';
@@ -13,6 +13,22 @@ const IS_ADMIN_APP = Constants.expoConfig?.extra?.appRole === 'admin'
   || process.env.EXPO_PUBLIC_MILO_ADMIN_APP === 'true';
 // When the learner login screen is disabled in lib/features.ts, skip the gate entirely.
 const BYPASS_GATE: boolean = IS_ADMIN_APP || !FEATURES.learnerLogin;
+const SESSION_INSPECT_TIMEOUT_MS = 5000;
+
+function isWebPreviewHost(): boolean {
+  if (Platform.OS !== 'web' || typeof window === 'undefined') return false;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('auth') === '1') return false;
+    const host = window.location.hostname.toLowerCase();
+    return host === 'localhost'
+      || host === '127.0.0.1'
+      || host.endsWith('.e2b.app')
+      || host.endsWith('.e2b.dev');
+  } catch {
+    return false;
+  }
+}
 
 type Mode = LoginMode;
 type AuthStep = 'request' | 'verify' | 'profile';
@@ -45,8 +61,19 @@ export function RegistrationGate({ children }: PropsWithChildren) {
 
   const inspect = useCallback(async () => {
     if (BYPASS_GATE || routingAfterAuth.current) return;
+    if (isWebPreviewHost()) {
+      setReady(true);
+      setChecking(false);
+      return;
+    }
+    let timer: ReturnType<typeof setTimeout> | undefined;
     try {
-      const state = await getRegisteredSession();
+      const state = await Promise.race([
+        getRegisteredSession(),
+        new Promise<never>((_, reject) => {
+          timer = setTimeout(() => reject(new Error('SESSION_INSPECT_TIMEOUT')), SESSION_INSPECT_TIMEOUT_MS);
+        }),
+      ]);
       const complete = !!state.session && !!state.profile;
       if (complete) {
         setReady(true);
@@ -63,6 +90,7 @@ export function RegistrationGate({ children }: PropsWithChildren) {
     } catch {
       setReady(false);
     } finally {
+      if (timer) clearTimeout(timer);
       setChecking(false);
     }
   }, []);

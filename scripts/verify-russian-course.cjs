@@ -58,7 +58,7 @@ const esbuild = require('esbuild');
   check('Russian course has 1032 eight-sentence records', sentenceCount === 1032 && app.RUSSIAN_LESSONS.every(lesson => lesson.sentences.length === 8));
   check('Russian roadmap now has six levels', app.RUSSIAN_LEVELS.map(level => level.id).join('|') === '0|1|2|3|4|5'
     && app.RUSSIAN_LEVELS.length === 6
-    && app.RUSSIAN_LEVELS.every((level, index) => level.title && level.description && level.modules.length > 0 && level.id === app.COURSE_LEVELS[index].id));
+    && app.RUSSIAN_LEVELS.every((level, index) => level.title && level.description && level.modules.length > 0 && level.id === app.COURSE_LEVELS[index + 1].id));
   check('Russian Foundation has twenty-eight lessons, Survival twenty-one and Everyday twenty (levels 1-3)', app.RUSSIAN_LESSONS.every((lesson, index) => lesson.order === index + 1 && lesson.subtitle)
     && app.RUSSIAN_LESSONS.slice(0, 28).every(lesson => lesson.levelId === 0)
     && app.RUSSIAN_LESSONS.slice(28, 49).every(lesson => lesson.levelId === 1)
@@ -282,17 +282,18 @@ const esbuild = require('esbuild');
     && app.RUSSIAN_LESSON_STAGES.every((stage, index) => stage.id === app.ENGLISH_ENGINE_STEPS[index].id
       && stage.labelFa === app.ENGLISH_ENGINE_STEPS[index].labelFa
       && stage.labelEn === app.ENGLISH_ENGINE_STEPS[index].labelEn));
-  check('English lesson scope includes the original material and the new A2, B1 and B2 lessons', app.SENTENCE_LESSONS.length === 212
-    && app.SENTENCE_LESSONS.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 4242
+  check('English lesson scope includes the original material and the new A2, B1 and B2 lessons', app.SENTENCE_LESSONS.length === 222
+    && app.SENTENCE_LESSONS.reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 4322
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 0).length === 10
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 0).reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 500
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 2).length === 25
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 2).reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 1050
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 3 && !lesson.b1Section).length === 15
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 3 && !lesson.b1Section).reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 750);
-  check('language picker registers en/ru without changing existing locales', app.LANGUAGES.map(language => language.id).join('|') === 'en|ru'
+  check('language picker adds tr without changing existing en/ru locales', app.LANGUAGES.map(language => language.id).join('|') === 'en|ru|tr'
     && app.LANGUAGES.find(language => language.id === 'en').speechLocale === 'en-US'
-    && app.LANGUAGES.find(language => language.id === 'ru').speechLocale === 'ru-RU');
+    && app.LANGUAGES.find(language => language.id === 'ru').speechLocale === 'ru-RU'
+    && app.LANGUAGES.find(language => language.id === 'tr').speechLocale === 'tr-TR');
   check('Russian lesson count and home route are registered', app.LANGUAGES.find(language => language.id === 'ru').lessonsCount === 129
     && app.LANGUAGES.find(language => language.id === 'ru').home === '/learn/ru'
     && app.russianProgress && typeof app.russianProgress.completeSentenceLesson === 'function');

@@ -10,6 +10,12 @@ import {
 /** Structural roadmap requested for the English engine; lesson copy stays in courseContent. */
 export const ENGLISH_ENGINE_BLUEPRINT = [
   {
+    levelId: -1,
+    title: 'Absolute Beginner',
+    band: 'Pre-A1 · شروع از صفر',
+    modules: ['سلام!', 'خداحافظ!', 'بله و نه', 'من هستم (I am)', 'اعداد ۱ تا ۱۰', 'حال شما چطور است؟', 'من دارم (I have)', 'لطفاً و ممنون', 'این ... است (This is)', 'مرور چیزهای یادگرفته'],
+  },
+  {
     levelId: 0,
     title: 'Foundation',
     band: 'Level 0',

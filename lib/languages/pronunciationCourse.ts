@@ -1,4 +1,4 @@
-export type PronunciationLanguage = 'en' | 'ru';
+export type PronunciationLanguage = 'en' | 'ru' | 'tr';
 
 export interface PronunciationExample {
   text: string;
@@ -23,6 +23,67 @@ export interface PronunciationUnit {
  * phonetic transcriptions or claims that a single accent is the only valid one.
  */
 export const PRONUNCIATION_COURSES: Record<PronunciationLanguage, readonly PronunciationUnit[]> = {
+  tr: [
+    {
+      id: 'tr-vowels-i-dotless',
+      title: 'واکهٔ نقطه‌دار i و بی‌نقطه ı',
+      focusFa: 'در ı لب‌ها کشیده نمی‌شوند و زبان کمی عقب‌تر از «ای» فارسی قرار می‌گیرد.',
+      explanationFa: 'در ترکی استانبولی İ / i دقیقاً صدای «ای» روشن و جلویی دارد، اما I / ı (حرف بی‌نقطه در هر دو شکل بزرگ و کوچک!) واکه‌ای پسین و بدون گرد شدن لب‌هاست. به تفاوت جفت‌ها گوش دهید و لب‌ها را هنگام ادای ı کاملاً آزاد نگه دارید.',
+      examples: [
+        { text: 'iyi', meaningFa: 'خوب', focusFa: 'هر دو i روشن و جلویی' },
+        { text: 'ılık', meaningFa: 'ولرم / معتدل', focusFa: 'ı پسین؛ لب‌ها گرد نشوند' },
+        { text: 'kış', meaningFa: 'زمستان', focusFa: 'ı کوتاه در میان دو همخوان' },
+        { text: 'diş · dış', meaningFa: 'دندان · بیرون', focusFa: 'تغییر معنی فقط با تفاوت i و ı' },
+      ],
+      practiceFa: 'ابتدا نمونهٔ صوتی را با سرعت آرام بشنوید و بدون گرد کردن لب‌ها تفاوت diş و dış را تکرار کنید.',
+      practiceText: 'Bugün hava ılık ve çok iyi.',
+      practiceMeaningFa: 'امروز هوا معتدل و خیلی خوب است.',
+    },
+    {
+      id: 'tr-rounded-vowels',
+      title: 'واکه‌های گردِ جلویی: ö و ü در برابر o و u',
+      focusFa: 'لب‌ها را گرد نگه دارید، اما زبان را به جایگاه e و i جلو بیاورید.',
+      explanationFa: 'برای ساختن ö لب‌ها را مثل «او» گرد کنید و هم‌زمان بخواهید صدای «اِ» بگویید؛ برای ü نیز لب‌ها گرد می‌مانند ولی زبان در جایگاه «ای» قرار می‌گیرد. جایگزین کردن آن‌ها با o و u معنی بسیاری از واژه‌ها را تغییر می‌دهد.',
+      examples: [
+        { text: 'ol · öl', meaningFa: 'باش · بمیر', focusFa: 'تفاوت حیاتی o پسین و ö جلویی' },
+        { text: 'un · ün', meaningFa: 'آرد · شهرت', focusFa: 'تفاوت u پسین و ü جلویی' },
+        { text: 'göz', meaningFa: 'چشم', focusFa: 'ö کوتاه و گرد در تک‌هجا' },
+        { text: 'günaydın', meaningFa: 'صبح بخیر', focusFa: 'شروع با ü جلویی و پایان با ı پسین' },
+      ],
+      practiceFa: 'جفت‌ها را پشت سر هم گوش کنید و با حفظ گردی لب‌ها، جلو آمدن زبان در ö و ü را تمرین کنید.',
+      practiceText: 'Üç güzel gül gördüm.',
+      practiceMeaningFa: 'سه گل سرخ زیبا دیدم.',
+    },
+    {
+      id: 'tr-special-consonants',
+      title: 'حروف ویژه: c، ç، ş و ğ (یوموشاک گ)',
+      focusFa: 'حرف c صدای «ج» دارد و ğ در استانبول صدای «غ» ندارد بلکه واکهٔ پیشین را می‌کشد.',
+      explanationFa: 'در خط ترکی هر حرف همیشه یک ارزش آوایی ثابت دارد: c = ج، ç = چ، ş = ش. حرف ğ (yumuşak g) هرگز در آغاز واژه نمی‌آید؛ با واکه‌های پسین (a, ı, o, u) فقط واکهٔ قبل را کمی می‌کشد و با واکه‌های پیشین (e, i, ö, ü) نرمش خفیفی شبیه «ی» ایجاد می‌کند.',
+      examples: [
+        { text: 'cam · çam', meaningFa: 'شیشه · درخت کاج', focusFa: 'c (ج) در برابر ç (چ)' },
+        { text: 'şeker', meaningFa: 'شکر', focusFa: 'ş روشن در آغاز واژه' },
+        { text: 'dağ · yağmur', meaningFa: 'کوه · باران', focusFa: 'ğ بدون تلفظ حلقی؛ کشش ملایم a' },
+        { text: 'değil · öğrenci', meaningFa: 'نیست · دانش‌آموز', focusFa: 'نرمش لطیف میان دو واکه' },
+      ],
+      practiceFa: 'هنگام گفتن yağmur و öğrenci گلو را منقبض نکنید؛ اجازه دهید واکهٔ پیش از ğ نرم و پیوسته ادا شود.',
+      practiceText: 'Öğrenci cam kenarında çay içiyor.',
+      practiceMeaningFa: 'دانشجو کنار پنجره چای می‌نوشد.',
+    },
+    {
+      id: 'tr-vowel-harmony-stress',
+      title: 'هماهنگی واکه‌ها و تکیهٔ جمله',
+      focusFa: 'پسوندها با آخرین واکهٔ ریشه هم‌نوا می‌شوند و جزء پرسشی بی‌تکیه است.',
+      explanationFa: 'در ترکی استانبولی تکیهٔ بیشتر واژه‌ها به‌نرمی روی هجای پایانی می‌نشیند، اما پسوند منفی (-ma/-me) و جزء پرسشی (mı/mi/mu/mü) تکیه را به هجای دقیقاً پیش از خود می‌سپارند. به جریان پیوستهٔ پسوندها گوش کنید.',
+      examples: [
+        { text: 'evde · okulda', meaningFa: 'در خانه · در مدرسه', focusFa: 'هم‌نوایی پسوند مکانی با واکهٔ ریشه' },
+        { text: 'geliyor musunuz?', meaningFa: 'آیا می‌آیید؟', focusFa: 'برجستگی ملایم پیش از جزء پرسشی mu' },
+        { text: 'İstanbul\'dayım', meaningFa: 'در استانبول هستم', focusFa: 'تکیه روی نام مکان در آغاز' },
+      ],
+      practiceFa: 'جمله را یک‌تکه بشنوید و بدون مکث مصنوعی بین ریشه و پسوند، آهنگ طبیعی پرسش را تقلید کنید.',
+      practiceText: 'Yarın bizimle İstanbul\'a geliyor musunuz?',
+      practiceMeaningFa: 'آیا فردا با ما به استانبول می‌آیید؟',
+    },
+  ],
   ru: [
     {
       id: 'ru-vowels-a-o',
@@ -207,5 +268,5 @@ export const PRONUNCIATION_COURSES: Record<PronunciationLanguage, readonly Pronu
 };
 
 export function isPronunciationLanguage(value: string | undefined): value is PronunciationLanguage {
-  return value === 'en' || value === 'ru';
+  return value === 'en' || value === 'ru' || value === 'tr';
 }

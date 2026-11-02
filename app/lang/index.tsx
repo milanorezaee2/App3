@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Image, Pressable, ScrollView, Text, View, useWindowDimensions } from 'react-native';
+import { Alert, Image, Pressable, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import {
@@ -18,13 +18,14 @@ import {
   MessageCircle,
   Play,
   RefreshCw,
+  RotateCcw,
   Sparkles,
   Volume2,
 } from 'lucide-react-native';
 import { AppBottomNav } from '@/components/AppBottomNav';
 import { PageNavigation } from '@/components/PageNavigation';
 import { COURSE_LEVELS, SENTENCE_LESSONS } from '@/lib/courseContent';
-import { getCourseProgress, type CourseProgress } from '@/lib/courseProgress';
+import { getCourseProgress, setCurrentLesson, type CourseProgress } from '@/lib/courseProgress';
 import { syncPersonalLearningData } from '@/lib/personalLearningSync';
 import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '@/components/LearningHomeStyles';
 import { toPersianDigits } from '@/lib/format';
@@ -95,6 +96,13 @@ export default function LearningHome() {
 
   const openLevel = (levelId: number) => router.push({ pathname: '/lang/library', params: { level: String(levelId) } } as never);
   const openCurrentLesson = () => router.push({ pathname: '/course/lesson', params: { id: currentLesson.id } } as never);
+
+  const restartFromBeginnerLevel = () => {
+    Alert.alert('شروع مجدد از سطح ابتدایی', 'می‌خواهید دوباره از اولین درسِ سطح ابتدایی شروع کنید؟ محتوای درس‌ها دست‌نخورده می‌ماند.', [
+      { text: 'انصراف', style: 'cancel' },
+      { text: 'شروع مجدد', style: 'destructive', onPress: () => { void setCurrentLesson(SENTENCE_LESSONS[0].id).then(() => router.push({ pathname: '/course/lesson', params: { id: SENTENCE_LESSONS[0].id, fromStart: '1' } } as never)).catch(() => undefined); } },
+    ]);
+  };
 
   return (
     <View style={styles.root}>
@@ -220,6 +228,10 @@ export default function LearningHome() {
             <Pressable accessibilityRole="button" accessibilityLabel="گوش دادن از ابتدای آموزش انگلیسی" style={styles.startFromBeginningButton} onPress={() => router.push({ pathname: '/course/lesson', params: { id: SENTENCE_LESSONS[0].id, fromStart: '1' } } as never)}>
               <Volume2 size={17} color={HomeColors.accent} />
               <Text style={styles.startFromBeginningText}>گوش دادن از ابتدا</Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel="شروع مجدد آموزش انگلیسی از سطح ابتدایی" style={styles.startFromBeginningButton} onPress={restartFromBeginnerLevel}>
+              <RotateCcw size={17} color={HomeColors.accent} />
+              <Text style={styles.startFromBeginningText}>شروع مجدد از سطح ابتدایی</Text>
             </Pressable>
           </View>
 

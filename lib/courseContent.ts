@@ -22,6 +22,7 @@ import { B1_INDEPENDENT_LESSONS } from './courseContentB1Independent';
 import { A2_FOUNDATION_LESSONS } from './courseContentA2Foundation';
 import { B2_UPPER_INTERMEDIATE_LESSONS } from './courseContentB2UpperIntermediate';
 import { C1_ADVANCED_LESSONS } from './courseContentC1Advanced';
+import { PRE_A1_LESSONS } from './courseContentPreA1';
 import {
   COMMUNICATION_LESSON_UNIT,
   COMMUNICATION_MODULES,
@@ -29,7 +30,7 @@ import {
 
 export { COMMUNICATION_COURSE_LESSON_IDS, COMMUNICATION_LESSON_UNIT, COMMUNICATION_MODULES };
 
-export type CourseLevelId = 0 | 1 | 2 | 3 | 4 | 5;
+export type CourseLevelId = -1 | 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface CourseSentence {
   id: string;
@@ -79,6 +80,14 @@ export interface CourseLevel {
 }
 
 export const COURSE_LEVELS: CourseLevel[] = [
+  {
+    id: -1,
+    title: 'Absolute Beginner',
+    cefr: 'Pre-A1 · شروع از صفر',
+    description: 'بخش پیش‌مقدمهٔ کاملاً جدید برای کسانی که هیچ چیز بلد نیستند: حروف، سلام، اعداد، ضمیرها و افعال خیلی رایج',
+    color: '#94a3b8',
+    modules: PRE_A1_LESSONS.map(lesson => lesson.title),
+  },
   {
     id: 0,
     title: 'Foundation',
@@ -672,6 +681,7 @@ const arrangedBeforeB1 = [
 const advancedStart = arrangedBeforeB1.findIndex(lesson => lesson.levelId === 4);
 if (advancedStart < 0) throw new Error('Advanced lesson boundary is missing.');
 export const SENTENCE_LESSONS: SentenceLesson[] = [
+  ...PRE_A1_LESSONS,
   ...arrangedBeforeB1.slice(0, advancedStart),
   ...B1_INDEPENDENT_LESSONS,
   ...B2_UPPER_INTERMEDIATE_LESSONS,

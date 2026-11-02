@@ -13,6 +13,7 @@ export type PronunciationMarks = Partial<Record<string, PronunciationMarkEntry>>
 export const PRONUNCIATION_PROGRESS_KEYS: Record<PronunciationLanguage, string> = {
   en: 'pronunciation_practice_en_v1',
   ru: 'pronunciation_practice_ru_v1',
+  tr: 'pronunciation_practice_tr_v1',
 };
 
 interface StoredPronunciationProgress {
@@ -116,6 +117,7 @@ async function readProgress(language: PronunciationLanguage): Promise<Pronunciat
 const writeQueues: Record<PronunciationLanguage, Promise<unknown>> = {
   en: Promise.resolve(),
   ru: Promise.resolve(),
+  tr: Promise.resolve(),
 };
 
 function serialWrite<T>(language: PronunciationLanguage, job: () => Promise<T>): Promise<T> {

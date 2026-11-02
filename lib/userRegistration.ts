@@ -60,17 +60,37 @@ export async function getRegisteredSession(): Promise<{ session: Session | null;
   if (error) throw error;
   const session = data.session;
   if (!session || !isPermanentLearner(session.user)) return { session: null, profile: null };
+  const fallbackName = String(session.user.user_metadata?.full_name || '').trim();
+  const buildOfflineProfile = (name: string): RegistrationProfile => {
+    const now = new Date().toISOString();
+    return {
+      user_id: session.user.id,
+      full_name: name,
+      email: (session.user.email || '').trim().toLowerCase(),
+      registered_at: session.user.created_at || now,
+      last_seen_at: now,
+    };
+  };
   const { data: profile, error: profileError } = await supabase
     .from('app_user_profiles')
     .select('user_id,full_name,email,registered_at,last_seen_at')
     .eq('user_id', session.user.id)
     .maybeSingle();
-  if (profileError) throw profileError;
+  if (profileError) {
+    const fallback = fallbackName || (session.user.email ? session.user.email.split('@')[0] : '');
+    if (fallback.length >= 2) {
+      return { session, profile: buildOfflineProfile(fallback) };
+    }
+    throw profileError;
+  }
   if (!profile) {
-    const fallbackName = String(session.user.user_metadata?.full_name || '').trim();
     if (fallbackName) {
-      await saveProfile(session.user, fallbackName);
-      return getRegisteredSession();
+      try {
+        await saveProfile(session.user, fallbackName);
+        return getRegisteredSession();
+      } catch {
+        return { session, profile: buildOfflineProfile(fallbackName) };
+      }
     }
   }
   return { session, profile: (profile || null) as RegistrationProfile | null };

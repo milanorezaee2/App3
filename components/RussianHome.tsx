@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import {
@@ -16,6 +16,7 @@ import {
   Play,
   RefreshCw,
   Sparkles,
+  RotateCcw,
   Volume2,
 } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
@@ -120,6 +121,13 @@ export default function RussianHome() {
   });
 
   const openLevel = (levelId: RussianLevelId) => router.push(`/learn/ru/library?level=${levelId}` as never);
+
+  const restartFromBeginnerLevel = () => {
+    Alert.alert('شروع مجدد از سطح ابتدایی', 'می‌خواهید دوباره از اولین درسِ سطح ابتداییِ روسی شروع کنید؟ محتوای درس‌ها دست‌نخورده می‌ماند.', [
+      { text: 'انصراف', style: 'cancel' },
+      { text: 'شروع مجدد', style: 'destructive', onPress: () => { void russianProgress.setCurrentLesson(RUSSIAN_LESSONS[0].id).then(() => router.push({ pathname: '/learn/ru/lesson', params: { id: RUSSIAN_LESSONS[0].id, fromStart: '1' } } as never)).catch(() => undefined); } },
+    ]);
+  };
   const openNextLesson = () => {
     if (resumeLesson) router.push(`/learn/ru/lesson?id=${encodeURIComponent(resumeLesson.id)}` as never);
     else openLevel(2);
@@ -262,6 +270,15 @@ export default function RussianHome() {
             >
               <Volume2 size={17} color={HomeColors.accent} />
               <Text style={styles.startFromBeginningText}>گوش دادن از ابتدا</Text>
+            </Pressable>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="شروع مجدد آموزش روسی از سطح ابتدایی"
+              style={({ pressed }) => [styles.startFromBeginningButton, pressed && styles.buttonPressed]}
+              onPress={restartFromBeginnerLevel}
+            >
+              <RotateCcw size={17} color={HomeColors.accent} />
+              <Text style={styles.startFromBeginningText}>شروع مجدد از سطح ابتدایی</Text>
             </Pressable>
           </View>
 

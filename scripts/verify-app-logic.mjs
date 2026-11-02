@@ -162,12 +162,12 @@ export { default as asyncStorage } from '${STUBS}/async-storage.js';
   const canonical = JSON.parse(readFileSync(path.join(APP, 'assets/data/essential504.json'), 'utf8'));
   const removed504 = JSON.parse(readFileSync(path.join(APP, 'assets/data/essential504-removed-level2.json'), 'utf8'));
 
-  check('212 sentence lessons include the A2, B1 and B2 additions', lessons.length === 212, `got ${lessons.length}`);
+  check('222 sentence lessons include the Pre-A1, A2, B1 and B2 additions', lessons.length === 222, `got ${lessons.length}`);
   check('lesson ids are unique', new Set(lessons.map((l) => l.id)).size === lessons.length);
   const orders = lessons.map((l) => l.order).sort((a, b) => a - b);
-  check('orders are exactly 1..212', JSON.stringify(orders) === JSON.stringify([...Array(212)].map((_, i) => i + 1)));
+  check('orders are exactly 1..222', JSON.stringify(orders) === JSON.stringify([...Array(222)].map((_, i) => i + 1)));
   check('every lesson has a title', lessons.every((l) => typeof l.title === 'string' && l.title.length > 1));
-  check('the active course contains 4242 examples', allSentences.length === 4242);
+  check('the active course contains 4322 examples', allSentences.length === 4322);
   check('every lesson has sentences', lessons.every((l) => Array.isArray(l.sentences) && l.sentences.length > 0));
   check('every sentence has id + English + Persian', allSentences.every((s) => s.id && s.en && s.fa));
   check('sentence ids are unique inside each lesson', lessons.every((l) => new Set(l.sentences.map((s) => s.id)).size === l.sentences.length));
@@ -480,12 +480,14 @@ export { default as asyncStorage } from '${STUBS}/async-storage.js';
   const englishHomeSource = readFileSync(path.join(APP, 'app/lang/index.tsx'), 'utf8');
   const englishLibrarySource = readFileSync(path.join(APP, 'app/lang/library.tsx'), 'utf8');
   const englishBottomNavSource = readFileSync(path.join(APP, 'components/AppBottomNav.tsx'), 'utf8');
-  const todayHeaderStyle = englishHomeSource.match(/sectionHeader:\s*\{([^}]+)\}/)?.[1] ?? '';
+  const learningHomeStyleSource = readFileSync(path.join(APP, 'components/LearningHomeStyles.ts'), 'utf8');
+  const todayHeaderStyle = learningHomeStyleSource.match(/sectionHeader:\s*\{([^}]+)\}/)?.[1] ?? '';
   const bottomNavShellStyle = englishBottomNavSource.match(/shell:\s*\{([^}]+)\}/)?.[1] ?? '';
   check('English Today heading stays right-aligned in RTL without changing its labels', /flexDirection:\s*'row-reverse'/.test(todayHeaderStyle) && englishHomeSource.includes('TODAY AT A GLANCE') && englishHomeSource.includes('برنامهٔ امروز'));
   check('English level cards show unique vocabulary counts calculated from each level', /metrics\.vocabularyCount/.test(englishHomeSource) && englishHomeSource.includes('واژهٔ یکتا') && /stats\.vocabularyCount/.test(englishLibrarySource) && englishLibrarySource.includes('واژهٔ یکتا'));
   check('English bottom navigation places Learning on the right, Conversation in the center, and Review on the left', /flexDirection:\s*'row-reverse'/.test(bottomNavShellStyle) && /path:\s*'\/lang',\s*label:\s*'یادگیری'/.test(englishBottomNavSource) && /path:\s*'\/conversations',\s*label:\s*'مکالمه'/.test(englishBottomNavSource) && /path:\s*'\/review',\s*label:\s*'مرور'/.test(englishBottomNavSource));
-  check('Only English and Russian are selectable', app.languages.LANGUAGES.map(language => language.id).join('|') === 'en|ru');
+  check('English, Russian, and Istanbul Turkish A1..C1 courses are selectable', app.languages.LANGUAGES.map(language => language.id).join('|') === 'en|ru|tr'
+    && app.languages.LANGUAGES.find(language => language.id === 'tr').lessonsCount === 304);
 
   // ---------------------------------------- F. config detection + guards -----
   section('F. Supabase configuration detection & fail-fast guards');
