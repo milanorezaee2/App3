@@ -41,6 +41,11 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
   const startFirstLesson = useRef(fromStart);
   const preserveExistingSession = useRef(false);
   const current = lesson.sentences[sentenceIndex];
+  const unitLabel = lesson.learningMode === 'words' ? 'واژه' : lesson.learningMode === 'chunks' ? 'ترکیب' : 'جمله';
+  const unitLabelPlural = lesson.learningMode === 'words' ? 'واژه‌ها' : lesson.learningMode === 'chunks' ? 'ترکیب‌های کوتاه' : 'جمله‌ها';
+  const coreStageLabel = lesson.learningMode === 'words' ? 'واژه‌های اصلی' : lesson.learningMode === 'chunks' ? 'ترکیب‌های اصلی' : 'جمله‌های اصلی';
+  const stageLabelFa = stage === 1 ? coreStageLabel : stage === 4 && lesson.learningMode === 'words' ? 'یادآوری واژه' : stage === 4 && lesson.learningMode === 'chunks' ? 'ساخت ترکیب کوتاه' : stage === 5 && lesson.learningMode === 'words' ? 'مرور واژگان' : stage === 7 && lesson.learningMode === 'words' ? 'مرور فعال واژه‌ها' : stages[stage].labelFa;
+  const stageLabelEn = stage === 1 && lesson.learningMode === 'words' ? 'Core Words' : stage === 1 && lesson.learningMode === 'chunks' ? 'Core Chunks' : stage === 4 && lesson.learningMode === 'words' ? 'Word Recall' : stage === 4 && lesson.learningMode === 'chunks' ? 'Chunk Building' : stage === 5 && lesson.learningMode === 'words' ? 'Vocabulary Review' : stage === 7 && lesson.learningMode === 'words' ? 'Active Word Review' : stages[stage].labelEn;
   const checks = lesson.checks ?? [];
   const allChecksPassed = checks.every((question, index) => answers[String(index)] === question.correctIndex);
   const progressPercent = Math.round(((stage + 1) / stages.length) * 100);
@@ -165,17 +170,17 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           <View style={styles.headerText}>
             <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
-            <Text style={styles.headerSub}>{stages[stage].labelFa} · مرحلهٔ {fa(stage + 1)} از {fa(stages.length)}</Text>
+            <Text style={styles.headerSub}>{stageLabelFa} · مرحلهٔ {fa(stage + 1)} از {fa(stages.length)}</Text>
           </View>
           <View style={styles.percentBadge}><Text style={styles.percent}>{fa(progressPercent)}٪</Text><Text style={styles.percentLabel}>پیشرفت</Text></View>
         </View>
-        <View style={styles.headerBottom}><View style={styles.headerInfoChip}><BookOpenCheck size={13} color="#D9DBFF" /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View><Text style={styles.headerInfoText}>{fa(lesson.sentences.length)} جملهٔ اصلی</Text></View>
+        <View style={styles.headerBottom}><View style={styles.headerInfoChip}><BookOpenCheck size={13} color="#D9DBFF" /><Text style={styles.headerInfoText}>{lesson.learningMode === 'words' ? 'واژه‌محور' : lesson.learningMode === 'chunks' ? 'ترکیب‌محور' : 'جمله‌محور'}</Text></View><Text style={styles.headerInfoText}>{fa(lesson.sentences.length)} {unitLabel} برای تمرین</Text></View>
       </LinearGradient>
 
       <View style={styles.stepperCard}>
         <View style={styles.stepperHeading}>
           <View><Text style={styles.stepperEyebrow}>LESSON FLOW · 09 STAGES</Text><Text style={styles.stepperTitle}>جریان این درس</Text></View>
-          <View style={styles.stepperNow}><Text style={styles.stepperNowEn}>{stages[stage].labelEn}</Text><Text style={styles.stepperNowFa}>{stages[stage].labelFa}</Text></View>
+          <View style={styles.stepperNow}><Text style={styles.stepperNowEn}>{stageLabelEn}</Text><Text style={styles.stepperNowFa}>{stageLabelFa}</Text></View>
         </View>
         <View style={styles.stepSegments}>{stages.map((item, index) => <View key={item.id} accessibilityLabel={`${item.labelEn} ${index + 1} از ${stages.length}`} style={[styles.stepSegment, index <= stage && styles.stepSegmentDone, index === stage && styles.stepSegmentCurrent]} />)}</View>
         <View style={styles.stepperEnds}><Text style={styles.stepperEndText}>Situation</Text><Text style={styles.stepperEndText}>Spaced Review</Text></View>
@@ -188,14 +193,14 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           <Text style={styles.stageEyebrow}>موقعیت واقعی</Text>
           <Text style={styles.stageTitle}>{lesson.title}</Text>
           <Text style={styles.situation}>{lesson.situation}</Text>
-          <View style={styles.promiseCard}><Text style={styles.promiseTitle}>در پایان این درس می‌توانید:</Text><Text style={styles.promiseText}>با {fa(lesson.sentences.length)} جملهٔ کوتاه، این موقعیت را مدیریت کنید.</Text></View>
+          <View style={styles.promiseCard}><Text style={styles.promiseTitle}>در پایان این درس می‌توانید:</Text><Text style={styles.promiseText}>با {fa(lesson.sentences.length)} {unitLabel}، این موضوع را یاد می‌گیرید.</Text></View>
           {lesson.teachingFa ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ ترکی استانبولی به فارسی</Text><Text style={styles.noteText}>{lesson.teachingFa}</Text></View> : null}
         </View>}
 
         {stage === 1 && <View style={styles.sentenceStage}>
-          <Text style={styles.counter}>جملهٔ {fa(sentenceIndex + 1)} از {fa(lesson.sentences.length)}</Text>
+          <Text style={styles.counter}>{unitLabel} {fa(sentenceIndex + 1)} از {fa(lesson.sentences.length)}</Text>
           <View style={styles.sentenceCard}>
-            <Pressable accessibilityRole="button" accessibilityLabel="شنیدن جملهٔ ترکی" style={styles.soundButton} onPress={() => speak(current.text)}><Volume2 size={25} color="#FFFFFF" /></Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن ${unitLabel} ترکی`} style={styles.soundButton} onPress={() => speak(current.text)}><Volume2 size={25} color="#FFFFFF" /></Pressable>
             <Text style={styles.turkishSentence}>{current.text}</Text>
             <Text style={styles.pronunciation}>{current.pronunciation}</Text>
             <View style={styles.divider} />
@@ -203,16 +208,16 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
             {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternText}>{current.pattern}</Text></View> : null}
           </View>
           <View style={styles.replayRow}>
-            <Pressable accessibilityRole="button" accessibilityLabel="پخش آهستهٔ جمله" style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable>
-            <Pressable accessibilityRole="button" accessibilityLabel="پخش معمولی جمله" style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel={`پخش آهستهٔ ${unitLabel}`} style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel={`پخش معمولی ${unitLabel}`} style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable>
           </View>
-          <Text style={styles.hint}>جمله به‌صورت خودکار پخش می‌شود. می‌توانید آهسته یا معمولی دوباره بشنوید و با صدای بلند تکرار کنید.</Text>
+          <Text style={styles.hint}>{lesson.learningMode === 'words' ? 'واژه به‌صورت خودکار پخش می‌شود؛ آهسته یا معمولی دوباره بشنوید و صدای آن را تکرار کنید.' : lesson.learningMode === 'chunks' ? 'ترکیب به‌صورت خودکار پخش می‌شود؛ آهسته یا معمولی دوباره بشنوید و تکرار کنید.' : 'جمله به‌صورت خودکار پخش می‌شود؛ آهسته یا معمولی دوباره بشنوید و تکرار کنید.'}</Text>
         </View>}
 
         {stage === 2 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><Headphones size={34} color={Palette.primary} /></View>
-          <Text style={styles.stageTitle}>شنیدن جمله‌ها</Text>
-          <Text style={styles.stageDesc}>هر جمله را جداگانه گوش دهید و معنی همان جمله را به یاد بیاورید. واژه‌ها کنار جملهٔ اصلی می‌مانند.</Text>
+          <Text style={styles.stageTitle}>شنیدن {unitLabelPlural}</Text>
+          <Text style={styles.stageDesc}>{lesson.learningMode === 'words' ? 'هر واژه را جداگانه گوش دهید و معنی و نقش واژگانی‌اش را به یاد بیاورید.' : lesson.learningMode === 'chunks' ? 'هر ترکیب کوتاه را جداگانه گوش دهید و معنی اجزای آشنای آن را به یاد بیاورید.' : 'هر جمله را جداگانه گوش دهید و معنی آن را به یاد بیاورید.'}</Text>
           <View style={styles.listenList}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityState={{ selected: index === sentenceIndex }} style={[styles.listenRow, index === sentenceIndex && styles.listenRowActive]} onPress={() => selectSentence(index)}>
             <View style={styles.listenNumber}><Text style={styles.listenNumberText}>{fa(index + 1)}</Text></View>
             <Text style={styles.listenTurkish}>{sentence.text}</Text>
@@ -226,26 +231,32 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           <Text style={styles.stageTitle}>سایه‌خوانی · Shadowing</Text>
           <Text style={styles.stageDesc}>نمونه را آهسته پخش کنید، مکث کنید و با همان آهنگ تکرار کنید. ضبط صدا یا ارزیابی گفتار لازم نیست.</Text>
           <View style={styles.speechPractice}>
-            <Text style={styles.speechTitle}>جملهٔ انتخاب‌شده</Text>
+            <Text style={styles.speechTitle}>{unitLabel} انتخاب‌شده</Text>
             <Text style={styles.speechSentence}>{current.text}</Text>
             <Pressable accessibilityRole="button" style={styles.playSlowButton} onPress={() => speak(current.text, .68)}><Volume2 size={18} color="#FFFFFF" /><Text style={styles.recordButtonText}>پخش آهستهٔ نمونه</Text></Pressable>
-            <Text style={styles.speechHint}>پس از شنیدن، جمله را با صدای بلند تکرار کنید؛ گفتار ضبط یا نمره‌گذاری نمی‌شود.</Text>
+            <Text style={styles.speechHint}>پس از شنیدن، {unitLabel} را با صدای بلند تکرار کنید؛ گفتار ضبط یا نمره‌گذاری نمی‌شود.</Text>
           </View>
-          <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`جمله ${fa(index + 1)}`} onPress={() => selectSentence(index, .68)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
+          <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`${unitLabel} ${fa(index + 1)}`} onPress={() => selectSentence(index, .68)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
         </View>}
 
         {stage === 4 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><RotateCcw size={33} color={Palette.success} /></View>
-          <Text style={styles.stageTitle}>ساخت جمله</Text>
-          <Text style={styles.stageDesc}>معنی را بخوانید و واژه‌های همان جمله را به ترتیب بچینید؛ تمرین به جمله‌های همین درس متصل است.</Text>
-          <TurkishSentenceBuilder key={current.id} sentence={current} />
-          <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`جمله ${fa(index + 1)}`} onPress={() => setSentenceIndex(index)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
+          {lesson.learningMode === 'words' ? <>
+            <Text style={styles.stageTitle}>یادآوری واژهٔ مستقل</Text>
+            <Text style={styles.stageDesc}>معنی را از روی خود واژه حدس بزنید؛ سپس پاسخ را آشکار کنید. اینجا هنوز واژه را به جمله تبدیل نمی‌کنیم.</Text>
+            <View style={styles.sentenceCard}><Text style={styles.turkishSentence}>{current.text}</Text><Pressable accessibilityRole="button" accessibilityState={{ expanded: revealed }} style={styles.showAnswersButton} onPress={() => setRevealed(value => !value)}><Text style={styles.showAnswersText}>{revealed ? 'پنهان‌کردن معنی' : 'نمایش معنی'}</Text></Pressable>{revealed ? <><View style={styles.divider} /><Text style={styles.persian}>{current.fa}</Text><Text style={styles.patternText}>{current.pattern ?? 'واژهٔ مستقل'}</Text></> : null}</View>
+          </> : <>
+            <Text style={styles.stageTitle}>{lesson.learningMode === 'chunks' ? 'ساخت ترکیب کوتاه' : 'ساخت جمله'}</Text>
+            <Text style={styles.stageDesc}>{lesson.learningMode === 'chunks' ? 'معنی را بخوانید و واژه‌های همان ترکیب را به ترتیب بچینید.' : 'معنی را بخوانید و واژه‌های همان جمله را به ترتیب بچینید؛ تمرین به محتوای همین درس متصل است.'}</Text>
+            <TurkishSentenceBuilder key={current.id} sentence={current} />
+          </>}
+          <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`${unitLabel} ${fa(index + 1)}`} onPress={() => { setSentenceIndex(index); setRevealed(false); }} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
         </View>}
 
         {stage === 5 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><Sparkles size={34} color={Palette.warning} /></View>
-          <Text style={styles.stageTitle}>واژگان از دل جمله‌ها</Text>
-          <Text style={styles.stageDesc}>هر واژه را همراه معنی و همان جمله‌ای ببینید که از آن آمده است.</Text>
+          <Text style={styles.stageTitle}>{lesson.learningMode === 'words' ? 'مرور واژه‌های مستقل' : lesson.learningMode === 'chunks' ? 'واژگان در ترکیب‌ها' : 'واژگان از دل جمله‌ها'}</Text>
+          <Text style={styles.stageDesc}>{lesson.learningMode === 'words' ? 'هر واژه را با معنی و نقش واژگانی‌اش مرور کنید.' : lesson.learningMode === 'chunks' ? 'هر واژه را همراه معنی و ترکیب کوتاهی که در آن آمده است ببینید.' : 'هر واژه را همراه معنی و همان جمله‌ای ببینید که از آن آمده است.'}</Text>
           <View style={styles.vocabList}>{vocabulary.map(({ word, sentence }) => <View key={`${word.word}-${sentence.id}`} style={styles.vocabCard}>
             <View style={styles.vocabTop}><Text style={styles.vocabWord}>{word.word}</Text><Text style={styles.vocabMeaning}>{word.meaning}</Text></View>
             <Text style={styles.vocabExample}>{sentence.text}</Text><Text style={styles.vocabExampleFa}>{sentence.fa}</Text>
@@ -264,17 +275,29 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
         </View>}
 
         {stage === 7 && <View style={styles.centerStage}>
-          <View style={styles.bigIcon}><MessageCircle size={34} color={Palette.primary} /></View>
-          <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
-          <Text style={styles.stageDesc}>از دیالوگ همین درس نقش‌آفرینی کنید؛ جملهٔ خود را بگویید و سپس نمونه را بشنوید.</Text>
-          <TurkishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} />
+          {lesson.learningMode === 'words' ? <>
+            <View style={styles.bigIcon}><RotateCcw size={33} color={Palette.success} /></View>
+            <Text style={styles.stageTitle}>مرور فعال واژه‌های مستقل</Text>
+            <Text style={styles.stageDesc}>معنی را پیش از آشکارکردن به یاد بیاورید. این درس واژه‌محور است؛ بنابراین در این مرحله هم عبارت یا گفت‌وگوی تازه‌ای وارد نمی‌شود.</Text>
+            <View style={styles.sentenceCard}>
+              <Text style={styles.turkishSentence}>{current.text}</Text>
+              <Pressable accessibilityRole="button" accessibilityState={{ expanded: revealed }} style={styles.showAnswersButton} onPress={() => setRevealed(value => !value)}><Text style={styles.showAnswersText}>{revealed ? 'پنهان‌کردن معنی' : 'یادآوری و نمایش معنی'}</Text></Pressable>
+              {revealed ? <><View style={styles.divider} /><Text style={styles.persian}>{current.fa}</Text></> : null}
+            </View>
+            <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`واژه ${fa(index + 1)}`} accessibilityState={{ selected: index === sentenceIndex }} onPress={() => { setSentenceIndex(index); setRevealed(false); }} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
+          </> : <>
+            <View style={styles.bigIcon}><MessageCircle size={34} color={Palette.primary} /></View>
+            <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
+            <Text style={styles.stageDesc}>از دیالوگ همین درس نقش‌آفرینی کنید؛ جملهٔ خود را بگویید و سپس نمونه را بشنوید.</Text>
+            <TurkishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} />
+          </>}
         </View>}
 
         {stage === 8 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><RefreshCw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
-          <Text style={styles.stageDesc}>با پایان درس، جمله‌ها وارد مرور محلی می‌شوند؛ فاصلهٔ بعدی براساس پاسخی که در مرور می‌دهید تنظیم می‌شود.</Text>
-          <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} جمله و {fa(vocabulary.length)} واژه/عبارت یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
+          <Text style={styles.stageDesc}>با پایان درس، {unitLabelPlural} وارد مرور محلی می‌شوند؛ فاصلهٔ بعدی براساس پاسخی که در مرور می‌دهید تنظیم می‌شود.</Text>
+          <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} {unitLabel} و {fa(vocabulary.length)} واژهٔ یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
           <View style={styles.evidenceCard}>
             <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
             <Text style={styles.evidenceIntro}>پرسش‌ها به جمله‌های همین درس وصل‌اند. پاسخ نادرست را می‌توانید دوباره امتحان کنید یا توضیح پاسخ نمونه را ببینید.</Text>
@@ -305,11 +328,11 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
 
       <View style={styles.footer}>
         <View style={styles.footerActions}>
-          {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && styles.nextButtonDisabled]}>
-            <Text style={styles.previousButtonText}>جمله قبلی</Text>
+          {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel={`${unitLabel} قبلی` } accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && styles.nextButtonDisabled]}>
+            <Text style={styles.previousButtonText}>{unitLabel} قبلی</Text>
           </Pressable>}
           <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === stages.length - 1 && !allChecksPassed && !showCheckAnswers)} style={[styles.nextButton, stage === 1 && styles.nextButtonBesidePrevious, (saving || (stage === stages.length - 1 && !allChecksPassed && !showCheckAnswers)) && styles.nextButtonDisabled]} onPress={() => void next()}>
-            <Text style={styles.nextText}>{saving ? 'در حال ذخیره…' : stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جملهٔ بعدی' : 'ادامه'}</Text>
+            <Text style={styles.nextText}>{saving ? 'در حال ذخیره…' : stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? `${unitLabel} بعدی` : 'ادامه'}</Text>
             {stage === stages.length - 1 ? <Check size={20} color="#FFFFFF" /> : <ChevronLeft size={20} color="#FFFFFF" />}
           </Pressable>
         </View>

@@ -57,13 +57,15 @@ export function EnglishLevelRail<T extends CourseLevelId = CourseLevelId>({
   activeLabelColor?: string;
   numberOffset?: number;
 }) {
+  const resolvedLevels = levels ?? COURSE_LEVELS as unknown as ReadonlyArray<{ id: T; title: string; cefr: string }>;
+  const activeIndex = resolvedLevels.findIndex(level => level.id === activeLevelId);
   return (
     <View style={[styles.rail, direction === 'rtl' && styles.railRtl]}>
-      {(levels ?? COURSE_LEVELS as unknown as ReadonlyArray<{ id: T; title: string; cefr: string }>).map((level, index, allLevels) => {
+      {resolvedLevels.map((level, index, allLevels) => {
         const count = counts?.[level.id];
         const done = !!count && count.total > 0 && count.completed === count.total;
         const active = level.id === activeLevelId;
-        const reached = index < activeLevelId;
+        const reached = activeIndex >= 0 && index < activeIndex;
         return (
           <View key={level.id} style={[styles.railItem, direction === 'rtl' && styles.railItemRtl]}>
             <Pressable

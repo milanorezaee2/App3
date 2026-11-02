@@ -61,6 +61,11 @@ export default function RussianLibrary() {
   useEffect(() => { setExpandedGroup(0); }, [selected?.id]);
 
   const completedIds = progress?.completedLessonIds ?? [];
+  const levelStartLesson = selectedLessons.find(item => !completedIds.includes(item.id) && !!sessions[item.id])
+    ?? selectedLessons.find(item => !completedIds.includes(item.id))
+    ?? selectedLessons[0];
+  const levelFullyCompleted = selectedLessons.length > 0 && selectedLessons.every(item => completedIds.includes(item.id));
+  const levelStartLabel = levelFullyCompleted ? 'بازبینی این سطح' : levelStartLesson && sessions[levelStartLesson.id] ? 'ادامهٔ درس این سطح' : 'شروع یادگیری از این سطح';
   const firstUnfinished = RUSSIAN_LESSONS.find(item => !completedIds.includes(item.id)) ?? RUSSIAN_LESSONS[RUSSIAN_LESSONS.length - 1];
   const activeLevelId = firstUnfinished.levelId;
   const countFor = (levelId: RussianLevelId) => {
@@ -145,6 +150,11 @@ export default function RussianLibrary() {
                 <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(patternCount)}</Text><Text style={styles.heroMetricLabel}>الگوی ثبت‌شده</Text></View><View style={styles.heroMetricDivider} />
                 <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(words.size)}</Text><Text style={styles.heroMetricLabel}>واژهٔ یکتا</Text></View>
               </View>
+              <Pressable accessibilityRole="button" accessibilityLabel={`${levelStartLabel}: ${selected.title}`} accessibilityState={{ disabled: !levelStartLesson }} disabled={!levelStartLesson} style={({ pressed }) => [styles.levelStartButton, pressed && { opacity: .85 }, !levelStartLesson && styles.levelStartButtonDisabled]} onPress={() => { if (levelStartLesson) openLesson(levelStartLesson.id); }}>
+                <Play size={16} color={selected.color} fill={selected.color} />
+                <Text style={styles.levelStartButtonText}>{levelStartLabel}</Text>
+                <ChevronLeft size={18} color={selected.color} />
+              </Pressable>
             </LinearGradient>
 
             <View style={styles.focusCard}>
@@ -255,6 +265,9 @@ const styles = StyleSheet.create({
   selectedProgressValue: { fontFamily: Typography.numberFontFamily, color: '#FFFFFF', fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
   selectedProgressTrack: { height: 7, borderRadius: 999, overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.22)' },
   selectedProgressFill: { height: '100%', alignSelf: 'flex-end', borderRadius: 999, backgroundColor: '#B8F28F' },
+  levelStartButton: { minHeight: 48, marginTop: 5, paddingHorizontal: 15, borderRadius: 15, backgroundColor: '#FFFFFF', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 9 },
+  levelStartButtonDisabled: { opacity: 0.55 },
+  levelStartButtonText: { flex: 1, fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 12, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   metricGrid: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', paddingTop: 12, marginTop: 2, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.18)' },
   heroMetric: { flex: 1, alignItems: 'center', gap: 1 },
   heroMetricValue: { fontFamily: Typography.numberFontFamily, color: '#FFFFFF', fontSize: 17, fontWeight: '800', writingDirection: 'rtl' },

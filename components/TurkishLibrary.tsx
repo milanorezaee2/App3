@@ -13,11 +13,15 @@ import { Typography } from '@/lib/theme';
 
 const LESSONS_PER_GROUP = 10;
 
+function lessonUnitLabel(mode: 'words' | 'chunks' | 'sentences') {
+  return mode === 'words' ? 'واژه' : mode === 'chunks' ? 'ترکیب' : 'جمله';
+}
+
 function lessonStatus(lessonId: string, progress: CourseProgress | null, sessions: Record<string, TurkishLessonSession | null>) {
   if (progress?.completedLessonIds.includes(lessonId)) return 'تکمیل‌شده · قابل مرور';
   const session = sessions[lessonId];
   if (session && (session.stage > 0 || session.sentenceIndex > 0)) {
-    return `ادامه از مرحله ${fa(session.stage + 1)}، جمله ${fa(session.sentenceIndex + 1)}`;
+    return `ادامه از مرحله ${fa(session.stage + 1)}، واحد ${fa(session.sentenceIndex + 1)}`;
   }
   return 'شروع درس';
 }
@@ -61,6 +65,11 @@ export default function TurkishLibrary() {
   useEffect(() => { setExpandedGroup(0); }, [selected?.id]);
 
   const completedIds = progress?.completedLessonIds ?? [];
+  const levelStartLesson = selectedLessons.find(item => !completedIds.includes(item.id) && !!sessions[item.id])
+    ?? selectedLessons.find(item => !completedIds.includes(item.id))
+    ?? selectedLessons[0];
+  const levelFullyCompleted = selectedLessons.length > 0 && selectedLessons.every(item => completedIds.includes(item.id));
+  const levelStartLabel = levelFullyCompleted ? 'بازبینی این سطح' : levelStartLesson && sessions[levelStartLesson.id] ? 'ادامهٔ درس این سطح' : 'شروع یادگیری از این سطح';
   const firstUnfinished = TURKISH_LESSONS.find(item => !completedIds.includes(item.id)) ?? TURKISH_LESSONS[TURKISH_LESSONS.length - 1];
   const activeLevelId = firstUnfinished.levelId;
   const countFor = (levelId: TurkishLevelId) => {
@@ -68,6 +77,7 @@ export default function TurkishLibrary() {
     return { total: lessons.length, completed: lessons.filter(item => completedIds.includes(item.id)).length };
   };
   const sentenceCount = selectedLessons.reduce((count, lesson) => count + lesson.sentences.length, 0);
+  const selectedUnitLabel = selected?.id === -1 ? 'واحد آموزشی' : 'جمله';
   const words = new Set(selectedLessons.flatMap(lesson => lesson.sentences.flatMap(sentence => sentence.vocabulary.map(item => item.word))));
   const patternCount = selectedLessons.reduce((count, lesson) => count + lesson.sentences.filter(sentence => !!sentence.pattern).length, 0);
   const allWords = new Set(TURKISH_LESSONS.flatMap(lesson => lesson.sentences.flatMap(sentence => sentence.vocabulary.map(item => item.word))));
@@ -90,26 +100,26 @@ export default function TurkishLibrary() {
 
             <LinearGradient colors={['#4A1828', '#832843', '#B83D56']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
               <View pointerEvents="none" style={styles.heroOrb} />
-              <View style={styles.heroTopRow}><View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View><View style={styles.heroPill}><Sparkles size={13} color="#FFD6DE" /><Text style={styles.heroPillText}>۶ سطح در نقشهٔ ترکی استانبولی</Text></View></View>
+              <View style={styles.heroTopRow}><View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View><View style={styles.heroPill}><Sparkles size={13} color="#FFD6DE" /><Text style={styles.heroPillText}>۷ گام در نقشهٔ ترکی استانبولی</Text></View></View>
               <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
-              <Text style={styles.overviewTitle}>از الفبا و هماهنگی واکه‌ها؛{'\n'}جمله به جمله</Text>
-              <Text style={styles.overviewText}>سطح‌های کامل A1 تا C1 (در دو بخش Foundation و Survival برای هر سطح) منتشر شده‌اند. آمار فقط درس‌ها و جمله‌های واقعی را می‌شمارد و سطح‌های آینده محتوای ساختگی ندارند.</Text>
+              <Text style={styles.overviewTitle}>از واژهٔ نخست تا جمله؛{'\n'}گام‌به‌گام</Text>
+              <Text style={styles.overviewText}>در Pre-A1 از واژه‌های مستقل می‌آغازید، بعد ترکیب کوتاه و جمله می‌سازید؛ آموزش الفبا و دستور به‌تدریج در A1 Foundation ادامه می‌یابد. آمار از محتوای واقعی دوره می‌آید.</Text>
               <View style={styles.overviewMetrics}>
                 <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(TURKISH_LESSONS.length)}</Text><Text style={styles.overviewMetricLabel}>درس موجود</Text></View><View style={styles.overviewMetricDivider} />
-                <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(totalSentences)}</Text><Text style={styles.overviewMetricLabel}>جملهٔ اصلی</Text></View><View style={styles.overviewMetricDivider} />
+                <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(totalSentences)}</Text><Text style={styles.overviewMetricLabel}>مورد آموزشی</Text></View><View style={styles.overviewMetricDivider} />
                 <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(allWords.size)}</Text><Text style={styles.overviewMetricLabel}>واژهٔ یکتا</Text></View>
               </View>
             </LinearGradient>
 
             <View style={styles.levelRailCard}>
-              <EnglishSectionHeading eyebrow="YOUR CURRENT STEP" title="پیشرفت در شش سطح" detail="این برچسب‌ها نقشهٔ آموزشی داخلی‌اند و گواهی یا ارزیابی رسمی سطح نیستند." />
+              <EnglishSectionHeading eyebrow="YOUR CURRENT STEP" title="پیشرفت در مسیر Pre-A1 تا C1" detail="این برچسب‌ها نقشهٔ آموزشی داخلی‌اند و گواهی یا ارزیابی رسمی سطح نیستند." />
               <View style={styles.railWrap}>
                 <EnglishLevelRail activeLevelId={activeLevelId} counts={Object.fromEntries(TURKISH_LEVELS.map(item => [item.id, countFor(item.id)]))} levels={TURKISH_LEVELS} onSelect={openLevel} />
               </View>
               <Text style={styles.railCurrent}>اکنون · {TURKISH_LEVELS.find(item => item.id === activeLevelId)?.title} · سطح {fa(activeLevelId)}</Text>
             </View>
 
-            <EnglishSectionHeading eyebrow="CHOOSE A LEVEL" title="انتخاب سطح" detail="شمار درس و جمله از محتوای واقعی هر سطح محاسبه می‌شود." />
+            <EnglishSectionHeading eyebrow="CHOOSE A LEVEL" title="انتخاب سطح" detail="شمار درس و واحدهای آموزشی از محتوای واقعی هر سطح محاسبه می‌شود." />
             <View style={styles.levelList}>
               {TURKISH_LEVELS.map(item => {
                 const stats = countFor(item.id);
@@ -120,7 +130,7 @@ export default function TurkishLibrary() {
                   <View style={styles.levelOptionContent}>
                     <View style={styles.levelOptionTitleRow}><Text style={styles.levelOptionTitle}>{item.title}</Text><Text style={[styles.levelOptionBand, { color: item.color }]}>{item.cefr}</Text></View>
                     <Text style={styles.levelOptionDescription}>{item.description || 'در نقشهٔ آیندهٔ دوره'}</Text>
-                    <View style={styles.levelOptionMeta}><Text style={styles.levelOptionMetaText}>{fa(stats.total)} درس</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{fa(sentenceTotal)} جمله</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{item.status === 'planned' ? 'در نقشهٔ آینده' : `${fa(stats.completed)} تکمیل`}</Text></View>
+                    <View style={styles.levelOptionMeta}><Text style={styles.levelOptionMetaText}>{fa(stats.total)} درس</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{fa(sentenceTotal)} {item.id === -1 ? 'مورد آموزشی' : 'جمله'}</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{item.status === 'planned' ? 'در نقشهٔ آینده' : `${fa(stats.completed)} تکمیل`}</Text></View>
                     <EnglishProgressTrack value={pct} color={item.color} height={5} />
                   </View>
                   <ChevronLeft size={19} color={Palette.muted} />
@@ -141,20 +151,25 @@ export default function TurkishLibrary() {
               <View style={styles.selectedProgressHeading}><Text style={styles.selectedProgressLabel}>پیشرفت این سطح</Text><Text style={styles.selectedProgressValue}>{fa(countFor(selected.id).completed)} از {fa(selectedLessons.length)} درس</Text></View>
               <View style={styles.selectedProgressTrack}><View style={[styles.selectedProgressFill, { width: `${selectedLessons.length ? countFor(selected.id).completed / selectedLessons.length * 100 : 0}%` }]} /></View>
               <View style={styles.metricGrid}>
-                <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(sentenceCount)}</Text><Text style={styles.heroMetricLabel}>جمله</Text></View><View style={styles.heroMetricDivider} />
+                <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(sentenceCount)}</Text><Text style={styles.heroMetricLabel}>{selectedUnitLabel}</Text></View><View style={styles.heroMetricDivider} />
                 <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(patternCount)}</Text><Text style={styles.heroMetricLabel}>الگوی ثبت‌شده</Text></View><View style={styles.heroMetricDivider} />
                 <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(words.size)}</Text><Text style={styles.heroMetricLabel}>واژهٔ یکتا</Text></View>
               </View>
+              <Pressable accessibilityRole="button" accessibilityLabel={`${levelStartLabel}: ${selected.title}`} accessibilityState={{ disabled: !levelStartLesson }} disabled={!levelStartLesson} style={({ pressed }) => [styles.levelStartButton, pressed && { opacity: .85 }, !levelStartLesson && styles.levelStartButtonDisabled]} onPress={() => { if (levelStartLesson) openLesson(levelStartLesson.id); }}>
+                <Play size={16} color={selected.color} fill={selected.color} />
+                <Text style={styles.levelStartButtonText}>{levelStartLabel}</Text>
+                <ChevronLeft size={18} color={selected.color} />
+              </Pressable>
             </LinearGradient>
 
             <View style={styles.focusCard}>
               <View style={styles.focusHeadingRow}><View style={styles.focusIcon}><Sparkles size={17} color={Palette.primary} /></View><View style={styles.focusHeadingCopy}><Text style={styles.focusEyebrow}>LEVEL FOCUS</Text><Text style={styles.focusTitle}>موضوعات این سطح</Text></View></View>
               <Text style={styles.focusDescription}>{selected.description || 'برای این سطح هنوز سرفصلی منتشر نشده است.'}</Text>
               {selected.modules.length > 0 ? <View style={styles.moduleGrid}>{selected.modules.map((module, index) => <View key={`${index}-${module}`} style={styles.moduleChip}><View style={[styles.moduleDot, { backgroundColor: selected.color }]} /><Text style={styles.moduleText}>{displayEnglishModuleLabel(module)}</Text></View>)}</View> : null}
-              <Text style={styles.focusFootnote}>{selected.status === 'planned' ? 'این سطح بخشی از نقشهٔ آینده است؛ تا زمان تدوین، درس یا جمله‌ای به شمار محتوای موجود اضافه نمی‌شود.' : 'محتوای منتشرشده بر پایهٔ جمله‌های ترکی استانبولی و راهنمای فارسی است؛ این نقشه سنجش رسمی CEFR نیست.'}</Text>
+              <Text style={styles.focusFootnote}>{selected.status === 'planned' ? 'این سطح بخشی از نقشهٔ آینده است؛ تا زمان تدوین، درس یا محتوای آموزشی به شمار محتوای موجود اضافه نمی‌شود.' : selected.id === -1 ? 'Pre-A1 از واژه‌های مستقل به ترکیب‌ها و جمله‌ها می‌رسد؛ این نقشه سنجش رسمی CEFR نیست.' : 'محتوای منتشرشده بر پایهٔ جمله‌های ترکی استانبولی و راهنمای فارسی است؛ این نقشه سنجش رسمی CEFR نیست.'}</Text>
             </View>
 
-            <View style={styles.lessonSectionHeading}><View><Text style={styles.brandEyebrow}>SENTENCE-BASED LESSONS</Text><Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text></View><View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{fa(selectedLessons.length)} درس</Text></View></View>
+            <View style={styles.lessonSectionHeading}><View><Text style={styles.brandEyebrow}>{selected?.id === -1 ? 'WORDS · CHUNKS · SENTENCES' : 'SENTENCE-BASED LESSONS'}</Text><Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text></View><View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{fa(selectedLessons.length)} درس</Text></View></View>
 
             {selectedLessons.length ? <View style={styles.groupList}>{lessonGroups.map((group, index) => {
               const first = group[0];
@@ -178,12 +193,12 @@ export default function TurkishLibrary() {
                       <View style={styles.lessonTitleLine}><Text style={styles.lessonTitle}>{item.title}</Text><View style={[styles.lessonStatus, complete && styles.lessonStatusDone, resumable && styles.lessonStatusResume]}><Text style={[styles.lessonStatusText, complete && styles.lessonStatusTextDone, resumable && styles.lessonStatusTextResume]}>{status}</Text></View></View>
                       <Text style={styles.lessonSubtitle}>{item.subtitle}</Text>
                       <View style={styles.lessonSentencePreview}>
-                        <View style={styles.lessonSentenceHeader}><Volume2 size={12} color={Palette.primary} /><Text style={styles.lessonSentenceEyebrow}>جملهٔ آغازین</Text></View>
+                        <View style={styles.lessonSentenceHeader}><Volume2 size={12} color={Palette.primary} /><Text style={styles.lessonSentenceEyebrow}>{lessonUnitLabel(item.learningMode)} آغازین</Text></View>
                         <Text style={styles.lessonSentenceTurkish}>{sentence.text}</Text>
                         <Text style={styles.lessonSentenceFa}>{sentence.fa}</Text>
                         {!!sentence.vocabulary.length && <View style={styles.lessonVocabRow}>{sentence.vocabulary.slice(0, 3).map(word => <Text key={word.word} style={styles.lessonVocabChip}>{word.word} · {word.meaning}</Text>)}</View>}
                       </View>
-                      <View style={styles.lessonFooter}><View style={styles.lessonFooterItem}><Clock3 size={12} color={Palette.muted} /><Text style={styles.lessonFooterText}>{fa(item.durationMinutes)} دقیقه</Text></View><Text style={styles.lessonFooterDot}>·</Text><Text style={styles.lessonFooterText}>{fa(item.sentences.length)} جملهٔ اصلی</Text></View>
+                      <View style={styles.lessonFooter}><View style={styles.lessonFooterItem}><Clock3 size={12} color={Palette.muted} /><Text style={styles.lessonFooterText}>{fa(item.durationMinutes)} دقیقه</Text></View><Text style={styles.lessonFooterDot}>·</Text><Text style={styles.lessonFooterText}>{fa(item.sentences.length)} {lessonUnitLabel(item.learningMode)} اصلی</Text></View>
                     </View>
                     <View style={styles.lessonPlayIcon}><Play size={13} color={Palette.primary} fill={Palette.primary} /></View>
                   </Pressable>;
@@ -255,6 +270,9 @@ const styles = StyleSheet.create({
   selectedProgressValue: { fontFamily: Typography.numberFontFamily, color: '#FFFFFF', fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
   selectedProgressTrack: { height: 7, borderRadius: 999, overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.22)' },
   selectedProgressFill: { height: '100%', alignSelf: 'flex-end', borderRadius: 999, backgroundColor: '#B8F28F' },
+  levelStartButton: { minHeight: 48, marginTop: 5, paddingHorizontal: 15, borderRadius: 15, backgroundColor: '#FFFFFF', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 9 },
+  levelStartButtonDisabled: { opacity: 0.55 },
+  levelStartButtonText: { flex: 1, fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 12, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   metricGrid: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', paddingTop: 12, marginTop: 2, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.18)' },
   heroMetric: { flex: 1, alignItems: 'center', gap: 1 },
   heroMetricValue: { fontFamily: Typography.numberFontFamily, color: '#FFFFFF', fontSize: 17, fontWeight: '800', writingDirection: 'rtl' },

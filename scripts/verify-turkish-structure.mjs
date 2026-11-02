@@ -272,18 +272,38 @@ check(russian.RUSSIAN_LESSONS.reduce((n, l) => n + l.sentences.length, 0) === 10
 
 // 2. Alphabet, levels, and A1 + A2 syllabus structure
 check(turkish.TURKISH_ALPHABET.join('') === 'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ', 'Turkish 29-letter alphabet is exact');
-check(turkish.TURKISH_LEVELS.length === 6, 'Turkish has the same six-level course skeleton');
-check(turkish.TURKISH_LEVELS.map(level => level.id).join('|') === russian.RUSSIAN_LEVELS.map(level => level.id).join('|'), 'Turkish level ids match the Russian structure');
-check(turkish.TURKISH_LEVELS.map(level => level.title).join('|') === russian.RUSSIAN_LEVELS.map(level => level.title.replace('Russian', 'Turkish')).join('|'), 'Turkish level sequence mirrors the Russian course');
+check(turkish.TURKISH_LEVELS.length === 7, 'Turkish has one standalone Pre-A1 level plus the six existing A1-C1 levels');
+check(turkish.TURKISH_LEVELS.slice(1).map(level => level.id).join('|') === russian.RUSSIAN_LEVELS.map(level => level.id).join('|'), 'Existing Turkish A1-C1 level ids still match the Russian structure');
+check(turkish.TURKISH_LEVELS.slice(1).map(level => level.title).join('|') === russian.RUSSIAN_LEVELS.map(level => level.title.replace('Russian', 'Turkish')).join('|'), 'Existing Turkish A1-C1 level sequence still mirrors the Russian course');
+check(turkish.TURKISH_LEVELS[0].id === -1 && turkish.TURKISH_LEVELS[0].cefr.startsWith('Pre-A1'), 'Turkish Pre-A1 is a distinct level before A1');
 check(JSON.stringify(turkish.TURKISH_LESSON_STAGES) === JSON.stringify(russian.RUSSIAN_LESSON_STAGES), 'Turkish preserves all nine sentence-based lesson stages');
 
 const availableLevels = turkish.TURKISH_LEVELS.filter(level => level.status === 'available');
 const plannedLevels = turkish.TURKISH_LEVELS.filter(level => level.status === 'planned');
-check(availableLevels.map(level => level.id).join('|') === '0|1|2|3|4|5', 'Levels 0..5 (A1, A2, B1, B2, C1) are all available');
-check(availableLevels.every(level => level.description.length > 20 && level.modules.length >= 30), 'Available A1, A2, B1, and B2 levels include descriptions and full syllabus modules');
+check(availableLevels.map(level => level.id).join('|') === '-1|0|1|2|3|4|5', 'Pre-A1 and all existing A1-C1 levels are available');
+check(availableLevels.slice(1).every(level => level.description.length > 20 && level.modules.length >= 30), 'Available A1-C1 levels include descriptions and full syllabus modules');
+check(turkish.TURKISH_LEVELS[0].modules.length === 25, 'Pre-A1 exposes its 25 dedicated lessons');
 check(plannedLevels.length === 0, 'No level remains planned');
-check(turkish.TURKISH_LEVELS[5].modules.length === 61, 'C1 level exposes all 61 modules');
-check(turkish.TURKISH_LESSONS.every(lesson => lesson.levelId <= 5), 'All lessons belong to levels 0..5');
+check(turkish.TURKISH_LEVELS[6].modules.length === 61, 'C1 level exposes all 61 modules');
+check(turkish.TURKISH_LESSONS.every(lesson => lesson.levelId >= -1 && lesson.levelId <= 5), 'All lessons belong to Pre-A1 through C1');
+const preA1Lessons = turkish.TURKISH_LESSONS.filter(lesson => lesson.levelId === -1);
+check(preA1Lessons.length === 25 && preA1Lessons.every(lesson => lesson.id.startsWith('tr-prea1-')), 'Turkish Pre-A1 has 25 separately identified lessons');
+check(preA1Lessons.map(lesson => lesson.learningMode).join('|') === [...Array(14).fill('words'), ...Array(5).fill('chunks'), ...Array(6).fill('sentences')].join('|'), 'Pre-A1 teaches 14 lexical lessons, then 5 chunk lessons, then 6 sentence lessons');
+const preA1ModeCounts = preA1Lessons.reduce((counts, lesson) => ({ ...counts, [lesson.learningMode]: counts[lesson.learningMode] + lesson.sentences.length }), { words: 0, chunks: 0, sentences: 0 });
+check(preA1ModeCounts.words === 112 && preA1ModeCounts.chunks === 40 && preA1ModeCounts.sentences === 48, 'Pre-A1 contains 112 standalone words, 40 chunks, and 48 sentence examples');
+const standalonePreA1Words = preA1Lessons.filter(lesson => lesson.learningMode === 'words').flatMap(lesson => lesson.sentences);
+check(standalonePreA1Words.every(sentence => sentence.vocabulary.length === 1 && sentence.vocabulary[0].word.toLocaleLowerCase('tr-TR') === sentence.text.toLocaleLowerCase('tr-TR')) && new Set(standalonePreA1Words.map(sentence => sentence.text.toLocaleLowerCase('tr-TR'))).size === 112, 'Every standalone word is individually tagged and unique before phrase lessons');
+check(preA1Lessons.map(lesson => lesson.title).join('|') === [
+  'واژه‌های نخستین و پاسخ‌های کوتاه', 'ضمیرها و اسم‌های پایه', 'فعل‌ها به شکل پایه', 'صفت‌ها و رنگ‌های پایه',
+  'عددهای صفر تا هفت', 'عددهای هشت تا ده و روزهای هفته', 'خوراکی‌ها و نوشیدنی‌های پایه', 'خانواده و خویشاوندان نزدیک',
+  'مکان‌های روزمره', 'وسایل خانه و اشیای روزمره', 'نام، کشور و زبان', 'جایگاه و جهت‌های ساده', 'تقویم و زمان روز', 'واژه‌های پرسشی و پیونددهنده',
+  'دو واژه کنار هم', 'فعل در ترکیب کوتاه', 'ترکیب‌های کوتاه برای معرفی خود', 'ترکیب‌های عددی و زمانی', 'درخواست مؤدبانه و مسیر کوتاه',
+  'جمله‌های نخست برای آشنایی', 'توصیف‌های ساده و خانواده', 'پرسش و پاسخ دربارهٔ اشیا', 'درخواست‌های ساده در کافه', 'روز، ساعت و زمان نزدیک', 'گفت‌وگوی نخست؛ واژه تا مسیر',
+].join('|'), 'Pre-A1 provides a broad word-first progression before chunks and sentences');
+check(preA1Lessons[0].sentences.every(sentence => sentence.pattern?.startsWith('واژهٔ مستقل')), 'The first lesson starts with individual everyday words, not prebuilt phrases');
+check(preA1Lessons[1].sentences.some(sentence => sentence.pattern?.includes('ضمیر')) && preA1Lessons[1].sentences.some(sentence => sentence.pattern?.includes('اسم')), 'The second lesson explicitly separates pronouns and nouns');
+check(preA1Lessons[2].sentences.every(sentence => sentence.pattern?.startsWith('فعل')), 'The third lesson teaches verbs as isolated infinitives');
+check(preA1Lessons[3].sentences.some(sentence => sentence.pattern?.startsWith('صفت')) && preA1Lessons[3].sentences.some(sentence => sentence.pattern?.startsWith('قید')), 'The fourth lesson teaches adjectives and adverbs as isolated words');
 
 // 3. Exact 182 A1 + A2 + B1 lessons & 1456 sentences content quality
 const foundationLessons = turkish.TURKISH_LESSONS.filter(lesson => lesson.levelId === 0);
@@ -300,7 +320,7 @@ const upperB2Survival = upperB2Lessons.slice(30);
 const advancedC1Lessons = turkish.TURKISH_LESSONS.filter(lesson => lesson.levelId === 5);
 const advancedC1Foundation = advancedC1Lessons.slice(0, 30);
 const advancedC1Survival = advancedC1Lessons.slice(30);
-check(turkish.TURKISH_LESSONS.length === 304, 'Turkish A1 + A2 + B1 + B2 + C1 contains all 304 lessons');
+check(turkish.TURKISH_LESSONS.length === 329, 'Turkish Pre-A1 plus A1-C1 contains all 329 lessons');
 check(foundationLessons.length === 34, 'A1 Foundation contains all 34 lessons');
 check(survivalLessons.length === 30, 'A1 Survival Turkish contains all 30 lessons');
 check(everydayA2Lessons.length === 57, 'A2 Everyday Turkish contains all 57 lessons (26 Foundation + 31 Survival)');
@@ -321,14 +341,14 @@ check(upperB2Foundation.every(lesson => lesson.subtitle.startsWith('Foundation �
 check(upperB2Survival.every(lesson => lesson.subtitle.startsWith('Survival · ')), 'All 31 B2 Survival lessons carry the Survival track subtitle');
 check(advancedC1Foundation.every(lesson => lesson.subtitle.startsWith('Foundation · ')), 'All 30 C1 Foundation lessons carry the Foundation track subtitle');
 check(advancedC1Survival.every(lesson => lesson.subtitle.startsWith('Survival · ')), 'All 31 C1 Survival lessons carry the Survival track subtitle');
-check(turkish.TURKISH_LESSONS.every((lesson, index) => lesson.order === index + 1), 'Lesson order numbers run sequentially 1..304');
+check(turkish.TURKISH_LESSONS.every((lesson, index) => lesson.order === index + 1), 'Lesson order numbers run sequentially 1..329');
 
 const lessonIds = new Set(turkish.TURKISH_LESSONS.map(lesson => lesson.id));
-check(lessonIds.size === 304, 'All 304 Turkish lesson IDs are unique');
+check(lessonIds.size === 329, 'All 329 Turkish lesson IDs are unique');
 const allSentences = turkish.TURKISH_LESSONS.flatMap(lesson => lesson.sentences);
-check(allSentences.length === 2432, 'Turkish A1..C1 contains 2432 core sentences (8 per lesson)');
-check(new Set(allSentences.map(sentence => sentence.id)).size === 2432, 'All 2432 Turkish sentence IDs are unique');
-check(new Set(allSentences.map(sentence => sentence.text)).size === 2432, 'All 2432 Turkish sentence texts are unique');
+check(allSentences.length === 2632, 'Turkish Pre-A1 through C1 contains 2632 core sentences (8 per lesson)');
+check(new Set(allSentences.map(sentence => sentence.id)).size === 2632, 'All 2632 Turkish sentence IDs are unique');
+check(new Set(allSentences.map(sentence => sentence.text)).size === 2632, 'All 2632 Turkish sentence texts are unique across Pre-A1-C1');
 
 for (const lesson of turkish.TURKISH_LESSONS) {
   assert.equal(lesson.sentences.length, 8, `${lesson.id} has 8 sentences`);
@@ -336,8 +356,12 @@ for (const lesson of turkish.TURKISH_LESSONS) {
   assert.ok(lesson.situation && lesson.situation.length >= 15, `${lesson.id} has Persian situation`);
   assert.ok(lesson.teachingFa && lesson.teachingFa.length >= 40, `${lesson.id} has Persian teaching note`);
   assert.ok(lesson.sentences.some(sentence => Boolean(sentence.pattern)), `${lesson.id} includes grammar-through-usage pattern notes`);
-  assert.ok(lesson.dialogue.length >= 3, `${lesson.id} includes a multi-turn guided dialogue`);
-  assert.ok(lesson.dialogue.every(turn => turn.speaker && turn.text && turn.fa && !/[А-Яа-яЁё]/.test(turn.text)), `${lesson.id} dialogue turns are valid Turkish + Persian`);
+  if (lesson.levelId === -1 && lesson.learningMode === 'words') {
+    assert.equal(lesson.dialogue.length, 0, `${lesson.id} does not introduce phrases or sentence dialogue before the chunk stage`);
+  } else {
+    assert.ok(lesson.dialogue.length >= 3, `${lesson.id} includes a multi-turn guided dialogue`);
+    assert.ok(lesson.dialogue.every(turn => turn.speaker && turn.text && turn.fa && !/[А-Яа-яЁё]/.test(turn.text)), `${lesson.id} dialogue turns are valid Turkish + Persian`);
+  }
   assert.ok((lesson.checks?.length ?? 0) >= 2, `${lesson.id} includes at least 2 self-check questions`);
   for (const question of lesson.checks ?? []) {
     assert.equal(question.choices.length, 3, `${lesson.id} check has 3 choices`);
@@ -345,7 +369,12 @@ for (const lesson of turkish.TURKISH_LESSONS) {
     assert.ok(question.explanationFa && question.explanationFa.length >= 10, `${lesson.id} check has Persian explanation`);
   }
   for (const sentence of lesson.sentences) {
-    assert.ok(sentence.text.trim().split(/\s+/).length >= 2, `${sentence.id} has >= 2 words for sentence builder`);
+    const tokenCount = sentence.text.trim().split(/\s+/).length;
+    if (lesson.levelId === -1 && lesson.learningMode === 'words') {
+      assert.equal(tokenCount, 1, `${sentence.id} is one isolated lexical item in a word-first Pre-A1 lesson`);
+    } else {
+      assert.ok(tokenCount >= 2, `${sentence.id} has >= 2 words for its chunk or sentence activity`);
+    }
     assert.ok(!/[А-Яа-яЁё]/.test(sentence.text), `${sentence.id} contains no Cyrillic characters`);
     assert.ok(sentence.fa && /[آ-ی]/.test(sentence.fa), `${sentence.id} has Persian translation`);
     assert.ok(sentence.pronunciation && !/[0-9A-Za-zÇçĞğİıÖöŞşÜüА-Яа-яЁё]/.test(sentence.pronunciation), `${sentence.id} pronunciation uses pure Persian script`);
@@ -361,23 +390,24 @@ checks += 10;
 
 // 4. Lookup, progress store, spaced review, and session persistence
 check(turkish.findTurkishLesson('missing') === undefined, 'Missing Turkish lookup returns undefined');
-check(turkish.findTurkishLesson('tr-l1-alphabet-pronunciation')?.order === 1, 'First A1 Foundation lesson resolves by ID');
-check(turkish.findTurkishLesson('tr-l2-connected-conversation')?.order === 64, 'Final A1 Survival lesson resolves by ID');
-check(turkish.findTurkishLesson('tr-a2-f-01-present-vs-aorist')?.order === 65, 'First A2 Foundation lesson resolves at order 65');
-check(turkish.findTurkishLesson('tr-a2-s-01-past-experiences-events')?.order === 91, 'First A2 Survival lesson resolves at order 91');
-check(turkish.findTurkishLesson('tr-a2-s-31-managing-conversation-start-to-finish')?.order === 121, 'Final A2 Survival lesson resolves at order 121');
-check(turkish.findTurkishLesson('tr-b1-f-01-narrating-past-events-definite')?.order === 122, 'First B1 Foundation lesson resolves at order 122');
-check(turkish.findTurkishLesson('tr-b1-s-31-managing-conversation-independently')?.order === 182, 'Final B1 Survival lesson resolves at order 182');
-check(turkish.findTurkishLesson('tr-b2-f-01-analytical-complex-narration')?.order === 183, 'First B2 Foundation lesson resolves at order 183');
-check(turkish.findTurkishLesson('tr-b2-s-31-emergencies-asking-help')?.order === 243, 'Final B2 Survival lesson resolves at order 243');
-check(turkish.findTurkishLesson('tr-c1-f-01-precise-abstract-concepts')?.order === 244, 'First C1 Foundation lesson resolves at order 244');
-check(turkish.findTurkishLesson('tr-c1-s-31-managing-complex-communication')?.order === 304, 'Final C1 Survival lesson resolves at order 304');
+check(turkish.findTurkishLesson('tr-prea1-01-greetings')?.order === 1, 'First Turkish Pre-A1 lesson resolves by ID');
+check(turkish.findTurkishLesson('tr-l1-alphabet-pronunciation')?.order === 26, 'First A1 Foundation lesson follows the separate Pre-A1 section');
+check(turkish.findTurkishLesson('tr-l2-connected-conversation')?.order === 89, 'Final A1 Survival lesson resolves by ID');
+check(turkish.findTurkishLesson('tr-a2-f-01-present-vs-aorist')?.order === 90, 'First A2 Foundation lesson resolves at order 90');
+check(turkish.findTurkishLesson('tr-a2-s-01-past-experiences-events')?.order === 116, 'First A2 Survival lesson resolves at order 116');
+check(turkish.findTurkishLesson('tr-a2-s-31-managing-conversation-start-to-finish')?.order === 146, 'Final A2 Survival lesson resolves at order 146');
+check(turkish.findTurkishLesson('tr-b1-f-01-narrating-past-events-definite')?.order === 147, 'First B1 Foundation lesson resolves at order 147');
+check(turkish.findTurkishLesson('tr-b1-s-31-managing-conversation-independently')?.order === 207, 'Final B1 Survival lesson resolves at order 207');
+check(turkish.findTurkishLesson('tr-b2-f-01-analytical-complex-narration')?.order === 208, 'First B2 Foundation lesson resolves at order 208');
+check(turkish.findTurkishLesson('tr-b2-s-31-emergencies-asking-help')?.order === 268, 'Final B2 Survival lesson resolves at order 268');
+check(turkish.findTurkishLesson('tr-c1-f-01-precise-abstract-concepts')?.order === 269, 'First C1 Foundation lesson resolves at order 269');
+check(turkish.findTurkishLesson('tr-c1-s-31-managing-complex-communication')?.order === 329, 'Final C1 Survival lesson resolves at order 329');
 
 const initial = await turkish.turkishProgress.getCourseProgress();
-check(initial.currentLessonId === 'tr-l1-alphabet-pronunciation' && initial.completedLessonIds.length === 0 && initial.reviewCards.length === 0, 'Fresh Turkish progress starts at Lesson 1 with 0 completed lessons');
-await turkish.turkishProgress.completeSentenceLesson('tr-l1-alphabet-pronunciation', 'tr-l1-greetings');
+check(initial.currentLessonId === 'tr-prea1-01-greetings' && initial.completedLessonIds.length === 0 && initial.reviewCards.length === 0, 'Fresh Turkish progress starts at the first Pre-A1 lesson with 0 completed lessons');
+await turkish.turkishProgress.completeSentenceLesson('tr-prea1-01-greetings', 'tr-prea1-02-how-are-you');
 const afterFirst = await turkish.turkishProgress.getCourseProgress();
-check(afterFirst.completedLessonIds.includes('tr-l1-alphabet-pronunciation') && afterFirst.currentLessonId === 'tr-l1-greetings', 'Completing Lesson 1 advances currentLessonId to Lesson 2');
+check(afterFirst.completedLessonIds.includes('tr-prea1-01-greetings') && afterFirst.currentLessonId === 'tr-prea1-02-how-are-you', 'Completing the first Pre-A1 lesson advances to the next dedicated lesson');
 check(afterFirst.reviewCards.length === 8, 'Completing an 8-sentence Turkish lesson schedules 8 local review cards');
 const dueCards = await turkish.turkishProgress.getDueReviewCards();
 check(dueCards.length === 8, 'Newly created Turkish review cards are due immediately');
@@ -386,7 +416,7 @@ check((await turkish.turkishProgress.getDueReviewCards()).length === 7, 'Rating 
 await assert.rejects(turkish.turkishProgress.completeSentenceLesson('missing')); checks += 1;
 const exported = await turkish.turkishProgress.exportProgress();
 const restored = await turkish.turkishProgress.restoreProgress(exported);
-check(restored.completedLessonIds.includes('tr-l1-alphabet-pronunciation') && restored.reviewCards.length === 8, 'Turkish progress export and restore preserve completed lessons and review cards');
+check(restored.completedLessonIds.includes('tr-prea1-01-greetings') && restored.reviewCards.length === 8, 'Turkish progress export and restore preserve Pre-A1 lessons and review cards');
 
 // Session persistence
 const freshLoad = await studyState.loadTurkishLessonSessionWithPresence('tr-l1-greetings');
@@ -403,7 +433,7 @@ check(globalThis.__turkishSupabaseCalls === 0, 'Turkish progress and session sto
 check(pronunciation.isPronunciationLanguage('tr'), 'Turkish pronunciation route is recognized');
 check(pronunciation.PRONUNCIATION_COURSES.tr.length === 4, 'Turkish pronunciation workshop has 4 Istanbul Turkish units');
 const trCatalog = catalog.findLanguage('tr');
-check(trCatalog?.status === 'starter' && trCatalog?.lessonsCount === 304 && trCatalog?.speechLocale === 'tr-TR', 'Language catalog exposes Turkish course with 304 A1..C1 lessons and tr-TR speech');
+check(trCatalog?.status === 'starter' && trCatalog?.lessonsCount === 329 && trCatalog?.speechLocale === 'tr-TR', 'Language catalog exposes the isolated Pre-A1 through C1 Turkish course and tr-TR speech');
 
 const now = Date.UTC(2026, 10, 1);
 check(resume.languageForResume('/learn/tr/library', 'en') === 'tr', 'Native resume tracking recognizes Turkish routes');
@@ -422,5 +452,9 @@ for (const [file, component] of [
   ['lib/turkishSpeech.ts', "speechTagFor('tr-TR')"],
 ]) check(read(file).includes(component), `${file} connects ${component}`);
 check(!/courseContent|RUSSIAN_LESSONS|SENTENCE_LESSONS/.test(read('lib/languages/turkish.ts')), 'Turkish curriculum does not reuse English or Russian educational content');
+check(/from '\.\/turkishSeed'/.test(read('lib/languages/turkishPreA1.ts')) && !/courseContent|courseContentPreA1/.test(read('lib/languages/turkishPreA1.ts')), 'Turkish Pre-A1 is authored in its own native Turkish data file, not copied from English');
+check(turkish.TURKISH_PRE_A1_LESSONS?.length === 25 && preA1Lessons.every(lesson => lesson.sentences.every(sentence => sentence.id.startsWith('tr0-'))), 'Pre-A1 lesson and sentence IDs are isolated from all other language tracks');
+const legacyPreA1SentenceStarts = { 'tr-prea1-01-greetings': 1, 'tr-prea1-02-how-are-you': 9, 'tr-prea1-03-basic-verbs': 17, 'tr-prea1-04-adjectives-and-adverbs': 25, 'tr-prea1-05-first-word-pairs': 33, 'tr-prea1-06-verb-chunks': 41, 'tr-prea1-07-first-short-sentences': 49, 'tr-prea1-08-simple-questions': 57, 'tr-prea1-09-needs-and-places': 65, 'tr-prea1-10-first-conversation': 73 };
+check(Object.entries(legacyPreA1SentenceStarts).every(([id, start]) => turkish.findTurkishLesson(id)?.sentences.map(sentence => sentence.id).join('|') === Array.from({ length: 8 }, (_, index) => `tr0-${String(start + index).padStart(3, '0')}`).join('|')), 'Expanded Pre-A1 preserves all 80 legacy sentence IDs so existing review schedules remain attached');
 
-console.log(`${checks} Turkish A1..C1 curriculum, orthography, progress, session resume, pronunciation, routing, and isolation checks passed.`);
+console.log(`${checks} Turkish Pre-A1..C1 curriculum, orthography, progress, session resume, pronunciation, routing, and isolation checks passed.`);

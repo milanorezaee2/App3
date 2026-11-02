@@ -479,6 +479,8 @@ export { default as asyncStorage } from '${STUBS}/async-storage.js';
   section('Multilingual content and progress isolation');
   const englishHomeSource = readFileSync(path.join(APP, 'app/lang/index.tsx'), 'utf8');
   const englishLibrarySource = readFileSync(path.join(APP, 'app/lang/library.tsx'), 'utf8');
+  const russianLibrarySource = readFileSync(path.join(APP, 'components/RussianLibrary.tsx'), 'utf8');
+  const turkishLibrarySource = readFileSync(path.join(APP, 'components/TurkishLibrary.tsx'), 'utf8');
   const englishBottomNavSource = readFileSync(path.join(APP, 'components/AppBottomNav.tsx'), 'utf8');
   const learningHomeStyleSource = readFileSync(path.join(APP, 'components/LearningHomeStyles.ts'), 'utf8');
   const todayHeaderStyle = learningHomeStyleSource.match(/sectionHeader:\s*\{([^}]+)\}/)?.[1] ?? '';
@@ -486,8 +488,12 @@ export { default as asyncStorage } from '${STUBS}/async-storage.js';
   check('English Today heading stays right-aligned in RTL without changing its labels', /flexDirection:\s*'row-reverse'/.test(todayHeaderStyle) && englishHomeSource.includes('TODAY AT A GLANCE') && englishHomeSource.includes('برنامهٔ امروز'));
   check('English level cards show unique vocabulary counts calculated from each level', /metrics\.vocabularyCount/.test(englishHomeSource) && englishHomeSource.includes('واژهٔ یکتا') && /stats\.vocabularyCount/.test(englishLibrarySource) && englishLibrarySource.includes('واژهٔ یکتا'));
   check('English bottom navigation places Learning on the right, Conversation in the center, and Review on the left', /flexDirection:\s*'row-reverse'/.test(bottomNavShellStyle) && /path:\s*'\/lang',\s*label:\s*'یادگیری'/.test(englishBottomNavSource) && /path:\s*'\/conversations',\s*label:\s*'مکالمه'/.test(englishBottomNavSource) && /path:\s*'\/review',\s*label:\s*'مرور'/.test(englishBottomNavSource));
-  check('English, Russian, and Istanbul Turkish A1..C1 courses are selectable', app.languages.LANGUAGES.map(language => language.id).join('|') === 'en|ru|tr'
-    && app.languages.LANGUAGES.find(language => language.id === 'tr').lessonsCount === 304);
+  check('Learners can start or resume directly from any selected English, Russian, or Turkish level',
+    englishLibrarySource.includes('levelStartButton') && englishLibrarySource.includes('startSelectedLevel') && englishLibrarySource.includes('levelStartLesson')
+    && russianLibrarySource.includes('levelStartButton') && russianLibrarySource.includes('openLesson(levelStartLesson.id)')
+    && turkishLibrarySource.includes('levelStartButton') && turkishLibrarySource.includes('openLesson(levelStartLesson.id)'));
+  check('English, Russian, and isolated Istanbul Turkish Pre-A1..C1 courses are selectable', app.languages.LANGUAGES.map(language => language.id).join('|') === 'en|ru|tr'
+    && app.languages.LANGUAGES.find(language => language.id === 'tr').lessonsCount === 329);
 
   // ---------------------------------------- F. config detection + guards -----
   section('F. Supabase configuration detection & fail-fast guards');
