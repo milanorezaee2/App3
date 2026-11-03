@@ -5,7 +5,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 
-const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist');
+const dist = path.resolve(process.env.DIST_DIR || path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist'));
 const port = parseInt(process.env.PORT || '8081', 10);
 const appConfig = JSON.parse(fs.readFileSync(new URL('../app.json', import.meta.url), 'utf8'));
 const baseUrl = (appConfig.expo?.experiments?.baseUrl || '').replace(/\/$/, '');
