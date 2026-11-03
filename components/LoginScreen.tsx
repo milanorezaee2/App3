@@ -1,5 +1,5 @@
-import { type ReactNode, useState } from 'react';
-import { ActivityIndicator, ImageBackground, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, ImageBackground, Platform, Pressable, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ArrowLeft, BookOpenCheck, LockKeyhole, Mail, ShieldCheck, UserRound } from 'lucide-react-native';
 import { KeyboardAwareScrollView, KeyboardAvoidingView } from '@/components/KeyboardRuntime';
@@ -54,13 +54,13 @@ type LoginProfileScreenProps = {
 
 /* ------------------------------------------------------------------ hero */
 
-function LoginHero() {
+function LoginHero({ wide }: { wide: boolean }) {
   return (
     <ImageBackground
       source={require('../assets/images/language-hero-journal.jpg')}
       imageStyle={styles.heroImage}
       resizeMode="cover"
-      style={styles.hero}
+      style={[styles.hero, wide && styles.heroWide]}
     >
       <LinearGradient
         pointerEvents="none"
@@ -106,21 +106,48 @@ function LoginHero() {
 /* --------------------------------------------------------------- scaffold */
 
 function LoginScaffold({ children }: { children: ReactNode }) {
+  const { width: windowWidth } = useWindowDimensions();
+  const [containerWidth, setContainerWidth] = useState(0);
+  const frameRef = useRef<View>(null);
+  const layoutWidth = containerWidth || windowWidth;
+  const wide = layoutWidth >= 900;
+  const compact = layoutWidth < 390;
+
+  useEffect(() => {
+    if (Platform.OS !== 'web') return;
+    const frame = frameRef.current as unknown as HTMLElement | null;
+    if (!frame || typeof frame.getBoundingClientRect !== 'function') return;
+    const measure = () => {
+      const width = frame.getBoundingClientRect().width;
+      if (width > 0) setContainerWidth(current => current === width ? current : width);
+    };
+    measure();
+    const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null;
+    observer?.observe(frame);
+    window.addEventListener('resize', measure);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
+
   return (
     <KeyboardAvoidingView style={styles.page} behavior="height" enabled>
-      <KeyboardAwareScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="on-drag"
-        bottomOffset={24}
-        extraKeyboardSpace={12}
-      >
-        <LoginHero />
-        <View style={styles.sheet}>
-          <View style={styles.sheetColumn}>{children}</View>
-        </View>
-      </KeyboardAwareScrollView>
+      <View ref={frameRef} style={styles.layoutFrame}>
+        <KeyboardAwareScrollView
+          style={styles.scroll}
+          contentContainerStyle={[styles.scrollContent, wide && styles.scrollContentWide]}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
+          bottomOffset={24}
+          extraKeyboardSpace={12}
+        >
+          <LoginHero wide={wide} />
+          <View style={[styles.sheet, wide && styles.sheetWide, compact && styles.sheetCompact]}>
+            <View style={[styles.sheetColumn, wide && styles.sheetColumnWide]}>{children}</View>
+          </View>
+        </KeyboardAwareScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -359,11 +386,14 @@ export function LoginProfileScreen({ email, fullName, onChangeFullName, onSubmit
 
 const styles = StyleSheet.create({
   page: { flex: 1, backgroundColor: '#F7F2E8' },
+  layoutFrame: { flex: 1, width: '100%', minWidth: 0 },
   scroll: { flex: 1 },
   scrollContent: { flexGrow: 1 },
+  scrollContentWide: { flexDirection: 'row', alignItems: 'stretch', width: '100%', minHeight: '100%' },
 
   hero: { paddingTop: 22, paddingBottom: 30, overflow: 'hidden', backgroundColor: '#EAE2D4' },
   heroImage: { opacity: 0.96 },
+  heroWide: { flex: 0.9, justifyContent: 'center', minHeight: '100%', paddingVertical: 48 },
   heroGlow: {
     position: 'absolute',
     top: -70,
@@ -431,7 +461,19 @@ const styles = StyleSheet.create({
     shadowRadius: 22,
     shadowOffset: { width: 0, height: -6 },
   },
+  sheetWide: {
+    flex: 1.1,
+    flexGrow: 1,
+    justifyContent: 'center',
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    paddingHorizontal: 36,
+    paddingVertical: 40,
+    shadowOffset: { width: -6, height: 0 },
+  },
+  sheetCompact: { paddingTop: 23, paddingHorizontal: 18, paddingBottom: 20 },
   sheetColumn: { width: '100%', maxWidth: 430, alignSelf: 'center' },
+  sheetColumnWide: { maxWidth: 470 },
 
   title: {
     fontFamily: Typography.boldFontFamily,
