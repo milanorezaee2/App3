@@ -12,16 +12,19 @@ import { FEATURES, LANGUAGE_SCOPE, RUSSIAN_ONLY_BUILD } from '@/lib/features';
 import { LtrDirection } from '@/lib/theme';
 
 const palette = {
-  canvas: '#F7F2E8',
-  paper: '#FFFCF6',
-  ink: '#26382D',
+  canvas: '#F8F5EC',
+  paper: '#FFFEFB',
+  ink: '#1D2945',
   forest: '#31533B',
-  sage: '#E8EBDD',
-  sageLine: '#D7DECE',
-  muted: '#746E63',
+  sage: '#E9ECE4',
+  sageLine: '#D9E0D2',
+  muted: '#737B8E',
+  blue: '#536DFF',
+  blueSoft: '#EEF1FF',
+  blueLine: '#DDE3FF',
   terracotta: '#B86F51',
   terracottaSoft: '#F4E2D6',
-  border: '#E6DDCE',
+  border: '#E7E3D9',
 };
 
 let welcomeVoicePlayed = false;
@@ -81,7 +84,7 @@ export default function LanguagesHome() {
     <View style={styles.root}>
       <View pointerEvents="none" style={StyleSheet.absoluteFillObject}>
         <LinearGradient
-          colors={['#F7F2E8', '#F4EFE3', '#FBF8F1']}
+          colors={['#F8F5EC', '#F4F0E7', '#F7F8FC']}
           start={{ x: 0.95, y: 0 }}
           end={{ x: 0.05, y: 1 }}
           style={StyleSheet.absoluteFillObject}
@@ -126,7 +129,7 @@ export default function LanguagesHome() {
           >
             <LinearGradient
               pointerEvents="none"
-              colors={['rgba(247,242,232,0.98)', 'rgba(247,242,232,0.90)', 'rgba(247,242,232,0.12)']}
+              colors={['rgba(248,245,236,0.98)', 'rgba(248,245,236,0.90)', 'rgba(248,245,236,0.10)']}
               start={{ x: 0, y: 0.5 }}
               end={{ x: 1, y: 0.5 }}
               style={StyleSheet.absoluteFillObject}
@@ -142,7 +145,7 @@ export default function LanguagesHome() {
             </View>
           </ImageBackground>
 
-          <View style={styles.languageList}>
+          <View style={[styles.languageList, compact && styles.languageListCompact]}>
             {languages.map((language) => {
               const displayName = language.nativeName || language.name;
               const artwork = languageArtwork[language.id] ?? languageArtwork.en;
@@ -154,22 +157,26 @@ export default function LanguagesHome() {
                   accessibilityLabel={`ورود به زبان ${language.name}`}
                   accessibilityHint="برای بازکردن دورهٔ این زبان انتخاب کنید"
                   onPress={() => router.push(language.home as never)}
-                  style={({ pressed }) => [styles.languageCard, pressed && styles.pressed]}
+                  style={({ pressed }) => [styles.languageCard, compact && styles.languageCardCompact, pressed && styles.pressed]}
                 >
                   <ImageBackground
                     source={artwork}
-                    imageStyle={styles.languageArtImage}
-                    style={styles.languageArt}
+                    imageStyle={[styles.languageArtImage, compact && styles.languageArtImageCompact]}
+                    style={[styles.languageArt, compact && styles.languageArtCompact]}
                     resizeMode="cover"
                   >
                     <View style={styles.languagePhotoTint} />
                   </ImageBackground>
-                  <View style={styles.languageCopy}>
-                    <Text numberOfLines={1} style={styles.languageNativeName}>{displayName}</Text>
-                    <Text style={styles.languageCode}>{language.id.toUpperCase()}</Text>
+                  <View style={[styles.languageCopy, compact && styles.languageCopyCompact]}>
+                    <Text numberOfLines={1} style={[styles.languageNativeName, compact && styles.languageNativeNameCompact]}>{displayName}</Text>
+                    <View style={styles.languageMeta}>
+                      <Text style={styles.languageCode}>{language.id.toUpperCase()}</Text>
+                      <View style={styles.languageMetaDot} />
+                      <Text style={styles.languageStatus}>{language.status === 'available' ? 'دورهٔ کامل' : 'شروع از پایه'}</Text>
+                    </View>
                   </View>
-                  <View style={styles.languageArrow}>
-                    <ArrowRight size={18} color={palette.forest} strokeWidth={2.1} />
+                  <View style={[styles.languageArrow, compact && styles.languageArrowCompact]}>
+                    <ArrowRight size={18} color={palette.blue} strokeWidth={2.1} />
                   </View>
                 </Pressable>
               );
@@ -196,7 +203,7 @@ export default function LanguagesHome() {
                     <View style={[styles.pathNode, index === 1 && styles.pathNodeAqua]} />
                   </View>
                   <View style={[styles.stepIcon, index === 1 && styles.stepIconAqua]}>
-                    <Icon size={24} color={index === 1 ? palette.terracotta : palette.forest} strokeWidth={1.9} />
+                    <Icon size={24} color={index === 1 ? palette.terracotta : palette.blue} strokeWidth={1.9} />
                   </View>
                   <View style={styles.stepCopy}>
                     <Text style={styles.stepTitle}>{step.title}</Text>
@@ -224,7 +231,7 @@ const styles = StyleSheet.create({
   header: { minHeight: 64, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
   headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   headerButton: { width: 44, height: 44, borderRadius: 16, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#554C3E', shadowOpacity: 0.06, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
-  hero: { minHeight: 230, justifyContent: 'center', padding: 24, borderRadius: 24, overflow: 'hidden', backgroundColor: '#ECE4D4', shadowColor: '#514433', shadowOpacity: 0.10, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
+  hero: { minHeight: 230, justifyContent: 'center', padding: 24, borderRadius: 24, overflow: 'hidden', backgroundColor: '#ECE4D4', shadowColor: '#26344F', shadowOpacity: 0.10, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
   heroImage: { borderRadius: 24 },
   heroCompact: { minHeight: 188, padding: 19 },
   heroCopy: { width: '78%', alignItems: 'flex-start', gap: 8 },
@@ -233,26 +240,36 @@ const styles = StyleSheet.create({
   subtitle: { width: '100%', fontFamily: 'Vazir', color: '#5B6257', fontSize: 15, lineHeight: 25, textAlign: 'left', writingDirection: 'rtl' },
   eyebrow: { alignSelf: 'flex-start', marginTop: 5, fontFamily: 'Inter-ExtraBold', color: palette.forest, fontSize: 9, lineHeight: 15, letterSpacing: 1.7, writingDirection: 'ltr' },
   languageList: { flexDirection: 'row', alignItems: 'stretch', gap: 12 },
-  languageCard: { flex: 1, minWidth: 0, borderRadius: 19, overflow: 'hidden', borderWidth: 1, borderColor: palette.border, paddingBottom: 12, alignItems: 'center', backgroundColor: palette.paper, shadowColor: '#514433', shadowOpacity: 0.07, shadowRadius: 12, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
+  languageListCompact: { flexDirection: 'column', gap: 10 },
+  languageCard: { flex: 1, minWidth: 0, borderRadius: 19, overflow: 'hidden', borderWidth: 1, borderColor: '#E1E5EE', paddingBottom: 12, alignItems: 'center', backgroundColor: palette.paper, shadowColor: '#26344F', shadowOpacity: 0.075, shadowRadius: 13, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
+  languageCardCompact: { flex: 0, flexDirection: 'row-reverse', alignItems: 'center', gap: 12, minHeight: 102, paddingHorizontal: 10, paddingVertical: 8, paddingBottom: 8, borderRadius: 18 },
   languageArt: { width: '100%', height: 156, justifyContent: 'flex-end', backgroundColor: '#EAE2D4' },
   languageArtImage: { borderTopLeftRadius: 18, borderTopRightRadius: 18 },
+  languageArtCompact: { flex: 0, width: 92, height: 84, borderRadius: 14, overflow: 'hidden' },
+  languageArtImageCompact: { borderRadius: 14 },
   languagePhotoTint: { height: 28, width: '100%', backgroundColor: 'rgba(247,242,232,0.18)' },
   languageCopy: { width: '100%', alignItems: 'center', justifyContent: 'center', gap: 2, paddingHorizontal: 5, paddingTop: 9 },
+  languageCopyCompact: { flex: 1, width: 'auto', minWidth: 0, alignItems: 'flex-end', justifyContent: 'center', gap: 5, paddingHorizontal: 0, paddingTop: 0 },
   languageNativeName: { maxWidth: '100%', fontFamily: 'Inter-SemiBold', color: palette.ink, fontSize: 14, lineHeight: 20, fontWeight: '600', textAlign: 'center', writingDirection: 'ltr' },
-  languageCode: { fontFamily: 'Inter-ExtraBold', color: palette.muted, fontSize: 10, lineHeight: 14, letterSpacing: 1.2, writingDirection: 'ltr' },
-  languageArrow: { width: 32, height: 32, marginTop: 7, borderRadius: 16, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.sage },
+  languageNativeNameCompact: { alignSelf: 'stretch', textAlign: 'right' },
+  languageMeta: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7 },
+  languageCode: { fontFamily: 'Inter-ExtraBold', color: palette.blue, fontSize: 10, lineHeight: 14, letterSpacing: 1.2, writingDirection: 'ltr' },
+  languageMetaDot: { width: 4, height: 4, borderRadius: 2, backgroundColor: palette.terracotta },
+  languageStatus: { paddingHorizontal: 8, paddingVertical: 3, overflow: 'hidden', borderRadius: 999, backgroundColor: palette.blueSoft, color: '#4F5F9B', fontFamily: 'Vazir', fontSize: 10, lineHeight: 16, textAlign: 'right', writingDirection: 'rtl' },
+  languageArrow: { width: 32, height: 32, marginTop: 7, borderRadius: 12, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.blueSoft, borderWidth: 1, borderColor: palette.blueLine },
+  languageArrowCompact: { marginTop: 0, width: 34, height: 34 },
   pathDivider: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 14, paddingVertical: 1, marginTop: 1 },
   dividerLine: { flex: 1, height: 1, backgroundColor: '#DCD5C6' },
   dividerOrnament: { width: 42, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, transform: [{ rotate: '-12deg' }] },
   dividerDot: { width: 5, height: 5, borderRadius: 3, backgroundColor: '#B5BDA7' },
   dividerDiamond: { width: 10, height: 10, borderWidth: 1.5, borderColor: palette.terracotta, transform: [{ rotate: '45deg' }] },
-  learningPath: { position: 'relative', gap: 4, padding: 17, borderRadius: 22, backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#514433', shadowOpacity: 0.045, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
-  pathRail: { position: 'absolute', left: 18, top: 35, bottom: 35, width: 2, borderRadius: 1, backgroundColor: '#D4DCCB' },
+  learningPath: { position: 'relative', gap: 4, padding: 17, borderRadius: 22, backgroundColor: palette.paper, borderWidth: 1, borderColor: '#E3E6EF', shadowColor: '#26344F', shadowOpacity: 0.05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
+  pathRail: { position: 'absolute', left: 18, top: 35, bottom: 35, width: 2, borderRadius: 1, backgroundColor: '#D9E0F0' },
   stepRow: { minHeight: 84, flexDirection: 'row', alignItems: 'center', gap: 14 },
   pathNodeWrap: { width: 20, height: 20, alignItems: 'center', justifyContent: 'center' },
   pathNode: { width: 13, height: 13, borderRadius: 7, backgroundColor: palette.forest, borderWidth: 2, borderColor: palette.paper },
   pathNodeAqua: { backgroundColor: palette.terracotta },
-  stepIcon: { width: 60, height: 60, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F0F1E8', borderWidth: 1, borderColor: palette.sageLine, shadowColor: '#514433', shadowOpacity: 0.05, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  stepIcon: { width: 60, height: 60, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.blueSoft, borderWidth: 1, borderColor: palette.blueLine, shadowColor: '#26344F', shadowOpacity: 0.05, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepIconAqua: { backgroundColor: palette.terracottaSoft, borderColor: '#EAD0C1' },
   stepCopy: { flex: 1, minWidth: 0, alignItems: 'flex-end', gap: 3 },
   stepTitle: { fontFamily: 'Vazir-Bold', color: palette.ink, fontSize: 17, lineHeight: 26, textAlign: 'right', writingDirection: 'rtl' },
