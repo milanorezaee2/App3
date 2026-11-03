@@ -50,8 +50,8 @@ export function PageNavigation({
 
 const styles = StyleSheet.create({
   row: { flexDirection: 'row-reverse', alignItems: 'center', gap: 7 },
-  button: { width: 38, height: 38, borderRadius: 13, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
-  buttonLight: { backgroundColor: '#FFFFFF', borderColor: '#E7E2F2' },
+  button: { width: 44, height: 44, borderRadius: 16, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
+  buttonLight: { backgroundColor: '#FFFFFF', borderColor: '#DDE3F1', shadowColor: '#211A68', shadowOpacity: 0.10, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
   buttonDark: { backgroundColor: 'rgba(255,255,255,0.12)', borderColor: 'rgba(255,255,255,0.18)' },
   pressed: { opacity: .72, transform: [{ scale: .96 }] },
 });

@@ -33,7 +33,7 @@ export function RussianBottomNav() {
 }
 
 const styles = StyleSheet.create({
-  shell: { minHeight: 68, marginHorizontal: 14, marginBottom: 38, paddingTop: 7, paddingBottom: 9, paddingHorizontal: 8, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, borderRadius: 22, shadowColor: '#211A68', shadowOpacity: 0.1, shadowRadius: 14, shadowOffset: { width: 0, height: 5 }, elevation: 5 },
+  shell: { minHeight: 72, marginHorizontal: 18, marginBottom: 22, paddingTop: 9, paddingBottom: 11, paddingHorizontal: 12, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, borderRadius: 26, shadowColor: '#211A68', shadowOpacity: 0.14, shadowRadius: 20, shadowOffset: { width: 0, height: 8 }, elevation: 5 },
   item: { flex: 1, minWidth: 48, alignItems: 'center', gap: 2 },
   iconWrap: { width: 42, height: 32, borderRadius: Radius.full, alignItems: 'center', justifyContent: 'center' },
   iconWrapActive: { backgroundColor: Palette.primarySoft },
