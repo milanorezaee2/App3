@@ -22,6 +22,35 @@
       "env": {
         "EXPO_PUBLIC_SKIP_COMPANION_ONBOARDING": "false"
       }
+    },
+    "admin": {
+      "distribution": "internal",
+      "autoIncrement": true,
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "MILO_ADMIN_APP": "true",
+        "EXPO_PUBLIC_MILO_ADMIN_APP": "true",
+        "EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN": "true",
+        "EXPO_PUBLIC_LEARNER_LOGIN": "false",
+        "EXPO_PUBLIC_LANGUAGE_SCOPE": "en,tr",
+        "EXPO_PUBLIC_SKIP_COMPANION_ONBOARDING": "false"
+      }
+    },
+    "learner": {
+      "distribution": "internal",
+      "autoIncrement": true,
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_MILO_ADMIN_APP": "false",
+        "EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN": "false",
+        "EXPO_PUBLIC_LEARNER_LOGIN": "false",
+        "EXPO_PUBLIC_LANGUAGE_SCOPE": "en,ru",
+        "EXPO_PUBLIC_SKIP_COMPANION_ONBOARDING": "false"
+      }
     }
   }
 }

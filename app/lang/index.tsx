@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Alert, Image, Pressable, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
@@ -44,6 +44,12 @@ export default function LearningHome() {
   const [timeError, setTimeError] = useState(false);
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [hasStartedCourse, setHasStartedCourse] = useState(false);
+
+  // Paint the home shell first, then fetch/parse the lesson route in the
+  // background so the first lesson is warm when the learner taps Start.
+  useEffect(() => {
+    void import('@/components/EnglishLessonRoute');
+  }, []);
 
   useFocusEffect(useCallback(() => {
     let alive = true;

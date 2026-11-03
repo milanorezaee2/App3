@@ -8,7 +8,7 @@ import { MiloLanguageBrand } from '@/components/MiloLanguageBrand';
 import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
-import { FEATURES, RUSSIAN_ONLY_BUILD } from '@/lib/features';
+import { FEATURES, LANGUAGE_SCOPE, RUSSIAN_ONLY_BUILD } from '@/lib/features';
 import { DesignTokens, LtrDirection } from '@/lib/theme';
 
 let welcomeVoicePlayed = false;
@@ -60,7 +60,9 @@ export default function LanguagesHome() {
       .finally(() => setOpeningSupport(false));
   };
 
-  const languages = LANGUAGES.filter(language => (language.id === 'ru' ? FEATURES.russianCourse : !RUSSIAN_ONLY_BUILD));
+  const languages = LANGUAGES.filter(language => LANGUAGE_SCOPE.includes(language.id as 'en' | 'ru' | 'tr')
+    && (language.id !== 'ru' || FEATURES.russianCourse)
+    && (!RUSSIAN_ONLY_BUILD || language.id === 'ru'));
 
 
   return (

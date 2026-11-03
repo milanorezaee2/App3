@@ -90,18 +90,30 @@ export interface EnglishLevelMetrics {
   vocabularyCount: number;
 }
 
+// The course is content-rich. Build sentence/word projections once per level
+// instead of rebuilding thousands of objects on every home-page render.
+const baseLevelMetrics = new Map<CourseLevelId, Omit<EnglishLevelMetrics, 'completedLessonCount'>>();
+
 export function getEnglishLevelMetrics(levelId: CourseLevelId, completedLessonIds: readonly string[] = []): EnglishLevelMetrics {
+  let base = baseLevelMetrics.get(levelId);
+  if (!base) {
+    const lessons = SENTENCE_LESSONS.filter(lesson => lesson.levelId === levelId);
+    const sentences = lessons.flatMap(lesson => lesson.sentences);
+    const words = new Set(sentences.flatMap(sentence => sentence.vocabulary.map(item => item.word)));
+    base = {
+      levelId,
+      lessonCount: lessons.length,
+      sentenceCount: sentences.length,
+      patternCount: sentences.filter(sentence => !!sentence.pattern).length,
+      vocabularyCount: words.size,
+    };
+    baseLevelMetrics.set(levelId, base);
+  }
   const lessons = SENTENCE_LESSONS.filter(lesson => lesson.levelId === levelId);
-  const sentences = lessons.flatMap(lesson => lesson.sentences);
-  const words = new Set(sentences.flatMap(sentence => sentence.vocabulary.map(item => item.word)));
   const completed = new Set(completedLessonIds);
   return {
-    levelId,
-    lessonCount: lessons.length,
+    ...base,
     completedLessonCount: lessons.filter(lesson => completed.has(lesson.id)).length,
-    sentenceCount: sentences.length,
-    patternCount: sentences.filter(sentence => !!sentence.pattern).length,
-    vocabularyCount: words.size,
   };
 }
 
