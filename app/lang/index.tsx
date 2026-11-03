@@ -116,7 +116,7 @@ export default function LearningHome() {
         <View style={styles.page}>
           <View style={styles.header}>
             <View style={styles.brandLockup}>
-              <LinearGradient colors={['#2878DE', '#1259B5']} start={{ x: .9, y: 0 }} end={{ x: .1, y: 1 }} style={styles.brandMark}>
+              <LinearGradient colors={['#635BFF', '#4338CA']} start={{ x: .9, y: 0 }} end={{ x: .1, y: 1 }} style={styles.brandMark}>
                 <BookOpenCheck size={20} color="#F9E8B9" strokeWidth={2} />
               </LinearGradient>
               <View style={styles.brandCopy}>
@@ -165,7 +165,7 @@ export default function LearningHome() {
           </LinearGradient>
 
           <View style={styles.lessonCard}>
-            <LinearGradient colors={['#4D9AF2', '#21A7C0', '#4D9AF2']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
+            <LinearGradient colors={['#4D9AF2', '#20C49A', '#4D9AF2']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
             <View style={styles.lessonMetaRow}>
               <View style={styles.levelTag}>
                 <View style={[styles.levelTagDot, { backgroundColor: currentLevel.color }]} />
@@ -220,7 +220,7 @@ export default function LearningHome() {
                 style={({ pressed }) => [styles.continueButton, pressed && styles.buttonPressed]}
                 onPress={openCurrentLesson}
               >
-                <LinearGradient colors={['#2878DE', '#1259B5']} start={{ x: .96, y: 0 }} end={{ x: .04, y: 1 }} style={styles.continueButtonGradient}>
+                <LinearGradient colors={['#635BFF', '#4338CA']} start={{ x: .96, y: 0 }} end={{ x: .04, y: 1 }} style={styles.continueButtonGradient}>
                   <Play size={16} color="#F5E7BC" fill="#F5E7BC" />
                   <Text style={styles.continueButtonText}>{hasStartedCourse ? 'ادامهٔ آموزش' : 'شروع اولین درس'}</Text>
                   <ArrowLeft size={17} color="#FFFFFF" />

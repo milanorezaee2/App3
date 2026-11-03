@@ -171,7 +171,7 @@ export default function TurkishHome() {
                   <Text style={styles.welcomeTagText}>یادگیری جمله‌محور</Text>
                 </View>
                 <View style={styles.welcomeTag}>
-                  <Sparkles size={12} color="#168451" />
+                  <Sparkles size={12} color="#07886A" />
                   <Text style={styles.welcomeTagText}>تلفظ و هماهنگی واکه‌ها</Text>
                 </View>
               </View>

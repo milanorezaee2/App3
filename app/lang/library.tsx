@@ -411,7 +411,7 @@ const styles = StyleSheet.create({
   railWrap: { paddingVertical: 5 },
   railCurrent: { fontFamily: Typography.latinFontFamily, color: Palette.primaryDark, fontSize: 10, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
   levelList: { gap: 9 },
-  levelOption: { minHeight: 96, flexDirection: 'row-reverse', alignItems: 'center', gap: 12, padding: 14, borderRadius: 20, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, shadowColor: '#20264A', shadowOpacity: .035, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  levelOption: { minHeight: 96, flexDirection: 'row-reverse', alignItems: 'center', gap: 12, padding: 14, borderRadius: 20, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, shadowColor: '#211A68', shadowOpacity: .035, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   levelOptionMark: { width: 44, height: 44, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
   levelOptionNumber: { fontFamily: 'Vazir', color: '#FFFFFF', fontSize: 17, fontWeight: '800', writingDirection: 'rtl' },
   levelOptionContent: { flex: 1, gap: 5 },

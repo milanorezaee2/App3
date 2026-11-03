@@ -15,7 +15,7 @@ import { DESIGN_VARIANT, Typography } from '@/lib/theme';
 const HERO_STEPS = ['بشنو', 'تکرار کن', 'به‌خاطر بسپار'] as const;
 const BRAND_GRADIENT: [string, string, string] = DESIGN_VARIANT === 'learner-v2'
   ? ['#312E81', '#635BFF', '#20C49A']
-  : ['#071E44', '#104A94', '#1769D2'];
+  : ['#211A68', '#3730A3', '#5146E5'];
 
 export type LoginMode = 'login' | 'register';
 
@@ -59,7 +59,7 @@ type LoginProfileScreenProps = {
 function LoginHero() {
   return (
     <LinearGradient
-      colors={['#071E44', '#104A94', '#1769D2']}
+      colors={['#211A68', '#3730A3', '#5146E5']}
       locations={[0, 0.45, 1]}
       start={{ x: 0.15, y: 0 }}
       end={{ x: 0.85, y: 1 }}
@@ -69,7 +69,7 @@ function LoginHero() {
       <View style={styles.heroColumn}>
         <View style={styles.brand}>
           <LinearGradient
-            colors={['#2F8BFF', '#1769D2', '#0B3E8F']}
+            colors={['#8D86FF', '#5146E5', '#312E81']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.brandMark}
@@ -226,7 +226,7 @@ export function LoginScreen({
         style={({ pressed }) => [styles.cta, pressed && !busy && styles.ctaPressed, busy && styles.disabled]}
       >
         <LinearGradient
-          colors={['#3C9AFF', '#1769D2', '#0E428A']}
+          colors={['#8D86FF', '#5146E5', '#3730A3']}
           locations={[0, 0.5, 1]}
           start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 1 }}
@@ -292,7 +292,7 @@ export function LoginCodeScreen({ email, code, onChangeCode, onSubmit, onResend,
         style={({ pressed }) => [styles.cta, pressed && !busy && styles.ctaPressed, busy && styles.disabled]}
       >
         <LinearGradient
-          colors={['#3C9AFF', '#1769D2', '#0E428A']}
+          colors={['#8D86FF', '#5146E5', '#3730A3']}
           locations={[0, 0.5, 1]}
           start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 1 }}
@@ -353,7 +353,7 @@ export function LoginProfileScreen({ email, fullName, onChangeFullName, onSubmit
 /* ---------------------------------------------------------------- styles */
 
 const styles = StyleSheet.create({
-  page: { flex: 1, backgroundColor: '#071E44' },
+  page: { flex: 1, backgroundColor: '#211A68' },
   scroll: { flex: 1 },
   scrollContent: { flexGrow: 1 },
 
@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
   },
   heroStepText: {
     fontFamily: Typography.mediumFontFamily,
-    color: '#EAF3FF',
+    color: '#E9E7FF',
     fontSize: 9.2,
     writingDirection: 'rtl',
   },
@@ -429,7 +429,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontFamily: Typography.boldFontFamily,
-    color: '#102A56',
+    color: '#211A68',
     fontSize: 20,
     lineHeight: 30,
     textAlign: 'right',
@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     writingDirection: 'rtl',
   },
-  switchTextActive: { fontFamily: Typography.mediumFontFamily, color: '#1769D2' },
+  switchTextActive: { fontFamily: Typography.mediumFontFamily, color: '#5146E5' },
 
   label: {
     marginTop: 16,
@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     fontFamily: Typography.mediumFontFamily,
     fontSize: 13.5,
-    color: '#102A56',
+    color: '#211A68',
     writingDirection: 'rtl',
   },
   ltr: { fontFamily: Typography.latinFontFamily, textAlign: 'right', writingDirection: 'ltr', fontSize: 12.6 },
@@ -504,7 +504,7 @@ const styles = StyleSheet.create({
   fieldIcon: { position: 'absolute', left: 16, top: 0, bottom: 0, justifyContent: 'center' },
   otpActions: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', marginTop: 14 },
   otpLinkButton: { paddingHorizontal: 6, paddingVertical: 8 },
-  otpLinkText: { fontFamily: Typography.mediumFontFamily, color: '#1769D2', fontSize: 11, writingDirection: 'rtl' },
+  otpLinkText: { fontFamily: Typography.mediumFontFamily, color: '#5146E5', fontSize: 11, writingDirection: 'rtl' },
 
   error: {
     marginTop: 12,
@@ -538,7 +538,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    shadowColor: '#1769D2',
+    shadowColor: '#5146E5',
     shadowOpacity: 0.35,
     shadowRadius: 14,
     shadowOffset: { width: 0, height: 9 },
@@ -582,7 +582,7 @@ const styles = StyleSheet.create({
     color: '#111111',
     backgroundColor: '#FFFFFF',
     borderWidth: 2,
-    borderColor: '#2878DE',
+    borderColor: '#635BFF',
     borderRadius: 18,
     paddingVertical: 12,
     paddingHorizontal: 18,

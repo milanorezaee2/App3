@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   intro: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 12, lineHeight: 21, textAlign: 'right', writingDirection: 'rtl' },
   privacyCard: { flexDirection: 'row-reverse', alignItems: 'flex-start', gap: 10, padding: 14, borderRadius: 17, backgroundColor: Palette.warningSoft, borderWidth: 1, borderColor: '#F2E0C5' },
   privacyText: { flex: 1, fontFamily: Typography.fontFamily, color: '#714B20', fontSize: 10, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
-  card: { width: '100%', padding: 18, borderRadius: 20, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 11, shadowColor: '#20264A', shadowOpacity: .035, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
+  card: { width: '100%', padding: 18, borderRadius: 20, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 11, shadowColor: '#211A68', shadowOpacity: .035, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
   headingRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
   heading: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 15, lineHeight: 24, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   body: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 11, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },

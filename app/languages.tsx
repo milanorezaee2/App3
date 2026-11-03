@@ -92,7 +92,7 @@ export default function LanguagesHome() {
                 style={({ pressed }) => [styles.headerButton, pressed && styles.pressed]}
                 onPress={openSupport}
               >
-                <LifeBuoy size={18} color="#2878DE" strokeWidth={1.9} />
+                <LifeBuoy size={18} color="#635BFF" strokeWidth={1.9} />
               </Pressable>
               <Pressable
                 accessibilityRole="button"
@@ -100,7 +100,7 @@ export default function LanguagesHome() {
                 style={({ pressed }) => [styles.headerButton, pressed && styles.pressed]}
                 onPress={() => router.push('/app-lock' as never)}
               >
-                <LockKeyhole size={18} color="#2878DE" strokeWidth={1.9} />
+                <LockKeyhole size={18} color="#635BFF" strokeWidth={1.9} />
               </Pressable>
             </View>
             <MiloLanguageBrand />
@@ -147,7 +147,7 @@ export default function LanguagesHome() {
                     <Text numberOfLines={1} style={styles.languageNativeName}>{displayName}</Text>
                   </View>
                   <View style={styles.languageArrow}>
-                    <ArrowRight size={20} color="#2878DE" strokeWidth={2.1} />
+                    <ArrowRight size={20} color="#635BFF" strokeWidth={2.1} />
                   </View>
                 </Pressable>
               );
@@ -174,7 +174,7 @@ export default function LanguagesHome() {
                     <View style={[styles.pathNode, index === 1 && styles.pathNodeAqua]} />
                   </View>
                   <View style={[styles.stepIcon, index === 1 && styles.stepIconAqua]}>
-                    <Icon size={24} color={index === 1 ? '#16A9C1' : '#2878DE'} strokeWidth={1.9} />
+                    <Icon size={24} color={index === 1 ? '#16A9C1' : '#635BFF'} strokeWidth={1.9} />
                   </View>
                   <View style={styles.stepCopy}>
                     <Text style={styles.stepTitle}>{step.title}</Text>

@@ -15,7 +15,7 @@ export function EnglishB2Scenario({ lessonId, speak, scenario: supplied }: { les
     <Text style={s.text}>{scenario.situation}</Text>
     <Text style={s.text}>{scenario.task}</Text>
     <Text style={s.text}>ابتدا پاسخ خود را با صدای بلند بگویید یا اینجا بنویسید؛ سپس با نمونه مقایسه کنید. پاسخ نمونه تنها پاسخ ممکن نیست.</Text>
-    <TextInput accessibilityLabel="پاسخ آزاد به موقعیت" style={[s.input, { minHeight: 100, textAlignVertical: 'top' }]} multiline value={answer} onChangeText={setAnswer} maxLength={2000} placeholder="Write your response here…" placeholderTextColor="#7086A2" />
+    <TextInput accessibilityLabel="پاسخ آزاد به موقعیت" style={[s.input, { minHeight: 100, textAlignVertical: 'top' }]} multiline value={answer} onChangeText={setAnswer} maxLength={2000} placeholder="Write your response here…" placeholderTextColor="#7C8AA5" />
     <Text style={s.text}>متن و علامت‌های خودارزیابی فقط تا خروج از این مرحله نگه‌داری می‌شوند؛ تصحیح خودکار یا ذخیره نمی‌شوند و شرط پایان درس نیستند.</Text>
     <Pressable accessibilityRole="button" accessibilityState={{ expanded: showSample }} aria-expanded={showSample} style={s.secondaryButton} onPress={() => setShowSample(value => !value)}>
       <Text style={s.secondaryButtonText}>{showSample ? 'پنهان‌کردن پاسخ نمونه' : 'دیدن پاسخ نمونه و توضیح'}</Text>

@@ -231,6 +231,6 @@ export function RegistrationGate({ children }: PropsWithChildren) {
 }
 
 const styles = StyleSheet.create({
-  loading: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, backgroundColor: '#F6FAFF' },
+  loading: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, backgroundColor: '#F8FAFF' },
   loadingText: { fontFamily: Typography.fontFamily, color: '#334155', fontSize: 13 },
 });

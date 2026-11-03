@@ -1,27 +1,27 @@
 import { Platform, type TextStyle, type ViewStyle } from 'react-native';
 
-export const DESIGN_VARIANT = process.env.EXPO_PUBLIC_DESIGN_VARIANT || 'legacy';
+export const DESIGN_VARIANT = process.env.EXPO_PUBLIC_DESIGN_VARIANT || 'learner-v2';
 
 const legacyColors = {
   primary: {
     50: '#F1F7FF',
-    100: '#E2EFFF',
-    200: '#C9DFFF',
-    300: '#4D8FE8',
-    400: '#2878DE',
-    500: '#1769D2',
-    600: '#1259B5',
-    700: '#104A94',
-    800: '#123E76',
-    900: '#102A56',
+    100: '#E9E7FF',
+    200: '#D8D5FF',
+    300: '#8D86FF',
+    400: '#635BFF',
+    500: '#5146E5',
+    600: '#4338CA',
+    700: '#3730A3',
+    800: '#211A68',
+    900: '#211A68',
   },
   accent: {
     50: '#EDFCFF',
     100: '#D7F7FC',
     200: '#B3EEF7',
     300: '#46BCD0',
-    400: '#21A7C0',
-    500: '#128DA8',
+    400: '#20C49A',
+    500: '#0EAA83',
     600: '#0E748E',
     700: '#115E73',
     800: '#154E5E',
@@ -188,18 +188,18 @@ export const LtrDirection: DirectionStyle =
  */
 export const DesignTokens = {
   surface: {
-    canvas: DESIGN_VARIANT === 'learner-v2' ? '#F8FAFF' : '#F6F8FB',
+    canvas: DESIGN_VARIANT === 'learner-v2' ? '#F8FAFF' : '#F8FAFF',
     card: '#FFFFFF',
   },
   brand: {
-    primarySoft: DESIGN_VARIANT === 'learner-v2' ? '#E9E7FF' : '#E2EFFF',
-    primaryStrong: DESIGN_VARIANT === 'learner-v2' ? '#635BFF' : '#2878DE',
+    primarySoft: DESIGN_VARIANT === 'learner-v2' ? '#E9E7FF' : '#E9E7FF',
+    primaryStrong: DESIGN_VARIANT === 'learner-v2' ? '#635BFF' : '#635BFF',
   },
   border: {
-    default: DESIGN_VARIANT === 'learner-v2' ? '#E3E7F3' : '#DCE8F7',
+    default: DESIGN_VARIANT === 'learner-v2' ? '#E3E7F3' : '#E3E7F3',
   },
   text: {
-    primary: DESIGN_VARIANT === 'learner-v2' ? '#211A68' : '#102A56',
+    primary: DESIGN_VARIANT === 'learner-v2' ? '#211A68' : '#211A68',
     secondary: DESIGN_VARIANT === 'learner-v2' ? '#64748B' : '#64748B',
   },
 } as const;

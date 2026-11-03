@@ -7,7 +7,7 @@ export default function EnglishLessonScreen() {
   return (
     <Suspense fallback={
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, backgroundColor: '#F8FAFF' }}>
-        <ActivityIndicator color="#2878DE" size="large" />
+        <ActivityIndicator color="#635BFF" size="large" />
         <Text style={{ fontFamily: 'Vazir', color: '#334155', fontSize: 13, textAlign: 'center', writingDirection: 'rtl' }}>
           در حال آماده‌کردن اولین درس…
         </Text>
