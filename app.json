@@ -91,6 +91,9 @@
     "extra": {
       "router": {
         "sitemap": false
+      },
+      "eas": {
+        "projectId": "be0e368c-0d94-4e95-b4f4-d757fa7beb42"
       }
     }
   }
