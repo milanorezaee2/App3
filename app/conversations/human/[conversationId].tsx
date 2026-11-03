@@ -56,7 +56,7 @@ function VoiceMessage({ message }: { message: DirectMessage }) {
   return (
     <Pressable accessibilityRole="button" accessibilityLabel={`پخش پیام صوتی، ${message.body || '۱'} ثانیه`} style={styles.voiceMessage} onPress={() => void toggle()}>
       <View style={styles.voicePlay}>
-        {!url && !error ? <Play size={16} color={Colors.neutral[50]} fill={Colors.neutral[50]} /> : status.playing ? <Pause size={16} color={Colors.neutral[50]} fill={Colors.neutral[50]} /> : <Play size={16} color={Colors.neutral[50]} fill={Colors.neutral[50]} />}
+        {!url && !error ? <Play size={16} color={'#29362F'} fill={'#29362F'} /> : status.playing ? <Pause size={16} color={'#29362F'} fill={'#29362F'} /> : <Play size={16} color={'#29362F'} fill={'#29362F'} />}
       </View>
       <View style={styles.wave}><View style={styles.waveLine} /><View style={[styles.waveLine, { height: 20 }]} /><View style={[styles.waveLine, { height: 12 }]} /><View style={[styles.waveLine, { height: 24 }]} /><View style={[styles.waveLine, { height: 16 }]} /></View>
       <Text style={styles.voiceDuration}>{error ? 'خطا' : `${message.body || '1'} ثانیه`}</Text>
@@ -201,14 +201,14 @@ export default function HumanConversationScreen() {
     <View style={styles.root}>
       <View style={styles.header}>
         <PageNavigation tone="dark" backFallback="/conversations" />
-        <View style={styles.avatar}><UserRound size={22} color={Colors.primary[300]} /></View>
+        <View style={styles.avatar}><UserRound size={22} color={'#728D75'} /></View>
         <View style={styles.headerText}><Text style={[styles.name, containsRtlScript(name || 'مخاطب واقعی') ? styles.rtlText : styles.ltrText]}>{name || 'مخاطب واقعی'}</Text><Text style={styles.status}>گفتگوی خصوصی</Text></View>
         <Pressable accessibilityRole="button" accessibilityLabel="حذف این مخاطب و گفتگو" accessibilityState={{ disabled: sending }} style={styles.deleteButton} onPress={confirmDeleteConversation} disabled={sending}><Trash2 size={18} color={Colors.error[300]} /></Pressable>
         <ShieldCheck size={20} color={Colors.success[400]} />
       </View>
 
       {loading ? (
-        <View style={styles.center}><ActivityIndicator color={Colors.primary[400]} /><Text style={styles.centerText}>در حال بازکردن گفتگو…</Text></View>
+        <View style={styles.center}><ActivityIndicator color={'#728D75'} /><Text style={styles.centerText}>در حال بازکردن گفتگو…</Text></View>
       ) : (
         <ScrollView
           ref={scrollRef}
@@ -240,7 +240,7 @@ export default function HumanConversationScreen() {
           <View style={styles.coachActions}>
             <Pressable accessibilityRole="button" accessibilityLabel="ترجمهٔ پیش‌نویس پیام" accessibilityState={{ disabled: !!assisting }} style={styles.coachAction} disabled={!!assisting} onPress={() => void runAssist('translate')}><Languages size={14} color={Colors.warning[300]} /><Text style={styles.coachActionText}>ترجمه</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="اصلاح پیش‌نویس پیام" accessibilityState={{ disabled: !!assisting }} style={styles.coachAction} disabled={!!assisting} onPress={() => void runAssist('correct')}><Check size={14} color={Colors.success[300]} /><Text style={styles.coachActionText}>اصلاح</Text></Pressable>
-            <Pressable accessibilityRole="button" accessibilityLabel="پیشنهاد پاسخ" accessibilityState={{ disabled: !!assisting }} style={styles.coachAction} disabled={!!assisting} onPress={() => void runAssist('suggest')}><Lightbulb size={14} color={Colors.primary[300]} /><Text style={styles.coachActionText}>پیشنهاد پاسخ</Text></Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel="پیشنهاد پاسخ" accessibilityState={{ disabled: !!assisting }} style={styles.coachAction} disabled={!!assisting} onPress={() => void runAssist('suggest')}><Lightbulb size={14} color={'#728D75'} /><Text style={styles.coachActionText}>پیشنهاد پاسخ</Text></Pressable>
           </View>
           {assisting ? <ActivityIndicator size="small" color={Colors.warning[400]} /> : null}
           {assistResult ? (
@@ -258,14 +258,14 @@ export default function HumanConversationScreen() {
       {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
       <KeyboardStickyView offset={{ closed: 0, opened: 0 }}>
       <View style={styles.composer}>
-        <Pressable accessibilityRole="button" accessibilityLabel="باز و بسته‌کردن دستیار زبان" accessibilityState={{ expanded: showCoach }} style={styles.helper} onPress={() => setShowCoach((value) => !value)}><Sparkles size={19} color={showCoach ? Colors.warning[400] : Colors.neutral[400]} /></Pressable>
+        <Pressable accessibilityRole="button" accessibilityLabel="باز و بسته‌کردن دستیار زبان" accessibilityState={{ expanded: showCoach }} style={styles.helper} onPress={() => setShowCoach((value) => !value)}><Sparkles size={19} color={showCoach ? Colors.warning[400] : '#778179'} /></Pressable>
         <TextInput
           accessibilityLabel="متن پیام فارسی یا انگلیسی"
           style={[styles.input, containsRtlScript(input || 'پیام') ? styles.rtlText : styles.ltrText]}
           value={input}
           onChangeText={setInput}
           placeholder="پیام فارسی یا انگلیسی بنویسید…"
-          placeholderTextColor={Colors.neutral[600]}
+          placeholderTextColor={'#778179'}
           multiline
         />
         {input.trim() ? (
@@ -282,57 +282,57 @@ export default function HumanConversationScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: Colors.neutral[950] },
-  header: { paddingTop: 12, paddingHorizontal: Spacing.md, paddingBottom: Spacing.sm, minHeight: 64, backgroundColor: Colors.neutral[900], borderBottomWidth: 1, borderBottomColor: Colors.neutral[800], flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.sm },
-  avatar: { width: 44, height: 44, borderRadius: 22, backgroundColor: Colors.primary[500] + '15', alignItems: 'center', justifyContent: 'center' },
+  root: { flex: 1, backgroundColor: '#F5F4EF' },
+  header: { paddingTop: 12, paddingHorizontal: Spacing.md, paddingBottom: Spacing.sm, minHeight: 64, backgroundColor: '#FFFEFB', borderBottomWidth: 1, borderBottomColor: '#E5E6DF', flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.sm },
+  avatar: { width: 44, height: 44, borderRadius: 22, backgroundColor: '#728D75' + '15', alignItems: 'center', justifyContent: 'center' },
   headerText: { flex: 1 },
-  name: { fontSize: Typography.sizes.md, fontWeight: Typography.weights.bold, color: Colors.neutral[100] },
+  name: { fontSize: Typography.sizes.md, fontWeight: Typography.weights.bold, color: '#29362F' },
   status: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.success[400], textAlign: 'right', marginTop: 2 },
   deleteButton: { width: 38, height: 38, borderRadius: 19, backgroundColor: Colors.error[500] + '12', alignItems: 'center', justifyContent: 'center' },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: Spacing.sm },
-  centerText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.neutral[500] },
+  centerText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: '#778179' },
   messages: { flex: 1, minHeight: 0 },
   messageContent: { flexGrow: 1, padding: Spacing.md, gap: Spacing.sm },
   privateNote: { alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 5, borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 6, backgroundColor: Colors.success[500] + '0D', marginBottom: Spacing.md },
   privateText: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.success[400] },
   empty: { flex: 1, minHeight: 300, alignItems: 'center', justifyContent: 'center' },
   emptyEmoji: { fontSize: 42 },
-  emptyTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg, fontWeight: Typography.weights.bold, color: Colors.neutral[200], marginTop: Spacing.md },
-  emptyDesc: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, color: Colors.neutral[600], marginTop: 4 },
+  emptyTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg, fontWeight: Typography.weights.bold, color: '#29362F', marginTop: Spacing.md },
+  emptyDesc: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, color: '#778179', marginTop: 4 },
   bubble: { maxWidth: '84%', borderRadius: Radius.xl, padding: Spacing.md, borderWidth: 1 },
-  mine: { alignSelf: 'flex-end', backgroundColor: Colors.primary[600], borderColor: Colors.primary[500], borderBottomRightRadius: 5 },
-  theirs: { alignSelf: 'flex-start', backgroundColor: Colors.neutral[850], borderColor: Colors.neutral[700], borderBottomLeftRadius: 5 },
-  messageText: { fontSize: 16, lineHeight: 24, color: Colors.neutral[50] },
+  mine: { alignSelf: 'flex-end', backgroundColor: Colors.primary[600], borderColor: '#728D75', borderBottomRightRadius: 5 },
+  theirs: { alignSelf: 'flex-start', backgroundColor: '#FFFEFB', borderColor: '#E5E6DF', borderBottomLeftRadius: 5 },
+  messageText: { fontSize: 16, lineHeight: 24, color: '#29362F' },
   rtlText: { fontFamily: Typography.fontFamily, textAlign: 'right', writingDirection: 'rtl' },
   ltrText: { fontFamily: Typography.latinFontFamily, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
-  time: { fontFamily: Typography.fontFamily, fontSize: 9, color: Colors.neutral[400], marginTop: 5, textAlign: 'left' },
+  time: { fontFamily: Typography.fontFamily, fontSize: 9, color: '#778179', marginTop: 5, textAlign: 'left' },
   voiceMessage: { minWidth: 190, flexDirection: 'row', alignItems: 'center', gap: 9 },
-  voicePlay: { width: 34, height: 34, borderRadius: 17, backgroundColor: Colors.neutral[50] + '22', alignItems: 'center', justifyContent: 'center' },
+  voicePlay: { width: 34, height: 34, borderRadius: 17, backgroundColor: '#29362F' + '22', alignItems: 'center', justifyContent: 'center' },
   wave: { flex: 1, height: 28, flexDirection: 'row', gap: 4, alignItems: 'center' },
-  waveLine: { width: 3, height: 9, borderRadius: 2, backgroundColor: Colors.neutral[200] },
-  voiceDuration: { fontFamily: Typography.fontFamily, fontSize: 9, color: Colors.neutral[300] },
+  waveLine: { width: 3, height: 9, borderRadius: 2, backgroundColor: '#29362F' },
+  voiceDuration: { fontFamily: Typography.fontFamily, fontSize: 9, color: '#29362F' },
   coach: { padding: Spacing.md, backgroundColor: Colors.warning[500] + '0B', borderTopWidth: 1, borderTopColor: Colors.warning[500] + '20', gap: 8 },
   coachTitleRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6 },
   coachTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, fontWeight: Typography.weights.bold, color: Colors.warning[300] },
   coachActions: { flexDirection: 'row-reverse', gap: 7 },
-  coachAction: { flex: 1, minHeight: 34, borderRadius: Radius.md, backgroundColor: Colors.neutral[850], flexDirection: 'row-reverse', gap: 5, alignItems: 'center', justifyContent: 'center' },
-  coachActionText: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.neutral[300] },
-  assistResult: { borderRadius: Radius.md, backgroundColor: Colors.neutral[900], padding: Spacing.sm, gap: 5 },
-  assistPrimary: { fontFamily: Typography.latinFontFamily, fontSize: 14, lineHeight: 20, fontWeight: '800', color: Colors.neutral[50], textAlign: 'left', writingDirection: 'ltr' },
-  assistExplanation: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.neutral[500], textAlign: 'right' },
-  useSuggestion: { alignSelf: 'flex-end', borderRadius: Radius.full, backgroundColor: Colors.primary[500], paddingHorizontal: 10, paddingVertical: 6 },
+  coachAction: { flex: 1, minHeight: 34, borderRadius: Radius.md, backgroundColor: '#FFFEFB', flexDirection: 'row-reverse', gap: 5, alignItems: 'center', justifyContent: 'center' },
+  coachActionText: { fontFamily: Typography.fontFamily, fontSize: 10, color: '#29362F' },
+  assistResult: { borderRadius: Radius.md, backgroundColor: '#FFFEFB', padding: Spacing.sm, gap: 5 },
+  assistPrimary: { fontFamily: Typography.latinFontFamily, fontSize: 14, lineHeight: 20, fontWeight: '800', color: '#29362F', textAlign: 'left', writingDirection: 'ltr' },
+  assistExplanation: { fontFamily: Typography.fontFamily, fontSize: 10, color: '#778179', textAlign: 'right' },
+  useSuggestion: { alignSelf: 'flex-end', borderRadius: Radius.full, backgroundColor: '#728D75', paddingHorizontal: 10, paddingVertical: 6 },
   useSuggestionText: { fontFamily: Typography.fontFamily, fontSize: 9, color: Colors.onColor },
-  alternative: { fontFamily: Typography.latinFontFamily, fontSize: 12, fontWeight: '800', color: Colors.primary[200], textAlign: 'left', writingDirection: 'ltr', paddingVertical: 3 },
+  alternative: { fontFamily: Typography.latinFontFamily, fontSize: 12, fontWeight: '800', color: '#728D75', textAlign: 'left', writingDirection: 'ltr', paddingVertical: 3 },
   recording: { minHeight: 34, backgroundColor: Colors.error[500] + '12', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7 },
   recordDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: Colors.error[400] },
   recordingText: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.error[300] },
   audioNotice: { minHeight: 34, paddingHorizontal: Spacing.md, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, backgroundColor: Colors.success[500] + '0D' },
   audioNoticeText: { flexShrink: 1, fontFamily: Typography.fontFamily, fontSize: 9, lineHeight: 16, color: Colors.success[300], textAlign: 'right' },
-  error: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.error[300], textAlign: 'center', paddingHorizontal: Spacing.md, paddingTop: 6, backgroundColor: Colors.neutral[900] },
-  composer: { flexShrink: 0, minHeight: 64, overflow: 'visible', padding: Spacing.sm, paddingBottom: 10, backgroundColor: Colors.neutral[900], flexDirection: 'row-reverse', alignItems: 'center', gap: 7 },
-  helper: { width: 42, height: 42, borderRadius: 21, backgroundColor: Colors.neutral[850], alignItems: 'center', justifyContent: 'center' },
-  input: { flex: 1, minHeight: 44, maxHeight: 100, borderRadius: 22, backgroundColor: Colors.neutral[850], borderWidth: 1, borderColor: Colors.neutral[700], paddingHorizontal: Spacing.md, paddingTop: 10, paddingBottom: 8, fontSize: Typography.sizes.sm, lineHeight: 22, color: Colors.neutral[100], textAlignVertical: 'center', includeFontPadding: false },
-  send: { width: 42, height: 42, borderRadius: 21, backgroundColor: Colors.primary[500], alignItems: 'center', justifyContent: 'center' },
+  error: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.error[300], textAlign: 'center', paddingHorizontal: Spacing.md, paddingTop: 6, backgroundColor: '#FFFEFB' },
+  composer: { flexShrink: 0, minHeight: 64, overflow: 'visible', padding: Spacing.sm, paddingBottom: 10, backgroundColor: '#FFFEFB', flexDirection: 'row-reverse', alignItems: 'center', gap: 7 },
+  helper: { width: 42, height: 42, borderRadius: 21, backgroundColor: '#FFFEFB', alignItems: 'center', justifyContent: 'center' },
+  input: { flex: 1, minHeight: 44, maxHeight: 100, borderRadius: 22, backgroundColor: '#FFFEFB', borderWidth: 1, borderColor: '#E5E6DF', paddingHorizontal: Spacing.md, paddingTop: 10, paddingBottom: 8, fontSize: Typography.sizes.sm, lineHeight: 22, color: '#29362F', textAlignVertical: 'center', includeFontPadding: false },
+  send: { width: 42, height: 42, borderRadius: 21, backgroundColor: '#728D75', alignItems: 'center', justifyContent: 'center' },
   recordStop: { backgroundColor: Colors.error[500] },
   disabled: { opacity: .4 },
 });

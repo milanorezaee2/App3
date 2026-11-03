@@ -108,7 +108,7 @@ export default function AgentHomeScreen() {
   if (checking) {
     return (
       <View style={[styles.root, styles.center]}>
-        <ActivityIndicator size="large" color={Colors.accent[500]} />
+        <ActivityIndicator size="large" color={'#728D75'} />
       </View>
     );
   }
@@ -140,7 +140,7 @@ export default function AgentHomeScreen() {
             onPress={() => router.push('/agent/pair' as never)}
           >
             <LinearGradient
-              colors={[Colors.accent[500], Colors.accent[800]]}
+              colors={['#728D75', Colors.accent[800]]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
               style={styles.bigBtnGradient}
@@ -162,17 +162,17 @@ export default function AgentHomeScreen() {
           <View style={styles.featuresCard}>
             <Text style={styles.featuresTitle}>پس از اتصال، این اطلاعات به‌صورت زنده ارسال می‌شود:</Text>
             <FeatureRow icon={BatteryCharging} text="میزان و وضعیت شارژ باتری" color={Colors.success[500]} />
-            <FeatureRow icon={Wifi} text="نوع اینترنت (وای‌فای / سیم‌کارت)" color={Colors.primary[400]} />
+            <FeatureRow icon={Wifi} text="نوع اینترنت (وای‌فای / سیم‌کارت)" color={'#728D75'} />
             <FeatureRow icon={HardDrive} text="حافظه‌ی خالی و کل گوشی" color={Colors.warning[400]} />
             <FeatureRow icon={MapPin} text="موقعیت مکانی (با اجازه‌ی شما)" color={Colors.error[400]} />
-            <FeatureRow icon={ShieldCheck} text="اجرای دستورات گوشی اول (پیدا کردن، صدا زدن، پیام)" color={Colors.accent[500]} />
+            <FeatureRow icon={ShieldCheck} text="اجرای دستورات گوشی اول (پیدا کردن، صدا زدن، پیام)" color={'#728D75'} />
           </View>
 
           <Text style={styles.footerNote}>
             مدل این دستگاه: {getAgentIdentity().deviceModel} • {getAgentIdentity().osVersion}
           </Text>
           <Pressable style={styles.languageBtn} onPress={() => router.push('/lang' as never)}>
-            <GraduationCap size={20} color={Colors.accent[300]} strokeWidth={2.2} />
+            <GraduationCap size={20} color={'#728D75'} strokeWidth={2.2} />
             <View style={styles.languageTextWrap}>
               <Text style={styles.languageTitle}>آموزش زبان انگلیسی</Text>
               <Text style={styles.languageDesc}>۱۶۱ درس جمله‌محور، تلفظ صوتی و مرور</Text>
@@ -230,7 +230,7 @@ export default function AgentHomeScreen() {
         {/* info grid */}
         <View style={styles.gridTitleRow}>
           <Text style={styles.gridTitle}>اطلاعاتی که ارسال می‌شود</Text>
-          <RefreshCw size={15} color={agent.syncing ? Colors.accent[500] : Colors.neutral[600]} strokeWidth={2.2} />
+          <RefreshCw size={15} color={agent.syncing ? '#728D75' : '#778179'} strokeWidth={2.2} />
         </View>
 
         <View style={styles.grid}>
@@ -242,7 +242,7 @@ export default function AgentHomeScreen() {
           />
           <InfoTile
             icon={Wifi}
-            color={Colors.primary[400]}
+            color={'#728D75'}
             label="اینترنت"
             value={networkFa(snap?.networkType ?? null)}
           />
@@ -254,7 +254,7 @@ export default function AgentHomeScreen() {
           />
           <InfoTile
             icon={Cpu}
-            color={Colors.accent[500]}
+            color={'#728D75'}
             label="حافظه‌ی رم"
             value={snap ? formatBytes(snap.totalMemory) : '…'}
           />
@@ -272,7 +272,7 @@ export default function AgentHomeScreen() {
           />
           <InfoTile
             icon={Smartphone}
-            color={Colors.neutral[300]}
+            color={'#29362F'}
             label="مدل"
             value={getAgentIdentity().deviceModel}
           />
@@ -284,7 +284,7 @@ export default function AgentHomeScreen() {
         </Pressable>
 
         <Pressable style={styles.languageBtn} onPress={() => router.push('/lang' as never)}>
-          <GraduationCap size={20} color={Colors.accent[300]} strokeWidth={2.2} />
+          <GraduationCap size={20} color={'#728D75'} strokeWidth={2.2} />
           <View style={styles.languageTextWrap}>
             <Text style={styles.languageTitle}>آموزش زبان انگلیسی</Text>
             <Text style={styles.languageDesc}>ادامه درس‌ها و آزمون‌های شما</Text>
@@ -331,7 +331,7 @@ function InfoTile({
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: Colors.neutral[950], ...RtlDirection },
+  root: { flex: 1, backgroundColor: '#F5F4EF', ...RtlDirection },
   center: { justifyContent: 'center', alignItems: 'center' },
   body: { padding: Spacing.lg, paddingBottom: Spacing.xxl + 24 },
 
@@ -418,10 +418,10 @@ const styles = StyleSheet.create({
   },
 
   featuresCard: {
-    backgroundColor: Colors.neutral[850],
+    backgroundColor: '#FFFEFB',
     borderRadius: Radius.xl,
     borderWidth: 1,
-    borderColor: Colors.neutral[800],
+    borderColor: '#E5E6DF',
     padding: Spacing.lg,
     gap: Spacing.md,
   },
@@ -429,7 +429,7 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.md,
     fontWeight: Typography.weights.bold,
-    color: Colors.neutral[0],
+    color: '#29362F',
     textAlign: 'right',
     marginBottom: 2,
   },
@@ -445,7 +445,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.sm,
-    color: Colors.neutral[300],
+    color: '#29362F',
     textAlign: 'right',
     lineHeight: 20,
   },
@@ -453,7 +453,7 @@ const styles = StyleSheet.create({
   footerNote: {
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.xs,
-    color: Colors.neutral[600],
+    color: '#778179',
     textAlign: 'center',
     marginTop: Spacing.xl,
     marginBottom: Spacing.md,
@@ -463,8 +463,8 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
     borderRadius: Radius.lg,
     borderWidth: 1,
-    borderColor: Colors.accent[500] + '55',
-    backgroundColor: Colors.accent[500] + '10',
+    borderColor: '#728D75' + '55',
+    backgroundColor: '#728D75' + '10',
     flexDirection: 'row-reverse',
     alignItems: 'center',
     gap: Spacing.md,
@@ -474,13 +474,13 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.md,
     fontWeight: Typography.weights.bold,
-    color: Colors.neutral[0],
+    color: '#29362F',
     textAlign: 'right',
   },
   languageDesc: {
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.xs,
-    color: Colors.neutral[400],
+    color: '#778179',
     textAlign: 'right',
     marginTop: 3,
   },
@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.lg,
     fontWeight: Typography.weights.bold,
-    color: Colors.neutral[0],
+    color: '#29362F',
   },
   grid: {
     flexDirection: 'row-reverse',
@@ -505,24 +505,24 @@ const styles = StyleSheet.create({
   },
   tile: {
     width: '48.5%',
-    backgroundColor: Colors.neutral[850],
+    backgroundColor: '#FFFEFB',
     borderRadius: Radius.lg,
     borderWidth: 1,
-    borderColor: Colors.neutral[800],
+    borderColor: '#E5E6DF',
     padding: Spacing.md,
     gap: 6,
   },
   tileLabel: {
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.xs,
-    color: Colors.neutral[400],
+    color: '#778179',
     textAlign: 'right',
   },
   tileValue: {
     fontFamily: Typography.numberFontFamily,
     fontSize: Typography.sizes.sm,
     fontWeight: Typography.weights.bold,
-    color: Colors.neutral[0],
+    color: '#29362F',
     textAlign: 'right',
     lineHeight: 20,
   },
@@ -546,7 +546,7 @@ const styles = StyleSheet.create({
   messageText: {
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.md,
-    color: Colors.neutral[100],
+    color: '#29362F',
     textAlign: 'right',
     lineHeight: 24,
   },

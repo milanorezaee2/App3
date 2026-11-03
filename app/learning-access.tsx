@@ -29,7 +29,7 @@ export default function LearningAccess() {
   const button=(text:string, action:()=>void, disabled=false)=><Pressable accessibilityRole="button" disabled={disabled||busy} onPress={action} style={[s.button,(disabled||busy)&&{opacity:.4}]}><Text style={s.buttonText}>{text}</Text></Pressable>;
   return <ScrollView contentContainerStyle={s.root}><View style={s.page}>
     <PageNavigation backFallback="/lang" />
-    <ShieldCheck size={38} color="#0c8b78"/><Text style={s.title}>مدیریت اشتراک آموزشی</Text>
+    <ShieldCheck size={38} color="#728D75"/><Text style={s.title}>مدیریت اشتراک آموزشی</Text>
     <Text style={s.text}>عضویت اختیاری است. مدیر فقط خلاصه پیشرفت آموزشی شما را می‌بیند، نه پیام‌ها، اطلاعات یا صفحه گوشی شما.</Text>
     {FEATURES.educationEnrollment && <View style={s.card}><Text style={s.heading}>پذیرفتن دعوت مدیر</Text>
       <Text style={s.text}>کد بلند دعوت آموزشی را وارد کنید؛ این کد با کد ۶ رقمی مکالمه متفاوت است.</Text>
@@ -46,7 +46,7 @@ export default function LearningAccess() {
       </>}
     </View>}
     {!FEATURES.educationEnrollment && <Text style={s.note}>پذیرش دعوت جدید فعلاً غیرفعال است. لغو اشتراک‌های قبلی همچنان ممکن است.</Text>}
-    {busy&&<ActivityIndicator color="#0c8b78"/>}{!!error&&<Text accessibilityRole="alert" style={s.error}>{error}</Text>}{!!message&&<Text style={s.success}>{message}</Text>}
+    {busy&&<ActivityIndicator color="#728D75"/>}{!!error&&<Text accessibilityRole="alert" style={s.error}>{error}</Text>}{!!message&&<Text style={s.success}>{message}</Text>}
     <View style={s.card}><Text style={s.heading}>اشتراک‌های فعلی</Text>
       {!members.length&&<Text style={s.text}>عضویتی برای این حساب نمایش داده نمی‌شود.</Text>}
       {members.map(m=><View key={m.admin_id} style={s.member}><Text style={s.text}>شناسه مدیر: {m.admin_id.slice(0,8)}… · {m.status==='active'?'اشتراک فعال':'گزارش متوقف'} </Text>
@@ -58,4 +58,4 @@ export default function LearningAccess() {
     <Text style={s.note}>قطع اشتراک، دسترسی بعدی مدیر را متوقف می‌کند؛ نسخه‌هایی که قبلاً دیده یا ذخیره کرده قابل پس‌گرفتن نیستند. اطلاعات دستگاه و کنترل گوشی بخشی از این عضویت نیست.</Text>
   </View></ScrollView>;
 }
-const s=StyleSheet.create({root:{flexGrow:1,backgroundColor:'#f3f7f9',padding:24},page:{width:'100%',maxWidth:760,alignSelf:'center',gap:20},title:{fontFamily:'Vazir',fontSize:25,fontWeight:'700',color:'#1e3d50',textAlign:'right'},text:{fontFamily:'Vazir',fontSize:13,color:'#496579',textAlign:'right',lineHeight:27},heading:{fontFamily:'Vazir',fontSize:17,fontWeight:'700',color:'#203f52',textAlign:'right'},card:{backgroundColor:'#fff',borderRadius:18,padding:22,gap:18},input:{fontFamily:'Vazir',backgroundColor:'#f5f8fa',padding:14,borderRadius:10,borderWidth:1,borderColor:'#dce6ec',textAlign:'right',color:'#253f54'},button:{backgroundColor:'#0c8b78',padding:14,borderRadius:10,alignItems:'center'},buttonText:{fontFamily:'Vazir',fontSize:13,color:'#fff'},consent:{backgroundColor:'#edf8f3',padding:14,borderRadius:10},member:{borderTopWidth:1,borderColor:'#e4edf1',paddingTop:15,gap:12},note:{fontFamily:'Vazir',fontSize:12,lineHeight:25,textAlign:'right',color:'#738496'},error:{fontFamily:'Vazir',color:'#ae3333',textAlign:'right',lineHeight:25},success:{fontFamily:'Vazir',color:'#14775d',textAlign:'right',lineHeight:25}});
+const s=StyleSheet.create({root:{flexGrow:1,backgroundColor:'#F5F4EF',padding:24},page:{width:'100%',maxWidth:760,alignSelf:'center',gap:20},title:{fontFamily:'Vazir',fontSize:25,fontWeight:'700',color:'#29362F',textAlign:'right'},text:{fontFamily:'Vazir',fontSize:13,color:'#496579',textAlign:'right',lineHeight:27},heading:{fontFamily:'Vazir',fontSize:17,fontWeight:'700',color:'#29362F',textAlign:'right'},card:{backgroundColor:'#FFFEFB',borderRadius:18,padding:22,gap:18},input:{fontFamily:'Vazir',backgroundColor:'#f5f8fa',padding:14,borderRadius:10,borderWidth:1,borderColor:'#dce6ec',textAlign:'right',color:'#253f54'},button:{backgroundColor:'#728D75',padding:14,borderRadius:10,alignItems:'center'},buttonText:{fontFamily:'Vazir',fontSize:13,color:'#FFFEFB'},consent:{backgroundColor:'#edf8f3',padding:14,borderRadius:10},member:{borderTopWidth:1,borderColor:'#e4edf1',paddingTop:15,gap:12},note:{fontFamily:'Vazir',fontSize:12,lineHeight:25,textAlign:'right',color:'#738496'},error:{fontFamily:'Vazir',color:'#ae3333',textAlign:'right',lineHeight:25},success:{fontFamily:'Vazir',color:'#14775d',textAlign:'right',lineHeight:25}});

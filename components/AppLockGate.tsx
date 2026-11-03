@@ -44,7 +44,7 @@ export function AppLockGate({ children }: { children: ReactNode }) {
     return () => subscription.remove();
   }, []);
 
-  if (!config) return <View style={styles.loading}><ActivityIndicator color={Colors.primary[400]} /></View>;
+  if (!config) return <View style={styles.loading}><ActivityIndicator color={'#728D75'} /></View>;
   if (!isAppLockEnabled(config) || unlocked) return <>{children}</>;
   return <UnlockScreen config={config} onUnlock={() => setUnlocked(true)} />;
 }
@@ -107,7 +107,7 @@ function UnlockScreen({ config, onUnlock }: { config: AppLockConfig; onUnlock: (
 
   return (
     <View style={styles.root}>
-      <View style={styles.logo}><LockKeyhole size={34} color={Colors.primary[300]} /></View>
+      <View style={styles.logo}><LockKeyhole size={34} color={'#728D75'} /></View>
       <Text style={styles.title}>MiloMultilang قفل است</Text>
       <Text style={styles.description}>برای محافظت از درس‌ها و گفتگوهای خصوصی، هویت خود را تأیید کنید.</Text>
 
@@ -116,7 +116,7 @@ function UnlockScreen({ config, onUnlock }: { config: AppLockConfig; onUnlock: (
           <PatternGrid value={pattern} onChange={next => { setPattern(next); setError(''); }} disabled={busy || guarded} />
           <View style={styles.patternActions}>
             <Pressable accessibilityRole="button" accessibilityLabel="پاک‌کردن الگو" style={styles.secondaryButton} onPress={() => setPattern([])} disabled={!pattern.length || busy}>
-              <RotateCcw size={17} color={Colors.neutral[300]} />
+              <RotateCcw size={17} color={'#29362F'} />
               <Text style={styles.secondaryText}>پاک‌کردن</Text>
             </Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="تأیید الگو" style={[styles.primaryButton, (pattern.length < 4 || busy || guarded) && styles.disabled]} onPress={() => void unlockWithPattern()} disabled={pattern.length < 4 || busy || guarded}>
@@ -129,7 +129,7 @@ function UnlockScreen({ config, onUnlock }: { config: AppLockConfig; onUnlock: (
 
       {config.deviceEnabled ? (
         <Pressable accessibilityRole="button" accessibilityLabel="بازکردن با قفل اصلی گوشی" style={styles.deviceButton} onPress={() => void unlockWithDevice()} disabled={busy}>
-          <Fingerprint size={21} color={Colors.primary[300]} />
+          <Fingerprint size={21} color={'#728D75'} />
           <Text style={styles.deviceText}>بازکردن با قفل اصلی گوشی</Text>
         </Pressable>
       ) : null}
@@ -139,19 +139,19 @@ function UnlockScreen({ config, onUnlock }: { config: AppLockConfig; onUnlock: (
 }
 
 const styles = StyleSheet.create({
-  loading: { flex: 1, backgroundColor: Colors.neutral[950], alignItems: 'center', justifyContent: 'center' },
-  root: { flex: 1, backgroundColor: Colors.neutral[950], alignItems: 'center', justifyContent: 'center', padding: Spacing.xl },
-  logo: { width: 72, height: 72, borderRadius: 24, backgroundColor: Colors.primary[500] + '18', borderWidth: 1, borderColor: Colors.primary[500] + '35', alignItems: 'center', justifyContent: 'center', marginBottom: Spacing.lg },
-  title: { fontFamily: Typography.fontFamily, color: Colors.neutral[50], fontSize: 24, fontWeight: Typography.weights.bold, textAlign: 'center' },
-  description: { maxWidth: 390, fontFamily: Typography.fontFamily, color: Colors.neutral[400], fontSize: 13, lineHeight: 23, textAlign: 'center', marginTop: 7 },
+  loading: { flex: 1, backgroundColor: '#F5F4EF', alignItems: 'center', justifyContent: 'center' },
+  root: { flex: 1, backgroundColor: '#F5F4EF', alignItems: 'center', justifyContent: 'center', padding: Spacing.xl },
+  logo: { width: 72, height: 72, borderRadius: 24, backgroundColor: '#728D75' + '18', borderWidth: 1, borderColor: '#728D75' + '35', alignItems: 'center', justifyContent: 'center', marginBottom: Spacing.lg },
+  title: { fontFamily: Typography.fontFamily, color: '#29362F', fontSize: 24, fontWeight: Typography.weights.bold, textAlign: 'center' },
+  description: { maxWidth: 390, fontFamily: Typography.fontFamily, color: '#778179', fontSize: 13, lineHeight: 23, textAlign: 'center', marginTop: 7 },
   patternSection: { marginTop: Spacing.lg, alignItems: 'center' },
   patternActions: { width: 246, flexDirection: 'row-reverse', gap: 8, marginTop: 5 },
-  primaryButton: { flex: 1, minHeight: 46, borderRadius: Radius.lg, backgroundColor: Colors.primary[500], flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7 },
+  primaryButton: { flex: 1, minHeight: 46, borderRadius: Radius.lg, backgroundColor: '#728D75', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7 },
   primaryText: { fontFamily: Typography.fontFamily, color: Colors.onColor, fontSize: 13 },
-  secondaryButton: { minWidth: 96, minHeight: 46, borderRadius: Radius.lg, backgroundColor: Colors.neutral[850], borderWidth: 1, borderColor: Colors.neutral[700], flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6 },
-  secondaryText: { fontFamily: Typography.fontFamily, color: Colors.neutral[300], fontSize: 12 },
-  deviceButton: { width: 246, minHeight: 50, borderRadius: Radius.lg, borderWidth: 1, borderColor: Colors.primary[500] + '55', backgroundColor: Colors.primary[500] + '10', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: Spacing.md },
-  deviceText: { fontFamily: Typography.fontFamily, color: Colors.primary[200], fontSize: 13 },
+  secondaryButton: { minWidth: 96, minHeight: 46, borderRadius: Radius.lg, backgroundColor: '#FFFEFB', borderWidth: 1, borderColor: '#E5E6DF', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6 },
+  secondaryText: { fontFamily: Typography.fontFamily, color: '#29362F', fontSize: 12 },
+  deviceButton: { width: 246, minHeight: 50, borderRadius: Radius.lg, borderWidth: 1, borderColor: '#728D75' + '55', backgroundColor: '#728D75' + '10', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: Spacing.md },
+  deviceText: { fontFamily: Typography.fontFamily, color: '#728D75', fontSize: 13 },
   error: { maxWidth: 310, fontFamily: Typography.fontFamily, color: Colors.error[300], fontSize: 12, lineHeight: 21, textAlign: 'center', marginTop: Spacing.md },
   disabled: { opacity: .4 },
 });

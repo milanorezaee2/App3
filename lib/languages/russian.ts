@@ -591,7 +591,7 @@ export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
     title: 'Foundation',
     cefr: 'سطح ۱ · شروع از صفر',
     description: 'سلام تا جمله‌های کامل روزمره: معرفی، عددها تا صد، رنگ، غذا، آب‌وهوا، بدن، لباس، شغل، فعل‌های ساده و ضمیرها',
-    color: '#6555E9',
+    color: '#728D75',
     modules: [
       'سلام و خداحافظی',
       'احوال‌پرسی ساده',

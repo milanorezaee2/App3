@@ -28,7 +28,7 @@ export function SupabaseSetupNotice() {
       </View>
 
       <View style={styles.footer}>
-        <KeyRound size={14} color={Colors.neutral[500]} />
+        <KeyRound size={14} color={'#778179'} />
         <Text style={styles.footerText}>
           فقط Project URL و کلید عمومی publishable یا anon لازم است؛ کلید secret یا service_role را هرگز در .env یا Git نگذارید.
         </Text>
@@ -78,13 +78,13 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.md,
     fontWeight: Typography.weights.bold,
-    color: Colors.neutral[50],
+    color: '#29362F',
     textAlign: 'right',
   },
   subtitle: {
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.xs,
-    color: Colors.neutral[400],
+    color: '#778179',
     textAlign: 'right',
     lineHeight: 19,
     marginTop: 3,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.xs,
-    color: Colors.neutral[200],
+    color: '#29362F',
     textAlign: 'right',
     lineHeight: 20,
   },
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: Typography.fontFamily,
     fontSize: 11,
-    color: Colors.neutral[500],
+    color: '#778179',
     textAlign: 'right',
     lineHeight: 17,
   },

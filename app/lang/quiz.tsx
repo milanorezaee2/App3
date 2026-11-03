@@ -119,7 +119,7 @@ export default function QuizScreen() {
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="شروع دوبارهٔ آزمون درس"
-            style={[styles.finishBtn, { backgroundColor: lesson.color }]}
+            style={[styles.finishBtn, { backgroundColor: Palette.primary }]}
             onPress={() => {
               setQuestions(buildQuestions(lessonId));
               setQi(0);
@@ -132,9 +132,9 @@ export default function QuizScreen() {
             <Text style={styles.finishBtnText}>تلاش دوباره</Text>
           </Pressable>
 
-          <Pressable accessibilityRole="button" accessibilityLabel="بازگشت به فهرست درس‌ها" style={[styles.finishBtn, { backgroundColor: Colors.neutral[800] }]} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel="بازگشت به فهرست درس‌ها" style={[styles.finishBtn, { backgroundColor: Palette.primaryDark }]} onPress={() => router.back()}>
             <ArrowRight size={18} color={Colors.neutral[200]} strokeWidth={2.3} />
-            <Text style={[styles.finishBtnText, { color: Colors.neutral[100] }]}>بازگشت</Text>
+            <Text style={[styles.finishBtnText, { color: '#FFFFFF' }]}>بازگشت</Text>
           </Pressable>
         </View>
       </View>
@@ -180,7 +180,7 @@ export default function QuizScreen() {
         </View>
 
         {selected !== null && (
-          <Pressable accessibilityRole="button" accessibilityLabel={qi + 1 >= total ? 'نمایش نتیجهٔ آزمون' : 'رفتن به سؤال بعدی'} style={[styles.nextBtn, { backgroundColor: lesson.color }]} onPress={next}>
+          <Pressable accessibilityRole="button" accessibilityLabel={qi + 1 >= total ? 'نمایش نتیجهٔ آزمون' : 'رفتن به سؤال بعدی'} style={[styles.nextBtn, { backgroundColor: Palette.primary }]} onPress={next}>
             <Text style={styles.nextBtnText}>{qi + 1 >= total ? 'نمایش نتیجه' : 'سؤال بعدی'}</Text>
             <ArrowRight size={18} color={Colors.onColor} strokeWidth={2.4} />
           </Pressable>
@@ -193,7 +193,7 @@ export default function QuizScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },
   progressWrap: { paddingHorizontal: Spacing.lg, paddingTop: Spacing.lg },
-  qWrap: { flex: 1, padding: Spacing.xl, gap: Spacing.lg, margin: Spacing.lg, backgroundColor: Palette.surface, borderRadius: Radius.xl, borderWidth: 1, borderColor: Palette.border, shadowColor: '#172033', shadowOpacity: 0.05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
+  qWrap: { flex: 1, padding: Spacing.xl, gap: Spacing.lg, margin: Spacing.lg, backgroundColor: Palette.surface, borderRadius: Radius.xl, borderWidth: 1, borderColor: Palette.border, shadowColor: '#35443A', shadowOpacity: 0.05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
   qLabel: { alignSelf: 'stretch', fontFamily: Typography.fontFamily, fontSize: Typography.sizes.md, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl' },
   qWord: { alignSelf: 'stretch', fontFamily: Typography.latinFontFamily, fontSize: 42, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   optionsWrap: { gap: Spacing.sm, marginTop: Spacing.md },
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   optionText: { flex: 1, fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg, fontWeight: Typography.weights.medium, color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
   nextBtn: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, paddingVertical: Spacing.md, borderRadius: Radius.lg, marginTop: Spacing.md, transform: [{ translateY: -30 }] },
   nextBtnText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.md, fontWeight: Typography.weights.bold, color: Colors.onColor, writingDirection: 'rtl', textAlign: 'center' },
-  finishWrap: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.xl, margin: Spacing.lg, gap: Spacing.lg, backgroundColor: Palette.surface, borderRadius: Radius.xl, borderWidth: 1, borderColor: Palette.border, shadowColor: '#172033', shadowOpacity: 0.06, shadowRadius: 14, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
+  finishWrap: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.xl, margin: Spacing.lg, gap: Spacing.lg, backgroundColor: Palette.surface, borderRadius: Radius.xl, borderWidth: 1, borderColor: Palette.border, shadowColor: '#35443A', shadowOpacity: 0.06, shadowRadius: 14, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
   trophyBadge: { width: 96, height: 96, borderRadius: 48, justifyContent: 'center', alignItems: 'center' },
   starRow: { flexDirection: 'row-reverse', gap: 8 },
   finishTitle: { alignSelf: 'stretch', fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xxl, fontWeight: Typography.weights.bold, color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },

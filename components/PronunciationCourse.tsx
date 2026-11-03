@@ -26,48 +26,48 @@ import {
 
 const THEMES = {
   en: {
-    accent: '#6654CE',
-    accentDark: '#40327F',
-    soft: '#F0ECFA',
-    canvas: '#F5F3F7',
-    surface: '#FFFFFF',
-    ink: '#191A31',
-    text: '#56566D',
-    muted: '#858398',
-    border: '#E7E2EC',
-    gold: '#D8B76E',
+    accent: '#728D75',
+    accentDark: '#4B614D',
+    soft: '#E4ECE4',
+    canvas: '#F5F4EF',
+    surface: '#FFFEFB',
+    ink: '#29362F',
+    text: '#29362F',
+    muted: '#778179',
+    border: '#E5E6DF',
+    gold: '#A08756',
     home: '/lang',
     locale: 'en-US',
     languageFa: 'انگلیسی',
     brand: 'ENGLISH · PRONUNCIATION',
   },
   tr: {
-    accent: '#C94F62',
-    accentDark: '#74303D',
-    soft: '#FBECEF',
-    canvas: '#FCF6F7',
-    surface: '#FFFFFF',
-    ink: '#43242B',
-    text: '#74545B',
-    muted: '#96797F',
-    border: '#EED9DE',
-    gold: '#D8B76E',
+    accent: '#728D75',
+    accentDark: '#4B614D',
+    soft: '#E4ECE4',
+    canvas: '#F5F4EF',
+    surface: '#FFFEFB',
+    ink: '#29362F',
+    text: '#29362F',
+    muted: '#778179',
+    border: '#E5E6DF',
+    gold: '#A08756',
     home: '/learn/tr',
     locale: 'tr-TR',
     languageFa: 'ترکی استانبولی',
     brand: 'İSTANBUL TÜRKÇESİ · TELAFFUZ',
   },
   ru: {
-    accent: '#3565B8',
-    accentDark: '#243F78',
-    soft: '#EAF0FB',
-    canvas: '#F4F7FC',
-    surface: '#FFFFFF',
-    ink: '#1D3152',
-    text: '#4E607D',
-    muted: '#78869D',
-    border: '#D8E2F2',
-    gold: '#C6A65D',
+    accent: '#728D75',
+    accentDark: '#4B614D',
+    soft: '#E4ECE4',
+    canvas: '#F5F4EF',
+    surface: '#FFFEFB',
+    ink: '#29362F',
+    text: '#29362F',
+    muted: '#778179',
+    border: '#E5E6DF',
+    gold: '#A08756',
     home: '/learn/ru',
     locale: 'ru-RU',
     languageFa: 'روسی',
@@ -222,7 +222,7 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           <View style={styles.content}>
-            <View style={[styles.hero, { backgroundColor: theme.accentDark }]}>
+            <View style={[styles.hero, { backgroundColor: theme.surface, borderWidth: 1, borderColor: theme.border }]}>
               <View style={styles.heroTop}><View style={styles.heroIcon}><Volume2 size={20} color={theme.gold} /></View><Text style={styles.heroEyebrow}>ساختار کارگاه تلفظ</Text></View>
               <Text accessibilityRole="header" style={styles.heroTitle}>هنوز تمرینی اضافه نشده است</Text>
               <Text style={styles.heroFocus}>کارگاه تلفظ {theme.languageFa} آمادهٔ دریافت محتوای آینده است.</Text>
@@ -259,7 +259,7 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
 
       <ScrollView ref={scrollRef} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
-          <View style={[styles.hero, { backgroundColor: theme.accentDark }]}>
+          <View style={[styles.hero, { backgroundColor: theme.surface, borderWidth: 1, borderColor: theme.border }]}>
             <View style={styles.heroTop}>
               <View style={styles.heroIcon}><Volume2 size={20} color={theme.gold} /></View>
               <Text style={styles.heroEyebrow}>تمرین {fa(index + 1)} از {fa(units.length)}</Text>
@@ -313,7 +313,7 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
             ))}
           </View>
 
-          <View style={[styles.practiceCard, { backgroundColor: theme.accentDark }]}>
+          <View style={[styles.practiceCard, { backgroundColor: theme.surface, borderWidth: 1, borderColor: theme.border }]}>
             <Text style={styles.practiceLabel}>حالا در جمله تمرین کن</Text>
             <Text style={styles.practiceText}>{unit.practiceText}</Text>
             <Text style={styles.practiceMeaning}>{unit.practiceMeaningFa}</Text>
@@ -503,10 +503,10 @@ const styles = StyleSheet.create({
   hero: { overflow: 'hidden', padding: 19, borderRadius: 22, gap: 9 },
   heroTop: { flexDirection: 'row-reverse', alignItems: 'center', gap: 9 },
   heroIcon: { width: 37, height: 37, borderRadius: 13, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.11)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.16)' },
-  heroEyebrow: { fontFamily: 'Vazir', color: '#F2D99C', fontSize: 10, fontWeight: '800', textAlign: 'right', writingDirection: 'rtl' },
-  heroTitle: { fontFamily: 'Vazir', color: '#FFFFFF', fontSize: 22, lineHeight: 34, fontWeight: '900', textAlign: 'right', writingDirection: 'rtl' },
-  heroFocus: { fontFamily: 'Vazir', color: '#E1DDEF', fontSize: 12, lineHeight: 22, textAlign: 'right', writingDirection: 'rtl' },
-  heroProgress: { fontFamily: 'Vazir', color: '#D2CDE2', fontSize: 10, lineHeight: 18, textAlign: 'right', writingDirection: 'rtl', marginTop: 3 },
+  heroEyebrow: { fontFamily: 'Vazir', color: '#A08756', fontSize: 10, fontWeight: '800', textAlign: 'right', writingDirection: 'rtl' },
+  heroTitle: { fontFamily: 'Vazir', color: '#29362F', fontSize: 22, lineHeight: 34, fontWeight: '900', textAlign: 'right', writingDirection: 'rtl' },
+  heroFocus: { fontFamily: 'Vazir', color: '#778179', fontSize: 12, lineHeight: 22, textAlign: 'right', writingDirection: 'rtl' },
+  heroProgress: { fontFamily: 'Vazir', color: '#778179', fontSize: 10, lineHeight: 18, textAlign: 'right', writingDirection: 'rtl', marginTop: 3 },
   noticeCard: { padding: 14, borderRadius: 17, borderWidth: 1, gap: 6 },
   noticeTitle: { fontFamily: 'Vazir', fontSize: 12, fontWeight: '800', textAlign: 'right', writingDirection: 'rtl' },
   card: { padding: 16, borderRadius: 19, borderWidth: 1, gap: 11 },
@@ -523,10 +523,10 @@ const styles = StyleSheet.create({
   audioButton: { minHeight: 38, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 5, borderWidth: 1, borderRadius: 12, paddingHorizontal: 10, paddingVertical: 7 },
   audioButtonText: { fontFamily: 'Vazir', fontSize: 10, fontWeight: '700', textAlign: 'right', writingDirection: 'rtl' },
   practiceCard: { padding: 17, borderRadius: 20, gap: 9 },
-  practiceLabel: { fontFamily: 'Vazir', color: '#F2D99C', fontSize: 11, fontWeight: '800', textAlign: 'right', writingDirection: 'rtl' },
-  practiceText: { fontFamily: 'Inter-ExtraBold', color: '#FFFFFF', fontSize: 18, lineHeight: 31, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
-  practiceMeaning: { fontFamily: 'Vazir', color: '#E1DDEF', fontSize: 11, lineHeight: 19, textAlign: 'right', writingDirection: 'rtl' },
-  practiceInstruction: { fontFamily: 'Vazir', color: '#E1DDEF', fontSize: 11, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
+  practiceLabel: { fontFamily: 'Vazir', color: '#A08756', fontSize: 11, fontWeight: '800', textAlign: 'right', writingDirection: 'rtl' },
+  practiceText: { fontFamily: 'Inter-ExtraBold', color: '#29362F', fontSize: 18, lineHeight: 31, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
+  practiceMeaning: { fontFamily: 'Vazir', color: '#778179', fontSize: 11, lineHeight: 19, textAlign: 'right', writingDirection: 'rtl' },
+  practiceInstruction: { fontFamily: 'Vazir', color: '#778179', fontSize: 11, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
   selfCheck: { padding: 16, borderRadius: 19, borderWidth: 1, gap: 10 },
   markButtons: { flexDirection: 'row-reverse', flexWrap: 'wrap', gap: 8 },
   actionButton: { minHeight: 42, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6, borderWidth: 1, borderRadius: 13, paddingHorizontal: 12, paddingVertical: 9 },
@@ -537,7 +537,7 @@ const styles = StyleSheet.create({
   clearMarkText: { fontFamily: 'Vazir', fontSize: 10, textAlign: 'right', writingDirection: 'rtl' },
   smallText: { fontFamily: 'Vazir', fontSize: 10, lineHeight: 18, textAlign: 'right', writingDirection: 'rtl' },
   storageErrorWrap: { gap: 8 },
-  storageError: { fontFamily: 'Vazir', color: '#9B263C', backgroundColor: '#FFF0F2', borderWidth: 1, borderColor: '#F2D1D8', padding: 11, borderRadius: 12, fontSize: 10, lineHeight: 18, textAlign: 'right', writingDirection: 'rtl' },
+  storageError: { fontFamily: 'Vazir', color: '#713C36', backgroundColor: '#FAF0ED', borderWidth: 1, borderColor: '#F1DED8', padding: 11, borderRadius: 12, fontSize: 10, lineHeight: 18, textAlign: 'right', writingDirection: 'rtl' },
   audioStatus: { fontFamily: 'Vazir', minHeight: 22, fontSize: 10, lineHeight: 18, textAlign: 'right', writingDirection: 'rtl' },
   footer: { width: '100%', maxWidth: 940, alignSelf: 'center', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', gap: 9, paddingHorizontal: 18, paddingVertical: 10, borderTopWidth: 1 },
 });

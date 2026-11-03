@@ -23,7 +23,7 @@ export function TurkishBottomNav() {
         const Icon = item.icon;
         return (
           <Pressable key={item.path} accessibilityRole="button" accessibilityState={{ selected: active }} style={styles.item} onPress={() => router.replace(item.path as never)}>
-            <View style={[styles.iconWrap, active && styles.iconWrapActive]}><Icon size={19} color={active ? Palette.primary : Palette.muted} strokeWidth={active ? 2.4 : 2} /></View>
+            <View style={[styles.iconWrap, active && styles.iconWrapActive]}><Icon size={19} color={active ? '#728D75' : '#778179'} strokeWidth={active ? 2.4 : 2} /></View>
             <Text style={[styles.label, active && styles.labelActive]}>{item.label}</Text>
           </Pressable>
         );
@@ -33,10 +33,10 @@ export function TurkishBottomNav() {
 }
 
 const styles = StyleSheet.create({
-  shell: { minHeight: 72, marginHorizontal: 18, marginBottom: 22, paddingTop: 9, paddingBottom: 11, paddingHorizontal: 12, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, borderRadius: 26, shadowColor: '#211A68', shadowOpacity: 0.14, shadowRadius: 20, shadowOffset: { width: 0, height: 8 }, elevation: 5 },
+  shell: { minHeight: 62, marginHorizontal: 18, marginBottom: 10, paddingTop: 9, paddingBottom: 11, paddingHorizontal: 12, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', backgroundColor: '#FFFEFB', borderWidth: 1, borderColor: '#E5E6DF', borderRadius: 22, shadowColor: '#29362F', shadowOpacity: 0.07, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
   item: { flex: 1, minWidth: 48, alignItems: 'center', gap: 2 },
   iconWrap: { width: 42, height: 32, borderRadius: Radius.full, alignItems: 'center', justifyContent: 'center' },
-  iconWrapActive: { backgroundColor: Palette.primarySoft },
-  label: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.muted },
-  labelActive: { color: Palette.primaryDark, fontWeight: Typography.weights.bold },
+  iconWrapActive: { backgroundColor: '#E4ECE4' },
+  label: { fontFamily: Typography.fontFamily, fontSize: 12, color: '#778179' },
+  labelActive: { color: '#5D765F', fontWeight: Typography.weights.bold },
 });

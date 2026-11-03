@@ -133,14 +133,14 @@ export default function AgentPairScreen() {
               </Text>
             </LinearGradient>
 
-            <Pressable style={[styles.primaryBtn, { backgroundColor: Colors.accent[500] }]} onPress={() => setStage({ name: 'type' })}>
+            <Pressable style={[styles.primaryBtn, { backgroundColor: '#728D75' }]} onPress={() => setStage({ name: 'type' })}>
               <Keyboard size={20} color={Colors.onColor} strokeWidth={2.2} />
               <Text style={styles.primaryBtnText}>وارد کردن کد ۶ رقمی</Text>
             </Pressable>
 
             {Platform.OS !== 'web' && (
               <Pressable
-                style={[styles.primaryBtn, { backgroundColor: Colors.neutral[800] }]}
+                style={[styles.primaryBtn, { backgroundColor: '#E5E6DF' }]}
                 onPress={async () => {
                   if (!permission?.granted) {
                     const result = await requestPermission();
@@ -150,8 +150,8 @@ export default function AgentPairScreen() {
                   setStage({ name: 'scan' });
                 }}
               >
-                <ScanLine size={20} color={Colors.neutral[100]} strokeWidth={2.2} />
-                <Text style={[styles.primaryBtnText, { color: Colors.neutral[100] }]}>اسکن QR گوشی اول</Text>
+                <ScanLine size={20} color={'#29362F'} strokeWidth={2.2} />
+                <Text style={[styles.primaryBtnText, { color: '#29362F' }]}>اسکن QR گوشی اول</Text>
               </Pressable>
             )}
           </>
@@ -175,7 +175,7 @@ export default function AgentPairScreen() {
               autoFocus
               textAlign="center"
               placeholder="------"
-              placeholderTextColor={Colors.neutral[700]}
+              placeholderTextColor={'#E5E6DF'}
             />
             <Text style={styles.securityNote}>
               پس از تأیید گوشی اول، فقط یک مرحله کوتاه برای مجوزهای اندروید باقی می‌ماند.
@@ -195,10 +195,10 @@ export default function AgentPairScreen() {
                 />
               ) : (
                 <View style={styles.centerBox}>
-                  <ScanLine size={40} color={Colors.neutral[500]} strokeWidth={1.8} />
+                  <ScanLine size={40} color={'#778179'} strokeWidth={1.8} />
                   <Text style={styles.smallText}>برای اسکن، اجازه‌ی دوربین لازم است</Text>
                   <Pressable
-                    style={[styles.primaryBtn, { backgroundColor: Colors.accent[500] }]}
+                    style={[styles.primaryBtn, { backgroundColor: '#728D75' }]}
                     onPress={() => requestPermission()}
                   >
                     <Text style={styles.primaryBtnText}>اجازه‌ی دوربین</Text>
@@ -207,8 +207,8 @@ export default function AgentPairScreen() {
               )}
             </View>
             <Text style={styles.smallText}>دوربین را روی QR کد گوشی اول بگیرید</Text>
-            <Pressable style={[styles.primaryBtn, { backgroundColor: Colors.neutral[800] }]} onPress={() => setStage({ name: 'type' })}>
-              <Text style={[styles.primaryBtnText, { color: Colors.neutral[100] }]}>بازگشت</Text>
+            <Pressable style={[styles.primaryBtn, { backgroundColor: '#E5E6DF' }]} onPress={() => setStage({ name: 'type' })}>
+              <Text style={[styles.primaryBtnText, { color: '#29362F' }]}>بازگشت</Text>
             </Pressable>
           </View>
         );
@@ -216,7 +216,7 @@ export default function AgentPairScreen() {
       case 'claiming':
         return (
           <View style={styles.centerBox}>
-            <ActivityIndicator size="large" color={Colors.accent[500]} />
+            <ActivityIndicator size="large" color={'#728D75'} />
             <Text style={styles.bigText}>در حال بررسی کد…</Text>
           </View>
         );
@@ -231,15 +231,15 @@ export default function AgentPairScreen() {
             <Text style={styles.smallText}>
               روی گوشی اول پیام «{stage.deviceName} می‌خواهد متصل شود» نمایش داده شده است. پس از تأیید، اتصال به‌صورت خودکار برقرار می‌شود.
             </Text>
-            <ActivityIndicator size="small" color={Colors.accent[500]} style={{ marginTop: Spacing.md }} />
+            <ActivityIndicator size="small" color={'#728D75'} style={{ marginTop: Spacing.md }} />
             <Pressable
-              style={[styles.primaryBtn, { backgroundColor: Colors.neutral[800], marginTop: Spacing.xl }]}
+              style={[styles.primaryBtn, { backgroundColor: '#E5E6DF', marginTop: Spacing.xl }]}
               onPress={() => {
                 stopPolling();
                 setStage({ name: 'type' });
               }}
             >
-              <Text style={[styles.primaryBtnText, { color: Colors.neutral[100] }]}>انصراف</Text>
+              <Text style={[styles.primaryBtnText, { color: '#29362F' }]}>انصراف</Text>
             </Pressable>
           </View>
         );
@@ -250,7 +250,7 @@ export default function AgentPairScreen() {
             <XCircle size={44} color={Colors.error[400]} strokeWidth={2} />
             <Text style={styles.bigText}>اتصال برقرار نشد</Text>
             <Text style={styles.smallText}>{stage.message}</Text>
-            <Pressable style={[styles.primaryBtn, { backgroundColor: Colors.accent[500] }]} onPress={() => setStage({ name: 'type' })}>
+            <Pressable style={[styles.primaryBtn, { backgroundColor: '#728D75' }]} onPress={() => setStage({ name: 'type' })}>
               <CheckCircle2 size={18} color={Colors.onColor} strokeWidth={2.2} />
               <Text style={styles.primaryBtnText}>تلاش دوباره</Text>
             </Pressable>
@@ -268,7 +268,7 @@ export default function AgentPairScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: Colors.neutral[950], ...RtlDirection },
+  root: { flex: 1, backgroundColor: '#F5F4EF', ...RtlDirection },
   body: { flex: 1, padding: Spacing.lg },
 
   hero: {
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.xl,
     fontWeight: Typography.weights.bold,
-    color: Colors.neutral[0],
+    color: '#29362F',
     textAlign: 'center',
   },
   securityNote: {
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
   smallText: {
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.sm,
-    color: Colors.neutral[400],
+    color: '#778179',
     textAlign: 'center',
     lineHeight: 22,
   },
@@ -351,14 +351,14 @@ const styles = StyleSheet.create({
   codeInput: {
     width: '100%',
     maxWidth: 280,
-    backgroundColor: Colors.neutral[900],
+    backgroundColor: '#FFFEFB',
     borderWidth: 2,
-    borderColor: Colors.accent[500],
+    borderColor: '#728D75',
     borderRadius: Radius.lg,
     paddingVertical: Spacing.md,
     fontSize: 34,
     fontWeight: Typography.weights.bold,
-    color: Colors.neutral[0],
+    color: '#29362F',
     letterSpacing: 14,
     fontFamily: Typography.fontFamily,
     marginVertical: Spacing.md,
@@ -371,8 +371,8 @@ const styles = StyleSheet.create({
     borderRadius: Radius.xl,
     overflow: 'hidden',
     borderWidth: 2,
-    borderColor: Colors.accent[500] + '60',
-    backgroundColor: Colors.neutral[900],
+    borderColor: '#728D75' + '60',
+    backgroundColor: '#FFFEFB',
   },
   camera: { flex: 1 },
 

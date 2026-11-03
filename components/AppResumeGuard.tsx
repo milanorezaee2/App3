@@ -134,9 +134,9 @@ export function AppResumeGuard() {
     return () => { subscription.remove(); clearInterval(timer); };
   }, [disabled, router]);
   if (disabled || !restoring) return null;
-  return <View accessibilityRole="progressbar" style={styles.loading}><ActivityIndicator size="large" color="#635BFF" /></View>;
+  return <View accessibilityRole="progressbar" style={styles.loading}><ActivityIndicator size="large" color="#728D75" /></View>;
 }
 
 const styles = StyleSheet.create({
-  loading: { ...StyleSheet.absoluteFillObject, zIndex: 2000, elevation: 2000, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F8FAFF' },
+  loading: { ...StyleSheet.absoluteFillObject, zIndex: 2000, elevation: 2000, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F5F4EF' },
 });

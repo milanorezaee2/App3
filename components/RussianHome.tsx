@@ -33,8 +33,8 @@ const russianOnlyStyles = StyleSheet.create({
   sentencePronunciation: {
     fontFamily: Typography.fontFamily,
     color: HomeColors.muted,
-    fontSize: 10,
-    lineHeight: 18,
+    fontSize: 13,
+    lineHeight: 21,
     textAlign: 'right',
     writingDirection: 'rtl',
   },
@@ -45,22 +45,22 @@ const russianOnlyStyles = StyleSheet.create({
     padding: 13,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#F2D1D8',
-    backgroundColor: '#FFF5F6',
+    borderColor: '#E5E6DF',
+    backgroundColor: '#FFFEFB',
   },
   errorText: {
     flex: 1,
     fontFamily: Typography.fontFamily,
-    color: '#9B263C',
-    fontSize: 11,
-    lineHeight: 19,
+    color: '#5D765F',
+    fontSize: 14,
+    lineHeight: 22,
     textAlign: 'right',
     writingDirection: 'rtl',
   },
   retryText: {
     fontFamily: Typography.fontFamily,
     color: HomeColors.accent,
-    fontSize: 11,
+    fontSize: 14,
     textAlign: 'right',
     writingDirection: 'rtl',
   },
@@ -139,7 +139,7 @@ export default function RussianHome() {
         <View style={styles.page}>
           <View style={styles.header}>
             <View style={styles.brandLockup}>
-              <LinearGradient colors={['#635BFF', '#4338CA']} start={{ x: .9, y: 0 }} end={{ x: .1, y: 1 }} style={styles.brandMark}>
+              <LinearGradient colors={['#5D765F', '#4B614D']} start={{ x: .9, y: 0 }} end={{ x: .1, y: 1 }} style={styles.brandMark}>
                 <BookOpenCheck size={20} color="#F9E8B9" strokeWidth={2} />
               </LinearGradient>
               <View style={styles.brandCopy}>
@@ -151,7 +151,7 @@ export default function RussianHome() {
           </View>
 
           <LinearGradient
-            colors={['#FFFFFF', '#EDF5FF', '#DDEEFF']}
+            colors={['#FFFEFB', '#F5F4EF', '#E4ECE4']}
             start={{ x: .95, y: .08 }}
             end={{ x: .04, y: 1 }}
             style={[styles.welcomeBlock, compact && styles.welcomeBlockCompact]}
@@ -178,7 +178,7 @@ export default function RussianHome() {
             </View>
             <View style={[styles.welcomeVisual, compact && styles.welcomeVisualCompact]}>
               <Image source={require('../assets/language-learning-hero.jpg')} resizeMode="cover" style={styles.welcomeImage} />
-              <LinearGradient colors={['rgba(16,42,86,0.02)', 'rgba(16,42,86,0.36)']} style={styles.welcomeImageShade} />
+              <LinearGradient colors={['rgba(41,54,47,0.00)', 'rgba(41,54,47,0.16)']} style={styles.welcomeImageShade} />
               <View style={styles.welcomeImageStamp}>
                 <Text style={styles.welcomeImageStampMain}>РУ</Text>
                 <View style={styles.welcomeImageStampLine} />
@@ -197,7 +197,7 @@ export default function RussianHome() {
           )}
 
           <View style={styles.lessonCard}>
-            <LinearGradient colors={['#4D9AF2', '#20C49A', '#4D9AF2']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
+            <LinearGradient colors={['#728D75', '#A08756', '#728D75']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
             <View style={styles.lessonMetaRow}>
               <View style={styles.levelTag}>
                 <View style={[styles.levelTagDot, { backgroundColor: activeLevel.color }]} />
@@ -251,7 +251,7 @@ export default function RussianHome() {
                 style={({ pressed }) => [styles.continueButton, pressed && styles.buttonPressed]}
                 onPress={openNextLesson}
               >
-                <LinearGradient colors={['#635BFF', '#4338CA']} start={{ x: .96, y: 0 }} end={{ x: .04, y: 1 }} style={styles.continueButtonGradient}>
+                <LinearGradient colors={['#5D765F', '#4B614D']} start={{ x: .96, y: 0 }} end={{ x: .04, y: 1 }} style={styles.continueButtonGradient}>
                   <Play size={16} color="#F5E7BC" fill="#F5E7BC" />
                   <Text style={styles.continueButtonText}>{resumeLesson ? hasStartedCourse ? 'ادامهٔ آموزش' : 'شروع اولین درس' : 'مشاهدهٔ سطح‌های بعدی'}</Text>
                   <ChevronLeft size={17} color="#FFFFFF" />
@@ -293,7 +293,7 @@ export default function RussianHome() {
             </View>
           </View>
 
-          <LinearGradient colors={['#FFFFFF', '#EDF5FF', '#E1F0FF']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
+          <LinearGradient colors={['#FFFEFB', '#F5F4EF', '#E4ECE4']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
             <View pointerEvents="none" style={styles.todayGlow} />
             <View style={styles.todayTopRow}>
               <View style={styles.todayIcon}><Clock3 size={18} color={HomeColors.gold} /></View>
@@ -412,7 +412,7 @@ export default function RussianHome() {
             </View>
           </View>
 
-          <LinearGradient colors={['#FFFFFF', '#EDF5FF']} start={{ x: .95, y: .1 }} end={{ x: .05, y: 1 }} style={styles.noteCard}>
+          <LinearGradient colors={['#FFFEFB', '#F5F4EF']} start={{ x: .95, y: .1 }} end={{ x: .05, y: 1 }} style={styles.noteCard}>
             <View style={styles.noteIcon}><Sparkles size={16} color={HomeColors.gold} /></View>
             <View style={styles.noteCopy}>
               <Text style={styles.noteTitle}>یادگیری روسی در بافت</Text>

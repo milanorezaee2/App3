@@ -162,7 +162,7 @@ export default function PersonalSyncScreen() {
             </View>
 
             <View style={styles.hero}>
-              <View style={styles.heroIcon}><Cloud size={24} color="#FFFFFF" strokeWidth={2} /></View>
+              <View style={styles.heroIcon}><Cloud size={24} color="#FFFEFB" strokeWidth={2} /></View>
               <Text accessibilityRole="header" style={styles.title}>حساب شخصی و همگام‌سازی</Text>
               <Text style={styles.subtitle}>یک ورود ایمیلی برای همگام‌سازی پیشرفت آموزشی و خودارزیابی تلفظ انگلیسی میان دستگاه‌های شما.</Text>
               <View style={styles.privacyPill}><ShieldCheck size={15} color="#D6F2E6" /><Text style={styles.privacyText}>خصوصی برای حساب واردشده · بدون رمز عبور</Text></View>
@@ -182,7 +182,7 @@ export default function PersonalSyncScreen() {
                   <View style={styles.rule} />
                   <View style={styles.scopeRow}><Smartphone size={17} color="#67677A" /><Text style={styles.scopeText}>پیشرفت درس‌ها و سنجش‌های تکمیل‌شده، مرورهای زمان‌بندی‌شده، زمان مطالعه و یادداشت‌های تلفظ هر دو زبان</Text></View>
                   <Pressable accessibilityRole="button" accessibilityState={{ disabled: syncing || busy }} disabled={syncing || busy} onPress={() => void runSync()} style={({ pressed }) => [styles.primaryButton, (syncing || busy) && styles.buttonDisabled, pressed && styles.buttonPressed]}>
-                    {syncing ? <ActivityIndicator size="small" color="#FFFFFF" /> : <RefreshCw size={17} color="#FFFFFF" />}
+                    {syncing ? <ActivityIndicator size="small" color="#FFFEFB" /> : <RefreshCw size={17} color="#FFFEFB" />}
                     <Text style={styles.primaryText}>{syncing ? 'در حال همگام‌سازی…' : 'همگام‌سازی اکنون'}</Text>
                   </Pressable>
                   {!!lastSynced && <Text style={styles.lastSynced}>آخرین تأیید سرور: {new Date(lastSynced).toLocaleString()}</Text>}
@@ -210,7 +210,7 @@ export default function PersonalSyncScreen() {
                     style={styles.input}
                   />
                   <Pressable accessibilityRole="button" accessibilityState={{ disabled: busy || !configured }} disabled={busy || !configured} onPress={() => void requestCode()} style={({ pressed }) => [styles.primaryButton, (busy || !configured) && styles.buttonDisabled, pressed && styles.buttonPressed]}>
-                    {busy ? <ActivityIndicator size="small" color="#FFFFFF" /> : <Mail size={17} color="#FFFFFF" />}
+                    {busy ? <ActivityIndicator size="small" color="#FFFEFB" /> : <Mail size={17} color="#FFFEFB" />}
                     <Text style={styles.primaryText}>{busy ? 'در حال ارسال…' : 'ارسال کد یک‌بارمصرف'}</Text>
                   </Pressable>
                 </>
@@ -233,7 +233,7 @@ export default function PersonalSyncScreen() {
                     style={[styles.input, styles.codeInput]}
                   />
                   <Pressable accessibilityRole="button" accessibilityState={{ disabled: busy }} disabled={busy} onPress={() => void verifyCode()} style={({ pressed }) => [styles.primaryButton, busy && styles.buttonDisabled, pressed && styles.buttonPressed]}>
-                    {busy ? <ActivityIndicator size="small" color="#FFFFFF" /> : <ShieldCheck size={17} color="#FFFFFF" />}
+                    {busy ? <ActivityIndicator size="small" color="#FFFEFB" /> : <ShieldCheck size={17} color="#FFFEFB" />}
                     <Text style={styles.primaryText}>{busy ? 'در حال تأیید…' : 'تأیید ایمیل و همگام‌سازی'}</Text>
                   </Pressable>
                   <View style={styles.codeActions}>
@@ -264,42 +264,42 @@ export default function PersonalSyncScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#F4F5F8' },
+  root: { flex: 1, backgroundColor: '#F5F4EF' },
   flex: { flex: 1 },
   scroll: { flexGrow: 1, paddingHorizontal: 18, paddingTop: 18, paddingBottom: 30 },
   page: { width: '100%', maxWidth: 720, alignSelf: 'center', gap: 16 },
   top: { minHeight: 40, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' },
-  close: { width: 38, height: 38, borderRadius: 13, borderWidth: 1, borderColor: '#E1E2E9', backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' },
-  hero: { borderRadius: 25, padding: 23, backgroundColor: '#282250', overflow: 'hidden', alignItems: 'flex-start' },
+  close: { width: 38, height: 38, borderRadius: 13, borderWidth: 1, borderColor: '#E5E6DF', backgroundColor: '#FFFEFB', alignItems: 'center', justifyContent: 'center' },
+  hero: { borderRadius: 25, padding: 23, backgroundColor: '#728D75', overflow: 'hidden', alignItems: 'flex-start' },
   heroIcon: { width: 48, height: 48, borderRadius: 17, backgroundColor: 'rgba(255,255,255,0.13)', alignItems: 'center', justifyContent: 'center', marginBottom: 14 },
-  title: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#FFFFFF', fontSize: 24, fontWeight: '700', textAlign: 'right', width: '100%' },
-  subtitle: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#E1DDF4', fontSize: 14, lineHeight: 23, textAlign: 'right', marginTop: 7, width: '100%' },
+  title: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#FFFEFB', fontSize: 24, fontWeight: '700', textAlign: 'right', width: '100%' },
+  subtitle: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#E4ECE4', fontSize: 14, lineHeight: 23, textAlign: 'right', marginTop: 7, width: '100%' },
   privacyPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 7, backgroundColor: 'rgba(80,153,120,0.23)', paddingHorizontal: 11, paddingVertical: 8, borderRadius: 99, marginTop: 15 },
   privacyText: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#E3F4EB', fontSize: 12, fontWeight: '600' },
-  card: { backgroundColor: '#FFFFFF', borderRadius: 23, borderWidth: 1, borderColor: '#E4E5EC', padding: 20, shadowColor: '#20213D', shadowOpacity: 0.04, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 2 },
+  card: { backgroundColor: '#FFFEFB', borderRadius: 23, borderWidth: 1, borderColor: '#E5E6DF', padding: 20, shadowColor: '#20213D', shadowOpacity: 0.04, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 2 },
   accountRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 11 },
-  accountIcon: { width: 42, height: 42, borderRadius: 15, backgroundColor: '#E8F2EA', alignItems: 'center', justifyContent: 'center' },
+  accountIcon: { width: 42, height: 42, borderRadius: 15, backgroundColor: '#E4ECE4', alignItems: 'center', justifyContent: 'center' },
   accountText: { flex: 1, alignItems: 'flex-start' },
-  eyebrow: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#7B7B8B', fontSize: 11, fontWeight: '700' },
-  accountEmail: { fontFamily: Typography.latinFontFamily, writingDirection: 'ltr', color: '#22243A', fontSize: 15, fontWeight: '700', marginTop: 2, textAlign: 'left' },
+  eyebrow: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#778179', fontSize: 11, fontWeight: '700' },
+  accountEmail: { fontFamily: Typography.latinFontFamily, writingDirection: 'ltr', color: '#29362F', fontSize: 15, fontWeight: '700', marginTop: 2, textAlign: 'left' },
   onlineDot: { width: 9, height: 9, borderRadius: 5, backgroundColor: '#3E9A69' },
   rule: { height: 1, backgroundColor: '#ECECF1', marginVertical: 16 },
   scopeRow: { flexDirection: 'row-reverse', alignItems: 'flex-start', gap: 9, marginBottom: 16 },
-  scopeText: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', flex: 1, color: '#56576C', fontSize: 13, lineHeight: 21, textAlign: 'right' },
-  formIcon: { width: 40, height: 40, borderRadius: 14, backgroundColor: '#F0EDFC', alignItems: 'center', justifyContent: 'center', marginBottom: 10 },
-  cardTitle: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#212239', fontSize: 18, fontWeight: '700', textAlign: 'right' },
-  cardCaption: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#696A7A', fontSize: 13, lineHeight: 21, textAlign: 'right', marginTop: 5, marginBottom: 17 },
+  scopeText: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', flex: 1, color: '#778179', fontSize: 13, lineHeight: 21, textAlign: 'right' },
+  formIcon: { width: 40, height: 40, borderRadius: 14, backgroundColor: '#E4ECE4', alignItems: 'center', justifyContent: 'center', marginBottom: 10 },
+  cardTitle: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#29362F', fontSize: 18, fontWeight: '700', textAlign: 'right' },
+  cardCaption: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#778179', fontSize: 13, lineHeight: 21, textAlign: 'right', marginTop: 5, marginBottom: 17 },
   label: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#434458', fontSize: 12, fontWeight: '700', textAlign: 'right', marginBottom: 7 },
-  input: { fontFamily: Typography.latinFontFamily, writingDirection: 'ltr', height: 50, borderWidth: 1, borderColor: '#DCDDE6', backgroundColor: '#FCFCFE', borderRadius: 14, paddingHorizontal: 14, color: '#24253A', fontSize: 15, textAlign: 'left', marginBottom: 13 },
+  input: { fontFamily: Typography.latinFontFamily, writingDirection: 'ltr', height: 50, borderWidth: 1, borderColor: '#DCDDE6', backgroundColor: '#FFFEFB', borderRadius: 14, paddingHorizontal: 14, color: '#29362F', fontSize: 15, textAlign: 'left', marginBottom: 13 },
   codeInput: { fontFamily: Typography.latinFontFamily, writingDirection: 'ltr', letterSpacing: 8, fontSize: 20, fontWeight: '700', textAlign: 'center' },
-  primaryButton: { minHeight: 49, borderRadius: 15, backgroundColor: '#5D4BB0', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 9, paddingHorizontal: 16, marginTop: 5 },
+  primaryButton: { minHeight: 49, borderRadius: 15, backgroundColor: '#728D75', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 9, paddingHorizontal: 16, marginTop: 5 },
   buttonDisabled: { opacity: 0.55 },
   buttonPressed: { transform: [{ scale: 0.985 }], opacity: 0.9 },
-  primaryText: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#FFFFFF', fontSize: 14, fontWeight: '700' },
+  primaryText: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#FFFEFB', fontSize: 14, fontWeight: '700' },
   secondaryButton: { minHeight: 43, alignItems: 'center', justifyContent: 'center', marginTop: 8 },
-  secondaryText: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#6A617E', fontSize: 12, fontWeight: '600', textAlign: 'center' },
+  secondaryText: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#778179', fontSize: 12, fontWeight: '600', textAlign: 'center' },
   codeActions: { flexDirection: 'row-reverse', justifyContent: 'space-between', paddingTop: 12 },
-  linkText: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#5D4BB0', fontSize: 12, fontWeight: '700', paddingVertical: 4 },
+  linkText: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#728D75', fontSize: 12, fontWeight: '700', paddingVertical: 4 },
   message: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#43704F', backgroundColor: '#EFF7EF', borderRadius: 12, padding: 11, fontSize: 12, lineHeight: 20, textAlign: 'right', marginTop: 12 },
   error: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#9C4139', backgroundColor: '#FFF0EE', borderRadius: 12, padding: 11, fontSize: 12, lineHeight: 20, textAlign: 'right', marginTop: 10 },
   lastSynced: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', color: '#858596', fontSize: 10, textAlign: 'center', marginTop: 11 },

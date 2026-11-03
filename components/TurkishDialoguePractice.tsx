@@ -43,7 +43,7 @@ export default function TurkishDialoguePractice({ dialogue, onSpeak }: {
 }
 
 const styles = StyleSheet.create({
-  card: { width: '100%', backgroundColor: Palette.surface, borderRadius: 18, borderWidth: 1, borderColor: Palette.border, padding: 16, gap: 12, marginTop: 18 },
+  card: { width: '100%', backgroundColor: Palette.surface, borderRadius: 20, borderWidth: 1, borderColor: Palette.border, padding: 18, gap: 14, marginTop: 18 },
   metaRow: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', gap: 8 },
   kicker: { flex: 1, fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: Palette.primary, textAlign: 'right', writingDirection: 'rtl' },
   counter: { fontFamily: Typography.fontFamily, fontSize: 11, fontWeight: '400', color: Palette.muted },
@@ -55,16 +55,16 @@ const styles = StyleSheet.create({
   roleTextActive: { color: Palette.primaryDark, fontWeight: '800' },
   bubble: { width: '94%', borderRadius: 15, borderWidth: 1, padding: 14, gap: 7 },
   bubblePartner: { alignSelf: 'flex-start', borderColor: Palette.border, backgroundColor: Palette.surfaceMuted, borderBottomLeftRadius: 5 },
-  bubbleLearner: { alignSelf: 'flex-end', borderColor: '#DDE2FF', backgroundColor: Palette.primarySoft, borderBottomRightRadius: 5 },
+  bubbleLearner: { alignSelf: 'flex-end', borderColor: '#E4ECE4', backgroundColor: Palette.primarySoft, borderBottomRightRadius: 5 },
   speaker: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
   turkish: { fontFamily: 'Inter-ExtraBold', fontSize: 16, fontWeight: '800', lineHeight: 27, color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
   persian: { fontFamily: Typography.fontFamily, fontSize: 14, lineHeight: 23, color: Palette.text, textAlign: 'right', writingDirection: 'rtl' },
   hint: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl' },
-  soundButton: { alignSelf: 'flex-start', minHeight: 34, flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
+  soundButton: { backgroundColor: Palette.primarySoft, borderRadius: 12, paddingHorizontal: 10, alignSelf: 'flex-start', minHeight: 40, flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
   soundText: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primary, writingDirection: 'rtl' },
   revealButton: { minHeight: 42, alignItems: 'center', justifyContent: 'center', borderRadius: 10, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, paddingHorizontal: 12, marginTop: 4 },
   revealText: { fontFamily: Typography.fontFamily, fontSize: 13, fontWeight: '400', color: Palette.primaryDark, writingDirection: 'rtl' },
-  nextButton: { minHeight: 46, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, borderRadius: 12, backgroundColor: Palette.primary, paddingHorizontal: 14, transform: [{ translateY: -30 }] },
+  nextButton: { minHeight: 48, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, borderRadius: 12, backgroundColor: Palette.primary, paddingHorizontal: 14 },
   nextText: { fontFamily: Typography.fontFamily, fontSize: 14, fontWeight: '400', color: '#FFFFFF', writingDirection: 'rtl' },
   restartButton: { minHeight: 42, alignItems: 'center', justifyContent: 'center', borderRadius: 11, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surfaceMuted },
   restartText: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: Palette.primaryDark, writingDirection: 'rtl' },

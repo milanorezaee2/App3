@@ -67,7 +67,7 @@ export default function RussianSentenceBuilder({ sentence }: { sentence: Learnin
 }
 
 const styles = StyleSheet.create({
-  card: { width: '100%', backgroundColor: Palette.surface, borderRadius: 18, borderWidth: 1, borderColor: Palette.border, padding: 16, gap: 12, marginTop: 18 },
+  card: { width: '100%', backgroundColor: Palette.surface, borderRadius: 20, borderWidth: 1, borderColor: Palette.border, padding: 18, gap: 14, marginTop: 18 },
   kicker: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: Palette.primary, textAlign: 'right', writingDirection: 'rtl' },
   translation: { fontFamily: Typography.fontFamily, fontSize: 17, lineHeight: 28, color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
   answerArea: { minHeight: 76, borderRadius: 13, borderWidth: 1, borderColor: Palette.primary, backgroundColor: Palette.primarySoft, padding: 10, flexDirection: 'row', flexWrap: 'wrap', gap: 7, alignItems: 'center' },

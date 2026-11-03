@@ -152,7 +152,7 @@ export default function EmmaChat() {
           style={[styles.voiceCall, recorderState.isRecording && styles.voiceCallActive]}
           onPress={() => recorderState.isRecording ? void stopVoiceTurn() : void startVoiceTurn()}
         >
-          {transcribing ? <ActivityIndicator size="small" color={Colors.primary[300]} /> : recorderState.isRecording ? <Square size={15} color={Colors.onColor} fill={Colors.onColor} /> : <Mic size={19} color={Colors.primary[300]} />}
+          {transcribing ? <ActivityIndicator size="small" color={'#728D75'} /> : recorderState.isRecording ? <Square size={15} color={Colors.onColor} fill={Colors.onColor} /> : <Mic size={19} color={'#728D75'} />}
         </Pressable>
       </View>
       {!PAID_AI_ENABLED && <View style={styles.voiceStatus}><Text style={styles.voiceStatusText}>{PAID_AI_DISABLED_MESSAGE}</Text></View>}
@@ -176,7 +176,7 @@ export default function EmmaChat() {
             {message.translation ? <Text style={styles.translation}>{message.translation}</Text> : null}
             {message.from === 'emma' ? (
               <Pressable accessibilityRole="button" accessibilityLabel={`پخش پیام انگلیسی Emma: ${message.text}`} style={styles.listen} onPress={() => Speech.speak(message.text, { language: speechTagFor('en-US'), rate: .78 })}>
-                <Volume2 size={14} color={Colors.primary[300]} /><Text style={styles.listenText}>پخش</Text>
+                <Volume2 size={14} color={'#728D75'} /><Text style={styles.listenText}>پخش</Text>
               </Pressable>
             ) : null}
           </View>
@@ -211,14 +211,14 @@ export default function EmmaChat() {
 
       <KeyboardStickyView offset={{ closed: 0, opened: 0 }}>
       <View style={styles.composer}>
-        <View style={styles.helper} accessibilityElementsHidden importantForAccessibility="no-hide-descendants"><Languages size={19} color={Colors.neutral[400]} /></View>
+        <View style={styles.helper} accessibilityElementsHidden importantForAccessibility="no-hide-descendants"><Languages size={19} color={'#778179'} /></View>
         <TextInput
           accessibilityLabel="پیام انگلیسی برای Emma"
           style={styles.input}
           value={input}
           onChangeText={setInput}
           placeholder="پیام انگلیسی بنویسید…"
-          placeholderTextColor={Colors.neutral[600]}
+          placeholderTextColor={'#778179'}
           multiline
           textAlign="left"
         />
@@ -232,53 +232,53 @@ export default function EmmaChat() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: Colors.neutral[950] },
-  header: { paddingTop: 12, paddingHorizontal: Spacing.md, paddingBottom: Spacing.sm, minHeight: 64, backgroundColor: Colors.neutral[900], borderBottomWidth: 1, borderBottomColor: Colors.neutral[800], flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.sm },
-  back: { width: 39, height: 39, borderRadius: Radius.md, backgroundColor: Colors.neutral[850], alignItems: 'center', justifyContent: 'center' },
-  avatar: { width: 46, height: 46, borderRadius: 23, backgroundColor: Colors.accent[500] + '20', alignItems: 'center', justifyContent: 'center', position: 'relative' },
+  root: { flex: 1, backgroundColor: '#F5F4EF' },
+  header: { paddingTop: 12, paddingHorizontal: Spacing.md, paddingBottom: Spacing.sm, minHeight: 64, backgroundColor: '#FFFEFB', borderBottomWidth: 1, borderBottomColor: '#E5E6DF', flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.sm },
+  back: { width: 39, height: 39, borderRadius: Radius.md, backgroundColor: '#FFFEFB', alignItems: 'center', justifyContent: 'center' },
+  avatar: { width: 46, height: 46, borderRadius: 23, backgroundColor: '#728D75' + '20', alignItems: 'center', justifyContent: 'center', position: 'relative' },
   avatarEmoji: { fontSize: 27 },
-  online: { position: 'absolute', left: 0, bottom: 2, width: 11, height: 11, borderRadius: 6, backgroundColor: Colors.success[500], borderWidth: 2, borderColor: Colors.neutral[900] },
+  online: { position: 'absolute', left: 0, bottom: 2, width: 11, height: 11, borderRadius: 6, backgroundColor: Colors.success[500], borderWidth: 2, borderColor: '#FFFEFB' },
   headerText: { flex: 1 },
   nameRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
-  name: { fontFamily: Typography.latinFontFamily, fontSize: 18, fontWeight: '800', color: Colors.neutral[100] },
+  name: { fontFamily: Typography.latinFontFamily, fontSize: 18, fontWeight: '800', color: '#29362F' },
   status: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.success[400], textAlign: 'right', marginTop: 2 },
   deleteButton: { width: 39, height: 39, borderRadius: Radius.full, backgroundColor: Colors.error[500] + '12', alignItems: 'center', justifyContent: 'center' },
-  voiceCall: { width: 39, height: 39, borderRadius: Radius.full, backgroundColor: Colors.primary[500] + '15', alignItems: 'center', justifyContent: 'center' },
+  voiceCall: { width: 39, height: 39, borderRadius: Radius.full, backgroundColor: '#728D75' + '15', alignItems: 'center', justifyContent: 'center' },
   voiceCallActive: { backgroundColor: Colors.error[500] },
   voiceStatus: { minHeight: 34, paddingHorizontal: Spacing.md, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.error[500] + '0D', borderBottomWidth: 1, borderBottomColor: Colors.error[500] + '20' },
   voiceStatusText: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.error[300], textAlign: 'center' },
   messages: { flex: 1, minHeight: 0 },
   messageContent: { padding: Spacing.md, gap: Spacing.sm },
-  topicChip: { alignSelf: 'center', borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 6, backgroundColor: Colors.accent[500] + '10', flexDirection: 'row-reverse', gap: 5, alignItems: 'center', marginBottom: Spacing.md },
-  topicText: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.accent[300] },
+  topicChip: { alignSelf: 'center', borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 6, backgroundColor: '#728D75' + '10', flexDirection: 'row-reverse', gap: 5, alignItems: 'center', marginBottom: Spacing.md },
+  topicText: { fontFamily: Typography.fontFamily, fontSize: 10, color: '#728D75' },
   bubble: { maxWidth: '86%', borderRadius: Radius.xl, padding: Spacing.md, borderWidth: 1 },
-  theirs: { alignSelf: 'flex-start', backgroundColor: Colors.neutral[850], borderColor: Colors.neutral[700], borderBottomLeftRadius: 5 },
-  mine: { alignSelf: 'flex-end', backgroundColor: Colors.primary[600], borderColor: Colors.primary[500], borderBottomRightRadius: 5 },
-  messageText: { fontFamily: Typography.latinFontFamily, fontSize: 16, lineHeight: 23, fontWeight: '800', color: Colors.neutral[50], textAlign: 'left', writingDirection: 'ltr' },
-  translation: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.neutral[400], textAlign: 'right', lineHeight: 19, marginTop: 7, paddingTop: 7, borderTopWidth: 1, borderTopColor: Colors.neutral[700] + '80' },
+  theirs: { alignSelf: 'flex-start', backgroundColor: '#FFFEFB', borderColor: '#E5E6DF', borderBottomLeftRadius: 5 },
+  mine: { alignSelf: 'flex-end', backgroundColor: Colors.primary[600], borderColor: '#728D75', borderBottomRightRadius: 5 },
+  messageText: { fontFamily: Typography.latinFontFamily, fontSize: 16, lineHeight: 23, fontWeight: '800', color: '#29362F', textAlign: 'left', writingDirection: 'ltr' },
+  translation: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: '#778179', textAlign: 'right', lineHeight: 19, marginTop: 7, paddingTop: 7, borderTopWidth: 1, borderTopColor: '#E5E6DF' + '80' },
   listen: { flexDirection: 'row-reverse', alignItems: 'center', gap: 4, marginTop: 7, alignSelf: 'flex-end' },
-  listenText: { fontFamily: Typography.fontFamily, fontSize: 9, color: Colors.primary[300] },
+  listenText: { fontFamily: Typography.fontFamily, fontSize: 9, color: '#728D75' },
   thinking: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  thinkingText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.neutral[500] },
+  thinkingText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: '#778179' },
   correctionCard: { alignSelf: 'stretch', borderRadius: Radius.lg, backgroundColor: Colors.warning[500] + '0D', borderWidth: 1, borderColor: Colors.warning[500] + '25', padding: Spacing.md, marginTop: Spacing.sm },
   correctionTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, fontWeight: Typography.weights.bold, color: Colors.warning[300], textAlign: 'right' },
   correctionOld: { fontFamily: Typography.latinFontFamily, fontSize: 13, fontWeight: '800', color: Colors.error[300], textDecorationLine: 'line-through', marginTop: 7, writingDirection: 'ltr' },
   correctionNew: { fontFamily: Typography.latinFontFamily, fontSize: 14, color: Colors.success[300], fontWeight: '800', marginTop: 4, writingDirection: 'ltr' },
-  correctionExplanation: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.neutral[500], textAlign: 'right', lineHeight: 18, marginTop: 6 },
+  correctionExplanation: { fontFamily: Typography.fontFamily, fontSize: 10, color: '#778179', textAlign: 'right', lineHeight: 18, marginTop: 6 },
   error: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.error[300], textAlign: 'center', padding: Spacing.sm },
-  coachArea: { backgroundColor: Colors.neutral[900], borderTopWidth: 1, borderTopColor: Colors.neutral[800] },
+  coachArea: { backgroundColor: '#FFFEFB', borderTopWidth: 1, borderTopColor: '#E5E6DF' },
   coachToggle: { minHeight: 38, paddingHorizontal: Spacing.md, flexDirection: 'row-reverse', alignItems: 'center', gap: 6 },
   coachToggleText: { flex: 1, fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.warning[300], textAlign: 'right' },
-  coachToggleHint: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.neutral[600] },
+  coachToggleHint: { fontFamily: Typography.fontFamily, fontSize: 10, color: '#778179' },
   tools: { paddingHorizontal: Spacing.md, paddingBottom: Spacing.sm },
   toolRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, marginBottom: 7 },
-  toolText: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.neutral[500] },
+  toolText: { fontFamily: Typography.fontFamily, fontSize: 10, color: '#778179' },
   suggestions: { gap: 7 },
-  suggestion: { borderRadius: Radius.full, borderWidth: 1, borderColor: Colors.primary[500] + '45', backgroundColor: Colors.primary[500] + '0C', paddingHorizontal: 11, paddingVertical: 7 },
-  suggestionText: { fontFamily: Typography.latinFontFamily, fontSize: 12, fontWeight: '800', color: Colors.primary[200], writingDirection: 'ltr' },
-  composer: { flexShrink: 0, minHeight: 64, overflow: 'visible', padding: Spacing.sm, paddingBottom: 10, backgroundColor: Colors.neutral[900], flexDirection: 'row-reverse', alignItems: 'center', gap: 7 },
-  helper: { width: 42, height: 42, borderRadius: 21, backgroundColor: Colors.neutral[850], alignItems: 'center', justifyContent: 'center' },
-  input: { flex: 1, minHeight: 44, maxHeight: 100, borderRadius: 22, backgroundColor: Colors.neutral[850], borderWidth: 1, borderColor: Colors.neutral[700], paddingHorizontal: Spacing.md, paddingTop: 10, paddingBottom: 8, fontFamily: Typography.latinFontFamily, fontSize: Typography.sizes.sm, lineHeight: 22, fontWeight: '800', color: Colors.neutral[100], textAlignVertical: 'center', includeFontPadding: false, writingDirection: 'ltr' },
-  send: { width: 42, height: 42, borderRadius: 21, backgroundColor: Colors.accent[500], alignItems: 'center', justifyContent: 'center' },
+  suggestion: { borderRadius: Radius.full, borderWidth: 1, borderColor: '#728D75' + '45', backgroundColor: '#728D75' + '0C', paddingHorizontal: 11, paddingVertical: 7 },
+  suggestionText: { fontFamily: Typography.latinFontFamily, fontSize: 12, fontWeight: '800', color: '#728D75', writingDirection: 'ltr' },
+  composer: { flexShrink: 0, minHeight: 64, overflow: 'visible', padding: Spacing.sm, paddingBottom: 10, backgroundColor: '#FFFEFB', flexDirection: 'row-reverse', alignItems: 'center', gap: 7 },
+  helper: { width: 42, height: 42, borderRadius: 21, backgroundColor: '#FFFEFB', alignItems: 'center', justifyContent: 'center' },
+  input: { flex: 1, minHeight: 44, maxHeight: 100, borderRadius: 22, backgroundColor: '#FFFEFB', borderWidth: 1, borderColor: '#E5E6DF', paddingHorizontal: Spacing.md, paddingTop: 10, paddingBottom: 8, fontFamily: Typography.latinFontFamily, fontSize: Typography.sizes.sm, lineHeight: 22, fontWeight: '800', color: '#29362F', textAlignVertical: 'center', includeFontPadding: false, writingDirection: 'ltr' },
+  send: { width: 42, height: 42, borderRadius: 21, backgroundColor: '#728D75', alignItems: 'center', justifyContent: 'center' },
   sendDisabled: { opacity: .4 },
 });

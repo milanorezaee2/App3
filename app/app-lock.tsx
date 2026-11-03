@@ -115,13 +115,13 @@ export default function AppLockSettings() {
       <View style={styles.header}>
         <PageNavigation backFallback="/languages" />
         <View style={styles.headerCopy}><Text style={styles.title}>قفل برنامه</Text><Text style={styles.subtitle}>محافظت از پیشرفت و گفتگوهای خصوصی</Text></View>
-        <View style={styles.headerIcon}><LockKeyhole size={23} color={Colors.primary[300]} /></View>
+        <View style={styles.headerIcon}><LockKeyhole size={23} color={'#728D75'} /></View>
       </View>
 
-      {loading ? <View style={styles.loading}><ActivityIndicator color={Colors.primary[400]} /></View> : (
+      {loading ? <View style={styles.loading}><ActivityIndicator color={'#728D75'} /></View> : (
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <View style={styles.summary}>
-            <ShieldCheck size={25} color={config.patternEnabled || config.deviceEnabled ? Colors.success[300] : Colors.neutral[500]} />
+            <ShieldCheck size={25} color={config.patternEnabled || config.deviceEnabled ? Colors.success[300] : '#778179'} />
             <View style={styles.summaryCopy}>
               <Text style={styles.summaryTitle}>{config.patternEnabled || config.deviceEnabled ? 'قفل برنامه فعال است' : 'قفل برنامه غیرفعال است'}</Text>
               <Text style={styles.summaryText}>بعد از خروج از اپ یا خاموش‌شدن صفحه، برنامه دوباره قفل می‌شود.</Text>
@@ -129,7 +129,7 @@ export default function AppLockSettings() {
           </View>
 
           <View style={styles.card}>
-            <View style={styles.cardHeading}><Fingerprint size={22} color={Colors.primary[300]} /><View style={styles.cardCopy}><Text style={styles.cardTitle}>قفل اصلی گوشی</Text><Text style={styles.cardDescription}>اثر انگشت، تشخیص چهره، PIN، پترن یا رمز تنظیم‌شده روی دستگاه</Text></View></View>
+            <View style={styles.cardHeading}><Fingerprint size={22} color={'#728D75'} /><View style={styles.cardCopy}><Text style={styles.cardTitle}>قفل اصلی گوشی</Text><Text style={styles.cardDescription}>اثر انگشت، تشخیص چهره، PIN، پترن یا رمز تنظیم‌شده روی دستگاه</Text></View></View>
             {Platform.OS === 'web' ? <Text style={styles.unavailable}>این گزینه فقط در نسخهٔ نصب‌شدهٔ موبایل فعال است.</Text> : config.deviceEnabled ? (
               <Pressable style={styles.disableButton} onPress={() => void disableDevice()} disabled={busy}><Unlock size={17} color={Colors.error[300]} /><Text style={styles.disableText}>غیرفعال‌کردن قفل گوشی</Text></Pressable>
             ) : (
@@ -138,13 +138,13 @@ export default function AppLockSettings() {
           </View>
 
           <View style={styles.card}>
-            <View style={styles.cardHeading}><LockKeyhole size={22} color={Colors.accent[300]} /><View style={styles.cardCopy}><Text style={styles.cardTitle}>الگوی اختصاصی برنامه</Text><Text style={styles.cardDescription}>یک پترن امن با حداقل چهار نقطه؛ الگو فقط به‌صورت هش رمزنگاری‌شده ذخیره می‌شود.</Text></View></View>
+            <View style={styles.cardHeading}><LockKeyhole size={22} color={'#728D75'} /><View style={styles.cardCopy}><Text style={styles.cardTitle}>الگوی اختصاصی برنامه</Text><Text style={styles.cardDescription}>یک پترن امن با حداقل چهار نقطه؛ الگو فقط به‌صورت هش رمزنگاری‌شده ذخیره می‌شود.</Text></View></View>
             {settingPattern ? (
               <View style={styles.patternSetup}>
                 <Text style={styles.stepTitle}>{firstPattern ? 'تکرار الگو برای تأیید' : 'ساخت الگوی جدید'}</Text>
                 <PatternGrid value={pattern} onChange={next => { setPattern(next); setError(''); }} disabled={busy} />
                 <View style={styles.patternActions}>
-                  <Pressable style={styles.resetButton} onPress={() => setPattern([])} disabled={!pattern.length || busy}><RotateCcw size={16} color={Colors.neutral[300]} /><Text style={styles.resetText}>پاک‌کردن</Text></Pressable>
+                  <Pressable style={styles.resetButton} onPress={() => setPattern([])} disabled={!pattern.length || busy}><RotateCcw size={16} color={'#29362F'} /><Text style={styles.resetText}>پاک‌کردن</Text></Pressable>
                   <Pressable style={[styles.enableButton, (pattern.length < 4 || busy) && styles.disabled]} onPress={() => void continuePattern()} disabled={pattern.length < 4 || busy}><ShieldCheck size={17} color={Colors.onColor} /><Text style={styles.enableText}>{firstPattern ? 'ذخیره و فعال‌سازی' : 'ادامه'}</Text></Pressable>
                 </View>
               </View>
@@ -168,38 +168,38 @@ export default function AppLockSettings() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: Colors.neutral[950] },
-  header: { minHeight: 72, paddingHorizontal: Spacing.md, paddingVertical: 10, backgroundColor: Colors.neutral[900], borderBottomWidth: 1, borderBottomColor: Colors.neutral[800], flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.sm },
+  root: { flex: 1, backgroundColor: '#F5F4EF' },
+  header: { minHeight: 72, paddingHorizontal: Spacing.md, paddingVertical: 10, backgroundColor: '#FFFEFB', borderBottomWidth: 1, borderBottomColor: '#E5E6DF', flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.sm },
   headerCopy: { flex: 1, alignItems: 'flex-end' },
-  title: { fontFamily: Typography.fontFamily, color: Colors.neutral[50], fontSize: 21, fontWeight: Typography.weights.bold, textAlign: 'right' },
-  subtitle: { fontFamily: Typography.fontFamily, color: Colors.neutral[500], fontSize: 11, textAlign: 'right', marginTop: 2 },
-  headerIcon: { width: 43, height: 43, borderRadius: 15, backgroundColor: Colors.primary[500] + '18', alignItems: 'center', justifyContent: 'center' },
+  title: { fontFamily: Typography.fontFamily, color: '#29362F', fontSize: 21, fontWeight: Typography.weights.bold, textAlign: 'right' },
+  subtitle: { fontFamily: Typography.fontFamily, color: '#778179', fontSize: 11, textAlign: 'right', marginTop: 2 },
+  headerIcon: { width: 43, height: 43, borderRadius: 15, backgroundColor: '#728D75' + '18', alignItems: 'center', justifyContent: 'center' },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   content: { width: '100%', maxWidth: 680, alignSelf: 'center', padding: Spacing.md, paddingBottom: 40, gap: Spacing.md },
-  summary: { borderRadius: Radius.xl, padding: Spacing.lg, backgroundColor: Colors.neutral[900], borderWidth: 1, borderColor: Colors.neutral[800], flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.md },
+  summary: { borderRadius: Radius.xl, padding: Spacing.lg, backgroundColor: '#FFFEFB', borderWidth: 1, borderColor: '#E5E6DF', flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.md },
   summaryCopy: { flex: 1 },
-  summaryTitle: { fontFamily: Typography.fontFamily, color: Colors.neutral[100], fontSize: 16, textAlign: 'right' },
-  summaryText: { fontFamily: Typography.fontFamily, color: Colors.neutral[500], fontSize: 11, lineHeight: 19, textAlign: 'right', marginTop: 3 },
-  card: { borderRadius: Radius.xl, padding: Spacing.lg, backgroundColor: Colors.neutral[900], borderWidth: 1, borderColor: Colors.neutral[800], gap: Spacing.md },
+  summaryTitle: { fontFamily: Typography.fontFamily, color: '#29362F', fontSize: 16, textAlign: 'right' },
+  summaryText: { fontFamily: Typography.fontFamily, color: '#778179', fontSize: 11, lineHeight: 19, textAlign: 'right', marginTop: 3 },
+  card: { borderRadius: Radius.xl, padding: Spacing.lg, backgroundColor: '#FFFEFB', borderWidth: 1, borderColor: '#E5E6DF', gap: Spacing.md },
   cardHeading: { flexDirection: 'row-reverse', alignItems: 'flex-start', gap: 10 },
   cardCopy: { flex: 1 },
-  cardTitle: { fontFamily: Typography.fontFamily, color: Colors.neutral[100], fontSize: 16, textAlign: 'right' },
-  cardDescription: { fontFamily: Typography.fontFamily, color: Colors.neutral[500], fontSize: 11, lineHeight: 20, textAlign: 'right', marginTop: 3 },
-  enableButton: { flex: 1, minHeight: 47, borderRadius: Radius.lg, backgroundColor: Colors.primary[500], flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, paddingHorizontal: 12 },
+  cardTitle: { fontFamily: Typography.fontFamily, color: '#29362F', fontSize: 16, textAlign: 'right' },
+  cardDescription: { fontFamily: Typography.fontFamily, color: '#778179', fontSize: 11, lineHeight: 20, textAlign: 'right', marginTop: 3 },
+  enableButton: { flex: 1, minHeight: 47, borderRadius: Radius.lg, backgroundColor: '#728D75', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, paddingHorizontal: 12 },
   enableText: { fontFamily: Typography.fontFamily, color: Colors.onColor, fontSize: 13 },
   disableButton: { minHeight: 45, borderRadius: Radius.lg, borderWidth: 1, borderColor: Colors.error[500] + '40', backgroundColor: Colors.error[500] + '0D', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, paddingHorizontal: 14 },
   disableText: { fontFamily: Typography.fontFamily, color: Colors.error[300], fontSize: 12 },
   unavailable: { fontFamily: Typography.fontFamily, color: Colors.warning[300], fontSize: 11, textAlign: 'right' },
   patternSetup: { alignItems: 'stretch' },
-  stepTitle: { fontFamily: Typography.fontFamily, color: Colors.accent[300], fontSize: 13, textAlign: 'center', marginBottom: 4 },
+  stepTitle: { fontFamily: Typography.fontFamily, color: '#728D75', fontSize: 13, textAlign: 'center', marginBottom: 4 },
   patternActions: { flexDirection: 'row-reverse', gap: 8 },
-  resetButton: { minWidth: 96, minHeight: 47, borderRadius: Radius.lg, backgroundColor: Colors.neutral[850], borderWidth: 1, borderColor: Colors.neutral[700], flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6 },
-  resetText: { fontFamily: Typography.fontFamily, color: Colors.neutral[300], fontSize: 12 },
+  resetButton: { minWidth: 96, minHeight: 47, borderRadius: Radius.lg, backgroundColor: '#FFFEFB', borderWidth: 1, borderColor: '#E5E6DF', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6 },
+  resetText: { fontFamily: Typography.fontFamily, color: '#29362F', fontSize: 12 },
   enabledActions: { flexDirection: 'row-reverse', gap: 8 },
-  changeButton: { flex: 1, minHeight: 45, borderRadius: Radius.lg, backgroundColor: Colors.accent[500] + '12', borderWidth: 1, borderColor: Colors.accent[500] + '35', alignItems: 'center', justifyContent: 'center' },
-  changeText: { fontFamily: Typography.fontFamily, color: Colors.accent[300], fontSize: 12 },
+  changeButton: { flex: 1, minHeight: 45, borderRadius: Radius.lg, backgroundColor: '#728D75' + '12', borderWidth: 1, borderColor: '#728D75' + '35', alignItems: 'center', justifyContent: 'center' },
+  changeText: { fontFamily: Typography.fontFamily, color: '#728D75', fontSize: 12 },
   success: { fontFamily: Typography.fontFamily, color: Colors.success[300], backgroundColor: Colors.success[500] + '0D', borderRadius: Radius.md, padding: 12, textAlign: 'center', fontSize: 12 },
   error: { fontFamily: Typography.fontFamily, color: Colors.error[300], backgroundColor: Colors.error[500] + '0D', borderRadius: Radius.md, padding: 12, textAlign: 'center', fontSize: 12 },
-  note: { fontFamily: Typography.fontFamily, color: Colors.neutral[500], fontSize: 11, lineHeight: 20, textAlign: 'center' },
+  note: { fontFamily: Typography.fontFamily, color: '#778179', fontSize: 11, lineHeight: 20, textAlign: 'center' },
   disabled: { opacity: .4 },
 });

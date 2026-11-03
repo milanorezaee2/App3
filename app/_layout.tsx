@@ -185,10 +185,10 @@ export default function RootLayout() {
 }
 
 const introStyles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#F8FAFF', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 28 },
+  root: { flex: 1, backgroundColor: '#F5F4EF', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 28 },
   image: { width: 280, height: 280, marginBottom: -12 },
-  brand: { fontFamily: 'Inter-ExtraBold', color: '#211A68', fontSize: 24, lineHeight: 31, fontWeight: '800', letterSpacing: 5, writingDirection: 'ltr' },
-  caption: { fontFamily: 'Inter-ExtraBold', color: '#6882A6', fontSize: 7, fontWeight: '800', letterSpacing: 2.1, writingDirection: 'ltr', marginTop: 2 },
-  loader: { width: 92, height: 3, borderRadius: 99, overflow: 'hidden', backgroundColor: '#E3E7F3', marginTop: 24 },
-  loaderFill: { width: '100%', height: '100%', borderRadius: 99, backgroundColor: '#635BFF' },
+  brand: { fontFamily: 'Inter-ExtraBold', color: '#29362F', fontSize: 24, lineHeight: 31, fontWeight: '800', letterSpacing: 5, writingDirection: 'ltr' },
+  caption: { fontFamily: 'Inter-ExtraBold', color: '#778179', fontSize: 7, fontWeight: '800', letterSpacing: 2.1, writingDirection: 'ltr', marginTop: 2 },
+  loader: { width: 92, height: 3, borderRadius: 99, overflow: 'hidden', backgroundColor: '#E5E6DF', marginTop: 24 },
+  loaderFill: { width: '100%', height: '100%', borderRadius: 99, backgroundColor: '#728D75' },
 });

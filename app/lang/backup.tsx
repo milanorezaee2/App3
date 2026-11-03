@@ -144,7 +144,7 @@ export default function EnglishBackupScreen() {
             <Text style={styles.body}>نسخهٔ JSON یک‌جا شامل پیشرفت دوره، وضعیت جلسه/شواهد مطالعه و دورهٔ تکمیلی است. ساخت آن فقط از همین دستگاه می‌خواند و مستقیم به سرور چیزی نمی‌فرستد.</Text>
             <Pressable accessibilityRole="button" accessibilityState={{ disabled: busy !== null }} disabled={busy !== null} onPress={() => void exportBackup()} style={({ pressed }) => [styles.primaryButton, (pressed || busy !== null) && styles.pressed]}>
               <Text style={styles.primaryButtonText}>{busy === 'export' ? 'در حال آماده‌سازی…' : Platform.OS === 'web' ? 'دانلود فایل JSON' : 'اشتراک‌گذاری فایل پشتیبان'}</Text>
-              <Download size={17} color="#FFFFFF" />
+              <Download size={17} color="#FFFEFB" />
             </Pressable>
             {fallbackExport ? <TextInput accessibilityLabel="متن نسخهٔ پشتیبان برای کپی" value={fallbackExport} editable={false} multiline selectTextOnFocus style={styles.fallback} /> : null}
           </View>
@@ -168,7 +168,7 @@ export default function EnglishBackupScreen() {
             />
             <Pressable accessibilityRole="button" accessibilityState={{ disabled: busy !== null || !importText.trim() }} disabled={busy !== null || !importText.trim()} onPress={() => void restoreBackup()} style={[styles.primaryButton, (busy !== null || !importText.trim()) && styles.disabled]}>
               <Text style={styles.primaryButtonText}>{busy === 'import' ? 'در حال بررسی و ادغام…' : 'بررسی و ادغام پیشرفت'}</Text>
-              <FileCheck2 size={17} color="#FFFFFF" />
+              <FileCheck2 size={17} color="#FFFEFB" />
             </Pressable>
           </View>
 
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   intro: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 12, lineHeight: 21, textAlign: 'right', writingDirection: 'rtl' },
   privacyCard: { flexDirection: 'row-reverse', alignItems: 'flex-start', gap: 10, padding: 14, borderRadius: 17, backgroundColor: Palette.warningSoft, borderWidth: 1, borderColor: '#F2E0C5' },
   privacyText: { flex: 1, fontFamily: Typography.fontFamily, color: '#714B20', fontSize: 10, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
-  card: { width: '100%', padding: 18, borderRadius: 20, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 11, shadowColor: '#211A68', shadowOpacity: .035, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
+  card: { width: '100%', padding: 18, borderRadius: 20, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 11, shadowColor: '#29362F', shadowOpacity: .035, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
   headingRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
   heading: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 15, lineHeight: 24, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   body: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 11, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   statLabel: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 9, textAlign: 'center', writingDirection: 'rtl' },
   small: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 9, lineHeight: 17, textAlign: 'right', writingDirection: 'rtl' },
   primaryButton: { minHeight: 46, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 8, paddingHorizontal: 13, borderRadius: 13, backgroundColor: Palette.primary },
-  primaryButtonText: { flex: 1, fontFamily: Typography.fontFamily, color: '#FFFFFF', fontSize: 11, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
+  primaryButtonText: { flex: 1, fontFamily: Typography.fontFamily, color: '#FFFEFB', fontSize: 11, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   secondaryButton: { minHeight: 42, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12, borderRadius: 12, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surfaceMuted },
   secondaryButtonText: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 10, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   importInput: { fontFamily: 'Inter-ExtraBold', minHeight: 185, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surfaceMuted, borderRadius: 13, padding: 12, color: Palette.ink, fontSize: 9, fontWeight: '800', lineHeight: 17, textAlign: 'left', writingDirection: 'ltr' },

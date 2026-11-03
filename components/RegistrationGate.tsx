@@ -182,7 +182,7 @@ export function RegistrationGate({ children }: PropsWithChildren) {
   };
 
   if (BYPASS_GATE || ready) return <>{children}</>;
-  if (checking) return <View style={styles.loading}><ActivityIndicator size="large" color="#31533B" /><Text style={styles.loadingText}>در حال بررسی حساب…</Text></View>;
+  if (checking) return <View style={styles.loading}><ActivityIndicator size="large" color="#728D75" /><Text style={styles.loadingText}>در حال بررسی حساب…</Text></View>;
 
   if (step === 'verify') {
     return (
@@ -231,6 +231,6 @@ export function RegistrationGate({ children }: PropsWithChildren) {
 }
 
 const styles = StyleSheet.create({
-  loading: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, backgroundColor: '#F7F2E8' },
-  loadingText: { fontFamily: Typography.fontFamily, color: '#4C5C49', fontSize: 13 },
+  loading: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, backgroundColor: '#F5F4EF' },
+  loadingText: { fontFamily: Typography.fontFamily, color: '#778179', fontSize: 13 },
 });

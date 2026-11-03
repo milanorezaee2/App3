@@ -70,7 +70,7 @@ export function EnglishSentenceBuilder({ sentence }: { sentence: CourseSentence 
 }
 
 const styles = StyleSheet.create({
-  card: { width: '100%', backgroundColor: Palette.surface, borderRadius: 18, borderWidth: 1, borderColor: Palette.border, padding: 16, gap: 12 },
+  card: { width: '100%', backgroundColor: Palette.surface, borderRadius: 20, borderWidth: 1, borderColor: Palette.border, padding: 18, gap: 14 },
   kicker: { fontFamily: 'Vazir', fontSize: 12, fontWeight: '400' as const, color: Palette.primary, textAlign: 'right' as const, writingDirection: 'rtl' as const },
   translation: { fontFamily: 'Vazir', fontSize: 17, lineHeight: 28, color: Palette.ink, textAlign: 'right' as const, writingDirection: 'rtl' as const },
   answerArea: { minHeight: 76, borderRadius: 13, borderWidth: 1, borderColor: Palette.primary, backgroundColor: Palette.primarySoft, padding: 10, flexDirection: 'row' as const, flexWrap: 'wrap' as const, gap: 7, alignItems: 'center' as const },

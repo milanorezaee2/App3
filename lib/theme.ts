@@ -2,117 +2,109 @@ import { Platform, type TextStyle, type ViewStyle } from 'react-native';
 
 export const DESIGN_VARIANT = process.env.EXPO_PUBLIC_DESIGN_VARIANT || 'learner-v2';
 
-const legacyColors = {
+/** Calm, editorial palette shared across the learner app and its native builds. */
+const calmColors = {
   primary: {
-    50: '#F1F7FF',
-    100: '#E9E7FF',
-    200: '#D8D5FF',
-    300: '#8D86FF',
-    400: '#635BFF',
-    500: '#5146E5',
-    600: '#4338CA',
-    700: '#3730A3',
-    800: '#211A68',
-    900: '#211A68',
+    50: '#EFF3EE',
+    100: '#E4ECE4',
+    200: '#CFDDCE',
+    300: '#AFC3B0',
+    400: '#8FA893',
+    500: '#728D75',
+    600: '#5D765F',
+    700: '#4B614D',
+    800: '#394B3B',
+    900: '#29372D',
   },
   accent: {
-    50: '#EDFCFF',
-    100: '#D7F7FC',
-    200: '#B3EEF7',
-    300: '#46BCD0',
-    400: '#20C49A',
-    500: '#0EAA83',
-    600: '#0E748E',
-    700: '#115E73',
-    800: '#154E5E',
+    50: '#F8F4EA',
+    100: '#F0E9D7',
+    200: '#E6D9B7',
+    300: '#CBB98A',
+    400: '#B59D6A',
+    500: '#A08756',
+    600: '#866E46',
+    700: '#725B3B',
+    800: '#604C33',
   },
   success: {
-    50: '#f0fdf4',
-    100: '#dcfce7',
-    300: '#15803d',
-    400: '#16a34a',
-    500: '#22c55e',
-    600: '#16a34a',
-    700: '#15803d',
-    800: '#166534',
+    50: '#EFF4EE',
+    100: '#DFE9DE',
+    300: '#78937A',
+    400: '#6F896F',
+    500: '#5D765F',
+    600: '#4B614D',
+    700: '#3F5442',
+    800: '#334638',
   },
   warning: {
-    50: '#fffbeb',
-    100: '#fef3c7',
-    300: '#b45309',
-    400: '#d97706',
-    500: '#f59e0b',
-    600: '#d97706',
-    700: '#b45309',
-    800: '#92400e',
+    50: '#F8F4EA',
+    100: '#F0E7D2',
+    300: '#927444',
+    400: '#A08756',
+    500: '#B49A70',
+    600: '#92774D',
+    700: '#775F3C',
+    800: '#614B30',
   },
   error: {
-    50: '#fef2f2',
-    100: '#fee2e2',
-    300: '#b91c1c',
-    400: '#dc2626',
-    500: '#ef4444',
-    600: '#dc2626',
-    700: '#b91c1c',
-    800: '#991b1b',
+    50: '#FAF0ED',
+    100: '#F1DED8',
+    300: '#B66D60',
+    400: '#AA6256',
+    500: '#9B554B',
+    600: '#884840',
+    700: '#713C36',
+    800: '#5C312D',
   },
   neutral: {
-    0: '#0f172a',
-    50: '#1e293b',
-    100: '#334155',
-    200: '#475569',
-    300: '#475569',
-    400: '#64748b',
-    500: '#94a3b8',
-    600: '#b4bfcd',
-    700: '#dde3ea',
-    800: '#e6eaf0',
-    850: '#ffffff',
-    900: '#f4f6fa',
-    950: '#f6f8fb',
+    0: '#29362F',
+    50: '#3B473F',
+    100: '#4E5A51',
+    200: '#657066',
+    300: '#778179',
+    400: '#899189',
+    500: '#A2A89F',
+    600: '#BEC2BA',
+    700: '#D9DBD4',
+    800: '#E7E8E1',
+    850: '#FFFEFB',
+    900: '#F1F0E9',
+    950: '#F5F4EF',
   },
-  onColor: '#ffffff',
-  onColorSoft: 'rgba(255,255,255,0.85)',
-} as const;
-
-/** Learner-first palette; opt-in so current APKs remain unchanged. */
-const learnerColors = {
-  primary: { 50: '#F3F2FF', 100: '#E9E7FF', 200: '#D8D5FF', 300: '#8D86FF', 400: '#635BFF', 500: '#5146E5', 600: '#4338CA', 700: '#3730A3', 800: '#312E81', 900: '#211A68' },
-  accent: { 50: '#ECFDF8', 100: '#D5FAEF', 200: '#AEF3DF', 300: '#5ED8BC', 400: '#20C49A', 500: '#0EAA83', 600: '#07886A', 700: '#08705B', 800: '#0B5A4B' },
-  success: legacyColors.success,
-  warning: legacyColors.warning,
-  error: legacyColors.error,
-  neutral: { 0: '#111827', 50: '#1F2937', 100: '#334155', 200: '#475569', 300: '#64748B', 400: '#7C8AA5', 500: '#A8B2C4', 600: '#C7CFDB', 700: '#E0E6EF', 800: '#E8EDF4', 850: '#FFFFFF', 900: '#F5F7FB', 950: '#F8FAFF' },
   onColor: '#FFFFFF',
-  onColorSoft: 'rgba(255,255,255,0.86)',
+  onColorSoft: 'rgba(255,255,255,0.9)',
 } as const;
 
+/** Kept as aliases so existing feature-variant imports remain source-compatible. */
+const legacyColors = calmColors;
+const learnerColors = calmColors;
 export const Colors = DESIGN_VARIANT === 'learner-v2' ? learnerColors : legacyColors;
 
 export const Shadows = {
   card: {
-    shadowColor: DESIGN_VARIANT === 'learner-v2' ? '#211A68' : '#0f172a',
-    shadowOpacity: DESIGN_VARIANT === 'learner-v2' ? 0.10 : 0.06,
-    shadowRadius: DESIGN_VARIANT === 'learner-v2' ? 18 : 12,
-    shadowOffset: { width: 0, height: DESIGN_VARIANT === 'learner-v2' ? 8 : 4 },
-    elevation: DESIGN_VARIANT === 'learner-v2' ? 4 : 2,
+    shadowColor: '#35443A',
+    shadowOpacity: 0.055,
+    shadowRadius: 13,
+    shadowOffset: { width: 0, height: 5 },
+    elevation: 2,
   },
 };
 
 export const Spacing = {
   xs: 4,
-  sm: 7,
-  md: 13,
-  lg: 18,
+  sm: 8,
+  md: 12,
+  lg: 16,
   xl: 24,
-  xxl: 36,
+  xxl: 32,
 };
 
 export const Radius = {
-  sm: DESIGN_VARIANT === 'learner-v2' ? 9 : 7,
-  md: DESIGN_VARIANT === 'learner-v2' ? 13 : 10,
-  lg: DESIGN_VARIANT === 'learner-v2' ? 18 : 14,
-  xl: DESIGN_VARIANT === 'learner-v2' ? 26 : 19,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 22,
   full: 9999,
 };
 
@@ -125,9 +117,9 @@ export const Typography = {
   numberFontFamily: 'Vazir-Black',
   latinFontFamily: 'Inter-ExtraBold',
   sizes: {
-    xs: 11,
-    sm: 13,
-    md: 15,
+    xs: 12,
+    sm: 14,
+    md: 16,
     lg: 18,
     xl: 22,
     xxl: 28,
@@ -141,14 +133,14 @@ export const Typography = {
 };
 
 export const CategoryColors: Record<string, string> = {
-  social: '#E1306C',
-  communication: '#2AABEE',
-  productivity: '#4285F4',
-  entertainment: '#FF6B35',
-  system: '#6B7280',
-  finance: '#00A651',
-  game: '#7C4DFF',
-  other: '#6366f1',
+  social: '#9A7077',
+  communication: '#758C97',
+  productivity: '#738A77',
+  entertainment: '#B47F68',
+  system: '#77837B',
+  finance: '#7D8B70',
+  game: '#8A7B93',
+  other: '#8E937F',
 };
 
 export const CategoryLabels: Record<string, string> = {
@@ -181,25 +173,21 @@ export const RtlDirection: DirectionStyle =
 export const LtrDirection: DirectionStyle =
   Platform.OS === 'web' ? { writingDirection: 'ltr' } : { direction: 'ltr' };
 
-/**
- * DesignTokens used by the language selector (app/languages.tsx).
- * Added to fix the broken 1a4c40a commit that imported DesignTokens without defining it.
- * Values are aligned with existing Colors + LearningHomeColors so the UI stays consistent.
- */
+/** Shared surfaces for the language selector and the learner experience. */
 export const DesignTokens = {
   surface: {
-    canvas: DESIGN_VARIANT === 'learner-v2' ? '#F8FAFF' : '#F8FAFF',
-    card: '#FFFFFF',
+    canvas: '#F5F4EF',
+    card: '#FFFEFB',
   },
   brand: {
-    primarySoft: DESIGN_VARIANT === 'learner-v2' ? '#E9E7FF' : '#E9E7FF',
-    primaryStrong: DESIGN_VARIANT === 'learner-v2' ? '#635BFF' : '#635BFF',
+    primarySoft: '#E4ECE4',
+    primaryStrong: '#728D75',
   },
   border: {
-    default: DESIGN_VARIANT === 'learner-v2' ? '#E3E7F3' : '#E3E7F3',
+    default: '#E5E6DF',
   },
   text: {
-    primary: DESIGN_VARIANT === 'learner-v2' ? '#211A68' : '#211A68',
-    secondary: DESIGN_VARIANT === 'learner-v2' ? '#64748B' : '#64748B',
+    primary: '#29362F',
+    secondary: '#778179',
   },
 } as const;

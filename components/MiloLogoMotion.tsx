@@ -55,7 +55,7 @@ export function MiloLogoMotion({ size = 'intro', play = true, onDone }: Props) {
     <View accessibilityRole="image" accessibilityLabel="MiloMultiLanguage" style={[styles.wrap, isIntro ? styles.wrapIntro : styles.wrapHeader]}>
       <Animated.View style={{ opacity: mark, transform: [{ scale: mark.interpolate({ inputRange: [0, 1], outputRange: [0.35, 1] }) }] }}>
         <LinearGradient
-          colors={['#8D86FF', '#5146E5', '#312E81']}
+          colors={['#AFC3B0', '#728D75', '#4B614D']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={{ width: markSize, height: markSize, borderRadius: isIntro ? 32 : 13, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   wrapIntro: { flexDirection: 'column', gap: 14 },
   wrapHeader: { flexDirection: 'row', gap: 10 },
   word: { flexDirection: 'row', direction: 'ltr', alignItems: 'center' },
-  letter: { fontFamily: 'Inter-ExtraBold', color: '#211A68', letterSpacing: 1.5, writingDirection: 'ltr' },
-  tagline: { fontFamily: 'Inter-ExtraBold', fontSize: 10, color: '#6882A6', writingDirection: 'ltr', textAlign: 'center' },
+  letter: { fontFamily: 'Inter-ExtraBold', color: '#29362F', letterSpacing: 1.5, writingDirection: 'ltr' },
+  tagline: { fontFamily: 'Inter-ExtraBold', fontSize: 10, color: '#778179', writingDirection: 'ltr', textAlign: 'center' },
   measureOnly: { position: 'absolute', opacity: 0, letterSpacing: 0 },
 });

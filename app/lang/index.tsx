@@ -116,7 +116,7 @@ export default function LearningHome() {
         <View style={styles.page}>
           <View style={styles.header}>
             <View style={styles.brandLockup}>
-              <LinearGradient colors={['#635BFF', '#4338CA']} start={{ x: .9, y: 0 }} end={{ x: .1, y: 1 }} style={styles.brandMark}>
+              <LinearGradient colors={['#5D765F', '#4B614D']} start={{ x: .9, y: 0 }} end={{ x: .1, y: 1 }} style={styles.brandMark}>
                 <BookOpenCheck size={20} color="#F9E8B9" strokeWidth={2} />
               </LinearGradient>
               <View style={styles.brandCopy}>
@@ -128,7 +128,7 @@ export default function LearningHome() {
           </View>
 
           <LinearGradient
-            colors={['#211A68', '#4338CA', '#0EAA83']}
+            colors={['#728D75', '#5D765F', '#A08756']}
             start={{ x: .95, y: .08 }}
             end={{ x: .04, y: 1 }}
             style={[styles.welcomeBlock, compact && styles.welcomeBlockCompact]}
@@ -155,7 +155,7 @@ export default function LearningHome() {
             </View>
             <View style={[styles.welcomeVisual, compact && styles.welcomeVisualCompact]}>
               <Image source={require('../../assets/english-learning-hero.jpg')} resizeMode="cover" style={styles.welcomeImage} />
-              <LinearGradient colors={['rgba(16,42,86,0.00)', 'rgba(16,42,86,0.12)']} style={styles.welcomeImageShade} />
+              <LinearGradient colors={['rgba(41,54,47,0.00)', 'rgba(41,54,47,0.10)']} style={styles.welcomeImageShade} />
               <View style={styles.welcomeImageStamp}>
                 <Text style={styles.welcomeImageStampMain}>EN</Text>
                 <View style={styles.welcomeImageStampLine} />
@@ -165,7 +165,7 @@ export default function LearningHome() {
           </LinearGradient>
 
           <View style={styles.lessonCard}>
-            <LinearGradient colors={['#5146E5', '#20C49A', '#5146E5']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
+            <LinearGradient colors={['#728D75', '#A08756', '#728D75']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
             <View style={styles.lessonMetaRow}>
               <View style={styles.levelTag}>
                 <View style={[styles.levelTagDot, { backgroundColor: currentLevel.color }]} />
@@ -220,7 +220,7 @@ export default function LearningHome() {
                 style={({ pressed }) => [styles.continueButton, pressed && styles.buttonPressed]}
                 onPress={openCurrentLesson}
               >
-                <LinearGradient colors={['#635BFF', '#4338CA']} start={{ x: .96, y: 0 }} end={{ x: .04, y: 1 }} style={styles.continueButtonGradient}>
+                <LinearGradient colors={['#5D765F', '#4B614D']} start={{ x: .96, y: 0 }} end={{ x: .04, y: 1 }} style={styles.continueButtonGradient}>
                   <Play size={16} color="#F5E7BC" fill="#F5E7BC" />
                   <Text style={styles.continueButtonText}>{hasStartedCourse ? 'ادامهٔ آموزش' : 'شروع اولین درس'}</Text>
                   <ArrowLeft size={17} color="#FFFFFF" />
@@ -252,7 +252,7 @@ export default function LearningHome() {
             </View>
           </View>
 
-          <LinearGradient colors={['#211A68', '#312E81', '#0EAA83']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
+          <LinearGradient colors={['#FFFEFB', '#F5F4EF', '#E4ECE4']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
             <View pointerEvents="none" style={styles.todayGlow} />
             <View style={styles.todayTopRow}>
               <View style={styles.todayIcon}><Clock3 size={18} color={HomeColors.gold} /></View>
@@ -409,7 +409,7 @@ export default function LearningHome() {
             </Pressable>
           </View>
 
-          <LinearGradient colors={['#FFFFFF', '#EDF5FF']} start={{ x: .95, y: .1 }} end={{ x: .05, y: 1 }} style={styles.noteCard}>
+          <LinearGradient colors={['#FFFEFB', '#F5F4EF']} start={{ x: .95, y: .1 }} end={{ x: .05, y: 1 }} style={styles.noteCard}>
             <View style={styles.noteIcon}><Sparkles size={16} color={HomeColors.gold} /></View>
             <View style={styles.noteCopy}>
               <Text style={styles.noteTitle}>یادگیری در بافت</Text>

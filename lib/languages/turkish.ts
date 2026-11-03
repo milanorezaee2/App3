@@ -112,7 +112,7 @@ export const TURKISH_LEVELS: readonly TurkishCourseLevel[] = [
     title: 'Foundation',
     cefr: 'A1 · ساختار زبان و جمله‌سازی',
     description: 'الفبا و تلفظ حروف ویژه، ضمایر، پسوندهای شخصی و ملکی، حال استمراری، حالت‌های چهارگانهٔ اسم، توانایی، هماهنگی واکه‌ها و ترتیب کلمات در جمله',
-    color: '#6555E9',
+    color: '#A08756',
     modules: FOUNDATION_RAW.map(item => item.title),
     status: 'available',
   },

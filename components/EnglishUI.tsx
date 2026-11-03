@@ -1,18 +1,18 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Check } from 'lucide-react-native';
 import { COURSE_LEVELS, type CourseLevelId } from '@/lib/courseContent';
-import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
+const Palette = { canvas: '#F5F4EF', surface: '#FFFEFB', surfaceMuted: '#E4ECE4', ink: '#29362F', text: '#29362F', muted: '#778179', border: '#E5E6DF', primary: '#728D75', primaryDark: '#4B614D', primarySoft: '#E4ECE4', teal: '#728D75', tealSoft: '#E4ECE4', success: '#5D765F', successSoft: '#E4ECE4', warning: '#A08756', warningSoft: '#F8F4EA', danger: '#9B554B', dangerSoft: '#FAF0ED' };
 import { toPersianDigits } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 
 export const ENGLISH_LEVEL_GRADIENTS: Record<CourseLevelId, [string, string]> = {
-  [-1]: ['#94A3B8', '#475569'],
-  0: ['#6555E9', '#29246F'],
-  1: ['#27A1D6', '#164D8C'],
-  2: ['#19A88B', '#0D5A53'],
-  3: ['#E4A436', '#99501D'],
-  4: ['#9A68E8', '#4C318A'],
-  5: ['#C55F76', '#78364F'],
+  [-1]: ['#E4ECE4', '#CFDDCE'],
+  0: ['#E4ECE4', '#CFDDCE'],
+  1: ['#E8EEE7', '#D4E0D2'],
+  2: ['#E4ECE4', '#CFDDCE'],
+  3: ['#F0E9D7', '#E6D9B7'],
+  4: ['#E8EEE7', '#D4E0D2'],
+  5: ['#F0E9D7', '#E6D9B7'],
 };
 
 export function displayEnglishModuleLabel(label: string) {
@@ -113,7 +113,7 @@ export function EnglishSectionHeading({
 }
 
 const styles = StyleSheet.create({
-  progressTrack: { width: '100%', borderRadius: 999, overflow: 'hidden', backgroundColor: '#E7EAF2' },
+  progressTrack: { width: '100%', borderRadius: 999, overflow: 'hidden', backgroundColor: Palette.border },
   progressFill: { height: '100%', borderRadius: 999, alignSelf: 'flex-start' },
   rail: { width: '100%', flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 2 },
   railRtl: { flexDirection: 'row-reverse' },
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   railNodeActive: { backgroundColor: Palette.primary, borderColor: Palette.primary, shadowColor: Palette.primary, shadowOpacity: 0.24, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 3 },
   railNodeDone: { backgroundColor: Palette.success, borderColor: Palette.success },
   railNodeText: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 11, fontWeight: '800', writingDirection: 'rtl' },
-  railNodeTextActive: { color: '#FFFFFF' },
+  railNodeTextActive: { color: Palette.surface },
   railLabel: { fontFamily: 'Inter-ExtraBold', maxWidth: 42, color: Palette.muted, fontSize: 6, fontWeight: '800', textAlign: 'center', writingDirection: 'ltr' },
   railLabelActive: { color: Palette.primaryDark },
   railConnector: { height: 3, flex: 1, borderRadius: 99, backgroundColor: Palette.border, marginTop: 15 },

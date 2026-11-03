@@ -95,7 +95,7 @@ export default function ConversationsHome() {
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         {configured && (
           <Pressable accessibilityRole="button" style={styles.inviteButton} disabled={openingSupport} onPress={openSupport}>
-            <MessageCircle size={17} color={Colors.primary[300]} />
+            <MessageCircle size={17} color={'#728D75'} />
             <Text style={styles.addAnotherText}>{openingSupport ? 'در حال باز کردن...' : 'گفتگو با پشتیبانی Milo'}</Text>
           </Pressable>
         )}
@@ -108,7 +108,7 @@ export default function ConversationsHome() {
           <View style={styles.contactText}>
             <View style={styles.nameRow}>
               <Text style={styles.contactName}>Emma</Text>
-              <View style={styles.aiBadge}><Bot size={12} color={Colors.accent[300]} /><Text style={styles.aiBadgeText}>مربی هوش مصنوعی</Text></View>
+              <View style={styles.aiBadge}><Bot size={12} color={'#728D75'} /><Text style={styles.aiBadgeText}>مربی هوش مصنوعی</Text></View>
             </View>
             <Text style={styles.contactDesc}>همیشه آماده برای تمرین جمله‌های درس شما</Text>
             <View style={styles.capabilities}>
@@ -117,7 +117,7 @@ export default function ConversationsHome() {
               <Text style={styles.capability}>مکالمه صوتی</Text>
             </View>
           </View>
-          <ChevronLeft size={21} color={Colors.neutral[500]} />
+          <ChevronLeft size={21} color={'#778179'} />
         </Pressable>
 
         <View style={styles.sectionRow}>
@@ -128,7 +128,7 @@ export default function ConversationsHome() {
         {!configured ? <SupabaseSetupNotice /> : null}
 
         {loadingContacts ? (
-          <View style={styles.loadingContacts}><ActivityIndicator color={Colors.primary[400]} /><Text style={styles.loadingText}>در حال دریافت مخاطبان…</Text></View>
+          <View style={styles.loadingContacts}><ActivityIndicator color={'#728D75'} /><Text style={styles.loadingText}>در حال دریافت مخاطبان…</Text></View>
         ) : contacts.length ? (
           <View style={styles.contactsList}>
             {contacts.map((contact) => (
@@ -152,14 +152,14 @@ export default function ConversationsHome() {
                 >
                   {deletingConversationId === contact.conversationId ? <ActivityIndicator size="small" color={Colors.error[300]} /> : <Trash2 size={17} color={Colors.error[300]} />}
                 </Pressable>
-                <ChevronLeft size={20} color={Colors.neutral[500]} />
+                <ChevronLeft size={20} color={'#778179'} />
               </Pressable>
             ))}
-            <Pressable style={styles.addAnother} onPress={() => router.push('/conversations/invite' as never)}><Plus size={17} color={Colors.primary[300]} /><Text style={styles.addAnotherText}>افزودن مخاطب دیگر</Text></Pressable>
+            <Pressable style={styles.addAnother} onPress={() => router.push('/conversations/invite' as never)}><Plus size={17} color={'#728D75'} /><Text style={styles.addAnotherText}>افزودن مخاطب دیگر</Text></Pressable>
           </View>
         ) : (
           <View style={styles.emptyContacts}>
-            <View style={styles.peopleIcon}><UserRound size={30} color={Colors.primary[400]} /></View>
+            <View style={styles.peopleIcon}><UserRound size={30} color={'#728D75'} /></View>
             <Text style={styles.emptyTitle}>{contactsError ? 'دریافت مخاطبان انجام نشد' : 'هنوز مخاطبی اضافه نکرده‌اید'}</Text>
             <Text style={styles.emptyDesc}>{contactsError || 'دوست مسلط به انگلیسی خود را با کد دعوت اضافه کنید و در محیطی خصوصی تمرین کنید.'}</Text>
             <Pressable style={styles.inviteButton} onPress={() => router.push('/conversations/invite' as never)}>
@@ -167,8 +167,8 @@ export default function ConversationsHome() {
               <Text style={styles.inviteText}>افزودن مخاطب واقعی</Text>
             </Pressable>
             <View style={styles.inviteMethods}>
-              <View style={styles.method}><QrCode size={15} color={Colors.neutral[500]} /><Text style={styles.methodText}>کد دعوت</Text></View>
-              <View style={styles.method}><ShieldCheck size={15} color={Colors.neutral[500]} /><Text style={styles.methodText}>ارتباط خصوصی</Text></View>
+              <View style={styles.method}><QrCode size={15} color={'#778179'} /><Text style={styles.methodText}>کد دعوت</Text></View>
+              <View style={styles.method}><ShieldCheck size={15} color={'#778179'} /><Text style={styles.methodText}>ارتباط خصوصی</Text></View>
             </View>
           </View>
         )}
@@ -192,56 +192,56 @@ export default function ConversationsHome() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: Colors.neutral[950] },
-  header: { paddingTop: 12, paddingBottom: Spacing.lg, paddingHorizontal: Spacing.lg, backgroundColor: Colors.neutral[900], borderBottomWidth: 1, borderBottomColor: Colors.neutral[800] },
+  root: { flex: 1, backgroundColor: '#F5F4EF' },
+  header: { paddingTop: 12, paddingBottom: Spacing.lg, paddingHorizontal: Spacing.lg, backgroundColor: '#FFFEFB', borderBottomWidth: 1, borderBottomColor: '#E5E6DF' },
   headerTop: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
   headerCopy: { flex: 1, alignItems: 'flex-end' },
-  title: { fontFamily: Typography.fontFamily, fontSize: 26, fontWeight: Typography.weights.bold, color: Colors.neutral[0], textAlign: 'right' },
-  subtitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, color: Colors.neutral[400], textAlign: 'right', marginTop: 3 },
+  title: { fontFamily: Typography.fontFamily, fontSize: 26, fontWeight: Typography.weights.bold, color: '#29362F', textAlign: 'right' },
+  subtitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, color: '#778179', textAlign: 'right', marginTop: 3 },
   content: { padding: Spacing.md, paddingBottom: 28, gap: Spacing.md },
-  sectionLabel: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.md, fontWeight: Typography.weights.bold, color: Colors.neutral[200], textAlign: 'right' },
+  sectionLabel: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.md, fontWeight: Typography.weights.bold, color: '#29362F', textAlign: 'right' },
   sectionRow: { marginTop: Spacing.sm, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' },
-  sectionHint: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.neutral[600] },
-  emmaCard: { borderRadius: Radius.xl, padding: Spacing.md, backgroundColor: Colors.neutral[850], borderWidth: 1, borderColor: Colors.accent[500] + '50', flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.md },
+  sectionHint: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: '#778179' },
+  emmaCard: { borderRadius: Radius.xl, padding: Spacing.md, backgroundColor: '#FFFEFB', borderWidth: 1, borderColor: '#728D75' + '50', flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.md },
   avatarWrap: { position: 'relative' },
-  emmaAvatar: { width: 62, height: 62, borderRadius: 31, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.accent[500] + '20' },
+  emmaAvatar: { width: 62, height: 62, borderRadius: 31, alignItems: 'center', justifyContent: 'center', backgroundColor: '#728D75' + '20' },
   avatarEmoji: { fontSize: 34 },
-  onlineDot: { position: 'absolute', left: 1, bottom: 3, width: 13, height: 13, borderRadius: 7, backgroundColor: Colors.success[500], borderWidth: 2, borderColor: Colors.neutral[850] },
+  onlineDot: { position: 'absolute', left: 1, bottom: 3, width: 13, height: 13, borderRadius: 7, backgroundColor: Colors.success[500], borderWidth: 2, borderColor: '#FFFEFB' },
   contactText: { flex: 1 },
   nameRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 7 },
-  contactName: { fontFamily: Typography.latinFontFamily, fontSize: 19, fontWeight: '800', color: Colors.neutral[50], textAlign: 'left', writingDirection: 'ltr' },
-  aiBadge: { flexDirection: 'row-reverse', alignItems: 'center', gap: 4, borderRadius: Radius.full, paddingHorizontal: 7, paddingVertical: 3, backgroundColor: Colors.accent[500] + '15' },
-  aiBadgeText: { fontFamily: Typography.fontFamily, fontSize: 9, color: Colors.accent[300] },
-  contactDesc: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.neutral[400], textAlign: 'right', lineHeight: 18, marginTop: 3 },
+  contactName: { fontFamily: Typography.latinFontFamily, fontSize: 19, fontWeight: '800', color: '#29362F', textAlign: 'left', writingDirection: 'ltr' },
+  aiBadge: { flexDirection: 'row-reverse', alignItems: 'center', gap: 4, borderRadius: Radius.full, paddingHorizontal: 7, paddingVertical: 3, backgroundColor: '#728D75' + '15' },
+  aiBadgeText: { fontFamily: Typography.fontFamily, fontSize: 9, color: '#728D75' },
+  contactDesc: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: '#778179', textAlign: 'right', lineHeight: 18, marginTop: 3 },
   capabilities: { flexDirection: 'row-reverse', flexWrap: 'wrap', gap: 5, marginTop: 8 },
-  capability: { fontFamily: Typography.fontFamily, fontSize: 9, color: Colors.neutral[400], backgroundColor: Colors.neutral[700], borderRadius: Radius.full, paddingHorizontal: 7, paddingVertical: 3 },
-  loadingContacts: { minHeight: 110, borderRadius: Radius.xl, backgroundColor: Colors.neutral[900], alignItems: 'center', justifyContent: 'center', gap: Spacing.sm },
-  loadingText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.neutral[500] },
+  capability: { fontFamily: Typography.fontFamily, fontSize: 9, color: '#778179', backgroundColor: '#E5E6DF', borderRadius: Radius.full, paddingHorizontal: 7, paddingVertical: 3 },
+  loadingContacts: { minHeight: 110, borderRadius: Radius.xl, backgroundColor: '#FFFEFB', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm },
+  loadingText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: '#778179' },
   contactsList: { gap: Spacing.sm },
-  contactCard: { minHeight: 72, borderRadius: Radius.lg, backgroundColor: Colors.neutral[850], borderWidth: 1, borderColor: Colors.neutral[800], padding: Spacing.md, flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.md },
-  realAvatar: { width: 46, height: 46, borderRadius: 23, backgroundColor: Colors.primary[500] + '15', alignItems: 'center', justifyContent: 'center' },
+  contactCard: { minHeight: 72, borderRadius: Radius.lg, backgroundColor: '#FFFEFB', borderWidth: 1, borderColor: '#E5E6DF', padding: Spacing.md, flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.md },
+  realAvatar: { width: 46, height: 46, borderRadius: 23, backgroundColor: '#728D75' + '15', alignItems: 'center', justifyContent: 'center' },
   realAvatarText: { fontSize: 25 },
   realContactText: { flex: 1 },
-  realContactName: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.md, fontWeight: Typography.weights.bold, color: Colors.neutral[100], textAlign: 'right' },
+  realContactName: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.md, fontWeight: Typography.weights.bold, color: '#29362F', textAlign: 'right' },
   realContactStatus: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.success[400], textAlign: 'right', marginTop: 3 },
   deleteContact: { width: 36, height: 36, borderRadius: 12, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.error[500] + '10', borderWidth: 1, borderColor: Colors.error[500] + '25' },
-  addAnother: { minHeight: 44, borderRadius: Radius.lg, borderWidth: 1, borderColor: Colors.primary[500] + '35', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6 },
-  addAnotherText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, color: Colors.primary[300] },
-  emptyContacts: { borderRadius: Radius.xl, padding: Spacing.xl, backgroundColor: Colors.neutral[900], borderWidth: 1, borderStyle: 'dashed', borderColor: Colors.neutral[700], alignItems: 'center' },
-  peopleIcon: { width: 62, height: 62, borderRadius: 31, backgroundColor: Colors.primary[500] + '14', alignItems: 'center', justifyContent: 'center', marginBottom: Spacing.md },
-  emptyTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg, fontWeight: Typography.weights.bold, color: Colors.neutral[200], textAlign: 'center' },
-  emptyDesc: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, color: Colors.neutral[500], textAlign: 'center', lineHeight: 22, marginTop: 6 },
-  inviteButton: { minHeight: 46, marginTop: Spacing.lg, paddingHorizontal: Spacing.xl, borderRadius: Radius.lg, backgroundColor: Colors.primary[500], flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7 },
+  addAnother: { minHeight: 44, borderRadius: Radius.lg, borderWidth: 1, borderColor: '#728D75' + '35', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6 },
+  addAnotherText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, color: '#728D75' },
+  emptyContacts: { borderRadius: Radius.xl, padding: Spacing.xl, backgroundColor: '#FFFEFB', borderWidth: 1, borderStyle: 'dashed', borderColor: '#E5E6DF', alignItems: 'center' },
+  peopleIcon: { width: 62, height: 62, borderRadius: 31, backgroundColor: '#728D75' + '14', alignItems: 'center', justifyContent: 'center', marginBottom: Spacing.md },
+  emptyTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg, fontWeight: Typography.weights.bold, color: '#29362F', textAlign: 'center' },
+  emptyDesc: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, color: '#778179', textAlign: 'center', lineHeight: 22, marginTop: 6 },
+  inviteButton: { minHeight: 46, marginTop: Spacing.lg, paddingHorizontal: Spacing.xl, borderRadius: Radius.lg, backgroundColor: '#728D75', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7 },
   inviteText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, fontWeight: Typography.weights.bold, color: Colors.onColor },
   inviteMethods: { flexDirection: 'row-reverse', gap: Spacing.md, marginTop: Spacing.md },
   method: { flexDirection: 'row-reverse', gap: 5, alignItems: 'center' },
-  methodText: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.neutral[600] },
+  methodText: { fontFamily: Typography.fontFamily, fontSize: 10, color: '#778179' },
   assistCard: { borderRadius: Radius.lg, padding: Spacing.md, backgroundColor: Colors.warning[500] + '0B', borderWidth: 1, borderColor: Colors.warning[500] + '20', flexDirection: 'row-reverse', alignItems: 'flex-start', gap: Spacing.sm },
   assistText: { flex: 1 },
   assistTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, fontWeight: Typography.weights.bold, color: Colors.warning[300], textAlign: 'right' },
-  assistDesc: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.neutral[500], textAlign: 'right', lineHeight: 19, marginTop: 3 },
+  assistDesc: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: '#778179', textAlign: 'right', lineHeight: 19, marginTop: 3 },
   modeRow: { flexDirection: 'row-reverse', gap: Spacing.sm },
-  modeCard: { flex: 1, borderRadius: Radius.lg, backgroundColor: Colors.neutral[850], padding: Spacing.md, borderWidth: 1, borderColor: Colors.neutral[800], alignItems: 'center', gap: 5 },
-  modeTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, fontWeight: Typography.weights.bold, color: Colors.neutral[200] },
-  modeDesc: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.neutral[600] },
+  modeCard: { flex: 1, borderRadius: Radius.lg, backgroundColor: '#FFFEFB', padding: Spacing.md, borderWidth: 1, borderColor: '#E5E6DF', alignItems: 'center', gap: 5 },
+  modeTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, fontWeight: Typography.weights.bold, color: '#29362F' },
+  modeDesc: { fontFamily: Typography.fontFamily, fontSize: 10, color: '#778179' },
 });

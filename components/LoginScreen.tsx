@@ -13,7 +13,7 @@ import { Typography } from '@/lib/theme';
  */
 
 const HERO_STEPS = ['گوش بده', 'پاسخ بده', 'مرور کن'] as const;
-const BRAND_GRADIENT: [string, string, string] = ['#31533B', '#4C6947', '#A9664C'];
+const BRAND_GRADIENT: [string, string, string] = ['#728D75', '#4C6947', '#A9664C'];
 
 export type LoginMode = 'login' | 'register';
 
@@ -74,12 +74,12 @@ function LoginHero({ wide }: { wide: boolean }) {
       <View style={styles.heroColumn}>
         <View style={styles.brand}>
           <LinearGradient
-            colors={['#D8E0CB', '#55704B', '#31533B']}
+            colors={['#D8E0CB', '#55704B', '#728D75']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.brandMark}
           >
-            <BookOpenCheck size={19} color="#FFFFFF" strokeWidth={2.4} />
+            <BookOpenCheck size={19} color="#FFFEFB" strokeWidth={2.4} />
           </LinearGradient>
           <View style={styles.brandCopy}>
             <Text style={styles.brandName}>Milo</Text>
@@ -212,11 +212,11 @@ export function LoginScreen({
                 onBlur={() => setFocus(null)}
                 style={styles.input}
                 placeholder="مثلاً سارا احمدی"
-                placeholderTextColor="#81796D"
+                placeholderTextColor="#778179"
                 textAlign="right"
               />
               <View pointerEvents="none" style={styles.fieldIcon}>
-                <UserRound size={16} color="#81796D" />
+                <UserRound size={16} color="#778179" />
               </View>
             </View>
           </View>
@@ -234,7 +234,7 @@ export function LoginScreen({
             onBlur={() => setFocus(null)}
             style={[styles.input, styles.ltr]}
             placeholder="name@example.com"
-            placeholderTextColor="#81796D"
+            placeholderTextColor="#778179"
             autoCapitalize="none"
             autoCorrect={false}
             autoComplete="email"
@@ -242,7 +242,7 @@ export function LoginScreen({
             keyboardType="email-address"
           />
           <View pointerEvents="none" style={styles.fieldIcon}>
-            <Mail size={16} color="#81796D" />
+            <Mail size={16} color="#778179" />
           </View>
         </View>
       </View>
@@ -265,15 +265,15 @@ export function LoginScreen({
           style={StyleSheet.absoluteFill}
         />
         <View pointerEvents="none" style={styles.ctaArrow}>
-          <ArrowLeft size={17} color="#FFFFFF" strokeWidth={2.4} />
+          <ArrowLeft size={17} color="#FFFEFB" strokeWidth={2.4} />
         </View>
         {busy
-          ? <ActivityIndicator color="#FFFFFF" />
+          ? <ActivityIndicator color="#FFFEFB" />
           : <Text style={styles.ctaText}>{registering ? 'ساخت حساب و ارسال کد' : 'ارسال کد ورود به ایمیل'}</Text>}
       </Pressable>
 
       <View style={styles.privacy}>
-        <ShieldCheck size={16} color="#31533B" />
+        <ShieldCheck size={16} color="#728D75" />
         <Text style={styles.privacyText}>
           مدیریت فقط اطلاعات حساب، وضعیت فعالیت و پیشرفت آموزشی را می‌بیند؛ پیام‌های خصوصی نمایش داده نمی‌شوند.
         </Text>
@@ -301,7 +301,7 @@ export function LoginCodeScreen({ email, code, onChangeCode, onSubmit, onResend,
             onBlur={() => setFocus(false)}
             style={[styles.input, styles.codeInput, styles.otpInput]}
             placeholder="کد ۶ رقمی"
-            placeholderTextColor="#81796D"
+            placeholderTextColor="#778179"
             keyboardType="number-pad"
             autoComplete="one-time-code"
             textContentType="oneTimeCode"
@@ -309,7 +309,7 @@ export function LoginCodeScreen({ email, code, onChangeCode, onSubmit, onResend,
             onSubmitEditing={onSubmit}
           />
           <View pointerEvents="none" style={styles.fieldIcon}>
-            <LockKeyhole size={16} color="#81796D" />
+            <LockKeyhole size={16} color="#778179" />
           </View>
         </View>
       </View>
@@ -331,9 +331,9 @@ export function LoginCodeScreen({ email, code, onChangeCode, onSubmit, onResend,
           style={StyleSheet.absoluteFill}
         />
         <View pointerEvents="none" style={styles.ctaArrow}>
-          <ArrowLeft size={17} color="#FFFFFF" strokeWidth={2.4} />
+          <ArrowLeft size={17} color="#FFFEFB" strokeWidth={2.4} />
         </View>
-        {busy ? <ActivityIndicator color="#FFFFFF" /> : <Text style={styles.ctaText}>تأیید کد و ورود</Text>}
+        {busy ? <ActivityIndicator color="#FFFEFB" /> : <Text style={styles.ctaText}>تأیید کد و ورود</Text>}
       </Pressable>
 
       <View style={styles.otpActions}>
@@ -365,18 +365,18 @@ export function LoginProfileScreen({ email, fullName, onChangeFullName, onSubmit
             onBlur={() => setFocus(false)}
             style={styles.input}
             placeholder="مثلاً سارا احمدی"
-            placeholderTextColor="#81796D"
+            placeholderTextColor="#778179"
             textAlign="right"
             autoComplete="name"
           />
-          <View pointerEvents="none" style={styles.fieldIcon}><UserRound size={16} color="#81796D" /></View>
+          <View pointerEvents="none" style={styles.fieldIcon}><UserRound size={16} color="#778179" /></View>
         </View>
       </View>
       {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
       {notice ? <Text style={styles.notice}>{notice}</Text> : null}
       <Pressable accessibilityRole="button" disabled={busy} onPress={onSubmit} style={({ pressed }) => [styles.cta, pressed && !busy && styles.ctaPressed, busy && styles.disabled]}>
         <LinearGradient colors={BRAND_GRADIENT} locations={[0, 0.5, 1]} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} style={StyleSheet.absoluteFill} />
-        {busy ? <ActivityIndicator color="#FFFFFF" /> : <Text style={styles.ctaText}>تکمیل پروفایل و ورود</Text>}
+        {busy ? <ActivityIndicator color="#FFFEFB" /> : <Text style={styles.ctaText}>تکمیل پروفایل و ورود</Text>}
       </Pressable>
     </LoginScaffold>
   );
@@ -385,7 +385,7 @@ export function LoginProfileScreen({ email, fullName, onChangeFullName, onSubmit
 /* ---------------------------------------------------------------- styles */
 
 const styles = StyleSheet.create({
-  page: { flex: 1, backgroundColor: '#F7F2E8' },
+  page: { flex: 1, backgroundColor: '#F5F4EF' },
   layoutFrame: { flex: 1, width: '100%', minWidth: 0 },
   scroll: { flex: 1 },
   scrollContent: { flexGrow: 1 },
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
   brandCopy: { gap: 1 },
   brandName: {
     fontFamily: Typography.latinFontFamily,
-    color: '#31533B',
+    color: '#728D75',
     fontSize: 23,
     lineHeight: 27,
     letterSpacing: 1.7,
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
   },
   brandCaption: {
     fontFamily: Typography.latinFontFamily,
-    color: '#746E63',
+    color: '#778179',
     fontSize: 6,
     lineHeight: 9,
     letterSpacing: 1.1,
@@ -426,7 +426,7 @@ const styles = StyleSheet.create({
   heroTitle: {
     marginTop: 24,
     fontFamily: Typography.boldFontFamily,
-    color: '#26382D',
+    color: '#29362F',
     fontSize: 25,
     lineHeight: 37,
     textAlign: 'center',
@@ -443,14 +443,14 @@ const styles = StyleSheet.create({
   },
   heroStepText: {
     fontFamily: Typography.mediumFontFamily,
-    color: '#31533B',
+    color: '#728D75',
     fontSize: 9.2,
     writingDirection: 'rtl',
   },
 
   sheet: {
     flexGrow: 1,
-    backgroundColor: '#FFFCF6',
+    backgroundColor: '#FFFEFB',
     borderTopLeftRadius: 34,
     borderTopRightRadius: 34,
     paddingTop: 28,
@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontFamily: Typography.boldFontFamily,
-    color: '#26382D',
+    color: '#29362F',
     fontSize: 20,
     lineHeight: 30,
     textAlign: 'right',
@@ -486,7 +486,7 @@ const styles = StyleSheet.create({
   subtitle: {
     marginTop: 3,
     fontFamily: Typography.fontFamily,
-    color: '#746E63',
+    color: '#778179',
     fontSize: 11.4,
     lineHeight: 20,
     textAlign: 'right',
@@ -496,14 +496,14 @@ const styles = StyleSheet.create({
   switcher: {
     marginTop: 15,
     flexDirection: 'row-reverse',
-    backgroundColor: '#F1ECE1',
+    backgroundColor: '#E4ECE4',
     borderRadius: 14,
     padding: 4,
     gap: 4,
   },
   switchButton: { flex: 1, minHeight: 40, alignItems: 'center', justifyContent: 'center', borderRadius: 11 },
   switchActive: {
-    backgroundColor: '#FFFCF6',
+    backgroundColor: '#FFFEFB',
     shadowColor: '#514433',
     shadowOpacity: 0.1,
     shadowRadius: 5,
@@ -512,17 +512,17 @@ const styles = StyleSheet.create({
   },
   switchText: {
     fontFamily: Typography.fontFamily,
-    color: '#81796D',
+    color: '#778179',
     fontSize: 12,
     writingDirection: 'rtl',
   },
-  switchTextActive: { fontFamily: Typography.mediumFontFamily, color: '#31533B' },
+  switchTextActive: { fontFamily: Typography.mediumFontFamily, color: '#728D75' },
 
   label: {
     marginTop: 16,
     marginBottom: 6,
     fontFamily: Typography.mediumFontFamily,
-    color: '#4C5C49',
+    color: '#778179',
     fontSize: 10.4,
     textAlign: 'right',
     writingDirection: 'rtl',
@@ -533,8 +533,8 @@ const styles = StyleSheet.create({
     minHeight: 52,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#D9D1C2',
-    backgroundColor: '#FBF8F1',
+    borderColor: '#E5E6DF',
+    backgroundColor: '#FFFEFB',
     justifyContent: 'center',
   },
   input: {
@@ -543,7 +543,7 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     fontFamily: Typography.mediumFontFamily,
     fontSize: 13.5,
-    color: '#26382D',
+    color: '#29362F',
     writingDirection: 'rtl',
   },
   ltr: { fontFamily: Typography.latinFontFamily, textAlign: 'right', writingDirection: 'ltr', fontSize: 12.6 },
@@ -552,7 +552,7 @@ const styles = StyleSheet.create({
   fieldIcon: { position: 'absolute', left: 16, top: 0, bottom: 0, justifyContent: 'center' },
   otpActions: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', marginTop: 14 },
   otpLinkButton: { paddingHorizontal: 6, paddingVertical: 8 },
-  otpLinkText: { fontFamily: Typography.mediumFontFamily, color: '#31533B', fontSize: 11, writingDirection: 'rtl' },
+  otpLinkText: { fontFamily: Typography.mediumFontFamily, color: '#728D75', fontSize: 11, writingDirection: 'rtl' },
 
   error: {
     marginTop: 12,
@@ -569,7 +569,7 @@ const styles = StyleSheet.create({
   notice: {
     marginTop: 12,
     fontFamily: Typography.fontFamily,
-    color: '#31533B',
+    color: '#728D75',
     backgroundColor: '#E9EFE1',
     borderRadius: 12,
     padding: 10,
@@ -586,7 +586,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    shadowColor: '#31533B',
+    shadowColor: '#728D75',
     shadowOpacity: 0.35,
     shadowRadius: 14,
     shadowOffset: { width: 0, height: 9 },
@@ -595,7 +595,7 @@ const styles = StyleSheet.create({
   ctaPressed: { opacity: 0.92, transform: [{ scale: 0.995 }] },
   ctaText: {
     fontFamily: Typography.boldFontFamily,
-    color: '#FFFFFF',
+    color: '#FFFEFB',
     fontSize: 14,
     writingDirection: 'rtl',
   },
@@ -607,14 +607,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
     alignItems: 'flex-start',
     gap: 8,
-    backgroundColor: '#EEF0E5',
+    backgroundColor: '#E4ECE4',
     borderRadius: 14,
     padding: 10,
   },
   privacyText: {
     flex: 1,
     fontFamily: Typography.fontFamily,
-    color: '#4D5B47',
+    color: '#778179',
     fontSize: 9.5,
     lineHeight: 17,
     textAlign: 'right',
@@ -627,10 +627,10 @@ const styles = StyleSheet.create({
     fontSize: 34,
     lineHeight: 50,
     letterSpacing: 8,
-    color: '#111111',
-    backgroundColor: '#FFFFFF',
+    color: '#29362F',
+    backgroundColor: '#FFFEFB',
     borderWidth: 2,
-    borderColor: '#718365',
+    borderColor: '#728D75',
     borderRadius: 18,
     paddingVertical: 12,
     paddingHorizontal: 18,
