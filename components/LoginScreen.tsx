@@ -1,9 +1,9 @@
 import { type ReactNode, useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, ImageBackground, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ArrowLeft, BookOpenCheck, LockKeyhole, Mail, ShieldCheck, UserRound } from 'lucide-react-native';
 import { KeyboardAwareScrollView, KeyboardAvoidingView } from '@/components/KeyboardRuntime';
-import { DESIGN_VARIANT, Typography } from '@/lib/theme';
+import { Typography } from '@/lib/theme';
 
 /**
  * Login / registration entry screen.
@@ -12,10 +12,8 @@ import { DESIGN_VARIANT, Typography } from '@/lib/theme';
  * session state and profile completion.
  */
 
-const HERO_STEPS = ['بشنو', 'تکرار کن', 'به‌خاطر بسپار'] as const;
-const BRAND_GRADIENT: [string, string, string] = DESIGN_VARIANT === 'learner-v2'
-  ? ['#312E81', '#635BFF', '#20C49A']
-  : ['#211A68', '#3730A3', '#5146E5'];
+const HERO_STEPS = ['گوش بده', 'پاسخ بده', 'مرور کن'] as const;
+const BRAND_GRADIENT: [string, string, string] = ['#31533B', '#4C6947', '#A9664C'];
 
 export type LoginMode = 'login' | 'register';
 
@@ -58,18 +56,25 @@ type LoginProfileScreenProps = {
 
 function LoginHero() {
   return (
-    <LinearGradient
-      colors={['#211A68', '#3730A3', '#5146E5']}
-      locations={[0, 0.45, 1]}
-      start={{ x: 0.15, y: 0 }}
-      end={{ x: 0.85, y: 1 }}
+    <ImageBackground
+      source={require('../assets/images/language-hero-journal.jpg')}
+      imageStyle={styles.heroImage}
+      resizeMode="cover"
       style={styles.hero}
     >
+      <LinearGradient
+        pointerEvents="none"
+        colors={['rgba(247,242,232,0.94)', 'rgba(247,242,232,0.90)', 'rgba(247,242,232,0.70)']}
+        locations={[0, 0.5, 1]}
+        start={{ x: 0, y: 0.5 }}
+        end={{ x: 1, y: 0.5 }}
+        style={StyleSheet.absoluteFill}
+      />
       <View style={styles.heroGlow} pointerEvents="none" />
       <View style={styles.heroColumn}>
         <View style={styles.brand}>
           <LinearGradient
-            colors={['#8D86FF', '#5146E5', '#312E81']}
+            colors={['#D8E0CB', '#55704B', '#31533B']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.brandMark}
@@ -94,7 +99,7 @@ function LoginHero() {
           ))}
         </View>
       </View>
-    </LinearGradient>
+    </ImageBackground>
   );
 }
 
@@ -180,11 +185,11 @@ export function LoginScreen({
                 onBlur={() => setFocus(null)}
                 style={styles.input}
                 placeholder="مثلاً سارا احمدی"
-                placeholderTextColor="#52657D"
+                placeholderTextColor="#81796D"
                 textAlign="right"
               />
               <View pointerEvents="none" style={styles.fieldIcon}>
-                <UserRound size={16} color="#6C87A6" />
+                <UserRound size={16} color="#81796D" />
               </View>
             </View>
           </View>
@@ -202,7 +207,7 @@ export function LoginScreen({
             onBlur={() => setFocus(null)}
             style={[styles.input, styles.ltr]}
             placeholder="name@example.com"
-            placeholderTextColor="#52657D"
+            placeholderTextColor="#81796D"
             autoCapitalize="none"
             autoCorrect={false}
             autoComplete="email"
@@ -210,7 +215,7 @@ export function LoginScreen({
             keyboardType="email-address"
           />
           <View pointerEvents="none" style={styles.fieldIcon}>
-            <Mail size={16} color="#6C87A6" />
+            <Mail size={16} color="#81796D" />
           </View>
         </View>
       </View>
@@ -226,7 +231,7 @@ export function LoginScreen({
         style={({ pressed }) => [styles.cta, pressed && !busy && styles.ctaPressed, busy && styles.disabled]}
       >
         <LinearGradient
-          colors={['#8D86FF', '#5146E5', '#3730A3']}
+          colors={BRAND_GRADIENT}
           locations={[0, 0.5, 1]}
           start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 1 }}
@@ -241,7 +246,7 @@ export function LoginScreen({
       </Pressable>
 
       <View style={styles.privacy}>
-        <ShieldCheck size={16} color="#16835D" />
+        <ShieldCheck size={16} color="#31533B" />
         <Text style={styles.privacyText}>
           مدیریت فقط اطلاعات حساب، وضعیت فعالیت و پیشرفت آموزشی را می‌بیند؛ پیام‌های خصوصی نمایش داده نمی‌شوند.
         </Text>
@@ -269,7 +274,7 @@ export function LoginCodeScreen({ email, code, onChangeCode, onSubmit, onResend,
             onBlur={() => setFocus(false)}
             style={[styles.input, styles.codeInput, styles.otpInput]}
             placeholder="کد ۶ رقمی"
-            placeholderTextColor="#52657D"
+            placeholderTextColor="#81796D"
             keyboardType="number-pad"
             autoComplete="one-time-code"
             textContentType="oneTimeCode"
@@ -277,7 +282,7 @@ export function LoginCodeScreen({ email, code, onChangeCode, onSubmit, onResend,
             onSubmitEditing={onSubmit}
           />
           <View pointerEvents="none" style={styles.fieldIcon}>
-            <LockKeyhole size={16} color="#52657D" />
+            <LockKeyhole size={16} color="#81796D" />
           </View>
         </View>
       </View>
@@ -292,7 +297,7 @@ export function LoginCodeScreen({ email, code, onChangeCode, onSubmit, onResend,
         style={({ pressed }) => [styles.cta, pressed && !busy && styles.ctaPressed, busy && styles.disabled]}
       >
         <LinearGradient
-          colors={['#8D86FF', '#5146E5', '#3730A3']}
+          colors={BRAND_GRADIENT}
           locations={[0, 0.5, 1]}
           start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 1 }}
@@ -333,11 +338,11 @@ export function LoginProfileScreen({ email, fullName, onChangeFullName, onSubmit
             onBlur={() => setFocus(false)}
             style={styles.input}
             placeholder="مثلاً سارا احمدی"
-            placeholderTextColor="#52657D"
+            placeholderTextColor="#81796D"
             textAlign="right"
             autoComplete="name"
           />
-          <View pointerEvents="none" style={styles.fieldIcon}><UserRound size={16} color="#52657D" /></View>
+          <View pointerEvents="none" style={styles.fieldIcon}><UserRound size={16} color="#81796D" /></View>
         </View>
       </View>
       {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
@@ -353,11 +358,12 @@ export function LoginProfileScreen({ email, fullName, onChangeFullName, onSubmit
 /* ---------------------------------------------------------------- styles */
 
 const styles = StyleSheet.create({
-  page: { flex: 1, backgroundColor: '#211A68' },
+  page: { flex: 1, backgroundColor: '#F7F2E8' },
   scroll: { flex: 1 },
   scrollContent: { flexGrow: 1 },
 
-  hero: { paddingTop: 22, paddingBottom: 30, overflow: 'hidden' },
+  hero: { paddingTop: 22, paddingBottom: 30, overflow: 'hidden', backgroundColor: '#EAE2D4' },
+  heroImage: { opacity: 0.96 },
   heroGlow: {
     position: 'absolute',
     top: -70,
@@ -365,7 +371,7 @@ const styles = StyleSheet.create({
     width: 240,
     height: 240,
     borderRadius: 120,
-    backgroundColor: 'rgba(86,156,246,0.28)',
+    backgroundColor: 'rgba(184,111,81,0.12)',
   },
   heroColumn: { width: '100%', maxWidth: 430, alignSelf: 'center', paddingHorizontal: 22 },
   brand: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 },
@@ -373,7 +379,7 @@ const styles = StyleSheet.create({
   brandCopy: { gap: 1 },
   brandName: {
     fontFamily: Typography.latinFontFamily,
-    color: '#FFFFFF',
+    color: '#31533B',
     fontSize: 23,
     lineHeight: 27,
     letterSpacing: 1.7,
@@ -381,7 +387,7 @@ const styles = StyleSheet.create({
   },
   brandCaption: {
     fontFamily: Typography.latinFontFamily,
-    color: '#A9C6EC',
+    color: '#746E63',
     fontSize: 6,
     lineHeight: 9,
     letterSpacing: 1.1,
@@ -390,7 +396,7 @@ const styles = StyleSheet.create({
   heroTitle: {
     marginTop: 24,
     fontFamily: Typography.boldFontFamily,
-    color: '#FFFFFF',
+    color: '#26382D',
     fontSize: 25,
     lineHeight: 37,
     textAlign: 'center',
@@ -402,26 +408,26 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.24)',
-    backgroundColor: 'rgba(255,255,255,0.10)',
+    borderColor: 'rgba(49,83,59,0.20)',
+    backgroundColor: 'rgba(255,252,246,0.78)',
   },
   heroStepText: {
     fontFamily: Typography.mediumFontFamily,
-    color: '#E9E7FF',
+    color: '#31533B',
     fontSize: 9.2,
     writingDirection: 'rtl',
   },
 
   sheet: {
     flexGrow: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFCF6',
     borderTopLeftRadius: 34,
     borderTopRightRadius: 34,
     paddingTop: 28,
     paddingBottom: 24,
     paddingHorizontal: 26,
-    shadowColor: '#020A18',
-    shadowOpacity: 0.3,
+    shadowColor: '#514433',
+    shadowOpacity: 0.12,
     shadowRadius: 22,
     shadowOffset: { width: 0, height: -6 },
   },
@@ -429,7 +435,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontFamily: Typography.boldFontFamily,
-    color: '#211A68',
+    color: '#26382D',
     fontSize: 20,
     lineHeight: 30,
     textAlign: 'right',
@@ -438,7 +444,7 @@ const styles = StyleSheet.create({
   subtitle: {
     marginTop: 3,
     fontFamily: Typography.fontFamily,
-    color: '#5B7796',
+    color: '#746E63',
     fontSize: 11.4,
     lineHeight: 20,
     textAlign: 'right',
@@ -448,15 +454,15 @@ const styles = StyleSheet.create({
   switcher: {
     marginTop: 15,
     flexDirection: 'row-reverse',
-    backgroundColor: '#EFF6FE',
+    backgroundColor: '#F1ECE1',
     borderRadius: 14,
     padding: 4,
     gap: 4,
   },
   switchButton: { flex: 1, minHeight: 40, alignItems: 'center', justifyContent: 'center', borderRadius: 11 },
   switchActive: {
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#174B86',
+    backgroundColor: '#FFFCF6',
+    shadowColor: '#514433',
     shadowOpacity: 0.1,
     shadowRadius: 5,
     shadowOffset: { width: 0, height: 1 },
@@ -464,29 +470,29 @@ const styles = StyleSheet.create({
   },
   switchText: {
     fontFamily: Typography.fontFamily,
-    color: '#7D93AE',
+    color: '#81796D',
     fontSize: 12,
     writingDirection: 'rtl',
   },
-  switchTextActive: { fontFamily: Typography.mediumFontFamily, color: '#5146E5' },
+  switchTextActive: { fontFamily: Typography.mediumFontFamily, color: '#31533B' },
 
   label: {
     marginTop: 16,
     marginBottom: 6,
     fontFamily: Typography.mediumFontFamily,
-    color: '#3B5A7E',
+    color: '#4C5C49',
     fontSize: 10.4,
     textAlign: 'right',
     writingDirection: 'rtl',
   },
   fieldRing: { borderRadius: 18, padding: 3, backgroundColor: 'transparent' },
-  fieldRingActive: { backgroundColor: 'rgba(40,120,222,0.10)' },
+  fieldRingActive: { backgroundColor: 'rgba(49,83,59,0.10)' },
   field: {
     minHeight: 52,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#AFC2D9',
-    backgroundColor: '#EAF1FA',
+    borderColor: '#D9D1C2',
+    backgroundColor: '#FBF8F1',
     justifyContent: 'center',
   },
   input: {
@@ -495,7 +501,7 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     fontFamily: Typography.mediumFontFamily,
     fontSize: 13.5,
-    color: '#102A56',
+    color: '#26382D',
     writingDirection: 'rtl',
   },
   ltr: { fontFamily: Typography.latinFontFamily, textAlign: 'right', writingDirection: 'ltr', fontSize: 12.6 },
@@ -504,13 +510,13 @@ const styles = StyleSheet.create({
   fieldIcon: { position: 'absolute', left: 16, top: 0, bottom: 0, justifyContent: 'center' },
   otpActions: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', marginTop: 14 },
   otpLinkButton: { paddingHorizontal: 6, paddingVertical: 8 },
-  otpLinkText: { fontFamily: Typography.mediumFontFamily, color: '#5146E5', fontSize: 11, writingDirection: 'rtl' },
+  otpLinkText: { fontFamily: Typography.mediumFontFamily, color: '#31533B', fontSize: 11, writingDirection: 'rtl' },
 
   error: {
     marginTop: 12,
     fontFamily: Typography.fontFamily,
-    color: '#B42318',
-    backgroundColor: '#FEECEB',
+    color: '#A34E3B',
+    backgroundColor: '#FAE9E3',
     borderRadius: 12,
     padding: 10,
     fontSize: 11,
@@ -521,8 +527,8 @@ const styles = StyleSheet.create({
   notice: {
     marginTop: 12,
     fontFamily: Typography.fontFamily,
-    color: '#16603F',
-    backgroundColor: '#E9F8F0',
+    color: '#31533B',
+    backgroundColor: '#E9EFE1',
     borderRadius: 12,
     padding: 10,
     fontSize: 11,
@@ -538,7 +544,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    shadowColor: '#5146E5',
+    shadowColor: '#31533B',
     shadowOpacity: 0.35,
     shadowRadius: 14,
     shadowOffset: { width: 0, height: 9 },
@@ -559,14 +565,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
     alignItems: 'flex-start',
     gap: 8,
-    backgroundColor: '#EBF8F3',
+    backgroundColor: '#EEF0E5',
     borderRadius: 14,
     padding: 10,
   },
   privacyText: {
     flex: 1,
     fontFamily: Typography.fontFamily,
-    color: '#32604F',
+    color: '#4D5B47',
     fontSize: 9.5,
     lineHeight: 17,
     textAlign: 'right',
@@ -582,7 +588,7 @@ const styles = StyleSheet.create({
     color: '#111111',
     backgroundColor: '#FFFFFF',
     borderWidth: 2,
-    borderColor: '#635BFF',
+    borderColor: '#718365',
     borderRadius: 18,
     paddingVertical: 12,
     paddingHorizontal: 18,

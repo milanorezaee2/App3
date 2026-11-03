@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase';
 import { LoginCodeScreen, LoginProfileScreen, LoginScreen, type LoginMode } from '@/components/LoginScreen';
 import { completeLearnerProfile, getRegisteredSession, normalizeOtpDigits, registrationError, requestLearnerOtp, touchLearnerActivity, verifyLearnerOtp, type LearnerOtpType } from '@/lib/userRegistration';
 import { writeResumeSnapshot } from '@/lib/appResume';
-import { Colors, Typography } from '@/lib/theme';
+import { Typography } from '@/lib/theme';
 import { FEATURES } from '@/lib/features';
 
 const IS_ADMIN_APP = Constants.expoConfig?.extra?.appRole === 'admin'
@@ -182,7 +182,7 @@ export function RegistrationGate({ children }: PropsWithChildren) {
   };
 
   if (BYPASS_GATE || ready) return <>{children}</>;
-  if (checking) return <View style={styles.loading}><ActivityIndicator size="large" color={Colors.primary[600]} /><Text style={styles.loadingText}>در حال بررسی حساب…</Text></View>;
+  if (checking) return <View style={styles.loading}><ActivityIndicator size="large" color="#31533B" /><Text style={styles.loadingText}>در حال بررسی حساب…</Text></View>;
 
   if (step === 'verify') {
     return (
@@ -231,6 +231,6 @@ export function RegistrationGate({ children }: PropsWithChildren) {
 }
 
 const styles = StyleSheet.create({
-  loading: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, backgroundColor: '#F8FAFF' },
-  loadingText: { fontFamily: Typography.fontFamily, color: '#334155', fontSize: 13 },
+  loading: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, backgroundColor: '#F7F2E8' },
+  loadingText: { fontFamily: Typography.fontFamily, color: '#4C5C49', fontSize: 13 },
 });

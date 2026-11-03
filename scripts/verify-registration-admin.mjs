@@ -24,8 +24,8 @@ check(/routeToLanguageSelection/.test(gate) && /writeResumeSnapshot\(\{ version:
   && /router\.replace\('\/languages'/.test(gate) && !/PLACEMENT_ENTRY_KEY|AssessmentEntry/.test(gate), 'OTP completion sends learners to language selection without an assessment gate');
 check(/requestLearnerOtp/.test(gate) && /verifyLearnerOtp/.test(gate) && /onResend/.test(loginFlow), 'the gate separates OTP request, verification, and resend');
 check(!/generateLoginCode|signInWithPassword|toAuthPassword/.test(registration + gate), 'the learner gate no longer invents local codes or uses password login');
-check(/color: '#102A56'/.test(loginFlow) && /backgroundColor: '#EAF1FA'/.test(loginFlow)
-  && /borderColor: '#AFC2D9'/.test(loginFlow) && /placeholderTextColor="#52657D"/.test(loginFlow), 'email and OTP fields use high-contrast text, fill, border and placeholder colors');
+check(/color: '#26382D'/.test(loginFlow) && /backgroundColor: '#FBF8F1'/.test(loginFlow)
+  && /borderColor: '#D9D1C2'/.test(loginFlow) && /placeholderTextColor="#81796D"/.test(loginFlow), 'email and OTP fields use high-contrast warm text, fill, border and placeholder colors');
 check(/KeyboardAvoidingView/.test(loginFlow) && /KeyboardAwareScrollView/.test(loginFlow)
   && /bottomOffset=\{24\}/.test(loginFlow), 'auth screens follow and scroll above the keyboard');
 check(/LearnerOtpType = 'email'/.test(registration) && /email_change/.test(registration)
