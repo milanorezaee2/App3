@@ -38,3 +38,7 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# Local preview exports
+dist-final-*/
+dist-preview-focused-home/
