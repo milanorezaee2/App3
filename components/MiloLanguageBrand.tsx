@@ -16,6 +16,6 @@ export function MiloLanguageBrand() {
 
 const styles = StyleSheet.create({
   brand: { flexDirection: 'row', alignItems: 'center', gap: 5 },
-  mark: { width: 64, height: 64 },
-  wordmark: { fontFamily: 'Inter-ExtraBold', color: '#211A68', fontSize: 25, lineHeight: 32, fontWeight: '800', letterSpacing: 0.8, writingDirection: 'ltr' },
+  mark: { width: 52, height: 52 },
+  wordmark: { fontFamily: 'Inter-ExtraBold', color: '#31533B', fontSize: 25, lineHeight: 32, fontWeight: '800', letterSpacing: 0.8, writingDirection: 'ltr' },
 });
