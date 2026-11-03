@@ -42,3 +42,4 @@ yarn-error.*
 # Local preview exports
 dist-final-*/
 dist-preview-focused-home/
+dist-focused-coach-dark-home/
