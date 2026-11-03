@@ -128,7 +128,7 @@ export default function LearningHome() {
           </View>
 
           <LinearGradient
-            colors={['#FFFFFF', '#EDF5FF', '#DDEEFF']}
+            colors={['#211A68', '#4338CA', '#0EAA83']}
             start={{ x: .95, y: .08 }}
             end={{ x: .04, y: 1 }}
             style={[styles.welcomeBlock, compact && styles.welcomeBlockCompact]}
@@ -165,7 +165,7 @@ export default function LearningHome() {
           </LinearGradient>
 
           <View style={styles.lessonCard}>
-            <LinearGradient colors={['#4D9AF2', '#20C49A', '#4D9AF2']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
+            <LinearGradient colors={['#5146E5', '#20C49A', '#5146E5']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
             <View style={styles.lessonMetaRow}>
               <View style={styles.levelTag}>
                 <View style={[styles.levelTagDot, { backgroundColor: currentLevel.color }]} />
@@ -252,7 +252,7 @@ export default function LearningHome() {
             </View>
           </View>
 
-          <LinearGradient colors={['#FFFFFF', '#EDF5FF', '#E1F0FF']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
+          <LinearGradient colors={['#211A68', '#312E81', '#0EAA83']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
             <View pointerEvents="none" style={styles.todayGlow} />
             <View style={styles.todayTopRow}>
               <View style={styles.todayIcon}><Clock3 size={18} color={HomeColors.gold} /></View>
@@ -260,8 +260,10 @@ export default function LearningHome() {
                 <Text style={styles.todayValue}>{toPersianDigits(measuredMinutes)} <Text style={styles.todayUnit}>دقیقه</Text></Text>
                 <Text style={styles.todayLabel}>{timeError ? 'زمان ثبت‌شده خوانده نشد' : 'زمان یادگیری ثبت‌شده امروز'}</Text>
               </View>
-              <View style={styles.todayPercentPill}>
-                <Text style={styles.todayPercentText}>{toPersianDigits(Math.round(dailyPct))}٪</Text>
+              <View style={styles.todayProgressRing}>
+                <View style={styles.todayProgressRingInner}>
+                  <Text style={styles.todayPercentText}>{toPersianDigits(Math.round(dailyPct))}٪</Text>
+                </View>
               </View>
             </View>
             <View style={styles.todayProgressTrack}>
