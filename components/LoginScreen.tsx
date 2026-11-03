@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     fontFamily: Typography.mediumFontFamily,
     fontSize: 13.5,
-    color: '#211A68',
+    color: '#102A56',
     writingDirection: 'rtl',
   },
   ltr: { fontFamily: Typography.latinFontFamily, textAlign: 'right', writingDirection: 'ltr', fontSize: 12.6 },

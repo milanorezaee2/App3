@@ -26,7 +26,7 @@ export const FEATURES = Object.freeze({
    * Learner builds must authenticate before entering the app. The private
    * management build is bypassed separately above.
    */
-  learnerLogin: process.env.EXPO_PUBLIC_LEARNER_LOGIN === 'true',
+  learnerLogin: true,
   adminPanel: educationAdminEnabled,
   educationEnrollment: educationAdminEnabled,
   // Roadmap modules are not implemented yet. Enabling a boolean cannot build them.

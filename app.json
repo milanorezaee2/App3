@@ -85,7 +85,7 @@
       ]
     ],
     "experiments": {
-      "baseUrl": "/",
+      "baseUrl": "/App3",
       "typedRoutes": true
     },
     "extra": {
