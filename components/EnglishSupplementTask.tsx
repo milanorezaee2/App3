@@ -3,10 +3,10 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import * as Speech from 'expo-speech';
 import { speechTagFor } from '@/lib/speechLanguage';
 import { isCorrect, SKILLS, type Task } from '@/lib/englishSupplement/content';
-import { Typography } from '@/lib/theme';
+import { Colors, DESIGN_VARIANT, Typography } from '@/lib/theme';
 import { recordEvidence, type SupplementProgress } from '@/lib/englishSupplement/progress';
 
-export const EnglishPalette = {
+const legacyEnglishPalette = {
   canvas: '#F6FAFF',
   surface: '#FFFFFF',
   surfaceMuted: '#F2F7FD',
@@ -26,6 +26,16 @@ export const EnglishPalette = {
   danger: '#B4233B',
   dangerSoft: '#FFF0F2',
 };
+
+const learnerEnglishPalette = {
+  canvas: '#F8FAFF', surface: '#FFFFFF', surfaceMuted: '#F3F2FF', ink: '#211A68',
+  text: '#475569', muted: '#7C8AA5', border: '#E3E7F3', primary: Colors.primary[500],
+  primaryDark: Colors.primary[700], primarySoft: '#E9E7FF', teal: Colors.accent[500],
+  tealSoft: '#ECFDF8', success: '#07886A', successSoft: '#ECFDF8', warning: '#A65C14',
+  warningSoft: '#FFF6E8', danger: '#B4233B', dangerSoft: '#FFF0F2',
+};
+
+export const EnglishPalette = DESIGN_VARIANT === 'learner-v2' ? learnerEnglishPalette : legacyEnglishPalette;
 
 export const supplementStyles = StyleSheet.create({
   page: { flex: 1, backgroundColor: EnglishPalette.canvas },

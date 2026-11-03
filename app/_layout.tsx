@@ -20,9 +20,10 @@ import { AppResumeGuard } from '@/components/AppResumeGuard';
 import { RegistrationGate } from '@/components/RegistrationGate';
 import { getPairingState, isOnboardingComplete } from '@/lib/storage';
 import { isSupabaseConfigured } from '@/lib/pairing';
-import { RtlDirection } from '@/lib/theme';
+import { DesignTokens, RtlDirection } from '@/lib/theme';
 import { useRealAgent } from '@/lib/useRealAgent';
 import { warmSpeech } from '@/lib/responsiveSpeech';
+import { DesignVariantStyles } from '@/components/DesignVariantStyles';
 
 // Android native mirroring is disabled in withStableLayoutDirection. Persian
 // and course-language direction are applied explicitly, independent of device locale.
@@ -162,10 +163,11 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <KeyboardProvider>
       <ErrorBoundary>
-        <SafeAreaView style={{ flex: 1, ...RtlDirection }} edges={['top', 'bottom']}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: DesignTokens.surface.canvas, ...RtlDirection }} edges={['top', 'bottom']}>
           {/* Web preview/browsers have no top inset: reserve the notch height so
               no header row is ever painted under the camera cut-out. */}
           <WebStatusBarSpacer />
+          <DesignVariantStyles />
           <AppLockGate>
             <RegistrationGate>
               {!IS_ADMIN_APP && <RuntimeGate />}

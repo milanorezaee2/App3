@@ -1,6 +1,8 @@
 import { Platform, type TextStyle, type ViewStyle } from 'react-native';
 
-export const Colors = {
+export const DESIGN_VARIANT = process.env.EXPO_PUBLIC_DESIGN_VARIANT || 'legacy';
+
+const legacyColors = {
   primary: {
     50: '#F1F7FF',
     100: '#E2EFFF',
@@ -73,13 +75,27 @@ export const Colors = {
   onColorSoft: 'rgba(255,255,255,0.85)',
 } as const;
 
+/** Learner-first palette; opt-in so current APKs remain unchanged. */
+const learnerColors = {
+  primary: { 50: '#F3F2FF', 100: '#E9E7FF', 200: '#D8D5FF', 300: '#8D86FF', 400: '#635BFF', 500: '#5146E5', 600: '#4338CA', 700: '#3730A3', 800: '#312E81', 900: '#211A68' },
+  accent: { 50: '#ECFDF8', 100: '#D5FAEF', 200: '#AEF3DF', 300: '#5ED8BC', 400: '#20C49A', 500: '#0EAA83', 600: '#07886A', 700: '#08705B', 800: '#0B5A4B' },
+  success: legacyColors.success,
+  warning: legacyColors.warning,
+  error: legacyColors.error,
+  neutral: { 0: '#111827', 50: '#1F2937', 100: '#334155', 200: '#475569', 300: '#64748B', 400: '#7C8AA5', 500: '#A8B2C4', 600: '#C7CFDB', 700: '#E0E6EF', 800: '#E8EDF4', 850: '#FFFFFF', 900: '#F5F7FB', 950: '#F8FAFF' },
+  onColor: '#FFFFFF',
+  onColorSoft: 'rgba(255,255,255,0.86)',
+} as const;
+
+export const Colors = DESIGN_VARIANT === 'learner-v2' ? learnerColors : legacyColors;
+
 export const Shadows = {
   card: {
-    shadowColor: '#0f172a',
-    shadowOpacity: 0.06,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 2,
+    shadowColor: DESIGN_VARIANT === 'learner-v2' ? '#211A68' : '#0f172a',
+    shadowOpacity: DESIGN_VARIANT === 'learner-v2' ? 0.10 : 0.06,
+    shadowRadius: DESIGN_VARIANT === 'learner-v2' ? 18 : 12,
+    shadowOffset: { width: 0, height: DESIGN_VARIANT === 'learner-v2' ? 8 : 4 },
+    elevation: DESIGN_VARIANT === 'learner-v2' ? 4 : 2,
   },
 };
 
@@ -93,10 +109,10 @@ export const Spacing = {
 };
 
 export const Radius = {
-  sm: 7,
-  md: 10,
-  lg: 14,
-  xl: 19,
+  sm: DESIGN_VARIANT === 'learner-v2' ? 9 : 7,
+  md: DESIGN_VARIANT === 'learner-v2' ? 13 : 10,
+  lg: DESIGN_VARIANT === 'learner-v2' ? 18 : 14,
+  xl: DESIGN_VARIANT === 'learner-v2' ? 26 : 19,
   full: 9999,
 };
 
@@ -172,18 +188,18 @@ export const LtrDirection: DirectionStyle =
  */
 export const DesignTokens = {
   surface: {
-    canvas: '#F6F8FB', // Colors.neutral[950] - page background
-    card: '#FFFFFF',   // Colors.neutral[850] - card surface
+    canvas: DESIGN_VARIANT === 'learner-v2' ? '#F8FAFF' : '#F6F8FB',
+    card: '#FFFFFF',
   },
   brand: {
-    primarySoft: '#E2EFFF',   // Colors.primary[100]
-    primaryStrong: '#2878DE', // Colors.primary[400]
+    primarySoft: DESIGN_VARIANT === 'learner-v2' ? '#E9E7FF' : '#E2EFFF',
+    primaryStrong: DESIGN_VARIANT === 'learner-v2' ? '#635BFF' : '#2878DE',
   },
   border: {
-    default: '#DCE8F7', // LearningHomeColors.border / Colors.neutral[800] blended
+    default: DESIGN_VARIANT === 'learner-v2' ? '#E3E7F3' : '#DCE8F7',
   },
   text: {
-    primary: '#102A56',   // Colors.primary[900] - ink
-    secondary: '#64748B', // Colors.neutral[400] - muted
+    primary: DESIGN_VARIANT === 'learner-v2' ? '#211A68' : '#102A56',
+    secondary: DESIGN_VARIANT === 'learner-v2' ? '#64748B' : '#64748B',
   },
 } as const;

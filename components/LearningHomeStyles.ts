@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
-import { Radius, Typography } from '@/lib/theme';
+import { DESIGN_VARIANT, Radius, Typography } from '@/lib/theme';
 
-export const LearningHomeColors = {
+const legacyLearningHomeColors = {
   canvas: '#F6FAFF',
   surface: '#FFFFFF',
   surfaceSoft: '#F2F7FD',
@@ -18,6 +18,17 @@ export const LearningHomeColors = {
   gold: '#2878DE',
   goldSoft: '#EAF3FF',
 } as const;
+
+const learnerLearningHomeColors = {
+  canvas: '#F8FAFF', surface: '#FFFFFF', surfaceSoft: '#F3F2FF', ink: '#211A68',
+  text: '#475569', muted: '#7C8AA5', border: '#E3E7F3', accent: '#5146E5',
+  accentDeep: '#3730A3', accentSoft: '#E9E7FF', sage: '#07886A', sageSoft: '#ECFDF8',
+  amber: '#A65C14', gold: '#635BFF', goldSoft: '#F3F2FF',
+} as const;
+
+export const LearningHomeColors = DESIGN_VARIANT === 'learner-v2'
+  ? learnerLearningHomeColors
+  : legacyLearningHomeColors;
 
 export const learningHomeStyles = StyleSheet.create({
   root: { flex: 1, backgroundColor: LearningHomeColors.canvas },

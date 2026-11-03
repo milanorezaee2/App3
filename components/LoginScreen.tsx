@@ -3,7 +3,7 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 
 import { LinearGradient } from 'expo-linear-gradient';
 import { ArrowLeft, BookOpenCheck, LockKeyhole, Mail, ShieldCheck, UserRound } from 'lucide-react-native';
 import { KeyboardAwareScrollView, KeyboardAvoidingView } from '@/components/KeyboardRuntime';
-import { Typography } from '@/lib/theme';
+import { DESIGN_VARIANT, Typography } from '@/lib/theme';
 
 /**
  * Login / registration entry screen.
@@ -13,6 +13,9 @@ import { Typography } from '@/lib/theme';
  */
 
 const HERO_STEPS = ['بشنو', 'تکرار کن', 'به‌خاطر بسپار'] as const;
+const BRAND_GRADIENT: [string, string, string] = DESIGN_VARIANT === 'learner-v2'
+  ? ['#312E81', '#635BFF', '#20C49A']
+  : ['#071E44', '#104A94', '#1769D2'];
 
 export type LoginMode = 'login' | 'register';
 
@@ -340,7 +343,7 @@ export function LoginProfileScreen({ email, fullName, onChangeFullName, onSubmit
       {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
       {notice ? <Text style={styles.notice}>{notice}</Text> : null}
       <Pressable accessibilityRole="button" disabled={busy} onPress={onSubmit} style={({ pressed }) => [styles.cta, pressed && !busy && styles.ctaPressed, busy && styles.disabled]}>
-        <LinearGradient colors={['#3C9AFF', '#1769D2', '#0E428A']} locations={[0, 0.5, 1]} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} style={StyleSheet.absoluteFill} />
+        <LinearGradient colors={BRAND_GRADIENT} locations={[0, 0.5, 1]} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} style={StyleSheet.absoluteFill} />
         {busy ? <ActivityIndicator color="#FFFFFF" /> : <Text style={styles.ctaText}>تکمیل پروفایل و ورود</Text>}
       </Pressable>
     </LoginScaffold>
