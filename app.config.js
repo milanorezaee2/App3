@@ -30,7 +30,7 @@ const build = () => {
   if (!admin) return base;
   return {
     ...base,
-    name: 'MiloMultiLanguage Admin',
+    name: 'Milo Admin',
     // All three APK variants share one EAS project; native identifiers keep
     // the admin build isolated from the learner builds.
     slug: base.slug,
@@ -38,7 +38,8 @@ const build = () => {
     android: {
       ...base.android,
       package: 'com.devicecontrol.miloadmin',
-      versionCode: 1,
+      label: 'Milo Admin',
+      versionCode: 2,
     },
     ios: {
       ...base.ios,
