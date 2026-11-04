@@ -111,7 +111,12 @@ jobs:
           fi
 
       - name: Generate native Android project
-        run: EXPO_PUBLIC_LEARNER_LOGIN=false EXPO_PUBLIC_LANGUAGE_SCOPE=en,ru npx expo prebuild --platform android --no-install
+        run: |
+          # Each APK embeds different EXPO_PUBLIC_* values, and Metro reuses its
+          # transform cache on CI, so the cache must be cleared before every
+          # build or later APKs silently ship the first build's JS bundle.
+          rm -rf "${TMPDIR:-/tmp}/metro-cache" /tmp/metro-cache /tmp/metro-haste-map-* /tmp/haste-map-* /tmp/react-native-packager-cache-*
+          EXPO_PUBLIC_LEARNER_LOGIN=false EXPO_PUBLIC_LANGUAGE_SCOPE=en,ru npx expo prebuild --platform android --no-install
 
       - name: Build standalone release APK
         working-directory: android
@@ -134,11 +139,24 @@ jobs:
           PY
           cp android/app/build/outputs/apk/release/app-release.apk MiloMultilang.apk
 
+      - name: Verify the learner APK bundle has no login gate
+        run: |
+          python3 - <<'PY'
+          import re
+          from zipfile import ZipFile
+          with ZipFile('MiloMultilang.apk') as archive:
+              bundle = archive.read('assets/index.android.bundle').decode('utf-8', errors='ignore')
+          if not re.search(r'learnerLogin\s*:\s*!1', bundle) or re.search(r'learnerLogin\s*:\s*!0', bundle):
+              raise SystemExit('MiloMultilang.apk must embed the no-login bundle (learnerLogin false).')
+          print('Learner bundle marker verified (no login gate).')
+          PY
+
       - name: Generate and build the private management APK
         if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
         shell: bash
         run: |
           rm -rf android
+          rm -rf "${TMPDIR:-/tmp}/metro-cache" /tmp/metro-cache /tmp/metro-haste-map-* /tmp/haste-map-* /tmp/react-native-packager-cache-*
           MILO_ADMIN_APP=true EXPO_PUBLIC_MILO_ADMIN_APP=true EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN=true EXPO_PUBLIC_LEARNER_LOGIN=false EXPO_PUBLIC_LANGUAGE_SCOPE=en,tr npx expo prebuild --platform android --no-install
           cd android
           chmod +x gradlew
@@ -154,11 +172,25 @@ jobs:
           print('Standalone private management APK verified.')
           PY
 
+      - name: Verify the management APK bundle marker
+        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
+        run: |
+          python3 - <<'PY'
+          import re
+          from zipfile import ZipFile
+          with ZipFile('MiloAdmin.apk') as archive:
+              bundle = archive.read('assets/index.android.bundle').decode('utf-8', errors='ignore')
+          if not re.search(r'learnerLogin\s*:\s*!1', bundle) or re.search(r'learnerLogin\s*:\s*!0', bundle):
+              raise SystemExit('MiloAdmin.apk must embed its own management bundle, not the login bundle.')
+          print('Management bundle marker verified.')
+          PY
+
       - name: Generate and build the learner login APK
         if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
         shell: bash
         run: |
           rm -rf android
+          rm -rf "${TMPDIR:-/tmp}/metro-cache" /tmp/metro-cache /tmp/metro-haste-map-* /tmp/haste-map-* /tmp/react-native-packager-cache-*
           EXPO_PUBLIC_LEARNER_LOGIN=true EXPO_PUBLIC_LANGUAGE_SCOPE=en,tr npx expo prebuild --platform android --no-install
           cd android
           chmod +x gradlew
@@ -172,6 +204,19 @@ jobs:
           if 'assets/index.android.bundle' not in names or not any(name.endswith('classes.dex') for name in names):
               raise SystemExit('Login APK structure validation failed.')
           print('Learner login APK verified.')
+          PY
+
+      - name: Verify the login APK bundle enforces the login gate
+        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
+        run: |
+          python3 - <<'PY'
+          import re
+          from zipfile import ZipFile
+          with ZipFile('MiloMultilang-Login.apk') as archive:
+              bundle = archive.read('assets/index.android.bundle').decode('utf-8', errors='ignore')
+          if not re.search(r'learnerLogin\s*:\s*!0', bundle) or re.search(r'learnerLogin\s*:\s*!1', bundle):
+              raise SystemExit('MiloMultilang-Login.apk must embed the login bundle (learnerLogin true).')
+          print('Login bundle marker verified (login gate enforced).')
           PY
 
       - name: Smoke-test both APKs on Android emulator
