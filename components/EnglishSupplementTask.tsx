@@ -102,7 +102,7 @@ const s = supplementStyles;
 // Assessment sources and options may be Persian or English.
 const contentDirection = (value: string) => /[\u0600-\u06FF]/.test(value)
   ? { textAlign: 'right' as const, writingDirection: 'rtl' as const }
-  : { textAlign: 'left' as const, writingDirection: 'ltr' as const };
+  : { fontFamily: Typography.latinFontFamily, textAlign: 'left' as const, writingDirection: 'ltr' as const };
 
 
 export function EnglishSupplementTask({

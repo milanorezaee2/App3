@@ -166,7 +166,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
     <View style={styles.root}>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
-          <Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color="#FFFFFF" /></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color={Palette.primaryDark} /></Pressable>
           <View style={styles.headerText}>
             <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
@@ -174,7 +174,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           </View>
           <View style={styles.percentBadge}><Text style={styles.percent}>{fa(progressPercent)}٪</Text><Text style={styles.percentLabel}>پیشرفت</Text></View>
         </View>
-        <View style={styles.headerBottom}><View style={styles.headerInfoChip}><BookOpenCheck size={13} color="#D9DBFF" /><Text style={styles.headerInfoText}>{lesson.learningMode === 'words' ? 'واژه‌محور' : lesson.learningMode === 'chunks' ? 'ترکیب‌محور' : 'جمله‌محور'}</Text></View><Text style={styles.headerInfoText}>{fa(lesson.sentences.length)} {unitLabel} برای تمرین</Text></View>
+        <View style={styles.headerBottom}><View style={styles.headerInfoChip}><BookOpenCheck size={13} color={Palette.primary} /><Text style={styles.headerInfoText}>{lesson.learningMode === 'words' ? 'واژه‌محور' : lesson.learningMode === 'chunks' ? 'ترکیب‌محور' : 'جمله‌محور'}</Text></View><Text style={styles.headerInfoText}>{fa(lesson.sentences.length)} {unitLabel} برای تمرین</Text></View>
       </LinearGradient>
 
       <View style={styles.stepperCard}>
@@ -349,19 +349,19 @@ const styles = StyleSheet.create({
   loadingText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 13, textAlign: 'right', writingDirection: 'rtl' },
   loadingButton: { minHeight: 44, justifyContent: 'center', paddingHorizontal: 18, borderRadius: 13, backgroundColor: Palette.primary },
   loadingButtonText: { fontFamily: Typography.fontFamily, color: '#FFFFFF', fontWeight: '400', writingDirection: 'rtl' },
-  header: { paddingTop: 42, paddingHorizontal: 20, paddingBottom: 15, gap: 14, borderBottomLeftRadius: 22, borderBottomRightRadius: 22 },
+  header: { paddingTop: 42, paddingHorizontal: 20, paddingBottom: 15, gap: 14, borderBottomLeftRadius: 22, borderBottomRightRadius: 22, borderBottomWidth: 1, borderColor: Palette.border },
   headerTop: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
-  back: { width: 40, height: 40, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.14)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.20)', alignItems: 'center', justifyContent: 'center' },
+  back: { width: 40, height: 40, borderRadius: 14, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, alignItems: 'center', justifyContent: 'center' },
   headerText: { flex: 1, alignItems: 'flex-end', gap: 2 },
-  headerEyebrow: { fontFamily: 'Inter-ExtraBold', color: 'rgba(255,255,255,0.72)', fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
-  headerTitle: { fontFamily: Typography.fontFamily, fontSize: 18, lineHeight: 27, fontWeight: '400', color: '#FFFFFF', textAlign: 'right', writingDirection: 'rtl' },
-  headerSub: { fontFamily: Typography.fontFamily, fontSize: 10, color: 'rgba(255,255,255,0.78)', textAlign: 'right', writingDirection: 'rtl' },
-  percentBadge: { minWidth: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.14)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.18)' },
-  percent: { fontFamily: Typography.fontFamily, fontSize: 14, lineHeight: 18, fontWeight: '400', color: '#FFFFFF', writingDirection: 'rtl' },
-  percentLabel: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.72)', fontSize: 7, writingDirection: 'rtl' },
-  headerBottom: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingTop: 9, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.18)' },
+  headerEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primaryDark, fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
+  headerTitle: { fontFamily: Typography.fontFamily, fontSize: 18, lineHeight: 27, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
+  headerSub: { fontFamily: Typography.fontFamily, fontSize: 10, color: Palette.text, textAlign: 'right', writingDirection: 'rtl' },
+  percentBadge: { minWidth: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border },
+  percent: { fontFamily: Typography.fontFamily, fontSize: 14, lineHeight: 18, fontWeight: '400', color: Palette.primaryDark, writingDirection: 'rtl' },
+  percentLabel: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 7, writingDirection: 'rtl' },
+  headerBottom: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingTop: 9, borderTopWidth: 1, borderTopColor: Palette.border },
   headerInfoChip: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
-  headerInfoText: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.78)', fontSize: 9, writingDirection: 'rtl' },
+  headerInfoText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 9, writingDirection: 'rtl' },
   stepperCard: { width: '94%', maxWidth: 820, alignSelf: 'center', marginTop: 13, padding: 13, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10, shadowColor: '#29362F', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepperHeading: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   stepperEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },

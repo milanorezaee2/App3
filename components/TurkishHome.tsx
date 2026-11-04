@@ -176,15 +176,6 @@ export default function TurkishHome() {
                 </View>
               </View>
             </View>
-            <View style={[styles.welcomeVisual, compact && styles.welcomeVisualCompact]}>
-              <Image source={require('../assets/language-learning-hero.jpg')} resizeMode="cover" style={styles.welcomeImage} />
-              <LinearGradient colors={['rgba(41,54,47,0.00)', 'rgba(41,54,47,0.16)']} style={styles.welcomeImageShade} />
-              <View style={styles.welcomeImageStamp}>
-                <Text style={styles.welcomeImageStampMain}>TR</Text>
-                <View style={styles.welcomeImageStampLine} />
-                <Text style={styles.welcomeImageStampSub}>TURKISH</Text>
-              </View>
-            </View>
           </LinearGradient>
 
           {!!error && (
@@ -198,20 +189,32 @@ export default function TurkishHome() {
 
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#728D75', '#A08756', '#728D75']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
-            <View style={styles.lessonMetaRow}>
-              <View style={styles.levelTag}>
-                <View style={[styles.levelTagDot, { backgroundColor: activeLevel.color }]} />
-                <Text style={[styles.levelTagName, { color: activeLevel.color }]}>{activeLevel.title}</Text>
-                <Text style={styles.levelTagDivider}>·</Text>
-                <Text style={[styles.levelTagText, { color: activeLevel.color }]}>{activeLevel.cefr}</Text>
+            <View style={[styles.lessonFeatureRow, compact && styles.lessonFeatureRowCompact]}>
+              <View style={styles.lessonFeatureCopy}>
+                <View style={[styles.lessonMetaRow, compact && styles.lessonMetaRowCompact]}>
+                  <View style={styles.levelTag}>
+                    <View style={[styles.levelTagDot, { backgroundColor: '#728D75' }]} />
+                    <Text style={[styles.levelTagName, { color: '#4B614D' }]}>{activeLevel.title}</Text>
+                    <Text style={styles.levelTagDivider}>·</Text>
+                    <Text style={[styles.levelTagText, { color: '#5D765F' }]}>{activeLevel.cefr}</Text>
+                  </View>
+                  <Text style={styles.lessonOrder}>{fa(heroLessonOrder)} از {fa(TURKISH_LESSONS.length)}</Text>
+                </View>
+                <View style={styles.lessonHeading}>
+                  <Text style={styles.lessonEyebrow}>ادامهٔ یادگیری ترکی استانبولی</Text>
+                  <Text style={styles.lessonTitle}>{nextLesson ? heroLesson.title : 'سطح‌های A1 و A2 ترکی استانبولی تکمیل شدند'}</Text>
+                  <Text style={styles.lessonSubtitle}>{nextLesson ? heroLesson.subtitle : 'درس‌های Foundation، Survival و Everyday Turkish را مرور کن یا نقشهٔ سطح‌ها را ببین.'}</Text>
+                </View>
               </View>
-              <Text style={styles.lessonOrder}>{fa(heroLessonOrder)} از {fa(TURKISH_LESSONS.length)}</Text>
-            </View>
-
-            <View style={styles.lessonHeading}>
-              <Text style={styles.lessonEyebrow}>ادامهٔ یادگیری ترکی استانبولی</Text>
-              <Text style={styles.lessonTitle}>{nextLesson ? heroLesson.title : 'سطح‌های A1 و A2 ترکی استانبولی تکمیل شدند'}</Text>
-              <Text style={styles.lessonSubtitle}>{nextLesson ? heroLesson.subtitle : 'درس‌های Foundation، Survival و Everyday Turkish را مرور کن یا نقشهٔ سطح‌ها را ببین.'}</Text>
+              <View style={[styles.lessonFeatureArt, compact && styles.lessonFeatureArtCompact]}>
+                <Image source={require('../assets/images/language-tr-watercolor.jpg')} resizeMode="cover" style={styles.lessonFeatureImage} />
+                <LinearGradient colors={['rgba(41,54,47,0.00)', 'rgba(41,54,47,0.14)']} style={styles.lessonFeatureShade} />
+                <View style={styles.lessonFeatureStamp}>
+                  <Text style={styles.welcomeImageStampMain}>TR</Text>
+                  <View style={styles.welcomeImageStampLine} />
+                  <Text style={styles.welcomeImageStampSub}>TURKISH</Text>
+                </View>
+              </View>
             </View>
 
             <View style={styles.sentenceCard}>
@@ -241,7 +244,7 @@ export default function TurkishHome() {
                 <Text style={styles.levelProgressLabel}>پیشرفت در {activeLevel.title}</Text>
                 <Text style={styles.levelProgressValue}>{fa(levelCompleted)} از {fa(levelLessons.length)} درس</Text>
               </View>
-              <EnglishProgressTrack value={levelProgress} color={activeLevel.color} height={7} />
+              <EnglishProgressTrack value={levelProgress} color="#728D75" trackColor="#E7E8E1" height={7} />
             </View>
 
             <View style={styles.lessonFooter}>

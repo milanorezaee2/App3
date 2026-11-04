@@ -128,7 +128,7 @@ export default function LearningHome() {
           </View>
 
           <LinearGradient
-            colors={['#728D75', '#5D765F', '#A08756']}
+            colors={['#FFFEFB', '#F5F4EF', '#E4ECE4']}
             start={{ x: .95, y: .08 }}
             end={{ x: .04, y: 1 }}
             style={[styles.welcomeBlock, compact && styles.welcomeBlockCompact]}
@@ -153,33 +153,36 @@ export default function LearningHome() {
                 </View>
               </View>
             </View>
-            <View style={[styles.welcomeVisual, compact && styles.welcomeVisualCompact]}>
-              <Image source={require('../../assets/english-learning-hero.jpg')} resizeMode="cover" style={styles.welcomeImage} />
-              <LinearGradient colors={['rgba(41,54,47,0.00)', 'rgba(41,54,47,0.10)']} style={styles.welcomeImageShade} />
-              <View style={styles.welcomeImageStamp}>
-                <Text style={styles.welcomeImageStampMain}>EN</Text>
-                <View style={styles.welcomeImageStampLine} />
-                <Text style={styles.welcomeImageStampSub}>LEARN</Text>
-              </View>
-            </View>
           </LinearGradient>
 
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#728D75', '#A08756', '#728D75']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
-            <View style={styles.lessonMetaRow}>
-              <View style={styles.levelTag}>
-                <View style={[styles.levelTagDot, { backgroundColor: currentLevel.color }]} />
-                <Text style={[styles.levelTagName, { color: currentLevel.color }]}>{currentLevel.title}</Text>
-                <Text style={styles.levelTagDivider}>·</Text>
-                <Text style={[styles.levelTagText, { color: currentLevel.color, writingDirection: currentLevel.id === 0 ? 'rtl' : 'ltr' }]}>{currentLevel.cefr}</Text>
+            <View style={[styles.lessonFeatureRow, compact && styles.lessonFeatureRowCompact]}>
+              <View style={styles.lessonFeatureCopy}>
+                <View style={[styles.lessonMetaRow, compact && styles.lessonMetaRowCompact]}>
+                  <View style={styles.levelTag}>
+                    <View style={[styles.levelTagDot, { backgroundColor: '#728D75' }]} />
+                    <Text style={[styles.levelTagName, { color: '#4B614D' }]}>{currentLevel.title}</Text>
+                    <Text style={styles.levelTagDivider}>·</Text>
+                    <Text style={[styles.levelTagText, { color: '#5D765F', writingDirection: currentLevel.id === 0 ? 'rtl' : 'ltr' }]}>{currentLevel.cefr}</Text>
+                  </View>
+                  <Text style={styles.lessonOrder}>{toPersianDigits(currentLesson.order)} از {toPersianDigits(SENTENCE_LESSONS.length)}</Text>
+                </View>
+                <View style={styles.lessonHeading}>
+                  <Text style={styles.lessonEyebrow}>ادامهٔ یادگیری</Text>
+                  <Text style={styles.lessonTitle}>{currentLesson.title}</Text>
+                  <Text style={styles.lessonSubtitle}>{currentLesson.subtitle}</Text>
+                </View>
               </View>
-              <Text style={styles.lessonOrder}>{toPersianDigits(currentLesson.order)} از {toPersianDigits(SENTENCE_LESSONS.length)}</Text>
-            </View>
-
-            <View style={styles.lessonHeading}>
-              <Text style={styles.lessonEyebrow}>ادامهٔ یادگیری</Text>
-              <Text style={styles.lessonTitle}>{currentLesson.title}</Text>
-              <Text style={styles.lessonSubtitle}>{currentLesson.subtitle}</Text>
+              <View style={[styles.lessonFeatureArt, compact && styles.lessonFeatureArtCompact]}>
+                <Image source={require('../../assets/images/language-en-watercolor.jpg')} resizeMode="cover" style={styles.lessonFeatureImage} />
+                <LinearGradient colors={['rgba(41,54,47,0.00)', 'rgba(41,54,47,0.14)']} style={styles.lessonFeatureShade} />
+                <View style={styles.lessonFeatureStamp}>
+                  <Text style={styles.welcomeImageStampMain}>EN</Text>
+                  <View style={styles.welcomeImageStampLine} />
+                  <Text style={styles.welcomeImageStampSub}>ENGLISH</Text>
+                </View>
+              </View>
             </View>
 
             {currentSentence ? (
@@ -210,7 +213,7 @@ export default function LearningHome() {
                 <Text style={styles.levelProgressLabel}>پیشرفت در {currentLevel.title}</Text>
                 <Text style={styles.levelProgressValue}>{toPersianDigits(levelMetrics.completedLessonCount)} از {toPersianDigits(levelMetrics.lessonCount)} درس</Text>
               </View>
-              <EnglishProgressTrack value={levelProgress} color={currentLevel.color} height={7} />
+              <EnglishProgressTrack value={levelProgress} color="#728D75" trackColor="#E7E8E1" height={7} />
             </View>
 
             <View style={styles.lessonFooter}>

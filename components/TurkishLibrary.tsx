@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BookOpen, BookOpenCheck, Check, ChevronDown, ChevronLeft, ChevronUp, Clock3, Play, Sparkles, Volume2 } from 'lucide-react-native';
@@ -98,9 +98,9 @@ export default function TurkishLibrary() {
               <Text style={styles.pageIntro}>یک سطح را انتخاب کنید؛ در بخش Foundation ساختار زبان و جمله‌سازی را گام‌به‌گام می‌آموزید و در Survival مکالمهٔ موقعیت‌های واقعی روزمره را تمرین می‌کنید.</Text>
             </View>
 
-            <LinearGradient colors={['#4A1828', '#832843', '#B83D56']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
+            <LinearGradient colors={['#EFF3EE', '#E4ECE4', '#F0E9D7']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
               <View pointerEvents="none" style={styles.heroOrb} />
-              <View style={styles.heroTopRow}><View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View><View style={styles.heroPill}><Sparkles size={13} color="#FFD6DE" /><Text style={styles.heroPillText}>۷ گام در نقشهٔ ترکی استانبولی</Text></View></View>
+              <View style={styles.heroTopRow}><View style={styles.heroArtWrap}><Image accessibilityLabel="تصویر آبرنگی استانبول برای مسیر ترکی استانبولی" source={require('../assets/images/language-tr-watercolor.jpg')} resizeMode="cover" style={styles.heroArt} /><View style={styles.heroArtMark}><BookOpenCheck size={13} color="#F8F4EA" /></View></View><View style={styles.heroPill}><Sparkles size={13} color={Palette.primary} /><Text style={styles.heroPillText}>۷ گام در نقشهٔ ترکی استانبولی</Text></View></View>
               <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
               <Text style={styles.overviewTitle}>از واژهٔ نخست تا جمله؛{'\n'}گام‌به‌گام</Text>
               <Text style={styles.overviewText}>در Pre-A1 از واژه‌های مستقل می‌آغازید، بعد ترکیب کوتاه و جمله می‌سازید؛ آموزش الفبا و دستور به‌تدریج در A1 Foundation ادامه می‌یابد. آمار از محتوای واقعی دوره می‌آید.</Text>
@@ -128,10 +128,10 @@ export default function TurkishLibrary() {
                 return <Pressable key={item.id} accessibilityRole="button" accessibilityLabel={`فهرست درس‌های ${item.title}`} style={styles.levelOption} onPress={() => openLevel(item.id)}>
                   <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[item.id]} style={styles.levelOptionMark}><Text style={styles.levelOptionNumber}>{fa(item.id)}</Text></LinearGradient>
                   <View style={styles.levelOptionContent}>
-                    <View style={styles.levelOptionTitleRow}><Text style={styles.levelOptionTitle}>{item.title}</Text><Text style={[styles.levelOptionBand, { color: item.color }]}>{item.cefr}</Text></View>
+                    <View style={styles.levelOptionTitleRow}><Text style={styles.levelOptionTitle}>{item.title}</Text><Text style={[styles.levelOptionBand, { color: Palette.primaryDark }]}>{item.cefr}</Text></View>
                     <Text style={styles.levelOptionDescription}>{item.description || 'در نقشهٔ آیندهٔ دوره'}</Text>
                     <View style={styles.levelOptionMeta}><Text style={styles.levelOptionMetaText}>{fa(stats.total)} درس</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{fa(sentenceTotal)} {item.id === -1 ? 'مورد آموزشی' : 'جمله'}</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{item.status === 'planned' ? 'در نقشهٔ آینده' : `${fa(stats.completed)} تکمیل`}</Text></View>
-                    <EnglishProgressTrack value={pct} color={item.color} height={5} />
+                    <EnglishProgressTrack value={pct} color={Palette.primary} trackColor="#E7E8E1" height={5} />
                   </View>
                   <ChevronLeft size={19} color={Palette.muted} />
                 </Pressable>;
@@ -156,16 +156,16 @@ export default function TurkishLibrary() {
                 <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(words.size)}</Text><Text style={styles.heroMetricLabel}>واژهٔ یکتا</Text></View>
               </View>
               <Pressable accessibilityRole="button" accessibilityLabel={`${levelStartLabel}: ${selected.title}`} accessibilityState={{ disabled: !levelStartLesson }} disabled={!levelStartLesson} style={({ pressed }) => [styles.levelStartButton, pressed && { opacity: .85 }, !levelStartLesson && styles.levelStartButtonDisabled]} onPress={() => { if (levelStartLesson) openLesson(levelStartLesson.id); }}>
-                <Play size={16} color={selected.color} fill={selected.color} />
+                <Play size={16} color={Palette.primary} fill={Palette.primary} />
                 <Text style={styles.levelStartButtonText}>{levelStartLabel}</Text>
-                <ChevronLeft size={18} color={selected.color} />
+                <ChevronLeft size={18} color={Palette.primary} />
               </Pressable>
             </LinearGradient>
 
             <View style={styles.focusCard}>
               <View style={styles.focusHeadingRow}><View style={styles.focusIcon}><Sparkles size={17} color={Palette.primary} /></View><View style={styles.focusHeadingCopy}><Text style={styles.focusEyebrow}>LEVEL FOCUS</Text><Text style={styles.focusTitle}>موضوعات این سطح</Text></View></View>
               <Text style={styles.focusDescription}>{selected.description || 'برای این سطح هنوز سرفصلی منتشر نشده است.'}</Text>
-              {selected.modules.length > 0 ? <View style={styles.moduleGrid}>{selected.modules.map((module, index) => <View key={`${index}-${module}`} style={styles.moduleChip}><View style={[styles.moduleDot, { backgroundColor: selected.color }]} /><Text style={styles.moduleText}>{displayEnglishModuleLabel(module)}</Text></View>)}</View> : null}
+              {selected.modules.length > 0 ? <View style={styles.moduleGrid}>{selected.modules.map((module, index) => <View key={`${index}-${module}`} style={styles.moduleChip}><View style={[styles.moduleDot, { backgroundColor: Palette.primary }]} /><Text style={styles.moduleText}>{displayEnglishModuleLabel(module)}</Text></View>)}</View> : null}
               <Text style={styles.focusFootnote}>{selected.status === 'planned' ? 'این سطح بخشی از نقشهٔ آینده است؛ تا زمان تدوین، درس یا محتوای آموزشی به شمار محتوای موجود اضافه نمی‌شود.' : selected.id === -1 ? 'Pre-A1 از واژه‌های مستقل به ترکیب‌ها و جمله‌ها می‌رسد؛ این نقشه سنجش رسمی CEFR نیست.' : 'محتوای منتشرشده بر پایهٔ جمله‌های ترکی استانبولی و راهنمای فارسی است؛ این نقشه سنجش رسمی CEFR نیست.'}</Text>
             </View>
 
@@ -231,7 +231,9 @@ const styles = StyleSheet.create({
   overviewHero: { position: 'relative', overflow: 'hidden', marginTop: 8, borderRadius: 25, padding: 20, gap: 10, shadowColor: '#35443A', shadowOpacity: .055, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 5 },
   heroOrb: { position: 'absolute', top: -50, left: -42, width: 180, height: 180, borderRadius: 90, backgroundColor: 'rgba(114,141,117,0.08)' },
   heroTopRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' },
-  heroIcon: { width: 40, height: 40, borderRadius: 14, backgroundColor: Palette.primarySoft, alignItems: 'center', justifyContent: 'center' },
+  heroArtWrap: { position: 'relative', width: 58, height: 58, borderRadius: 18, overflow: 'hidden', borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface },
+  heroArt: { width: '100%', height: '100%' },
+  heroArtMark: { position: 'absolute', bottom: 4, left: 4, width: 23, height: 23, borderRadius: 8, backgroundColor: Palette.primaryDark, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#E6D9B7' },
   heroPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, borderRadius: 999, backgroundColor: Palette.primarySoft, paddingHorizontal: 10, paddingVertical: 6 },
   heroPillText: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
   overviewEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primaryDark, fontSize: 6, fontWeight: '800', letterSpacing: 1.4, writingDirection: 'ltr', marginTop: 4 },
@@ -294,9 +296,9 @@ const styles = StyleSheet.create({
   lessonSectionTitle: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 20, lineHeight: 29, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   lessonCountPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5, paddingHorizontal: 10, paddingVertical: 7, borderRadius: 999, backgroundColor: Palette.primarySoft },
   lessonCountText: { fontFamily: Typography.numberFontFamily, color: Palette.primaryDark, fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
-  groupList: { gap: 10 },
-  group: { gap: 8 },
-  groupHeader: { minHeight: 68, flexDirection: 'row-reverse', alignItems: 'center', gap: 10, paddingHorizontal: 13, paddingVertical: 10, borderRadius: 17, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border },
+  groupList: { gap: 12 },
+  group: { gap: 8, padding: 7, borderRadius: 22, backgroundColor: '#EEEFE9', borderWidth: 1, borderColor: Palette.border },
+  groupHeader: { minHeight: 64, flexDirection: 'row-reverse', alignItems: 'center', gap: 11, paddingHorizontal: 12, paddingVertical: 9, borderRadius: 16, backgroundColor: Palette.surface, borderWidth: 1, borderColor: '#E7E5DC' },
   groupNumber: { width: 36, height: 36, borderRadius: 12, backgroundColor: Palette.surfaceMuted, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: Palette.border },
   groupNumberActive: { backgroundColor: Palette.primary, borderColor: Palette.primary },
   groupNumberText: { fontFamily: Typography.numberFontFamily, color: Palette.muted, fontSize: 12, fontWeight: '800', writingDirection: 'rtl' },
@@ -304,22 +306,22 @@ const styles = StyleSheet.create({
   groupHeaderCopy: { flex: 1, alignItems: 'flex-end', gap: 2 },
   groupTitle: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 12, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   groupMeta: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 9, textAlign: 'right', writingDirection: 'rtl' },
-  lessonList: { gap: 8 },
-  lessonCard: { flexDirection: 'row-reverse', alignItems: 'flex-start', gap: 10, padding: 12, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border },
-  lessonOrder: { width: 33, height: 33, borderRadius: 11, backgroundColor: Palette.primarySoft, alignItems: 'center', justifyContent: 'center' },
+  lessonList: { gap: 8, paddingHorizontal: 1, paddingBottom: 1 },
+  lessonCard: { flexDirection: 'row-reverse', alignItems: 'flex-start', gap: 10, padding: 12, borderRadius: 17, backgroundColor: Palette.surface, borderWidth: 1, borderColor: '#E8E5DC', shadowColor: '#35443A', shadowOpacity: .035, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  lessonOrder: { width: 34, height: 34, borderRadius: 12, backgroundColor: '#E8EDE6', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#DDE5DA' },
   lessonOrderComplete: { backgroundColor: Palette.success },
   lessonOrderText: { fontFamily: 'Vazir', color: Palette.primaryDark, fontSize: 11, fontWeight: '800', writingDirection: 'rtl' },
-  lessonCopy: { flex: 1, gap: 4 },
-  lessonTitleLine: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', gap: 6, flexWrap: 'wrap' },
+  lessonCopy: { flex: 1, gap: 5 },
+  lessonTitleLine: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', gap: 7, flexWrap: 'wrap' },
   lessonTitle: { fontFamily: Typography.fontFamily, flexShrink: 1, color: Palette.ink, fontSize: 13, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   lessonSubtitle: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 10, textAlign: 'right', writingDirection: 'rtl' },
-  lessonStatus: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 999, backgroundColor: Palette.surfaceMuted },
+  lessonStatus: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 999, backgroundColor: '#ECEDE7', borderWidth: 1, borderColor: Palette.border },
   lessonStatusDone: { backgroundColor: Palette.successSoft },
   lessonStatusResume: { backgroundColor: Palette.warningSoft },
   lessonStatusText: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 8, fontWeight: '400', writingDirection: 'rtl' },
   lessonStatusTextDone: { color: Palette.success },
   lessonStatusTextResume: { color: Palette.warning },
-  lessonSentencePreview: { marginTop: 5, padding: 10, borderRadius: 14, backgroundColor: Palette.surfaceMuted, borderWidth: 1, borderColor: Palette.border, gap: 4 },
+  lessonSentencePreview: { marginTop: 5, padding: 10, borderRadius: 13, backgroundColor: '#F2F3EE', borderWidth: 1, borderColor: '#E6E8E0', gap: 4 },
   lessonSentenceHeader: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
   lessonSentenceEyebrow: { fontFamily: Typography.fontFamily, color: Palette.primary, fontSize: 8, fontWeight: '400', writingDirection: 'rtl' },
   lessonSentenceTurkish: { fontFamily: 'Inter-ExtraBold', color: Palette.ink, fontSize: 12, lineHeight: 21, fontWeight: '800', textAlign: 'right', writingDirection: 'ltr' },
@@ -330,7 +332,7 @@ const styles = StyleSheet.create({
   lessonFooterItem: { flexDirection: 'row-reverse', alignItems: 'center', gap: 3 },
   lessonFooterText: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 8, writingDirection: 'rtl' },
   lessonFooterDot: { color: Palette.border, fontSize: 11 },
-  lessonPlayIcon: { width: 27, height: 27, borderRadius: 9, backgroundColor: Palette.primarySoft, alignItems: 'center', justifyContent: 'center' },
+  lessonPlayIcon: { width: 30, height: 30, borderRadius: 10, backgroundColor: '#E8EDE6', borderWidth: 1, borderColor: '#DDE5DA', alignItems: 'center', justifyContent: 'center' },
   emptyLevel: { padding: 24, gap: 11, alignItems: 'center', borderRadius: 21, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface },
   emptyIcon: { width: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: Palette.primarySoft },
   emptyTitle: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 17, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },

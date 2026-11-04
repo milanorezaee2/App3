@@ -36,7 +36,7 @@ for (const file of [...walk('app'), ...walk('components')]) {
   lines.forEach((line, index) => {
     if (!line.includes("writingDirection: 'ltr'") && !line.includes("writingDirection:'ltr'")) return;
     const nearby = lines.slice(Math.max(0, index - 14), index + 1).join('\n');
-    if (!line.includes('fontFamily') && !nearby.includes('fontFamily: Typography.latinFontFamily')) {
+    if (!line.includes('fontFamily') && !/fontFamily:\s*Typography\.(?:latin|number)FontFamily/.test(nearby)) {
       missing.push(`${file}:${index + 1}`);
     }
   });

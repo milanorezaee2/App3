@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -126,11 +126,14 @@ export default function EnglishLessonList() {
                 <Text style={styles.pageIntro}>یک سطح را انتخاب کنید؛ درس‌ها بر اساس موقعیت و جمله پیش می‌روند و واژگان زیر جملهٔ مربوط می‌مانند.</Text>
               </View>
 
-              <LinearGradient colors={['#19204C', '#343B8A', '#5148C8']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
+              <LinearGradient colors={['#F5F4EF', '#E4ECE4', '#F0E9D7']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
                 <View pointerEvents="none" style={styles.heroOrb} />
                 <View style={styles.heroTopRow}>
-                  <View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View>
-                  <View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۵ سطح آموزشی</Text></View>
+                  <View style={styles.heroArtWrap}>
+                    <Image accessibilityLabel="تصویر آبرنگی لندن برای مسیر انگلیسی" source={require('../../assets/images/language-en-watercolor.jpg')} resizeMode="cover" style={styles.heroArt} />
+                    <View style={styles.heroArtMark}><BookOpenCheck size={13} color="#F8F4EA" /></View>
+                  </View>
+                  <View style={styles.heroPill}><Sparkles size={13} color={Palette.primary} /><Text style={styles.heroPillText}>۵ سطح آموزشی</Text></View>
                 </View>
                 <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
                 <Text style={styles.overviewTitle}>یک مسیر روشن؛{ '\n' }جمله به جمله</Text>
@@ -169,7 +172,7 @@ export default function EnglishLessonList() {
                       <View style={styles.levelOptionContent}>
                         <View style={styles.levelOptionTitleRow}>
                           <Text style={styles.levelOptionTitle}>{item.title}</Text>
-                          <Text style={[styles.levelOptionBand, { color: item.color }]}>{item.cefr}</Text>
+                          <Text style={[styles.levelOptionBand, { color: Palette.primaryDark }]}>{item.cefr}</Text>
                         </View>
                         <Text style={styles.levelOptionDescription}>{item.description}</Text>
                         <View style={styles.levelOptionMeta}>
@@ -181,7 +184,7 @@ export default function EnglishLessonList() {
                           <View style={styles.metaDot} />
                           <Text style={styles.levelOptionMetaText}>{toPersianDigits(stats.completedLessonCount)} تکمیل</Text>
                         </View>
-                        <EnglishProgressTrack value={pct} color={item.color} height={5} />
+                        <EnglishProgressTrack value={pct} color={Palette.primary} trackColor="#E7E8E1" height={5} />
                       </View>
                       <ChevronLeft size={19} color={Palette.muted} />
                     </Pressable>
@@ -218,9 +221,9 @@ export default function EnglishLessonList() {
                     <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{toPersianDigits(metrics.vocabularyCount)}</Text><Text style={styles.heroMetricLabel}>واژهٔ یکتا</Text></View>
                   </View>
                   <Pressable accessibilityRole="button" accessibilityLabel={`${levelStartLabel}: ${selected.title}`} accessibilityState={{ disabled: !levelStartLesson }} disabled={!levelStartLesson} style={({ pressed }) => [styles.levelStartButton, pressed && styles.pressed, !levelStartLesson && styles.levelStartButtonDisabled]} onPress={startSelectedLevel}>
-                    <Play size={16} color={selected.color} fill={selected.color} />
+                    <Play size={16} color={Palette.primary} fill={Palette.primary} />
                     <Text style={styles.levelStartButtonText}>{levelStartLabel}</Text>
-                    <ChevronLeft size={18} color={selected.color} />
+                    <ChevronLeft size={18} color={Palette.primary} />
                   </Pressable>
                 </LinearGradient>
               )}
@@ -237,7 +240,7 @@ export default function EnglishLessonList() {
                 <View style={styles.moduleGrid}>
                   {(blueprint?.modules ?? selected.modules).map((module, index) => (
                     <View key={`${index}-${module}`} style={styles.moduleChip}>
-                      <View style={[styles.moduleDot, { backgroundColor: selected.color }]} />
+                      <View style={[styles.moduleDot, { backgroundColor: Palette.primary }]} />
                       <Text style={styles.moduleText}>{displayEnglishModuleLabel(module)}</Text>
                     </View>
                   ))}
@@ -304,7 +307,7 @@ export default function EnglishLessonList() {
                       <Pressable accessibilityRole="button" accessibilityLabel={groupTitle} accessibilityState={{ expanded: open }} style={styles.groupHeader} onPress={() => setExpandedGroup(open ? -1 : index)}>
                         <View style={[styles.groupNumber, open && styles.groupNumberActive]}><Text style={[styles.groupNumberText, open && styles.groupNumberTextActive]}>{toPersianDigits(groupNumber)}</Text></View>
                         <View style={styles.groupHeaderCopy}>
-                          <Text style={[styles.groupTitle, (first.b1Section || first.b2Section || first.c1Section) && { textAlign: 'left', writingDirection: 'ltr' }]}>{groupTitle}</Text>
+                          <Text style={[styles.groupTitle, (first.b1Section || first.b2Section || first.c1Section) && { fontFamily: Typography.latinFontFamily, textAlign: 'left', writingDirection: 'ltr' }]}>{groupTitle}</Text>
                           <Text style={styles.groupMeta}>{toPersianDigits(group.length)} درس · {toPersianDigits(groupCompleted)} تکمیل‌شده · درس‌های {toPersianDigits(first.order)} تا {toPersianDigits(last.order)}</Text>
                         </View>
                         {open ? <ChevronUp size={18} color={Palette.primary} /> : <ChevronDown size={18} color={Palette.muted} />}
@@ -396,7 +399,9 @@ const styles = StyleSheet.create({
   overviewHero: { position: 'relative', overflow: 'hidden', marginTop: 8, borderRadius: 25, padding: 20, gap: 10, shadowColor: '#35443A', shadowOpacity: .055, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 5 },
   heroOrb: { position: 'absolute', top: -50, left: -42, width: 180, height: 180, borderRadius: 90, backgroundColor: 'rgba(114,141,117,0.08)' },
   heroTopRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' },
-  heroIcon: { width: 40, height: 40, borderRadius: 14, backgroundColor: Palette.primarySoft, alignItems: 'center', justifyContent: 'center' },
+  heroArtWrap: { position: 'relative', width: 58, height: 58, borderRadius: 18, overflow: 'hidden', borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface },
+  heroArt: { width: '100%', height: '100%' },
+  heroArtMark: { position: 'absolute', bottom: 4, left: 4, width: 23, height: 23, borderRadius: 8, backgroundColor: Palette.primaryDark, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#E6D9B7' },
   heroPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, borderRadius: 999, backgroundColor: Palette.primarySoft, paddingHorizontal: 10, paddingVertical: 6 },
   heroPillText: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
   overviewEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primaryDark, fontSize: 6, fontWeight: '800', letterSpacing: 1.4, writingDirection: 'ltr', marginTop: 4 },
@@ -460,33 +465,33 @@ const styles = StyleSheet.create({
   lessonSectionTitle: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 20, lineHeight: 29, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   lessonCountPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5, paddingHorizontal: 10, paddingVertical: 7, borderRadius: 999, backgroundColor: Palette.primarySoft },
   lessonCountText: { fontFamily: Typography.numberFontFamily, color: Palette.primaryDark, fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
-  groupList: { gap: 10 },
-  group: { gap: 8 },
-  groupHeader: { minHeight: 68, flexDirection: 'row-reverse', alignItems: 'center', gap: 10, paddingHorizontal: 13, paddingVertical: 10, borderRadius: 17, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border },
-  groupNumber: { width: 36, height: 36, borderRadius: 12, backgroundColor: Palette.surfaceMuted, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: Palette.border },
+  groupList: { gap: 11 },
+  group: { gap: 7 },
+  groupHeader: { minHeight: 68, flexDirection: 'row-reverse', alignItems: 'center', gap: 11, paddingHorizontal: 13, paddingVertical: 11, borderRadius: 16, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, shadowColor: '#35443A', shadowOpacity: .035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  groupNumber: { width: 37, height: 37, borderRadius: 12, backgroundColor: Palette.warningSoft, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#E8DFC9' },
   groupNumberActive: { backgroundColor: Palette.primary, borderColor: Palette.primary },
   groupNumberText: { fontFamily: Typography.numberFontFamily, color: Palette.muted, fontSize: 12, fontWeight: '800', writingDirection: 'rtl' },
   groupNumberTextActive: { color: Palette.surface },
   groupHeaderCopy: { flex: 1, alignItems: 'flex-end', gap: 2 },
-  groupTitle: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 12, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
-  groupMeta: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 9, textAlign: 'right', writingDirection: 'rtl' },
-  lessonList: { gap: 8 },
-  lessonCard: { flexDirection: 'row-reverse', alignItems: 'flex-start', gap: 10, padding: 12, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border },
-  lessonOrder: { width: 33, height: 33, borderRadius: 11, backgroundColor: Palette.primarySoft, alignItems: 'center', justifyContent: 'center' },
+  groupTitle: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 13, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
+  groupMeta: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 9, textAlign: 'right', writingDirection: 'rtl', lineHeight: 15 },
+  lessonList: { gap: 7, paddingHorizontal: 2 },
+  lessonCard: { flexDirection: 'row-reverse', alignItems: 'flex-start', gap: 9, padding: 11, borderRadius: 15, backgroundColor: Palette.surface, borderWidth: 1, borderColor: '#E7E6DE', shadowColor: '#35443A', shadowOpacity: .025, shadowRadius: 7, shadowOffset: { width: 0, height: 2 }, elevation: 1 },
+  lessonOrder: { width: 32, height: 32, borderRadius: 10, backgroundColor: Palette.surfaceMuted, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: Palette.border },
   lessonOrderComplete: { backgroundColor: Palette.success },
   lessonOrderText: { fontFamily: 'Vazir', color: Palette.primaryDark, fontSize: 11, fontWeight: '800', writingDirection: 'rtl' },
-  lessonCopy: { flex: 1, gap: 4 },
+  lessonCopy: { flex: 1, gap: 4, minWidth: 0 },
   lessonTitleLine: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', gap: 6, flexWrap: 'wrap' },
-  lessonTitle: { fontFamily: Typography.fontFamily, flexShrink: 1, color: Palette.ink, fontSize: 13, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
-  lessonSubtitle: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 10, textAlign: 'right', writingDirection: 'rtl' },
+  lessonTitle: { fontFamily: Typography.fontFamily, flexShrink: 1, color: Palette.ink, fontSize: 13, lineHeight: 20, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
+  lessonSubtitle: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 10, lineHeight: 16, textAlign: 'right', writingDirection: 'rtl' },
   contentKindNote: { alignSelf: 'flex-end', overflow: 'hidden', borderRadius: 8, paddingHorizontal: 8, paddingVertical: 4, backgroundColor: Palette.warningSoft, color: Palette.warning, fontFamily: Typography.fontFamily, fontSize: 9, textAlign: 'right', writingDirection: 'rtl' },
-  lessonStatus: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 999, backgroundColor: Palette.surfaceMuted },
+  lessonStatus: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 999, backgroundColor: '#EEF0EA', borderWidth: 1, borderColor: Palette.border },
   lessonStatusDone: { backgroundColor: Palette.successSoft },
   lessonStatusResume: { backgroundColor: Palette.warningSoft },
   lessonStatusText: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 8, fontWeight: '400', writingDirection: 'rtl' },
   lessonStatusTextDone: { color: Palette.success },
   lessonStatusTextResume: { color: Palette.warning },
-  lessonSentencePreview: { marginTop: 5, padding: 10, borderRadius: 14, backgroundColor: Palette.surfaceMuted, borderWidth: 1, borderColor: Palette.border, gap: 4 },
+  lessonSentencePreview: { marginTop: 5, padding: 9, borderRadius: 12, backgroundColor: '#F1F3EE', borderWidth: 1, borderColor: '#E2E7DE', gap: 4 },
   lessonSentenceHeader: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
   lessonSentenceEyebrow: { fontFamily: Typography.fontFamily, color: Palette.primary, fontSize: 8, fontWeight: '400', writingDirection: 'rtl' },
   lessonSentenceEn: { fontFamily: 'Inter-ExtraBold', color: Palette.ink, fontSize: 10, lineHeight: 18, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
@@ -497,7 +502,7 @@ const styles = StyleSheet.create({
   lessonFooterItem: { flexDirection: 'row-reverse', alignItems: 'center', gap: 3 },
   lessonFooterText: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 8, writingDirection: 'rtl' },
   lessonFooterDot: { color: Palette.border, fontSize: 11 },
-  lessonPlayIcon: { width: 27, height: 27, borderRadius: 9, backgroundColor: Palette.primarySoft, alignItems: 'center', justifyContent: 'center' },
+  lessonPlayIcon: { width: 29, height: 29, borderRadius: 10, backgroundColor: Palette.warningSoft, borderWidth: 1, borderColor: '#E8DFC9', alignItems: 'center', justifyContent: 'center' },
   licenseArea: { gap: 8, marginTop: 4 },
   licenseIntro: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 10, lineHeight: 18, textAlign: 'right', writingDirection: 'rtl' },
   licenseButton: { minHeight: 44, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, borderRadius: 13, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border },
