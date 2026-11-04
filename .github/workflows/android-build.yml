@@ -139,16 +139,18 @@ jobs:
           PY
           cp android/app/build/outputs/apk/release/app-release.apk MiloMultilang.apk
 
-      - name: Verify the learner APK bundle has no login gate
+      - name: Verify the learner APK bundle scope (en+ru)
         run: |
           python3 - <<'PY'
-          import re
           from zipfile import ZipFile
           with ZipFile('MiloMultilang.apk') as archive:
-              bundle = archive.read('assets/index.android.bundle').decode('utf-8', errors='ignore')
-          if not re.search(r'learnerLogin\s*:\s*!1', bundle) or re.search(r'learnerLogin\s*:\s*!0', bundle):
-              raise SystemExit('MiloMultilang.apk must embed the no-login bundle (learnerLogin false).')
-          print('Learner bundle marker verified (no login gate).')
+              bundle = archive.read('assets/index.android.bundle')
+          # The inlined EXPO_PUBLIC_LANGUAGE_SCOPE string survives minification
+          # and Hermes bytecode; the login gate itself is verified on the
+          # emulator below, which renders the real first screen.
+          if b'en,ru' not in bundle or b'en,tr' in bundle:
+              raise SystemExit('MiloMultilang.apk must embed the en+ru bundle, not another variant.')
+          print('Learner bundle scope verified (en+ru).')
           PY
 
       - name: Generate and build the private management APK
@@ -176,12 +178,11 @@ jobs:
         if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
         run: |
           python3 - <<'PY'
-          import re
           from zipfile import ZipFile
           with ZipFile('MiloAdmin.apk') as archive:
-              bundle = archive.read('assets/index.android.bundle').decode('utf-8', errors='ignore')
-          if not re.search(r'learnerLogin\s*:\s*!1', bundle) or re.search(r'learnerLogin\s*:\s*!0', bundle):
-              raise SystemExit('MiloAdmin.apk must embed its own management bundle, not the login bundle.')
+              bundle = archive.read('assets/index.android.bundle')
+          if b'en,tr' not in bundle or b'en,ru' in bundle:
+              raise SystemExit('MiloAdmin.apk must embed its own en+tr management bundle.')
           print('Management bundle marker verified.')
           PY
 
@@ -206,17 +207,16 @@ jobs:
           print('Learner login APK verified.')
           PY
 
-      - name: Verify the login APK bundle enforces the login gate
+      - name: Verify the login APK bundle scope (en+tr)
         if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
         run: |
           python3 - <<'PY'
-          import re
           from zipfile import ZipFile
           with ZipFile('MiloMultilang-Login.apk') as archive:
-              bundle = archive.read('assets/index.android.bundle').decode('utf-8', errors='ignore')
-          if not re.search(r'learnerLogin\s*:\s*!0', bundle) or re.search(r'learnerLogin\s*:\s*!1', bundle):
-              raise SystemExit('MiloMultilang-Login.apk must embed the login bundle (learnerLogin true).')
-          print('Login bundle marker verified (login gate enforced).')
+              bundle = archive.read('assets/index.android.bundle')
+          if b'en,tr' not in bundle or b'en,ru' in bundle:
+              raise SystemExit('MiloMultilang-Login.apk must embed the en+tr login bundle.')
+          print('Login bundle scope verified (en+tr).')
           PY
 
       - name: Smoke-test both APKs on Android emulator
