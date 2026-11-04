@@ -171,20 +171,30 @@ fi
 
 failed_step="installing the private management APK"
 adb install -r "$admin_apk_path"
+# Free emulator memory and keep each APK under test isolated in the foreground.
+adb shell am force-stop com.devicecontrol.companion || true
 adb shell am force-stop com.devicecontrol.miloadmin
 
 failed_step="launching the private management app"
-timeout 90s adb shell am start -W -n com.devicecontrol.miloadmin/.MainActivity
-sleep 12
-capture_ui
-
-failed_step="verifying the management login is isolated and protected"
-if ! grep -Fq 'ایمیل مدیر' "$ui_file" || ! grep -Fq 'ورود امن به پنل' "$ui_file"; then
-  echo 'Management accessibility tree is not ready; waiting once more.'
+admin_rendered=false
+for admin_attempt in 1 2; do
+  timeout 90s adb shell am start -W -n com.devicecontrol.miloadmin/.MainActivity
   sleep 12
   capture_ui
-fi
-if ! grep -Fq 'ایمیل مدیر' "$ui_file" || ! grep -Fq 'ورود امن به پنل' "$ui_file"; then
+  if grep -Fq 'ایمیل مدیر' "$ui_file" && grep -Fq 'ورود امن به پنل' "$ui_file"; then
+    admin_rendered=true
+    echo 'Android emulator launched the management APK and rendered its protected manager login.'
+    break
+  fi
+  if [[ "$admin_attempt" == 2 ]]; then
+    break
+  fi
+  echo 'Management accessibility tree is not ready; relaunching once.'
+  adb shell am force-stop com.devicecontrol.miloadmin
+done
+
+failed_step="verifying the management login is isolated and protected"
+if [[ "$admin_rendered" != true ]]; then
   echo 'The standalone management APK did not render its protected manager login.'
   exit 1
 fi
@@ -200,6 +210,7 @@ if [[ -s "$login_apk_path" ]]; then
   adb install -r "$login_apk_path"
   failed_step="verifying the learner login APK package"
   adb shell pm path com.devicecontrol.milomultilang
+  adb shell am force-stop com.devicecontrol.miloadmin || true
   adb shell am force-stop com.devicecontrol.milomultilang
   failed_step="launching the learner login APK"
   timeout 90s adb shell am start -W -n com.devicecontrol.milomultilang/.MainActivity
