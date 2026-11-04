@@ -8,7 +8,7 @@ import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import RussianSentenceBuilder from '@/components/RussianSentenceBuilder';
 import RussianDialoguePractice from '@/components/RussianDialoguePractice';
-import { clearRussianLessonSession, loadRussianLessonSessionWithPresence, saveRussianLessonSession } from '@/lib/languages/russianStudyState';
+import { clearRussianLessonSession, freshRussianLessonSession, loadRussianLessonSessionWithPresence, saveRussianLessonSession } from '@/lib/languages/russianStudyState';
 import { RUSSIAN_LESSONS, RUSSIAN_LEVELS, RUSSIAN_LESSON_STAGES, russianProgress, type RussianCourseLesson } from '@/lib/languages/russian';
 import type { RussianLessonSession } from '@/lib/languages/russianStudyState';
 import { toPersianDigits as fa } from '@/lib/format';
@@ -22,7 +22,7 @@ const stages = RUSSIAN_LESSON_STAGES;
 const NORMAL_SPEECH_RATE = 0.85;
 const SLOW_SPEECH_RATE = 0.5;
 
-export default function RussianLesson({ lesson, fromStart = false }: { lesson: RussianCourseLesson; fromStart?: boolean }) {
+export default function RussianLesson({ lesson, fromStart = false, restarted = false }: { lesson: RussianCourseLesson; fromStart?: boolean; restarted?: boolean }) {
   const router = useRouter();
   const courseLevel = RUSSIAN_LEVELS.find(item => item.id === lesson.levelId) ?? RUSSIAN_LEVELS[0];
   const [stage, setStage] = useState(0);
@@ -39,6 +39,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
   const [saving, setSaving] = useState(false);
   const completing = useRef(false);
   const startFirstLesson = useRef(fromStart);
+  const startFreshAfterRestart = useRef(restarted);
   const preserveExistingSession = useRef(false);
   const current = lesson.sentences[sentenceIndex];
   const checks = lesson.checks ?? [];
@@ -66,15 +67,20 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
     setCompletionError('');
     void loadRussianLessonSessionWithPresence(lesson.id).then(({ session: saved, hasSavedSession }) => {
       if (!alive) return;
-      const replay = startFirstLesson.current && lesson.id === RUSSIAN_LESSONS[0].id;
+      // A restart landing ignores any stored position and starts at the very beginning.
+      const freshRestart = startFreshAfterRestart.current;
+      startFreshAfterRestart.current = false;
+      if (freshRestart) router.setParams({ restarted: undefined });
+      const replay = !freshRestart && startFirstLesson.current && lesson.id === RUSSIAN_LESSONS[0].id;
       startFirstLesson.current = false;
-      preserveExistingSession.current = replay && hasSavedSession;
+      preserveExistingSession.current = !freshRestart && replay && hasSavedSession;
       if (replay) router.setParams({ fromStart: undefined });
-      setStage(replay ? 1 : saved.stage);
-      setSentenceIndex(replay ? 0 : Math.min(saved.sentenceIndex, lesson.sentences.length - 1));
-      setRevealed(replay ? false : saved.revealed);
-      setAnswers(saved.answers);
-      setShowCheckAnswers(saved.showCheckAnswers);
+      const fresh = freshRussianLessonSession();
+      setStage(freshRestart ? fresh.stage : replay ? 1 : saved.stage);
+      setSentenceIndex(freshRestart ? fresh.sentenceIndex : replay ? 0 : Math.min(saved.sentenceIndex, lesson.sentences.length - 1));
+      setRevealed(freshRestart ? fresh.revealed : replay ? false : saved.revealed);
+      setAnswers(freshRestart ? fresh.answers : saved.answers);
+      setShowCheckAnswers(freshRestart ? fresh.showCheckAnswers : saved.showCheckAnswers);
       setSessionReady(true);
     }).catch(() => {
       if (alive) setSessionError('جلسهٔ قبلی خوانده نشد؛ برای حفظ اطلاعات، ذخیره متوقف است. دوباره تلاش کنید.');
@@ -162,7 +168,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
     <View style={styles.root}>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
-          <Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color="#FFFFFF" /></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color={Palette.ink} /></Pressable>
           <View style={styles.headerText}>
             <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
@@ -170,7 +176,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           </View>
           <View style={styles.percentBadge}><Text style={styles.percent}>{fa(progressPercent)}٪</Text><Text style={styles.percentLabel}>پیشرفت</Text></View>
         </View>
-        <View style={styles.headerBottom}><View style={styles.headerInfoChip}><BookOpenCheck size={13} color="#D9DBFF" /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View><Text style={styles.headerInfoText}>{fa(lesson.sentences.length)} جملهٔ اصلی</Text></View>
+        <View style={styles.headerBottom}><View style={styles.headerInfoChip}><BookOpenCheck size={13} color={Palette.primary} /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View><Text style={styles.headerInfoText}>{fa(lesson.sentences.length)} جملهٔ اصلی</Text></View>
       </LinearGradient>
 
       <View style={styles.stepperCard}>
@@ -327,19 +333,19 @@ const styles = StyleSheet.create({
   loadingText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 13, textAlign: 'right', writingDirection: 'rtl' },
   loadingButton: { minHeight: 44, justifyContent: 'center', paddingHorizontal: 18, borderRadius: 13, backgroundColor: Palette.primary },
   loadingButtonText: { fontFamily: Typography.fontFamily, color: '#FFFFFF', fontWeight: '400', writingDirection: 'rtl' },
-  header: { paddingTop: 42, paddingHorizontal: 20, paddingBottom: 15, gap: 14, borderBottomLeftRadius: 22, borderBottomRightRadius: 22 },
+  header: { paddingTop: 42, paddingHorizontal: 20, paddingBottom: 15, gap: 14, borderBottomLeftRadius: 22, borderBottomRightRadius: 22, borderBottomWidth: 1, borderBottomColor: 'rgba(33,26,104,0.08)' },
   headerTop: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
-  back: { width: 40, height: 40, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.14)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.20)', alignItems: 'center', justifyContent: 'center' },
+  back: { width: 40, height: 40, borderRadius: 14, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: 'rgba(33,26,104,0.10)', alignItems: 'center', justifyContent: 'center' },
   headerText: { flex: 1, alignItems: 'flex-end', gap: 2 },
-  headerEyebrow: { fontFamily: 'Inter-ExtraBold', color: 'rgba(255,255,255,0.72)', fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
-  headerTitle: { fontFamily: Typography.fontFamily, fontSize: 18, lineHeight: 27, fontWeight: '400', color: '#FFFFFF', textAlign: 'right', writingDirection: 'rtl' },
-  headerSub: { fontFamily: Typography.fontFamily, fontSize: 10, color: 'rgba(255,255,255,0.78)', textAlign: 'right', writingDirection: 'rtl' },
-  percentBadge: { minWidth: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.14)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.18)' },
-  percent: { fontFamily: Typography.fontFamily, fontSize: 14, lineHeight: 18, fontWeight: '400', color: '#FFFFFF', writingDirection: 'rtl' },
-  percentLabel: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.72)', fontSize: 7, writingDirection: 'rtl' },
-  headerBottom: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingTop: 9, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.18)' },
+  headerEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.muted, fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
+  headerTitle: { fontFamily: Typography.fontFamily, fontSize: 18, lineHeight: 27, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
+  headerSub: { fontFamily: Typography.fontFamily, fontSize: 10, color: Palette.text, textAlign: 'right', writingDirection: 'rtl' },
+  percentBadge: { minWidth: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: 'rgba(33,26,104,0.10)' },
+  percent: { fontFamily: Typography.fontFamily, fontSize: 14, lineHeight: 18, fontWeight: '400', color: Palette.ink, writingDirection: 'rtl' },
+  percentLabel: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 7, writingDirection: 'rtl' },
+  headerBottom: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingTop: 9, borderTopWidth: 1, borderTopColor: 'rgba(33,26,104,0.10)' },
   headerInfoChip: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
-  headerInfoText: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.78)', fontSize: 9, writingDirection: 'rtl' },
+  headerInfoText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 9, writingDirection: 'rtl' },
   stepperCard: { width: '94%', maxWidth: 820, alignSelf: 'center', marginTop: 13, padding: 13, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10, shadowColor: '#211A68', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepperHeading: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   stepperEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },

@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { consumeStudyDeletions } from './englishStudyState';
 import { getCourseProgress } from './courseProgress';
 import { exportEnglishSyncExtras, mergeEnglishSyncExtras, type EnglishSyncExtras } from './englishBackup';
 import {
@@ -118,6 +119,8 @@ async function performSync(): Promise<PersonalSyncResult> {
       || !sameJson(mergedLanguages, remoteLanguageProgress)
       || !sameJson(mergedPronunciation, remotePronunciationProgress);
     if (!needsWrite) {
+      // Remote already holds the cleaned state; drop restart tombstones so they cannot linger.
+      await consumeStudyDeletions().catch(() => undefined);
       return { status: 'synced', email: user.email, updatedAt: row.updated_at };
     }
 
@@ -155,6 +158,8 @@ async function performSync(): Promise<PersonalSyncResult> {
         throw remoteSetupError(result.error);
       }
       if (!result.data) continue; // A concurrent device won; re-read and merge, never blind overwrite.
+      // The cleaned state is now in the cloud; restart tombstones have served their purpose.
+      await consumeStudyDeletions().catch(() => undefined);
       return { status: 'synced', email: user.email, updatedAt: result.data.updated_at ?? updatedAt };
     } catch (error) {
       if (error instanceof Error && (error.message.startsWith('جدول همگام‌سازی') || error.message.startsWith('دسترسی امن'))) throw error;

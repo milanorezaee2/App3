@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   BookOpen,
@@ -11,12 +11,14 @@ import {
   ChevronUp,
   Clock3,
   Play,
+  RotateCcw,
   Sparkles,
   Volume2,
 } from 'lucide-react-native';
 import { COURSE_LEVELS, SENTENCE_LESSONS, type CourseLevelId, type SentenceLesson } from '@/lib/courseContent';
-import { getCourseProgress, type CourseProgress } from '@/lib/courseProgress';
-import { loadStudy, type StudyState } from '@/lib/englishStudyState';
+import { getCourseProgress, restartLevelFromBeginning, type CourseProgress } from '@/lib/courseProgress';
+import { clearLessonStudy, loadStudy, type StudyState } from '@/lib/englishStudyState';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { ENGLISH_ENGINE_BLUEPRINT, getAdvancedContentComposition, getEnglishLevelMetrics } from '@/lib/englishLearningEngine';
 import { ENGLISH_PHONEME_LICENSE } from '@/lib/englishPhonemeLicense';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
@@ -52,18 +54,23 @@ export default function EnglishLessonList() {
   const [study, setStudy] = useState<StudyState | null>(null);
   const [error, setError] = useState('');
   const [hydrated, setHydrated] = useState(false);
+  const [levelRestartDialogOpen, setLevelRestartDialogOpen] = useState(false);
+  const [levelRestartBusy, setLevelRestartBusy] = useState(false);
+  const [levelRestartError, setLevelRestartError] = useState('');
 
   useEffect(() => setHydrated(true), []);
   const selected = hydrated ? COURSE_LEVELS.find(item => String(item.id) === level) : undefined;
-  useEffect(() => {
+  // Refetch on every focus (like the Russian/Turkish libraries) so the hero always shows
+  // the truth in storage, even after a restart or a background cloud merge.
+  useFocusEffect(useCallback(() => {
     let alive = true;
     void Promise.all([getCourseProgress(), loadStudy()]).then(([nextProgress, nextStudy]) => {
-      if (alive) { setProgress(nextProgress); setStudy(nextStudy); }
+      if (alive) { setProgress(nextProgress); setStudy(nextStudy); setError(''); }
     }).catch(() => {
       if (alive) setError('وضعیت ذخیره‌شده خوانده نشد؛ فهرست همچنان قابل استفاده است.');
     });
     return () => { alive = false; };
-  }, []);
+  }, []));
   useEffect(() => { setExpandedGroup(0); }, [selected?.id]);
 
   const lessons = useMemo(() => selected ? SENTENCE_LESSONS.filter(item => item.levelId === selected.id) : [], [selected?.id]);
@@ -113,6 +120,29 @@ export default function EnglishLessonList() {
     if (levelStartLesson) router.push({ pathname: '/course/lesson', params: { id: levelStartLesson.id } } as never);
   };
 
+  const confirmLevelRestart = async () => {
+    if (levelRestartBusy || !selected) return;
+    setLevelRestartBusy(true);
+    setLevelRestartError('');
+    try {
+      // Progress and study sessions live in separate keys, so both resets run together.
+      const [nextProgress] = await Promise.all([
+        restartLevelFromBeginning(selected.id),
+        clearLessonStudy(lessons.map(item => item.id)),
+      ]);
+      setProgress(nextProgress);
+      setStudy(await loadStudy());
+      setLevelRestartDialogOpen(false);
+      // Sessions were just cleared; `restarted=1` additionally forces a fresh start even if a
+      // stale session somehow survived (e.g. an older cloud snapshot mid-sync).
+      if (lessons[0]) router.push({ pathname: '/course/lesson', params: { id: lessons[0].id, restarted: '1' } } as never);
+    } catch (cause) {
+      setLevelRestartError(cause instanceof Error && cause.message ? cause.message : 'شروع مجدد این سطح انجام نشد؛ دوباره تلاش کنید.');
+    } finally {
+      setLevelRestartBusy(false);
+    }
+  };
+
   return (
     <View style={styles.root}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -126,11 +156,13 @@ export default function EnglishLessonList() {
                 <Text style={styles.pageIntro}>یک سطح را انتخاب کنید؛ درس‌ها بر اساس موقعیت و جمله پیش می‌روند و واژگان زیر جملهٔ مربوط می‌مانند.</Text>
               </View>
 
-              <LinearGradient colors={['#19204C', '#343B8A', '#5148C8']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
+              <LinearGradient colors={['#FFFFFF', '#EFF0FE', '#DDE2FA']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
                 <View pointerEvents="none" style={styles.heroOrb} />
+                <View pointerEvents="none" style={styles.heroRing} />
+                <View pointerEvents="none" style={styles.heroDot} />
                 <View style={styles.heroTopRow}>
-                  <View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View>
-                  <View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۵ سطح آموزشی</Text></View>
+                  <View style={styles.heroIcon}><BookOpenCheck size={18} color={Palette.primary} /></View>
+                  <View style={styles.heroPill}><Sparkles size={13} color={Palette.primary} /><Text style={styles.heroPillText}>۵ سطح آموزشی</Text></View>
                 </View>
                 <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
                 <Text style={styles.overviewTitle}>یک مسیر روشن؛{ '\n' }جمله به جمله</Text>
@@ -199,6 +231,8 @@ export default function EnglishLessonList() {
               {metrics && (
                 <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[selected.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.levelHero}>
                   <View pointerEvents="none" style={styles.levelHeroOrb} />
+                  <View pointerEvents="none" style={[styles.levelHeroRing, { borderColor: `${selected.color}40` }]} />
+                  <View pointerEvents="none" style={[styles.levelHeroDot, { backgroundColor: `${selected.color}2E` }]} />
                   <View style={styles.levelHeroTop}>
                     <View style={styles.levelHeroTag}><Text style={styles.levelHeroTagText}>LEVEL {selected.id}</Text></View>
                     <Text style={styles.levelHeroBand}>{selected.cefr}</Text>
@@ -209,7 +243,7 @@ export default function EnglishLessonList() {
                     <Text style={styles.selectedProgressLabel}>پیشرفت این سطح</Text>
                     <Text style={styles.selectedProgressValue}>{toPersianDigits(completed)} از {toPersianDigits(lessons.length)} درس</Text>
                   </View>
-                  <View style={styles.selectedProgressTrack}><View style={[styles.selectedProgressFill, { width: `${lessons.length ? (completed / lessons.length) * 100 : 0}%` }]} /></View>
+                  <View style={styles.selectedProgressTrack}><View style={[styles.selectedProgressFill, { width: `${lessons.length ? (completed / lessons.length) * 100 : 0}%`, backgroundColor: selected.color }]} /></View>
                   <View style={styles.metricGrid}>
                     <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{toPersianDigits(metrics.sentenceCount)}</Text><Text style={styles.heroMetricLabel}>جمله</Text></View>
                     <View style={styles.heroMetricDivider} />
@@ -222,6 +256,12 @@ export default function EnglishLessonList() {
                     <Text style={styles.levelStartButtonText}>{levelStartLabel}</Text>
                     <ChevronLeft size={18} color={selected.color} />
                   </Pressable>
+                  {completed > 0 && (
+                    <Pressable accessibilityRole="button" accessibilityLabel={`شروع از ابتدا: ${selected.title}`} style={({ pressed }) => [styles.levelRestartButton, pressed && styles.pressed]} onPress={() => { setLevelRestartError(''); setLevelRestartDialogOpen(true); }}>
+                      <RotateCcw size={14} color={selected.color} />
+                      <Text style={styles.levelRestartButtonText}>شروع از ابتدا</Text>
+                    </Pressable>
+                  )}
                 </LinearGradient>
               )}
 
@@ -380,6 +420,20 @@ export default function EnglishLessonList() {
           {!!error && <Text style={styles.error}>{error}</Text>}
         </View>
       </ScrollView>
+      <ConfirmDialog
+        visible={levelRestartDialogOpen}
+        title="شروع این سطح از ابتدا؟"
+        message={selected
+          ? `تکمیل درس‌ها، جلسات نیمه‌تمام و برنامهٔ مرور «${selected.title}» پاک می‌شود و از درس اول همین سطح شروع می‌کنید. سطح‌های دیگر، زنجیرهٔ روزانه و محتوای درس‌ها حفظ می‌شود.`
+          : 'تکمیل درس‌ها، جلسات نیمه‌تمام و برنامهٔ مرور این سطح پاک می‌شود و از درس اول همین سطح شروع می‌کنید.'}
+        confirmText="شروع از ابتدا"
+        cancelText="انصراف"
+        destructive
+        busy={levelRestartBusy}
+        error={levelRestartError}
+        onConfirm={() => void confirmLevelRestart()}
+        onCancel={() => { if (!levelRestartBusy) setLevelRestartDialogOpen(false); }}
+      />
     </View>
   );
 }
@@ -393,27 +447,29 @@ const styles = StyleSheet.create({
   brandEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 7, fontWeight: '800', letterSpacing: 1.2, writingDirection: 'ltr' },
   pageTitle: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 29, lineHeight: 39, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   pageIntro: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 13, lineHeight: 23, textAlign: 'right', writingDirection: 'rtl' },
-  overviewHero: { position: 'relative', overflow: 'hidden', marginTop: 60, borderRadius: 25, padding: 20, gap: 10, shadowColor: '#282671', shadowOpacity: .16, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 5 },
-  heroOrb: { position: 'absolute', top: -50, left: -42, width: 180, height: 180, borderRadius: 90, backgroundColor: 'rgba(255,255,255,0.09)' },
+  overviewHero: { position: 'relative', overflow: 'hidden', marginTop: 60, borderRadius: 25, padding: 20, gap: 10, borderWidth: 1, borderColor: 'rgba(33,26,104,0.08)', shadowColor: '#211A68', shadowOpacity: .10, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 4 },
+  heroOrb: { position: 'absolute', top: -50, left: -42, width: 180, height: 180, borderRadius: 90, backgroundColor: 'rgba(99,91,255,0.10)' },
+  heroRing: { position: 'absolute', bottom: -72, right: -52, width: 190, height: 190, borderRadius: 95, borderWidth: 1.5, borderColor: 'rgba(99,91,255,0.20)' },
+  heroDot: { position: 'absolute', top: 30, right: 34, width: 12, height: 12, borderRadius: 6, backgroundColor: 'rgba(99,91,255,0.30)' },
   heroTopRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' },
-  heroIcon: { width: 40, height: 40, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.15)', alignItems: 'center', justifyContent: 'center' },
-  heroPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.12)', paddingHorizontal: 10, paddingVertical: 6 },
-  heroPillText: { fontFamily: Typography.fontFamily, color: '#FFFFFF', fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
-  overviewEyebrow: { fontFamily: 'Inter-ExtraBold', color: '#C6C9FF', fontSize: 6, fontWeight: '800', letterSpacing: 1.4, writingDirection: 'ltr', marginTop: 4 },
-  overviewTitle: { fontFamily: Typography.fontFamily, color: '#FFFFFF', fontSize: 26, lineHeight: 38, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
-  overviewText: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.78)', fontSize: 12, lineHeight: 21, textAlign: 'right', writingDirection: 'rtl' },
-  overviewMetrics: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', marginTop: 5, paddingTop: 13, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.18)' },
+  heroIcon: { width: 40, height: 40, borderRadius: 14, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: 'rgba(33,26,104,0.08)', alignItems: 'center', justifyContent: 'center' },
+  heroPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, borderRadius: 999, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: 'rgba(33,26,104,0.08)', paddingHorizontal: 10, paddingVertical: 6 },
+  heroPillText: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
+  overviewEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 6, fontWeight: '800', letterSpacing: 1.4, writingDirection: 'ltr', marginTop: 4 },
+  overviewTitle: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 26, lineHeight: 38, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
+  overviewText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 12, lineHeight: 21, textAlign: 'right', writingDirection: 'rtl' },
+  overviewMetrics: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', marginTop: 5, paddingTop: 13, borderTopWidth: 1, borderTopColor: 'rgba(33,26,104,0.10)' },
   overviewMetric: { flex: 1, alignItems: 'center', gap: 2 },
-  overviewMetricValue: { fontFamily: Typography.numberFontFamily, color: '#FFFFFF', fontSize: 18, fontWeight: '800', writingDirection: 'rtl' },
-  overviewMetricLabel: { fontFamily: Typography.fontFamily, color: '#CFD2FF', fontSize: 9, writingDirection: 'rtl' },
-  overviewMetricDivider: { width: 1, height: 30, backgroundColor: 'rgba(255,255,255,0.18)' },
+  overviewMetricValue: { fontFamily: Typography.numberFontFamily, color: Palette.ink, fontSize: 18, fontWeight: '800', writingDirection: 'rtl' },
+  overviewMetricLabel: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 9, writingDirection: 'rtl' },
+  overviewMetricDivider: { width: 1, height: 30, backgroundColor: 'rgba(33,26,104,0.10)' },
   levelRailCard: { padding: 16, gap: 12, borderRadius: 21, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border },
   railWrap: { paddingVertical: 5 },
   railCurrent: { fontFamily: Typography.latinFontFamily, color: Palette.primaryDark, fontSize: 10, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
   levelList: { gap: 9 },
   levelOption: { minHeight: 96, flexDirection: 'row-reverse', alignItems: 'center', gap: 12, padding: 14, borderRadius: 20, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, shadowColor: '#211A68', shadowOpacity: .035, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
-  levelOptionMark: { width: 44, height: 44, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
-  levelOptionNumber: { fontFamily: 'Vazir', color: '#FFFFFF', fontSize: 17, fontWeight: '800', writingDirection: 'rtl' },
+  levelOptionMark: { width: 44, height: 44, borderRadius: 15, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: 'rgba(33,26,104,0.10)' },
+  levelOptionNumber: { fontFamily: 'Vazir', color: Palette.ink, fontSize: 17, fontWeight: '800', writingDirection: 'rtl' },
   levelOptionContent: { flex: 1, gap: 5 },
   levelOptionTitleRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
   levelOptionTitle: { flexShrink: 1, fontFamily: Typography.latinFontFamily, color: Palette.ink, fontSize: 12, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
@@ -423,27 +479,31 @@ const styles = StyleSheet.create({
   levelOptionMetaText: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 9, writingDirection: 'rtl' },
   metaDot: { width: 3, height: 3, borderRadius: 2, backgroundColor: Palette.border },
   pressed: { opacity: .82, transform: [{ scale: .995 }] },
-  levelHero: { position: 'relative', overflow: 'hidden', padding: 20, borderRadius: 25, gap: 9, shadowColor: '#24245C', shadowOpacity: .16, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 5 },
-  levelHeroOrb: { position: 'absolute', top: -60, right: -30, width: 190, height: 190, borderRadius: 95, backgroundColor: 'rgba(255,255,255,0.10)' },
+  levelHero: { position: 'relative', overflow: 'hidden', padding: 20, borderRadius: 25, gap: 9, borderWidth: 1, borderColor: 'rgba(33,26,104,0.08)', shadowColor: '#211A68', shadowOpacity: .10, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 4 },
+  levelHeroOrb: { position: 'absolute', top: -60, right: -30, width: 190, height: 190, borderRadius: 95, backgroundColor: 'rgba(255,255,255,0.55)' },
+  levelHeroRing: { position: 'absolute', bottom: -78, left: -58, width: 200, height: 200, borderRadius: 100, borderWidth: 1.5, borderColor: 'rgba(33,26,104,0.10)' },
+  levelHeroDot: { position: 'absolute', top: 34, left: 38, width: 12, height: 12, borderRadius: 6, backgroundColor: 'rgba(33,26,104,0.10)' },
   levelHeroTop: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' },
-  levelHeroTag: { borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.16)', paddingHorizontal: 10, paddingVertical: 5 },
-  levelHeroTagText: { fontFamily: 'Inter-ExtraBold', color: '#FFFFFF', fontSize: 7, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
-  levelHeroBand: { fontFamily: 'Inter-ExtraBold', color: 'rgba(255,255,255,0.85)', fontSize: 8, fontWeight: '800', writingDirection: 'ltr' },
-  selectedTitle: { fontFamily: Typography.latinFontFamily, color: '#FFFFFF', fontSize: 25, lineHeight: 37, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr', marginTop: 4 },
-  selectedDescription: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.8)', fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
+  levelHeroTag: { borderRadius: 999, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: 'rgba(33,26,104,0.08)', paddingHorizontal: 10, paddingVertical: 5 },
+  levelHeroTagText: { fontFamily: 'Inter-ExtraBold', color: Palette.ink, fontSize: 7, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
+  levelHeroBand: { fontFamily: 'Inter-ExtraBold', color: Palette.muted, fontSize: 8, fontWeight: '800', writingDirection: 'ltr' },
+  selectedTitle: { fontFamily: Typography.latinFontFamily, color: Palette.ink, fontSize: 25, lineHeight: 37, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr', marginTop: 4 },
+  selectedDescription: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
   selectedProgressHeading: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 },
-  selectedProgressLabel: { fontFamily: Typography.fontFamily, color: '#DCE0FF', fontSize: 10, writingDirection: 'rtl' },
-  selectedProgressValue: { fontFamily: Typography.numberFontFamily, color: '#FFFFFF', fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
-  selectedProgressTrack: { height: 7, borderRadius: 999, overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.22)' },
-  selectedProgressFill: { height: '100%', alignSelf: 'flex-end', borderRadius: 999, backgroundColor: '#B8F28F' },
-  levelStartButton: { minHeight: 48, marginTop: 5, paddingHorizontal: 15, borderRadius: 15, backgroundColor: '#FFFFFF', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 9 },
+  selectedProgressLabel: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 10, writingDirection: 'rtl' },
+  selectedProgressValue: { fontFamily: Typography.numberFontFamily, color: Palette.ink, fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
+  selectedProgressTrack: { height: 7, borderRadius: 999, overflow: 'hidden', backgroundColor: 'rgba(33,26,104,0.10)' },
+  selectedProgressFill: { height: '100%', alignSelf: 'flex-end', borderRadius: 999, backgroundColor: Palette.primary },
+  levelStartButton: { minHeight: 48, marginTop: 5, paddingHorizontal: 15, borderRadius: 15, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: 'rgba(33,26,104,0.10)', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 9, shadowColor: '#211A68', shadowOpacity: .08, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 2 },
   levelStartButtonDisabled: { opacity: 0.55 },
   levelStartButtonText: { flex: 1, fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 12, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
-  metricGrid: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', paddingTop: 12, marginTop: 2, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.18)' },
+  levelRestartButton: { minHeight: 40, paddingHorizontal: 14, borderRadius: 13, borderWidth: 1.5, borderColor: 'rgba(33,26,104,0.16)', backgroundColor: 'rgba(255,255,255,0.65)', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7 },
+  levelRestartButtonText: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 12, fontWeight: '700', writingDirection: 'rtl' },
+  metricGrid: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', paddingTop: 12, marginTop: 2, borderTopWidth: 1, borderTopColor: 'rgba(33,26,104,0.10)' },
   heroMetric: { flex: 1, alignItems: 'center', gap: 1 },
-  heroMetricValue: { fontFamily: Typography.numberFontFamily, color: '#FFFFFF', fontSize: 17, fontWeight: '800', writingDirection: 'rtl' },
-  heroMetricLabel: { fontFamily: Typography.fontFamily, color: '#D6D9FF', fontSize: 9, writingDirection: 'rtl' },
-  heroMetricDivider: { width: 1, height: 28, backgroundColor: 'rgba(255,255,255,0.18)' },
+  heroMetricValue: { fontFamily: Typography.numberFontFamily, color: Palette.ink, fontSize: 17, fontWeight: '800', writingDirection: 'rtl' },
+  heroMetricLabel: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 9, writingDirection: 'rtl' },
+  heroMetricDivider: { width: 1, height: 28, backgroundColor: 'rgba(33,26,104,0.10)' },
   focusCard: { padding: 17, borderRadius: 21, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10 },
   focusHeadingRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 9 },
   focusIcon: { width: 36, height: 36, borderRadius: 13, backgroundColor: Palette.primarySoft, alignItems: 'center', justifyContent: 'center' },

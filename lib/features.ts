@@ -23,10 +23,12 @@ export const isLanguageEnabled = (language: string | undefined): boolean =>
 
 export const FEATURES = Object.freeze({
   /**
-   * Learner builds must authenticate before entering the app. The private
-   * management build is bypassed separately above.
+   * Learner builds must authenticate before entering the app, unless the
+   * build explicitly opts out with EXPO_PUBLIC_LEARNER_LOGIN=false
+   * (the no-login learner variant). The private management build is
+   * bypassed separately above.
    */
-  learnerLogin: true,
+  learnerLogin: process.env.EXPO_PUBLIC_LEARNER_LOGIN !== 'false',
   adminPanel: educationAdminEnabled,
   educationEnrollment: educationAdminEnabled,
   // Roadmap modules are not implemented yet. Enabling a boolean cannot build them.

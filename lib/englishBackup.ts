@@ -198,7 +198,9 @@ function mergeStudyState(current: StudyState, incoming: StudyState): StudyState 
       if (!incomingResult || result.attempts >= incomingResult.attempts) lessonEvidence[lessonId][taskId] = result;
     }
   }
-  return parseStudy(JSON.stringify({ version: 1, sessions, days, lessonEvidence }));
+  // Tombstones are local-only delete instructions: keep this device's, never import remote ones.
+  const deletedLessonIds = [...new Set(current.deletedLessonIds)];
+  return parseStudy(JSON.stringify({ version: 1, sessions, days, lessonEvidence, deletedLessonIds }));
 }
 
 function mergeAssessmentAttempts(current: SupplementProgress['assessmentAttempts'], incoming: SupplementProgress['assessmentAttempts']) {
@@ -275,6 +277,12 @@ export async function mergeEnglishSyncExtras(remote: unknown, storage: BackupSto
   // Cloud snapshots deliberately omit answer drafts; do not import free text from a device backup.
   const incomingSupplement = parseProgress(JSON.stringify({ ...remote.supplement, drafts: {} }));
   const mergedStudy = mergeStudyState(currentStudy, incomingStudy);
+  // A restart is an explicit deletion: tombstoned lessons stay deleted even when the cloud
+  // still holds an older snapshot. Tombstones are consumed after the cleaned state uploads.
+  mergedStudy.deletedLessonIds.forEach(id => {
+    delete mergedStudy.sessions[id];
+    delete mergedStudy.lessonEvidence[id];
+  });
   const mergedSupplement = mergeSupplementProgress(currentSupplement, incomingSupplement);
   const values = [JSON.stringify(mergedStudy), JSON.stringify(mergedSupplement)];
   const keys = [STUDY_KEY, SUPPLEMENT_KEY] as const;
@@ -304,6 +312,8 @@ export async function restoreEnglishBackup(text: string, storage: BackupStorage 
   const incoming = parseEnglishBackup(text).data;
   const current = await readLocalData(storage);
   const merged = mergeEnglishBackupData(current, incoming, now);
+  // An explicit restore is newer than any pending restart: cancel restart tombstones.
+  merged.study.deletedLessonIds = [];
   const values = [
     JSON.stringify(merged.courseProgress),
     JSON.stringify(merged.study),

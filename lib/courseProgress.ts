@@ -308,6 +308,65 @@ export async function setCurrentLesson(lessonId: string): Promise<CourseProgress
   return saveProgress({ ...current, currentLessonId: lessonId });
 }
 
+/**
+ * True course restart: back to the first lesson with completion and review
+ * state cleared. Lesson content, streaks, activity minutes and the daily goal
+ * are preserved. The previous snapshot is stashed to `<KEY>_backup_v1` first.
+ */
+async function stashBackupBeforeRestart(): Promise<void> {
+  try {
+    const raw = await readRaw();
+    if (raw !== null) {
+      if (Platform.OS === 'web') {
+        if (typeof window !== 'undefined') window.localStorage.setItem(KEY + '_backup_v1', raw);
+      } else {
+        await AsyncStorage.setItem(KEY + '_backup_v1', raw);
+      }
+    }
+  } catch {
+    // Restart must not fail when a best-effort snapshot cannot be stored.
+  }
+}
+
+export async function restartCourseFromBeginning(): Promise<CourseProgress> {
+  const firstLessonId = SENTENCE_LESSONS[0]?.id;
+  if (!firstLessonId) throw new Error('درس آغازین دوره یافت نشد.');
+  await stashBackupBeforeRestart();
+  const current = await getCourseProgress();
+  return saveProgress({
+    ...current,
+    currentLessonId: firstLessonId,
+    completedLessonIds: [],
+    reviewSentenceIds: [],
+    reviewCards: [],
+    learnedEssential504Words: [],
+    updatedAt: new Date().toISOString(),
+  });
+}
+
+/**
+ * Restart ONE level from the beginning: clears that level's completions and review queue and
+ * moves the resume pointer to the level's first lesson. Other levels, streaks, goal and learned
+ * words are kept. The previous snapshot is stashed to `<KEY>_backup_v1` first.
+ */
+export async function restartLevelFromBeginning(levelId: number): Promise<CourseProgress> {
+  const levelLessons = SENTENCE_LESSONS.filter(lesson => lesson.levelId === levelId);
+  const firstLesson = levelLessons[0] ?? SENTENCE_LESSONS[0];
+  if (!firstLesson) throw new Error('درس آغازین این سطح یافت نشد.');
+  await stashBackupBeforeRestart();
+  const levelLessonIds = new Set(levelLessons.map(lesson => lesson.id));
+  const levelSentenceIds = new Set(levelLessons.flatMap(lesson => lesson.sentences.map(sentence => sentence.id)));
+  const current = await getCourseProgress();
+  return saveProgress({
+    ...current,
+    currentLessonId: firstLesson.id,
+    completedLessonIds: current.completedLessonIds.filter(id => !levelLessonIds.has(id)),
+    reviewSentenceIds: current.reviewSentenceIds.filter(id => !levelSentenceIds.has(id)),
+    reviewCards: current.reviewCards.filter(card => !levelLessonIds.has(card.lessonId)),
+    updatedAt: new Date().toISOString(),
+  });
+}
+
 export async function completeSentenceLesson(lessonId: string, nextLessonId?: string): Promise<CourseProgress> {
   const current = await getCourseProgress();
   const cardMap = new Map(current.reviewCards.map((card) => [card.id, card]));

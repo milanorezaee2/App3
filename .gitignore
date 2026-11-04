@@ -4,6 +4,8 @@ node_modules/
 # expo
 .expo/
 dist/
+dist-admin/
+dist-login/
 dist-web-*/
 dist-v2-*/
 design-previews/

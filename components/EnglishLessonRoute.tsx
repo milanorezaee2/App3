@@ -47,7 +47,7 @@ const stages = ENGLISH_ENGINE_STEPS;
 
 export default function SentenceLessonScreen() {
   const router = useRouter();
-  const { id, fromStart } = useLocalSearchParams<{ id: string; fromStart?: string }>();
+  const { id, fromStart, restarted } = useLocalSearchParams<{ id: string; fromStart?: string; restarted?: string }>();
   const lesson = getSentenceLesson(id || '') ?? SENTENCE_LESSONS[0];
   const courseLevel = COURSE_LEVELS.find(item => item.id === lesson.levelId) ?? COURSE_LEVELS[0];
   const [evidencePassed, setEvidencePassed] = useState(false);
@@ -64,6 +64,8 @@ export default function SentenceLessonScreen() {
   const completing=useRef(false);
   const loadedLesson=useRef<string|null>(null);
   const startFirstLesson = useRef(fromStart === '1');
+  const startFreshAfterRestart = useRef(restarted === '1');
+  const lastSavedSession = useRef('');
   const preserveExistingSession = useRef(false);
   const [audioNotice, setAudioNotice] = useState('');
   const timer=useEnglishStudyTimer(sessionReady && !!getSentenceLesson(id || ''));
@@ -80,24 +82,36 @@ export default function SentenceLessonScreen() {
     void loadStudy().then(async state => {
       if (!alive) return;
       const saved = state.sessions[lesson.id] ?? freshSession();
-      const startAtFirstSentence = startFirstLesson.current && lesson.id === SENTENCE_LESSONS[0].id;
+      // A restart landing ignores any stored position/evidence and starts at the very beginning,
+      // even if a stale session somehow survived (e.g. an older cloud snapshot mid-sync).
+      const freshRestart = startFreshAfterRestart.current;
+      startFreshAfterRestart.current = false;
+      if (freshRestart) router.setParams({ restarted: undefined });
+      const startAtFirstSentence = !freshRestart && startFirstLesson.current && lesson.id === SENTENCE_LESSONS[0].id;
       // Replay without overwriting a saved position or any completed evidence.
-      preserveExistingSession.current = startAtFirstSentence && !!state.sessions[lesson.id];
+      preserveExistingSession.current = !freshRestart && startAtFirstSentence && !!state.sessions[lesson.id];
       startFirstLesson.current = false;
       if (startAtFirstSentence) router.setParams({ fromStart: undefined });
-      setStage(startAtFirstSentence ? 1 : saved.stage);
-      setSentenceIndex(startAtFirstSentence ? 0 : Math.min(saved.sentenceIndex, lesson.sentences.length - 1));
-      setRevealed(startAtFirstSentence ? false : saved.revealed);
+      const initialStage = freshRestart ? 0 : startAtFirstSentence ? 1 : saved.stage;
+      const initialSentence = freshRestart || startAtFirstSentence ? 0 : Math.min(saved.sentenceIndex, lesson.sentences.length - 1);
+      const initialRevealed = freshRestart || startAtFirstSentence ? false : saved.revealed;
+      setStage(initialStage);
+      setSentenceIndex(initialSentence);
+      setRevealed(initialRevealed);
 
       if (CORE_LESSON_EVIDENCE[lesson.id]) {
-        setEvidencePassed(isCoreLessonEvidenceComplete(lesson.id, state.lessonEvidence[lesson.id] ?? {}));
+        const passed = freshRestart ? false : isCoreLessonEvidenceComplete(lesson.id, state.lessonEvidence[lesson.id] ?? {});
+        lastSavedSession.current = JSON.stringify({ stage: initialStage, sentenceIndex: initialSentence, revealed: initialRevealed, evidencePassed: passed });
+        setEvidencePassed(passed);
       } else {
         const proof = await loadSupplement();
         if (!alive) return;
-        setEvidencePassed(saved.evidencePassed
+        const passed = freshRestart ? false : saved.evidencePassed
           && !!proof.evidence[`legacy-${lesson.id}-listening`]?.correct
           && !!proof.evidence[`legacy-${lesson.id}-listening`]?.heard
-          && !!proof.evidence[`legacy-${lesson.id}-writing`]?.correct);
+          && !!proof.evidence[`legacy-${lesson.id}-writing`]?.correct;
+        lastSavedSession.current = JSON.stringify({ stage: initialStage, sentenceIndex: initialSentence, revealed: initialRevealed, evidencePassed: passed });
+        setEvidencePassed(passed);
       }
 
       loadedLesson.current = lesson.id;
@@ -110,9 +124,15 @@ export default function SentenceLessonScreen() {
   useEffect(() => {
     let currentSave = true;
     if (sessionReady && loadedLesson.current === lesson.id && !completing.current && !preserveExistingSession.current) {
-      void saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed })
-        .then(() => { if (currentSave) setSessionError(''); })
-        .catch(() => { if (currentSave) setSessionError('جلسه ذخیره نشد؛ دوباره یکی از کنترل‌های درس را بزنید تا ذخیره تکرار شود.'); });
+      const snapshot = JSON.stringify({ stage, sentenceIndex, revealed, evidencePassed });
+      // Skip the automatic mount save: nothing changed since load, and a post-restart landing
+      // must not rewrite storage (or expire restart tombstones) before the learner acts.
+      if (snapshot !== lastSavedSession.current) {
+        lastSavedSession.current = snapshot;
+        void saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed })
+          .then(() => { if (currentSave) setSessionError(''); })
+          .catch(() => { if (currentSave) setSessionError('جلسه ذخیره نشد؛ دوباره یکی از کنترل‌های درس را بزنید تا ذخیره تکرار شود.'); });
+      }
     }
     return () => { currentSave = false; };
   }, [lesson.id, sessionReady, stage, sentenceIndex, revealed, evidencePassed]);
@@ -238,7 +258,7 @@ export default function SentenceLessonScreen() {
     <View style={styles.root} onTouchStart={timer.interact}>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
-          <PageNavigation tone="dark" backFallback="/lang" />
+          <PageNavigation backFallback="/lang" />
           <View style={styles.headerText}>
             <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
@@ -250,7 +270,7 @@ export default function SentenceLessonScreen() {
           </View>
         </View>
         <View style={styles.headerBottom}>
-          <View style={styles.headerInfoChip}><BookOpenCheck size={13} color="#D9DBFF" /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View>
+          <View style={styles.headerInfoChip}><BookOpenCheck size={13} color={Palette.primary} /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View>
           <Text style={styles.headerInfoText}>{toPersianDigits(lesson.sentences.length)} جملهٔ اصلی</Text>
         </View>
       </LinearGradient>
@@ -502,18 +522,18 @@ export default function SentenceLessonScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },
   // Keep the lesson canvas and vertical safe area consistent.
-  header: { width: '100%', maxWidth: 900, minHeight: 64, alignSelf: 'center', paddingTop: 12, paddingHorizontal: 15, paddingBottom: 7, gap: 8, borderBottomLeftRadius: 22, borderBottomRightRadius: 22 },
+  header: { width: '100%', maxWidth: 900, minHeight: 64, alignSelf: 'center', paddingTop: 12, paddingHorizontal: 15, paddingBottom: 7, gap: 8, borderBottomLeftRadius: 22, borderBottomRightRadius: 22, borderBottomWidth: 1, borderBottomColor: 'rgba(33,26,104,0.08)' },
   headerTop: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
   headerText: { flex: 1, alignItems: 'flex-end', gap: 2 },
-  headerEyebrow: { fontFamily: 'Inter-ExtraBold', color: 'rgba(255,255,255,0.72)', fontSize: 8, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
-  headerTitle: { fontFamily: Typography.fontFamily, fontSize: 20, lineHeight: 27, fontWeight: '400', color: '#FFFFFF', textAlign: 'right', writingDirection: 'rtl' },
-  headerSub: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: 'rgba(255,255,255,0.78)', textAlign: 'right', writingDirection: 'rtl' },
-  percentBadge: { minWidth: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.14)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.18)' },
-  percent: { fontFamily: Typography.fontFamily, fontSize: 16, lineHeight: 18, fontWeight: '400', color: '#FFFFFF', writingDirection: 'rtl' },
-  percentLabel: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.72)', fontSize: 9, fontWeight: '400', writingDirection: 'rtl' },
-  headerBottom: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingTop: 9, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.18)' },
+  headerEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.muted, fontSize: 8, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
+  headerTitle: { fontFamily: Typography.fontFamily, fontSize: 20, lineHeight: 27, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
+  headerSub: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: Palette.text, textAlign: 'right', writingDirection: 'rtl' },
+  percentBadge: { minWidth: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: 'rgba(33,26,104,0.10)' },
+  percent: { fontFamily: Typography.fontFamily, fontSize: 16, lineHeight: 18, fontWeight: '400', color: Palette.ink, writingDirection: 'rtl' },
+  percentLabel: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 9, fontWeight: '400', writingDirection: 'rtl' },
+  headerBottom: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingTop: 9, borderTopWidth: 1, borderTopColor: 'rgba(33,26,104,0.10)' },
   headerInfoChip: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
-  headerInfoText: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.78)', fontSize: 11, fontWeight: '400', writingDirection: 'rtl' },
+  headerInfoText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 11, fontWeight: '400', writingDirection: 'rtl' },
   stepperCard: { width: '100%', maxWidth: 900, alignSelf: 'center', marginTop: 12, paddingHorizontal: 20, paddingVertical: 13, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10, shadowColor: '#211A68', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepperHeading: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   stepperEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 8, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },

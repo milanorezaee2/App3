@@ -25,6 +25,13 @@ export interface StudyState {
   days: Record<string, number>;
   /** Goal-based checks for mapped sentence-course lessons; absent in older v1 data. */
   lessonEvidence: Record<string, Record<string, CourseLessonEvidence>>;
+  /**
+   * Restart tombstones: lesson ids whose sessions/evidence were explicitly deleted on this
+   * device. The personal-cloud merge must keep them deleted (never resurrect them from an
+   * older cloud snapshot) until the cleaned state has been uploaded; re-studying a lesson
+   * expires its tombstone. Absent in older v1 data.
+   */
+  deletedLessonIds: string[];
 }
 
 export const studyDay = (date = new Date()) =>
@@ -39,7 +46,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 const validSkills = new Set<Skill>(['reading', 'listening', 'writing', 'grammar']);
 
 export function parseStudy(raw: string | null): StudyState {
-  if (raw === null) return { version: 1, sessions: {}, days: {}, lessonEvidence: {} };
+  if (raw === null) return { version: 1, sessions: {}, days: {}, lessonEvidence: {}, deletedLessonIds: [] };
   const parsed = JSON.parse(raw) as Partial<StudyState> | null;
   if (!parsed || parsed.version !== 1 || !isRecord(parsed.sessions) || !isRecord(parsed.days)
     || Object.values(parsed.days).some(value => typeof value !== 'number' || !Number.isFinite(value) || value < 0)
@@ -59,12 +66,18 @@ export function parseStudy(raw: string | null): StudyState {
     throw Error('سنجش درس معتبر نیست؛ داده‌های قبلی بازنویسی نشدند.');
   }
 
+  // Restart tombstones are auxiliary: coerce leniently and never fail the whole load for them.
+  const deletedLessonIds = Array.isArray(parsed.deletedLessonIds)
+    ? [...new Set(parsed.deletedLessonIds.filter((id): id is string => typeof id === 'string' && !!id.trim()))]
+    : [];
+
   return {
     ...parsed,
     version: 1,
     sessions: parsed.sessions as Record<string, LessonSession>,
     days: parsed.days as Record<string, number>,
     lessonEvidence: lessonEvidence as Record<string, Record<string, CourseLessonEvidence>>,
+    deletedLessonIds,
   };
 }
 
@@ -97,7 +110,36 @@ function update(change: (state: StudyState) => void): Promise<StudyState> {
 }
 
 export function saveLessonSession(id: string, value: LessonSession) {
-  return update(state => { state.sessions[id] = value; });
+  return update(state => {
+    state.sessions[id] = value;
+    // Genuine post-restart progress wins over the restart: expire this lesson's tombstone.
+    // A pristine auto-save right after a restart landing must NOT (it carries no new progress).
+    const progressed = value.stage > 0 || value.sentenceIndex > 0 || value.revealed || value.evidencePassed;
+    if (progressed && state.deletedLessonIds.length) state.deletedLessonIds = state.deletedLessonIds.filter(item => item !== id);
+  });
+}
+
+/**
+ * Forget saved positions and assessment evidence for the given lessons (daily study time is kept).
+ * Stashes restart tombstones so the personal-cloud merge cannot resurrect the deleted data.
+ */
+export function clearLessonStudy(lessonIds: string[]) {
+  const ids = [...new Set(lessonIds.map(id => id.trim()).filter(Boolean))];
+  if (!ids.length) return loadStudy();
+  return update(state => {
+    ids.forEach(id => {
+      delete state.sessions[id];
+      delete state.lessonEvidence[id];
+    });
+    state.deletedLessonIds = [...new Set([...state.deletedLessonIds, ...ids])];
+  });
+}
+
+/** Drop restart tombstones once the personal cloud row has been written without the deleted data. */
+export async function consumeStudyDeletions(): Promise<void> {
+  const state = await loadStudy();
+  if (!state.deletedLessonIds.length) return;
+  await update(next => { next.deletedLessonIds = []; });
 }
 
 export function recordLessonEvidence(lessonId: string, taskId: string, skill: Skill, correct: boolean, heard: boolean) {
@@ -112,6 +154,8 @@ export function recordLessonEvidence(lessonId: string, taskId: string, skill: Sk
       ...state.lessonEvidence[lessonId],
       [taskId]: { skill, correct, heard, attempts: (existing?.attempts ?? 0) + 1 },
     };
+    // Fresh post-restart evidence wins over the restart: expire this lesson's tombstone.
+    if (state.deletedLessonIds.length) state.deletedLessonIds = state.deletedLessonIds.filter(item => item !== lessonId);
   });
 }
 

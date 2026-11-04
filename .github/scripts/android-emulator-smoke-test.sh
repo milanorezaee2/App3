@@ -138,60 +138,34 @@ if ! timeout 30s adb exec-out screencap -p > "$screenshot_file"; then
   echo 'Warning: screenshot capture failed; continuing with the UI hierarchy check.'
 fi
 
-failed_step="verifying the mandatory learner OTP gate rendered"
-registration_gate=false
-if { grep -Fq 'ورود به حساب' "$ui_file" && grep -Fq 'ارسال کد ورود به ایمیل' "$ui_file"; } \
-  || { grep -Fq 'ساخت حساب زبان‌آموز' "$ui_file" && grep -Fq 'ساخت حساب و ارسال کد' "$ui_file"; }; then
-  registration_gate=true
-  echo 'Android emulator opened MiloMultilang and rendered its email OTP login or registration gate.'
-elif (grep -Fq 'MILO' "$ui_file" || grep -Fq 'Milo' "$ui_file") && grep -Fq 'هر روز، یک قدم' "$ui_file"; then
-  echo 'Android emulator restored an authenticated learner and rendered the language home.'
-else
-  echo 'Neither the learner registration gate nor the authenticated language home was found.'
+failed_step="verifying the no-login language home rendered"
+# MiloMultilang.apk is the no-login learner variant (English + Russian): it must
+# open directly on language selection, with no account gate and no Turkish card.
+home_rendered=false
+for home_attempt in 1 2 3; do
+  if grep -Fq 'English' "$ui_file" && grep -Fq 'Русский' "$ui_file" \
+    && grep -Fq 'زبان را از زندگی یاد بگیر' "$ui_file" \
+    && ! grep -Fq 'Türkçe' "$ui_file" \
+    && ! grep -Fq 'ورود به حساب' "$ui_file" \
+    && ! grep -Fq 'ساخت حساب زبان‌آموز' "$ui_file"; then
+    home_rendered=true
+    echo 'Android emulator opened MiloMultilang (no login) on the English + Russian language home.'
+    break
+  fi
+  if [[ "$home_attempt" == 3 ]]; then
+    break
+  fi
+  echo 'Language home is not ready; waiting once more.'
+  sleep 20
+  capture_ui
+done
+if [[ "$home_rendered" != true ]]; then
+  echo 'MiloMultilang (no login) did not render the English + Russian language home without an account gate.'
   exit 1
 fi
 
-if [[ "$registration_gate" == true ]]; then
-  failed_step="opening the keyboard in the learner registration form"
-  registration_coords="$(python3 - "$ui_file" <<'PY'
-import re, sys, xml.etree.ElementTree as ET
-for node in ET.parse(sys.argv[1]).getroot().iter():
-    if node.attrib.get('content-desc', '') == 'ایمیل حساب':
-        match = re.search(r'\[(\d+),(\d+)\]\[(\d+),(\d+)\]', node.attrib.get('bounds', ''))
-        if match:
-            x1,y1,x2,y2=map(int,match.groups()); print((x1+x2)//2,(y1+y2)//2); break
-PY
-)"
-  [[ -n "$registration_coords" ]] || { echo 'Registration email input was not found.'; exit 1; }
-  read -r registration_x registration_y <<< "$registration_coords"
-  adb shell settings put secure show_ime_with_hard_keyboard 1
-  adb shell input tap "$registration_x" "$registration_y"
-  sleep 5
-  capture_ui
-  keyboard_state="$(adb shell dumpsys input_method 2>/dev/null || true)"
-  grep -Eq 'mInputShown=true|isInputViewShown=true|inputShown=true' <<< "$keyboard_state" || { echo 'Registration keyboard did not open.'; exit 1; }
-  python3 - "$ui_file" <<'PY'
-import re, sys, xml.etree.ElementTree as ET
-root=ET.parse(sys.argv[1]).getroot(); input_bottom=None; keyboard_tops=[]
-for node in root.iter():
-    bounds=re.search(r'\[(\d+),(\d+)\]\[(\d+),(\d+)\]',node.attrib.get('bounds',''))
-    if not bounds: continue
-    x1,y1,x2,y2=map(int,bounds.groups())
-    if node.attrib.get('content-desc','') == 'ایمیل حساب': input_bottom=y2
-    package=node.attrib.get('package','').lower()
-    if 'inputmethod' in package or 'keyboard' in package: keyboard_tops.append(y1)
-if input_bottom is None: raise SystemExit('Registration input disappeared with keyboard open.')
-if keyboard_tops and input_bottom > min(keyboard_tops):
-    raise SystemExit(f'Registration input overlaps keyboard by {input_bottom-min(keyboard_tops)}px.')
-print('Registration input remains fully visible above the software keyboard.')
-PY
-  adb shell input keyevent KEYCODE_BACK
-fi
-
-# A clean CI install intentionally has no production learner credentials. Chat
-# geometry remains covered when an authenticated test session is restored; on a
-# first install we verify the account gate and continue with the separate admin APK.
-if [[ "$registration_gate" == false ]]; then
+# The no-login variant opens every route without credentials, so the chat
+# keyboard geometry is covered directly on this APK.
 failed_step="opening the Emma chat keyboard test route"
 timeout 60s adb shell am start -W -a android.intent.action.VIEW -d 'companionenglish:///conversations/emma' com.devicecontrol.companion
 sleep 8
@@ -366,7 +340,6 @@ PY
 
 timeout 30s adb exec-out screencap -p > "$screenshot_file"
 echo 'Android emulator verified both complete chat composers and their side buttons with the keyboard open.'
-fi
 
 failed_step="installing the private management APK"
 adb install -r "$admin_apk_path"
@@ -411,9 +384,9 @@ if [[ -s "$login_apk_path" ]]; then
   # re-dump before deciding the login variant failed to render.
   login_rendered=false
   for login_attempt in 1 2 3; do
-    if grep -Fq 'ساخت حساب زبان‌آموز' "$ui_file" || grep -Fq 'هر روز، یک قدم' "$ui_file"; then
+    if grep -Fq 'ورود به حساب' "$ui_file" && grep -Fq 'ارسال کد ورود به ایمیل' "$ui_file"; then
       login_rendered=true
-      echo 'Android emulator launched the learner login APK and rendered its first screen.'
+      echo 'Android emulator launched the learner login APK and rendered its email OTP login gate.'
       break
     fi
     if [[ "$login_attempt" == 3 ]]; then
@@ -424,9 +397,43 @@ if [[ -s "$login_apk_path" ]]; then
     capture_ui
   done
   if [[ "$login_rendered" != true ]]; then
-    echo 'The learner login APK did not render the registration gate or the language home.'
+    echo 'The learner login APK did not enforce its email OTP login gate.'
     exit 1
   fi
+  failed_step="opening the keyboard in the learner login form"
+  login_coords="$(python3 - "$ui_file" <<'PY'
+import re, sys, xml.etree.ElementTree as ET
+for node in ET.parse(sys.argv[1]).getroot().iter():
+    if node.attrib.get('content-desc', '') == 'ایمیل حساب':
+        match = re.search(r'\[(\d+),(\d+)\]\[(\d+),(\d+)\]', node.attrib.get('bounds', ''))
+        if match:
+            x1,y1,x2,y2=map(int,match.groups()); print((x1+x2)//2,(y1+y2)//2); break
+PY
+)"
+  [[ -n "$login_coords" ]] || { echo 'Login email input was not found.'; exit 1; }
+  read -r login_x login_y <<< "$login_coords"
+  adb shell settings put secure show_ime_with_hard_keyboard 1
+  adb shell input tap "$login_x" "$login_y"
+  sleep 5
+  capture_ui
+  keyboard_state="$(adb shell dumpsys input_method 2>/dev/null || true)"
+  grep -Eq 'mInputShown=true|isInputViewShown=true|inputShown=true' <<< "$keyboard_state" || { echo 'Login keyboard did not open.'; exit 1; }
+  python3 - "$ui_file" <<'PY'
+import re, sys, xml.etree.ElementTree as ET
+root=ET.parse(sys.argv[1]).getroot(); input_bottom=None; keyboard_tops=[]
+for node in root.iter():
+    bounds=re.search(r'\[(\d+),(\d+)\]\[(\d+),(\d+)\]',node.attrib.get('bounds',''))
+    if not bounds: continue
+    x1,y1,x2,y2=map(int,bounds.groups())
+    if node.attrib.get('content-desc','') == 'ایمیل حساب': input_bottom=y2
+    package=node.attrib.get('package','').lower()
+    if 'inputmethod' in package or 'keyboard' in package: keyboard_tops.append(y1)
+if input_bottom is None: raise SystemExit('Login input disappeared with keyboard open.')
+if keyboard_tops and input_bottom > min(keyboard_tops):
+    raise SystemExit(f'Login input overlaps keyboard by {input_bottom-min(keyboard_tops)}px.')
+print('Login input remains fully visible above the software keyboard.')
+PY
+  adb shell input keyevent KEYCODE_BACK
 fi
 
 echo 'Android emulator verified the standalone management APK and protected manager login.'

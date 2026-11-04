@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, Image, Pressable, ScrollView, Text, View, useWindowDimensions } from 'react-native';
+import { Image, Pressable, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import {
@@ -23,13 +23,14 @@ import {
   Volume2,
 } from 'lucide-react-native';
 import { AppBottomNav } from '@/components/AppBottomNav';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { PageNavigation } from '@/components/PageNavigation';
 import { COURSE_LEVELS, SENTENCE_LESSONS } from '@/lib/courseContent';
-import { getCourseProgress, setCurrentLesson, type CourseProgress } from '@/lib/courseProgress';
+import { getCourseProgress, restartCourseFromBeginning, type CourseProgress } from '@/lib/courseProgress';
 import { syncPersonalLearningData } from '@/lib/personalLearningSync';
 import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '@/components/LearningHomeStyles';
 import { toPersianDigits } from '@/lib/format';
-import { loadStudy, studyDay } from '@/lib/englishStudyState';
+import { clearLessonStudy, loadStudy, studyDay } from '@/lib/englishStudyState';
 import { ENGLISH_ENGINE_BLUEPRINT, getEnglishLevelMetrics } from '@/lib/englishLearningEngine';
 import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } from '@/components/EnglishUI';
 
@@ -44,6 +45,9 @@ export default function LearningHome() {
   const [timeError, setTimeError] = useState(false);
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [hasStartedCourse, setHasStartedCourse] = useState(false);
+  const [restartDialogOpen, setRestartDialogOpen] = useState(false);
+  const [restartBusy, setRestartBusy] = useState(false);
+  const [restartError, setRestartError] = useState('');
 
   // Paint the home shell first, then fetch/parse the lesson route in the
   // background so the first lesson is warm when the learner taps Start.
@@ -104,10 +108,29 @@ export default function LearningHome() {
   const openCurrentLesson = () => router.push({ pathname: '/course/lesson', params: { id: currentLesson.id } } as never);
 
   const restartFromBeginnerLevel = () => {
-    Alert.alert('شروع مجدد از سطح ابتدایی', 'می‌خواهید دوباره از اولین درسِ سطح ابتدایی شروع کنید؟ محتوای درس‌ها دست‌نخورده می‌ماند.', [
-      { text: 'انصراف', style: 'cancel' },
-      { text: 'شروع مجدد', style: 'destructive', onPress: () => { void setCurrentLesson(SENTENCE_LESSONS[0].id).then(() => router.push({ pathname: '/course/lesson', params: { id: SENTENCE_LESSONS[0].id, fromStart: '1' } } as never)).catch(() => undefined); } },
-    ]);
+    // Alert.alert is a silent no-op on web, so restart confirmation uses the
+    // cross-platform ConfirmDialog rendered below.
+    setRestartError('');
+    setRestartDialogOpen(true);
+  };
+
+  const confirmRestartFromBeginning = async () => {
+    if (restartBusy) return;
+    setRestartBusy(true);
+    setRestartError('');
+    try {
+      // Progress and study sessions live in separate keys, so both resets run together.
+      await Promise.all([
+        restartCourseFromBeginning(),
+        clearLessonStudy(SENTENCE_LESSONS.map(lesson => lesson.id)),
+      ]);
+      setRestartDialogOpen(false);
+      router.push({ pathname: '/course/lesson', params: { id: SENTENCE_LESSONS[0].id, fromStart: '1' } } as never);
+    } catch (cause) {
+      setRestartError(cause instanceof Error && cause.message ? cause.message : 'شروع مجدد انجام نشد؛ دوباره تلاش کنید.');
+    } finally {
+      setRestartBusy(false);
+    }
   };
 
   return (
@@ -128,7 +151,7 @@ export default function LearningHome() {
           </View>
 
           <LinearGradient
-            colors={['#211A68', '#4338CA', '#0EAA83']}
+            colors={['#FFFFFF', '#EFF0FE', '#DDE2FA']}
             start={{ x: .95, y: .08 }}
             end={{ x: .04, y: 1 }}
             style={[styles.welcomeBlock, compact && styles.welcomeBlockCompact]}
@@ -148,7 +171,7 @@ export default function LearningHome() {
                   <Text style={styles.welcomeTagText}>یادگیری جمله‌محور</Text>
                 </View>
                 <View style={styles.welcomeTag}>
-                  <Sparkles size={12} color="#B8E3D5" />
+                  <Sparkles size={12} color={HomeColors.sage} />
                   <Text style={styles.welcomeTagText}>تمرین کوتاه روزانه</Text>
                 </View>
               </View>
@@ -252,7 +275,7 @@ export default function LearningHome() {
             </View>
           </View>
 
-          <LinearGradient colors={['#211A68', '#312E81', '#0EAA83']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
+          <LinearGradient colors={['#FFFFFF', '#EFF0FE', '#DDE2FA']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
             <View pointerEvents="none" style={styles.todayGlow} />
             <View style={styles.todayTopRow}>
               <View style={styles.todayIcon}><Clock3 size={18} color={HomeColors.gold} /></View>
@@ -267,14 +290,14 @@ export default function LearningHome() {
               </View>
             </View>
             <View style={styles.todayProgressTrack}>
-              <EnglishProgressTrack value={dailyPct} color={HomeColors.gold} trackColor="rgba(255,255,255,0.17)" height={7} />
+              <EnglishProgressTrack value={dailyPct} color={HomeColors.gold} trackColor="rgba(33,26,104,0.10)" height={7} />
             </View>
             <View style={styles.todayFootnote}>
               <BookOpen size={14} color={HomeColors.gold} />
               <Text style={styles.todayFootnoteText}>{toPersianDigits(completed)} از {toPersianDigits(SENTENCE_LESSONS.length)} درس اصلی تکمیل‌شده</Text>
               {progress?.currentStreak ? (
                 <View style={styles.streakPill}>
-                  <Flame size={12} color="#C4E8D8" />
+                  <Flame size={12} color={HomeColors.sage} />
                   <Text style={styles.streakText}>{toPersianDigits(progress.currentStreak)} روز پیاپی</Text>
                 </View>
               ) : null}
@@ -419,6 +442,18 @@ export default function LearningHome() {
           </LinearGradient>
         </View>
       </ScrollView>
+      <ConfirmDialog
+        visible={restartDialogOpen}
+        title="شروع مجدد از سطح ابتدایی"
+        message="از اولین درس انگلیسی شروع می‌کنی. درس‌های تکمیل‌شده، جلسات نیمه‌تمام و برنامهٔ مرور این دوره پاک می‌شود؛ محتوای درس‌ها، زنجیرهٔ روزانه و هدف روزانه حفظ می‌شود."
+        confirmText="شروع مجدد"
+        cancelText="انصراف"
+        destructive
+        busy={restartBusy}
+        error={restartError}
+        onConfirm={() => void confirmRestartFromBeginning()}
+        onCancel={() => { if (!restartBusy) setRestartDialogOpen(false); }}
+      />
       <AppBottomNav />
     </View>
   );

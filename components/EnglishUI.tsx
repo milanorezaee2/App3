@@ -5,14 +5,18 @@ import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { toPersianDigits } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 
+/**
+ * Light, professional level tints. Each level keeps its hue identity in a soft pastel form;
+ * all consumers (library heroes, level chips, lesson headers) render dark-ink content on top.
+ */
 export const ENGLISH_LEVEL_GRADIENTS: Record<CourseLevelId, [string, string]> = {
-  [-1]: ['#94A3B8', '#475569'],
-  0: ['#6555E9', '#29246F'],
-  1: ['#27A1D6', '#164D8C'],
-  2: ['#19A88B', '#0D5A53'],
-  3: ['#E4A436', '#99501D'],
-  4: ['#9A68E8', '#4C318A'],
-  5: ['#C55F76', '#78364F'],
+  [-1]: ['#F7F9FC', '#E5EAF1'],
+  0: ['#EFF0FE', '#DADFFA'],
+  1: ['#EAF5FD', '#D1E8F8'],
+  2: ['#E9FAF1', '#CFF1DE'],
+  3: ['#FFF7E5', '#FAEAC4'],
+  4: ['#F2EDFE', '#E1D5FA'],
+  5: ['#FDEEF2', '#F7D6DF'],
 };
 
 export function displayEnglishModuleLabel(label: string) {

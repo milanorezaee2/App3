@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import {
@@ -20,11 +20,12 @@ import {
   Volume2,
 } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { TurkishBottomNav } from '@/components/TurkishBottomNav';
 import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '@/components/LearningHomeStyles';
 import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } from '@/components/EnglishUI';
 import { TURKISH_LEVELS, TURKISH_LESSONS, turkishProgress, type TurkishLevelId } from '@/lib/languages/turkish';
-import { loadTurkishLessonSessionWithPresence } from '@/lib/languages/turkishStudyState';
+import { clearTurkishLessonSession, loadTurkishLessonSessionWithPresence } from '@/lib/languages/turkishStudyState';
 import type { CourseProgress } from '@/lib/courseProgress';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
@@ -76,6 +77,9 @@ export default function TurkishHome() {
   const [error, setError] = useState('');
   const [retry, setRetry] = useState(0);
   const [hasStartedCourse, setHasStartedCourse] = useState(false);
+  const [restartDialogOpen, setRestartDialogOpen] = useState(false);
+  const [restartBusy, setRestartBusy] = useState(false);
+  const [restartError, setRestartError] = useState('');
 
   useFocusEffect(useCallback(() => {
     let alive = true;
@@ -123,10 +127,29 @@ export default function TurkishHome() {
   const openLevel = (levelId: TurkishLevelId) => router.push(`/learn/tr/library?level=${levelId}` as never);
 
   const restartFromBeginnerLevel = () => {
-    Alert.alert('شروع مجدد از سطح ابتدایی', 'می‌خواهید دوباره از اولین درسِ سطح ابتداییِ ترکی استانبولی شروع کنید؟ محتوای درس‌ها دست‌نخورده می‌ماند.', [
-      { text: 'انصراف', style: 'cancel' },
-      { text: 'شروع مجدد', style: 'destructive', onPress: () => { void turkishProgress.setCurrentLesson(TURKISH_LESSONS[0].id).then(() => router.push({ pathname: '/learn/tr/lesson', params: { id: TURKISH_LESSONS[0].id, fromStart: '1' } } as never)).catch(() => undefined); } },
-    ]);
+    // Alert.alert is a silent no-op on web, so restart confirmation uses the
+    // cross-platform ConfirmDialog rendered below.
+    setRestartError('');
+    setRestartDialogOpen(true);
+  };
+
+  const confirmRestartFromBeginning = async () => {
+    if (restartBusy) return;
+    setRestartBusy(true);
+    setRestartError('');
+    try {
+      // Progress and study sessions live in separate keys, so both resets run together.
+      await Promise.all([
+        turkishProgress.restartCourse(),
+        ...TURKISH_LESSONS.map(lesson => clearTurkishLessonSession(lesson.id)),
+      ]);
+      setRestartDialogOpen(false);
+      router.push({ pathname: '/learn/tr/lesson', params: { id: TURKISH_LESSONS[0].id, fromStart: '1' } } as never);
+    } catch (cause) {
+      setRestartError(cause instanceof Error && cause.message ? cause.message : 'شروع مجدد انجام نشد؛ دوباره تلاش کنید.');
+    } finally {
+      setRestartBusy(false);
+    }
   };
   const openNextLesson = () => {
     if (resumeLesson) router.push(`/learn/tr/lesson?id=${encodeURIComponent(resumeLesson.id)}` as never);
@@ -306,7 +329,7 @@ export default function TurkishHome() {
               </View>
             </View>
             <View style={styles.todayProgressTrack}>
-              <EnglishProgressTrack value={courseProgressPercent} color={HomeColors.gold} trackColor="rgba(255,255,255,0.17)" height={7} />
+              <EnglishProgressTrack value={courseProgressPercent} color={HomeColors.gold} trackColor="rgba(33,26,104,0.10)" height={7} />
             </View>
             <View style={styles.todayFootnote}>
               <BookOpen size={14} color={HomeColors.gold} />
@@ -422,6 +445,18 @@ export default function TurkishHome() {
           </LinearGradient>
         </View>
       </ScrollView>
+      <ConfirmDialog
+        visible={restartDialogOpen}
+        title="شروع مجدد از سطح ابتدایی"
+        message="از اولین درس ترکی استانبولی شروع می‌کنی. درس‌های تکمیل‌شده، جلسات نیمه‌تمام و برنامهٔ مرور این دوره پاک می‌شود؛ محتوای درس‌ها، زنجیرهٔ روزانه و هدف روزانه حفظ می‌شود."
+        confirmText="شروع مجدد"
+        cancelText="انصراف"
+        destructive
+        busy={restartBusy}
+        error={restartError}
+        onConfirm={() => void confirmRestartFromBeginning()}
+        onCancel={() => { if (!restartBusy) setRestartDialogOpen(false); }}
+      />
       <TurkishBottomNav />
     </View>
   );

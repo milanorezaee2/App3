@@ -14,6 +14,7 @@ on:
       - arena/9ecb1f7a-app2
       - arena/8366eeeb-app2
       - arena/8290df12-app2
+      - arena/f350ae27-app3
 
 permissions:
   contents: write
@@ -110,13 +111,13 @@ jobs:
           fi
 
       - name: Generate native Android project
-        run: npx expo prebuild --platform android --no-install
+        run: EXPO_PUBLIC_LEARNER_LOGIN=false EXPO_PUBLIC_LANGUAGE_SCOPE=en,ru npx expo prebuild --platform android --no-install
 
       - name: Build standalone release APK
         working-directory: android
         run: |
           chmod +x gradlew
-          ./gradlew assembleRelease --no-daemon
+          EXPO_PUBLIC_LEARNER_LOGIN=false EXPO_PUBLIC_LANGUAGE_SCOPE=en,ru ./gradlew assembleRelease --no-daemon
 
       - name: Verify and preserve the learner APK
         run: |
@@ -138,10 +139,10 @@ jobs:
         shell: bash
         run: |
           rm -rf android
-          MILO_ADMIN_APP=true EXPO_PUBLIC_MILO_ADMIN_APP=true EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN=true npx expo prebuild --platform android --no-install
+          MILO_ADMIN_APP=true EXPO_PUBLIC_MILO_ADMIN_APP=true EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN=true EXPO_PUBLIC_LEARNER_LOGIN=false EXPO_PUBLIC_LANGUAGE_SCOPE=en,tr npx expo prebuild --platform android --no-install
           cd android
           chmod +x gradlew
-          MILO_ADMIN_APP=true EXPO_PUBLIC_MILO_ADMIN_APP=true EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN=true ./gradlew assembleRelease --no-daemon
+          MILO_ADMIN_APP=true EXPO_PUBLIC_MILO_ADMIN_APP=true EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN=true EXPO_PUBLIC_LEARNER_LOGIN=false EXPO_PUBLIC_LANGUAGE_SCOPE=en,tr ./gradlew assembleRelease --no-daemon
           cd ..
           cp android/app/build/outputs/apk/release/app-release.apk MiloAdmin.apk
           python3 - <<'PY'
@@ -158,10 +159,10 @@ jobs:
         shell: bash
         run: |
           rm -rf android
-          EXPO_PUBLIC_LEARNER_LOGIN=true npx expo prebuild --platform android --no-install
+          EXPO_PUBLIC_LEARNER_LOGIN=true EXPO_PUBLIC_LANGUAGE_SCOPE=en,tr npx expo prebuild --platform android --no-install
           cd android
           chmod +x gradlew
-          EXPO_PUBLIC_LEARNER_LOGIN=true ./gradlew assembleRelease --no-daemon
+          EXPO_PUBLIC_LEARNER_LOGIN=true EXPO_PUBLIC_LANGUAGE_SCOPE=en,tr ./gradlew assembleRelease --no-daemon
           cd ..
           cp android/app/build/outputs/apk/release/app-release.apk MiloMultilang-Login.apk
           python3 - <<'PY'

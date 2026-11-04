@@ -191,6 +191,15 @@ try {
     html:not(.arena-frame-disabled) #root > div {
       background: #F8F6FB !important;
       min-height: 100% !important;
+      /* The app container must fill the frame: without a definite width the
+         flex-column #root lets it collapse to 0px wide (blank screen with
+         only the fixed-size absolute background shapes visible). The
+         keep-desktop rule below keeps its own 1120px width (higher
+         specificity), so this only affects mobile-optimized mode. */
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      align-self: stretch !important;
     }
     html:not(.arena-frame-disabled) #root::before {
       content: '';
@@ -305,6 +314,11 @@ try {
     border-radius: 0 !important;
     box-shadow: none !important;
     border: none !important;
+  }
+  html.arena-frame-disabled #root > div {
+    width: 100% !important;
+    max-width: 100% !important;
+    align-self: stretch !important;
   }
   html.arena-frame-disabled #root::before,
   html.arena-frame-disabled #root::after,
