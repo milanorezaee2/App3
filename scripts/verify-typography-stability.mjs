@@ -49,10 +49,11 @@ const personalSync = read('app/personal-sync.tsx');
 const appConfig = read('app.json');
 const androidSmoke = read('.github/scripts/android-emulator-smoke-test.sh');
 check(/"softwareKeyboardLayoutMode":\s*"resize"/.test(appConfig), 'Android manifest is generated with native keyboard resize');
-check(/companionenglish:\/\/\/conversations\/emma/.test(androidSmoke)
+check(/زبان را از زندگی یاد بگیر/.test(androidSmoke)
+  && /ارسال کد ورود به ایمیل/.test(androidSmoke)
   && /mInputShown=true/.test(androidSmoke)
-  && /Composer is clipped/.test(androidSmoke),
-  'Android release smoke test opens the real keyboard and rejects a clipped composer');
+  && /Login input remains fully visible above the software keyboard/.test(androidSmoke),
+  'Android release smoke test covers the no-login home, the login gate and the real keyboard');
 check(/messages:\s*\{\s*flex:\s*1,\s*minHeight:\s*0/.test(emma) && /messages:\s*\{\s*flex:\s*1,\s*minHeight:\s*0/.test(human), 'message lists yield all resized height to the composer');
 check(/KeyboardAvoidingView style=\{styles\.root\} behavior="height" enabled/.test(emma)
   && /KeyboardAvoidingView style=\{styles\.root\} behavior="height" enabled/.test(human)
