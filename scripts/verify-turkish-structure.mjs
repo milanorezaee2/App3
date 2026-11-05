@@ -492,10 +492,29 @@ await Promise.all([
 check(globalThis.__turkishUtterances.length === beforeRapidRequests + 1
   && globalThis.__turkishUtterances.at(-1).text === 'İki', 'Rapid Turkish narration changes allow only the latest phrase to start');
 await turkishSpeech.stopTurkishSpeech();
+let queuedPhraseDone = 0;
+await turkishSpeech.playTurkishSpeech('Sıradaki', 0.85, undefined, () => { queuedPhraseDone += 1; });
+const queuedPhrase = globalThis.__turkishUtterances.at(-1);
+queuedPhrase.options.onDone();
+check(queuedPhraseDone === 1, 'A completed queue phrase releases only its own sequential playback callback');
+const stopsBeforeIdleStop = globalThis.__turkishSpeechStops;
+await turkishSpeech.stopTurkishSpeech();
+check(globalThis.__turkishSpeechStops === stopsBeforeIdleStop, 'Stopping an already completed Turkish phrase adds no native stop delay');
+queuedPhrase.options.onDone();
+check(queuedPhraseDone === 1, 'A stale queue callback cannot advance narration after cancellation');
 const turkishLessonSource = read('components/TurkishLesson.tsx');
 check(/AUTO_SPEECH_RATE = 0\.85/.test(turkishLessonSource) && /NORMAL_SPEECH_RATE = 1/.test(turkishLessonSource)
   && /SLOW_SPEECH_RATE = 0\.5/.test(turkishLessonSource), 'Turkish automatic, normal and slow rates match the English narrator levels');
 check(/replayRow: \{ flexDirection: 'row-reverse', alignSelf: 'stretch', alignItems: 'stretch'/.test(turkishLessonSource)
   && /replayButton: \{ flex: 1, minWidth: 0,[\s\S]*?justifyContent: 'center'/.test(turkishLessonSource), 'Turkish slow and normal buttons share equal width, height and centered alignment');
+check(turkishLessonSource.includes('<PageNavigation backFallback="/learn/tr" />'), 'Turkish lesson has the same real Back and language Home navigation as English');
+check(turkishLessonSource.includes('for (const text of phrases)') && turkishLessonSource.includes('AUTO_SPEECH_RATE,')
+  && turkishLessonSource.includes('accessibilityLabel="توقف پخش خودکار"'), 'Visible Turkish learning cards play sequentially at English speed with a manual stop control');
+check(turkishLessonSource.includes('const automaticQueueKey = JSON.stringify(automaticPhrases)')
+  && turkishLessonSource.includes('if (stage === 2) speak('), 'Selecting a listening card replaces its audio without restarting the unchanged queue');
+check(/nextButton: \{ flex: 1, minWidth: 0, alignSelf: 'stretch'/.test(turkishLessonSource)
+  && !turkishLessonSource.includes('nextButtonBesidePrevious'), 'Turkish Continue fills the available footer row instead of shrinking to its label');
+check(turkishLessonSource.includes("fontFamily: 'IRANSans'") && read('components/TurkishDialoguePractice.tsx').includes('if (current && (!isMyLine || revealed)) onSpeak(current.text)'),
+  'Turkish lesson uses bundled Persian typography and narrates only dialogue text that is actually visible');
 
 console.log(`${checks} Turkish Pre-A1..C1 curriculum, orthography, progress, session resume, pronunciation, routing, and isolation checks passed.`);

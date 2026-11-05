@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { ChevronLeft, Volume2 } from 'lucide-react-native';
 import type { LearningLesson } from '@/lib/languages/types';
@@ -16,6 +16,11 @@ export default function TurkishDialoguePractice({ dialogue, onSpeak }: {
   const [revealed, setRevealed] = useState(false);
   const current = dialogue[index];
   const isMyLine = current?.speaker === myRole;
+
+  // Only narrate text that is actually visible; hidden recall answers stay hidden.
+  useEffect(() => {
+    if (current && (!isMyLine || revealed)) onSpeak(current.text);
+  }, [current, isMyLine, onSpeak, revealed]);
 
   const restart = () => { setIndex(0); setRevealed(false); };
   const advance = () => { setRevealed(false); setIndex(value => Math.min(value + 1, dialogue.length - 1)); };

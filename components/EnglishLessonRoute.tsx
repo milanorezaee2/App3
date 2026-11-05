@@ -13,7 +13,7 @@ import { BookOpenCheck, Check, ChevronLeft, Headphones, MessageCircle, Mic2, Ref
 import { COURSE_LEVELS, getSentenceLesson, SENTENCE_LESSONS } from '@/lib/courseContent';
 import { completeSentenceLesson } from '@/lib/courseProgress';
 import { evaluateSpokenSentence, type SpeechEvaluation } from '@/lib/speechPractice';
-import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
+import { Colors, Radius, Spacing, Typography as SharedTypography } from '@/lib/theme';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { toPersianDigits } from '@/lib/format';
 
@@ -43,6 +43,9 @@ import { C1_ADDITIONAL_APPLICATION } from '@/lib/englishC1AppliedAssessment';
 import { B2_GUIDANCE, B2_PRODUCTION, B2_PRODUCTION_CHECKLIST } from '@/lib/englishB2Practice';
 import { A2_FOUNDATION_LESSONS } from '@/lib/courseContentA2Foundation';
 
+// Only this lesson's Persian copy uses IRANSans; all shared tokens and the
+// bundled extra-bold Latin teaching face remain unchanged.
+const Typography = { ...SharedTypography, fontFamily: 'IRANSans' };
 const stages = ENGLISH_ENGINE_STEPS;
 
 export default function SentenceLessonScreen() {
@@ -511,7 +514,7 @@ export default function SentenceLessonScreen() {
           {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && styles.nextButtonDisabled]}>
             <Text style={styles.secondaryControlText}>جمله قبلی</Text>
           </Pressable>}
-          <Pressable accessibilityRole="button" accessibilityState={{ disabled: nextDisabled }} disabled={nextDisabled} style={[styles.nextButton, stage === 1 && styles.nextButtonBesidePrevious, nextDisabled && styles.nextButtonDisabled]} onPress={() => void next()}>
+          <Pressable accessibilityRole="button" accessibilityState={{ disabled: nextDisabled }} disabled={nextDisabled} style={[styles.nextButton, nextDisabled && styles.nextButtonDisabled]} onPress={() => void next()}>
             <Text style={[styles.nextText, nextDisabled && styles.nextTextDisabled]}>{stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جمله بعدی' : 'ادامه'}</Text>
             {stage === stages.length - 1 ? <Check size={20} color={nextDisabled ? Palette.primaryDark : Colors.onColor} /> : <ChevronLeft size={20} color={nextDisabled ? Palette.primaryDark : Colors.onColor} />}
           </Pressable>
@@ -621,11 +624,10 @@ const styles = StyleSheet.create({
   vocabMeaning: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
   vocabExample: { fontFamily: 'Inter-ExtraBold', fontSize: 13, fontWeight: '800', color: Palette.text, textAlign: 'left', writingDirection: 'ltr', marginTop: 8 },
   footer: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 15, paddingTop: 7, paddingBottom: 30, backgroundColor: Palette.canvas, borderTopWidth: 1, borderTopColor: Palette.border, shadowColor: '#211A68', shadowOpacity: .07, shadowRadius: 12, shadowOffset: { width: 0, height: -4 }, elevation: 5 },
-  footerButtons: { width: '100%', flexDirection: 'row-reverse', gap: 8, alignItems: 'center' },
+  footerButtons: { width: '100%', flexDirection: 'row-reverse', gap: 8, alignItems: 'stretch' },
   previousButton: { flex: 1, minHeight: 54, borderRadius: 17, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
   secondaryControlText: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 13, textAlign: 'center', writingDirection: 'rtl' },
-  nextButton: { width: '100%', maxWidth: 900, alignSelf: 'center', minHeight: 54, borderRadius: 17, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, shadowColor: Palette.primary, shadowOpacity: .2, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
-  nextButtonBesidePrevious: { flex: 1, width: undefined },
+  nextButton: { flex: 1, minWidth: 0, alignSelf: 'stretch', minHeight: 54, borderRadius: 17, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, shadowColor: Palette.primary, shadowOpacity: .2, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
   nextButtonDisabled: { backgroundColor: '#E4E1FF', shadowOpacity: 0, elevation: 0 },
   nextTextDisabled: { color: Palette.primaryDark },
   nextText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.md + 2, fontWeight: '400', color: Colors.onColor, writingDirection: 'rtl' },

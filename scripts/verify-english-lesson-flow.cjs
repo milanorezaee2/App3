@@ -70,5 +70,9 @@ const esbuild = require('esbuild');
   check(home.includes('گوش دادن از ابتدا') && home.includes("fromStart: '1'") && home.includes('SENTENCE_LESSONS[0].id'), 'home button opens the first lesson');
   check(screen.includes('جمله قبلی') && screen.includes('stage === 1') && !screen.includes('گوش‌دادن از ابتدا'), 'previous sentence is beside next, and old replay control is removed');
   check(screen.includes('preserveExistingSession.current') && screen.includes('!preserveExistingSession.current'), 'replay does not overwrite an existing saved session');
+  check(/nextButton: \{ flex: 1, minWidth: 0, alignSelf: 'stretch'/.test(screen) && !screen.includes('nextButtonBesidePrevious'),
+    'English Continue fills the footer row and cannot shrink to the bottom-right label');
+  check(screen.includes("fontFamily: 'IRANSans'") && /english: \{ fontFamily: 'Inter-ExtraBold'[\s\S]*?fontWeight: '800'/.test(screen),
+    'English lesson keeps bold Latin teaching text and uses the bundled Persian lesson font');
   console.log(`${checks} lesson navigation and speech lifecycle checks passed.`);
 })().catch(error => { console.error(error); process.exit(1); });

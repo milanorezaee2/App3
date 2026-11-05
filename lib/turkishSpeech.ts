@@ -40,6 +40,11 @@ function preferredTurkishVoice(): Promise<string | undefined> {
   return preferredVoicePromise;
 }
 
+/** Resolve and cache the approved device voice before the first card appears. */
+export function warmTurkishSpeech(): void {
+  void preferredTurkishVoice();
+}
+
 /** First manual press uses natural 1× speed; the repeated phrase uses 0.5×. */
 function alternatingRate(text: string) {
   const count = playCounts.get(text) ?? 0;
@@ -47,7 +52,7 @@ function alternatingRate(text: string) {
   return count % 2 === 0 ? 1 : 0.5;
 }
 
-export function playTurkishSpeech(text: string, rate?: number, onError?: () => void): Promise<void> {
+export function playTurkishSpeech(text: string, rate?: number, onError?: () => void, onDone?: () => void): Promise<void> {
   const currentRequest = ++requestId;
   const selectedRate = rate ?? alternatingRate(text);
   const start = async () => {
@@ -60,7 +65,7 @@ export function playTurkishSpeech(text: string, rate?: number, onError?: () => v
         rate: selectedRate,
         ...(voice ? { voice } : {}),
         onDone: () => {
-          if (currentRequest === requestId) active = false;
+          if (currentRequest === requestId) { active = false; onDone?.(); }
         },
         onStopped: () => {
           if (currentRequest === requestId) active = false;
@@ -81,7 +86,10 @@ export function playTurkishSpeech(text: string, rate?: number, onError?: () => v
 }
 
 export function stopTurkishSpeech(): Promise<void> {
+  const shouldStop = active;
   requestId += 1;
   active = false;
-  return Speech.stop().catch(() => undefined);
+  // Invalidate pending voice selection too, but do not add a native stop delay
+  // when the previous phrase has already completed.
+  return shouldStop ? Speech.stop().catch(() => undefined) : Promise.resolve();
 }

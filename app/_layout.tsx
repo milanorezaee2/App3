@@ -112,6 +112,8 @@ export default function RootLayout() {
     Vazirmatn: Vazirmatn_400Regular,
     'Vazirmatn-Medium': Vazirmatn_500Medium,
     'Vazirmatn-Bold': Vazirmatn_700Bold,
+    // Requested Persian lesson typography, bundled for offline/native parity.
+    IRANSans: require('iransans/ttf/IRANSansWeb.ttf'),
   });
 
   useEffect(() => {

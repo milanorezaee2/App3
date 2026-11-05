@@ -2,8 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import * as Speech from 'expo-speech';
-import { ArrowRight, BookOpenCheck, Check, ChevronLeft, Headphones, MessageCircle, Mic2, RefreshCw, RotateCcw, Sparkles, Volume2 } from 'lucide-react-native';
+import { BookOpenCheck, Check, ChevronLeft, Headphones, MessageCircle, Mic2, RefreshCw, RotateCcw, Sparkles, Square, Volume2 } from 'lucide-react-native';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import TurkishSentenceBuilder from '@/components/TurkishSentenceBuilder';
@@ -12,10 +11,14 @@ import { clearTurkishLessonSession, freshTurkishLessonSession, loadTurkishLesson
 import { TURKISH_LESSONS, TURKISH_LEVELS, TURKISH_LESSON_STAGES, turkishProgress, type TurkishCourseLesson } from '@/lib/languages/turkish';
 import type { TurkishLessonSession } from '@/lib/languages/turkishStudyState';
 import { isPersianLedText, toPersianDigits as fa } from '@/lib/format';
-import { playTurkishSpeech, stopTurkishSpeech } from '@/lib/turkishSpeech';
-import { Typography } from '@/lib/theme';
+import { playTurkishSpeech, stopTurkishSpeech, warmTurkishSpeech } from '@/lib/turkishSpeech';
+import { Typography as SharedTypography } from '@/lib/theme';
 import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
+import { PageNavigation } from '@/components/PageNavigation';
 
+// This lesson uses an explicitly bundled Persian face without changing the
+// typography of other languages or unrelated screens. Latin stays extra-bold.
+const Typography = { ...SharedTypography, fontFamily: 'IRANSans' };
 const stages = TURKISH_LESSON_STAGES;
 
 /** سرعت پخش: معمولی برای شنیدن خودکار و آهسته برای تکرار دقیق‌تر. */
@@ -38,7 +41,11 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
   const [loadingRetry, setLoadingRetry] = useState(0);
   const [saveRetry, setSaveRetry] = useState(0);
   const [saving, setSaving] = useState(false);
+  const [autoSpeechPlaying, setAutoSpeechPlaying] = useState(false);
   const completing = useRef(false);
+  const autoSpeechGeneration = useRef(0);
+  const autoSpeechActive = useRef(false);
+  const autoSpeechCancel = useRef<(() => void) | null>(null);
   const startFirstLesson = useRef(fromStart);
   const startFreshAfterRestart = useRef(restarted);
   const preserveExistingSession = useRef(false);
@@ -58,11 +65,26 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
     }));
     return [...byWord.values()];
   }, [lesson]);
-  const grammarPatterns = lesson.sentences.flatMap(sentence => sentence.pattern ? [{ sentence, pattern: sentence.pattern }] : []);
+  const grammarPatterns = useMemo(() => lesson.sentences.flatMap(sentence => sentence.pattern ? [{ sentence, pattern: sentence.pattern }] : []), [lesson.sentences]);
+  const automaticPhrases = useMemo(() => {
+    if (!current) return [] as string[];
+    if (stage === 1 || stage === 3 || ((stage === 4 || stage === 7) && lesson.learningMode === 'words')) return [current.text];
+    if (stage === 2) return lesson.sentences.map(sentence => sentence.text);
+    if (stage === 5) {
+      const phrases = vocabulary.flatMap(({ word, sentence }) => [word.word, sentence.text]);
+      return phrases.filter((text, index) => index === 0 || text !== phrases[index - 1]);
+    }
+    if (stage === 6) return grammarPatterns.map(({ sentence }) => sentence.text);
+    // Do not read hidden answers in sentence-building, dialogue recall, or checks.
+    return [] as string[];
+  }, [current, grammarPatterns, lesson.learningMode, lesson.sentences, stage, vocabulary]);
+  const automaticQueueKey = JSON.stringify(automaticPhrases);
+  const automaticPhrasesRef = useRef(automaticPhrases);
+  automaticPhrasesRef.current = automaticPhrases;
 
-  // Warm up the device speech engine so the first Turkish sentence is not delayed.
+  // Cache the same approved warm voice before the first Turkish card appears.
   useEffect(() => {
-    void Speech.getAvailableVoicesAsync().catch(() => undefined);
+    warmTurkishSpeech();
   }, []);
 
   useEffect(() => {
@@ -102,22 +124,95 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
       .catch(() => setSessionError('جلسه ذخیره نشد؛ پیشرفت درس کامل ثبت نشده است. دوباره ذخیره کنید.'));
   }, [lesson.id, sessionReady, stage, sentenceIndex, revealed, answers, showCheckAnswers, saveRetry]);
 
-  const speak = useCallback((text: string, rate?: number) => {
-    setSpeechError('');
-    void playTurkishSpeech(text, rate, () => setSpeechError('صدای ترکی دستگاه در دسترس نیست؛ متن و راهنمای خوانش همچنان دیده می‌شوند.'));
+  const cancelAutomaticSpeech = useCallback((stopAudio: boolean) => {
+    autoSpeechGeneration.current += 1;
+    const cancel = autoSpeechCancel.current;
+    autoSpeechCancel.current = null;
+    cancel?.();
+    autoSpeechActive.current = false;
+    setAutoSpeechPlaying(false);
+    if (stopAudio) void stopTurkishSpeech();
   }, []);
 
-  // Read the visible main sentence on entry, resume, and each sentence change.
+  const speak = useCallback((text: string, rate?: number) => {
+    // A manual choice replaces the queue without adding a stop to cold playback.
+    cancelAutomaticSpeech(false);
+    setSpeechError('');
+    void playTurkishSpeech(text, rate, () => setSpeechError('صدای ترکی دستگاه در دسترس نیست؛ متن و راهنمای خوانش همچنان دیده می‌شوند.'));
+  }, [cancelAutomaticSpeech]);
+
+  // Speak the Turkish learning cards on this stage one at a time. A stage
+  // change, manual choice, or unmount invalidates the remainder of the queue.
   useEffect(() => {
-    if (!sessionReady || stage !== 1 || !current) return;
-    speak(current.text, AUTO_SPEECH_RATE);
-  }, [lesson.id, sessionReady, stage, sentenceIndex, current?.text, speak]);
+    if (!sessionReady) return;
+    const phrases = automaticPhrasesRef.current;
+    const run = ++autoSpeechGeneration.current;
+    const previousCancel = autoSpeechCancel.current;
+    autoSpeechCancel.current = null;
+    previousCancel?.();
+    if (!phrases.length) {
+      autoSpeechActive.current = false;
+      setAutoSpeechPlaying(false);
+      return;
+    }
+
+    let cancelled = false;
+    autoSpeechActive.current = true;
+    setAutoSpeechPlaying(true);
+    setSpeechError('');
+
+    const playPhrase = (text: string) => new Promise<void>(resolve => {
+      let settled = false;
+      const finish = () => {
+        if (settled) return;
+        settled = true;
+        if (autoSpeechCancel.current === finish) autoSpeechCancel.current = null;
+        resolve();
+      };
+      autoSpeechCancel.current = finish;
+      void playTurkishSpeech(
+        text,
+        AUTO_SPEECH_RATE,
+        () => {
+          if (!cancelled && run === autoSpeechGeneration.current) setSpeechError('صدای ترکی دستگاه در دسترس نیست؛ متن و راهنمای خوانش همچنان دیده می‌شوند.');
+          finish();
+        },
+        finish,
+      ).catch(finish);
+    });
+
+    const runQueue = async () => {
+      for (const text of phrases) {
+        if (cancelled || run !== autoSpeechGeneration.current) return;
+        await playPhrase(text);
+      }
+      if (!cancelled && run === autoSpeechGeneration.current) {
+        autoSpeechActive.current = false;
+        autoSpeechCancel.current = null;
+        setAutoSpeechPlaying(false);
+      }
+    };
+    void runQueue();
+
+    return () => {
+      cancelled = true;
+      if (run === autoSpeechGeneration.current) autoSpeechGeneration.current += 1;
+      const cancel = autoSpeechCancel.current;
+      autoSpeechCancel.current = null;
+      cancel?.();
+      const shouldStop = autoSpeechActive.current;
+      autoSpeechActive.current = false;
+      if (shouldStop) void stopTurkishSpeech();
+    };
+  }, [automaticQueueKey, lesson.id, sessionReady]);
 
   const selectSentence = (index: number, rate?: number) => {
     setSentenceIndex(index);
     setRevealed(false);
     setSpeechError('');
-    speak(lesson.sentences[index].text, rate);
+    // Listening cards keep their queue position stable; other stages speak the
+    // newly displayed phrase through the same automatic lifecycle.
+    if (stage === 2) speak(lesson.sentences[index].text, rate);
   };
 
   const goToPreviousSentence = () => {
@@ -141,8 +236,7 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
       setStage(nextStage);
       setSentenceIndex(0);
       setRevealed(false);
-      if (nextStage === 3) speak(lesson.sentences[0].text, AUTO_SPEECH_RATE);
-      else if (nextStage !== 1) void stopTurkishSpeech();
+      if (nextStage !== 1) void stopTurkishSpeech();
       return;
     }
     if (!allChecksPassed && !showCheckAnswers) return;
@@ -175,7 +269,7 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
     <View style={styles.root}>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
-          <Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color={Palette.ink} /></Pressable>
+          <PageNavigation backFallback="/learn/tr" />
           <View style={styles.headerText}>
             <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
@@ -336,11 +430,12 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
       </ScrollView>
 
       <View style={styles.footer}>
+        {autoSpeechPlaying && <Pressable accessibilityRole="button" accessibilityLabel="توقف پخش خودکار" style={styles.autoSpeechStop} onPress={() => cancelAutomaticSpeech(true)}><Square size={13} color={Palette.primary} /><Text style={styles.autoSpeechStopText}>توقف پخش خودکار</Text></Pressable>}
         <View style={styles.footerActions}>
           {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel={`${unitLabel} قبلی` } accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && styles.nextButtonDisabled]}>
             <Text style={styles.previousButtonText}>{unitLabel} قبلی</Text>
           </Pressable>}
-          <Pressable accessibilityRole="button" disabled={nextDisabled} style={[styles.nextButton, stage === 1 && styles.nextButtonBesidePrevious, nextDisabled && styles.nextButtonDisabled]} onPress={() => void next()}>
+          <Pressable accessibilityRole="button" accessibilityState={{ disabled: nextDisabled }} disabled={nextDisabled} style={[styles.nextButton, nextDisabled && styles.nextButtonDisabled]} onPress={() => void next()}>
             <Text style={[styles.nextText, nextDisabled && styles.nextTextDisabled]}>{saving ? 'در حال ذخیره…' : stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? `${unitLabel} بعدی` : 'ادامه'}</Text>
             {stage === stages.length - 1 ? <Check size={20} color={nextDisabled ? Palette.primaryDark : '#FFFFFF'} /> : <ChevronLeft size={20} color={nextDisabled ? Palette.primaryDark : '#FFFFFF'} />}
           </Pressable>
@@ -358,20 +453,19 @@ const styles = StyleSheet.create({
   loadingText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 13, textAlign: 'right', writingDirection: 'rtl' },
   loadingButton: { minHeight: 44, justifyContent: 'center', paddingHorizontal: 18, borderRadius: 13, backgroundColor: Palette.primary },
   loadingButtonText: { fontFamily: Typography.fontFamily, color: '#FFFFFF', fontWeight: '400', writingDirection: 'rtl' },
-  header: { paddingTop: 42, paddingHorizontal: 20, paddingBottom: 15, gap: 14, borderBottomLeftRadius: 22, borderBottomRightRadius: 22, borderBottomWidth: 1, borderBottomColor: 'rgba(33,26,104,0.08)' },
-  headerTop: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
-  back: { width: 40, height: 40, borderRadius: 14, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: 'rgba(33,26,104,0.10)', alignItems: 'center', justifyContent: 'center' },
+  header: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingTop: 24, paddingHorizontal: 16, paddingBottom: 10, gap: 9, borderBottomLeftRadius: 22, borderBottomRightRadius: 22, borderBottomWidth: 1, borderBottomColor: 'rgba(33,26,104,0.08)' },
+  headerTop: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 9 },
   headerText: { flex: 1, alignItems: 'flex-end', gap: 2 },
   headerEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.muted, fontSize: 6, fontWeight: '800', letterSpacing: 1, textAlign: 'left', alignSelf: 'flex-start', writingDirection: 'ltr' },
-  headerTitle: { fontFamily: Typography.fontFamily, fontSize: 18, lineHeight: 27, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
+  headerTitle: { fontFamily: Typography.fontFamily, fontSize: 17, lineHeight: 24, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
   headerSub: { fontFamily: Typography.fontFamily, fontSize: 10, color: Palette.text, textAlign: 'right', writingDirection: 'rtl' },
-  percentBadge: { minWidth: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: 'rgba(33,26,104,0.10)' },
+  percentBadge: { minWidth: 46, height: 46, borderRadius: 15, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: 'rgba(33,26,104,0.10)' },
   percent: { fontFamily: Typography.fontFamily, fontSize: 14, lineHeight: 18, fontWeight: '400', color: Palette.ink, writingDirection: 'rtl' },
   percentLabel: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 7, writingDirection: 'rtl' },
-  headerBottom: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingTop: 9, borderTopWidth: 1, borderTopColor: 'rgba(33,26,104,0.10)' },
+  headerBottom: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingTop: 7, borderTopWidth: 1, borderTopColor: 'rgba(33,26,104,0.10)' },
   headerInfoChip: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
   headerInfoText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 9, writingDirection: 'rtl' },
-  stepperCard: { width: '94%', maxWidth: 820, alignSelf: 'center', marginTop: 13, padding: 13, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10, shadowColor: '#211A68', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  stepperCard: { width: '94%', maxWidth: 820, alignSelf: 'center', marginTop: 9, padding: 10, borderRadius: 16, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 8, shadowColor: '#211A68', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepperHeading: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   stepperEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 6, fontWeight: '800', letterSpacing: 1, textAlign: 'left', writingDirection: 'ltr' },
   stepperTitle: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 18, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
@@ -388,58 +482,58 @@ const styles = StyleSheet.create({
   error: { width: '94%', maxWidth: 820, alignSelf: 'center', marginTop: 10, padding: 12, borderRadius: 12, backgroundColor: Palette.dangerSoft, color: Palette.danger, fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
   retrySaveButton: { alignSelf: 'center', marginBottom: 10, padding: 10 },
   retrySaveText: { fontFamily: Typography.fontFamily, color: Palette.primary, fontSize: 11, fontWeight: '400', writingDirection: 'rtl' },
-  content: { width: '100%', maxWidth: 820, alignSelf: 'center', paddingHorizontal: 20, paddingTop: 16, paddingBottom: 130, gap: 16 },
+  content: { width: '100%', maxWidth: 820, alignSelf: 'center', paddingHorizontal: 16, paddingTop: 10, paddingBottom: 40, gap: 12 },
   centerStage: { alignItems: 'center', width: '100%' },
-  bigIcon: { width: 72, height: 72, borderRadius: 36, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF', alignItems: 'center', justifyContent: 'center', marginVertical: 18 },
+  bigIcon: { width: 56, height: 56, borderRadius: 28, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF', alignItems: 'center', justifyContent: 'center', marginVertical: 10 },
   stageEyebrow: { fontFamily: Typography.fontFamily, fontSize: 11, fontWeight: '400', color: Palette.primary, marginBottom: 4, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
-  stageTitle: { fontFamily: Typography.fontFamily, fontSize: 25, lineHeight: 36, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
-  stageDesc: { fontFamily: Typography.fontFamily, fontSize: 13, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', lineHeight: 23, marginTop: 8 },
-  situation: { fontFamily: Typography.fontFamily, fontSize: 14, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', lineHeight: 27, marginTop: 12 },
-  promiseCard: { width: '100%', borderRadius: 20, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF', padding: 18, marginTop: 20, gap: 5 },
+  stageTitle: { fontFamily: Typography.fontFamily, fontSize: 21, lineHeight: 30, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
+  stageDesc: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', lineHeight: 20, marginTop: 6 },
+  situation: { fontFamily: Typography.fontFamily, fontSize: 13, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', lineHeight: 23, marginTop: 9 },
+  promiseCard: { width: '100%', borderRadius: 18, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF', padding: 14, marginTop: 14, gap: 4 },
   promiseTitle: { fontFamily: Typography.fontFamily, fontSize: 13, fontWeight: '400', color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
-  promiseText: { fontFamily: Typography.fontFamily, fontSize: 13, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', lineHeight: 23, marginTop: 4 },
-  noteCard: { width: '100%', marginTop: 14, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 17, gap: 8 },
+  promiseText: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', lineHeight: 21, marginTop: 3 },
+  noteCard: { width: '100%', marginTop: 10, borderRadius: 16, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 14, gap: 6 },
   noteTitle: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 13, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
-  noteText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 12, lineHeight: 25, textAlign: 'right', writingDirection: 'rtl' },
-  sentenceStage: { alignItems: 'center', paddingTop: 18, width: '100%' },
-  counter: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, marginBottom: 12, alignSelf: 'flex-end', textAlign: 'right', writingDirection: 'rtl' },
-  sentenceCard: { width: '100%', borderRadius: 22, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 22, alignItems: 'center', shadowColor: '#172033', shadowOpacity: .05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
-  soundButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: 18 },
-  turkishSentence: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 23, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
+  noteText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 12, lineHeight: 22, textAlign: 'right', writingDirection: 'rtl' },
+  sentenceStage: { alignItems: 'center', paddingTop: 8, width: '100%' },
+  counter: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, marginBottom: 9, alignSelf: 'flex-end', textAlign: 'right', writingDirection: 'rtl' },
+  sentenceCard: { width: '100%', borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 16, alignItems: 'center', shadowColor: '#172033', shadowOpacity: .05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
+  soundButton: { width: 46, height: 46, borderRadius: 23, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
+  turkishSentence: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 21, lineHeight: 31, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   pronunciation: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', marginTop: 8 },
-  divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 18 },
-  persian: { fontFamily: Typography.fontFamily, fontSize: 17, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
+  divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 12 },
+  persian: { fontFamily: Typography.fontFamily, fontSize: 15, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   pattern: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start', gap: 8, alignSelf: 'flex-end', backgroundColor: Palette.warningSoft, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999, marginTop: 14 },
   patternLabel: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.warning, writingDirection: 'rtl' },
   patternText: { fontFamily: Typography.latinFontFamily, fontSize: 10, fontWeight: '800', color: Palette.warning, textAlign: 'left', writingDirection: 'ltr' },
   patternTextFa: { fontFamily: Typography.fontFamily, textAlign: 'right', writingDirection: 'rtl' },
-  hint: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', lineHeight: 19, marginTop: 14 },
-  listenList: { width: '100%', gap: 8, marginTop: 20 },
-  listenRow: { minHeight: 62, borderRadius: 16, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, paddingHorizontal: 13, flexDirection: 'row-reverse', alignItems: 'center', gap: 10 },
+  hint: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', lineHeight: 18, marginTop: 10 },
+  listenList: { width: '100%', gap: 7, marginTop: 12 },
+  listenRow: { minHeight: 54, borderRadius: 14, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, paddingHorizontal: 12, flexDirection: 'row-reverse', alignItems: 'center', gap: 9 },
   listenRowActive: { borderColor: Palette.primary, backgroundColor: Palette.primarySoft },
   listenNumber: { width: 30, height: 30, borderRadius: 15, backgroundColor: Palette.primarySoft, alignItems: 'center', justifyContent: 'center' },
   listenNumberText: { fontFamily: Typography.numberFontFamily, fontSize: 11, color: Palette.primaryDark, writingDirection: 'rtl' },
-  listenTurkish: { fontFamily: 'Inter-ExtraBold', flex: 1, fontSize: 13, fontWeight: '800', lineHeight: 22, color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
-  shadowTip: { width: '100%', marginTop: 18, borderRadius: 14, backgroundColor: Palette.warningSoft, padding: 13, flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
-  shadowText: { flex: 1, fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', lineHeight: 19 },
-  speechPractice: { width: '100%', borderRadius: 22, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 18, alignItems: 'center', marginTop: 18, shadowColor: '#172033', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  listenTurkish: { fontFamily: 'Inter-ExtraBold', flex: 1, fontSize: 13, fontWeight: '800', lineHeight: 21, color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
+  shadowTip: { width: '100%', marginTop: 12, borderRadius: 14, backgroundColor: Palette.warningSoft, padding: 11, flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
+  shadowText: { flex: 1, fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', lineHeight: 18 },
+  speechPractice: { width: '100%', borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 15, alignItems: 'center', marginTop: 12, shadowColor: '#172033', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   speechTitle: { fontFamily: Typography.fontFamily, fontSize: 14, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
-  speechSentence: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 17, lineHeight: 28, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr', marginTop: 8 },
-  playSlowButton: { minHeight: 48, minWidth: 155, borderRadius: 999, paddingHorizontal: 18, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, marginTop: 14 },
+  speechSentence: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 16, lineHeight: 26, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr', marginTop: 7 },
+  playSlowButton: { minHeight: 48, minWidth: 155, borderRadius: 999, paddingHorizontal: 18, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, marginTop: 10 },
   recordButtonText: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: '#FFFFFF', writingDirection: 'rtl' },
-  speechHint: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', lineHeight: 19, marginTop: 8 },
-  dots: { flexDirection: 'row-reverse', gap: 8, marginTop: 18 },
+  speechHint: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', lineHeight: 18, marginTop: 7 },
+  dots: { flexDirection: 'row-reverse', gap: 8, marginTop: 12 },
   dot: { width: 9, height: 9, borderRadius: 5, backgroundColor: Palette.border },
   dotActive: { width: 24, backgroundColor: Palette.primary },
-  vocabList: { width: '100%', gap: 9, marginTop: 18 },
-  vocabCard: { width: '100%', borderRadius: 16, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 14, gap: 7 },
+  vocabList: { width: '100%', gap: 7, marginTop: 12 },
+  vocabCard: { width: '100%', borderRadius: 14, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 11, gap: 5 },
   vocabTop: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', gap: 10 },
-  vocabWord: { fontFamily: 'Inter-ExtraBold', fontSize: 16, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
+  vocabWord: { fontFamily: 'Inter-ExtraBold', fontSize: 15, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   vocabMeaning: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
-  vocabExample: { fontFamily: 'Inter-ExtraBold', fontSize: 13, fontWeight: '800', lineHeight: 22, color: Palette.text, textAlign: 'left', writingDirection: 'ltr' },
-  vocabExampleFa: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 19, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl' },
-  bubbleSound: { alignSelf: 'flex-end', marginTop: 4, padding: 5 },
-  evidenceCard: { width: '100%', marginTop: 20, borderRadius: 20, padding: 17, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 12 },
+  vocabExample: { fontFamily: 'Inter-ExtraBold', fontSize: 13, fontWeight: '800', lineHeight: 20, color: Palette.text, textAlign: 'left', writingDirection: 'ltr' },
+  vocabExampleFa: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 18, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl' },
+  bubbleSound: { alignSelf: 'flex-end', marginTop: 2, padding: 5 },
+  evidenceCard: { width: '100%', marginTop: 14, borderRadius: 18, padding: 14, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10 },
   evidenceTitle: { fontFamily: Typography.fontFamily, fontSize: 17, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
   evidenceIntro: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 19, color: Palette.text, textAlign: 'right', writingDirection: 'rtl' },
   question: { gap: 9, marginTop: 5 },
@@ -458,12 +552,13 @@ const styles = StyleSheet.create({
   showAnswersButton: { minHeight: 45, alignItems: 'center', justifyContent: 'center', borderRadius: 12, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface, marginTop: 4 },
   showAnswersText: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 12, fontWeight: '400', writingDirection: 'rtl' },
   evidenceNote: { fontFamily: Typography.fontFamily, color: Palette.success, fontSize: 11, lineHeight: 19, textAlign: 'right', writingDirection: 'rtl' },
-  footer: { paddingHorizontal: 18, paddingTop: 11, paddingBottom: 20, backgroundColor: 'rgba(255,255,255,0.96)', borderTopWidth: 1, borderTopColor: Palette.border, shadowColor: '#211A68', shadowOpacity: .07, shadowRadius: 12, shadowOffset: { width: 0, height: -4 }, elevation: 5 },
-  footerActions: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', gap: 10 },
+  footer: { paddingHorizontal: 16, paddingTop: 8, paddingBottom: 14, backgroundColor: 'rgba(255,255,255,0.96)', borderTopWidth: 1, borderTopColor: Palette.border, shadowColor: '#211A68', shadowOpacity: .07, shadowRadius: 12, shadowOffset: { width: 0, height: -4 }, elevation: 5 },
+  autoSpeechStop: { minHeight: 32, marginBottom: 6, borderRadius: 10, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6, backgroundColor: Palette.primarySoft },
+  autoSpeechStopText: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 11, writingDirection: 'rtl' },
+  footerActions: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'stretch', gap: 10 },
   previousButton: { flex: 1, minHeight: 54, borderRadius: 17, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
   previousButtonText: { fontFamily: Typography.fontFamily, color: Palette.primary, fontSize: 12, writingDirection: 'rtl' },
-  nextButtonBesidePrevious: { flex: 1, width: undefined },
-  nextButton: { width: '100%', maxWidth: 820, alignSelf: 'center', minHeight: 54, borderRadius: 17, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, shadowColor: Palette.primary, shadowOpacity: .2, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
+  nextButton: { flex: 1, minWidth: 0, alignSelf: 'stretch', minHeight: 54, borderRadius: 17, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, shadowColor: Palette.primary, shadowOpacity: .2, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
   replayRow: { flexDirection: 'row-reverse', alignSelf: 'stretch', alignItems: 'stretch', gap: 10, justifyContent: 'center', marginTop: 12 },
   replayButton: { flex: 1, minWidth: 0, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 44, paddingHorizontal: 12, borderRadius: 14, borderWidth: 1, borderColor: Palette.primary, backgroundColor: '#FFFFFF' },
   replayText: { fontFamily: Typography.fontFamily, fontSize: 14, fontWeight: '400', color: Palette.primary, writingDirection: 'rtl' },
