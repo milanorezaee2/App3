@@ -44,7 +44,7 @@ await esbuild.build({
         loader: 'js',
       }));
       build.onResolve({ filter: /^expo-speech$/ }, () => ({ path: 'expo-speech', namespace: 'turkish-speech-stub' }));
-      build.onLoad({ filter: /.*/, namespace: 'turkish-speech-stub' }, () => ({ contents: 'export function speak(text, options) { globalThis.__turkishUtterances.push({ text, options }); } export function stop() { globalThis.__turkishSpeechStops += 1; return Promise.resolve(); }', loader: 'js' }));
+      build.onLoad({ filter: /.*/, namespace: 'turkish-speech-stub' }, () => ({ contents: 'export const VoiceQuality = { Default: "Default", Enhanced: "Enhanced" }; export function speak(text, options) { globalThis.__turkishUtterances.push({ text, options }); } export function stop() { globalThis.__turkishSpeechStops += 1; return Promise.resolve(); } export async function getAvailableVoicesAsync() { return globalThis.__turkishVoices || []; }', loader: 'js' }));
       build.onResolve({ filter: /^react-native$/ }, () => ({ path: 'react-native', namespace: 'turkish-platform-stub' }));
       build.onLoad({ filter: /.*/, namespace: 'turkish-platform-stub' }, () => ({ contents: 'export const Platform = { get OS() { return globalThis.__turkishPlatformOS || "web"; } };', loader: 'js' }));
     },
@@ -468,10 +468,16 @@ globalThis.__turkishPlatformOS = 'android';
 await turkishSpeech.stopTurkishSpeech();
 globalThis.__turkishUtterances = [];
 globalThis.__turkishSpeechStops = 0;
+globalThis.__turkishVoices = [
+  { identifier: 'tr-default', name: 'tr-default', quality: 'Default', language: 'tr-TR' },
+  { identifier: 'en-natural', name: 'en-natural-female', quality: 'Enhanced', language: 'en-US' },
+  { identifier: 'tr-warm-natural', name: 'tr-natural-female-network', quality: 'Enhanced', language: 'tr-TR' },
+];
 await turkishSpeech.playTurkishSpeech('Merhaba');
 check(globalThis.__turkishUtterances.length === 1 && globalThis.__turkishSpeechStops === 0
   && globalThis.__turkishUtterances[0].options.rate === 1
   && globalThis.__turkishUtterances[0].options.language === 'tr', 'Turkish cold playback starts immediately at natural speed with the Android Turkish voice');
+check(globalThis.__turkishUtterances[0].options.voice === 'tr-warm-natural', 'Turkish narration selects an installed enhanced warm Turkish voice without using another language voice');
 await turkishSpeech.playTurkishSpeech('Merhaba');
 check(globalThis.__turkishUtterances.length === 2 && globalThis.__turkishSpeechStops === 1
   && globalThis.__turkishUtterances[1].options.rate === 0.5, 'Repeated Turkish manual playback uses the same slow rate as English and stops only the active phrase');
