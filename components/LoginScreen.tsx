@@ -623,7 +623,8 @@ const styles = StyleSheet.create({
 
   code: {
     marginTop: 18,
-    fontFamily: Typography.numberFontFamily,
+    fontFamily: Typography.latinFontFamily,
+    fontWeight: '800',
     fontSize: 34,
     lineHeight: 50,
     letterSpacing: 8,

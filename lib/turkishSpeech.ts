@@ -9,6 +9,9 @@ const playCounts = new Map<string, number>();
 let active = false;
 let requestId = 0;
 let preferredVoicePromise: Promise<string | undefined> | null = null;
+let preferredVoice: string | undefined;
+let voiceReady = false;
+let pendingStop: Promise<void> | null = null;
 
 function selectWarmTurkishVoice(voices: Speech.Voice[]): string | undefined {
   const candidates = voices.filter(voice => voice.language.toLowerCase().startsWith('tr'));
@@ -20,7 +23,8 @@ function selectWarmTurkishVoice(voices: Speech.Voice[]): string | undefined {
     // Prefer natural/high-fidelity voices. A gentle female voice is used as
     // the experiment's warm-voice tie-breaker, never as a content change.
     if (/natural|neural|premium|enhanced|high|hd/.test(label)) score += 30;
-    if (/network/.test(label)) score += 10;
+    // Local natural voices avoid a network round-trip before the first sound.
+    if (/network/.test(label)) score -= 20;
     if (/female|femme|woman|kadın|kadin|trf/.test(label)) score += 20;
     if (/compact|legacy|deprecated|low/.test(label)) score -= 60;
     if (score > bestScore) { best = voice; bestScore = score; }
@@ -35,7 +39,12 @@ function preferredTurkishVoice(): Promise<string | undefined> {
   if (!preferredVoicePromise) {
     preferredVoicePromise = Speech.getAvailableVoicesAsync()
       .then(selectWarmTurkishVoice)
-      .catch(() => undefined);
+      .catch(() => undefined)
+      .then(voice => {
+        preferredVoice = voice;
+        voiceReady = true;
+        return voice;
+      });
   }
   return preferredVoicePromise;
 }
@@ -43,6 +52,16 @@ function preferredTurkishVoice(): Promise<string | undefined> {
 /** Resolve and cache the approved device voice before the first card appears. */
 export function warmTurkishSpeech(): void {
   void preferredTurkishVoice();
+}
+
+function stopActiveSpeech(): Promise<void> {
+  if (pendingStop) return pendingStop;
+  const stopping = Speech.stop().catch(() => undefined);
+  pendingStop = stopping;
+  void stopping.finally(() => {
+    if (pendingStop === stopping) pendingStop = null;
+  });
+  return stopping;
 }
 
 /** First manual press uses natural 1× speed; the repeated phrase uses 0.5×. */
@@ -56,7 +75,10 @@ export function playTurkishSpeech(text: string, rate?: number, onError?: () => v
   const currentRequest = ++requestId;
   const selectedRate = rate ?? alternatingRate(text);
   const start = async () => {
-    const voice = await preferredTurkishVoice();
+    // A stage/manual replacement must not race the native stop operation.
+    // After prewarming this path has no voice-selection await at all.
+    if (pendingStop) await pendingStop;
+    const voice = voiceReady ? preferredVoice : await preferredTurkishVoice();
     if (currentRequest !== requestId) return;
     active = true;
     try {
@@ -80,16 +102,18 @@ export function playTurkishSpeech(text: string, rate?: number, onError?: () => v
   };
 
   if (active) {
-    return Speech.stop().catch(() => undefined).finally(start);
+    return stopActiveSpeech().finally(start);
   }
   return start();
 }
 
 export function stopTurkishSpeech(): Promise<void> {
-  const shouldStop = active;
+  const shouldStop = active || !!pendingStop;
   requestId += 1;
   active = false;
   // Invalidate pending voice selection too, but do not add a native stop delay
-  // when the previous phrase has already completed.
-  return shouldStop ? Speech.stop().catch(() => undefined) : Promise.resolve();
+  // when the previous phrase has already completed. Never issue a duplicate
+  // native stop while a previous one is still settling.
+  if (pendingStop) return pendingStop;
+  return shouldStop ? stopActiveSpeech() : Promise.resolve();
 }

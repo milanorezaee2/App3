@@ -37,7 +37,7 @@ check(/education_admins_single_owner_idx/.test(migration), 'the database enforce
 check(/registeredUsers/.test(admin) && /کاربران ثبت‌شده/.test(admin), 'the management UI lists registered learners');
 check(/LinearGradient/.test(admin) && /topbar:/.test(admin) && /topnavRow/.test(admin) && /navTextActive/.test(admin), 'the management UI keeps a polished top navigation with stacked tab rows');
 check(/\[0, 1, 2\]/.test(admin) && /logoutBtn/.test(admin), 'management tabs render as three rows under the top bar with logout in the top bar');
-check(/statNumber:\{fontFamily:'Vazir-Bold',fontSize:16/.test(admin) && /borderRadius:15,padding:12,gap:10/.test(admin), 'all management tabs keep a compact mobile density and smaller Vazir numbers');
+check(/statNumber:\{fontFamily:'Beiruti_700Bold',fontSize:16/.test(admin) && /borderRadius:15,padding:12,gap:10/.test(admin), 'all management tabs keep a compact mobile density and bold Beiruti numbers');
 check(/admin_registered_users/.test(adminApi), 'the management client loads the protected directory RPC');
 check(/com\.devicecontrol\.miloadmin/.test(appConfig) && /com\.devicecontrol\.companion/.test(read('app.json')), 'learner and management APKs have separate Android package IDs');
 check(/MiloAdmin\.apk/.test(workflow) && /MiloMultilang\.apk/.test(workflow), 'CI builds and publishes both standalone APKs');

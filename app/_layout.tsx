@@ -9,8 +9,8 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { MiloLogoMotion } from '@/components/MiloLogoMotion';
 import { KeyboardProvider } from '@/components/KeyboardRuntime';
 import { createAudioPlayer } from 'expo-audio';
-import { Inter_400Regular, Inter_600SemiBold, Inter_800ExtraBold } from '@expo-google-fonts/inter';
-import { Vazirmatn_400Regular, Vazirmatn_500Medium, Vazirmatn_700Bold, Vazirmatn_900Black } from '@expo-google-fonts/vazirmatn';
+import { Inter_800ExtraBold } from '@expo-google-fonts/inter/800ExtraBold';
+import { Beiruti_700Bold } from '@expo-google-fonts/beiruti/700Bold';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AppLockGate } from '@/components/AppLockGate';
@@ -95,25 +95,10 @@ export default function RootLayout() {
   useFrameworkReady();
   const [introComplete, setIntroComplete] = useState(Platform.OS === 'web');
   const [fontsLoaded, fontError] = useFonts({
-    // Bundle Vazir locally so Persian typography and numerals stay identical
-    // offline and independent of each Android manufacturer's system fonts.
-    Vazir: Vazirmatn_400Regular,
-    'Vazir-Medium': Vazirmatn_500Medium,
-    'Vazir-Bold': Vazirmatn_700Bold,
-    'Vazir-Black': Vazirmatn_900Black,
-    // Latin teaching content uses bundled faces too, eliminating Android OEM
-    // font and fallback-metric differences between phones.
-    Inter: Inter_400Regular,
-    'Inter-SemiBold': Inter_600SemiBold,
+    // One bundled bold Persian face keeps every screen consistent offline.
+    Beiruti_700Bold,
+    // Latin teaching and interface copy uses the bundled extra-bold face too.
     'Inter-ExtraBold': Inter_800ExtraBold,
-    // Legacy aliases now resolve to Vazir too, preventing an old screen from
-    // silently falling back to an OEM font.
-    Lalezar: Vazirmatn_400Regular,
-    Vazirmatn: Vazirmatn_400Regular,
-    'Vazirmatn-Medium': Vazirmatn_500Medium,
-    'Vazirmatn-Bold': Vazirmatn_700Bold,
-    // Requested Persian lesson typography, bundled for offline/native parity.
-    IRANSans: require('iransans/ttf/IRANSansWeb.ttf'),
   });
 
   useEffect(() => {

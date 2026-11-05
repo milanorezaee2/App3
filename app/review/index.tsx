@@ -87,7 +87,7 @@ export default function ReviewHome() {
     const vocabulary = sentence.vocabulary.map((item) => `${item.word} · ${item.meaning}`).join('   ');
     return (
       <View style={styles.root} onTouchStart={timer.interact}>
-        {!!timer.error&&<Text style={{ fontFamily: 'Vazir', color: Palette.danger, textAlign: 'right', writingDirection: 'rtl' }}>{timer.error}</Text>}
+        {!!timer.error&&<Text style={{ fontFamily: 'Beiruti_700Bold', color: Palette.danger, textAlign: 'right', writingDirection: 'rtl' }}>{timer.error}</Text>}
       <View style={styles.header}>
         <View style={styles.headerTop}>
           <View style={styles.headerCopy}>
@@ -144,7 +144,7 @@ export default function ReviewHome() {
 
   return (
     <View style={styles.root} onTouchStart={timer.interact}>
-        {!!timer.error&&<Text style={{ fontFamily: 'Vazir', color: Palette.danger, textAlign: 'right', writingDirection: 'rtl' }}>{timer.error}</Text>}
+        {!!timer.error&&<Text style={{ fontFamily: 'Beiruti_700Bold', color: Palette.danger, textAlign: 'right', writingDirection: 'rtl' }}>{timer.error}</Text>}
       <View style={styles.header}>
         <View style={styles.headerTop}>
           <View style={styles.headerCopy}>

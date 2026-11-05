@@ -237,7 +237,7 @@ try {
       transform: translateX(-50%);
       background: #ffffff;
       color: #64748b;
-      font-family: Vazirmatn, system-ui, sans-serif;
+      font-family: system-ui, sans-serif;
       font-size: 11px;
       font-weight: 500;
       letter-spacing: 0.2px;
@@ -278,7 +278,7 @@ try {
       border: 1px solid #e2e8f0;
       border-radius: 9999px;
       padding: 8px 16px;
-      font-family: Vazirmatn, system-ui, sans-serif;
+      font-family: system-ui, sans-serif;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
@@ -344,7 +344,7 @@ try {
       border: 1px solid #e2e8f0;
       border-radius: 9999px;
       padding: 6px 14px;
-      font-family: Vazirmatn, system-ui, sans-serif;
+      font-family: system-ui, sans-serif;
       font-size: 11px;
       font-weight: 600;
       cursor: pointer;

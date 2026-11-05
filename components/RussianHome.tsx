@@ -227,7 +227,7 @@ export default function RussianHome() {
                 <View style={[styles.levelTagDot, { backgroundColor: activeLevel.color }]} />
                 <Text style={[styles.levelTagName, { color: activeLevel.color }]}>{activeLevel.title}</Text>
                 <Text style={styles.levelTagDivider}>·</Text>
-                <Text style={[styles.levelTagText, { color: activeLevel.color, writingDirection: 'ltr' }]}>{activeLevel.cefr}</Text>
+                <Text style={[styles.levelTagText, !/[\u0600-\u06FF]/.test(activeLevel.cefr) && styles.levelTagTextLatin, { color: activeLevel.color }]}>{activeLevel.cefr}</Text>
               </View>
               <Text style={styles.lessonOrder}>{fa(heroLessonOrder)} از {fa(RUSSIAN_LESSONS.length)}</Text>
             </View>
@@ -396,7 +396,7 @@ export default function RussianHome() {
                       <View style={styles.levelText}>
                         <View style={styles.levelTitleRow}>
                           <Text style={styles.levelTitle}>{level.title}</Text>
-                          <Text style={[styles.levelCefr, { color: level.color }]}>{level.cefr}</Text>
+                          <Text style={[styles.levelCefr, /[\u0600-\u06FF]/.test(level.cefr) && styles.levelCefrFa, { color: level.color }]}>{level.cefr}</Text>
                         </View>
                         <Text style={styles.levelDesc} numberOfLines={1}>{level.description}</Text>
                         <Text style={styles.levelStats}>{fa(count.completed)} از {fa(count.total)} درس · {level.status === 'planned' ? 'در نقشهٔ آینده' : 'محتوای موجود'}</Text>

@@ -72,7 +72,7 @@ const esbuild = require('esbuild');
   check(screen.includes('preserveExistingSession.current') && screen.includes('!preserveExistingSession.current'), 'replay does not overwrite an existing saved session');
   check(/nextButton: \{ flex: 1, minWidth: 0, alignSelf: 'stretch'/.test(screen) && !screen.includes('nextButtonBesidePrevious'),
     'English Continue fills the footer row and cannot shrink to the bottom-right label');
-  check(screen.includes("fontFamily: 'IRANSans'") && /english: \{ fontFamily: 'Inter-ExtraBold'[\s\S]*?fontWeight: '800'/.test(screen),
-    'English lesson keeps bold Latin teaching text and uses the bundled Persian lesson font');
+  check(screen.includes('const Typography = SharedTypography;') && /english: \{ fontFamily: 'Inter-ExtraBold'[\s\S]*?fontWeight: '800'/.test(screen),
+    'English lesson keeps bold Latin teaching text and uses shared bundled Beiruti Persian typography');
   console.log(`${checks} lesson navigation and speech lifecycle checks passed.`);
 })().catch(error => { console.error(error); process.exit(1); });

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { BookOpenCheck, Check, ChevronLeft, Headphones, MessageCircle, Mic2, RefreshCw, RotateCcw, Sparkles, Square, Volume2 } from 'lucide-react-native';
+import { BookOpenCheck, Check, ChevronLeft, Headphones, MessageCircle, Mic2, RefreshCw, RotateCcw, Sparkles, Volume2 } from 'lucide-react-native';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import TurkishSentenceBuilder from '@/components/TurkishSentenceBuilder';
@@ -16,13 +16,12 @@ import { Typography as SharedTypography } from '@/lib/theme';
 import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
 import { PageNavigation } from '@/components/PageNavigation';
 
-// This lesson uses an explicitly bundled Persian face without changing the
-// typography of other languages or unrelated screens. Latin stays extra-bold.
-const Typography = { ...SharedTypography, fontFamily: 'IRANSans' };
+// Shared bundled typography keeps Persian bold and Latin extra-bold everywhere.
+const Typography = SharedTypography;
 const stages = TURKISH_LESSON_STAGES;
 
 /** سرعت پخش: معمولی برای شنیدن خودکار و آهسته برای تکرار دقیق‌تر. */
-const AUTO_SPEECH_RATE = 0.85;
+const AUTO_SPEECH_RATE = 1;
 const NORMAL_SPEECH_RATE = 1;
 const SLOW_SPEECH_RATE = 0.5;
 
@@ -41,10 +40,8 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
   const [loadingRetry, setLoadingRetry] = useState(0);
   const [saveRetry, setSaveRetry] = useState(0);
   const [saving, setSaving] = useState(false);
-  const [autoSpeechPlaying, setAutoSpeechPlaying] = useState(false);
   const completing = useRef(false);
   const autoSpeechGeneration = useRef(0);
-  const autoSpeechActive = useRef(false);
   const autoSpeechCancel = useRef<(() => void) | null>(null);
   const startFirstLesson = useRef(fromStart);
   const startFreshAfterRestart = useRef(restarted);
@@ -124,19 +121,16 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
       .catch(() => setSessionError('جلسه ذخیره نشد؛ پیشرفت درس کامل ثبت نشده است. دوباره ذخیره کنید.'));
   }, [lesson.id, sessionReady, stage, sentenceIndex, revealed, answers, showCheckAnswers, saveRetry]);
 
-  const cancelAutomaticSpeech = useCallback((stopAudio: boolean) => {
+  const cancelAutomaticSpeech = useCallback(() => {
     autoSpeechGeneration.current += 1;
     const cancel = autoSpeechCancel.current;
     autoSpeechCancel.current = null;
     cancel?.();
-    autoSpeechActive.current = false;
-    setAutoSpeechPlaying(false);
-    if (stopAudio) void stopTurkishSpeech();
   }, []);
 
   const speak = useCallback((text: string, rate?: number) => {
     // A manual choice replaces the queue without adding a stop to cold playback.
-    cancelAutomaticSpeech(false);
+    cancelAutomaticSpeech();
     setSpeechError('');
     void playTurkishSpeech(text, rate, () => setSpeechError('صدای ترکی دستگاه در دسترس نیست؛ متن و راهنمای خوانش همچنان دیده می‌شوند.'));
   }, [cancelAutomaticSpeech]);
@@ -151,14 +145,12 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
     autoSpeechCancel.current = null;
     previousCancel?.();
     if (!phrases.length) {
-      autoSpeechActive.current = false;
-      setAutoSpeechPlaying(false);
+      // Silent stages still cancel any phrase that was playing on the prior stage.
+      void stopTurkishSpeech();
       return;
     }
 
     let cancelled = false;
-    autoSpeechActive.current = true;
-    setAutoSpeechPlaying(true);
     setSpeechError('');
 
     const playPhrase = (text: string) => new Promise<void>(resolve => {
@@ -187,9 +179,7 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
         await playPhrase(text);
       }
       if (!cancelled && run === autoSpeechGeneration.current) {
-        autoSpeechActive.current = false;
         autoSpeechCancel.current = null;
-        setAutoSpeechPlaying(false);
       }
     };
     void runQueue();
@@ -200,9 +190,8 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
       const cancel = autoSpeechCancel.current;
       autoSpeechCancel.current = null;
       cancel?.();
-      const shouldStop = autoSpeechActive.current;
-      autoSpeechActive.current = false;
-      if (shouldStop) void stopTurkishSpeech();
+      // The next speaking stage uses playTurkishSpeech's serialized stop/start.
+      // Session teardown and silent stages stop audio explicitly.
     };
   }, [automaticQueueKey, lesson.id, sessionReady]);
 
@@ -236,7 +225,6 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
       setStage(nextStage);
       setSentenceIndex(0);
       setRevealed(false);
-      if (nextStage !== 1) void stopTurkishSpeech();
       return;
     }
     if (!allChecksPassed && !showCheckAnswers) return;
@@ -430,7 +418,6 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
       </ScrollView>
 
       <View style={styles.footer}>
-        {autoSpeechPlaying && <Pressable accessibilityRole="button" accessibilityLabel="توقف پخش خودکار" style={styles.autoSpeechStop} onPress={() => cancelAutomaticSpeech(true)}><Square size={13} color={Palette.primary} /><Text style={styles.autoSpeechStopText}>توقف پخش خودکار</Text></Pressable>}
         <View style={styles.footerActions}>
           {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel={`${unitLabel} قبلی` } accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && styles.nextButtonDisabled]}>
             <Text style={styles.previousButtonText}>{unitLabel} قبلی</Text>
@@ -553,8 +540,6 @@ const styles = StyleSheet.create({
   showAnswersText: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 12, fontWeight: '400', writingDirection: 'rtl' },
   evidenceNote: { fontFamily: Typography.fontFamily, color: Palette.success, fontSize: 11, lineHeight: 19, textAlign: 'right', writingDirection: 'rtl' },
   footer: { paddingHorizontal: 16, paddingTop: 8, paddingBottom: 14, backgroundColor: 'rgba(255,255,255,0.96)', borderTopWidth: 1, borderTopColor: Palette.border, shadowColor: '#211A68', shadowOpacity: .07, shadowRadius: 12, shadowOffset: { width: 0, height: -4 }, elevation: 5 },
-  autoSpeechStop: { minHeight: 32, marginBottom: 6, borderRadius: 10, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6, backgroundColor: Palette.primarySoft },
-  autoSpeechStopText: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 11, writingDirection: 'rtl' },
   footerActions: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'stretch', gap: 10 },
   previousButton: { flex: 1, minHeight: 54, borderRadius: 17, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
   previousButtonText: { fontFamily: Typography.fontFamily, color: Palette.primary, fontSize: 12, writingDirection: 'rtl' },

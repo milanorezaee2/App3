@@ -117,12 +117,12 @@ export const Radius = {
 };
 
 export const Typography = {
-  // Persian UI and Persian numerals use bundled Vazir; explicit LTR teaching
-  // copy uses bundled Inter, so neither path depends on an OEM font.
-  fontFamily: 'Vazir',
-  mediumFontFamily: 'Vazir-Medium',
-  boldFontFamily: 'Vazir-Bold',
-  numberFontFamily: 'Vazir-Black',
+  // Persian UI and numerals always use bundled Beiruti Bold; explicit LTR
+  // copy uses bundled Inter ExtraBold, so neither path depends on an OEM font.
+  fontFamily: 'Beiruti_700Bold',
+  mediumFontFamily: 'Beiruti_700Bold',
+  boldFontFamily: 'Beiruti_700Bold',
+  numberFontFamily: 'Beiruti_700Bold',
   latinFontFamily: 'Inter-ExtraBold',
   sizes: {
     xs: 11,
@@ -134,9 +134,9 @@ export const Typography = {
     xxxl: 36,
   },
   weights: {
-    regular: '400' as const,
-    medium: '400' as const,
-    bold: '400' as const,
+    regular: '700' as const,
+    medium: '700' as const,
+    bold: '700' as const,
   },
 };
 

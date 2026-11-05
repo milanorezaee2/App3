@@ -97,7 +97,7 @@ const topBarStyles = StyleSheet.create({
   },
   texts: { flex: 1, alignItems: 'flex-end' },
   alignRightTexts: { alignItems: 'stretch' },
-  alignRightText: { fontFamily: 'Vazir', width: '100%', alignSelf: 'stretch', textAlign: 'right', writingDirection: 'rtl' },
+  alignRightText: { fontFamily: 'Beiruti_700Bold', width: '100%', alignSelf: 'stretch', textAlign: 'right', writingDirection: 'rtl' },
   title: {
     fontFamily: Typography.fontFamily,
     fontSize: Typography.sizes.xl,

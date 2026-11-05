@@ -195,7 +195,7 @@ export default function LearningHome() {
                 <View style={[styles.levelTagDot, { backgroundColor: currentLevel.color }]} />
                 <Text style={[styles.levelTagName, { color: currentLevel.color }]}>{currentLevel.title}</Text>
                 <Text style={styles.levelTagDivider}>·</Text>
-                <Text style={[styles.levelTagText, { color: currentLevel.color, writingDirection: currentLevel.id === 0 ? 'rtl' : 'ltr' }]}>{currentLevel.cefr}</Text>
+                <Text style={[styles.levelTagText, !/[\u0600-\u06FF]/.test(currentLevel.cefr) && styles.levelTagTextLatin, { color: currentLevel.color }]}>{currentLevel.cefr}</Text>
               </View>
               <Text style={styles.lessonOrder}>{toPersianDigits(currentLesson.order)} از {toPersianDigits(SENTENCE_LESSONS.length)}</Text>
             </View>
@@ -363,7 +363,7 @@ export default function LearningHome() {
                       <View style={styles.levelText}>
                         <View style={styles.levelTitleRow}>
                           <Text style={styles.levelTitle}>{level.title}</Text>
-                          <Text style={[styles.levelCefr, { color: level.color }]}>{level.cefr}</Text>
+                          <Text style={[styles.levelCefr, /[\u0600-\u06FF]/.test(level.cefr) && styles.levelCefrFa, { color: level.color }]}>{level.cefr}</Text>
                         </View>
                         <Text style={styles.levelDesc} numberOfLines={1}>{level.description}</Text>
                         <Text style={styles.levelStats}>{toPersianDigits(metrics.completedLessonCount)} از {toPersianDigits(metrics.lessonCount)} درس · {toPersianDigits(metrics.sentenceCount)} جمله · {toPersianDigits(metrics.vocabularyCount)} واژهٔ یکتا</Text>
