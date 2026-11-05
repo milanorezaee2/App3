@@ -88,7 +88,7 @@ export default function TurkishReview() {
 
   const speak = (text: string) => {
     setError('');
-    void playTurkishSpeech(text, 0.78, () => setError('صدای ترکی دستگاه در دسترس نیست؛ جمله همچنان برای خواندن نمایش داده می‌شود.'));
+    void playTurkishSpeech(text, 1, () => setError('صدای ترکی دستگاه در دسترس نیست؛ جمله همچنان برای خواندن نمایش داده می‌شود.'));
   };
 
   if (sessionActive && currentContent) {

@@ -19,7 +19,8 @@ import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNav
 const stages = TURKISH_LESSON_STAGES;
 
 /** سرعت پخش: معمولی برای شنیدن خودکار و آهسته برای تکرار دقیق‌تر. */
-const NORMAL_SPEECH_RATE = 0.85;
+const AUTO_SPEECH_RATE = 0.85;
+const NORMAL_SPEECH_RATE = 1;
 const SLOW_SPEECH_RATE = 0.5;
 
 export default function TurkishLesson({ lesson, fromStart = false, restarted = false }: { lesson: TurkishCourseLesson; fromStart?: boolean; restarted?: boolean }) {
@@ -101,7 +102,7 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
       .catch(() => setSessionError('جلسه ذخیره نشد؛ پیشرفت درس کامل ثبت نشده است. دوباره ذخیره کنید.'));
   }, [lesson.id, sessionReady, stage, sentenceIndex, revealed, answers, showCheckAnswers, saveRetry]);
 
-  const speak = useCallback((text: string, rate = 0.78) => {
+  const speak = useCallback((text: string, rate?: number) => {
     setSpeechError('');
     void playTurkishSpeech(text, rate, () => setSpeechError('صدای ترکی دستگاه در دسترس نیست؛ متن و راهنمای خوانش همچنان دیده می‌شوند.'));
   }, []);
@@ -109,10 +110,10 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
   // Read the visible main sentence on entry, resume, and each sentence change.
   useEffect(() => {
     if (!sessionReady || stage !== 1 || !current) return;
-    speak(current.text, NORMAL_SPEECH_RATE);
+    speak(current.text, AUTO_SPEECH_RATE);
   }, [lesson.id, sessionReady, stage, sentenceIndex, current?.text, speak]);
 
-  const selectSentence = (index: number, rate = 0.72) => {
+  const selectSentence = (index: number, rate?: number) => {
     setSentenceIndex(index);
     setRevealed(false);
     setSpeechError('');
@@ -140,7 +141,7 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
       setStage(nextStage);
       setSentenceIndex(0);
       setRevealed(false);
-      if (nextStage === 3) speak(lesson.sentences[0].text, NORMAL_SPEECH_RATE);
+      if (nextStage === 3) speak(lesson.sentences[0].text, AUTO_SPEECH_RATE);
       else if (nextStage !== 1) void stopTurkishSpeech();
       return;
     }
@@ -241,10 +242,10 @@ export default function TurkishLesson({ lesson, fromStart = false, restarted = f
           <View style={styles.speechPractice}>
             <Text style={styles.speechTitle}>{unitLabel} انتخاب‌شده</Text>
             <Text style={styles.speechSentence}>{current.text}</Text>
-            <Pressable accessibilityRole="button" style={styles.playSlowButton} onPress={() => speak(current.text, .68)}><Volume2 size={18} color="#FFFFFF" /><Text style={styles.recordButtonText}>پخش آهستهٔ نمونه</Text></Pressable>
+            <Pressable accessibilityRole="button" style={styles.playSlowButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color="#FFFFFF" /><Text style={styles.recordButtonText}>پخش آهستهٔ نمونه</Text></Pressable>
             <Text style={styles.speechHint}>پس از شنیدن، {unitLabel} را با صدای بلند تکرار کنید؛ گفتار ضبط یا نمره‌گذاری نمی‌شود.</Text>
           </View>
-          <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`${unitLabel} ${fa(index + 1)}`} onPress={() => selectSentence(index, .68)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
+          <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`${unitLabel} ${fa(index + 1)}`} onPress={() => selectSentence(index, AUTO_SPEECH_RATE)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
         </View>}
 
         {stage === 4 && <View style={styles.centerStage}>
@@ -463,8 +464,8 @@ const styles = StyleSheet.create({
   previousButtonText: { fontFamily: Typography.fontFamily, color: Palette.primary, fontSize: 12, writingDirection: 'rtl' },
   nextButtonBesidePrevious: { flex: 1, width: undefined },
   nextButton: { width: '100%', maxWidth: 820, alignSelf: 'center', minHeight: 54, borderRadius: 17, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, shadowColor: Palette.primary, shadowOpacity: .2, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
-  replayRow: { flexDirection: 'row-reverse', gap: 10, justifyContent: 'center', marginTop: 12 },
-  replayButton: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, minHeight: 44, paddingHorizontal: 18, borderRadius: 14, borderWidth: 1, borderColor: Palette.primary, backgroundColor: '#FFFFFF' },
+  replayRow: { flexDirection: 'row-reverse', alignSelf: 'stretch', alignItems: 'stretch', gap: 10, justifyContent: 'center', marginTop: 12 },
+  replayButton: { flex: 1, minWidth: 0, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 44, paddingHorizontal: 12, borderRadius: 14, borderWidth: 1, borderColor: Palette.primary, backgroundColor: '#FFFFFF' },
   replayText: { fontFamily: Typography.fontFamily, fontSize: 14, fontWeight: '400', color: Palette.primary, writingDirection: 'rtl' },
   nextButtonDisabled: { backgroundColor: '#E4E1FF', shadowOpacity: 0, elevation: 0 },
   nextTextDisabled: { color: Palette.primaryDark },

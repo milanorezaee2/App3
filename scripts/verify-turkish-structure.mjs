@@ -19,7 +19,8 @@ await esbuild.build({
       "import * as catalog from './lib/languages/catalog';",
       "import * as pronunciation from './lib/languages/pronunciationCourse';",
       "import * as resume from './lib/appResume';",
-      'export { turkish, studyState, russian, english, catalog, pronunciation, resume };',
+      "import * as turkishSpeech from './lib/turkishSpeech';",
+      'export { turkish, studyState, russian, english, catalog, pronunciation, resume, turkishSpeech };',
     ].join('\n'),
     resolveDir: root,
   },
@@ -42,6 +43,8 @@ await esbuild.build({
         contents: 'export default { async getItem(key) { return globalThis.__turkishNativeMemory?.get(key) ?? null; }, async setItem(key, value) { globalThis.__turkishNativeMemory ??= new Map(); globalThis.__turkishNativeMemory.set(key, String(value)); }, async removeItem(key) { globalThis.__turkishNativeMemory?.delete(key); } };',
         loader: 'js',
       }));
+      build.onResolve({ filter: /^expo-speech$/ }, () => ({ path: 'expo-speech', namespace: 'turkish-speech-stub' }));
+      build.onLoad({ filter: /.*/, namespace: 'turkish-speech-stub' }, () => ({ contents: 'export function speak(text, options) { globalThis.__turkishUtterances.push({ text, options }); } export function stop() { globalThis.__turkishSpeechStops += 1; return Promise.resolve(); }', loader: 'js' }));
       build.onResolve({ filter: /^react-native$/ }, () => ({ path: 'react-native', namespace: 'turkish-platform-stub' }));
       build.onLoad({ filter: /.*/, namespace: 'turkish-platform-stub' }, () => ({ contents: 'export const Platform = { get OS() { return globalThis.__turkishPlatformOS || "web"; } };', loader: 'js' }));
     },
@@ -60,7 +63,9 @@ globalThis.window = {
 globalThis.__turkishSupabaseCalls = 0;
 
 const require = createRequire(import.meta.url);
-const { turkish, studyState, russian, english, catalog, pronunciation, resume } = require(output);
+const { turkish, studyState, russian, english, catalog, pronunciation, resume, turkishSpeech } = require(output);
+globalThis.__turkishUtterances = [];
+globalThis.__turkishSpeechStops = 0;
 let checks = 0;
 const check = (condition, message) => { assert.ok(condition, message); checks += 1; };
 
@@ -456,5 +461,35 @@ check(/from '\.\/turkishSeed'/.test(read('lib/languages/turkishPreA1.ts')) && !/
 check(turkish.TURKISH_PRE_A1_LESSONS?.length === 25 && preA1Lessons.every(lesson => lesson.sentences.every(sentence => sentence.id.startsWith('tr0-'))), 'Pre-A1 lesson and sentence IDs are isolated from all other language tracks');
 const legacyPreA1SentenceStarts = { 'tr-prea1-01-greetings': 1, 'tr-prea1-02-how-are-you': 9, 'tr-prea1-03-basic-verbs': 17, 'tr-prea1-04-adjectives-and-adverbs': 25, 'tr-prea1-05-first-word-pairs': 33, 'tr-prea1-06-verb-chunks': 41, 'tr-prea1-07-first-short-sentences': 49, 'tr-prea1-08-simple-questions': 57, 'tr-prea1-09-needs-and-places': 65, 'tr-prea1-10-first-conversation': 73 };
 check(Object.entries(legacyPreA1SentenceStarts).every(([id, start]) => turkish.findTurkishLesson(id)?.sentences.map(sentence => sentence.id).join('|') === Array.from({ length: 8 }, (_, index) => `tr0-${String(start + index).padStart(3, '0')}`).join('|')), 'Expanded Pre-A1 preserves all 80 legacy sentence IDs so existing review schedules remain attached');
+
+// Turkish narration mirrors the English responsive lifecycle without sharing
+// English/Russian module state or delaying cold playback behind a stop queue.
+globalThis.__turkishPlatformOS = 'android';
+await turkishSpeech.stopTurkishSpeech();
+globalThis.__turkishUtterances = [];
+globalThis.__turkishSpeechStops = 0;
+await turkishSpeech.playTurkishSpeech('Merhaba');
+check(globalThis.__turkishUtterances.length === 1 && globalThis.__turkishSpeechStops === 0
+  && globalThis.__turkishUtterances[0].options.rate === 1
+  && globalThis.__turkishUtterances[0].options.language === 'tr', 'Turkish cold playback starts immediately at natural speed with the Android Turkish voice');
+await turkishSpeech.playTurkishSpeech('Merhaba');
+check(globalThis.__turkishUtterances.length === 2 && globalThis.__turkishSpeechStops === 1
+  && globalThis.__turkishUtterances[1].options.rate === 0.5, 'Repeated Turkish manual playback uses the same slow rate as English and stops only the active phrase');
+globalThis.__turkishUtterances[1].options.onDone();
+await turkishSpeech.playTurkishSpeech('Günaydın', 0.85);
+check(globalThis.__turkishUtterances.at(-1).options.rate === 0.85 && globalThis.__turkishSpeechStops === 1, 'Completed Turkish speech does not add a stop delay before automatic-speed playback');
+const beforeRapidRequests = globalThis.__turkishUtterances.length;
+await Promise.all([
+  turkishSpeech.playTurkishSpeech('Bir', 0.85),
+  turkishSpeech.playTurkishSpeech('İki', 1),
+]);
+check(globalThis.__turkishUtterances.length === beforeRapidRequests + 1
+  && globalThis.__turkishUtterances.at(-1).text === 'İki', 'Rapid Turkish narration changes allow only the latest phrase to start');
+await turkishSpeech.stopTurkishSpeech();
+const turkishLessonSource = read('components/TurkishLesson.tsx');
+check(/AUTO_SPEECH_RATE = 0\.85/.test(turkishLessonSource) && /NORMAL_SPEECH_RATE = 1/.test(turkishLessonSource)
+  && /SLOW_SPEECH_RATE = 0\.5/.test(turkishLessonSource), 'Turkish automatic, normal and slow rates match the English narrator levels');
+check(/replayRow: \{ flexDirection: 'row-reverse', alignSelf: 'stretch', alignItems: 'stretch'/.test(turkishLessonSource)
+  && /replayButton: \{ flex: 1, minWidth: 0,[\s\S]*?justifyContent: 'center'/.test(turkishLessonSource), 'Turkish slow and normal buttons share equal width, height and centered alignment');
 
 console.log(`${checks} Turkish Pre-A1..C1 curriculum, orthography, progress, session resume, pronunciation, routing, and isolation checks passed.`);
