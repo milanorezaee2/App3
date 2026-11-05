@@ -254,6 +254,8 @@ export default function SentenceLessonScreen() {
 
   if (invalidLesson) return <View style={styles.root}><PageNavigation backFallback="/lang/library" /><Text style={styles.stageDesc}>درس پیدا نشد.</Text><Pressable accessibilityRole="button" onPress={()=>router.replace('/lang/library' as never)}><Text style={styles.stageTitle}>فهرست درس‌ها</Text></Pressable></View>;
   if (!sessionReady) return <View style={styles.root}><PageNavigation backFallback="/lang" /><Text style={styles.stageDesc}>{sessionError || 'در حال بازیابی جلسه…'}</Text></View>;
+  const nextDisabled = saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed);
+
   return (
     <View style={styles.root} onTouchStart={timer.interact}>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
@@ -276,13 +278,13 @@ export default function SentenceLessonScreen() {
       </LinearGradient>
       <View style={styles.stepperCard}>
         <View style={styles.stepperHeading}>
-          <View>
-            <Text style={styles.stepperEyebrow}>LESSON FLOW · 09 STAGES</Text>
+          <View style={styles.stepperFaCol}>
             <Text style={styles.stepperTitle}>جریان این درس</Text>
-          </View>
-          <View style={styles.stepperNow}>
-            <Text style={styles.stepperNowEn}>{stages[stage].labelEn}</Text>
             <Text style={styles.stepperNowFa}>{stages[stage].labelFa}</Text>
+          </View>
+          <View style={styles.stepperEnCol}>
+            <Text style={styles.stepperEyebrow}>LESSON FLOW · 09 STAGES</Text>
+            <Text style={styles.stepperNowEn}>{stages[stage].labelEn}</Text>
           </View>
         </View>
         <View style={styles.stepSegments}>
@@ -506,12 +508,12 @@ export default function SentenceLessonScreen() {
 
       <View style={styles.footer}>
         <View style={styles.footerButtons}>
-          {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && { opacity: .45 }]}>
+          {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && styles.nextButtonDisabled]}>
             <Text style={styles.secondaryControlText}>جمله قبلی</Text>
           </Pressable>}
-          <Pressable accessibilityRole="button" accessibilityState={{ disabled: saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed) }} disabled={saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed)} style={[styles.nextButton, stage === 1 && styles.nextButtonBesidePrevious, (saving || (stage === stages.length - 1 && !evidencePassed)) && { opacity: .45 }]} onPress={() => void next()}>
-            <Text style={styles.nextText}>{stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جمله بعدی' : 'ادامه'}</Text>
-            {stage === stages.length - 1 ? <Check size={20} color={Colors.onColor} /> : <ChevronLeft size={20} color={Colors.onColor} />}
+          <Pressable accessibilityRole="button" accessibilityState={{ disabled: nextDisabled }} disabled={nextDisabled} style={[styles.nextButton, stage === 1 && styles.nextButtonBesidePrevious, nextDisabled && styles.nextButtonDisabled]} onPress={() => void next()}>
+            <Text style={[styles.nextText, nextDisabled && styles.nextTextDisabled]}>{stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جمله بعدی' : 'ادامه'}</Text>
+            {stage === stages.length - 1 ? <Check size={20} color={nextDisabled ? Palette.primaryDark : Colors.onColor} /> : <ChevronLeft size={20} color={nextDisabled ? Palette.primaryDark : Colors.onColor} />}
           </Pressable>
         </View>
       </View>
@@ -525,7 +527,7 @@ const styles = StyleSheet.create({
   header: { width: '100%', maxWidth: 900, minHeight: 64, alignSelf: 'center', paddingTop: 12, paddingHorizontal: 15, paddingBottom: 7, gap: 8, borderBottomLeftRadius: 22, borderBottomRightRadius: 22, borderBottomWidth: 1, borderBottomColor: 'rgba(33,26,104,0.08)' },
   headerTop: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
   headerText: { flex: 1, alignItems: 'flex-end', gap: 2 },
-  headerEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.muted, fontSize: 8, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
+  headerEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.muted, fontSize: 8, fontWeight: '800', letterSpacing: 1, textAlign: 'left', alignSelf: 'flex-start', writingDirection: 'ltr' },
   headerTitle: { fontFamily: Typography.fontFamily, fontSize: 20, lineHeight: 27, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
   headerSub: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: Palette.text, textAlign: 'right', writingDirection: 'rtl' },
   percentBadge: { minWidth: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: 'rgba(33,26,104,0.10)' },
@@ -536,10 +538,11 @@ const styles = StyleSheet.create({
   headerInfoText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 11, fontWeight: '400', writingDirection: 'rtl' },
   stepperCard: { width: '100%', maxWidth: 900, alignSelf: 'center', marginTop: 12, paddingHorizontal: 20, paddingVertical: 13, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10, shadowColor: '#211A68', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepperHeading: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
-  stepperEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 8, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
+  stepperEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 8, fontWeight: '800', letterSpacing: 1, textAlign: 'left', writingDirection: 'ltr' },
   stepperTitle: { fontFamily: Typography.fontFamily, fontSize: 14, lineHeight: 18, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
-  stepperNow: { alignItems: 'flex-end', gap: 1 },
-  stepperNowEn: { fontFamily: 'Inter-ExtraBold', color: Palette.primaryDark, fontSize: 9, fontWeight: '800', writingDirection: 'ltr' },
+  stepperFaCol: { flex: 1, alignItems: 'flex-end', gap: 2 },
+  stepperEnCol: { alignItems: 'flex-start', gap: 2 },
+  stepperNowEn: { fontFamily: 'Inter-ExtraBold', color: Palette.primaryDark, fontSize: 9, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
   stepperNowFa: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
   stepSegments: { flexDirection: 'row-reverse', gap: 4 },
   stepSegment: { flex: 1, height: 5, borderRadius: 999, backgroundColor: Palette.border },
@@ -547,7 +550,7 @@ const styles = StyleSheet.create({
   stepSegmentCurrent: { height: 8, marginTop: -1.5, backgroundColor: Palette.teal },
   stepperEnds: { flexDirection: 'row-reverse', justifyContent: 'space-between' },
   stepperEndText: { fontFamily: 'Inter-ExtraBold', color: Palette.muted, fontSize: 8, fontWeight: '800', writingDirection: 'ltr' },
-  content: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 15, paddingTop: 9, paddingBottom: 22, gap: 11 },
+  content: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 15, paddingTop: 9, paddingBottom: 130, gap: 11 },
   centerStage: { alignItems: 'center', width: '100%' },
   bigIcon: { width: 72, height: 72, borderRadius: 36, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF', alignItems: 'center', justifyContent: 'center', marginVertical: Spacing.lg },
   stageEyebrow: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.primary, marginBottom: 4, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
@@ -562,7 +565,7 @@ const styles = StyleSheet.create({
   sentenceCard: { width: '100%', borderRadius: Radius.xl, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: Spacing.xl, alignItems: 'center', shadowColor: '#172033', shadowOpacity: 0.05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
   soundButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: Spacing.lg },
   english: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 25, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
-  pronunciation: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'center', writingDirection: 'rtl', marginTop: 8 },
+  pronunciation: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', marginTop: 8 },
   divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: Spacing.lg },
   persian: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg + 2, fontWeight: '400', color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   pattern: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start', gap: 8, alignSelf: 'flex-end', backgroundColor: Palette.warningSoft, paddingHorizontal: 10, paddingVertical: 6, borderRadius: Radius.full, marginTop: Spacing.md },
@@ -600,7 +603,7 @@ const styles = StyleSheet.create({
   revealText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, writingDirection: 'rtl' },
   answerBox: { marginTop: Spacing.xl, padding: Spacing.md, borderRadius: Radius.lg, backgroundColor: Palette.successSoft, flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
   answerText: { fontFamily: 'Inter-ExtraBold', flex: 1, fontSize: 18, fontWeight: '800', color: Palette.success, textAlign: 'left', writingDirection: 'ltr' },
-  dots: { flexDirection: 'row', gap: 8, marginTop: Spacing.lg },
+  dots: { flexDirection: 'row-reverse', gap: 8, marginTop: Spacing.lg },
   dot: { width: 9, height: 9, borderRadius: 5, backgroundColor: Palette.border },
   dotActive: { width: 24, backgroundColor: Palette.primary },
   dialogue: { width: '100%', gap: Spacing.sm, marginTop: Spacing.xl },
@@ -618,10 +621,12 @@ const styles = StyleSheet.create({
   vocabMeaning: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
   vocabExample: { fontFamily: 'Inter-ExtraBold', fontSize: 13, fontWeight: '800', color: Palette.text, textAlign: 'left', writingDirection: 'ltr', marginTop: 8 },
   footer: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 15, paddingTop: 7, paddingBottom: 30, backgroundColor: Palette.canvas, borderTopWidth: 1, borderTopColor: Palette.border, shadowColor: '#211A68', shadowOpacity: .07, shadowRadius: 12, shadowOffset: { width: 0, height: -4 }, elevation: 5 },
-  footerButtons: { width: '100%', flexDirection: 'row', gap: 8, alignItems: 'center' },
+  footerButtons: { width: '100%', flexDirection: 'row-reverse', gap: 8, alignItems: 'center' },
   previousButton: { flex: 1, minHeight: 54, borderRadius: 17, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
   secondaryControlText: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 13, textAlign: 'center', writingDirection: 'rtl' },
   nextButton: { width: '100%', maxWidth: 900, alignSelf: 'center', minHeight: 54, borderRadius: 17, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, shadowColor: Palette.primary, shadowOpacity: .2, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
   nextButtonBesidePrevious: { flex: 1, width: undefined },
+  nextButtonDisabled: { backgroundColor: '#E4E1FF', shadowOpacity: 0, elevation: 0 },
+  nextTextDisabled: { color: Palette.primaryDark },
   nextText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.md + 2, fontWeight: '400', color: Colors.onColor, writingDirection: 'rtl' },
 });

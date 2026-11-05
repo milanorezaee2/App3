@@ -146,6 +146,7 @@ export const learningHomeStyles = StyleSheet.create({
   mapToggleText: { flex: 1, gap: 2 },
   mapToggleTitle: { fontFamily: Typography.fontFamily, color: LearningHomeColors.ink, fontSize: 10, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   mapToggleMeta: { fontFamily: Typography.latinFontFamily, color: LearningHomeColors.muted, fontSize: 6, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
+  mapToggleMetaFa: { fontFamily: Typography.fontFamily, textAlign: 'right', writingDirection: 'rtl' },
   fullRoadmap: { gap: 8 },
   levelCard: { minHeight: 78, flexDirection: 'row-reverse', alignItems: 'center', gap: 11, padding: 13, borderRadius: 19, backgroundColor: LearningHomeColors.surface, borderWidth: 1, borderColor: LearningHomeColors.border, shadowColor: '#211A68', shadowOpacity: 0.06, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
   levelCardActive: { borderColor: '#8D86FF', backgroundColor: '#F8F7FF' },

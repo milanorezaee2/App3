@@ -27,7 +27,7 @@ import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } fro
 import { TURKISH_LEVELS, TURKISH_LESSONS, turkishProgress, type TurkishLevelId } from '@/lib/languages/turkish';
 import { clearTurkishLessonSession, loadTurkishLessonSessionWithPresence } from '@/lib/languages/turkishStudyState';
 import type { CourseProgress } from '@/lib/courseProgress';
-import { toPersianDigits as fa } from '@/lib/format';
+import { isPersianLedText, toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 
 const turkishOnlyStyles = StyleSheet.create({
@@ -109,6 +109,7 @@ export default function TurkishHome() {
   const resumeLesson = savedCurrentLesson ?? nextLesson;
   const heroLesson = resumeLesson ?? TURKISH_LESSONS[TURKISH_LESSONS.length - 1];
   const activeLevel = TURKISH_LEVELS.find(level => level.id === (resumeLesson?.levelId ?? heroLesson.levelId)) ?? TURKISH_LEVELS[0];
+  const activeModuleSummary = activeLevel.modules.slice(0, 3).map(displayEnglishModuleLabel).join(' · ');
   const completedCount = TURKISH_LESSONS.filter(lesson => completedSet.has(lesson.id)).length;
   const levelLessons = TURKISH_LESSONS.filter(lesson => lesson.levelId === activeLevel.id);
   const levelCompleted = levelLessons.filter(lesson => completedSet.has(lesson.id)).length;
@@ -371,7 +372,7 @@ export default function TurkishHome() {
               <View style={styles.mapToggleIcon}><Compass size={16} color={HomeColors.accent} /></View>
               <View style={styles.mapToggleText}>
                 <Text style={styles.mapToggleTitle}>{showRoadmap ? 'بستن نقشهٔ کامل سطح‌ها' : 'دیدن جزئیات سطح‌ها'}</Text>
-                <Text style={styles.mapToggleMeta}>{activeLevel.modules.slice(0, 3).map(displayEnglishModuleLabel).join(' · ')}</Text>
+                <Text style={[styles.mapToggleMeta, isPersianLedText(activeModuleSummary) && styles.mapToggleMetaFa]}>{activeModuleSummary}</Text>
               </View>
               {showRoadmap ? <ChevronUp size={18} color={HomeColors.accent} /> : <ChevronDown size={18} color={HomeColors.muted} />}
             </Pressable>

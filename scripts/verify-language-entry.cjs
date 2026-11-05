@@ -23,7 +23,7 @@ check(/onPress=\{\(\) => router\.push\(language\.home as never\)\}/.test(languag
 check(/home: '\/lang'/.test(catalog) && /home: '\/learn\/ru'/.test(catalog), 'English and Russian cards keep the original course destinations');
 check(/زبان را از زندگی یاد بگیر/.test(languageScreen) && /کوتاه، شنیدنی، ماندگار/.test(languageScreen), 'language chooser follows the approved warm-journal copy');
 check(/MiloLanguageBrand/.test(languageScreen) && !/MiloLogoMotion/.test(languageScreen) && /splash-learning-light\.png/.test(read('components/MiloLanguageBrand.tsx')), 'language chooser uses the selected book-and-globe brand mark');
-check(/languages\.map\(\(language\)/.test(languageScreen) && /styles\.languageCard/.test(languageScreen) && /languageList: \{ flexDirection: 'row'/.test(languageScreen), 'language choices remain catalog-driven cards in one selection row');
+check(/languages\.map\(\(language\)/.test(languageScreen) && /styles\.languageCard/.test(languageScreen) && /languageList: \{ flexDirection: 'row-reverse'/.test(languageScreen), 'language choices remain catalog-driven cards in one RTL selection row');
 check(/learningSteps\.map/.test(languageScreen) && /styles\.stepRow/.test(languageScreen), 'language chooser contains the selected step-by-step path');
 check(!/\/placement|PlacementLanguage|PlacementRecommendation|سنجش همان لحظه|شروع پرسش‌های سنجش/.test(languageScreen), 'language chooser contains no assessment route, bank, or CTA');
 check(!/\/placement|سنجش آغازین انگلیسی برای انتخاب نقطهٔ شروع|پیداکردن نقطهٔ شروع/.test(englishHome), 'English home contains no remaining placement-assessment shortcut');

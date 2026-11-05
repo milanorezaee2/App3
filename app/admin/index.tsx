@@ -150,8 +150,8 @@ function EducationAdmin() {
     catch (e) { await adminClient().auth.signOut(); throw e; }
   });
   const button = (title: string, onPress: () => void, secondary = false, disabled = false) => (
-    <Pressable accessibilityRole="button" disabled={disabled || busy} onPress={onPress} style={[s.button, secondary && s.secondary, (disabled || busy) && { opacity: .45 }]}>
-      <Text style={[s.buttonText, secondary && { color: '#344761' }]}>{title}</Text>
+    <Pressable accessibilityRole="button" disabled={disabled || busy} onPress={onPress} style={[s.button, secondary && s.secondary, (disabled || busy) && (secondary ? { opacity: .55 } : { backgroundColor: '#E4E1FF' })]}>
+      <Text style={[s.buttonText, secondary && { color: '#344761' }, !secondary && (disabled || busy) && { color: '#5146E5' }]}>{title}</Text>
     </Pressable>
   );
   const feedback = <>{busy && <ActivityIndicator color="#5146E5" />}{!!error && <Text accessibilityRole="alert" style={s.error}>{error}</Text>}{!!notice && <Text style={s.notice}>{notice}</Text>}</>;

@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   revealButtonText: { fontFamily: Typography.fontFamily, fontSize: 13, fontWeight: '400', color: '#FFFFFF', writingDirection: 'rtl' },
   answerArea: { width: '100%', alignItems: 'center' },
   answerDivider: { width: '75%', height: 1, backgroundColor: Palette.border, marginVertical: 18 },
-  reviewTurkish: { fontFamily: 'Inter-ExtraBold', alignSelf: 'stretch', fontSize: 21, lineHeight: 34, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
+  reviewTurkish: { fontFamily: 'Inter-ExtraBold', alignSelf: 'stretch', fontSize: 21, lineHeight: 34, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   reviewPronunciation: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl', marginTop: 7 },
   soundButton: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, padding: 8, marginTop: 8 },
   soundText: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.primary, writingDirection: 'rtl' },

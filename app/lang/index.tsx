@@ -29,7 +29,7 @@ import { COURSE_LEVELS, SENTENCE_LESSONS } from '@/lib/courseContent';
 import { getCourseProgress, restartCourseFromBeginning, type CourseProgress } from '@/lib/courseProgress';
 import { syncPersonalLearningData } from '@/lib/personalLearningSync';
 import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '@/components/LearningHomeStyles';
-import { toPersianDigits } from '@/lib/format';
+import { isPersianLedText, toPersianDigits } from '@/lib/format';
 import { clearLessonStudy, loadStudy, studyDay } from '@/lib/englishStudyState';
 import { ENGLISH_ENGINE_BLUEPRINT, getEnglishLevelMetrics } from '@/lib/englishLearningEngine';
 import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } from '@/components/EnglishUI';
@@ -94,6 +94,7 @@ export default function LearningHome() {
   const completed = completedIds.length;
   const levelMetrics = getEnglishLevelMetrics(currentLevel.id, completedIds);
   const currentBlueprint = ENGLISH_ENGINE_BLUEPRINT.find(level => level.levelId === currentLevel.id);
+  const currentModuleSummary = currentBlueprint?.modules.slice(0, 3).map(displayEnglishModuleLabel).join(' · ') ?? '';
   const dailyGoal = progress?.dailyGoalMinutes ?? 10;
   const dailyPct = Math.min(100, dailyGoal ? (measuredMinutes / dailyGoal) * 100 : 0);
   const levelCounts = Object.fromEntries(COURSE_LEVELS.map(level => {
@@ -338,7 +339,7 @@ export default function LearningHome() {
               <View style={styles.mapToggleIcon}><Compass size={16} color={HomeColors.accent} /></View>
               <View style={styles.mapToggleText}>
                 <Text style={styles.mapToggleTitle}>{showRoadmap ? 'بستن نقشهٔ کامل' : 'دیدن جزئیات سطح‌ها'}</Text>
-                <Text style={styles.mapToggleMeta}>{currentBlueprint?.modules.slice(0, 3).map(displayEnglishModuleLabel).join(' · ')}</Text>
+                <Text style={[styles.mapToggleMeta, isPersianLedText(currentModuleSummary) && styles.mapToggleMetaFa]}>{currentModuleSummary}</Text>
               </View>
               {showRoadmap ? <ChevronUp size={18} color={HomeColors.accent} /> : <ChevronDown size={18} color={HomeColors.muted} />}
             </Pressable>

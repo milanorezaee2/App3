@@ -164,6 +164,17 @@ if [[ "$home_rendered" != true ]]; then
   exit 1
 fi
 
+failed_step="verifying Android hardware back stays inside the learner app"
+adb shell input keyevent KEYCODE_BACK
+sleep 3
+capture_ui
+if ! grep -Fq 'زبان را از زندگی یاد بگیر' "$ui_file" \
+  || ! grep -Fq 'English' "$ui_file" || ! grep -Fq 'Русский' "$ui_file"; then
+  echo 'Android hardware back left the learner language home instead of being consumed by the app guard.'
+  exit 1
+fi
+echo 'Android hardware back kept the learner app on its language home.'
+
 # Chat composer geometry used to be covered through deep links, but that flow never
 # rendered on a clean install (deep links settle back on the language home), so those
 # steps were removed. Keyboard coverage stays on the learner login gate below, and the

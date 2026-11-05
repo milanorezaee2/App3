@@ -13,6 +13,7 @@ const appLock = read('lib/appLock.ts');
 const gate = read('components/AppLockGate.tsx');
 const settings = read('app/app-lock.tsx');
 const rootLayout = read('app/_layout.tsx');
+const androidBackGuard = read('components/AndroidBackGuard.tsx');
 const humanChat = read('app/conversations/human/[conversationId].tsx');
 const emmaChat = read('app/conversations/emma.tsx');
 const conversations = read('lib/conversations.ts');
@@ -25,6 +26,9 @@ check(/authenticateAsync\([\s\S]*?disableDeviceFallback:\s*false/.test(appLock),
 check(/AppState\.addEventListener\('change'/.test(gate) && /state === 'inactive' \|\| state === 'background'/.test(gate), 'app relocks when hidden or backgrounded');
 check(/nextFailures >= 5/.test(gate) && /30_000/.test(gate), 'pattern brute-force attempts receive a cooldown');
 check(/<AppLockGate>[\s\S]*?<Stack/.test(rootLayout), 'app lock guards the complete route stack');
+check(/Platform\.OS !== 'android'/.test(androidBackGuard) && /appRole === 'admin'/.test(androidBackGuard)
+  && /addEventListener\('hardwareBackPress', \(\) => true\)/.test(androidBackGuard), 'Android learner builds consume hardware back while admin and other platforms keep system behavior');
+check(/<\/AppLockGate>\s*<AndroidBackGuard \/>/.test(rootLayout), 'hardware-back protection remains mounted on the learner login gate too');
 check(/savePattern\(pattern\)/.test(settings) && /setDeviceLockEnabled\(true\)/.test(settings), 'settings can independently enable pattern and phone lock');
 check(/deleteConversationForMe/.test(humanChat) && /confirmDeleteConversation/.test(humanChat), 'an open real-person chat can be deleted');
 check(/clearEmmaHistory/.test(emmaChat) && /confirmClearConversation/.test(emmaChat), 'the Emma chat history can be deleted');
@@ -35,4 +39,4 @@ check(/<KeyboardStickyView\s+offset=\{\{\s*closed:\s*0,\s*opened:\s*0\s*\}\}>[\s
 check(/composer:\s*\{\s*flexShrink:\s*0/.test(humanChat) && /composer:\s*\{\s*flexShrink:\s*0/.test(emmaChat), 'both composers remain fully visible during keyboard resize');
 check(!/marginBottom:\s*100/.test(humanChat) && !/marginBottom:\s*100/.test(emmaChat), 'no fixed composer offset fights keyboard movement');
 
-console.log(`${checks} app-lock, deletion, and dynamic-keyboard checks passed.`);
+console.log(`${checks} app-lock, Android-back, deletion, and dynamic-keyboard checks passed.`);

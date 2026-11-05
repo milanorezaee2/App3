@@ -3,7 +3,7 @@ import { Alert, ImageBackground, Pressable, ScrollView, StyleSheet, Text, View, 
 import { createAudioPlayer } from 'expo-audio';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { ArrowRight, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
+import { ArrowLeft, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
 import { MiloLanguageBrand } from '@/components/MiloLanguageBrand';
 import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
@@ -169,7 +169,7 @@ export default function LanguagesHome() {
                     <Text style={styles.languageCode}>{language.id.toUpperCase()}</Text>
                   </View>
                   <View style={styles.languageArrow}>
-                    <ArrowRight size={18} color={palette.forest} strokeWidth={2.1} />
+                    <ArrowLeft size={18} color={palette.forest} strokeWidth={2.1} />
                   </View>
                 </Pressable>
               );
@@ -222,17 +222,17 @@ const styles = StyleSheet.create({
   page: { width: '100%', maxWidth: 880, alignSelf: 'center', paddingHorizontal: 24, paddingTop: 24, gap: 24 },
   pageCompact: { paddingHorizontal: 18, paddingTop: 14, gap: 17 },
   header: { minHeight: 64, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
-  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  headerActions: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
   headerButton: { width: 44, height: 44, borderRadius: 16, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#554C3E', shadowOpacity: 0.06, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   hero: { minHeight: 230, justifyContent: 'center', padding: 24, borderRadius: 24, overflow: 'hidden', backgroundColor: '#ECE4D4', shadowColor: '#514433', shadowOpacity: 0.10, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
   heroImage: { borderRadius: 24 },
   heroCompact: { minHeight: 188, padding: 19 },
-  heroCopy: { width: '78%', alignItems: 'flex-start', gap: 8 },
-  title: { width: '100%', fontFamily: 'Vazir-Bold', color: palette.ink, fontSize: 30, lineHeight: 46, textAlign: 'left', writingDirection: 'rtl' },
+  heroCopy: { width: '78%', alignItems: 'flex-end', gap: 8 },
+  title: { width: '100%', fontFamily: 'Vazir-Bold', color: palette.ink, fontSize: 30, lineHeight: 46, textAlign: 'right', writingDirection: 'rtl' },
   titleTiny: { fontSize: 25, lineHeight: 38 },
-  subtitle: { width: '100%', fontFamily: 'Vazir', color: '#5B6257', fontSize: 15, lineHeight: 25, textAlign: 'left', writingDirection: 'rtl' },
+  subtitle: { width: '100%', fontFamily: 'Vazir', color: '#5B6257', fontSize: 15, lineHeight: 25, textAlign: 'right', writingDirection: 'rtl' },
   eyebrow: { alignSelf: 'flex-start', marginTop: 5, fontFamily: 'Inter-ExtraBold', color: palette.forest, fontSize: 9, lineHeight: 15, letterSpacing: 1.7, writingDirection: 'ltr' },
-  languageList: { flexDirection: 'row', alignItems: 'stretch', gap: 12 },
+  languageList: { flexDirection: 'row-reverse', alignItems: 'stretch', gap: 12 },
   languageCard: { flex: 1, minWidth: 0, borderRadius: 19, overflow: 'hidden', borderWidth: 1, borderColor: palette.border, paddingBottom: 12, alignItems: 'center', backgroundColor: palette.paper, shadowColor: '#514433', shadowOpacity: 0.07, shadowRadius: 12, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
   languageArt: { width: '100%', height: 156, justifyContent: 'flex-end', backgroundColor: '#EAE2D4' },
   languageArtImage: { borderTopLeftRadius: 18, borderTopRightRadius: 18 },

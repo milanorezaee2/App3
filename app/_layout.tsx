@@ -15,6 +15,7 @@ import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AppLockGate } from '@/components/AppLockGate';
 import { WebStatusBarSpacer } from '@/components/WebStatusBarSpacer';
+import { AndroidBackGuard } from '@/components/AndroidBackGuard';
 import { ChatNotificationBridge } from '@/components/ChatNotificationBridge';
 import { AppResumeGuard } from '@/components/AppResumeGuard';
 import { RegistrationGate } from '@/components/RegistrationGate';
@@ -176,6 +177,7 @@ export default function RootLayout() {
               <ChatNotificationBridge />
             </RegistrationGate>
           </AppLockGate>
+          <AndroidBackGuard />
           <StatusBar style="dark" />
         </SafeAreaView>
       </ErrorBoundary>

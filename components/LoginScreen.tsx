@@ -546,7 +546,7 @@ const styles = StyleSheet.create({
     color: '#26382D',
     writingDirection: 'rtl',
   },
-  ltr: { fontFamily: Typography.latinFontFamily, textAlign: 'right', writingDirection: 'ltr', fontSize: 12.6 },
+  ltr: { fontFamily: Typography.latinFontFamily, textAlign: 'left', writingDirection: 'ltr', fontSize: 12.6 },
   codeInput: { fontFamily: Typography.numberFontFamily, letterSpacing: 3, fontSize: 14.5 },
   otpInput: { textAlign: 'center', writingDirection: 'ltr' },
   fieldIcon: { position: 'absolute', left: 16, top: 0, bottom: 0, justifyContent: 'center' },

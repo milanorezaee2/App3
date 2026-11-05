@@ -27,6 +27,12 @@ export function toPersianDigits(input: string | number): string {
   return String(input).replace(/[0-9]/g, (d) => persian[parseInt(d)]);
 }
 
+// Use the first visible character to choose layout direction without changing
+// mixed-language teaching content or translating any labels.
+export function isPersianLedText(input: string): boolean {
+  return /^[\u0600-\u06FF]/.test(input.trim());
+}
+
 export function formatPersianDate(isoDate: string): string {
   const date = new Date(isoDate);
   const months = [

@@ -441,7 +441,7 @@ check(resume.resumeHref('/learn/tr/lesson', { id: 'tr-l1-greetings' }) === '/lea
 check(resume.resumeDestination({ version: 1, href: '/learn/tr/library?level=1', language: 'tr', backgroundAt: now - 25 * 60 * 60 * 1000, updatedAt: now }, now) === '/learn/tr', 'Expired Turkish resume returns to Turkish home');
 
 const read = file => readFileSync(path.join(root, file), 'utf8');
-check(/tr: '🇹🇷'/.test(read('app/languages.tsx')), 'Language chooser includes the Turkish flag');
+check(/id: 'tr', name: 'ترکی استانبولی'/.test(read('lib/languages/catalog.ts')) && /LANGUAGES/.test(read('app/languages.tsx')), 'Language chooser includes Turkish from the shared catalog');
 for (const [file, component] of [
   ['app/learn/[language]/index.tsx', 'TurkishHome'],
   ['app/learn/[language]/library.tsx', 'TurkishLibrary'],
