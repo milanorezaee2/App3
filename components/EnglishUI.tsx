@@ -1,5 +1,5 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Check } from 'lucide-react-native';
+import { Check, Play } from 'lucide-react-native';
 import { COURSE_LEVELS, type CourseLevelId } from '@/lib/courseContent';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { toPersianDigits } from '@/lib/format';
@@ -64,8 +64,16 @@ export function EnglishLevelRail<T extends CourseLevelId = CourseLevelId>({
   const resolvedLevels = levels ?? COURSE_LEVELS as unknown as ReadonlyArray<{ id: T; title: string; cefr: string }>;
   const activeIndex = resolvedLevels.findIndex(level => level.id === activeLevelId);
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.railScroll} contentContainerStyle={styles.rail}>
-      {resolvedLevels.map((level, index, allLevels) => {
+    <View style={styles.railGroup}>
+      <View accessibilityLabel="از هر سطحی می‌توانی شروع کنی. روی سطح دلخواه بزن؛ کامل‌کردن سطح‌های قبلی لازم نیست." style={styles.levelChoiceHint}>
+        <View style={styles.levelChoiceIcon}><Play size={13} color={Palette.primary} fill={Palette.primary} /></View>
+        <View style={styles.levelChoiceCopy}>
+          <Text style={styles.levelChoiceTitle}>از هر سطحی می‌توانی شروع کنی</Text>
+          <Text style={styles.levelChoiceDetail}>روی سطح دلخواه بزن؛ کامل‌کردن سطح‌های قبلی لازم نیست.</Text>
+        </View>
+      </View>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.railScroll} contentContainerStyle={styles.rail}>
+        {resolvedLevels.map((level, index, allLevels) => {
         const count = counts?.[level.id];
         const done = !!count && count.total > 0 && count.completed === count.total;
         const active = level.id === activeLevelId;
@@ -78,7 +86,7 @@ export function EnglishLevelRail<T extends CourseLevelId = CourseLevelId>({
               accessibilityRole="button"
               accessibilityLabel={accessibilityLabelPrefix ? `${accessibilityLabelPrefix} ${level.title}` : `${level.title}, ${count ? `${count.completed} از ${count.total} درس` : level.cefr}`}
               accessibilityState={{ selected: active }}
-              accessibilityHint="انتخاب این سطح برای شروع"
+              accessibilityHint="دیدن درس‌ها و شروع آموزش از این سطح، بدون نیاز به تکمیل سطح‌های قبلی"
               hitSlop={5}
               onPress={() => onSelect(level.id)}
               style={({ pressed }) => [styles.railPressable, pressed && styles.railPressed]}
@@ -95,8 +103,9 @@ export function EnglishLevelRail<T extends CourseLevelId = CourseLevelId>({
             {index < allLevels.length - 1 ? <View style={[styles.railConnector, reached && styles.railConnectorActive, reached && { backgroundColor: successColor }]} /> : null}
           </View>
         );
-      })}
-    </ScrollView>
+        })}
+      </ScrollView>
+    </View>
   );
 }
 
@@ -123,6 +132,12 @@ export function EnglishSectionHeading({
 const styles = StyleSheet.create({
   progressTrack: { width: '100%', borderRadius: 999, overflow: 'hidden', backgroundColor: '#E7EAF2' },
   progressFill: { height: '100%', borderRadius: 999, alignSelf: 'flex-start' },
+  railGroup: { width: '100%' },
+  levelChoiceHint: { width: '100%', flexDirection: 'row-reverse', alignItems: 'center', gap: 9, marginBottom: 10, paddingHorizontal: 11, paddingVertical: 9, borderRadius: 14, borderWidth: 1, borderColor: '#DDE2FF', backgroundColor: Palette.primarySoft },
+  levelChoiceIcon: { width: 28, height: 28, borderRadius: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: Palette.surface },
+  levelChoiceCopy: { flex: 1, gap: 2 },
+  levelChoiceTitle: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 12, lineHeight: 18, textAlign: 'right', writingDirection: 'rtl' },
+  levelChoiceDetail: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 11, lineHeight: 17, textAlign: 'right', writingDirection: 'rtl' },
   railScroll: { width: '100%' },
   rail: { flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 2, paddingVertical: 4 },
   railItem: { width: 82, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start' },

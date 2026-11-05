@@ -55,7 +55,7 @@ const englishLesson = read('components/EnglishLessonRoute.tsx');
 const russianLesson = read('components/RussianLesson.tsx');
 const turkishLesson = read('components/TurkishLesson.tsx');
 const styleLine = (source, name) => source.match(new RegExp(`^  ${name}: \\{.*\\},$`, 'm'))?.[0];
-check(['header', 'content', 'sentenceCard', 'soundButton', 'footer'].every(name =>
+check(['header', 'content', 'sentenceCard', 'soundButton', 'replayRow', 'replayButton', 'replayText', 'footer'].every(name =>
   styleLine(englishLesson, name) === styleLine(turkishLesson, name)
   && styleLine(russianLesson, name) === styleLine(turkishLesson, name)),
   'English and Russian compact lesson metrics match the Turkish reference');

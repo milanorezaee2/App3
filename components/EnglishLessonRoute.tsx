@@ -46,6 +46,8 @@ import { A2_FOUNDATION_LESSONS } from '@/lib/courseContentA2Foundation';
 // Shared bundled typography keeps Persian bold and Latin teaching text LTR.
 const Typography = SharedTypography;
 const stages = ENGLISH_ENGINE_STEPS;
+const NORMAL_SPEECH_RATE = 1;
+const SLOW_SPEECH_RATE = 0.5;
 
 export default function SentenceLessonScreen() {
   const router = useRouter();
@@ -328,6 +330,10 @@ export default function SentenceLessonScreen() {
               <Text style={styles.persian}>{current.fa}</Text>
               {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternEnglish}>{current.pattern}</Text></View> : null}
             </View>
+            <View style={styles.replayRow}>
+              <Pressable accessibilityRole="button" accessibilityLabel="پخش آهستهٔ جمله" style={styles.replayButton} onPress={() => speak(current.en, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable>
+              <Pressable accessibilityRole="button" accessibilityLabel="پخش معمولی جمله" style={styles.replayButton} onPress={() => speak(current.en, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable>
+            </View>
             <Text style={styles.hint}>جمله به‌صورت خودکار پخش می‌شود. اگر مرورگر صدا را متوقف کرد، دکمهٔ بلندگو را بزنید.</Text>
             {!!audioNotice && <Text accessibilityLiveRegion="polite" style={styles.speechError}>{audioNotice}</Text>}
           </View>
@@ -566,6 +572,9 @@ const styles = StyleSheet.create({
   counter: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, marginBottom: 9, alignSelf: 'flex-end', textAlign: 'right', writingDirection: 'rtl' },
   sentenceCard: { width: '100%', borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 16, alignItems: 'center', shadowColor: '#172033', shadowOpacity: .05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
   soundButton: { width: 46, height: 46, borderRadius: 23, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
+  replayRow: { flexDirection: 'row-reverse', alignSelf: 'stretch', alignItems: 'stretch', gap: 10, justifyContent: 'center', marginTop: 12 },
+  replayButton: { flex: 1, minWidth: 0, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 44, paddingHorizontal: 12, borderRadius: 14, borderWidth: 1, borderColor: Palette.primary, backgroundColor: '#FFFFFF' },
+  replayText: { fontFamily: Typography.fontFamily, fontSize: 14, fontWeight: '400', color: Palette.primary, writingDirection: 'rtl' },
   english: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 21, lineHeight: 31, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   pronunciation: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', marginTop: 8 },
   divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 12 },

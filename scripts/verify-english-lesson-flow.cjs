@@ -67,8 +67,17 @@ const esbuild = require('esbuild');
   check(screen.includes("params: { id: nextLesson.id }") && screen.includes('await completeSentenceLesson') && screen.includes('await saveLessonSession'), 'navigation occurs after durable progress and session saves');
   check(!screen.includes('saveLessonSession(lesson.id,freshSession())'), 'completion does not erase the saved session');
   const home = fs.readFileSync('app/lang/index.tsx', 'utf8');
+  const rail = fs.readFileSync('components/EnglishUI.tsx', 'utf8');
+  check(rail.includes('از هر سطحی می‌توانی شروع کنی') && rail.includes('کامل‌کردن سطح‌های قبلی لازم نیست')
+    && rail.includes('onPress={() => onSelect(level.id)}'), 'level rail explicitly offers an unrestricted start at every level');
   check(home.includes('گوش دادن از ابتدا') && home.includes("fromStart: '1'") && home.includes('SENTENCE_LESSONS[0].id'), 'home button opens the first lesson');
   check(screen.includes('جمله قبلی') && screen.includes('stage === 1') && !screen.includes('گوش‌دادن از ابتدا'), 'previous sentence is beside next, and old replay control is removed');
+  const slowControl = screen.indexOf('accessibilityLabel="پخش آهستهٔ جمله"');
+  const normalControl = screen.indexOf('accessibilityLabel="پخش معمولی جمله"');
+  check(slowControl >= 0 && normalControl > slowControl
+    && /const NORMAL_SPEECH_RATE = 1;/.test(screen) && /const SLOW_SPEECH_RATE = 0\.5;/.test(screen)
+    && screen.includes('speak(current.en, SLOW_SPEECH_RATE)') && screen.includes('speak(current.en, NORMAL_SPEECH_RATE)'),
+    'English Slow then Normal controls play the visible sentence at explicit 0.5× and 1× rates');
   check(screen.includes('preserveExistingSession.current') && screen.includes('!preserveExistingSession.current'), 'replay does not overwrite an existing saved session');
   check(/nextButton: \{ flex: 1, minWidth: 0, alignSelf: 'stretch'/.test(screen) && !screen.includes('nextButtonBesidePrevious'),
     'English Continue fills the footer row and cannot shrink to the bottom-right label');
