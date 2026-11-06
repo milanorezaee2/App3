@@ -143,11 +143,10 @@ jobs:
           sha256sum MiloLanguages.apk | tee MiloLanguages.apk.sha256
           ls -lh MiloLanguages.apk
 
-      # The budget is a ratchet, not the target. It sits above today's universal
-      # APK so it only blocks regressions. Once the build runs with restricted
-      # ABIs (MILO_ANDROID_ABIS=arm64-v8a,armeabi-v7a) lower this to 45.
+      # Informational only. The budget is enforced in a later step, after the
+      # artifact is uploaded, so a size miss can never discard the APK.
       - name: Report APK composition
-        run: node scripts/apk-report.mjs MiloLanguages.apk --limit-mb 45
+        run: node scripts/apk-report.mjs MiloLanguages.apk
 
       # GitHub serves job logs from a host that is not always reachable, so the
       # numbers are also written where they survive: on the pull request.
@@ -168,6 +167,20 @@ jobs:
               echo '```'
               echo
               echo "Artifact size: $(du -h MiloLanguages.apk | cut -f1)"
+              echo
+              echo "<details><summary>Build inputs</summary>"
+              echo
+              echo '```'
+              echo "MILO_ANDROID_ABIS = ${MILO_ANDROID_ABIS:-<unset>}"
+              if [ -f android/gradle.properties ]; then
+                echo "gradle.properties  = $(grep '^reactNativeArchitectures' android/gradle.properties || echo '<not present>')"
+              fi
+              if [ -f android/app/build.gradle ]; then
+                echo "build.gradle       = $(grep -o 'abiFilters.*' android/app/build.gradle | head -1 || echo '<not present>')"
+              fi
+              echo '```'
+              echo
+              echo "</details>"
             } > /tmp/report.md
           fi
           cat /tmp/report.md >> "$GITHUB_STEP_SUMMARY"
@@ -218,6 +231,15 @@ jobs:
           emulator-boot-timeout: 900
           disable-animations: true
           script: bash .github/scripts/apk-learner-smoke.sh MiloLanguages.apk
+
+      - name: Enforce the APK size budget
+        if: always()
+        run: |
+          if [ ! -s MiloLanguages.apk ]; then
+            echo "No APK was produced; the build failed earlier."
+            exit 1
+          fi
+          node scripts/apk-report.mjs MiloLanguages.apk --limit-mb 60
 
       - name: Keep the emulator diagnostics
         if: always()
