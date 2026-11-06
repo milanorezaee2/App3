@@ -27,7 +27,6 @@ npm install
 npm run typecheck
 npm run validate:content   # ۱۷۴ درس، ۳٬۸۶۲ جمله و پوشش ۵۰۴ واژه
 npm run validate:russian   # محتوای آغازین روسی، جریان ۹مرحله‌ای و جداسازی
-npm run validate:russian-architecture  # نقشهٔ A1–B2، چرخهٔ جمله‌محور و شواهد محلی
 npm run validate:english-supplement  # ۲۴ واحد، پاسخ‌ها و نگهداشت سابقه
 npm run validate:backup            # ادغام ایمن بکاپ انگلیسی و حفظ پیش‌نویس محلی
 npm run validate:personal-sync     # OTP/RLS و ادغام پیشرفت ابری
