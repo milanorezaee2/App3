@@ -63,7 +63,7 @@ const esbuild = require('esbuild');
   play({ text: 'English on web.', locale: 'en-US' });
   check(global.__utterances.at(-1).options.language === 'en-US' && speechTagFor('ru-RU') === 'ru-RU', 'web retains full locale tags');
   await stop();
-  const screen = fs.readFileSync('components/EnglishLessonRoute.tsx', 'utf8');
+  const screen = fs.readFileSync('app/course/lesson.tsx', 'utf8');
   check(screen.includes("params: { id: nextLesson.id }") && screen.includes('await completeSentenceLesson') && screen.includes('await saveLessonSession'), 'navigation occurs after durable progress and session saves');
   check(!screen.includes('saveLessonSession(lesson.id,freshSession())'), 'completion does not erase the saved session');
   const home = fs.readFileSync('app/lang/index.tsx', 'utf8');

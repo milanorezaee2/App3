@@ -74,7 +74,7 @@ check(fetchCalls === 0 && globalThis.__identityCalls === 0 && globalThis.__confi
   'disabled paid-AI speech exits before fetch, identity/session creation, Supabase configuration, or any server function');
 
 const read = file => readFileSync(path.join(root, file), 'utf8');
-const lesson = read('components/EnglishLessonRoute.tsx');
+const lesson = read('app/course/lesson.tsx');
 const emma = read('app/conversations/emma.tsx');
 const human = read('app/conversations/human/[conversationId].tsx');
 check(/if\s*\(!PAID_AI_ENABLED\)[\s\S]*?return;[\s\S]*?requestRecordingPermissionsAsync\(\)/.test(lesson), 'English lesson blocks before requesting the microphone permission');
