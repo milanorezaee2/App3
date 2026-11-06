@@ -3,6 +3,7 @@ import type { CourseLevelId } from '../courseContent';
 import { createCourseProgressStore } from '../createCourseProgressStore';
 import { createStarterSessions } from './starterSessions';
 import { PRE_A1_EXPANSION } from './preA1Expansion';
+import { PRE_A1_MORE } from './preA1More';
 
 export type NewLanguageId = 'de' | 'fr' | 'es';
 export type StarterLesson = LearningLesson & { levelId: CourseLevelId; order: number; subtitle: string };
@@ -55,14 +56,25 @@ const levelSeeds: Array<[CourseLevelId,string,string,string,string]> = [
 ];
 export function isNewLanguage(value: string | undefined): value is NewLanguageId { return value === 'de' || value === 'fr' || value === 'es'; }
 function buildCourse(id: NewLanguageId) {
-  const allSeeds = [...seeds[id], ...PRE_A1_EXPANSION[id]];
+  const allSeeds = [...seeds[id], ...PRE_A1_EXPANSION[id], ...PRE_A1_MORE[id]];
   const lessons: StarterLesson[] = allSeeds.map((seed, n) => {
     const sentenceSeeds = n < 2 ? [...seed.sentences, ...pilotExtras[id][n]] : seed.sentences;
     const sentences = sentenceSeeds.map(([text,fa,pronunciation,word,meaning,pattern], i) => ({ id:`${id}-pre${n+1}-s${i+1}`, text, fa, pronunciation, vocabulary:[{word,meaning}], ...(pattern ? {pattern} : {}) }));
     const [promptFa, correctIndex, explanationFa] = seed.check;
     // Choices use actual sentences from the lesson; no generated or cross-language content.
     const choices = sentences.map(sentence => sentence.text);
-    return { id:`${id}-pre-${n+1}`, levelId:-1 as const, order:n+1, title:seed.title, subtitle:seed.subtitle, situation:seed.situation, teachingFa:seed.teachingFa, durationMinutes:8, sentences, dialogue: (seed.dialogue ?? (n === 0 ? [0,0,4,4] : [1,0,3,4])).map((idx, i) => ({speaker:i % 2 === 1 ? 'همراه' : 'زبان‌آموز', text:sentences[idx].text, fa:sentences[idx].fa})), checks:[{promptFa,choices,correctIndex,explanationFa}] };
+    const checks = [{promptFa,choices,correctIndex,explanationFa}];
+    // The new bridge lessons include an additional comprehension question.
+    // Existing check indexes must not change: saved sessions contain answers.
+    if (n >= 10) {
+      const secondIndex = sentences.findIndex((sentence, index) => index !== correctIndex
+        && sentences.filter(other => other.text === sentence.text || other.fa === sentence.fa).length === 1);
+      if (secondIndex >= 0) {
+        const sentence = sentences[secondIndex];
+        checks.push({promptFa:`«${sentence.fa}» به این زبان کدام است؟`, choices, correctIndex:secondIndex, explanationFa:`${sentence.text} یعنی ${sentence.fa}`});
+      }
+    }
+    return { id:`${id}-pre-${n+1}`, levelId:-1 as const, order:n+1, title:seed.title, subtitle:seed.subtitle, situation:seed.situation, teachingFa:seed.teachingFa, durationMinutes:8, sentences, dialogue: (seed.dialogue ?? (n === 0 ? [0,0,4,4] : [1,0,3,4])).map((idx, i) => ({speaker:i % 2 === 1 ? 'همراه' : 'زبان‌آموز', text:sentences[idx].text, fa:sentences[idx].fa})), checks };
   });
   const levels = levelSeeds.map(([levelId,title,cefr,description,color])=>({ id:levelId,title,cefr,description,color,modules:lessons.filter(l=>l.levelId===levelId).map(l=>l.title),status:(levelId === -1 ? 'available' : 'planned') as 'available'|'planned' }));
   const progress = createCourseProgressStore({key:`sentence_course_progress_${id}_starter_v1`,lessons,cloudSync:false,recordEstimatedTime:false,markVocabularyOnCompletion:false});

@@ -15,8 +15,8 @@ const path = require('node:path');
   const allIds = new Set();
   for (const id of ['de','fr','es']) {
     const course = NEW_COURSES[id];
-    assert.equal(course.lessons.length,10);
-    assert.equal(course.lessons.reduce((sum,lesson)=>sum+lesson.sentences.length,0),80);
+    assert.equal(course.lessons.length,21);
+    assert.equal(course.lessons.reduce((sum,lesson)=>sum+lesson.sentences.length,0),168);
     assert.equal(course.levels.length,7);
     assert.equal(course.levels[0].id,-1);
     assert(course.levels.slice(1).every(level=>level.status==='planned'));
@@ -31,7 +31,13 @@ const path = require('node:path');
       }
       for(const q of lesson.checks) assert(q.correctIndex>=0 && q.correctIndex<q.choices.length && q.choices[q.correctIndex] && q.explanationFa);
     }
-    assert.deepEqual(course.lessons.slice(0,2).map(x=>x.id), [`${id}-pre-1`,`${id}-pre-2`]);
+    assert.deepEqual(course.lessons.slice(0,10).map(x=>x.id), Array.from({length:10},(_,i)=>`${id}-pre-${i+1}`));
+    for (const lesson of course.lessons.slice(0,10)) {
+      assert.deepEqual(lesson.sentences.map(sentence => sentence.id), Array.from({length:8},(_,i)=>`${id}-pre${lesson.order}-s${i+1}`));
+    }
+    assert(course.lessons.slice(10).every(lesson => lesson.checks.length >= 2));
+    assert.equal(course.lessons[10].title, 'الفبا و املای نام');
+    assert.equal(course.lessons.at(-1).title, 'مرور پایانی مقدماتی');
     assert.deepEqual(course.lessons.slice(0,2).flatMap((l,n)=>l.sentences.slice(0,6).map((x,i)=>x.id)), Array.from({length:12},(_,i)=>`${id}-pre${Math.floor(i/6)+1}-s${i%6+1}`));
     const lesson = course.lessons[0];
     const session={stage:3,sentenceIndex:2,revealed:false,answers:{},showCheckAnswers:false};
@@ -51,6 +57,17 @@ const path = require('node:path');
     assert.equal((await course.progress.getDueReviewCards()).length,lesson.sentences.length);
     await course.sessions.clearStarterLessonSession(lesson.id);
     assert.equal((await course.sessions.loadStarterLessonSessionWithPresence(lesson.id)).hasSavedSession,false);
+    // A learner who already completed all ten original lessons can continue
+    // into the expansion without losing an old review schedule or session.
+    const oldLessons = course.lessons.slice(0,10);
+    memory.set(`sentence_course_progress_${id}_starter_v1`,JSON.stringify({completedLessonIds:oldLessons.map(item=>item.id),currentLessonId:oldLessons[9].id,reviewCards:[oldCard]}));
+    const returning = await course.progress.getCourseProgress();
+    assert.equal(returning.completedLessonIds.length,10);
+    assert.equal(returning.reviewCards.find(card=>card.id===oldCard.id).intervalDays,5);
+    assert.equal(course.lessons.find(item=>!returning.completedLessonIds.includes(item.id)).id,`${id}-pre-11`);
+    const oldSession = {stage:8,sentenceIndex:0,revealed:false,answers:{'0':0},showCheckAnswers:false};
+    await course.sessions.saveStarterLessonSession(oldLessons[9].id,oldSession);
+    assert.deepEqual(await course.sessions.loadStarterLessonSession(oldLessons[9].id),oldSession);
   }
   assert.equal([...memory.keys()].filter(k=>/^sentence_course_progress_(de|fr|es)_starter_v1$/.test(k)).length,3);
   for(const id of ['de','fr','es']) assert((await NEW_COURSES[id].progress.getCourseProgress()).completedLessonIds.every(key=>key.startsWith(id+'-')));
@@ -65,5 +82,5 @@ const path = require('node:path');
     assert.equal((await course.progress.getDueReviewCards()).length,lesson.sentences.length);
   }
   assert.equal([...global.__starterNative.keys()].filter(k=>k.includes('_starter_v1')).length,3);
-  console.log('Three Pre-A1 curricula: 30 lessons / 240 examples, stable IDs, isolated sessions, progress migration and review passed.');
+  console.log('Three Pre-A1 curricula: 63 lessons / 504 examples, stable IDs, isolated sessions, progress migration and review passed.');
 })().catch(e=>{console.error(e);process.exit(1)});
