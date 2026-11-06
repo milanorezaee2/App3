@@ -67,6 +67,7 @@ jobs:
       - name: Verify core curricula and speech policy
         run: |
           npm run typecheck
+          npm run validate:hygiene
           npm run validate:content
           npm run validate:russian
           npm run validate:russian-architecture

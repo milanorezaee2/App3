@@ -30,6 +30,7 @@ jobs:
       - name: Check TypeScript and web shell
         run: |
           npm run typecheck
+          npm run validate:hygiene
           npm run validate:web-shell
           npm run validate:registration-admin
           npm run validate:language-entry

@@ -77,6 +77,7 @@ jobs:
       - name: Validate learner OTP, language entry and accessibility
         run: |
           npm run typecheck
+          npm run validate:hygiene
           npm run validate:registration-admin
           npm run validate:language-entry
           npm run validate:a11y

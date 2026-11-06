@@ -14,6 +14,7 @@
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
     "validate:content": "node scripts/validate-course-content.mjs",
+    "validate:hygiene": "node scripts/verify-repo-hygiene.mjs",
     "android": "node scripts/run-expo.mjs run:android",
     "ios": "node scripts/run-expo.mjs run:ios",
     "validate:logic": "node scripts/verify-app-logic.mjs",
