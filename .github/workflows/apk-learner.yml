@@ -42,8 +42,10 @@ jobs:
       CI: '1'
       EXPO_NO_TELEMETRY: '1'
       NODE_OPTIONS: '--max-old-space-size=8192'
-      # Blank keeps Expo's default ABI list. Set from the workflow_dispatch input.
-      MILO_ANDROID_ABIS: ${{ inputs.abis }}
+      # Real phones need arm64-v8a (current) or armeabi-v7a (old). x86/x86_64
+      # only exist for emulators and roughly double the native payload.
+      # Blank input therefore means "phones only", not "everything".
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
@@ -145,7 +147,7 @@ jobs:
       # APK so it only blocks regressions. Once the build runs with restricted
       # ABIs (MILO_ANDROID_ABIS=arm64-v8a,armeabi-v7a) lower this to 45.
       - name: Report APK composition
-        run: node scripts/apk-report.mjs MiloLanguages.apk --limit-mb 120
+        run: node scripts/apk-report.mjs MiloLanguages.apk --limit-mb 45
 
       # GitHub serves job logs from a host that is not always reachable, so the
       # numbers are also written where they survive: on the pull request.
@@ -193,7 +195,18 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      - name: Check whether this APK can run on the emulator
+        id: emulator_abi
+        run: |
+          if unzip -l MiloLanguages.apk | grep -q 'lib/x86_64/'; then
+            echo 'available=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'available=false' >> "$GITHUB_OUTPUT"
+            echo "::notice title=Emulator smoke test skipped::This APK has no x86_64 libraries, so it cannot be installed on the x86_64 emulator. The universal build in 'Build MiloMultilang Android APK' still covers the emulator smoke test."
+          fi
+
       - name: Boot an emulator and check that the app starts
+        if: steps.emulator_abi.outputs.available == 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 30
