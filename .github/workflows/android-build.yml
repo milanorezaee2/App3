@@ -250,6 +250,14 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      # Informational only: prints where the megabytes went for each APK built.
+      - name: Report APK composition
+        if: always()
+        run: |
+          for apk in MiloMultilang.apk MiloAdmin.apk MiloMultilang-Login.apk MiloRussian.apk; do
+            if [ -s "$apk" ]; then node scripts/apk-report.mjs "$apk" || true; fi
+          done
+
       - name: Upload APK artifacts
         if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
         uses: actions/upload-artifact@v4

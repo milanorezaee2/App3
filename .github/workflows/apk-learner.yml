@@ -5,6 +5,11 @@ name: Build learner APK
 
 on:
   workflow_dispatch:
+    inputs:
+      abis:
+        description: 'CPU architectures to package (e.g. arm64-v8a,armeabi-v7a). Blank = all four.'
+        required: false
+        default: ''
   push:
     branches:
       - arena/940e66ab-app3
@@ -36,6 +41,8 @@ jobs:
       CI: '1'
       EXPO_NO_TELEMETRY: '1'
       NODE_OPTIONS: '--max-old-space-size=8192'
+      # Blank keeps Expo's default ABI list. Set from the workflow_dispatch input.
+      MILO_ANDROID_ABIS: ${{ inputs.abis }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
@@ -132,6 +139,12 @@ jobs:
           "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs MiloLanguages.apk
           sha256sum MiloLanguages.apk | tee MiloLanguages.apk.sha256
           ls -lh MiloLanguages.apk
+
+      # The budget is a ratchet, not the target. It sits above today's universal
+      # APK so it only blocks regressions. Once the build runs with restricted
+      # ABIs (MILO_ANDROID_ABIS=arm64-v8a,armeabi-v7a) lower this to 45.
+      - name: Report APK composition
+        run: node scripts/apk-report.mjs MiloLanguages.apk --limit-mb 120
 
       - name: Upload the APK
         uses: actions/upload-artifact@v4
