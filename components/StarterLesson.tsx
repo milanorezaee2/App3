@@ -96,7 +96,7 @@ export default function StarterLessonView({ course, lesson, fromStart = false }:
 
   const speak = useCallback((text: string, rate = NORMAL_SPEECH_RATE) => {
     setSpeechError('');
-    void playStarterSpeech(course.locale, text, rate, () => setSpeechError('صدای این زبان در دسترس نیست؛ تنظیمات گفتار دستگاه را بررسی کنید.'), () => setSpeechError('صدای منطقه‌ای تأیید نشد؛ تلفظ ممکن است با لهجهٔ انتخاب‌شده متفاوت باشد. تنظیمات گفتار دستگاه را بررسی کنید.'));
+    void playStarterSpeech(course.locale, text, rate, () => setSpeechError('پخش صدا ممکن نشد؛ موتور گفتار و بستهٔ صوتی این زبان را در تنظیمات دستگاه بررسی کنید.'), () => setSpeechError('صدای منطقه‌ای تأیید نشد؛ تلفظ ممکن است با لهجهٔ انتخاب‌شده متفاوت باشد. تنظیمات گفتار دستگاه را بررسی کنید.'));
   }, [course.locale]);
 
   // Read the visible main sentence on entry, resume, and each sentence change.
