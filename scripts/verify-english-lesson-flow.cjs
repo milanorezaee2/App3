@@ -63,8 +63,17 @@ const esbuild = require('esbuild');
   play({ text: 'English on web.', locale: 'en-US' });
   check(global.__utterances.at(-1).options.language === 'en-US' && speechTagFor('ru-RU') === 'ru-RU', 'web retains full locale tags');
   await stop();
-  const screen = fs.readFileSync('app/course/lesson.tsx', 'utf8');
-  check(screen.includes("params: { id: nextLesson.id }") && screen.includes('await completeSentenceLesson') && screen.includes('await saveLessonSession'), 'navigation occurs after durable progress and session saves');
+  // app/course/lesson.tsx is only a Suspense shell; the lesson logic lives in
+  // components/EnglishLessonRoute.tsx. Assert the real order, not just presence.
+  const screen = fs.readFileSync('components/EnglishLessonRoute.tsx', 'utf8');
+  const atComplete = screen.indexOf('await completeSentenceLesson(');
+  const atSave = screen.indexOf('await saveLessonSession(lesson.id,');
+  const atNavigate = screen.indexOf("params: { id: nextLesson.id }");
+  check(
+    atComplete !== -1 && atSave !== -1 && atNavigate !== -1
+      && atComplete < atSave && atSave < atNavigate,
+    'navigation occurs after durable progress and session saves',
+  );
   check(!screen.includes('saveLessonSession(lesson.id,freshSession())'), 'completion does not erase the saved session');
   const home = fs.readFileSync('app/lang/index.tsx', 'utf8');
   check(home.includes('گوش دادن از ابتدا') && home.includes("fromStart: '1'") && home.includes('SENTENCE_LESSONS[0].id'), 'home button opens the first lesson');
