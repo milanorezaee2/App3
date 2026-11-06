@@ -138,12 +138,54 @@ import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
 
 ---
 
+## قدم ۵ (بخش اول) — ادغام سه جفت کامپوننت یکسان ✅
+
+سه جفت کامپوننت روسی/ترکی که عملاً یک فایل بودند، به یک کامپوننت مشترک + پوستهٔ نازک تبدیل شدند.
+
+| جفت | اختلاف قبلی | فایل مشترک جدید |
+|---|---|---|
+| `RussianDialoguePractice` ↔ `TurkishDialoguePractice` | ۲ خط | `LanguageDialoguePractice.tsx` |
+| `RussianSentenceBuilder` ↔ `TurkishSentenceBuilder` | ۲ خط | `LanguageSentenceBuilder.tsx` |
+| `RussianBottomNav` ↔ `TurkishBottomNav` | ۱۰ خط | `LanguageBottomNav.tsx` |
+
+الگوی کار: منطق و ظاهر در فایل مشترک، و فقط **دادهٔ مخصوص هر زبان** (برچسب، مسیرها، متن راهنما) در پوستهٔ نازک می‌ماند.
+
+| سنجه | قبل | بعد |
+|---|---:|---:|
+| حجم این ۶ فایل | 32,946 B | **20,643 B** |
+| کاهش | — | **−۱۲,۳۰۳ B (−۳۷٪)** |
+
+**یک آزمون به‌روز شد:** `scripts/verify-requested-updates.mjs` رشتهٔ `flexDirection: 'row-reverse'` را داخل `RussianBottomNav.tsx` جست‌وجو می‌کرد. چون نوار پایین مشترک شد، این بررسی به `LanguageBottomNav.tsx` منتقل شد — قصد آزمون («ناوبری روسی راست‌به‌چپ بماند») بدون تغییر باقی است.
+
+**تأیید:** typecheck پاس + همان ۱۹ پاس / ۵ خطای قبلی + خروجی وب با موفقیت ساخته شد (۱۷ MB، JS ۱۲.۵۵ MB).
+
+### چهار جفت باقی‌مانده — ادغام نشده
+
+| جفت | حجم | درصد یکسان |
+|---|---:|---:|
+| `RussianHome` ↔ `TurkishHome` | 24,193 B | ۸۶٪ |
+| `RussianLesson` ↔ `TurkishLesson` | 42,845 B | ۸۸٪ |
+| `RussianLibrary` ↔ `TurkishLibrary` | 35,431 B | ۸۵٪ |
+| `RussianReview` ↔ `TurkishReview` | 18,644 B | ۸۹٪ |
+
+اینها **حدود ۱۳۰ کیلوبایت** کد تکراری هستند — یعنی سود اصلی همین‌جاست، نه در آن ۱۲ کیلوبایت.
+
+**چرا متوقف شدم:** آزمون‌های پروژه رشته‌های دقیقِ داخل همین فایل‌ها را می‌سنجند. مثلاً:
+
+- `verify-app-logic.mjs` در `RussianLibrary.tsx` و `TurkishLibrary.tsx` دنبال `levelStartButton` و `openLesson(levelStartLesson.id)` می‌گردد.
+- `verify-russian-course.cjs` در `RussianLesson.tsx` دنبال `await russianProgress.completeSentenceLesson` و `params: { id: nextLesson.id }` می‌گردد.
+- `verify-russian-speech-flow.cjs` دنبال `speak(current.text, NORMAL_SPEECH_RATE)` می‌گردد.
+
+با ادغام، این رشته‌ها به فایل مشترک منتقل می‌شوند و آزمون‌ها می‌شکنند. یعنی ادامهٔ این کار **بازنویسی ۳ آزمون سبز** را لازم دارد. این تصمیمی است که باید با شما گرفته شود، نه اینکه من بی‌صدا آزمون‌های امنیتی پروژه را تغییر دهم.
+
+---
+
 ## باقی‌مانده
 
 | قدم | وضعیت | چرا |
 |---|---|---|
 | ۴ — تنظیم روش ساخت (APK) | **نیاز به محیط ساخت** | `Android SDK` در این محیط نیست؛ بدون ساختن APK نمی‌توان نتیجه را اندازه گرفت |
-| ۵ — یکی‌کردن کامپوننت‌های روسی/ترکی | **آمادهٔ شروع** | تغییر بزرگ کد؛ بهتر است در نوبت جداگانه با آزمون کامل انجام شود |
+| ۵ — یکی‌کردن کامپوننت‌های روسی/ترکی | **۳ جفت از ۷ انجام شد** | ۴ جفت باقی‌مانده (~۱۳۰ KB) نیازمند بازنویسی ۳ آزمون سبز است |
 | بهینه‌سازی تصاویر (۱.۱ MB) | اختیاری | نیاز به `pngquant` / `jpegoptim` |
 | ۵ آزمون قرمز قدیمی | خارج از محدودهٔ این کار | باید جداگانه بررسی شوند |
 
