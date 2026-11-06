@@ -12,7 +12,7 @@ export default function LanguageLessonRoute() {
   if (isNewLanguage(language)) {
     const course = NEW_COURSES[language];
     const lesson = id ? course.lessons.find(item => item.id === id) : course.lessons[0];
-    return lesson ? <StarterLesson key={lesson.id} course={course} lesson={lesson} fromStart={fromStart === '1'} /> : <CoursePage title="درس پیدا نشد" back={`${course.home}/library`}>{null}</CoursePage>;
+    return lesson ? <StarterLesson key={lesson.id} course={course} lesson={lesson} fromStart={fromStart === '1' ? 'listen' : fromStart === 'restart' ? 'restart' : undefined} /> : <CoursePage title="درس پیدا نشد" back={`${course.home}/library`}>{null}</CoursePage>;
   }
   if (language === 'tr') {
     const trLesson = id ? findTurkishLesson(id) : TURKISH_LESSONS[0];

@@ -13,12 +13,14 @@ import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 
 const LESSONS_PER_GROUP = 10;
+const groupLabels = { sounds:'صدا و نوشتار', words:'واژه‌های مستقل', chunks:'عبارت‌های کوتاه', sentences:'جمله، گفت‌وگو و مرور' } as const;
 
-function lessonStatus(lessonId: string, progress: CourseProgress | null, sessions: Record<string, StarterLessonSession | null>) {
+function lessonStatus(lesson: StarterLesson, progress: CourseProgress | null, sessions: Record<string, StarterLessonSession | null>) {
+  const lessonId = lesson.id;
   if (progress?.completedLessonIds.includes(lessonId)) return 'تکمیل‌شده · قابل مرور';
   const session = sessions[lessonId];
   if (session && (session.stage > 0 || session.sentenceIndex > 0)) {
-    return `ادامه از مرحله ${fa(session.stage + 1)}، جمله ${fa(session.sentenceIndex + 1)}`;
+    return `ادامه از مرحله ${fa(session.stage + 1)}، ${lesson.learningMode === 'chunks' ? 'عبارت' : lesson.learningMode ? 'واژه' : 'جمله'} ${fa(session.sentenceIndex + 1)}`;
   }
   return 'شروع درس';
 }
@@ -39,8 +41,13 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
   const selected = hydrated ? levels.find(item => String(item.id) === String(level)) : undefined;
   const selectedLessons = useMemo(() => selected ? lessons.filter(item => item.levelId === selected.id) : [], [selected?.id]);
   const lessonGroups = useMemo(() => {
-    const groups: typeof selectedLessons[] = [];
-    for (let index = 0; index < selectedLessons.length; index += LESSONS_PER_GROUP) groups.push(selectedLessons.slice(index, index + LESSONS_PER_GROUP));
+    const groups: Array<{kind: keyof typeof groupLabels; lessons: typeof selectedLessons}> = [];
+    for (const lesson of selectedLessons) {
+      const kind = lesson.learningMode ?? 'sentences';
+      const last = groups[groups.length - 1];
+      if (!last || last.kind !== kind || last.lessons.length >= LESSONS_PER_GROUP) groups.push({kind, lessons:[lesson]});
+      else last.lessons.push(lesson);
+    }
     return groups;
   }, [selectedLessons]);
 
@@ -93,18 +100,18 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
               <Pressable accessibilityRole="button" style={styles.backButton} onPress={() => router.replace(course.home as never)}><ChevronLeft size={18} color={Palette.ink} /><Text style={styles.backText}>بازگشت به آموزش این زبان</Text></Pressable>
               <Text style={styles.brandEyebrow}>LEARNING PATH · MAIN COURSE</Text>
               <Text style={styles.pageTitle}>مسیر یادگیری {course.name}</Text>
-              <Text style={styles.pageIntro}>یک سطح را انتخاب کنید؛ از نخستین جمله‌ها شروع می‌کنیم و مرحله‌به‌مرحله به موقعیت‌های روزمره می‌رسیم.</Text>
+              <Text style={styles.pageIntro}>یک سطح را انتخاب کنید؛ از صداها و واژه‌های نخستین شروع می‌کنیم و مرحله‌به‌مرحله به موقعیت‌های روزمره می‌رسیم.</Text>
             </View>
 
             <LinearGradient colors={['#19204C', '#343B8A', '#5148C8']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
               <View pointerEvents="none" style={styles.heroOrb} />
               <View style={styles.heroTopRow}><View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View><View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۷ سطح در نقشهٔ این زبان</Text></View></View>
               <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
-              <Text style={styles.overviewTitle}>از جمله‌های اول؛{ '\n' }جمله به جمله</Text>
-              <Text style={styles.overviewText}>محتوای موجود از پایه آغاز می‌شود. آمار فقط درس‌ها و جمله‌های منتشرشده را می‌شمارد؛ سطح‌های آینده محتوای ساختگی ندارند.</Text>
+              <Text style={styles.overviewTitle}>از صداهای اول؛{ '\n' }گام به گام</Text>
+              <Text style={styles.overviewText}>محتوای موجود از پایه آغاز می‌شود. آمار فقط درس‌ها و نمونه‌های منتشرشده را می‌شمارد؛ سطح‌های آینده محتوای ساختگی ندارند.</Text>
               <View style={styles.overviewMetrics}>
                 <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(lessons.length)}</Text><Text style={styles.overviewMetricLabel}>درس موجود</Text></View><View style={styles.overviewMetricDivider} />
-                <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(totalSentences)}</Text><Text style={styles.overviewMetricLabel}>جملهٔ اصلی</Text></View><View style={styles.overviewMetricDivider} />
+                <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(totalSentences)}</Text><Text style={styles.overviewMetricLabel}>نمونهٔ آموزشی</Text></View><View style={styles.overviewMetricDivider} />
                 <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(allWords.size)}</Text><Text style={styles.overviewMetricLabel}>واژهٔ یکتا</Text></View>
               </View>
             </LinearGradient>
@@ -117,7 +124,7 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
               <Text style={styles.railCurrent}>اکنون · {levels.find(item => item.id === activeLevelId)?.title} · سطح {fa(activeLevelId + 1)}</Text>
             </View>
 
-            <EnglishSectionHeading eyebrow="CHOOSE A LEVEL" title="انتخاب سطح" detail="شمار درس و جمله از محتوای واقعی هر سطح محاسبه می‌شود." />
+            <EnglishSectionHeading eyebrow="CHOOSE A LEVEL" title="انتخاب سطح" detail="شمار درس و نمونه از محتوای واقعی هر سطح محاسبه می‌شود." />
             <View style={styles.levelList}>
               {levels.map(item => {
                 const stats = countFor(item.id);
@@ -128,7 +135,7 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
                   <View style={styles.levelOptionContent}>
                     <View style={styles.levelOptionTitleRow}><Text style={styles.levelOptionTitle}>{item.title}</Text><Text style={[styles.levelOptionBand, { color: item.color }]}>{item.cefr}</Text></View>
                     <Text style={styles.levelOptionDescription}>{item.description}</Text>
-                    <View style={styles.levelOptionMeta}><Text style={styles.levelOptionMetaText}>{fa(stats.total)} درس</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{fa(sentenceTotal)} جمله</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{item.status === 'planned' ? 'در نقشهٔ آینده' : `${fa(stats.completed)} تکمیل`}</Text></View>
+                    <View style={styles.levelOptionMeta}><Text style={styles.levelOptionMetaText}>{fa(stats.total)} درس</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{fa(sentenceTotal)} نمونه</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{item.status === 'planned' ? 'در نقشهٔ آینده' : `${fa(stats.completed)} تکمیل`}</Text></View>
                     <EnglishProgressTrack value={pct} color={item.color} height={5} />
                   </View>
                   <ChevronLeft size={19} color={Palette.muted} />
@@ -149,7 +156,7 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
               <View style={styles.selectedProgressHeading}><Text style={styles.selectedProgressLabel}>پیشرفت این سطح</Text><Text style={styles.selectedProgressValue}>{fa(countFor(selected.id).completed)} از {fa(selectedLessons.length)} درس</Text></View>
               <View style={styles.selectedProgressTrack}><View style={[styles.selectedProgressFill, { width: `${selectedLessons.length ? countFor(selected.id).completed / selectedLessons.length * 100 : 0}%` }]} /></View>
               <View style={styles.metricGrid}>
-                <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(sentenceCount)}</Text><Text style={styles.heroMetricLabel}>جمله</Text></View><View style={styles.heroMetricDivider} />
+                <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(sentenceCount)}</Text><Text style={styles.heroMetricLabel}>نمونه</Text></View><View style={styles.heroMetricDivider} />
                 <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(patternCount)}</Text><Text style={styles.heroMetricLabel}>الگوی ثبت‌شده</Text></View><View style={styles.heroMetricDivider} />
                 <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(words.size)}</Text><Text style={styles.heroMetricLabel}>واژهٔ یکتا</Text></View>
               </View>
@@ -170,18 +177,18 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
             <View style={styles.lessonSectionHeading}><View><Text style={styles.brandEyebrow}>SENTENCE-BASED LESSONS</Text><Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text></View><View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{fa(selectedLessons.length)} درس</Text></View></View>
 
             {selectedLessons.length ? <View style={styles.groupList}>{lessonGroups.map((group, index) => {
-              const first = group[0];
-              const last = group[group.length - 1];
-              const groupCompleted = group.filter(item => completedIds.includes(item.id)).length;
+              const first = group.lessons[0];
+              const last = group.lessons[group.lessons.length - 1];
+              const groupCompleted = group.lessons.filter(item => completedIds.includes(item.id)).length;
               const open = expandedGroup === index;
               return <View key={`${first.id}-${last.id}`} style={styles.group}>
                 <Pressable accessibilityRole="button" accessibilityState={{ expanded: open }} style={styles.groupHeader} onPress={() => setExpandedGroup(open ? -1 : index)}>
                   <View style={[styles.groupNumber, open && styles.groupNumberActive]}><Text style={[styles.groupNumberText, open && styles.groupNumberTextActive]}>{fa(index + 1)}</Text></View>
-                  <View style={styles.groupHeaderCopy}><Text style={styles.groupTitle}>بخش {fa(index + 1)} · درس‌های {fa(first.order)} تا {fa(last.order)}</Text><Text style={styles.groupMeta}>{fa(group.length)} درس · {fa(groupCompleted)} تکمیل‌شده</Text></View>
+                  <View style={styles.groupHeaderCopy}><Text style={styles.groupTitle}>{groupLabels[group.kind]} · درس‌های {fa(first.order)} تا {fa(last.order)}</Text><Text style={styles.groupMeta}>{fa(group.lessons.length)} درس · {fa(groupCompleted)} تکمیل‌شده</Text></View>
                   {open ? <ChevronUp size={18} color={Palette.primary} /> : <ChevronDown size={18} color={Palette.muted} />}
                 </Pressable>
-                {open && <View style={styles.lessonList}>{group.map(item => {
-                  const status = lessonStatus(item.id, progress, sessions);
+                {open && <View style={styles.lessonList}>{group.lessons.map(item => {
+                  const status = lessonStatus(item, progress, sessions);
                   const complete = progress?.completedLessonIds.includes(item.id) ?? false;
                   const resumable = !complete && status.startsWith('ادامه');
                   const sentence = item.sentences[0];
@@ -191,12 +198,12 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
                       <View style={styles.lessonTitleLine}><Text style={styles.lessonTitle}>{item.title}</Text><View style={[styles.lessonStatus, complete && styles.lessonStatusDone, resumable && styles.lessonStatusResume]}><Text style={[styles.lessonStatusText, complete && styles.lessonStatusTextDone, resumable && styles.lessonStatusTextResume]}>{status}</Text></View></View>
                       <Text style={styles.lessonSubtitle}>{item.subtitle}</Text>
                       <View style={styles.lessonSentencePreview}>
-                        <View style={styles.lessonSentenceHeader}><Volume2 size={12} color={Palette.primary} /><Text style={styles.lessonSentenceEyebrow}>جملهٔ آغازین</Text></View>
+                        <View style={styles.lessonSentenceHeader}><Volume2 size={12} color={Palette.primary} /><Text style={styles.lessonSentenceEyebrow}>{item.learningMode === 'chunks' ? 'عبارت آغازین' : item.learningMode ? 'واژهٔ آغازین' : 'جملهٔ آغازین'}</Text></View>
                         <Text style={styles.lessonSentenceRussian}>{sentence.text}</Text>
                         <Text style={styles.lessonSentenceFa}>{sentence.fa}</Text>
                         {!!sentence.vocabulary.length && <View style={styles.lessonVocabRow}>{sentence.vocabulary.slice(0, 3).map(word => <Text key={word.word} style={styles.lessonVocabChip}>{word.word} · {word.meaning}</Text>)}</View>}
                       </View>
-                      <View style={styles.lessonFooter}><View style={styles.lessonFooterItem}><Clock3 size={12} color={Palette.muted} /><Text style={styles.lessonFooterText}>{fa(item.durationMinutes)} دقیقه</Text></View><Text style={styles.lessonFooterDot}>·</Text><Text style={styles.lessonFooterText}>{fa(item.sentences.length)} جملهٔ اصلی</Text></View>
+                      <View style={styles.lessonFooter}><View style={styles.lessonFooterItem}><Clock3 size={12} color={Palette.muted} /><Text style={styles.lessonFooterText}>{fa(item.durationMinutes)} دقیقه</Text></View><Text style={styles.lessonFooterDot}>·</Text><Text style={styles.lessonFooterText}>{fa(item.sentences.length)} {item.learningMode === 'chunks' ? 'عبارت' : item.learningMode ? 'واژه' : 'جمله'} اصلی</Text></View>
                     </View>
                     <View style={styles.lessonPlayIcon}><Play size={13} color={Palette.primary} fill={Palette.primary} /></View>
                   </Pressable>;

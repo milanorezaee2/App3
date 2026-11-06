@@ -57,6 +57,11 @@ const starterOnlyStyles = StyleSheet.create({
     textAlign: 'right',
     writingDirection: 'rtl',
   },
+  foundationCard: { padding: 16, borderRadius: 18, borderWidth: 1, borderColor: '#D8D5FF', backgroundColor: '#F5F3FF', gap: 8 },
+  foundationTitle: { fontFamily: Typography.boldFontFamily, fontSize: 16, lineHeight: 26, color: '#312E81', textAlign: 'right', writingDirection: 'rtl' },
+  foundationText: { fontFamily: Typography.fontFamily, fontSize: 13, lineHeight: 22, color: '#334155', textAlign: 'right', writingDirection: 'rtl' },
+  foundationButton: { alignSelf: 'flex-end', minHeight: 44, justifyContent: 'center', paddingHorizontal: 14, borderRadius: 12, backgroundColor: '#5146E5' },
+  foundationButtonText: { fontFamily: Typography.boldFontFamily, color: '#FFFFFF', fontSize: 13, writingDirection: 'rtl' },
   retryText: {
     fontFamily: Typography.fontFamily,
     color: HomeColors.accent,
@@ -105,6 +110,8 @@ export default function StarterHome({course}: {course: StarterCourse}) {
   const nextLesson = lessons.find(lesson => !completedSet.has(lesson.id));
   const savedCurrentLesson = lessons.find(lesson => lesson.id === progress?.currentLessonId && !completedSet.has(lesson.id));
   const resumeLesson = savedCurrentLesson ?? nextLesson;
+  const unfinishedFoundation = lessons.find(lesson => !!lesson.learningMode && !completedSet.has(lesson.id));
+  const hasLegacyProgress = !!progress && (progress.completedLessonIds.some(id => id.startsWith(`${course.id}-pre-`)) || progress.currentLessonId.startsWith(`${course.id}-pre-`));
   const heroLesson = resumeLesson ?? lessons[lessons.length - 1];
   const activeLevel = levels.find(level => level.id === (resumeLesson?.levelId ?? heroLesson.levelId)) ?? levels[0];
   const completedCount = lessons.filter(lesson => completedSet.has(lesson.id)).length;
@@ -125,9 +132,9 @@ export default function StarterHome({course}: {course: StarterCourse}) {
   const openLevel = (levelId: StarterLevelId) => router.push(`${course.home}/library?level=${levelId}` as never);
 
   const restartFromBeginnerLevel = () => {
-    Alert.alert('شروع مجدد از سطح ابتدایی', 'می‌خواهید دوباره از اولین درسِ سطح ابتداییِ این زبان شروع کنید؟ محتوای درس‌ها دست‌نخورده می‌ماند.', [
+    Alert.alert('شروع مجدد از سطح ابتدایی', 'می‌خواهید دوباره از اولین درسِ سطح ابتداییِ این زبان شروع کنید؟ پیشرفت و جلسهٔ قبلی شما محفوظ می‌ماند.', [
       { text: 'انصراف', style: 'cancel' },
-      { text: 'شروع مجدد', style: 'destructive', onPress: () => { void courseProgress.setCurrentLesson(lessons[0].id).then(() => router.push({ pathname: `${course.home}/lesson`, params: { id: lessons[0].id, fromStart: '1' } } as never)).catch(() => undefined); } },
+      { text: 'شروع مجدد', onPress: () => router.push({ pathname: `${course.home}/lesson`, params: { id: lessons[0].id, fromStart: 'restart' } } as never) },
     ]);
   };
   const openNextLesson = () => {
@@ -166,11 +173,11 @@ export default function StarterHome({course}: {course: StarterCourse}) {
                 <Text style={styles.welcomeEyebrow}>LANGUAGE JOURNEY</Text>
               </View>
               <Text style={styles.welcomeTitle}>سلام! آماده‌ای {course.name} را ادامه بدهی؟</Text>
-              <Text style={styles.welcomeDescription}>یک جملهٔ کاربردی {course.name}، یک قدم دیگر در مسیر یادگیری.</Text>
+              <Text style={styles.welcomeDescription}>یک واژه یا عبارت کاربردی {course.name}، یک قدم دیگر در مسیر یادگیری.</Text>
               <View style={styles.welcomeTags}>
                 <View style={styles.welcomeTag}>
                   <BookOpen size={12} color={HomeColors.gold} />
-                  <Text style={styles.welcomeTagText}>یادگیری جمله‌محور</Text>
+                  <Text style={styles.welcomeTagText}>یادگیری گام‌به‌گام</Text>
                 </View>
                 <View style={styles.welcomeTag}>
                   <Sparkles size={12} color="#07886A" />
@@ -271,6 +278,12 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             </View>
           )}
 
+          {hasLegacyProgress && unfinishedFoundation ? <View style={starterOnlyStyles.foundationCard}>
+            <Text style={starterOnlyStyles.foundationTitle}>درس‌های پایهٔ تازه اضافه شده‌اند</Text>
+            <Text style={starterOnlyStyles.foundationText}>برای مرور صداها، واژه‌ها و عبارت‌های کوتاه می‌توانید از اینجا شروع کنید. درس و پیشرفت قبلی شما محفوظ است.</Text>
+            <Pressable accessibilityRole="button" accessibilityLabel="شروع درس‌های پایهٔ جدید" style={starterOnlyStyles.foundationButton} onPress={() => router.push(`${course.home}/lesson?id=${encodeURIComponent(unfinishedFoundation.id)}` as never)}><Text style={starterOnlyStyles.foundationButtonText}>دیدن درس‌های پایه</Text></Pressable>
+          </View> : null}
+
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#4D9AF2', '#20C49A', '#4D9AF2']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
             <View style={styles.lessonMetaRow}>
@@ -292,7 +305,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             <View style={styles.sentenceCard}>
               <View style={styles.sentenceTopRow}>
                 <View style={styles.sentenceIcon}><BookOpen size={15} color={HomeColors.accent} /></View>
-                <Text style={styles.sentenceLabel}>جملهٔ منتخب این درس</Text>
+                <Text style={styles.sentenceLabel}>{heroLesson.learningMode === 'chunks' ? 'عبارت منتخب این درس' : heroLesson.learningMode ? 'واژهٔ منتخب این درس' : 'جملهٔ منتخب این درس'}</Text>
                 <Text style={styles.sentenceNumber}>{fa(1)} / {fa(heroLesson.sentences.length)}</Text>
               </View>
               <Text style={styles.sentenceEnglish}>{firstSentence.text}</Text>
@@ -334,7 +347,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
               </Pressable>
               <View style={styles.lessonCountPill}>
                 <Text style={styles.lessonCountValue}>{fa(heroLesson.sentences.length)}</Text>
-                <Text style={styles.lessonCountLabel}>جمله</Text>
+                <Text style={styles.lessonCountLabel}>{heroLesson.learningMode === 'chunks' ? 'عبارت' : heroLesson.learningMode ? 'واژه' : 'جمله'}</Text>
               </View>
             </View>
             <Pressable
@@ -364,7 +377,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             </View>
             <View style={styles.dailyGoalPill}>
               <Flame size={14} color={HomeColors.amber} />
-              <Text style={styles.dailyGoalText}>{fa(dueCount)} جمله برای مرور</Text>
+              <Text style={styles.dailyGoalText}>{fa(dueCount)} نمونه برای مرور</Text>
             </View>
           </View>
 
@@ -385,7 +398,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             </View>
             <View style={styles.todayFootnote}>
               <BookOpen size={14} color={HomeColors.gold} />
-              <Text style={styles.todayFootnoteText}>{fa(sentenceCount)} جملهٔ آموزشی · {fa(uniqueWords)} واژه/عبارت یکتا</Text>
+              <Text style={styles.todayFootnoteText}>{fa(sentenceCount)} نمونهٔ آموزشی · {fa(uniqueWords)} واژه/عبارت یکتا</Text>
             </View>
           </LinearGradient>
 
@@ -400,7 +413,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
               <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push(`${course.home}/review` as never)}>
                 <View style={[styles.quickIcon, { backgroundColor: HomeColors.sageSoft }]}><RefreshCw size={18} color={HomeColors.sage} /></View>
                 <View style={styles.quickCopy}>
-                  <Text style={styles.quickTitle}>مرور جمله‌های این زبان</Text>
+                  <Text style={styles.quickTitle}>مرور آموخته‌های این زبان</Text>
                   <Text style={styles.quickDesc}>کارت‌های زمان‌بندی‌شدهٔ این زبان</Text>
                 </View>
                 <ChevronLeft size={17} color={HomeColors.muted} />

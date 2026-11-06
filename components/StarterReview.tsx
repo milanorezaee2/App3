@@ -100,34 +100,34 @@ export default function StarterReview({course}: {course: StarterCourse}) {
       <View style={styles.header}><Text style={styles.title}>مرور امروز</Text><Text style={styles.subtitle}>کارت {fa(cardIndex + 1)} از {fa(sessionCards.length)} · {lesson.title}</Text></View>
       <View style={styles.sessionProgress}><View style={[styles.sessionProgressFill, { width: `${((cardIndex + 1) / sessionCards.length) * 100}%` }]} /></View>
       <ScrollView contentContainerStyle={styles.sessionContent}>
-        <Text style={styles.recallLabel}>جملهٔ این زبان را به یاد بیاورید</Text>
+        <Text style={styles.recallLabel}>نمونهٔ این زبان را به یاد بیاورید</Text>
         <View style={styles.reviewCard}>
           <Text style={styles.reviewFa}>{sentence.fa}</Text>
           {!revealed ? <><Text style={styles.sayHint}>پاسخ این زبان را با صدای بلند بگویید.</Text><Pressable accessibilityRole="button" style={styles.revealButton} onPress={() => setRevealed(true)}><Text style={styles.revealButtonText}>نمایش پاسخ</Text></Pressable></> : <View style={styles.answerArea}>
             <View style={styles.answerDivider} /><Text style={styles.reviewTarget}>{sentence.text}</Text><Text style={styles.reviewPronunciation}>{sentence.pronunciation}</Text>
-            <Pressable accessibilityRole="button" style={styles.soundButton} onPress={() => speak(sentence.text)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.soundText}>پخش جمله</Text></Pressable>
+            <Pressable accessibilityRole="button" style={styles.soundButton} onPress={() => speak(sentence.text)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.soundText}>پخش نمونه</Text></Pressable>
             {vocabulary ? <View style={styles.vocabChip}><Sparkles size={13} color={Palette.warning} /><Text style={styles.vocabText}>{vocabulary}</Text></View> : null}
           </View>}
         </View>
-        {revealed ? <View style={styles.ratingArea}><Text style={styles.ratingTitle}>یادآوری این جمله چطور بود؟</Text><View style={styles.ratingGrid}>{ratingOptions.map(option => <Pressable key={option.id} accessibilityRole="button" disabled={saving} style={[styles.ratingButton, { borderColor: `${option.color}55` }]} onPress={() => void rate(option.id)}><Text style={[styles.ratingLabel, { color: option.color }]}>{saving ? 'در حال ذخیره…' : option.label}</Text><Text style={styles.ratingHint}>{option.hint}</Text></Pressable>)}</View></View> : null}
+        {revealed ? <View style={styles.ratingArea}><Text style={styles.ratingTitle}>یادآوری این نمونه چطور بود؟</Text><View style={styles.ratingGrid}>{ratingOptions.map(option => <Pressable key={option.id} accessibilityRole="button" disabled={saving} style={[styles.ratingButton, { borderColor: `${option.color}55` }]} onPress={() => void rate(option.id)}><Text style={[styles.ratingLabel, { color: option.color }]}>{saving ? 'در حال ذخیره…' : option.label}</Text><Text style={styles.ratingHint}>{option.hint}</Text></Pressable>)}</View></View> : null}
       </ScrollView>
     </View>;
   }
 
   return <View style={styles.root}>
-    <View style={styles.header}><Text style={styles.title}>مرور {course.name}</Text><Text style={styles.subtitle}>فقط جمله‌هایی که زمان مرورشان رسیده است</Text></View>
+    <View style={styles.header}><Text style={styles.title}>مرور {course.name}</Text><Text style={styles.subtitle}>فقط نمونه‌هایی که زمان مرورشان رسیده است</Text></View>
     <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-      {finished ? <View style={styles.finishedCard}><View style={styles.finishedIcon}><Check size={32} color={Palette.success} /></View><Text style={styles.finishedTitle}>مرور امروز تمام شد</Text><Text style={styles.finishedDesc}>زمان مرور بعدی هر جمله بر اساس پاسخ شما تنظیم شد.</Text></View> : null}
+      {finished ? <View style={styles.finishedCard}><View style={styles.finishedIcon}><Check size={32} color={Palette.success} /></View><Text style={styles.finishedTitle}>مرور امروز تمام شد</Text><Text style={styles.finishedDesc}>زمان مرور بعدی هر نمونه بر اساس پاسخ شما تنظیم شد.</Text></View> : null}
       <LinearGradient colors={['#18204B', '#303A80', '#4D48B6']} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.summaryCard}>
         <View pointerEvents="none" style={styles.summaryOrb} />
         <View style={styles.summaryTop}><View style={styles.brain}><Brain size={23} color="#D5D7FF" /></View><View style={styles.summaryTag}><RefreshCw size={12} color="#C8CAFF" /><Text style={styles.summaryTagText}>SPACED REVIEW</Text></View></View>
-        <Text style={styles.summaryTitle}>{loading ? 'در حال بارگذاری مرور…' : reviewCount ? `${fa(reviewCount)} جمله برای مرور` : 'فعلاً مروری ندارید'}</Text>
-        <Text style={styles.summaryDesc}>{loading ? 'در حال بررسی موعد مرور جمله‌های این زبان…' : reviewCount ? 'جمله‌های دشوار زودتر و جمله‌های آسان دیرتر برمی‌گردند.' : progress?.completedLessonIds.length ? 'مرور بعدی در زمان مناسب به‌طور خودکار اینجا ظاهر می‌شود.' : 'پس از پایان اولین درس این زبان، جمله‌های آن وارد برنامهٔ مرور می‌شوند.'}</Text>
+        <Text style={styles.summaryTitle}>{loading ? 'در حال بارگذاری مرور…' : reviewCount ? `${fa(reviewCount)} نمونه برای مرور` : 'فعلاً مروری ندارید'}</Text>
+        <Text style={styles.summaryDesc}>{loading ? 'در حال بررسی موعد مرور نمونه‌های این زبان…' : reviewCount ? 'نمونه‌های دشوار زودتر و نمونه‌های آسان دیرتر برمی‌گردند.' : progress?.completedLessonIds.length ? 'مرور بعدی در زمان مناسب به‌طور خودکار اینجا ظاهر می‌شود.' : 'پس از پایان اولین درس این زبان، نمونه‌های آن وارد برنامهٔ مرور می‌شوند.'}</Text>
         {!!error && <Text accessibilityRole="alert" style={styles.summaryError}>{error}</Text>}
         <View style={styles.summaryActions}><Pressable accessibilityRole="button" disabled={!reviewCount || loading} style={[styles.startButton, (!reviewCount || loading) && styles.disabled]} onPress={startSession}><RefreshCw size={16} color={Palette.primaryDark} /><Text style={styles.startText}>شروع مرور امروز</Text></Pressable>{reviewCount ? <View style={styles.time}><Clock3 size={13} color="#D7D9FF" /><Text style={styles.timeText}>حدود {fa(Math.max(2, Math.ceil(reviewCount * .6)))} دقیقه</Text></View> : null}</View>
       </LinearGradient>
       <Text style={styles.sectionTitle}>مرور چگونه تنظیم می‌شود؟</Text>
-      <View style={styles.methodList}><Method num="۱" title="معنی را ببین و جمله را بگو" desc="پیش از دیدن پاسخ، جملهٔ این زبان را با صدای بلند به یاد بیاورید." /><Method num="۲" title="پاسخ را ببین و بشنو" desc="متن این زبان و آوانویسی تقریبی را با پاسخ خود مقایسه کنید." /><Method num="۳" title="میزان سختی را انتخاب کن" desc="برنامه زمان مرور بعدی را روی همین دستگاه تنظیم می‌کند." /></View>
+      <View style={styles.methodList}><Method num="۱" title="معنی را ببین و نمونه را بگو" desc="پیش از دیدن پاسخ، نمونهٔ این زبان را با صدای بلند به یاد بیاورید." /><Method num="۲" title="پاسخ را ببین و بشنو" desc="متن این زبان و آوانویسی تقریبی را با پاسخ خود مقایسه کنید." /><Method num="۳" title="میزان سختی را انتخاب کن" desc="برنامه زمان مرور بعدی را روی همین دستگاه تنظیم می‌کند." /></View>
       <View style={styles.note}><CheckCircle2 size={18} color={Palette.success} /><Text style={styles.noteText}>مرور این زبان جدا از پیشرفت انگلیسی، فقط در حافظهٔ همین دستگاه ذخیره می‌شود.</Text></View>
     </ScrollView>
     <StarterBottomNav course={course} />

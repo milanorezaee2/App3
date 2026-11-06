@@ -4,9 +4,10 @@ import { createCourseProgressStore } from '../createCourseProgressStore';
 import { createStarterSessions } from './starterSessions';
 import { PRE_A1_EXPANSION } from './preA1Expansion';
 import { PRE_A1_MORE } from './preA1More';
+import { STARTER_FOUNDATIONS, type FoundationMode, type FoundationSeed } from './starterFoundations';
 
 export type NewLanguageId = 'de' | 'fr' | 'es';
-export type StarterLesson = LearningLesson & { levelId: CourseLevelId; order: number; subtitle: string };
+export type StarterLesson = LearningLesson & { levelId: CourseLevelId; order: number; subtitle: string; learningMode?: FoundationMode };
 export type SentenceSeed = [string, string, string, string, string, string?];
 export type LessonSeed = { title: string; subtitle: string; situation: string; teachingFa: string; sentences: SentenceSeed[]; check: [string, number, string]; dialogue?: number[] };
 const seeds: Record<NewLanguageId, LessonSeed[]> = {
@@ -55,9 +56,36 @@ const levelSeeds: Array<[CourseLevelId,string,string,string,string]> = [
   [-1,'Absolute Beginner','Pre-A1 · شروع از صفر','نخستین واژه‌ها و جمله‌ها','#94a3b8'], [0,'Foundation','پایه · شروع از صفر','پایه‌های جمله‌سازی','#6555E9'], [1,'Survival','A1 · کاربرد روزمره','موقعیت‌های ضروری','#27A1D6'], [2,'Everyday','A2–B1 · زندگی روزمره','گفت‌وگو دربارهٔ زندگی روزمره','#19A88B'], [3,'Communication','B1–B2 · ارتباط مستقل','توضیح و بیان نظر','#E4A436'], [4,'Upper-Intermediate','B2 · پیشرفته‌تر','استدلال و ارتباط حرفه‌ای','#9A68E8'], [5,'Advanced Communication','C1 · پیشرفته','تحلیل و دقت در بیان','#D56788'],
 ];
 export function isNewLanguage(value: string | undefined): value is NewLanguageId { return value === 'de' || value === 'fr' || value === 'es'; }
+function buildFoundation(id: NewLanguageId, seed: FoundationSeed): StarterLesson {
+  const lessonId = `${id}-foundation-${seed.id}`;
+  const sentences = seed.rows.map(([text, fa, pronunciation], index) => ({
+    id: `${lessonId}-s${index + 1}`, text, fa, pronunciation,
+    vocabulary: [{word: text, meaning: fa}],
+  }));
+  // Three short checks in both directions; all distractors come from this
+  // same lesson and every prompt and answer remains stable for saved sessions.
+  const check = (target: number, meaningFirst: boolean) => {
+    const indexes = [target, (target + 1) % sentences.length, (target + 3) % sentences.length, (target + 5) % sentences.length];
+    const rotated = [...indexes.slice(1), indexes[0]];
+    const item = sentences[target];
+    return {
+      promptFa: meaningFirst ? `کدام گزینه یعنی «${item.fa}»؟` : `«${item.text}» یعنی چه؟`,
+      choices: rotated.map(index => meaningFirst ? sentences[index].text : sentences[index].fa),
+      correctIndex: rotated.indexOf(target),
+      explanationFa: `${item.text} یعنی ${item.fa}.`,
+    };
+  };
+  return {
+    id: lessonId, levelId: -1, order: 0, learningMode: seed.mode,
+    title: seed.title, subtitle: seed.subtitle, situation: seed.situation,
+    teachingFa: seed.teachingFa, durationMinutes: 6, sentences,
+    dialogue: [], checks: [check(0, true), check(3, false), check(6, true)],
+  };
+}
+
 function buildCourse(id: NewLanguageId) {
   const allSeeds = [...seeds[id], ...PRE_A1_EXPANSION[id], ...PRE_A1_MORE[id]];
-  const lessons: StarterLesson[] = allSeeds.map((seed, n) => {
+  const legacy: StarterLesson[] = allSeeds.map((seed, n) => {
     const sentenceSeeds = n < 2 ? [...seed.sentences, ...pilotExtras[id][n]] : seed.sentences;
     const sentences = sentenceSeeds.map(([text,fa,pronunciation,word,meaning,pattern], i) => ({ id:`${id}-pre${n+1}-s${i+1}`, text, fa, pronunciation, vocabulary:[{word,meaning}], ...(pattern ? {pattern} : {}) }));
     const [promptFa, correctIndex, explanationFa] = seed.check;
@@ -76,6 +104,14 @@ function buildCourse(id: NewLanguageId) {
     }
     return { id:`${id}-pre-${n+1}`, levelId:-1 as const, order:n+1, title:seed.title, subtitle:seed.subtitle, situation:seed.situation, teachingFa:seed.teachingFa, durationMinutes:8, sentences, dialogue: (seed.dialogue ?? (n === 0 ? [0,0,4,4] : [1,0,3,4])).map((idx, i) => ({speaker:i % 2 === 1 ? 'همراه' : 'زبان‌آموز', text:sentences[idx].text, fa:sentences[idx].fa})), checks };
   });
+  // The original records retain every ID, sentence, check and review card.
+  // Only their presentation order changes; returning learners keep their saved
+  // current lesson and may optionally visit the new foundations.
+  const legacyOrder = [11, 1, 3, 4, 5, 2, 7, 6, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+  const lessons: StarterLesson[] = [
+    ...STARTER_FOUNDATIONS[id].map(seed => buildFoundation(id, seed)),
+    ...legacyOrder.map(number => legacy[number - 1]),
+  ].map((lesson, index) => ({...lesson, order: index + 1}));
   const levels = levelSeeds.map(([levelId,title,cefr,description,color])=>({ id:levelId,title,cefr,description,color,modules:lessons.filter(l=>l.levelId===levelId).map(l=>l.title),status:(levelId === -1 ? 'available' : 'planned') as 'available'|'planned' }));
   const progress = createCourseProgressStore({key:`sentence_course_progress_${id}_starter_v1`,lessons,cloudSync:false,recordEstimatedTime:false,markVocabularyOnCompletion:false});
   return { id,...labels[id], lessons,levels,progress,sessions:createStarterSessions(id,lessons), home:`/learn/${id}` };
