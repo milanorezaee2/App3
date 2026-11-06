@@ -111,7 +111,7 @@ lib/languages/russianCurriculum.ts
 | `expo-haptics` | حذف | بدون ریسک |
 | `expo-symbols` | حذف | بدون ریسک |
 | `@expo/vector-icons` | حذف | فونت آیکون کامل در باندل |
-| `iransans` | حذف | فونت‌ها از Vazirmatn می‌آیند |
+| `iransans` | حذف | فونت‌ها آن روز از Vazirmatn می‌آمدند؛ امروز فونت محلی Beiruti است |
 
 ### ⚠️ تضاد دوم — `react-native-reanimated`
 

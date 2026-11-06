@@ -9,16 +9,12 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { MiloLogoMotion } from '@/components/MiloLogoMotion';
 import { KeyboardProvider } from '@/components/KeyboardRuntime';
 import { createAudioPlayer } from 'expo-audio';
-// Imported from per-weight subpaths on purpose: the package root `require()`s
-// every weight at load time, so Metro bundled all 27 font files (7.0 MB) even
-// though only these 7 are used. Subpath imports keep only these (1.5 MB).
+// Inter is imported from per-weight subpaths on purpose: the package root
+// `require()`s every weight at load time, so Metro would bundle all of them.
+// The Persian face is bundled from assets/fonts instead of an npm package.
 import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { Inter_800ExtraBold } from '@expo-google-fonts/inter/800ExtraBold';
-import { Vazirmatn_400Regular } from '@expo-google-fonts/vazirmatn/400Regular';
-import { Vazirmatn_500Medium } from '@expo-google-fonts/vazirmatn/500Medium';
-import { Vazirmatn_700Bold } from '@expo-google-fonts/vazirmatn/700Bold';
-import { Vazirmatn_900Black } from '@expo-google-fonts/vazirmatn/900Black';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AppLockGate } from '@/components/AppLockGate';
@@ -102,23 +98,20 @@ export default function RootLayout() {
   useFrameworkReady();
   const [introComplete, setIntroComplete] = useState(Platform.OS === 'web');
   const [fontsLoaded, fontError] = useFonts({
-    // Bundle Vazir locally so Persian typography and numerals stay identical
-    // offline and independent of each Android manufacturer's system fonts.
-    Vazir: Vazirmatn_400Regular,
-    'Vazir-Medium': Vazirmatn_500Medium,
-    'Vazir-Bold': Vazirmatn_700Bold,
-    'Vazir-Black': Vazirmatn_900Black,
+    // Beiruti is bundled from assets/fonts so Persian typography and Persian
+    // numerals stay identical offline and independent of each Android
+    // manufacturer's system fonts. Each file carries the Arabic and the Latin
+    // range together, so a mixed Persian/English line never jumps between two
+    // faces mid-sentence.
+    Beiruti: require('../assets/fonts/Beiruti-Regular.ttf'),
+    'Beiruti-Medium': require('../assets/fonts/Beiruti-Medium.ttf'),
+    'Beiruti-Bold': require('../assets/fonts/Beiruti-Bold.ttf'),
+    'Beiruti-Black': require('../assets/fonts/Beiruti-Black.ttf'),
     // Latin teaching content uses bundled faces too, eliminating Android OEM
     // font and fallback-metric differences between phones.
     Inter: Inter_400Regular,
     'Inter-SemiBold': Inter_600SemiBold,
     'Inter-ExtraBold': Inter_800ExtraBold,
-    // Legacy aliases now resolve to Vazir too, preventing an old screen from
-    // silently falling back to an OEM font.
-    Lalezar: Vazirmatn_400Regular,
-    Vazirmatn: Vazirmatn_400Regular,
-    'Vazirmatn-Medium': Vazirmatn_500Medium,
-    'Vazirmatn-Bold': Vazirmatn_700Bold,
   });
 
   useEffect(() => {

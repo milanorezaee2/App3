@@ -116,7 +116,7 @@ import { TURKISH_LESSONS, turkishProgress } from './turkish';
 | `expo-haptics` | ماژول نیتیو |
 | `expo-symbols` | ماژول نیتیو iOS |
 | `@lucide/lab` | پکیج آیکون دوم، پروژه از `lucide-react-native` استفاده می‌کند |
-| `iransans` | فونت استفاده‌نشده (فونت‌ها از `@expo-google-fonts/vazirmatn` می‌آیند) |
+| `iransans` | فونت استفاده‌نشده (آن روز فونت‌ها از `@expo-google-fonts/vazirmatn` می‌آمدند؛ امروز فونت محلی Beiruti) |
 | `react-native-url-polyfill` | بدون استفاده |
 
 > **تصحیح (پس از اندازه‌گیری واقعی باندل):** ادعای اولیهٔ من دربارهٔ `@expo/vector-icons` نادرست بود. این پکیج یک وابستگی **اجباری خودِ `expo`** است (`expo/package.json` → `"@expo/vector-icons": "^15.0.2"`)، پس از `package.json` ما حذف‌شدنی نیست. مهم‌تر اینکه چون هیچ کدی آن را import نمی‌کند، فونت‌هایش هم بسته‌بندی نمی‌شوند. ارجاع `expo-router` به آن فقط داخل یک **کامنت JSDoc** است. پس حذفش هیچ سودی برای APK نداشت.

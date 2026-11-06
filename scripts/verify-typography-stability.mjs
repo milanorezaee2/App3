@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -19,10 +19,10 @@ const layout = read('app/_layout.tsx');
 const theme = read('lib/theme.ts');
 const pkg = JSON.parse(read('package.json'));
 check(pkg.dependencies['@expo-google-fonts/inter'], 'bundled Inter dependency is declared');
-check(pkg.dependencies['@expo-google-fonts/vazirmatn'], 'bundled open-source Vazir dependency is declared');
+check(['Beiruti-Regular','Beiruti-Medium','Beiruti-Bold','Beiruti-Black'].every(face => existsSync(path.join(root, 'assets/fonts', `${face}.ttf`))), 'the bundled Persian face ships four weights as local files');
 check(/Inter_400Regular[\s\S]*Inter_600SemiBold[\s\S]*Inter_800ExtraBold/.test(layout), 'regular, semibold and extrabold Inter faces are bundled');
-check(/Vazir:[\s\S]*Vazirmatn_400Regular[\s\S]*'Vazir-Black': Vazirmatn_900Black/.test(layout), 'Vazir regular through black faces are bundled locally');
-check(/fontFamily:\s*'Vazir'/.test(theme) && /numberFontFamily:\s*'Vazir-Black'/.test(theme), 'Persian copy and decorative Persian digits use Vazir');
+check(/Beiruti: require\('\.\.\/assets\/fonts\/Beiruti-Regular\.ttf'\)[\s\S]*'Beiruti-Black': require\('\.\.\/assets\/fonts\/Beiruti-Black\.ttf'\)/.test(layout), 'Beiruti regular through black faces are bundled locally');
+check(/fontFamily:\s*'Beiruti'/.test(theme) && /numberFontFamily:\s*'Beiruti-Black'/.test(theme), 'Persian copy and decorative Persian digits use Beiruti');
 check(/I18nManager\.allowRTL\(false\)/.test(entry) && /I18nManager\.forceRTL\(false\)/.test(entry)
   && !/I18nManager\.(?:allowRTL|forceRTL)\(true\)/.test(entry + layout),
   'entry point and root layout cannot alternate native direction between launches');
