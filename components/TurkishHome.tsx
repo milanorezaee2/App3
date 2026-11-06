@@ -22,6 +22,7 @@ import {
 import { PageNavigation } from '@/components/PageNavigation';
 import { TurkishBottomNav } from '@/components/TurkishBottomNav';
 import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '@/components/LearningHomeStyles';
+import { ClassicPaperFrame } from '@/components/ClassicPageFrame';
 import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } from '@/components/EnglishUI';
 import { TURKISH_LEVELS, TURKISH_LESSONS, turkishProgress, type TurkishLevelId } from '@/lib/languages/turkish';
 import { loadTurkishLessonSessionWithPresence } from '@/lib/languages/turkishStudyState';
@@ -135,6 +136,7 @@ export default function TurkishHome() {
 
   return (
     <View style={styles.root}>
+      <ClassicPaperFrame />
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.page}>
           <View style={styles.header}>
@@ -146,6 +148,76 @@ export default function TurkishHome() {
                 <Text style={styles.brandEyebrow}>LANGUAGE JOURNEY</Text>
                 <Text style={styles.headerTitle}>مسیر یادگیری ترکی استانبولی</Text>
               </View>
+          <View style={styles.pathPanel}>
+            <View style={styles.panelHeadingRow}>
+              <View style={styles.panelHeadingText}>
+                <Text style={styles.panelEyebrow}>TURKISH LEARNING PATH</Text>
+                <Text style={styles.panelTitle}>مسیر یادگیری ترکی استانبولی</Text>
+              </View>
+              <Pressable accessibilityRole="button" style={styles.libraryLink} onPress={() => router.push('/learn/tr/library' as never)}>
+                <Text style={styles.libraryLinkText}>کتابخانه</Text>
+                <ChevronLeft size={16} color={HomeColors.accent} />
+              </Pressable>
+            </View>
+
+            <View style={styles.railWrap}>
+              <EnglishLevelRail activeLevelId={activeLevel.id} counts={levelCounts} levels={TURKISH_LEVELS} accessibilityLabelPrefix="فهرست درس‌های" direction="rtl" onSelect={openLevel} />
+            </View>
+
+            <View style={styles.currentLevelCard}>
+              <View style={[styles.levelNumber, { backgroundColor: `${activeLevel.color}14` }]}>
+                <Text style={[styles.levelNumberText, { color: activeLevel.color }]}>{fa(activeLevel.id)}</Text>
+              </View>
+              <View style={styles.currentLevelCopy}>
+                <Text style={styles.currentLevelName}>{activeLevel.title}</Text>
+                <Text style={styles.currentLevelDescription}>{activeLevel.description}</Text>
+              </View>
+              <View style={styles.currentLevelCount}>
+                <Text style={[styles.levelCountValue, { color: activeLevel.color }]}>{fa(levelCompleted)} / {fa(levelLessons.length)}</Text>
+                <Text style={styles.levelCountLabel}>درس</Text>
+              </View>
+            </View>
+
+            <Pressable accessibilityRole="button" accessibilityState={{ expanded: showRoadmap }} style={styles.mapToggle} onPress={() => setShowRoadmap(value => !value)}>
+              <View style={styles.mapToggleIcon}><Compass size={16} color={HomeColors.accent} /></View>
+              <View style={styles.mapToggleText}>
+                <Text style={styles.mapToggleTitle}>{showRoadmap ? 'بستن نقشهٔ کامل سطح‌ها' : 'دیدن جزئیات سطح‌ها'}</Text>
+                <Text style={styles.mapToggleMeta}>{activeLevel.modules.slice(0, 3).map(displayEnglishModuleLabel).join(' · ')}</Text>
+              </View>
+              {showRoadmap ? <ChevronUp size={18} color={HomeColors.accent} /> : <ChevronDown size={18} color={HomeColors.muted} />}
+            </Pressable>
+
+            {showRoadmap && (
+              <View style={styles.fullRoadmap}>
+                {TURKISH_LEVELS.map(level => {
+                  const count = levelCounts[level.id] ?? { completed: 0, total: 0 };
+                  const passed = count.total > 0 && count.completed === count.total;
+                  return (
+                    <Pressable
+                      key={level.id}
+                      accessibilityRole="button"
+                      accessibilityLabel={`فهرست درس‌های ${level.title}`}
+                      style={({ pressed }) => [styles.levelCard, level.id === activeLevel.id && styles.levelCardActive, pressed && styles.buttonPressed]}
+                      onPress={() => openLevel(level.id)}
+                    >
+                      <View style={[styles.levelNumber, { backgroundColor: `${level.color}14` }]}>
+                        {passed ? <Check size={17} color={level.color} strokeWidth={2.6} /> : <Text style={[styles.levelNumberText, { color: level.color }]}>{fa(level.id)}</Text>}
+                      </View>
+                      <View style={styles.levelText}>
+                        <View style={styles.levelTitleRow}>
+                          <Text style={styles.levelTitle}>{level.title}</Text>
+                          <Text style={[styles.levelCefr, { color: level.color }]}>{level.cefr}</Text>
+                        </View>
+                        <Text style={styles.levelDesc} numberOfLines={1}>{level.description || 'در نقشهٔ آیندهٔ دوره'}</Text>
+                        <Text style={styles.levelStats}>{fa(count.completed)} از {fa(count.total)} درس · {level.status === 'planned' ? 'در نقشهٔ آینده' : 'محتوای موجود'}</Text>
+                      </View>
+                      <ChevronLeft size={18} color={HomeColors.muted} />
+                    </Pressable>
+                  );
+                })}
+              </View>
+            )}
+          </View>
             </View>
             <PageNavigation backFallback="/languages" />
           </View>
@@ -171,14 +243,14 @@ export default function TurkishHome() {
                   <Text style={styles.welcomeTagText}>یادگیری جمله‌محور</Text>
                 </View>
                 <View style={styles.welcomeTag}>
-                  <Sparkles size={12} color="#07886A" />
+                  <Sparkles size={12} color="#8A6D3B" />
                   <Text style={styles.welcomeTagText}>تلفظ و هماهنگی واکه‌ها</Text>
                 </View>
               </View>
             </View>
             <View style={[styles.welcomeVisual, compact && styles.welcomeVisualCompact]}>
               <Image source={require('../assets/language-learning-hero.jpg')} resizeMode="cover" style={styles.welcomeImage} />
-              <LinearGradient colors={['rgba(92,18,34,0.04)', 'rgba(92,18,34,0.38)']} style={styles.welcomeImageShade} />
+              <LinearGradient colors={['rgba(20,20,20,0.00)', 'rgba(20,20,20,0.12)']} style={styles.welcomeImageShade} />
               <View style={styles.welcomeImageStamp}>
                 <Text style={styles.welcomeImageStampMain}>TR</Text>
                 <View style={styles.welcomeImageStampLine} />
@@ -293,7 +365,7 @@ export default function TurkishHome() {
             </View>
           </View>
 
-          <LinearGradient colors={['#FFFFFF', '#FFF4F6', '#FDE8EC']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
+          <LinearGradient colors={['#FFFFFF', '#FAF7F0', '#F3EEE1']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
             <View pointerEvents="none" style={styles.todayGlow} />
             <View style={styles.todayTopRow}>
               <View style={styles.todayIcon}><Clock3 size={18} color={HomeColors.gold} /></View>
@@ -306,7 +378,7 @@ export default function TurkishHome() {
               </View>
             </View>
             <View style={styles.todayProgressTrack}>
-              <EnglishProgressTrack value={courseProgressPercent} color={HomeColors.gold} trackColor="rgba(255,255,255,0.17)" height={7} />
+              <EnglishProgressTrack value={courseProgressPercent} color={HomeColors.gold} trackColor="rgba(176,141,87,0.18)" height={7} />
             </View>
             <View style={styles.todayFootnote}>
               <BookOpen size={14} color={HomeColors.gold} />
@@ -314,76 +386,6 @@ export default function TurkishHome() {
             </View>
           </LinearGradient>
 
-          <View style={styles.pathPanel}>
-            <View style={styles.panelHeadingRow}>
-              <View style={styles.panelHeadingText}>
-                <Text style={styles.panelEyebrow}>TURKISH LEARNING PATH</Text>
-                <Text style={styles.panelTitle}>مسیر یادگیری ترکی استانبولی</Text>
-              </View>
-              <Pressable accessibilityRole="button" style={styles.libraryLink} onPress={() => router.push('/learn/tr/library' as never)}>
-                <Text style={styles.libraryLinkText}>کتابخانه</Text>
-                <ChevronLeft size={16} color={HomeColors.accent} />
-              </Pressable>
-            </View>
-
-            <View style={styles.railWrap}>
-              <EnglishLevelRail activeLevelId={activeLevel.id} counts={levelCounts} levels={TURKISH_LEVELS} accessibilityLabelPrefix="فهرست درس‌های" direction="rtl" onSelect={openLevel} />
-            </View>
-
-            <View style={styles.currentLevelCard}>
-              <View style={[styles.levelNumber, { backgroundColor: `${activeLevel.color}14` }]}>
-                <Text style={[styles.levelNumberText, { color: activeLevel.color }]}>{fa(activeLevel.id)}</Text>
-              </View>
-              <View style={styles.currentLevelCopy}>
-                <Text style={styles.currentLevelName}>{activeLevel.title}</Text>
-                <Text style={styles.currentLevelDescription}>{activeLevel.description}</Text>
-              </View>
-              <View style={styles.currentLevelCount}>
-                <Text style={[styles.levelCountValue, { color: activeLevel.color }]}>{fa(levelCompleted)} / {fa(levelLessons.length)}</Text>
-                <Text style={styles.levelCountLabel}>درس</Text>
-              </View>
-            </View>
-
-            <Pressable accessibilityRole="button" accessibilityState={{ expanded: showRoadmap }} style={styles.mapToggle} onPress={() => setShowRoadmap(value => !value)}>
-              <View style={styles.mapToggleIcon}><Compass size={16} color={HomeColors.accent} /></View>
-              <View style={styles.mapToggleText}>
-                <Text style={styles.mapToggleTitle}>{showRoadmap ? 'بستن نقشهٔ کامل سطح‌ها' : 'دیدن جزئیات سطح‌ها'}</Text>
-                <Text style={styles.mapToggleMeta}>{activeLevel.modules.slice(0, 3).map(displayEnglishModuleLabel).join(' · ')}</Text>
-              </View>
-              {showRoadmap ? <ChevronUp size={18} color={HomeColors.accent} /> : <ChevronDown size={18} color={HomeColors.muted} />}
-            </Pressable>
-
-            {showRoadmap && (
-              <View style={styles.fullRoadmap}>
-                {TURKISH_LEVELS.map(level => {
-                  const count = levelCounts[level.id] ?? { completed: 0, total: 0 };
-                  const passed = count.total > 0 && count.completed === count.total;
-                  return (
-                    <Pressable
-                      key={level.id}
-                      accessibilityRole="button"
-                      accessibilityLabel={`فهرست درس‌های ${level.title}`}
-                      style={({ pressed }) => [styles.levelCard, level.id === activeLevel.id && styles.levelCardActive, pressed && styles.buttonPressed]}
-                      onPress={() => openLevel(level.id)}
-                    >
-                      <View style={[styles.levelNumber, { backgroundColor: `${level.color}14` }]}>
-                        {passed ? <Check size={17} color={level.color} strokeWidth={2.6} /> : <Text style={[styles.levelNumberText, { color: level.color }]}>{fa(level.id)}</Text>}
-                      </View>
-                      <View style={styles.levelText}>
-                        <View style={styles.levelTitleRow}>
-                          <Text style={styles.levelTitle}>{level.title}</Text>
-                          <Text style={[styles.levelCefr, { color: level.color }]}>{level.cefr}</Text>
-                        </View>
-                        <Text style={styles.levelDesc} numberOfLines={1}>{level.description || 'در نقشهٔ آیندهٔ دوره'}</Text>
-                        <Text style={styles.levelStats}>{fa(count.completed)} از {fa(count.total)} درس · {level.status === 'planned' ? 'در نقشهٔ آینده' : 'محتوای موجود'}</Text>
-                      </View>
-                      <ChevronLeft size={18} color={HomeColors.muted} />
-                    </Pressable>
-                  );
-                })}
-              </View>
-            )}
-          </View>
 
           <View style={styles.quickSection}>
             <View style={styles.sectionHeading}>
@@ -412,14 +414,12 @@ export default function TurkishHome() {
             </View>
           </View>
 
-          <LinearGradient colors={['#FFFFFF', '#FFF3F5']} start={{ x: .95, y: .1 }} end={{ x: .05, y: 1 }} style={styles.noteCard}>
-            <View style={styles.noteIcon}><Sparkles size={16} color={HomeColors.gold} /></View>
-            <View style={styles.noteCopy}>
-              <Text style={styles.noteTitle}>یادگیری ترکی استانبولی در بافت</Text>
-              <Text style={styles.noteText}>جمله‌های ترکی استانبولی را همراه با معنی فارسی، راهنمای خوانش، هماهنگی پسوندها و مکالمهٔ واقعی یاد بگیر.</Text>
-            </View>
-            <View style={styles.noteOrnament} pointerEvents="none"><Sparkles size={30} color="rgba(216,183,110,0.22)" /></View>
-          </LinearGradient>
+          {/* یک خط کلاسیک، جای بلوک متنی بلند پایین صفحه. */}
+          <View style={styles.classicFooter}>
+            <View style={styles.classicFooterRule} />
+            <Text style={styles.classicFooterText}>ترکی را با جمله‌های کوتاه روزمره یاد بگیر.</Text>
+            <View style={styles.classicFooterRule} />
+          </View>
         </View>
       </ScrollView>
       <TurkishBottomNav />

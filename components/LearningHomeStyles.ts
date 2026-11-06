@@ -2,35 +2,35 @@ import { StyleSheet } from 'react-native';
 import { DESIGN_VARIANT, Radius, Typography } from '@/lib/theme';
 
 const legacyLearningHomeColors = {
-  canvas: '#F6FAFF',
+  canvas: '#FFFFFF',
   surface: '#FFFFFF',
-  surfaceSoft: '#F2F7FD',
-  ink: '#102A56',
-  text: '#425E80',
-  muted: '#7086A2',
-  border: '#DCE8F7',
-  accent: '#1769D2',
-  accentDeep: '#104A94',
-  accentSoft: '#EAF3FF',
-  sage: '#168451',
-  sageSoft: '#ECF9F2',
-  amber: '#A65C14',
-  gold: '#2878DE',
-  goldSoft: '#EAF3FF',
+  surfaceSoft: '#FBF8F1',
+  ink: '#141414',
+  text: '#3F3C38',
+  muted: '#7A7368',
+  border: '#EAE3D4',
+  accent: '#2B4A6F',
+  accentDeep: '#1B3350',
+  accentSoft: '#EFF2F6',
+  sage: '#3F6B52',
+  sageSoft: '#EDF4EF',
+  amber: '#8A5A23',
+  gold: '#B08D57',
+  goldSoft: '#FBF6EC',
 } as const;
 
 const learnerLearningHomeColors = {
-  canvas: '#F8FAFF', surface: '#FFFFFF', surfaceSoft: '#F3F2FF', ink: '#211A68',
-  text: '#475569', muted: '#7C8AA5', border: '#E3E7F3', accent: '#5146E5',
-  accentDeep: '#3730A3', accentSoft: '#E9E7FF', sage: '#07886A', sageSoft: '#ECFDF8',
-  amber: '#A65C14', gold: '#635BFF', goldSoft: '#F3F2FF',
+  canvas: '#FFFFFF', surface: '#FFFFFF', surfaceSoft: '#FBF8F1', ink: '#141414',
+  text: '#3F3C38', muted: '#7A7368', border: '#EAE3D4', accent: '#2B4A6F',
+  accentDeep: '#1B3350', accentSoft: '#EFF2F6', sage: '#3F6B52', sageSoft: '#EDF4EF',
+  amber: '#8A5A23', gold: '#B08D57', goldSoft: '#FBF6EC',
 } as const;
 
 export const LearningHomeColors = DESIGN_VARIANT === 'learner-v2'
   ? learnerLearningHomeColors
   : legacyLearningHomeColors;
 
-export const learningHomeStyles = StyleSheet.create({
+const baseHomeStyles = StyleSheet.create({
   root: { flex: 1, backgroundColor: '#111633' },
   scrollContent: { flexGrow: 1 },
   page: { width: '100%', maxWidth: 760, alignSelf: 'center', paddingHorizontal: 20, paddingTop: 20, paddingBottom: 104, gap: 20 },
@@ -169,4 +169,132 @@ export const learningHomeStyles = StyleSheet.create({
   noteTitle: { fontFamily: Typography.fontFamily, color: LearningHomeColors.accent, fontSize: 10, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   noteText: { fontFamily: Typography.fontFamily, color: LearningHomeColors.text, fontSize: 9, lineHeight: 17, textAlign: 'right', writingDirection: 'rtl' },
   noteOrnament: { position: 'absolute', left: 13, bottom: -6, opacity: 0.8 },
+});
+
+/* -------------------------------------------------------------------------
+ * Classic paper theme overrides
+ *
+ * The home screens were designed on a dark navy canvas, so a large part of the
+ * sheet above assumes white text on a deep background. The palette below keeps
+ * every layout value (sizes, spacing, radii, shadows) exactly as it was and
+ * only rewrites colour: the page becomes white, text becomes near-black, cards
+ * become white sheets with a warm hairline, and the accent moves from violet to
+ * gilt. Spreading the base entry keeps the geometry in one place.
+ * ---------------------------------------------------------------------- */
+const PAPER = {
+  ink: '#141414',
+  body: '#3F3C38',
+  quiet: '#6B655C',
+  hair: '#EAE3D4',
+  hairStrong: '#DFD5BF',
+  parchment: '#FBF8F1',
+  parchmentDeep: '#FCFAF5',
+  gold: '#B08D57',
+  goldInk: '#8A6D3B',
+  goldWash: '#FBF6EC',
+  shadow: '#8A7B5C',
+} as const;
+
+export const learningHomeStyles = StyleSheet.create({
+  ...baseHomeStyles,
+
+  root: { ...baseHomeStyles.root, backgroundColor: '#FFFFFF' },
+
+  brandEyebrow: { ...baseHomeStyles.brandEyebrow, color: '#A39A8C' },
+  headerTitle: { ...baseHomeStyles.headerTitle, color: PAPER.ink },
+
+  welcomeBlock: {
+    ...baseHomeStyles.welcomeBlock,
+    backgroundColor: '#FFFFFF',
+    borderColor: PAPER.hair,
+    shadowColor: PAPER.shadow,
+    shadowOpacity: 0.10,
+  },
+  welcomeGlowOne: { ...baseHomeStyles.welcomeGlowOne, backgroundColor: 'rgba(251,246,236,0.85)' },
+  welcomeGlowTwo: { ...baseHomeStyles.welcomeGlowTwo, backgroundColor: 'rgba(246,241,229,0.7)' },
+  welcomeEyebrowRow: { ...baseHomeStyles.welcomeEyebrowRow, backgroundColor: PAPER.goldWash, borderColor: PAPER.hairStrong },
+  welcomeEyebrow: { ...baseHomeStyles.welcomeEyebrow, color: PAPER.goldInk },
+  welcomeTitle: { ...baseHomeStyles.welcomeTitle, color: PAPER.ink },
+  welcomeDescription: { ...baseHomeStyles.welcomeDescription, color: PAPER.body },
+  welcomeTag: { ...baseHomeStyles.welcomeTag, backgroundColor: PAPER.goldWash, borderColor: PAPER.hairStrong },
+  welcomeVisual: { ...baseHomeStyles.welcomeVisual, backgroundColor: PAPER.parchment, borderColor: PAPER.hair },
+
+  lessonCard: {
+    ...baseHomeStyles.lessonCard,
+    backgroundColor: '#FFFFFF',
+    borderColor: PAPER.hair,
+    shadowColor: PAPER.shadow,
+    shadowOpacity: 0.09,
+  },
+  lessonEyebrow: { ...baseHomeStyles.lessonEyebrow, color: PAPER.goldInk },
+  lessonTitle: { ...baseHomeStyles.lessonTitle, color: PAPER.ink },
+  lessonSubtitle: { ...baseHomeStyles.lessonSubtitle, color: PAPER.quiet },
+  lessonOrder: { ...baseHomeStyles.lessonOrder, color: '#8A8378' },
+  sentenceCard: { ...baseHomeStyles.sentenceCard, backgroundColor: PAPER.parchmentDeep, borderColor: '#EDE6D7' },
+  sentenceIcon: { ...baseHomeStyles.sentenceIcon, backgroundColor: PAPER.goldWash, borderColor: PAPER.hairStrong },
+  sentenceLabel: { ...baseHomeStyles.sentenceLabel, color: PAPER.quiet },
+  sentenceEnglish: { ...baseHomeStyles.sentenceEnglish, color: PAPER.ink },
+  sentencePersian: { ...baseHomeStyles.sentencePersian, color: PAPER.body },
+  sentenceNumber: { ...baseHomeStyles.sentenceNumber, color: '#8A8378' },
+  wordChip: { ...baseHomeStyles.wordChip, backgroundColor: PAPER.parchmentDeep, borderColor: '#EDE6D7' },
+
+  sectionTitle: { ...baseHomeStyles.sectionTitle, color: PAPER.ink },
+  sectionEyebrow: { ...baseHomeStyles.sectionEyebrow, color: PAPER.goldInk },
+  dailyGoalPill: { ...baseHomeStyles.dailyGoalPill, backgroundColor: PAPER.goldWash, borderColor: PAPER.hairStrong },
+
+  todayCard: {
+    ...baseHomeStyles.todayCard,
+    backgroundColor: '#FFFFFF',
+    borderColor: PAPER.hair,
+    shadowColor: PAPER.shadow,
+    shadowOpacity: 0.10,
+  },
+  todayGlow: { ...baseHomeStyles.todayGlow, backgroundColor: 'rgba(251,246,236,0.8)' },
+  todayIcon: { ...baseHomeStyles.todayIcon, backgroundColor: PAPER.goldWash, borderColor: PAPER.hairStrong },
+  todayValue: { ...baseHomeStyles.todayValue, color: PAPER.ink },
+  todayUnit: { ...baseHomeStyles.todayUnit, color: PAPER.quiet },
+  todayLabel: { ...baseHomeStyles.todayLabel, color: PAPER.quiet },
+  todayPercentPill: { ...baseHomeStyles.todayPercentPill, backgroundColor: PAPER.parchmentDeep, borderColor: PAPER.hairStrong },
+  todayPercentText: { ...baseHomeStyles.todayPercentText, color: PAPER.ink },
+  todayFootnote: { ...baseHomeStyles.todayFootnote, borderTopColor: PAPER.hair },
+  todayFootnoteText: { ...baseHomeStyles.todayFootnoteText, color: PAPER.body },
+
+  pathPanel: {
+    ...baseHomeStyles.pathPanel,
+    backgroundColor: '#FFFFFF',
+    borderColor: PAPER.hair,
+    shadowColor: PAPER.shadow,
+    shadowOpacity: 0.09,
+  },
+  panelEyebrow: { ...baseHomeStyles.panelEyebrow, color: PAPER.goldInk },
+  panelTitle: { ...baseHomeStyles.panelTitle, color: PAPER.ink },
+  libraryLink: { ...baseHomeStyles.libraryLink, backgroundColor: PAPER.goldWash, borderColor: PAPER.hairStrong },
+  libraryLinkText: { ...baseHomeStyles.libraryLinkText, color: PAPER.goldInk },
+  currentLevelCard: { ...baseHomeStyles.currentLevelCard, backgroundColor: PAPER.parchmentDeep, borderColor: '#EDE6D7' },
+  currentLevelName: { ...baseHomeStyles.currentLevelName, color: PAPER.ink },
+  currentLevelDescription: { ...baseHomeStyles.currentLevelDescription, color: PAPER.quiet },
+  levelCountLabel: { ...baseHomeStyles.levelCountLabel, color: PAPER.quiet },
+  mapToggle: { ...baseHomeStyles.mapToggle, backgroundColor: PAPER.goldWash, borderColor: PAPER.hairStrong },
+  mapToggleTitle: { ...baseHomeStyles.mapToggleTitle, color: PAPER.ink },
+  mapToggleMeta: { ...baseHomeStyles.mapToggleMeta, color: '#8A8378' },
+  levelCard: { ...baseHomeStyles.levelCard, backgroundColor: '#FFFFFF', borderColor: '#EDE6D7', shadowColor: PAPER.shadow, shadowOpacity: 0.06 },
+  levelCardActive: { ...baseHomeStyles.levelCardActive, backgroundColor: PAPER.goldWash, borderColor: PAPER.hairStrong },
+  levelTitle: { ...baseHomeStyles.levelTitle, color: PAPER.ink },
+  levelDesc: { ...baseHomeStyles.levelDesc, color: PAPER.body },
+  levelStats: { ...baseHomeStyles.levelStats, color: '#7A7368' },
+
+  quickCard: { ...baseHomeStyles.quickCard, backgroundColor: '#FFFFFF', borderColor: PAPER.hair, shadowColor: PAPER.shadow, shadowOpacity: 0.06 },
+  quickTitle: { ...baseHomeStyles.quickTitle, color: PAPER.ink },
+  quickDesc: { ...baseHomeStyles.quickDesc, color: PAPER.quiet },
+
+  noteCard: { ...baseHomeStyles.noteCard, backgroundColor: 'transparent', borderColor: 'transparent' },
+  noteTitle: { ...baseHomeStyles.noteTitle, color: PAPER.goldInk },
+  noteText: { ...baseHomeStyles.noteText, color: PAPER.quiet },
+
+  streakPill: { ...baseHomeStyles.streakPill, backgroundColor: PAPER.parchmentDeep, borderColor: PAPER.hair },
+  streakText: { ...baseHomeStyles.streakText, color: PAPER.quiet },
+  /* کوتاه: خط کلاسیک پایان صفحه، جای بلوک متنی بلند قبلی */
+  classicFooter: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 12, paddingTop: 10, paddingBottom: 2 },
+  classicFooterRule: { flex: 1, height: 1, backgroundColor: 'rgba(176,141,87,0.24)' },
+  classicFooterText: { fontFamily: Typography.fontFamily, color: '#6B655C', fontSize: 10, lineHeight: 18, textAlign: 'center', writingDirection: 'rtl' },
 });
