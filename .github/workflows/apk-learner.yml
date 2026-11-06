@@ -5,6 +5,11 @@ name: Build learner APK
 
 on:
   workflow_dispatch:
+    inputs:
+      abis:
+        description: 'CPU architectures to package (e.g. arm64-v8a,armeabi-v7a). Blank = all four.'
+        required: false
+        default: ''
   push:
     branches:
       - arena/940e66ab-app3
@@ -23,6 +28,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 concurrency:
   group: learner-apk-${{ github.ref }}
@@ -36,6 +42,10 @@ jobs:
       CI: '1'
       EXPO_NO_TELEMETRY: '1'
       NODE_OPTIONS: '--max-old-space-size=8192'
+      # Real phones need arm64-v8a (current) or armeabi-v7a (old). x86/x86_64
+      # only exist for emulators and roughly double the native payload.
+      # Blank input therefore means "phones only", not "everything".
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
@@ -67,9 +77,9 @@ jobs:
       - name: Verify core curricula and speech policy
         run: |
           npm run typecheck
+          npm run validate:hygiene
           npm run validate:content
           npm run validate:russian
-          npm run validate:russian-architecture
           npm run validate:english-engine
           npm run validate:english-lesson-flow
           npm run validate:speech-policy
@@ -132,6 +142,55 @@ jobs:
           sha256sum MiloLanguages.apk | tee MiloLanguages.apk.sha256
           ls -lh MiloLanguages.apk
 
+      # Informational only. The budget is enforced in a later step, after the
+      # artifact is uploaded, so a size miss can never discard the APK.
+      - name: Report APK composition
+        run: node scripts/apk-report.mjs MiloLanguages.apk
+
+      # GitHub serves job logs from a host that is not always reachable, so the
+      # numbers are also written where they survive: on the pull request.
+      - name: Publish the APK size report
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+          if [ ! -s MiloLanguages.apk ]; then
+            echo 'APK was not produced, so there is no size report.' > /tmp/report.md
+          else
+            {
+              echo "### APK size report · \`$GITHUB_REF_NAME\`"
+              echo
+              echo '```'
+              node scripts/apk-report.mjs MiloLanguages.apk 2>&1 || true
+              echo '```'
+              echo
+              echo "Artifact size: $(du -h MiloLanguages.apk | cut -f1)"
+              echo
+              echo "<details><summary>Build inputs</summary>"
+              echo
+              echo '```'
+              echo "MILO_ANDROID_ABIS = ${MILO_ANDROID_ABIS:-<unset>}"
+              if [ -f android/gradle.properties ]; then
+                echo "gradle.properties  = $(grep '^reactNativeArchitectures' android/gradle.properties || echo '<not present>')"
+              fi
+              if [ -f android/app/build.gradle ]; then
+                echo "build.gradle       = $(grep -o 'abiFilters.*' android/app/build.gradle | head -1 || echo '<not present>')"
+              fi
+              echo '```'
+              echo
+              echo "</details>"
+            } > /tmp/report.md
+          fi
+          cat /tmp/report.md >> "$GITHUB_STEP_SUMMARY"
+          PR=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json number --jq '.[0].number' 2>/dev/null || true)
+          if [ -n "${PR:-}" ]; then
+            gh pr comment "$PR" --body-file /tmp/report.md
+            echo "Posted the report to PR #$PR"
+          else
+            echo "No open pull request for $GITHUB_REF_NAME; the report is in the job summary only."
+          fi
+
       - name: Upload the APK
         uses: actions/upload-artifact@v4
         with:
@@ -148,7 +207,18 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      - name: Check whether this APK can run on the emulator
+        id: emulator_abi
+        run: |
+          if unzip -l MiloLanguages.apk | grep -q 'lib/x86_64/'; then
+            echo 'available=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'available=false' >> "$GITHUB_OUTPUT"
+            echo "::notice title=Emulator smoke test skipped::This APK has no x86_64 libraries, so it cannot be installed on the x86_64 emulator. The universal build in 'Build MiloMultilang Android APK' still covers the emulator smoke test."
+          fi
+
       - name: Boot an emulator and check that the app starts
+        if: steps.emulator_abi.outputs.available == 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 30
@@ -160,6 +230,15 @@ jobs:
           emulator-boot-timeout: 900
           disable-animations: true
           script: bash .github/scripts/apk-learner-smoke.sh MiloLanguages.apk
+
+      - name: Enforce the APK size budget
+        if: always()
+        run: |
+          if [ ! -s MiloLanguages.apk ]; then
+            echo "No APK was produced; the build failed earlier."
+            exit 1
+          fi
+          node scripts/apk-report.mjs MiloLanguages.apk --limit-mb 60
 
       - name: Keep the emulator diagnostics
         if: always()

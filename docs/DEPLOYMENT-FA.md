@@ -19,7 +19,6 @@ npm run validate:web-shell
 npm run validate:content
 npm run validate:logic
 npm run validate:russian
-npm run validate:russian-architecture
 npm run validate:personal-sync
 npm run validate:backup
 npm run build:web

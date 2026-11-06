@@ -77,6 +77,7 @@ jobs:
       - name: Validate learner OTP, language entry and accessibility
         run: |
           npm run typecheck
+          npm run validate:hygiene
           npm run validate:registration-admin
           npm run validate:language-entry
           npm run validate:a11y
@@ -248,6 +249,14 @@ jobs:
           path: MiloRussian.apk
           if-no-files-found: error
           retention-days: 7
+
+      # Informational only: prints where the megabytes went for each APK built.
+      - name: Report APK composition
+        if: always()
+        run: |
+          for apk in MiloMultilang.apk MiloAdmin.apk MiloMultilang-Login.apk MiloRussian.apk; do
+            if [ -s "$apk" ]; then node scripts/apk-report.mjs "$apk" || true; fi
+          done
 
       - name: Upload APK artifacts
         if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}

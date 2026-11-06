@@ -28,6 +28,7 @@
     "plugins": [
       "expo-router",
       "./plugins/withStableLayoutDirection",
+      "./plugins/withAndroidAbis",
       "expo-font",
       [
         "expo-notifications",
@@ -79,7 +80,9 @@
                 "**/libjsc.so",
                 "**/libfbjni.so"
               ]
-            }
+            },
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "enableMinifyInReleaseBuilds": true
           }
         }
       ]
