@@ -39,17 +39,25 @@ const legacyHashes = {
   const allIds = new Set();
   for (const id of ['de','fr','es']) {
     const course = NEW_COURSES[id];
-    assert.equal(course.lessons.length,27);
-    assert.equal(course.lessons.reduce((sum,lesson)=>sum+lesson.sentences.length,0),216);
+    assert.equal(course.lessons.length,29);
+    assert.equal(course.lessons.reduce((sum,lesson)=>sum+lesson.sentences.length,0),256);
     assert.equal(course.levels.length,7);
     assert.equal(course.levels[0].id,-1);
-    assert(course.levels.slice(1).every(level=>level.status==='planned'));
-    assert.deepEqual(course.lessons.map(l=>l.order),Array.from({length:27},(_,i)=>i+1));
+    assert.equal(course.levels.find(level=>level.id===1).status,'available');
+    assert(course.levels.filter(level=>level.id!==-1 && level.id!==1).every(level=>level.status==='planned'));
+    assert.deepEqual(course.lessons.map(l=>l.order),Array.from({length:29},(_,i)=>i+1));
     assert.deepEqual(course.lessons.slice(0,6).map(l=>l.learningMode),['sounds','sounds','words','words','chunks','chunks']);
     for (const lesson of course.lessons) {
       assert(!allIds.has(lesson.id)); allIds.add(lesson.id);
-      assert(lesson.id.startsWith(id+'-') && lesson.levelId === -1 && lesson.teachingFa);
-      assert.equal(lesson.sentences.length,8);
+      assert(lesson.id.startsWith(id+'-') && [-1,1].includes(lesson.levelId) && lesson.teachingFa);
+      assert.equal(lesson.sentences.length,lesson.levelId === 1 ? 20 : 8);
+      if (lesson.levelId === 1) {
+        assert(lesson.id.startsWith(`${id}-a1-`));
+        assert.equal(lesson.checks.length,4);
+        assert.equal(new Set(lesson.sentences.map(x=>x.text)).size,20);
+        assert(lesson.sentences.filter(x=>x.pattern).length >= 5);
+        for (const q of lesson.checks) { assert.equal(q.choices.length,4); assert.equal(new Set(q.choices).size,4); assert(q.choices.every(choice=>lesson.sentences.some(x=>x.text===choice))); }
+      }
       if (lesson.learningMode) {
         assert.equal(lesson.dialogue.length,0,`${lesson.id}: no premature dialogue`);
         assert.equal(lesson.checks.length,3);
@@ -103,7 +111,17 @@ const legacyHashes = {
     const normalized = legacy.map(({order,...rest})=>rest).sort((a,b)=>a.id.localeCompare(b.id));
     assert.equal(crypto.createHash('sha256').update(JSON.stringify(normalized)).digest('hex'), legacyHashes[id],`${id}: all shipped lesson content is unchanged`);
     assert.equal(course.lessons[6].id,`${id}-pre-11`);
-    assert.equal(course.lessons.at(-1).id,`${id}-pre-21`);
+    assert.equal(course.lessons[26].id,`${id}-pre-21`);
+    assert.deepEqual(course.lessons.slice(27).map(l=>l.id),[`${id}-a1-profile`,`${id}-a1-cafe`]);
+    assert.equal(course.lessons[27].levelId,1);
+    assert.equal(course.levels.find(l=>l.id===1).modules.length,2);
+    const firstA1 = course.lessons[27];
+    assert.equal(firstA1.dialogue.length,6);
+    const a1Session={stage:8,sentenceIndex:0,revealed:false,answers:{'0':0,'1':1},showCheckAnswers:false};
+    await course.sessions.saveStarterLessonSession(firstA1.id,a1Session);
+    assert.deepEqual(await course.sessions.loadStarterLessonSession(firstA1.id),a1Session);
+    await assert.rejects(course.sessions.saveStarterLessonSession(firstA1.id,{...a1Session,answers:{'0':4}}));
+    await course.sessions.clearStarterLessonSession(firstA1.id);
 
     const oldLesson=legacy.find(l=>l.id===`${id}-pre-1`);
     const oldCard={id:`${oldLesson.id}:${oldLesson.sentences[0].id}`,lessonId:oldLesson.id,sentenceId:oldLesson.sentences[0].id,dueAt:new Date(0).toISOString(),intervalDays:5,ease:2.4,repetitions:2,lapses:0};
@@ -129,6 +147,11 @@ const legacyHashes = {
     assert(after.completedLessonIds.includes(first.id));
     assert.equal(after.reviewCards.filter(card=>card.lessonId===first.id).length,8);
     assert.equal(after.reviewCards.find(c=>c.id===oldCard.id).intervalDays,5);
+    await course.progress.completeSentenceLesson(firstA1.id,`${id}-a1-cafe`);
+    const withA1=await course.progress.getCourseProgress();
+    assert(withA1.completedLessonIds.includes(firstA1.id));
+    assert.equal(withA1.reviewCards.filter(card=>card.lessonId===firstA1.id).length,20);
+    assert.equal(withA1.reviewCards.find(c=>c.id===oldCard.id).intervalDays,5);
     assert.deepEqual(await course.sessions.loadStarterLessonSession(oldLesson.id),oldSession);
     await course.sessions.clearStarterLessonSession(first.id);
     assert.equal((await course.sessions.loadStarterLessonSessionWithPresence(first.id)).hasSavedSession,false);
@@ -146,5 +169,5 @@ const legacyHashes = {
     assert.equal((await course.progress.getDueReviewCards()).length,8);
   }
   assert.equal([...global.__starterNative.keys()].filter(k=>k.includes('_starter_v1')).length,3);
-  console.log('Three beginner paths: sounds → words → chunks → sentences, 81 lessons / 648 examples, unchanged legacy content, clarified checks, optional practice, isolated progress/sessions and review migration passed.');
+  console.log('Three beginner paths and initial A1 units: 87 lessons / 768 examples; legacy snapshots, A1 structure, checks, independent progress, sessions and review migration passed.');
 })().catch(e=>{console.error(e);process.exit(1)});

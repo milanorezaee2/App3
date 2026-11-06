@@ -171,7 +171,7 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
               <View style={styles.focusHeadingRow}><View style={styles.focusIcon}><Sparkles size={17} color={Palette.primary} /></View><View style={styles.focusHeadingCopy}><Text style={styles.focusEyebrow}>LEVEL FOCUS</Text><Text style={styles.focusTitle}>موضوعات این سطح</Text></View></View>
               <Text style={styles.focusDescription}>{selected.description}</Text>
               <View style={styles.moduleGrid}>{selected.modules.map((module, index) => <View key={`${index}-${module}`} style={styles.moduleChip}><View style={[styles.moduleDot, { backgroundColor: selected.color }]} /><Text style={styles.moduleText}>{displayEnglishModuleLabel(module)}</Text></View>)}</View>
-              <Text style={styles.focusFootnote}>{selected.status === 'planned' ? 'این سطح بخشی از نقشهٔ آینده است؛ تا زمان تدوین، درس یا جمله‌ای به شمار محتوای موجود اضافه نمی‌شود.' : `این سطح شامل ${fa(selected.modules.length)} درس شروع از صفر است؛ این نقشه سنجش رسمی CEFR نیست.`}</Text>
+              <Text style={styles.focusFootnote}>{selected.status === 'planned' ? 'این سطح بخشی از نقشهٔ آینده است؛ تا زمان تدوین، درس یا جمله‌ای به شمار محتوای موجود اضافه نمی‌شود.' : selected.id === 1 ? `این‌ها ${fa(selected.modules.length)} درس آغازین A1 هستند؛ این سطح هنوز کامل نیست و سنجش رسمی CEFR محسوب نمی‌شود.` : `این سطح شامل ${fa(selected.modules.length)} درس است؛ این نقشه سنجش رسمی CEFR نیست.`}</Text>
             </View>
 
             <View style={styles.lessonSectionHeading}><View><Text style={styles.brandEyebrow}>SENTENCE-BASED LESSONS</Text><Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text></View><View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{fa(selectedLessons.length)} درس</Text></View></View>
@@ -184,7 +184,7 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
               return <View key={`${first.id}-${last.id}`} style={styles.group}>
                 <Pressable accessibilityRole="button" accessibilityState={{ expanded: open }} style={styles.groupHeader} onPress={() => setExpandedGroup(open ? -1 : index)}>
                   <View style={[styles.groupNumber, open && styles.groupNumberActive]}><Text style={[styles.groupNumberText, open && styles.groupNumberTextActive]}>{fa(index + 1)}</Text></View>
-                  <View style={styles.groupHeaderCopy}><Text style={styles.groupTitle}>{groupLabels[group.kind]} · درس‌های {fa(first.order)} تا {fa(last.order)}</Text><Text style={styles.groupMeta}>{fa(group.lessons.length)} درس · {fa(groupCompleted)} تکمیل‌شده</Text></View>
+                  <View style={styles.groupHeaderCopy}><Text style={styles.groupTitle}>{groupLabels[group.kind]} · درس‌های {fa(selectedLessons.indexOf(first) + 1)} تا {fa(selectedLessons.indexOf(last) + 1)}</Text><Text style={styles.groupMeta}>{fa(group.lessons.length)} درس · {fa(groupCompleted)} تکمیل‌شده</Text></View>
                   {open ? <ChevronUp size={18} color={Palette.primary} /> : <ChevronDown size={18} color={Palette.muted} />}
                 </Pressable>
                 {open && <View style={styles.lessonList}>{group.lessons.map(item => {
@@ -192,8 +192,8 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
                   const complete = progress?.completedLessonIds.includes(item.id) ?? false;
                   const resumable = !complete && status.startsWith('ادامه');
                   const sentence = item.sentences[0];
-                  return <Pressable key={item.id} accessibilityRole="button" accessibilityLabel={`${item.order}. ${item.title}`} style={styles.lessonCard} onPress={() => openLesson(item.id)}>
-                    <View style={[styles.lessonOrder, complete && styles.lessonOrderComplete]}>{complete ? <Check size={16} color="#FFFFFF" strokeWidth={3} /> : <Text style={styles.lessonOrderText}>{fa(item.order)}</Text>}</View>
+                  return <Pressable key={item.id} accessibilityRole="button" accessibilityLabel={`${selectedLessons.indexOf(item) + 1}. ${item.title}`} style={styles.lessonCard} onPress={() => openLesson(item.id)}>
+                    <View style={[styles.lessonOrder, complete && styles.lessonOrderComplete]}>{complete ? <Check size={16} color="#FFFFFF" strokeWidth={3} /> : <Text style={styles.lessonOrderText}>{fa(selectedLessons.indexOf(item) + 1)}</Text>}</View>
                     <View style={styles.lessonCopy}>
                       <View style={styles.lessonTitleLine}><Text style={styles.lessonTitle}>{item.title}</Text><View style={[styles.lessonStatus, complete && styles.lessonStatusDone, resumable && styles.lessonStatusResume]}><Text style={[styles.lessonStatusText, complete && styles.lessonStatusTextDone, resumable && styles.lessonStatusTextResume]}>{status}</Text></View></View>
                       <Text style={styles.lessonSubtitle}>{item.subtitle}</Text>

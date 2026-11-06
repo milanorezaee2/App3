@@ -9,6 +9,7 @@ import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import LanguageSentenceBuilder from '@/components/LanguageSentenceBuilder';
 import { StarterWordChoice } from '@/components/StarterWordChoice';
 import StarterExtraPractice from '@/components/StarterExtraPractice';
+import StarterWritingPractice from '@/components/StarterWritingPractice';
 import { starterDisplayChecks, starterTeachingNote } from '@/lib/languages/starterEditorial';
 import LanguageDialoguePractice from '@/components/LanguageDialoguePractice';
 import type { StarterCourse, StarterLesson } from '@/lib/languages/newCourses';
@@ -39,6 +40,7 @@ const SLOW_SPEECH_RATE = 0.5;
 export default function StarterLessonView({ course, lesson, fromStart }: { course: StarterCourse; lesson: StarterCourseLesson; fromStart?: 'listen' | 'restart' }) {
   const {lessons, levels, progress: courseProgress} = course;
   const foundation = !!lesson.learningMode;
+  const a1 = lesson.levelId === 1;
   const unit = lesson.learningMode === 'chunks' ? 'عبارت' : foundation ? 'واژه' : 'جمله';
   const unitPlural = lesson.learningMode === 'chunks' ? 'عبارت‌ها' : foundation ? 'واژه‌ها' : 'جمله‌ها';
   // The nine saved stage indexes stay identical to the existing lessons.
@@ -157,7 +159,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
       else if (nextStage !== 1) void stopStarterSpeech();
       return;
     }
-    if (!allChecksPassed && !showCheckAnswers) return;
+    if (!allChecksPassed && (a1 || !showCheckAnswers)) return;
     void stopStarterSpeech();
     completing.current = true;
     setSaving(true);
@@ -256,7 +258,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
             <View style={styles.replayRow}><Pressable accessibilityRole="button" accessibilityLabel={`پخش آهستهٔ ${unit}`} style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable><Pressable accessibilityRole="button" accessibilityLabel={`پخش معمولی ${unit}`} style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable></View>
             <Text style={styles.speechHint}>پس از شنیدن، {unit} را با صدای بلند تکرار کنید؛ گفتار ضبط یا نمره‌گذاری نمی‌شود.</Text>
           </View>
-          <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`${unit} ${fa(index + 1)}`} onPress={() => selectSentence(index, .68)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
+          {a1 ? <PracticeNavigation index={sentenceIndex} count={lesson.sentences.length} onChange={index => selectSentence(index, .68)} /> : <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`${unit} ${fa(index + 1)}`} onPress={() => selectSentence(index, .68)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>}
         </View>}
 
         {stage === 4 && <View style={styles.centerStage}>
@@ -265,6 +267,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           <Text style={styles.stageDesc}>{foundation ? `معنی ثبت‌شده را بخوانید و ${unit} مربوط به همان نمونهٔ درس را انتخاب کنید.` : 'معنی را بخوانید و واژه‌های همان جمله را به ترتیب بچینید؛ تمرین به جمله‌های همین درس متصل است.'}</Text>
           {foundation || current.text.trim().replace(/\s+([!?.;,:])/g, '$1').split(/\s+/).length === 1 ? <StarterWordChoice key={current.id} sentence={current} sentences={lesson.sentences} /> : <LanguageSentenceBuilder key={current.id} sentence={current} placeholder="واژه‌ها را به ترتیب انتخاب کنید" />}
           <PracticeNavigation index={sentenceIndex} count={lesson.sentences.length} onChange={setSentenceIndex} />
+          {a1 && <StarterWritingPractice key={current.id} sentence={current} />}
         </View>}
 
         {stage === 5 && <View style={styles.centerStage}>
@@ -282,6 +285,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           <View style={styles.bigIcon}><BookOpenCheck size={33} color={Palette.primary} /></View>
           <Text style={styles.stageTitle}>{foundation ? 'نکتهٔ نوشتار و کاربرد' : 'دستور در کاربرد'}</Text>
           <Text style={styles.stageDesc}>{foundation ? 'نکته را بخوانید؛ نمونه‌ها را می‌توانید در بخش شنیدن یا تمرین دوباره بشنوید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به داده‌ها اضافه نمی‌شود.'}</Text>
+          {a1 && teachingNote ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ این زبان</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : null}
           {foundation ? <View style={styles.noteCard}><Text style={styles.noteTitle}>یادآوری</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : grammarPatterns.length ? grammarPatterns.map(({ sentence, pattern }) => <View key={sentence.id} style={styles.vocabCard}>
             <Text style={styles.patternText}>{pattern}</Text><Text style={styles.vocabExample}>{sentence.text}</Text><Text style={styles.vocabExampleFa}>{sentence.fa}</Text>
             <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن جمله: ${sentence.text}`} onPress={() => speak(sentence.text)} style={styles.bubbleSound}><Volume2 size={16} color={Palette.primary} /></Pressable>
@@ -310,25 +314,25 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} {unit} و {fa(vocabulary.length)} واژه/عبارت یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
           <View style={styles.evidenceCard}>
             <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
-            <Text style={styles.evidenceIntro}>پرسش‌ها به نمونه‌های همین درس وصل‌اند. پاسخ نادرست را می‌توانید دوباره امتحان کنید یا توضیح پاسخ نمونه را ببینید.</Text>
+            <Text style={styles.evidenceIntro}>{a1 ? 'برای پایان درس به همهٔ پرسش‌های کاربردی پاسخ درست دهید؛ پس از پاسخ نادرست می‌توانید دوباره امتحان کنید. این سنجش، آزمون رسمی سطح نیست.' : 'پرسش‌ها به نمونه‌های همین درس وصل‌اند. پاسخ نادرست را می‌توانید دوباره امتحان کنید یا توضیح پاسخ نمونه را ببینید.'}</Text>
             {checks.map((question, index) => <View key={index} style={styles.question}>
               <Text style={styles.questionPrompt}>{fa(index + 1)}. {question.promptFa}</Text>
               {question.choices.map((choice, choiceIndex) => {
                 const selected = answers[String(index)] === choiceIndex;
-                const shownCorrect = showCheckAnswers && choiceIndex === question.correctIndex;
-                const locked = answers[String(index)] === question.correctIndex || showCheckAnswers;
+                const shownCorrect = !a1 && showCheckAnswers && choiceIndex === question.correctIndex;
+                const locked = answers[String(index)] === question.correctIndex || (!a1 && showCheckAnswers);
                 return <Pressable key={`${index}-${choiceIndex}`} accessibilityRole="radio" accessibilityState={{ checked: selected || shownCorrect, disabled: locked }} disabled={locked} onPress={() => setAnswers(value => ({ ...value, [String(index)]: choiceIndex }))} style={[styles.choice, (selected || shownCorrect) && styles.choiceSelected, shownCorrect && styles.choiceCorrect]}>
                   <Text style={/[A-Za-zÀ-ÿ]/.test(choice) ? styles.choiceTarget : styles.choicePersian}>{choice}</Text>
                 </Pressable>;
               })}
-              {(answers[String(index)] !== undefined || showCheckAnswers) && <View style={styles.feedbackBox}>
-                <Text style={showCheckAnswers || answers[String(index)] === question.correctIndex ? styles.feedbackTitle : styles.feedbackError}>{showCheckAnswers && answers[String(index)] !== question.correctIndex ? `پاسخ نمونه: ${question.choices[question.correctIndex]}` : answers[String(index)] === question.correctIndex ? 'پاسخ مناسب است.' : 'این بار درست نبود؛ دوباره تلاش کنید.'}</Text>
-                <Text style={styles.feedbackText}>{question.explanationFa}</Text>
-                {answers[String(index)] !== undefined && answers[String(index)] !== question.correctIndex && !showCheckAnswers ? <Pressable accessibilityRole="button" style={styles.retryAnswer} onPress={() => setAnswers(value => { const nextAnswers = { ...value }; delete nextAnswers[String(index)]; return nextAnswers; })}><Text style={styles.retryAnswerText}>دوباره امتحان کن</Text></Pressable> : null}
+              {(answers[String(index)] !== undefined || (!a1 && showCheckAnswers)) && <View style={styles.feedbackBox}>
+                <Text style={(!a1 && showCheckAnswers) || answers[String(index)] === question.correctIndex ? styles.feedbackTitle : styles.feedbackError}>{!a1 && showCheckAnswers && answers[String(index)] !== question.correctIndex ? `پاسخ نمونه: ${question.choices[question.correctIndex]}` : answers[String(index)] === question.correctIndex ? 'پاسخ مناسب است.' : 'این بار درست نبود؛ دوباره تلاش کنید.'}</Text>
+                {(!a1 || answers[String(index)] === question.correctIndex) && <Text style={styles.feedbackText}>{question.explanationFa}</Text>}
+                {answers[String(index)] !== undefined && answers[String(index)] !== question.correctIndex && (a1 || !showCheckAnswers) ? <Pressable accessibilityRole="button" style={styles.retryAnswer} onPress={() => setAnswers(value => { const nextAnswers = { ...value }; delete nextAnswers[String(index)]; return nextAnswers; })}><Text style={styles.retryAnswerText}>دوباره امتحان کن</Text></Pressable> : null}
               </View>}
             </View>)}
-            {!showCheckAnswers && <Pressable accessibilityRole="button" style={styles.showAnswersButton} onPress={() => setShowCheckAnswers(true)}><Text style={styles.showAnswersText}>نمایش توضیح همهٔ پاسخ‌ها</Text></Pressable>}
-            {showCheckAnswers ? <Text style={styles.evidenceNote}>پاسخ‌های نمونه نمایش داده شدند؛ می‌توانید درس را پایان دهید.</Text> : null}
+            {!a1 && !showCheckAnswers && <Pressable accessibilityRole="button" style={styles.showAnswersButton} onPress={() => setShowCheckAnswers(true)}><Text style={styles.showAnswersText}>نمایش توضیح همهٔ پاسخ‌ها</Text></Pressable>}
+            {!a1 && showCheckAnswers ? <Text style={styles.evidenceNote}>پاسخ‌های نمونه نمایش داده شدند؛ می‌توانید درس را پایان دهید.</Text> : null}
           </View>
           <StarterExtraPractice key={lesson.id} lesson={lesson} />
         </View>}
@@ -343,7 +347,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel={foundation ? `${unit} قبلی` : "جملهٔ قبلی"} accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && styles.nextButtonDisabled]}>
             <Text style={styles.previousButtonText}>{unit} قبلی</Text>
           </Pressable>}
-          <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === stages.length - 1 && !allChecksPassed && !showCheckAnswers)} style={[styles.nextButton, (saving || (stage === stages.length - 1 && !allChecksPassed && !showCheckAnswers)) && styles.nextButtonDisabled]} onPress={() => void next()}>
+          <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === stages.length - 1 && !allChecksPassed && (a1 || !showCheckAnswers))} style={[styles.nextButton, (saving || (stage === stages.length - 1 && !allChecksPassed && (a1 || !showCheckAnswers))) && styles.nextButtonDisabled]} onPress={() => void next()}>
             <Text style={styles.nextText}>{saving ? 'در حال ذخیره…' : stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? `${unit}${foundation ? '' : 'ٔ'} بعدی` : 'ادامه'}</Text>
             {stage === stages.length - 1 ? <Check size={20} color="#FFFFFF" /> : <ChevronLeft size={20} color="#FFFFFF" />}
           </Pressable>

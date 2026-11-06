@@ -4,6 +4,7 @@ import { createCourseProgressStore } from '../createCourseProgressStore';
 import { createStarterSessions } from './starterSessions';
 import { PRE_A1_EXPANSION } from './preA1Expansion';
 import { PRE_A1_MORE } from './preA1More';
+import { A1_FIRST_UNITS, type A1Seed } from './a1FirstUnits';
 import { STARTER_FOUNDATIONS, type FoundationMode, type FoundationSeed } from './starterFoundations';
 
 export type NewLanguageId = 'de' | 'fr' | 'es';
@@ -83,6 +84,20 @@ function buildFoundation(id: NewLanguageId, seed: FoundationSeed): StarterLesson
   };
 }
 
+function buildA1(id: NewLanguageId, seed: A1Seed): StarterLesson {
+  const lessonId = `${id}-a1-${seed.slug}`;
+  const sentences = seed.rows.map(([text, fa, pronunciation, word, meaning, pattern], index) => ({
+    id: `${lessonId}-s${index + 1}`, text, fa, pronunciation,
+    vocabulary: [{word, meaning}], ...(pattern ? {pattern} : {}),
+  }));
+  return {
+    id: lessonId, levelId: 1, order: 0, title: seed.title, subtitle: seed.subtitle,
+    situation: seed.situation, teachingFa: seed.teachingFa, durationMinutes: 20, sentences,
+    dialogue: seed.dialogue.map((index, turn) => ({speaker: turn % 2 ? 'همراه' : 'زبان‌آموز', text: sentences[index].text, fa: sentences[index].fa})),
+    checks: seed.checks.map(question => ({...question, choices: question.choices.map(index => sentences[index].text)})),
+  };
+}
+
 function buildCourse(id: NewLanguageId) {
   const allSeeds = [...seeds[id], ...PRE_A1_EXPANSION[id], ...PRE_A1_MORE[id]];
   const legacy: StarterLesson[] = allSeeds.map((seed, n) => {
@@ -111,8 +126,9 @@ function buildCourse(id: NewLanguageId) {
   const lessons: StarterLesson[] = [
     ...STARTER_FOUNDATIONS[id].map(seed => buildFoundation(id, seed)),
     ...legacyOrder.map(number => legacy[number - 1]),
+    ...A1_FIRST_UNITS[id].map(seed => buildA1(id, seed)),
   ].map((lesson, index) => ({...lesson, order: index + 1}));
-  const levels = levelSeeds.map(([levelId,title,cefr,description,color])=>({ id:levelId,title,cefr,description,color,modules:lessons.filter(l=>l.levelId===levelId).map(l=>l.title),status:(levelId === -1 ? 'available' : 'planned') as 'available'|'planned' }));
+  const levels = levelSeeds.map(([levelId,title,cefr,description,color])=>({ id:levelId,title,cefr,description,color,modules:lessons.filter(l=>l.levelId===levelId).map(l=>l.title),status:(levelId === -1 || levelId === 1 ? 'available' : 'planned') as 'available'|'planned' }));
   const progress = createCourseProgressStore({key:`sentence_course_progress_${id}_starter_v1`,lessons,cloudSync:false,recordEstimatedTime:false,markVocabularyOnCompletion:false});
   return { id,...labels[id], lessons,levels,progress,sessions:createStarterSessions(id,lessons), home:`/learn/${id}` };
 }

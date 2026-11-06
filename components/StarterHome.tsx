@@ -197,7 +197,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
           </LinearGradient>
 
           <View style={styles.pathPanel}>
-            <Text style={styles.panelHint}>۱۰ درس Pre-A1 آماده است؛ سطح‌های بالاتر در حال آماده‌سازی هستند.{course.id === 'es' ? ' گونهٔ اسپانیای اسپانیا مبناست.' : ''}</Text>
+            <Text style={styles.panelHint}>مسیر Pre-A1 و درس‌های آغازین A1 آماده‌اند؛ ادامهٔ A1 و سطح‌های بالاتر در حال تدوین است.{course.id === 'es' ? ' گونهٔ اسپانیای اسپانیا مبناست.' : ''}</Text>
             <View style={styles.panelHeadingRow}>
               <View style={styles.panelHeadingText}>
                 <Text style={styles.panelEyebrow}>LEARNING PATH</Text>
@@ -298,7 +298,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
 
             <View style={styles.lessonHeading}>
               <Text style={styles.lessonEyebrow}>ادامهٔ یادگیری این زبان</Text>
-              <Text style={styles.lessonTitle}>{nextLesson ? heroLesson.title : 'درس‌های Pre-A1 تکمیل شد'}</Text>
+              <Text style={styles.lessonTitle}>{nextLesson ? heroLesson.title : 'درس‌های موجود تکمیل شد'}</Text>
               <Text style={styles.lessonSubtitle}>{nextLesson ? heroLesson.subtitle : 'درس‌های موجود را مرور کن یا نقشهٔ سطح‌ها را ببین.'}</Text>
             </View>
 
