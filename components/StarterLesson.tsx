@@ -8,6 +8,8 @@ import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import LanguageSentenceBuilder from '@/components/LanguageSentenceBuilder';
 import { StarterWordChoice } from '@/components/StarterWordChoice';
+import StarterExtraPractice from '@/components/StarterExtraPractice';
+import { starterDisplayChecks, starterTeachingNote } from '@/lib/languages/starterEditorial';
 import LanguageDialoguePractice from '@/components/LanguageDialoguePractice';
 import type { StarterCourse, StarterLesson } from '@/lib/languages/newCourses';
 import { ENGLISH_ENGINE_STEPS } from '@/lib/englishLearningEngine';
@@ -60,7 +62,8 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
   const startFirstLesson = useRef(fromStart);
   const preserveExistingSession = useRef(false);
   const current = lesson.sentences[sentenceIndex];
-  const checks = lesson.checks ?? [];
+  const checks = starterDisplayChecks(lesson);
+  const teachingNote = starterTeachingNote(lesson);
   const allChecksPassed = checks.every((question, index) => answers[String(index)] === question.correctIndex);
   const progressPercent = Math.round(((stage + 1) / stages.length) * 100);
   const vocabulary = useMemo(() => {
@@ -211,7 +214,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           <Text style={styles.stageTitle}>{lesson.title}</Text>
           <Text style={styles.situation}>{lesson.situation}</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>در پایان این درس می‌توانید:</Text><Text style={styles.promiseText}>{foundation ? `با ${fa(lesson.sentences.length)} ${unit} آشنا شوید، آن‌ها را بشنوید و معنی‌شان را تمرین کنید.` : `با ${fa(lesson.sentences.length)} جملهٔ کوتاه، این موقعیت را مدیریت کنید.`}</Text></View>
-          {lesson.teachingFa ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ این زبان به فارسی</Text><Text style={styles.noteText}>{lesson.teachingFa}</Text></View> : null}
+          {teachingNote ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ این زبان به فارسی</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : null}
         </View>}
 
         {stage === 1 && <View style={styles.sentenceStage}>
@@ -259,9 +262,9 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
         {stage === 4 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><RotateCcw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>{foundation ? `انتخاب ${unit}` : 'ساخت جمله'}</Text>
-          <Text style={styles.stageDesc}>{foundation ? `معنی را بخوانید و ${unit} درست را از گزینه‌های همین درس انتخاب کنید.` : 'معنی را بخوانید و واژه‌های همان جمله را به ترتیب بچینید؛ تمرین به جمله‌های همین درس متصل است.'}</Text>
+          <Text style={styles.stageDesc}>{foundation ? `معنی ثبت‌شده را بخوانید و ${unit} مربوط به همان نمونهٔ درس را انتخاب کنید.` : 'معنی را بخوانید و واژه‌های همان جمله را به ترتیب بچینید؛ تمرین به جمله‌های همین درس متصل است.'}</Text>
           {foundation || current.text.trim().replace(/\s+([!?.;,:])/g, '$1').split(/\s+/).length === 1 ? <StarterWordChoice key={current.id} sentence={current} sentences={lesson.sentences} /> : <LanguageSentenceBuilder key={current.id} sentence={current} placeholder="واژه‌ها را به ترتیب انتخاب کنید" />}
-          <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`${unit} ${fa(index + 1)}`} onPress={() => setSentenceIndex(index)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
+          <PracticeNavigation index={sentenceIndex} count={lesson.sentences.length} onChange={setSentenceIndex} />
         </View>}
 
         {stage === 5 && <View style={styles.centerStage}>
@@ -279,7 +282,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           <View style={styles.bigIcon}><BookOpenCheck size={33} color={Palette.primary} /></View>
           <Text style={styles.stageTitle}>{foundation ? 'نکتهٔ نوشتار و کاربرد' : 'دستور در کاربرد'}</Text>
           <Text style={styles.stageDesc}>{foundation ? 'نکته را بخوانید؛ نمونه‌ها را می‌توانید در بخش شنیدن یا تمرین دوباره بشنوید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به داده‌ها اضافه نمی‌شود.'}</Text>
-          {foundation ? <View style={styles.noteCard}><Text style={styles.noteTitle}>یادآوری</Text><Text style={styles.noteText}>{lesson.teachingFa}</Text></View> : grammarPatterns.length ? grammarPatterns.map(({ sentence, pattern }) => <View key={sentence.id} style={styles.vocabCard}>
+          {foundation ? <View style={styles.noteCard}><Text style={styles.noteTitle}>یادآوری</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : grammarPatterns.length ? grammarPatterns.map(({ sentence, pattern }) => <View key={sentence.id} style={styles.vocabCard}>
             <Text style={styles.patternText}>{pattern}</Text><Text style={styles.vocabExample}>{sentence.text}</Text><Text style={styles.vocabExampleFa}>{sentence.fa}</Text>
             <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن جمله: ${sentence.text}`} onPress={() => speak(sentence.text)} style={styles.bubbleSound}><Volume2 size={16} color={Palette.primary} /></Pressable>
           </View>) : <View style={styles.promiseCard}><Text style={styles.promiseTitle}>یادگیری در بافت جمله</Text><Text style={styles.promiseText}>برای این درس الگوی جداگانه‌ای ثبت نشده است؛ جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید.</Text></View>}
@@ -289,10 +292,10 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           <View style={styles.bigIcon}><MessageCircle size={34} color={Palette.primary} /></View>
           {foundation ? <>
             <Text style={styles.stageTitle}>تمرین یادآوری</Text>
-            <Text style={styles.stageDesc}>معنی را بخوانید و گزینهٔ درست را پیدا کنید. با نقطه‌ها نمونهٔ دیگری را انتخاب کنید.</Text>
+            <Text style={styles.stageDesc}>معنی ثبت‌شده در درس را بخوانید و گزینهٔ مربوط به آن نمونه را پیدا کنید. با دکمه‌ها نمونهٔ دیگری را انتخاب کنید.</Text>
             <StarterWordChoice key={current.id} sentence={current} sentences={lesson.sentences} />
             <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن ${unit} انتخاب‌شده`} style={styles.bubbleSound} onPress={() => speak(current.text)}><Volume2 size={20} color={Palette.primary} /></Pressable>
-            <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`${unit} ${fa(index + 1)}`} onPress={() => setSentenceIndex(index)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
+            <PracticeNavigation index={sentenceIndex} count={lesson.sentences.length} onChange={setSentenceIndex} />
           </> : <>
             <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
             <Text style={styles.stageDesc}>از دیالوگ همین درس نقش‌آفرینی کنید؛ جملهٔ خود را بگویید و سپس نمونه را بشنوید.</Text>
@@ -327,6 +330,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
             {!showCheckAnswers && <Pressable accessibilityRole="button" style={styles.showAnswersButton} onPress={() => setShowCheckAnswers(true)}><Text style={styles.showAnswersText}>نمایش توضیح همهٔ پاسخ‌ها</Text></Pressable>}
             {showCheckAnswers ? <Text style={styles.evidenceNote}>پاسخ‌های نمونه نمایش داده شدند؛ می‌توانید درس را پایان دهید.</Text> : null}
           </View>
+          <StarterExtraPractice key={lesson.id} lesson={lesson} />
         </View>}
 
         {!!(sessionError || completionError) && <Text accessibilityRole="alert" style={styles.error}>{sessionError || completionError}</Text>}
@@ -347,6 +351,14 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
       </View>
     </View>
   );
+}
+
+function PracticeNavigation({ index, count, onChange }: { index: number; count: number; onChange: (index: number) => void }) {
+  return <View style={styles.practiceNavigation}>
+    <Pressable accessibilityRole="button" accessibilityLabel="نمونهٔ قبلی" disabled={index === 0} accessibilityState={{disabled:index === 0}} onPress={() => onChange(index - 1)} style={[styles.practiceNavButton, index === 0 && styles.nextButtonDisabled]}><Text style={styles.practiceNavText}>نمونهٔ قبلی</Text></Pressable>
+    <Text style={styles.practiceCounter}>{fa(index + 1)} / {fa(count)}</Text>
+    <Pressable accessibilityRole="button" accessibilityLabel="نمونهٔ بعدی" disabled={index === count - 1} accessibilityState={{disabled:index === count - 1}} onPress={() => onChange(index + 1)} style={[styles.practiceNavButton, index === count - 1 && styles.nextButtonDisabled]}><Text style={styles.practiceNavText}>نمونهٔ بعدی</Text></Pressable>
+  </View>;
 }
 
 type LearningLessonVocabulary = StarterCourseLesson['sentences'][number]['vocabulary'][number];
@@ -426,6 +438,10 @@ const styles = StyleSheet.create({
   playSlowButton: { minHeight: 48, minWidth: 155, borderRadius: 999, paddingHorizontal: 18, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, marginTop: 14 },
   recordButtonText: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: '#FFFFFF', writingDirection: 'rtl' },
   speechHint: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', lineHeight: 19, marginTop: 8 },
+  practiceNavigation: { width: '100%', flexDirection: 'row-reverse', alignItems: 'center', gap: 8, marginTop: 16 },
+  practiceNavButton: { flex: 1, minHeight: 44, borderRadius: 12, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 5 },
+  practiceNavText: { fontFamily: Typography.fontFamily, fontSize: 13, color: Palette.primaryDark, textAlign: 'center' },
+  practiceCounter: { fontFamily: Typography.numberFontFamily, fontSize: 13, color: Palette.muted },
   dots: { flexDirection: 'row', gap: 8, marginTop: 18 },
   dot: { width: 9, height: 9, borderRadius: 5, backgroundColor: Palette.border },
   dotActive: { width: 24, backgroundColor: Palette.primary },

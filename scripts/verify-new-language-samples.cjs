@@ -22,6 +22,20 @@ const legacyHashes = {
   const memory = new Map();
   global.window = {localStorage:{getItem:k=>memory.get(k) ?? null,setItem:(k,v)=>memory.set(k,String(v)),removeItem:k=>memory.delete(k)}};
   const {NEW_COURSES} = require(outfile);
+  const editorialFile = path.resolve('node_modules/.cache/starter-editorial.cjs');
+  const practiceFile = path.resolve('node_modules/.cache/starter-extra-practice.cjs');
+  await esbuild.build({entryPoints:['lib/languages/starterEditorial.ts'],bundle:true,platform:'node',format:'cjs',outfile:editorialFile});
+  await esbuild.build({entryPoints:['lib/languages/starterExtraPractice.ts'],bundle:true,platform:'node',format:'cjs',outfile:practiceFile});
+  const {starterDisplayChecks, starterTeachingNote} = require(editorialFile);
+  const {buildExtraPractice} = require(practiceFile);
+  const clarified = {
+    'de-pre-3': [0, 'به‌تنهایی'], 'fr-pre-3': [0, 'به‌تنهایی'], 'es-pre-3': [0, 'به‌تنهایی'],
+    'fr-pre-1': [0, 'خنثی'], 'es-pre-1': [0, 'بدون اشاره'],
+    'de-pre-4': [0, 'نه «خیلی ممنون»'], 'fr-pre-4': [0, 'نه «خیلی ممنون»'], 'es-pre-4': [0, 'نه «خیلی ممنون»'],
+    'de-pre-9': [0, 'دوست مرد'], 'de-pre-21': [1, 'زمان روز'], 'es-pre-21': [1, 'زمان روز'],
+    'fr-foundation-words-1': [0, 'نه سلام دوستانه'], 'es-foundation-chunks-1': [1, 'در این درس'],
+  };
+  const seenClarifications = new Set();
   const allIds = new Set();
   for (const id of ['de','fr','es']) {
     const course = NEW_COURSES[id];
@@ -57,6 +71,32 @@ const legacyHashes = {
         assert(sentence.text && sentence.fa && sentence.pronunciation && sentence.vocabulary.every(v=>v.word && v.meaning && sentence.text.toLocaleLowerCase().includes(v.word.toLocaleLowerCase())));
       }
       for (const q of lesson.checks) assert(q.correctIndex>=0 && q.correctIndex<q.choices.length && q.explanationFa);
+      const original = JSON.stringify(lesson);
+      const display = starterDisplayChecks(lesson);
+      assert.equal(display.length, lesson.checks.length);
+      display.forEach((q, i) => {
+        assert.deepEqual(q.choices, lesson.checks[i].choices, `${lesson.id}: old choice ordering`);
+        assert.equal(q.correctIndex, lesson.checks[i].correctIndex, `${lesson.id}: old saved answer still valid`);
+      });
+      if (clarified[lesson.id]) {
+        const [i, phrase] = clarified[lesson.id];
+        assert(display[i].promptFa.includes(phrase), `${lesson.id}: editorial prompt applied`);
+        assert.notEqual(display[i].promptFa, lesson.checks[i].promptFa);
+        seenClarifications.add(lesson.id);
+      }
+      if (lesson.id === 'de-pre-15') assert(starterTeachingNote(lesson).includes('Bis Montag'));
+      const extra = buildExtraPractice(lesson);
+      assert.equal(extra.length, 3, `${lesson.id}: three optional questions`);
+      assert.deepEqual(extra.map(q=>q.correctIndex),[1,2,3]);
+      for (const q of extra) {
+        assert.equal(q.choices.length,4);
+        assert.equal(new Set(q.choices).size,4);
+        const matching=lesson.sentences.filter(item=>item.text===q.target);
+        assert.equal(matching.length,1);
+        assert.equal(q.choices[q.correctIndex],matching[0].fa);
+        assert(q.choices.every(choice=>lesson.sentences.some(item=>item.fa===choice)));
+      }
+      assert.equal(JSON.stringify(lesson),original, `${lesson.id}: editorial and optional practice do not mutate data`);
     }
     const legacy = course.lessons.filter(l=>l.id.startsWith(`${id}-pre-`));
     assert.equal(legacy.length,21);
@@ -93,6 +133,7 @@ const legacyHashes = {
     await course.sessions.clearStarterLessonSession(first.id);
     assert.equal((await course.sessions.loadStarterLessonSessionWithPresence(first.id)).hasSavedSession,false);
   }
+  assert.deepEqual([...seenClarifications].sort(),Object.keys(clarified).sort());
   assert.equal([...memory.keys()].filter(k=>/^sentence_course_progress_(de|fr|es)_starter_v1$/.test(k)).length,3);
   global.__starterOS='ios'; global.__starterNative = new Map();
   for (const id of ['de','fr','es']) {
@@ -105,5 +146,5 @@ const legacyHashes = {
     assert.equal((await course.progress.getDueReviewCards()).length,8);
   }
   assert.equal([...global.__starterNative.keys()].filter(k=>k.includes('_starter_v1')).length,3);
-  console.log('Three beginner paths: sounds → words → chunks → sentences, 81 lessons / 648 examples, unchanged legacy content, isolated progress/sessions and review migration passed.');
+  console.log('Three beginner paths: sounds → words → chunks → sentences, 81 lessons / 648 examples, unchanged legacy content, clarified checks, optional practice, isolated progress/sessions and review migration passed.');
 })().catch(e=>{console.error(e);process.exit(1)});

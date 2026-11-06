@@ -13,7 +13,7 @@
     },
     "android": {
       "package": "com.devicecontrol.companion",
-      "versionCode": 9,
+      "versionCode": 10,
       "softwareKeyboardLayoutMode": "resize",
       "permissions": [
         "android.permission.POST_NOTIFICATIONS",

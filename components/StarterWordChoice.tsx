@@ -17,10 +17,10 @@ export function StarterWordChoice({ sentence, sentences }: { sentence: LearningS
   const [selected, setSelected] = useState<string | null>(null);
   useEffect(() => setSelected(null), [sentence.id]);
   return <View style={s.card}>
-    <Text style={s.title}>واژه یا عبارت درست را انتخاب کن</Text>
+    <Text style={s.title}>گزینهٔ این نمونه را انتخاب کن</Text>
     <Text style={s.question}>{sentence.fa}</Text>
     <View style={s.options}>{options.map(option => <Pressable key={option} accessibilityRole="button" accessibilityState={{selected: selected === option}} onPress={() => setSelected(option)} style={[s.option,selected === option && s.selected]}><Text style={s.optionText}>{option}</Text></Pressable>)}</View>
-    {selected !== null && <Text accessibilityLiveRegion="polite" style={[s.feedback,{color:selected === sentence.text ? '#13805D' : '#B14F2B'}]}>{selected === sentence.text ? 'درست است!' : 'دوباره تلاش کنید.'}</Text>}
+    {selected !== null && <Text accessibilityLiveRegion="polite" style={[s.feedback,{color:selected === sentence.text ? '#13805D' : '#B14F2B'}]}>{selected === sentence.text ? 'درست است!' : 'برای این نمونه گزینهٔ دیگری ثبت شده است؛ دوباره تلاش کنید.'}</Text>}
   </View>;
 }
 const s=StyleSheet.create({card:{width:'100%',marginTop:18,borderRadius:18,borderWidth:1,borderColor:'#E1E4F0',backgroundColor:'#fff',padding:16,gap:12},title:{fontFamily:'Beiruti-Bold',fontSize:15,color:'#5148C8',textAlign:'right'},question:{fontFamily:Typography.fontFamily,fontSize:19,color:'#202039',textAlign:'right'},options:{flexDirection:'row',flexWrap:'wrap',gap:8},option:{minHeight:46,flexGrow:1,borderRadius:12,borderWidth:1,borderColor:'#DCE0EE',paddingHorizontal:12,paddingVertical:10,justifyContent:'center'},selected:{borderColor:'#5148C8',backgroundColor:'#F1EFFF'},optionText:{fontFamily:'Inter-SemiBold',fontSize:14,color:'#202039',writingDirection:'ltr',textAlign:'center'},feedback:{fontFamily:Typography.fontFamily,fontSize:15,textAlign:'right'}});
