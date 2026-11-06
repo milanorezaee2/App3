@@ -27,6 +27,12 @@ const path = require('node:path');
   check(app.resumeHref('//evil.example',{})===null && app.resumeHref('/unknown',{})===null,'unsafe routes excluded');
   check(app.parseResumeSnapshot('{invalid')===null && app.parseResumeSnapshot(JSON.stringify({...snapshot,href:'//evil.example'}))===null,'corrupt and external targets rejected');
   check(app.parseResumeSnapshot(JSON.stringify({...snapshot,href:'/lang?fromStart=1'}))===null,'one-shot query cannot replay');
+  for (const id of ['de','fr','es']) {
+    const href=`/learn/${id}/lesson`;
+    check(app.languageForResume(href,'en')===id, `${id} page selects its course`);
+    check(app.resumeHref(href,{id:`${id}-pre-1`})===`${href}?id=${id}-pre-1`, `${id} lesson route is safe to restore`);
+    check(app.resumeDestination({...snapshot,language:id},base+24*hour+1)===`/learn/${id}`, `${id} expired session returns to its home`);
+  }
   let stored=null; const order=[];
   global.__resumeStorage={getItem:async()=>stored,setItem:async(key,value)=>{order.push(JSON.parse(value).href);stored=value;}};
   await Promise.all([app.writeResumeSnapshot(snapshot),app.writeResumeSnapshot({...snapshot,href:'/lang'})]);

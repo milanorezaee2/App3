@@ -3,6 +3,10 @@ import { speechTagFor } from './speechLanguage';
 
 type SpeechLocale = 'en-US';
 
+// Explicit speeds for English lesson playback. They do not alternate between taps.
+export const ENGLISH_NORMAL_SPEECH_RATE = 1;
+export const ENGLISH_SLOW_SPEECH_RATE = 0.5;
+
 const warmedLocales = new Set<SpeechLocale>();
 const playCounts = new Map<string, number>();
 let active = false;

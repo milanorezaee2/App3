@@ -1,0 +1,33 @@
+const assert=require('node:assert/strict');
+const esbuild=require('esbuild');
+const path=require('node:path');
+(async()=>{
+  const output=path.resolve('node_modules/.cache/starter-speech.cjs');
+  await esbuild.build({entryPoints:['lib/starterSpeech.ts'],bundle:true,platform:'node',format:'cjs',outfile:output,plugins:[{name:'speech-test-stubs',setup(b){
+    b.onResolve({filter:/^expo-speech$/},()=>({path:'speech',namespace:'stub'}));
+    b.onResolve({filter:/^react-native$/},()=>({path:'platform',namespace:'stub'}));
+    b.onLoad({filter:/.*/,namespace:'stub'},args=>({loader:'js',contents:args.path==='platform'?'export const Platform={get OS(){return globalThis.__os}};':`export const getAvailableVoicesAsync=()=>globalThis.__getVoices(); export const stop=async()=>{globalThis.__stops++}; export const speak=(text,options)=>globalThis.__spoken.push({text,...options});`}));
+  }}]});
+  const {playStarterSpeech,stopStarterSpeech}=require(output);
+  global.__os='android';global.__stops=0;global.__spoken=[];
+  let voices=[{identifier:'es-mx',language:'es-MX',quality:'Enhanced'},{identifier:'es-spain-default',language:'es-ES',quality:'Default'},{identifier:'es-spain-enhanced',language:'es-ES',quality:'Enhanced'},{identifier:'german',language:'de-DE',quality:'Default'}];
+  global.__getVoices=async()=>voices;
+  let fallbacks=0,errors=0;
+  await playStarterSpeech('es-ES','¡Hola!',.5,()=>errors++,()=>fallbacks++);
+  assert.equal(__spoken.at(-1).voice,'es-spain-enhanced');assert.equal(__spoken.at(-1).language,'es');assert.equal(__spoken.at(-1).rate,.5);assert.equal(fallbacks,0);
+  await playStarterSpeech('de-DE','Hallo!',1,()=>errors++,()=>fallbacks++);
+  assert.equal(__spoken.at(-1).voice,'german');assert.equal(__spoken.at(-1).language,'de');
+  voices=[{identifier:'fr-ca',language:'fr-CA',quality:'Default'}];
+  await playStarterSpeech('fr-FR','Bonjour !',1,()=>errors++,()=>fallbacks++);
+  assert.equal(__spoken.at(-1).voice,'fr-ca');assert.equal(fallbacks,1);
+  voices=[{identifier:'en',language:'en-US',quality:'Default'}];const count=__spoken.length;
+  await playStarterSpeech('de-DE','Hallo!',1,()=>errors++,()=>fallbacks++);assert.equal(errors,1);assert.equal(__spoken.length,count);
+  voices=[];await playStarterSpeech('es-ES','Hola',1,()=>errors++,()=>fallbacks++);assert.equal(fallbacks,2);assert.equal(__spoken.at(-1).voice,undefined);
+  global.__os='web';voices=[{identifier:'france',language:'fr-FR',quality:'Default'}];
+  await playStarterSpeech('fr-FR','Bonjour',.5);assert.equal(__spoken.at(-1).language,'fr-FR');assert.equal(__spoken.at(-1).voice,'france');
+  let release;__getVoices=()=>new Promise(r=>release=r);const before=__spoken.length;
+  const first=playStarterSpeech('de-DE','old',1);await new Promise(r=>setTimeout(r,10));const next=playStarterSpeech('de-DE','new',1);release([{identifier:'german',language:'de-DE',quality:'Default'}]);
+  await new Promise(r=>setTimeout(r,10));release([{identifier:'german',language:'de-DE',quality:'Default'}]);await Promise.all([first,next]);assert.equal(__spoken.length,before+1);assert.equal(__spoken.at(-1).text,'new');
+  await stopStarterSpeech();assert(__stops>=7);
+  console.log('Regional voice preference, fallback, unsupported voice, rate and request cancellation checks passed.');
+})().catch(e=>{console.error(e);process.exit(1)});

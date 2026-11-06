@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Check } from 'lucide-react-native';
 import { COURSE_LEVELS, type CourseLevelId } from '@/lib/courseContent';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
@@ -57,23 +57,25 @@ export function EnglishLevelRail<T extends CourseLevelId = CourseLevelId>({
   activeLabelColor?: string;
   numberOffset?: number;
 }) {
+  const { width } = useWindowDimensions();
+  const narrow = width < 360;
   const resolvedLevels = levels ?? COURSE_LEVELS as unknown as ReadonlyArray<{ id: T; title: string; cefr: string }>;
   const activeIndex = resolvedLevels.findIndex(level => level.id === activeLevelId);
   return (
-    <View style={[styles.rail, direction === 'rtl' && styles.railRtl]}>
+    <View style={[styles.rail, direction === 'rtl' && styles.railRtl, narrow && styles.railCompact]}>
       {resolvedLevels.map((level, index, allLevels) => {
         const count = counts?.[level.id];
         const done = !!count && count.total > 0 && count.completed === count.total;
         const active = level.id === activeLevelId;
         const reached = activeIndex >= 0 && index < activeIndex;
         return (
-          <View key={level.id} style={[styles.railItem, direction === 'rtl' && styles.railItemRtl]}>
+          <View key={level.id} style={[styles.railItem, direction === 'rtl' && styles.railItemRtl, narrow && styles.railItemCompact]}>
             <Pressable
               accessibilityRole="button"
               accessibilityLabel={accessibilityLabelPrefix ? `${accessibilityLabelPrefix} ${level.title}` : `${level.title}, ${count ? `${count.completed} از ${count.total} درس` : level.cefr}`}
               accessibilityState={{ selected: active }}
               onPress={() => onSelect(level.id)}
-              style={styles.railPressable}
+              style={[styles.railPressable, narrow && styles.railPressableCompact]}
             >
               <View style={[styles.railNode, active && styles.railNodeActive, done && !active && styles.railNodeDone, (active || done) && { backgroundColor: active ? accentColor : successColor, borderColor: active ? accentColor : successColor, ...(active ? { shadowColor: accentColor } : {}) }]}>
                 {done && !active
@@ -81,10 +83,10 @@ export function EnglishLevelRail<T extends CourseLevelId = CourseLevelId>({
                   : <Text style={[styles.railNodeText, active && styles.railNodeTextActive]}>{toPersianDigits(level.id + numberOffset)}</Text>}
               </View>
               <Text style={[styles.railLabel, active && styles.railLabelActive, active && { color: activeLabelColor }]} numberOfLines={1}>
-                {level.id === 0 ? startLabel : level.cefr}
+                {level.cefr.split(' · ')[0] || startLabel}
               </Text>
             </Pressable>
-            {index < allLevels.length - 1 ? <View style={[styles.railConnector, reached && styles.railConnectorActive, reached && { backgroundColor: successColor }]} /> : null}
+            {!narrow && index < allLevels.length - 1 ? <View style={[styles.railConnector, reached && styles.railConnectorActive, reached && { backgroundColor: successColor }]} /> : null}
           </View>
         );
       })}
@@ -117,6 +119,9 @@ const styles = StyleSheet.create({
   progressFill: { height: '100%', borderRadius: 999, alignSelf: 'flex-start' },
   rail: { width: '100%', flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 2 },
   railRtl: { flexDirection: 'row-reverse' },
+  railCompact: { flexWrap: 'wrap', rowGap: 8 },
+  railItemCompact: { flexBasis: '25%', flexGrow: 0, flexShrink: 0, justifyContent: 'center' },
+  railPressableCompact: { width: '100%', minHeight: 48 },
   railItem: { flex: 1, flexDirection: 'row', alignItems: 'center' },
   railItemRtl: { flexDirection: 'row-reverse' },
   railPressable: { width: 40, alignItems: 'center', gap: 5 },
@@ -125,12 +130,12 @@ const styles = StyleSheet.create({
   railNodeDone: { backgroundColor: Palette.success, borderColor: Palette.success },
   railNodeText: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 11, fontWeight: '800', writingDirection: 'rtl' },
   railNodeTextActive: { color: '#FFFFFF' },
-  railLabel: { fontFamily: 'Inter-ExtraBold', maxWidth: 42, color: Palette.muted, fontSize: 6, fontWeight: '800', textAlign: 'center', writingDirection: 'ltr' },
+  railLabel: { fontFamily: Typography.fontFamily, maxWidth: 42, color: Palette.muted, fontSize: 9, fontWeight: '400', textAlign: 'center', writingDirection: 'ltr' },
   railLabelActive: { color: Palette.primaryDark },
   railConnector: { height: 3, flex: 1, borderRadius: 99, backgroundColor: Palette.border, marginTop: 15 },
   railConnectorActive: { backgroundColor: Palette.success },
   sectionHeading: { gap: 3, alignItems: 'flex-end' },
   sectionEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 8, fontWeight: '800', letterSpacing: 1, textAlign: 'left', writingDirection: 'ltr' },
-  sectionTitle: { fontFamily: 'Vazir', color: Palette.ink, fontSize: 19, lineHeight: 28, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
-  sectionDetail: { fontFamily: 'Vazir', color: Palette.muted, fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
+  sectionTitle: { fontFamily: 'Beiruti', color: Palette.ink, fontSize: 19, lineHeight: 28, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
+  sectionDetail: { fontFamily: 'Beiruti', color: Palette.muted, fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
 });

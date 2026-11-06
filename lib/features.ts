@@ -12,14 +12,14 @@ export const RUSSIAN_ONLY_BUILD = process.env.EXPO_PUBLIC_RUSSIAN_ONLY === 'true
 const configuredLanguageScope = (process.env.EXPO_PUBLIC_LANGUAGE_SCOPE || '')
   .split(',')
   .map(value => value.trim().toLowerCase())
-  .filter(value => value === 'en' || value === 'ru' || value === 'tr');
-export const LANGUAGE_SCOPE: ReadonlyArray<'en' | 'ru' | 'tr'> = Object.freeze(
+  .filter(value => value === 'en' || value === 'ru' || value === 'tr' || value === 'de' || value === 'fr' || value === 'es');
+export const LANGUAGE_SCOPE: ReadonlyArray<'en' | 'ru' | 'tr' | 'de' | 'fr' | 'es'> = Object.freeze(
   configuredLanguageScope.length
-    ? Array.from(new Set(configuredLanguageScope)) as Array<'en' | 'ru' | 'tr'>
-    : MANAGEMENT_BUILD ? ['en', 'tr'] : ['en', 'ru'],
+    ? Array.from(new Set(configuredLanguageScope)) as Array<'en' | 'ru' | 'tr' | 'de' | 'fr' | 'es'>
+    : MANAGEMENT_BUILD ? ['en', 'tr'] : ['en', 'ru', 'de', 'fr', 'es'],
 );
 export const isLanguageEnabled = (language: string | undefined): boolean =>
-  language === 'en' || LANGUAGE_SCOPE.includes(language as 'en' | 'ru' | 'tr');
+  language === 'en' || LANGUAGE_SCOPE.includes(language as 'en' | 'ru' | 'tr' | 'de' | 'fr' | 'es');
 
 export const FEATURES = Object.freeze({
   /**

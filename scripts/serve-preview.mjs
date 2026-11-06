@@ -228,7 +228,7 @@ try {
       transform: translateX(-50%);
       background: #ffffff;
       color: #64748b;
-      font-family: Vazirmatn, system-ui, sans-serif;
+      font-family: Beiruti, system-ui, sans-serif;
       font-size: 11px;
       font-weight: 500;
       letter-spacing: 0.2px;
@@ -269,7 +269,7 @@ try {
       border: 1px solid #e2e8f0;
       border-radius: 9999px;
       padding: 8px 16px;
-      font-family: Vazirmatn, system-ui, sans-serif;
+      font-family: Beiruti, system-ui, sans-serif;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
@@ -309,8 +309,11 @@ try {
   html.arena-frame-disabled #root::before,
   html.arena-frame-disabled #root::after,
   html.arena-frame-disabled body::after { display: none !important; }
-  /* Keep-desktop mode: preserve original desktop layout scaled to fit 360 */
+  /* The app root is a flex item; give it a cross-axis width in mobile mode. */
   @media (min-width: 520px) {
+    html:not(.arena-frame-disabled):not(.arena-keep-desktop) #root > div {
+      width: 100% !important;
+    }
     html.arena-keep-desktop:not(.arena-frame-disabled) #root > div {
       zoom: 0.3214 !important;
       width: 1120px !important;
@@ -330,7 +333,7 @@ try {
       border: 1px solid #e2e8f0;
       border-radius: 9999px;
       padding: 6px 14px;
-      font-family: Vazirmatn, system-ui, sans-serif;
+      font-family: Beiruti, system-ui, sans-serif;
       font-size: 11px;
       font-weight: 600;
       cursor: pointer;

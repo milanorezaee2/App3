@@ -46,8 +46,8 @@ export function AppBottomNav() {
 const styles = StyleSheet.create({
   shell: {
     minHeight: 60,
-    marginHorizontal: 18,
-    marginBottom: 14,
+    marginHorizontal: 12,
+    marginBottom: 10,
     paddingTop: 8,
     paddingBottom: 9,
     paddingHorizontal: 14,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     elevation: 5,
   },
-  item: { flex: 1, minWidth: 52, alignItems: 'center', gap: 2 },
+  item: { flex: 1, minWidth: 0, alignItems: 'center', gap: 2 },
   iconWrap: {
     width: 42,
     height: 32,

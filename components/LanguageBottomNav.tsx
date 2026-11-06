@@ -42,8 +42,8 @@ export function LanguageBottomNav({ items, rootPath }: {
 
 /** RTL navigation bar: the first item is rendered on the right. */
 const styles = StyleSheet.create({
-  shell: { minHeight: 72, marginHorizontal: 18, marginBottom: 22, paddingTop: 9, paddingBottom: 11, paddingHorizontal: 12, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, borderRadius: 26, shadowColor: '#211A68', shadowOpacity: 0.14, shadowRadius: 20, shadowOffset: { width: 0, height: 8 }, elevation: 5 },
-  item: { flex: 1, minWidth: 48, alignItems: 'center', gap: 2 },
+  shell: { minHeight: 72, marginHorizontal: 12, marginBottom: 10, paddingTop: 9, paddingBottom: 11, paddingHorizontal: 12, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, borderRadius: 26, shadowColor: '#211A68', shadowOpacity: 0.14, shadowRadius: 20, shadowOffset: { width: 0, height: 8 }, elevation: 5 },
+  item: { flex: 1, minWidth: 0, alignItems: 'center', gap: 2 },
   iconWrap: { width: 42, height: 32, borderRadius: Radius.full, alignItems: 'center', justifyContent: 'center' },
   iconWrapActive: { backgroundColor: Palette.primarySoft },
   label: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.muted },

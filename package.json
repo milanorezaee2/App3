@@ -8,7 +8,7 @@
     "dev:web": "node scripts/serve-preview.mjs",
     "build:web": "node scripts/run-expo.mjs export --platform web --clear",
     "build:web:admin": "MILO_ADMIN_APP=true EXPO_PUBLIC_MILO_ADMIN_APP=true EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN=true EXPO_PUBLIC_LEARNER_LOGIN=false EXPO_PUBLIC_LANGUAGE_SCOPE=en,tr node scripts/run-expo.mjs export --platform web --clear",
-    "build:web:learner": "EXPO_PUBLIC_MILO_ADMIN_APP=false EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN=false EXPO_PUBLIC_LEARNER_LOGIN=false EXPO_PUBLIC_LANGUAGE_SCOPE=en,ru node scripts/run-expo.mjs export --platform web --clear",
+    "build:web:learner": "EXPO_PUBLIC_MILO_ADMIN_APP=false EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN=false EXPO_PUBLIC_LEARNER_LOGIN=false EXPO_PUBLIC_LANGUAGE_SCOPE=en,ru,de,fr,es node scripts/run-expo.mjs export --platform web --clear",
     "serve:web": "node scripts/serve-preview.mjs",
     "preview:web": "node scripts/serve-preview.mjs",
     "lint": "expo lint",
@@ -41,8 +41,8 @@
     "apk:report": "node scripts/apk-report.mjs"
   },
   "dependencies": {
+    "@expo-google-fonts/beiruti": "^0.4.1",
     "@expo-google-fonts/inter": "^0.4.2",
-    "@expo-google-fonts/vazirmatn": "^0.4.1",
     "@expo/vector-icons": "^15.0.2",
     "@lucide/lab": "^0.1.2",
     "@react-native-async-storage/async-storage": "^2.2.0",
