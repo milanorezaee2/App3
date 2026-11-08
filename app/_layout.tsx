@@ -15,7 +15,6 @@ import { createAudioPlayer } from 'expo-audio';
 import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { Inter_800ExtraBold } from '@expo-google-fonts/inter/800ExtraBold';
-import { Pacifico_400Regular } from '@expo-google-fonts/pacifico/400Regular';
 import { Beiruti_400Regular } from '@expo-google-fonts/beiruti/400Regular';
 import { Beiruti_500Medium } from '@expo-google-fonts/beiruti/500Medium';
 import { Beiruti_700Bold } from '@expo-google-fonts/beiruti/700Bold';
@@ -116,7 +115,6 @@ export default function RootLayout() {
     Inter: Inter_400Regular,
     'Inter-SemiBold': Inter_600SemiBold,
     'Inter-ExtraBold': Inter_800ExtraBold,
-    'Milo-Wordmark': Pacifico_400Regular,
     // Legacy aliases resolve to Beiruti, preventing an old screen from
     // silently falling back to an OEM font.
     Lalezar: Beiruti_400Regular,

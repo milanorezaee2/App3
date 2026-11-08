@@ -22,7 +22,7 @@ const workflowFiles = [
 check(/onPress=\{\(\) => router\.push\(language\.home as never\)\}/.test(languageScreen), 'language cards navigate directly to their existing home route');
 check(/home: '\/lang'/.test(catalog) && /home: '\/learn\/ru'/.test(catalog), 'English and Russian cards keep the original course destinations');
 check(/زبان را از زندگی یاد بگیر/.test(languageScreen) && /کوتاه، شنیدنی، ماندگار/.test(languageScreen), 'language chooser follows the approved warm-journal copy');
-check(/MiloLanguageBrand/.test(languageScreen) && !/MiloLogoMotion/.test(languageScreen) && /milo-premium-mark\.png/.test(read('components/MiloLanguageBrand.tsx')), 'language chooser uses the selected book-and-globe brand mark');
+check(/MiloLanguageBrand/.test(languageScreen) && !/MiloLogoMotion/.test(languageScreen) && />Milo</.test(read('components/MiloLanguageBrand.tsx')) && />multilanguage</.test(read('components/MiloLanguageBrand.tsx')) && /Times New Roman/.test(read('components/MiloLanguageBrand.tsx')), 'language chooser uses the text-only Times-style Milo multilanguage wordmark');
 check(/languages\.map\(\(language\)/.test(languageScreen) && /styles\.languageCard/.test(languageScreen) && /languageList: \{ flexDirection: 'row'/.test(languageScreen), 'language choices remain catalog-driven cards in one selection row');
 check(/learningSteps\.map/.test(languageScreen) && /styles\.stepRow/.test(languageScreen), 'language chooser contains the selected step-by-step path');
 check(!/\/placement|PlacementLanguage|PlacementRecommendation|سنجش همان لحظه|شروع پرسش‌های سنجش/.test(languageScreen), 'language chooser contains no assessment route, bank, or CTA');
