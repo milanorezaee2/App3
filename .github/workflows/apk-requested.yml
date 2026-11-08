@@ -1,5 +1,8 @@
 name: Build requested APKs
 
+# rev 2: the open learner APK now really skips the login gate
+# (EXPO_PUBLIC_LEARNER_LOGIN=false drives FEATURES.learnerLogin).
+
 # Builds the three APK flavours the owner asked for, in one run, and publishes
 # them as a downloadable release:
 #   1. manager/admin app            (com.devicecontrol.miloadmin)
