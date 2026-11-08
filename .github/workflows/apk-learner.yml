@@ -7,12 +7,17 @@ on:
   workflow_dispatch:
     inputs:
       abis:
-        description: 'CPU architectures to package (e.g. arm64-v8a,armeabi-v7a). Blank = all four.'
+        description: 'CPU architectures to package (e.g. arm64-v8a,armeabi-v7a). Blank = phones only.'
+        required: false
+        default: ''
+      language_scope:
+        description: 'Optional comma-separated languages to include in the learner build.'
         required: false
         default: ''
   push:
     branches:
       - arena/940e66ab-app3
+      - arena/358727c9-app3
     paths:
       - '.github/workflows/apk-learner.yml'
       - '.github/scripts/apk-learner-smoke.sh'
@@ -46,6 +51,7 @@ jobs:
       # only exist for emulators and roughly double the native payload.
       # Blank input therefore means "phones only", not "everything".
       MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      EXPO_PUBLIC_LANGUAGE_SCOPE: ${{ inputs.language_scope || (github.ref_name == 'arena/358727c9-app3' && 'en,ru,tr,de,fr,es') || '' }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
@@ -83,6 +89,8 @@ jobs:
           npm run validate:english-engine
           npm run validate:english-lesson-flow
           npm run validate:speech-policy
+          node scripts/verify-starter-speech.cjs
+          node scripts/verify-new-language-samples.cjs
           npm run validate:pronunciation
           npm run validate:registration-admin
           npm run validate:language-entry

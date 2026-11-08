@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useMemo, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect } from 'expo-router';
 import { Brain, Check, CheckCircle2, Clock3, RefreshCw, Sparkles, Volume2 } from 'lucide-react-native';
@@ -87,7 +88,7 @@ export default function ReviewHome() {
     const vocabulary = sentence.vocabulary.map((item) => `${item.word} · ${item.meaning}`).join('   ');
     return (
       <View style={styles.root} onTouchStart={timer.interact}>
-        {!!timer.error&&<Text style={{ fontFamily: 'Vazir', color: Palette.danger, textAlign: 'right', writingDirection: 'rtl' }}>{timer.error}</Text>}
+        {!!timer.error&&<Text style={{ fontFamily: 'Beiruti', color: Palette.danger, textAlign: 'right', writingDirection: 'rtl' }}>{timer.error}</Text>}
       <View style={styles.header}>
         <View style={styles.headerTop}>
           <View style={styles.headerCopy}>
@@ -144,7 +145,7 @@ export default function ReviewHome() {
 
   return (
     <View style={styles.root} onTouchStart={timer.interact}>
-        {!!timer.error&&<Text style={{ fontFamily: 'Vazir', color: Palette.danger, textAlign: 'right', writingDirection: 'rtl' }}>{timer.error}</Text>}
+        {!!timer.error&&<Text style={{ fontFamily: 'Beiruti', color: Palette.danger, textAlign: 'right', writingDirection: 'rtl' }}>{timer.error}</Text>}
       <View style={styles.header}>
         <View style={styles.headerTop}>
           <View style={styles.headerCopy}>

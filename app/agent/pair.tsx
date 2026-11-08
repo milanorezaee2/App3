@@ -1,9 +1,10 @@
+import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 // Agent pairing screen (phone 2) — enter the 6-digit code shown on phone 1,
 // or scan its QR code with the camera. Then wait for phone 1 to approve,
 // exactly like a phone connecting to a smart TV.
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { CameraView, useCameraPermissions } from 'expo-camera';

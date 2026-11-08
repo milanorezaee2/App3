@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import type { LearningSentence } from '@/lib/languages/types';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { Typography } from '@/lib/theme';

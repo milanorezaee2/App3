@@ -492,7 +492,7 @@ export { default as asyncStorage } from '${STUBS}/async-storage.js';
     englishLibrarySource.includes('levelStartButton') && englishLibrarySource.includes('startSelectedLevel') && englishLibrarySource.includes('levelStartLesson')
     && russianLibrarySource.includes('levelStartButton') && russianLibrarySource.includes('openLesson(levelStartLesson.id)')
     && turkishLibrarySource.includes('levelStartButton') && turkishLibrarySource.includes('openLesson(levelStartLesson.id)'));
-  check('English, Russian, and isolated Istanbul Turkish Pre-A1..C1 courses are selectable', app.languages.LANGUAGES.map(language => language.id).join('|') === 'en|ru|tr'
+  check('English, Russian, and isolated Istanbul Turkish Pre-A1..C1 courses are selectable', app.languages.LANGUAGES.map(language => language.id).slice(0, 3).join('|') === 'en|ru|tr'
     && app.languages.LANGUAGES.find(language => language.id === 'tr').lessonsCount === 329);
 
   // ---------------------------------------- F. config detection + guards -----

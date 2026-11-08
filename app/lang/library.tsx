@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -304,7 +305,7 @@ export default function EnglishLessonList() {
                       <Pressable accessibilityRole="button" accessibilityLabel={groupTitle} accessibilityState={{ expanded: open }} style={styles.groupHeader} onPress={() => setExpandedGroup(open ? -1 : index)}>
                         <View style={[styles.groupNumber, open && styles.groupNumberActive]}><Text style={[styles.groupNumberText, open && styles.groupNumberTextActive]}>{toPersianDigits(groupNumber)}</Text></View>
                         <View style={styles.groupHeaderCopy}>
-                          <Text style={[styles.groupTitle, (first.b1Section || first.b2Section || first.c1Section) && { textAlign: 'left', writingDirection: 'ltr' }]}>{groupTitle}</Text>
+                          <Text style={[styles.groupTitle, (first.b1Section || first.b2Section || first.c1Section) && { fontFamily: 'Inter-SemiBold', textAlign: 'left', writingDirection: 'ltr' }]}>{groupTitle}</Text>
                           <Text style={styles.groupMeta}>{toPersianDigits(group.length)} درس · {toPersianDigits(groupCompleted)} تکمیل‌شده · درس‌های {toPersianDigits(first.order)} تا {toPersianDigits(last.order)}</Text>
                         </View>
                         {open ? <ChevronUp size={18} color={Palette.primary} /> : <ChevronDown size={18} color={Palette.muted} />}
@@ -413,7 +414,7 @@ const styles = StyleSheet.create({
   levelList: { gap: 9 },
   levelOption: { minHeight: 96, flexDirection: 'row-reverse', alignItems: 'center', gap: 12, padding: 14, borderRadius: 20, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, shadowColor: '#211A68', shadowOpacity: .035, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   levelOptionMark: { width: 44, height: 44, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
-  levelOptionNumber: { fontFamily: 'Vazir', color: '#FFFFFF', fontSize: 17, fontWeight: '800', writingDirection: 'rtl' },
+  levelOptionNumber: { fontFamily: 'Beiruti', color: '#FFFFFF', fontSize: 17, fontWeight: '800', writingDirection: 'rtl' },
   levelOptionContent: { flex: 1, gap: 5 },
   levelOptionTitleRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
   levelOptionTitle: { flexShrink: 1, fontFamily: Typography.latinFontFamily, color: Palette.ink, fontSize: 12, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
@@ -474,7 +475,7 @@ const styles = StyleSheet.create({
   lessonCard: { flexDirection: 'row-reverse', alignItems: 'flex-start', gap: 10, padding: 12, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border },
   lessonOrder: { width: 33, height: 33, borderRadius: 11, backgroundColor: Palette.primarySoft, alignItems: 'center', justifyContent: 'center' },
   lessonOrderComplete: { backgroundColor: Palette.success },
-  lessonOrderText: { fontFamily: 'Vazir', color: Palette.primaryDark, fontSize: 11, fontWeight: '800', writingDirection: 'rtl' },
+  lessonOrderText: { fontFamily: 'Beiruti', color: Palette.primaryDark, fontSize: 11, fontWeight: '800', writingDirection: 'rtl' },
   lessonCopy: { flex: 1, gap: 4 },
   lessonTitleLine: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', gap: 6, flexWrap: 'wrap' },
   lessonTitle: { fontFamily: Typography.fontFamily, flexShrink: 1, color: Palette.ink, fontSize: 13, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },

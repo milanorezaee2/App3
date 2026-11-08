@@ -1,0 +1,25 @@
+const assert=require('node:assert/strict'),esbuild=require('esbuild'),path=require('node:path');
+(async()=>{
+ const outfile=path.resolve('node_modules/.cache/b1-b2-upgrade.cjs');
+ await esbuild.build({stdin:{contents:"export {b1Intensive} from './lib/languages/b1Intensive';export {branchConversations} from './lib/languages/branchConversations';export {practiceDraftKey,loadPracticeDraft,savePracticeDraft,removePracticeDraft} from './lib/languages/localPracticeDraft';",resolveDir:process.cwd(),loader:'ts'},bundle:true,platform:'node',format:'cjs',outfile,plugins:[{name:'storage-stub',setup(b){b.onResolve({filter:/^@react-native-async-storage\/async-storage$|^react-native$/},a=>({path:a.path,namespace:'stub'}));b.onLoad({filter:/.*/,namespace:'stub'},a=>({loader:'js',contents:a.path==='react-native'?'export const Platform={get OS(){return globalThis.__draftOS || "web"}};':'export default {async getItem(k){return globalThis.__draftNative.get(k) ?? null},async setItem(k,v){globalThis.__draftNative.set(k,String(v))},async removeItem(k){globalThis.__draftNative.delete(k)}};'}))}}]});
+ const x=require(outfile),words=t=>t.trim().split(/\s+/).length;
+ for(const id of ['fr','de','es']){
+  const items=x.b1Intensive(id);assert.equal(items.length,6);assert.equal(new Set(items.map(x=>x.id)).size,6);assert.equal(items.filter(x=>x.mode==='listening').length,3);assert.equal(items.filter(x=>x.mode==='reading').length,3);
+  for(const task of items){assert(words(task.text)>=75,`${id}/${task.id} passage`);assert(words(task.model)>=25&&words(task.spokenModel)>=25);assert(task.spokenModel!==task.model&&task.speaking!==task.writing);assert(task.checklist.length>=3);assert.equal(task.questions.length,4);for(const q of task.questions){assert(q.prompt&&q.explanation&&q.choices[q.correctIndex]);assert.equal(new Set(q.choices).size,3);assert(task.text.includes(q.evidence[id]),`${id}/${task.id} missing evidence ${q.evidence[id]}`)}}
+  console.log(id,'6 longer B1 situations, 24 questions with evidence, separate oral/written examples passed');
+ }
+ for(const level of ['b1','b2']){const tasks=x.branchConversations(level);assert.equal(tasks.length,4);assert.equal(new Set(tasks.map(t=>t.id)).size,4);
+  for(const task of tasks){const ids=task.nodes.map(n=>n.id);assert.equal(new Set(ids).size,ids.length);assert(ids.includes('start'));let terminals=0,seen=new Set();
+   function visit(id,stack){assert(!stack.has(id),`${task.id} cycle`);const node=task.nodes.find(n=>n.id===id);assert(node,`${task.id} broken link`);seen.add(id);for(const lang of ['fr','de','es'])assert(node.message[lang]);assert.equal(node.options.length,3);assert(node.options.some(o=>o.appropriate)&&node.options.some(o=>!o.appropriate));for(const o of node.options){for(const lang of ['fr','de','es'])assert(o.text[lang]);assert(o.feedbackFa);if(o.appropriate&&o.next){assert(ids.includes(o.next));visit(o.next,new Set([...stack,id]));}else if(o.appropriate){terminals++;}else assert.equal(o.next,null);}}
+   visit('start',new Set());assert.equal(seen.size,task.nodes.length,`${task.id} unreachable`);assert(terminals>=2);assert(task.nodes.find(n=>n.id==='start').options.filter(o=>o.appropriate).length>=2);
+  }console.log(level,'four branching scenarios, reachable paths and multilingual choices passed');
+ }
+ const web=new Map(),native=new Map();global.__draftNative=native;global.__draftOS='web';global.window={localStorage:{getItem:k=>web.get(k)??null,setItem:(k,v)=>web.set(k,String(v)),removeItem:k=>web.delete(k)}};
+ const k=x.practiceDraftKey('fr','b1','lesson','fr-b1-past-story'),k2=x.practiceDraftKey('fr','b2','lesson','fr-b2-complex-narrative'),k3=x.practiceDraftKey('de','b1','lesson','de-b1-past-story');
+ assert.equal(await x.loadPracticeDraft(k),null);assert.equal(web.size,0);await x.savePracticeDraft(k,'Mon texte.');assert.equal(await x.loadPracticeDraft(k),'Mon texte.');assert.equal(await x.loadPracticeDraft(k2),null);assert.equal(await x.loadPracticeDraft(k3),null);
+ await x.savePracticeDraft(k2,'Autre texte.');await x.removePracticeDraft(k);assert.equal(await x.loadPracticeDraft(k),null);assert.equal(await x.loadPracticeDraft(k2),'Autre texte.');
+ web.set(k,'{invalid');await assert.rejects(()=>x.loadPracticeDraft(k));await assert.rejects(()=>x.savePracticeDraft(k,'overwrite'));await assert.rejects(()=>x.removePracticeDraft(k));assert.equal(web.get(k),'{invalid');
+ await assert.rejects(()=>x.savePracticeDraft(k2,'a'.repeat(30001)));assert.equal(await x.loadPracticeDraft(k2),'Autre texte.');assert.throws(()=>x.practiceDraftKey('fr','b1','lesson','../unsafe'));
+ global.__draftOS='android';assert.equal(await x.loadPracticeDraft(k2),null);await x.savePracticeDraft(k2,'Texte natif');assert.equal(await x.loadPracticeDraft(k2),'Texte natif');assert.equal(web.get(k2),JSON.stringify({schema:1,text:'Autre texte.'}));await x.removePracticeDraft(k2);assert.equal(native.size,0);
+ console.log('Explicit local drafts: web/native isolation, manual save/delete, corrupt-data preservation, length bounds passed');
+})().catch(e=>{console.error(e);process.exitCode=1});

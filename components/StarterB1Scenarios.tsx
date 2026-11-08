@@ -1,0 +1,26 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
+import {useEffect,useState} from 'react';
+import {Pressable,StyleSheet,View} from 'react-native';
+import {playStarterSpeech,stopStarterSpeech} from '@/lib/starterSpeech';
+import {b1Scenarios,type B1Scenario} from '@/lib/languages/b1Scenarios';
+import type {NewLanguageId} from '@/lib/languages/newCourses';
+import {Typography} from '@/lib/theme';
+import {toPersianDigits as fa} from '@/lib/format';
+import StarterPracticeDraft from '@/components/StarterPracticeDraft';
+import {practiceDraftKey} from '@/lib/languages/localPracticeDraft';
+function Scenario({task,locale,language}:{task:B1Scenario;locale:string;language:NewLanguageId}){
+ const [answers,setAnswers]=useState<Record<number,number>>({});const [showText,setShowText]=useState(task.mode==='reading');const [error,setError]=useState('');
+ const speak=()=>{setError('');void playStarterSpeech(locale,task.text,0.8,()=>setError('پخش صدا در دسترس نیست؛ تنظیمات دستگاه را بررسی کنید.'),()=>setError('صدای منطقه‌ای تأیید نشد؛ تلفظ ممکن است متفاوت باشد.'));};
+ return <View style={s.scenario}><Text style={s.heading}>{task.title} · {task.mode==='reading'?'خواندن':'شنیدن'}</Text>
+  {task.mode==='listening'&&<><Pressable accessibilityRole="button" accessibilityLabel={`پخش متن ${task.title}`} onPress={speak} style={s.action}><Text style={s.actionText}>پخش پیام شنیداری</Text></Pressable><Pressable accessibilityRole="button" accessibilityState={{expanded:showText}} onPress={()=>setShowText(v=>!v)} style={s.action}><Text style={s.actionText}>{showText?'پنهان کردن متن':'نمایش متن پیام'}</Text></Pressable></>}
+  {!!error&&<Text accessibilityRole="alert" style={s.error}>{error}</Text>}{showText&&<Text style={s.target}>{task.text}</Text>}
+  {task.questions.map((q,i)=><View key={q.prompt} style={s.question}><Text style={s.prompt}>{fa(i+1)}. {q.prompt}</Text>{q.choices.map((choice,j)=><Pressable key={choice} accessibilityRole="radio" accessibilityState={{checked:answers[i]===j}} onPress={()=>setAnswers(prev=>({...prev,[i]:j}))} style={[s.choice,answers[i]===j&&s.selected]}><Text style={s.body}>{choice}</Text></Pressable>)}{answers[i]!==undefined&&<Text style={answers[i]===q.correctIndex?s.feedback:s.error}>{answers[i]===q.correctIndex?`درست است. ${q.explanation}`:'این پاسخ مناسب نیست؛ دوباره امتحان کنید.'}</Text>}</View>)}
+  <Text style={s.heading}>تولید آزاد</Text><Text style={s.body}>{task.production}</Text><StarterPracticeDraft label={`پاسخ آزاد ${task.title}`} storageKey={practiceDraftKey(language,'b1','workshop',`legacy-${task.id}`)}/>
+ </View>;
+}
+export default function StarterB1Scenarios({language,locale}:{language:NewLanguageId;locale:string}){
+ const [open,setOpen]=useState(false);useEffect(()=>()=>{void stopStarterSpeech();},[language]);
+ return <View style={s.card}><Pressable accessibilityRole="button" accessibilityState={{expanded:open}} style={s.toggle} onPress={()=>{if(open)void stopStarterSpeech();setOpen(v=>!v);}}><Text style={s.title}>کارگاه موقعیت‌های مستقل B1</Text><Text style={s.symbol}>{open?'−':'+'}</Text></Pressable>
+ {open&&<View style={s.content}><Text style={s.body}>سه موقعیت طولانی‌تر با پرسش‌های درک مطلب و تمرین نوشتن آزاد. این کارگاه اختیاری و غیررسمی است؛ گزینه‌ها ذخیره نمی‌شوند؛ نوشتار خودکار تصحیح یا نمره‌دهی نمی‌شود و فقط با انتخاب شما روی دستگاه ذخیره می‌شود.</Text>{b1Scenarios(language).map(task=><Scenario key={task.id} task={task} locale={locale} language={language}/>)}</View>}</View>;
+}
+const s=StyleSheet.create({card:{width:'100%',borderRadius:18,borderWidth:1,borderColor:'#DDD9F6',backgroundColor:'#FFF',padding:16,gap:12},toggle:{minHeight:44,flexDirection:'row-reverse',alignItems:'center',justifyContent:'space-between',gap:8},title:{flex:1,fontFamily:Typography.boldFontFamily,fontSize:16,lineHeight:26,color:'#302880',textAlign:'right'},symbol:{fontSize:22,color:'#5148C8'},content:{gap:12},scenario:{borderWidth:1,borderColor:'#E1E4F0',borderRadius:14,padding:12,gap:10,backgroundColor:'#FAFAFE'},heading:{fontFamily:Typography.boldFontFamily,fontSize:14,lineHeight:24,color:'#5148C8',textAlign:'right',writingDirection:'rtl'},body:{fontFamily:Typography.fontFamily,fontSize:14,lineHeight:23,color:'#292A3D',textAlign:'right',writingDirection:'rtl'},target:{fontSize:15,lineHeight:25,color:'#202039',textAlign:'left',writingDirection:'ltr'},prompt:{fontFamily:Typography.boldFontFamily,fontSize:14,lineHeight:24,color:'#202039',textAlign:'right',writingDirection:'rtl'},question:{gap:7},choice:{minHeight:44,borderRadius:10,borderWidth:1,borderColor:'#DFE1EC',padding:10,justifyContent:'center',backgroundColor:'#FFF'},selected:{backgroundColor:'#F0EFFF',borderColor:'#5148C8'},feedback:{fontFamily:Typography.fontFamily,fontSize:13,lineHeight:22,color:'#176B55',textAlign:'right',writingDirection:'rtl'},error:{fontFamily:Typography.fontFamily,fontSize:13,lineHeight:22,color:'#AC3030',textAlign:'right',writingDirection:'rtl'},input:{minHeight:100,borderColor:'#CBD5E1',borderWidth:1,borderRadius:10,padding:10,backgroundColor:'#FFF',textAlign:'left',writingDirection:'ltr',textAlignVertical:'top',fontSize:15,color:'#202039'},action:{minHeight:44,justifyContent:'center',alignItems:'flex-end'},actionText:{fontFamily:Typography.boldFontFamily,fontSize:13,lineHeight:22,color:'#5148C8',textAlign:'right'}});

@@ -1,5 +1,6 @@
+import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { type ReactNode, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, ImageBackground, Platform, Pressable, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
+import { ActivityIndicator, ImageBackground, Platform, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ArrowLeft, BookOpenCheck, LockKeyhole, Mail, ShieldCheck, UserRound } from 'lucide-react-native';
 import { KeyboardAwareScrollView, KeyboardAvoidingView } from '@/components/KeyboardRuntime';

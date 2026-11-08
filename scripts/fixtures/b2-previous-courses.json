@@ -1,0 +1,1418 @@
+{
+  "de": {
+    "de-foundation-sounds-1": {
+      "lesson": "9d427e0878a462fccab0ef65a8a47ce7490ff68bf672329dd8416d330aa33bd8"
+    },
+    "de-foundation-sounds-2": {
+      "lesson": "3db8fb543064edf80617aa69e76a196a5c5be73c3c3e841296b2298bd0d72087"
+    },
+    "de-foundation-words-1": {
+      "lesson": "50cf51869401c0b28a31e7086375dd55bb060c65ac0dd21c563929e89aa321fe"
+    },
+    "de-foundation-words-2": {
+      "lesson": "013a4234a63d5725106a440f8cd60a453c4e237cfcd6a5976de9d37af655671a"
+    },
+    "de-foundation-chunks-1": {
+      "lesson": "00859aa7eaf087ef8956b75e2d4d733acbaa6e1156c617ba7a9dde57f5daede5"
+    },
+    "de-foundation-chunks-2": {
+      "lesson": "29278b40f6273edfccb25e9d43399c2a622aa26c8b17c2d527d57b7c700e35ce"
+    },
+    "de-pre-11": {
+      "lesson": "180ad05452ec12edccda4190146c6a122f515b0bb48719f8b798b098fef09543"
+    },
+    "de-pre-1": {
+      "lesson": "984b011cb0ccc158a145f1918a878bc378bb493730909088b49d9cf1339806d8"
+    },
+    "de-pre-3": {
+      "lesson": "5342372314306de57107a2d052f8da018c76fabbd2b5c60081a46ed827f9da58"
+    },
+    "de-pre-4": {
+      "lesson": "a8d5a132eee3bee210049d0dc41268efe34faf58a75f757c94e231956cf38c0a"
+    },
+    "de-pre-5": {
+      "lesson": "c708609549d4bcf6454f60a4858c8b43dd106015a38959e5e218fe64b7b5bded"
+    },
+    "de-pre-2": {
+      "lesson": "cf220bbdb1ea9fd855bc8404b39c50db65e37a637ede6eab2b45625ffe5789b6"
+    },
+    "de-pre-7": {
+      "lesson": "fe9330188520955bc1371ad2f2f3f0ebc5de5e26abb27ab735a20a35474bd5e3"
+    },
+    "de-pre-6": {
+      "lesson": "a04331191e66bce779df500fa045bea06ee1c0c6aae8e8f6f5a0a4adcb513e1a"
+    },
+    "de-pre-8": {
+      "lesson": "fc30d2b32ce74a7fce74b87feb8c7b0aaca5747c0eb3be5510a206b7d7606261"
+    },
+    "de-pre-9": {
+      "lesson": "db36b5f1040973c2327ceb8f7b1fe2ce56a968e501c0148a361f8237ef5f7bbe"
+    },
+    "de-pre-10": {
+      "lesson": "9c303ff2205c32fb8afc13ba43cda083125126d7586dd0938f1263e67322d394"
+    },
+    "de-pre-12": {
+      "lesson": "a7fa7427d2fac4956a5cdd4d69886136130d6e8b8710abc0700f18b5f11c2637"
+    },
+    "de-pre-13": {
+      "lesson": "77141dd80ded29ca8238695c66ca92fecacc94dc1de1055d8b0a0c9875b25a55"
+    },
+    "de-pre-14": {
+      "lesson": "ce5425e117d21dca16a4eacf6a1c2860b2bfd44980c373e0a21e44295921ef76"
+    },
+    "de-pre-15": {
+      "lesson": "2c135d066d846372b6b20c6d15d54c91575ad0602a830732e7e4917f2db611d2"
+    },
+    "de-pre-16": {
+      "lesson": "f2f247550f34c59a9bebf970b052e4970e42f9953956afdff00eec37132d1e81"
+    },
+    "de-pre-17": {
+      "lesson": "f86448c972d5d78d555b06e3df0a228815d314b6ed560adcaf58aff41e2fa300"
+    },
+    "de-pre-18": {
+      "lesson": "8a34dd7f39cee0a4cc185c22c31f8905d997a9d5c8432c213a59ad9a461d9b87"
+    },
+    "de-pre-19": {
+      "lesson": "8d7d07eeb0e784973107552a90a5cb49b35f1e5c2d00a1cba53fa57da5edc823"
+    },
+    "de-pre-20": {
+      "lesson": "ecbbc4ba2412683f8f5a5b2e32c78289b0e877bf24a99bc043e7462e4e0d6af1"
+    },
+    "de-pre-21": {
+      "lesson": "a953cfbfc6db6a4e7e4a801c2046100a83a875461761935aafee8b481302ed7c"
+    },
+    "de-a1-greetings": {
+      "lesson": "da3ca72b54df0a77246c61ecd635f4721d741b4bded7961c674aa05a1c08429c"
+    },
+    "de-a1-profile": {
+      "lesson": "431c2430526799b98f40af6bb3d45961271fa3398d7076f30b48f50738ff2763"
+    },
+    "de-a1-subject-pronouns": {
+      "lesson": "5498d61ad77315131fd62b34a5ca55f048ab424fcee954795a1625bad0716848"
+    },
+    "de-a1-verb-to-be": {
+      "lesson": "38523030c2a3a6abf1cbe46ce92bf5fa60730e9356779bc7d38c3b0ade3e4206"
+    },
+    "de-a1-nationalities": {
+      "lesson": "a42e88ac9854c6220140bd44c1fdd3f85cf977f4203d41a4b015bdc11fba8a05"
+    },
+    "de-a1-numbers-age": {
+      "lesson": "68336f7ce52f5b4f0d18a6dcc8b80a98bf1859891cf8398e57b036cee98bc0cc"
+    },
+    "de-a1-family": {
+      "lesson": "6b510ba3b3f860776a44fa50eda3df11bdd888ad21d3ff3654d72fa66ee5d21c"
+    },
+    "de-a1-possessives": {
+      "lesson": "8d13b3265ee18414789edd6594e40ca1d8c8d0948919e257095f69fa82d450be"
+    },
+    "de-a1-nouns-gender-plural": {
+      "lesson": "3865baba4d4fac42d4b571f2c7604890c730495ebf95027c7570d55fc79be59e"
+    },
+    "de-a1-demonstratives": {
+      "lesson": "ee1c2a24a7335f8c20f70c8e7eb44d77f33f63ec9afd6ad4dbda6dd3868a01fe"
+    },
+    "de-a1-descriptions": {
+      "lesson": "55ce201eb1a7be8b300038a2c320c9250b87934b797030b06d8694044043a070"
+    },
+    "de-a1-colors": {
+      "lesson": "71668a38e74694db7a9d0fcea511192ff510f74f9b9af2f547ae33a683318f8d"
+    },
+    "de-a1-articles": {
+      "lesson": "ab03833f0e2c5405effb33db3ef1abd594f4e8deb04549c82400216adc37fdae"
+    },
+    "de-a1-simple-verbs": {
+      "lesson": "72b53f922e8583acea6137214048afa3c5c20f01223eb6e8d27665a7fa566b3e"
+    },
+    "de-a1-present-tense": {
+      "lesson": "09b56b7da4969f364ea596634709f756a2d8a8a3bff22c71263e10ebbe8039c3"
+    },
+    "de-a1-verb-conjugation": {
+      "lesson": "f910bab9f30ffecba1e9ffb8186699f2c409d41a035e06caac2a665a2f844921"
+    },
+    "de-a1-positive-negative-questions": {
+      "lesson": "4655a3df0d9daa3f0f8a4db9e27a6137893dbeef42f5bd66dc8d6c1e9efb2e86"
+    },
+    "de-a1-question-words": {
+      "lesson": "99cd0fd32502cef4bb0eb98e422b4bf4fa1505bd683d39e5f549c071b39aa36e"
+    },
+    "de-a1-dates-and-time": {
+      "lesson": "4648a2ab6cd2a9a97a1f0832d9592bd318f10ba39fe24a9fdc5ef4ef7b785ace"
+    },
+    "de-a1-location": {
+      "lesson": "9aaf6222900a969799156d5c765ca2bb5521ec8930e6e9768a876fd63ebf9167"
+    },
+    "de-a1-wants-needs": {
+      "lesson": "4cf1be0c0143895215ad65ef6dc345a3cbaded3bc5c18c3fc4658e7f6aa0b2d5"
+    },
+    "de-a1-ability": {
+      "lesson": "ac0d7e70c3bdd35d893936f8da483a27f97d6a7af51429bad471c2c3e5f84093"
+    },
+    "de-a1-prepositions": {
+      "lesson": "85b580b8801a145f4b27ef35ad12b11afe2e97a485daa0257876ff341c91c698"
+    },
+    "de-a1-daily-routine": {
+      "lesson": "4c89677618b5278ee63851d769eafb997c8dd8abf4cb760335fdf8d5134909e7"
+    },
+    "de-a1-connectors": {
+      "lesson": "85d81a6cdb947ad437db237f04a81badfb2976991fbb9e2b684b245c332b4028"
+    },
+    "de-a1-social-chat": {
+      "lesson": "fe7041ec7c3586acafc3a3c49bb46bed4c799fe7bef61d1ffdf749368505f96f"
+    },
+    "de-a1-shopping-payment": {
+      "lesson": "64d7ab25d3c9137cc08aaf8556a1372f06be3def48e0fa9e8d954602885b983d"
+    },
+    "de-a1-ordering-food": {
+      "lesson": "bd3f0be6e380e21113a2510dd7d0459f4c9ccb297df7d767c21902eb829612af"
+    },
+    "de-a1-cafe": {
+      "lesson": "c72a4b75a268d8f1a2b847cc323c3fd792e563c7e3332088a98bb5860c89f9b5"
+    },
+    "de-a1-directions": {
+      "lesson": "5d078b65989a6669b0dfdb45dcd4c6daac1ac0fdca68b8f3675a52236b0a910e"
+    },
+    "de-a1-public-transport": {
+      "lesson": "c1a64dbcc7c46abda0139aec9f7fdb7cb0c89c8533c790d7a6c6300f73a83b4d"
+    },
+    "de-a1-travel-tickets": {
+      "lesson": "49372854d182d0cae3f706a925f8f81ec9e20b7fb877cdb2fd115ca2fd352a8b"
+    },
+    "de-a1-hotel-stay": {
+      "lesson": "e71c1ec8ee0f20ce12c8fab2ca2e78b29595f9ecc33a2cb522d10cea0c513bfd"
+    },
+    "de-a1-asking-help": {
+      "lesson": "1ee27fbbd0bb5902e7fa376bad8050ecde1639625adab5de619a12a38ce27648"
+    },
+    "de-a1-doctor-symptoms": {
+      "lesson": "275c5706e15776171d17571c5e7e2bb957abdb3c6213a857bc67db41fc077b80"
+    },
+    "de-a1-work-study": {
+      "lesson": "c18080dd0c4ad7b1e9f073836f4e8f189d11763bc3ed937de036ed92b8c336fd"
+    },
+    "de-a1-weather": {
+      "lesson": "fae17347c3a654652c5e58ec15d02ddc8c80e7cdb467e7967bbe6be0ddfd500e"
+    },
+    "de-a1-phone-messages": {
+      "lesson": "2183a2a6466298c7fb256da3cb891adfded7e61a899616f62c05b80da277ee61"
+    },
+    "de-a1-invitations": {
+      "lesson": "eea00f14164812cf7443462d893a0c68e18a57a590fd32d57eb12a086e146396"
+    },
+    "de-a1-polite-requests": {
+      "lesson": "0ed2c287412cf26b158936e1688d7d141da675315b2738977b010281f8baf179"
+    },
+    "de-a1-instructions": {
+      "lesson": "5db059ab18c4abfefaf1014ba0a33cf9bc05d132f431cd02fb492d3d186e0bbc"
+    },
+    "de-a1-suggestions": {
+      "lesson": "7bb2a4b95285405a069c8bdcab08f2e461bf48cb69f360b36514dcd783b8e6c6"
+    },
+    "de-a1-past-events": {
+      "lesson": "a66f7b8525018d54ca166a4ec13c1a92915b6c1a639a3716ea63ccbc4c7832bb"
+    },
+    "de-a1-future-plans": {
+      "lesson": "0b188358275101f773bbe3259c5ca74c2c116f5f567a585c54fb3a10a1a79f6e"
+    },
+    "de-a1-feelings": {
+      "lesson": "5fb92c8ac8bc8030e1375086ab0c8be83438da492d367851dfe8297d61ecddf6"
+    },
+    "de-a1-forms-information": {
+      "lesson": "2578dc0c35e0b673e758775461b631370894b53540dfa1e022b18bf9c5efbfbf"
+    },
+    "de-a1-supermarket": {
+      "lesson": "a5eb1eeed2718d4d9ee39ddcf59b7d800ff794ad56cb49946ff7763d5eb917b5"
+    },
+    "de-a1-clothes-shopping": {
+      "lesson": "4c7cf073d1ee8552a86e4f5fee6d47b6def2efd98e7dcca1d84319eff5b3f4df"
+    },
+    "de-a1-room-search": {
+      "lesson": "b80f5a97c0c9d280b43b557cbfdd5dcc1385d75a35648d9e816f58723c828f46"
+    },
+    "de-a1-home-furniture": {
+      "lesson": "8d9fe5f66d8437b6c26019edbb693230b96972d82bd2f2cb8e6a8c22d8572c6f"
+    },
+    "de-a1-leisure": {
+      "lesson": "a5d71956dd9ccedbe4897c2f92961f83e4312a7f764c94b5ff9aa7f083cfce52"
+    },
+    "de-a1-weekly-schedule": {
+      "lesson": "8478291905cebf41ecedb6e180d59e1cb3facf8d821f5ef1c4b4033db39dd4a5"
+    },
+    "de-a1-preferences": {
+      "lesson": "8bfd3f5765b379b31765dfde4ec9a90df79ae4313403c71cf36808d613e05493"
+    },
+    "de-a1-comparisons": {
+      "lesson": "e9a15cc208ea80df27980c67a0558cd11b407755a555fea4bcada999270e9163"
+    },
+    "de-a1-reasons": {
+      "lesson": "dd1e18a33cc79955b783fb2f2d0f3abfe0051df1d0b27a8a606015a8b30b7666"
+    },
+    "de-a1-connected-conversation": {
+      "lesson": "3b338203e93f867460015c4aaaf4db01d46f0014a9d8bd96861229739edbc138"
+    },
+    "de-a2-present": {
+      "lesson": "e59cce2db36fe0e8d6adccd7154bd7051f4711e0be791b858f1e6ca2a819bc99"
+    },
+    "de-a2-routine-now": {
+      "lesson": "2032350bb4c60e98898200349b7ddd8ef30b86bac3518b84c756f0bac774893d"
+    },
+    "de-a2-past-activities": {
+      "lesson": "a1fb4065621f21e87b4389039a0d6992dcf4abca870aa1750632ffbcf41c4fb2"
+    },
+    "de-a2-experiences": {
+      "lesson": "656eb4f627728e47342846cf8564d1fea6d9dbf34a2a4b1b8f3d93d63cb81b3a"
+    },
+    "de-a2-future-arrangements": {
+      "lesson": "07af5dca686799ebee62f1e798f92a212749f850ba7c237a306d657b4866870f"
+    },
+    "de-a2-shopping-return": {
+      "lesson": "cf394a4b3805368c44ca91bc4f5e2970e35e3503262b6bedc40572bd8f24ffa2"
+    },
+    "de-a2-comparison-quantity": {
+      "lesson": "4c06d423f02de19bc0b0fe06493f9c7ec9f8b922c59f72fc5f6f86cbfdbc5043"
+    },
+    "de-a2-necessity-advice": {
+      "lesson": "057a97aece03979adb64efed3de424a6f1f5fff07273c9e7d32876b697a3a7ae"
+    },
+    "de-a2-hotel-change": {
+      "lesson": "bb15b0f10c3776d1c13bc3ddbdf0881ac8d76636386fdeee854e46238a584354"
+    },
+    "de-a2-health-symptoms": {
+      "lesson": "406d1ce695056f4ee67f90a04addc98296984e6d474b31226ade7f84e93a850e"
+    },
+    "de-a2-reasons-conditions": {
+      "lesson": "fb6c4bddc42703cd82f2fd38e12af056b40a7326a90034ff7cbdc28319d91e95"
+    },
+    "de-a2-food-preferences": {
+      "lesson": "a187b332a28c400db506d4f077ee654e8026107e03b895c54b5c84937a2ebc40"
+    },
+    "de-a2-housing-problems": {
+      "lesson": "7a7403cbca10c2753f7a75fe06573fc1d2def80e3b79938bf0c1de028341ddf1"
+    },
+    "de-a2-objects-and-place": {
+      "lesson": "9653b8d7fa61cdfd66be0115e67a09ec8f79ae2fd674ffdd8d186b0c345ab1dc"
+    },
+    "de-a2-belonging-relations": {
+      "lesson": "76939dfc37c872932d29a862c4c33dff151f6c93dbab477cb30bb99a95e9d414"
+    },
+    "de-a2-story-sequence": {
+      "lesson": "ba1050f8a3648b2709dcc10cf0f981dbd090dc5cc4684f687b8a63c93a623450"
+    },
+    "de-a2-inviting-arranging": {
+      "lesson": "3806d0f056344b72faa1dfda0a78e5a5a83741990f1e4bcff01a27bba737ca74"
+    },
+    "de-a2-tourism-directions": {
+      "lesson": "329c9b4599836e2727f678232c001e1dabcca15ae4d6188395a920385f5c88c1"
+    },
+    "de-a2-work-duties": {
+      "lesson": "173accf7da5bb8497da53f3b61542b127614e00b7be5bb7fe8090c30cad4a28e"
+    },
+    "de-a2-study-plans": {
+      "lesson": "f5191320c41ac3d1c815d2016cd6a1a0807d10ecd62a08071d13f3f75a841b8b"
+    },
+    "de-a2-opinions-agreement": {
+      "lesson": "061f0418ad23d1107534886ee20ae643135a03b2551223d9c9b3001be47cef00"
+    },
+    "de-a2-leisure-new-experiences": {
+      "lesson": "a685d6c73d9ad14aebebab04034f7903c50242987c48e94c0736a492f00fdb5b"
+    },
+    "de-a2-life-changes": {
+      "lesson": "39ac19e5bd2cfbf9ab7e67b36528d970a3390334e429aa91b9156e4165f7c48c"
+    },
+    "de-a2-feelings-worries": {
+      "lesson": "6c1bd0344a440f70e142c90a95f646d6e25fc21320a4610c8b4082eb49501bdd"
+    },
+    "de-a2-reporting-messages": {
+      "lesson": "f3aa6c1e68de2b39aa132b97f4ea5d3a4f72474ff063e1a8a9f6c079ebd4a31b"
+    },
+    "de-a2-ability-permission": {
+      "lesson": "f491940f03fc8b20b65a8d7d42330e5cbf3704851bbff46d5977829c7f838b7b"
+    },
+    "de-a2-future-simple-extension": {
+      "lesson": "6955a1ab261f0057d8f94c9448c76997b5894db45e8f30a6050458c8f5bdad68"
+    },
+    "de-b1-past-story": {
+      "lesson": "bc9e0cdde06049c9b5ba74c8f430c172a3d63272ae5936e0a49ecf7f12cc0f39",
+      "skills": "df86e4371d4d38bc20f4eb6851c882855715440ac90ea60f5cd3e8c7f0e575a6",
+      "patterns": "afa27aaf441bd0c8316fc4701f1dd2be1462e3758f323864560469deae8fb7a9"
+    },
+    "de-b1-past-contrast": {
+      "lesson": "b63dcfcd8c26ce15e8a8b7b143a202370a8243ea504b85daa0b4b6109d2281ac",
+      "skills": "0f7ed5dec69631955d75cb0693ad99a1531c3f219b0a58ec25e23dce6f7a4d88",
+      "patterns": "608524be81294e7eedc71ec9bb13ed70c2a6ecceed38fa292cddd6ceadf17dbc"
+    },
+    "de-b1-future-plans": {
+      "lesson": "fea7c7fb17642bfd70c2b5ed5e9faad2ce17240765ff73f710233f7f301f7cb4",
+      "skills": "a383c6e656739c93455e68a05821d4945161fc04b3a69cbd5025c6f18956e48c",
+      "patterns": "788974ca644466be7f1d10c32e317d0393dbc8d6a3b5010a7dbd2a13d7d94c2b"
+    },
+    "de-b1-real-conditions": {
+      "lesson": "00fb19479ab475567eda763c2fdc431eeed4516ac6345e8620dff8cb408d5732",
+      "skills": "93765987739c0e80aa52c5def1c4dff74003f753668a4e15fa00de348cb99f12",
+      "patterns": "e52677c21025a889e6d091fae9a003d487bd791bab887614066b90125bc3797c"
+    },
+    "de-b1-hypothetical": {
+      "lesson": "f74e55b237963dd9a8e9a85c5494b2d1783c107283f22902ac9c33c5d03a49bf",
+      "skills": "64481dcf1976c3426e8c8ac0b5984eef898b3355df5fa9ff21c1a686ec1b72bd",
+      "patterns": "78e729415612c504d303a897ddccf1ee0a3e9bef2a0a0458f0c2094d0326657a"
+    },
+    "de-b1-opinions": {
+      "lesson": "bbacab66f531f1a7d32aee685acdcf1ceefd3950ad1584cd286c0d07b9796c5b",
+      "skills": "ccec7fe1edb1bf5e72223b8658ed886a96ee4ff530064acc7495e6da58a64214",
+      "patterns": "dbf6edf5d82248e2594411f624cbdca35efc101d6267a6a19096e92e1a9f8fb9"
+    },
+    "de-b1-compare-options": {
+      "lesson": "06b6dc31b05b2c1957d4ccde2be4eafad9f74c9078121dc77ff195503291c366",
+      "skills": "df1dc00e9adb67e15405c627661347fc859fc74f786ef71f77ec53ea8599b543",
+      "patterns": "36aea0611afbd687259bcba25d834a48fae077396ffb9de299ec591331316644"
+    },
+    "de-b1-work-interview": {
+      "lesson": "c77ee3c7dcc12ffe71597aa1bbf19380e897d2c97cae521cd5b01fc0bc4d2cc6",
+      "skills": "1f7c15a984713f05d6a97a16e9f2de7e241ea6f4dfbf1e6c328635e50fb38985",
+      "patterns": "650a5902b914591b58b3683b7bbec85cd13428aea19ee44bad288816c87e3f7a"
+    },
+    "de-b1-study-goals": {
+      "lesson": "2e192325cf64a372ad4e2b3adc84438648097b8d05d3ef4f6bef6a2872f0a28d",
+      "skills": "bf8159950d0d050d6f851c1ac356581edd019510aace13cc3ab77dbfe6a80890",
+      "patterns": "2e170cfd1786a2d738fecbd24a03499b943f28665caf2332fecadd4744c041b8"
+    },
+    "de-b1-travel-problem": {
+      "lesson": "89872336fdb7871b5fe93159436a47abed812f0d1311e2d48e60a0d6b4a1b789",
+      "skills": "3f1cbfde2d5c38a4fbbc12e82bbbc8db652f09a5f048d470b901523978b0fc4f",
+      "patterns": "a55761557f231ce3306e323a994f41423f2b255cd85cc350a590a65bb4ebb3d6"
+    },
+    "de-b1-health-advice": {
+      "lesson": "463ee45fa5022252d764905331b08a6c90b4f508223b47ccc14edfbc2a8affa2",
+      "skills": "f99700c1e2fb8a95108b8a82d9c6030a986a8a2ebb77fc74c7ac5ba267ead8f0",
+      "patterns": "66647693507f73ec80e4dcb0fcb0e60630edfb9740932d95cbbcc92d84b82a5d"
+    },
+    "de-b1-digital-life": {
+      "lesson": "cad4efa47331b5b48093a09b6c2915323056965c1e58802027de1a2aa8da98d0",
+      "skills": "49b34b06437117fbf5eb5cb103630fb154fba0d938380dc93dd8fb01ed7ca95d",
+      "patterns": "c1912e0164be65d99ff5194dbb8fc11d4a4be70c0e50f5693af372b4119fbd07"
+    },
+    "de-b1-report-summary": {
+      "lesson": "e07ed0171413200406ab33f89524a1af29bba09f443a5ffcedf16315c5e31ed7",
+      "skills": "9a70cb0cbb072a4481f73b8c8d08cceb626637b95d69375df94488bcd2f60a6f",
+      "patterns": "d76db21dcbf40e4d089889c1a856ccff86c2802c99fc04feddc837c16d5ffab5"
+    },
+    "de-b1-relative-clauses": {
+      "lesson": "f1fb6ad92309c3c178bc579cf88d4073881a81f9276bf124626c8f731c4e3006",
+      "skills": "8c290005f1a698ec7134ef473c368e2088fae07a715eabf9bbdd11211e611a8c",
+      "patterns": "d0844a05832a5176311662b14070be0870ea5bc909f32a86fbb2be51ad1b40c3"
+    },
+    "de-b1-process-passive": {
+      "lesson": "e274b302a15027a115c8dcf7b4f938e65e8561f4841165323f92e23c8a402fde",
+      "skills": "64d380cc71b3881e678fe14d65b726f641dd26cf8312379e443353fdb215a249",
+      "patterns": "7486e9ebd4abd6fbc8a3710f18efd485ed64e13e8fd8b878b67e378ec83ffe02"
+    },
+    "de-b1-inference-past-modals": {
+      "lesson": "3e4dc7603af29dc770594087092887c50fa93eca05ca15bff23ca178753f374e",
+      "skills": "0660497ef3a5b5d17dfb2c5b607b3e0e50760eba17970cf3b9e1094b26e17404",
+      "patterns": "3745d5d453efe865a279d611ccd532fe33e262ffa46dfc82da3c658e1473f584"
+    },
+    "de-b1-news-events": {
+      "lesson": "2ced77e1c155539ce4fbb6e903abdc70ccc3b877c6eeb944338509331f509d8c",
+      "skills": "67d8d55528b92ca3673b713fdcb834a911efff4993bc7789d4dd15b7f6f5945f",
+      "patterns": "6ddf58589b6f41174435acbbf6c92462210bf8ef59137d0e1ffea259a260db0e"
+    },
+    "de-b1-culture-exchange": {
+      "lesson": "32e183eb0c9ccaa93fc7c031965782834f5fbce5ee57515803640d3caf293e8e",
+      "skills": "18b6bcbdfca27e5dfca9b26ba48b065470cc0cdd3b8bef0fca412bd322e424c3",
+      "patterns": "e4ec77814bfb146af86af5c3276b71d9d73a61ec3a45604c5cf5281cc5de2246"
+    },
+    "de-b1-complaint-followup": {
+      "lesson": "0ba8ed9e536f5430b68330c820e96f8e59d1598065310106bc24fe4c3e58c57e",
+      "skills": "85d01a7cccc131ae337a56e370163437526c34b6fbcfdc1f8ecffc6a12f3a609",
+      "patterns": "51207e22bc44c7ec1ea43ab1a7e0b3ce6f860dfa54ca1fc683eaf7d9cc5d4d89"
+    },
+    "de-b1-work-coordination": {
+      "lesson": "d017b69b0ffcc0d0d982341456232bdbc0606b8f0f28158b4609b0bb415cd3a1",
+      "skills": "ab14f2b4b38dc5b7c51a365117c72108fdfff21b9d51661981fa0e50e47419e5",
+      "patterns": "d3e5200184f3b8b01e8622d69d90c5c653a58cb87a30e401a42cc160e7e147a4"
+    },
+    "de-b1-negotiating": {
+      "lesson": "1f53072dfd4aa4dc6e3f295d4c6b4faa622d28006e50170151f1ade04f0a89a2",
+      "skills": "ddaf761548a31a6a99204bf100b15b06dd7a5a9b6697c85923d6d815179eb5f5",
+      "patterns": "7c94d34c18023fc02ad438a3c88566fb3b0aa29f68dc7afc64b9a0ff89a206b7"
+    },
+    "de-b1-purpose-consequences": {
+      "lesson": "66609370d75f710100dda01cba744f75cdd911d1109f62e32253584967cc2b4a",
+      "skills": "4ec20b17ecf0e75a541cc6d9a73939867ecb0ecafbec4eec83d31eab6db428e2",
+      "patterns": "a53f28e0a2b6e16da988ea4084d2d7f4a5fd69b65c7fc3f240bef8fa785b1b49"
+    },
+    "de-b1-relatives-prepositions": {
+      "lesson": "62a37d8c6b147c3eaf5fec3bc3a4a9c20ebaf9f373848bf78f69da3505d2390e",
+      "skills": "7bd28a40c11a7379373363958c4190d4a3886495134a35739ea476d03b6cdcd1",
+      "patterns": "e7de0fd17a2bd746e5b8b1fe0ce6b45a6a97c13e4816457548cf120b7b62a8b4"
+    },
+    "de-b1-sequence-incident": {
+      "lesson": "fb33f234e1bdc15a0689f06cea1695559cb533c2e6b1687478256609819c2d91",
+      "skills": "c0a416574f377e32b4e2be69025448471b6ca1edc005548caef1f0b885a5561f",
+      "patterns": "d9e08a54e82cb4e0057ed652783ab75aa792594d55add8eb7c96ffe1f7c94ad2"
+    },
+    "de-b1-short-presentation": {
+      "lesson": "d372790df9faa22f90353ba1c84f769d09dd6388b733dd4a71adedcac3c14bcf",
+      "skills": "ecbb00913dafdfab39b4fd6b9494ea742c506073667f59051b51d9705d75eaca",
+      "patterns": "b7c368c2c9af2d63d03c3f2be233ab3fa81bcc970b280c986f9ff0ba02d60886"
+    },
+    "de-b1-conversation-repair": {
+      "lesson": "8388499f745aeb7915e78c9d65e8030647c6f3bd823e6ac757aef0c39cc27607",
+      "skills": "2e8592a76a61d256008b4dbec566481ed89738bf2219c91ddbba9657af856ddf",
+      "patterns": "949817af1fe1ded59bce97c1ac677b29ad8c8aed2dd1f2547972b9c504fd9697"
+    },
+    "de-b1-emotions-reactions": {
+      "lesson": "de47b92907e4c1e5ad03c11367ecaa61e04736222f3302ad8aa61c3e589ce87a",
+      "skills": "390498e81fa6b548f0ad61823887ec9f4ae58b401165765a35954a0b08551f38",
+      "patterns": "a1070a7c17784247f51ba64dc4841b281a37fcc1c6dd45ef9c7fd944f6617b4c"
+    },
+    "de-b1-advice-rules": {
+      "lesson": "c9e4544834bd2c1d7fe3828ced9f082287ca54bf56a953b76eb7b0bbec45bde5",
+      "skills": "59c5164ea24a1774b6b276c4ab46060f07e052c775d3bd68a87430647199c083",
+      "patterns": "a2b5420e98cb5f7d07850979f44343030c7fa5f64e5da0ced16a17568664397e"
+    }
+  },
+  "fr": {
+    "fr-foundation-sounds-1": {
+      "lesson": "d563fd2a097996b71c29e171002122004311dd2a30e70570c6e24799a50e7f97"
+    },
+    "fr-foundation-sounds-2": {
+      "lesson": "59bb730669fca71af07696dcba95a4e25d1473ac3d85acee04e555947fe3ab7b"
+    },
+    "fr-foundation-words-1": {
+      "lesson": "dc177bbea1be1af1dc7a8fa7fecab1251b3a4b5bbf18e03a61ca514749ade0eb"
+    },
+    "fr-foundation-words-2": {
+      "lesson": "0bc2a2abc205e61bbfda08e6cc34acc236fc30a2604405044fc3dc76b882b13f"
+    },
+    "fr-foundation-chunks-1": {
+      "lesson": "85178bfb8cb3a61fd99a50ee07a24a31b9d62e7061c9e973558b6fe0c71f2f19"
+    },
+    "fr-foundation-chunks-2": {
+      "lesson": "a08fd11d137b3a7d1a9e9ce69aa8ccca4ebbc419f52be499daf8e51f3bba22f9"
+    },
+    "fr-pre-11": {
+      "lesson": "c7b61a838fb7878f17e218eae9cf79f731340e828011afbd6e8f3302665cd4ae"
+    },
+    "fr-pre-1": {
+      "lesson": "47db52b9469b17e0f886f7596d4bc2fd9d3e4d47f4f8e8e934186c3e911a8d69"
+    },
+    "fr-pre-3": {
+      "lesson": "0f2727080d0698c226f03ca4cc4c5b96ed6c0455cdd79d6484d915701740eba4"
+    },
+    "fr-pre-4": {
+      "lesson": "e24de2dc26650619018a70fd62ea41ddc13b2c02a121777484678f790c78fd9b"
+    },
+    "fr-pre-5": {
+      "lesson": "a88f42dcf5a83aba2ad2e9bf6cc6cea293db3d4d5cbf2a5d6ec81899814fb566"
+    },
+    "fr-pre-2": {
+      "lesson": "8c5b280a8964f5d1f16071ac314abb1cb6af9646ffe8a308414405d884af4c3e"
+    },
+    "fr-pre-7": {
+      "lesson": "06ffee16ddfe7c48f21dcf0ab86de0e8a167b26aafbb8964904d4ccda0cb58c8"
+    },
+    "fr-pre-6": {
+      "lesson": "30c11e90d381a5a5ea535e11369b122b9f74e935ffd023c693805a48ec7a1f7f"
+    },
+    "fr-pre-8": {
+      "lesson": "60bea64a7dd15570335c3aa184a1d8b45e37327e85d29a97d3de169ff6949244"
+    },
+    "fr-pre-9": {
+      "lesson": "25d12a243cf340bb155bb308074e00fe2da96bea66f5d3b4b2f49c2f4781062b"
+    },
+    "fr-pre-10": {
+      "lesson": "b9b5f6ce6d113fa38c0e7e44287ea9cdb2a0449c7c6647842cae2b0e568fc1b1"
+    },
+    "fr-pre-12": {
+      "lesson": "d2bcaa37cc837ea2eba02c6eb9062a5a117f235eac463e813f302fffea3d28ae"
+    },
+    "fr-pre-13": {
+      "lesson": "3abd665d5c5c35af04434bc20f08c4a29ca2d9ce56e0c9e179ca7487f482564a"
+    },
+    "fr-pre-14": {
+      "lesson": "dce7cc76fa31cb03efab436ee63d849b1ccd6357c60c6a1c049b6536ac932b71"
+    },
+    "fr-pre-15": {
+      "lesson": "f55e28f6c900d2676c164384ef87de5ce821a68925928d99d6d032e35907a8a9"
+    },
+    "fr-pre-16": {
+      "lesson": "cd7c1442fe78fd41440f58b9ef451719dffebf77a8119072818fa006764f39b5"
+    },
+    "fr-pre-17": {
+      "lesson": "d4fb5602cdd6e6587d119fb064fde589f4af567731f2f9a5efa2b8deb4a92df4"
+    },
+    "fr-pre-18": {
+      "lesson": "e3e8a4df98c4a5417a7cd46137208f96706ac825078038d526d5fa30fe6d1ee0"
+    },
+    "fr-pre-19": {
+      "lesson": "0a3a050345b7faafada727d318d06587f8b64480d7e9fe558998e463999d1a62"
+    },
+    "fr-pre-20": {
+      "lesson": "fd482ab686cf25938e5fd562476b4ae2bccb270362901d3391e23f46d454f161"
+    },
+    "fr-pre-21": {
+      "lesson": "4fe83a643d411394630cb2767049d559dca9dc5fd79fc72f68541272a3e11d17"
+    },
+    "fr-a1-greetings": {
+      "lesson": "296a31e8aa712a58dae5dcddb12e9e73795b850f73c17d2144a12bbb20d55656"
+    },
+    "fr-a1-profile": {
+      "lesson": "ae2fa627decd9a19d25b9e2d8e189240e6bd3ee8cde2cfb1e98d945b608a6317"
+    },
+    "fr-a1-subject-pronouns": {
+      "lesson": "d305133f3b17c83159ec7636c4adf7b3b572b7929822156c9bf56a5b59e354b4"
+    },
+    "fr-a1-verb-to-be": {
+      "lesson": "e6b53fab9f22b6b0ed73c76d68ff1eb7ec8aae0e3d655922a22b3027a6b6f243"
+    },
+    "fr-a1-nationalities": {
+      "lesson": "cb9bfea688eb667c5d69fd1708d0e03ecbb9bf8ffa187759c66c9956b2eb53d1"
+    },
+    "fr-a1-numbers-age": {
+      "lesson": "57094f8f87710be506b0c80de6c8025beec16fdd5245e1027ce6b7c32d69aead"
+    },
+    "fr-a1-family": {
+      "lesson": "91269b2a644e1024384d46c6a401ca2d8424373222ee541a8be8db6aff9f155e"
+    },
+    "fr-a1-possessives": {
+      "lesson": "254a2fc6d058705643c840db0658d3df526f7bc657db7034ed5a66b204f2a285"
+    },
+    "fr-a1-nouns-gender-plural": {
+      "lesson": "4a1d10b4ffb3cbed1b5db0887f833c50f9621a815a1fd04a390eeea9c8787b1d"
+    },
+    "fr-a1-demonstratives": {
+      "lesson": "22a6ad0a69f490fa852c395b1f046687bd1d61617ddbca5b13eb6ccb0c557fca"
+    },
+    "fr-a1-descriptions": {
+      "lesson": "659a991b3bc596dc6971f3182acb4503b59408dbea8af1f5ef1cd159e192495f"
+    },
+    "fr-a1-colors": {
+      "lesson": "0b83b7ca909ff25648f0f5155db7f56c149411b888bcf87477cd9b88d95916aa"
+    },
+    "fr-a1-articles": {
+      "lesson": "cd84945af274b976d6e97bc7e4001ea95aadab9bf48a7ef1bdf88de480564917"
+    },
+    "fr-a1-simple-verbs": {
+      "lesson": "7d8aa893e1f26ce0c5da67707d3a37e2755919b4fe1aceee3b35a97277100cc1"
+    },
+    "fr-a1-present-tense": {
+      "lesson": "c964befa7facf6469c2c9a85b6f60a7fb6f1b5d51a73634f2281d2160584433c"
+    },
+    "fr-a1-verb-conjugation": {
+      "lesson": "c51cf984a6c000c72397e05ae740765d310171b3a0350ebb2c5566aa37c5fd7b"
+    },
+    "fr-a1-positive-negative-questions": {
+      "lesson": "193c817a1e51bfab9719222d511925bf7fec8929909638caa51372e7bf8555e8"
+    },
+    "fr-a1-question-words": {
+      "lesson": "3fe7ab1beb0d6fc3a058a0519761d8be70898bff25d08adf363012eadf5d48b4"
+    },
+    "fr-a1-appointment-time": {
+      "lesson": "4c333f1fae01a5fb01263cc7348ba01919b8d8be6a193a8ba4d91f3794032465"
+    },
+    "fr-a1-dates-and-time": {
+      "lesson": "5685b019c8e8e87c411da3d9cccc115485690b00d0dca096652892b84ced286a"
+    },
+    "fr-a1-location": {
+      "lesson": "0413ec3d48fea4aca981a0016b7d11db44db9a5841624e9ec9d4ece67bcfd261"
+    },
+    "fr-a1-wants-needs": {
+      "lesson": "daf8c879a23cb9a8269a1582b045ebd5de5d2656c72f374145abb4b782291c0f"
+    },
+    "fr-a1-ability": {
+      "lesson": "92533aff0b548e383e88bc8f0d52f41a68d87d8cd54d71de1d14e0cda4482dd9"
+    },
+    "fr-a1-prepositions": {
+      "lesson": "c0d605c9e3c6a00502614b83bd4c09d99dbfee2dab51f191f94549a8a7e8f17e"
+    },
+    "fr-a1-daily-routine": {
+      "lesson": "ba8f03c3d2b73c882c8e6b99bc48cb832191700870a2e68db81c4da00241265e"
+    },
+    "fr-a1-connectors": {
+      "lesson": "31066924340bb14b03296b3ae8415227dec799ff81f1aab0fdc62d5d9f0489ba"
+    },
+    "fr-a1-social-chat": {
+      "lesson": "36f437bdd7f7ebc09b6266d74721fe30ddba46acc903032038bb57f1a8c43951"
+    },
+    "fr-a1-shopping-payment": {
+      "lesson": "6b2747fae6cc31fdee3eaf22bf287a5d75efaa1f1425191cb8d307374ea219a0"
+    },
+    "fr-a1-ordering-food": {
+      "lesson": "078d09bd225341a03e180cc9361d2cc250c78ee3fc81b16908b5a2974ca8f889"
+    },
+    "fr-a1-cafe": {
+      "lesson": "b5af1fd667a8e03c74eaa55a01b86f3c347dafc082d15e7c0b119b1499dffd3a"
+    },
+    "fr-a1-directions": {
+      "lesson": "5a0d7f9f2d04d4005e88430f50cb3739c461651176cc6717604cabaa4e8ab9d6"
+    },
+    "fr-a1-public-transport": {
+      "lesson": "28ab104072347875018748e2fc6feb59eb7a084def1664f39c68007595c65d5f"
+    },
+    "fr-a1-travel-tickets": {
+      "lesson": "28f050e2e47bb024f80d13bfc4cf682554782f57bd5f42e424f066f516e4e2f1"
+    },
+    "fr-a1-hotel-stay": {
+      "lesson": "65f8e1e8fe7c117f4d664271340440b663ac20c6323f366f9b41e794a7eee811"
+    },
+    "fr-a1-asking-help": {
+      "lesson": "d09263538a1a752d981bf6c4e086000e78e0ff304dfdcc92e923b35cb0ed1b7e"
+    },
+    "fr-a1-doctor-symptoms": {
+      "lesson": "d581957084557fa2ef87fc9be270e13deff45a1e77c6254c235e34f3cbdbf08a"
+    },
+    "fr-a1-work-study": {
+      "lesson": "e92ba9cd0e6939f7091d4f05fb8ddff91478a3c316ebb54e459109c9cb8a684d"
+    },
+    "fr-a1-weather": {
+      "lesson": "a472d507878b1a6bc7c54cf63b1d286d9fb2bf098a6f29c290c68a82a4e04aa7"
+    },
+    "fr-a1-phone-messages": {
+      "lesson": "bc6e29323b19761e9690d3a13b53962698b0a0e37b5ace9ded96e8a69d2cb50e"
+    },
+    "fr-a1-invitations": {
+      "lesson": "8a182a838bb793545a89f673a39418ad3b4fe4a755dd0e373cc4770b369eb83e"
+    },
+    "fr-a1-polite-requests": {
+      "lesson": "e46b8fb038a962242b8757ef630f5e02e313d6f8d2e16b77c18869da5e67570c"
+    },
+    "fr-a1-instructions": {
+      "lesson": "981e4bf2598929fbfd212d4e698ebc39a4fdd438cc2d97d7f341ea78edcbc321"
+    },
+    "fr-a1-suggestions": {
+      "lesson": "f909dbfa83a2794883edcc64b9c178d73adbf6d6a7649dc3be7f896b7ef5fbf4"
+    },
+    "fr-a1-past-events": {
+      "lesson": "30e5df129a3639f41f5ae3db2620e5fb04d194495386d0895fb9ccc4d559fc4e"
+    },
+    "fr-a1-future-plans": {
+      "lesson": "fbb5ec3ce15991aaf2bd1c01b4a5b98c28af8ad90c1114bd835bcf8c39cc98ae"
+    },
+    "fr-a1-feelings": {
+      "lesson": "9d3f1f2be4903b10218d1e8d8bd3bcf79a935245d62c93ac929f3c0ff56a2b4f"
+    },
+    "fr-a1-forms-information": {
+      "lesson": "a96e501ddbe2abbc2342b7ca440371084b310e3bae027314abb7f8f184679db4"
+    },
+    "fr-a1-supermarket": {
+      "lesson": "0a9297648ee8d75614422514f28ab99e5a5126ac258d95081a4b149cf2c88c21"
+    },
+    "fr-a1-clothes-shopping": {
+      "lesson": "48fda00e30b94d0580a484ecb12b10000ad6c108bff931f46ed79d97158cc0ea"
+    },
+    "fr-a1-home-furniture": {
+      "lesson": "0021b2a2d7548c12c4c76182e3ed521a072e0a901ecddfdeeba08752c077a5bf"
+    },
+    "fr-a1-leisure": {
+      "lesson": "ad5ef41e515b73adc2dbd6365c3355cd5875a99a12c76ee97bf117f05b80517b"
+    },
+    "fr-a1-weekly-schedule": {
+      "lesson": "588ca25818317dc59e3dbb2b8e21cf2c542a00f85503a4555526295a9c7cb094"
+    },
+    "fr-a1-preferences": {
+      "lesson": "63ba5ac8ad953afaa055108feb2f207add6dfade7046c37240d3ace2b304009e"
+    },
+    "fr-a1-comparisons": {
+      "lesson": "0496772d8e66ab47830e3861071edd26493041eecda6066ccee1a2886821bd51"
+    },
+    "fr-a1-reasons": {
+      "lesson": "03905e1c8e6f44ef01e818fb0216d82d03343e57076543dd3f5d21620c248c51"
+    },
+    "fr-a1-connected-conversation": {
+      "lesson": "bc5af7d19a32bfbc891c059574c12cbbd4585ab97afc70072e124adc531a63eb"
+    },
+    "fr-a2-present": {
+      "lesson": "fc6efbe83bd8723f75bfdc5d791d852f7ae03483317fc9aaf780632bdb3b8894"
+    },
+    "fr-a2-routine-now": {
+      "lesson": "d7dc52fbe35619b995ff587a29665cf909817187d0f13e954ebe390e92a98085"
+    },
+    "fr-a2-past-activities": {
+      "lesson": "f9cedb47424718f2e425f1ab563b77f9a0ad0834dce3a72224daa312d9558a43"
+    },
+    "fr-a2-experiences": {
+      "lesson": "446f2de3003805a4a364afb7925a1382088b23a28bf94b23148d72363e04f400"
+    },
+    "fr-a2-future-arrangements": {
+      "lesson": "d63c13a01a9d8cbfdcf6d245e9a1fc185ad6adb6cd04a8c7572b9ca29adea594"
+    },
+    "fr-a2-shopping-return": {
+      "lesson": "fc8ea1d5cc0e889fb0523bb047da4e700b26611c75237eedddd4f2f10fae808d"
+    },
+    "fr-a2-comparison-quantity": {
+      "lesson": "79c5091c584a380e8f9f6ddecf07eb87909e55eaddf6ba64d7696e6b02a2961f"
+    },
+    "fr-a2-necessity-advice": {
+      "lesson": "eecc7ed19d5204bb509e36e889944329f4b6e9da96eb308720a04a557dbba0d1"
+    },
+    "fr-a2-hotel-change": {
+      "lesson": "9b196959d54ea3767384a845ce3ae53948cd93ba5095e81d11d1b9882d32ba39"
+    },
+    "fr-a2-health-symptoms": {
+      "lesson": "7e8bfdfaaef9a21f7057fe6c4997ae1819a7115864cdbc26e4681b46cfa48fb3"
+    },
+    "fr-a2-reasons-conditions": {
+      "lesson": "3056dca8a090c290aa1d89897db2fd6913ea7eda0e3f93cd51d5ba267987e532"
+    },
+    "fr-a2-food-preferences": {
+      "lesson": "e899a3a674bb3f54e41133cc9f4caa90cb0d915ae3c7b522fbccba83ea8b6ef4"
+    },
+    "fr-a2-housing-problems": {
+      "lesson": "9fddeb06dd05a362929f747923ff9321838dbf2bdbbf1afa2ce56cf38c05c785"
+    },
+    "fr-a2-objects-and-place": {
+      "lesson": "747545ed757cb8cf9052391585f607ef992a6e52d01d64c0b01f4901c267dcb8"
+    },
+    "fr-a2-belonging-relations": {
+      "lesson": "225101b39a0bb30cc8b28974c95715650220ad87f94362e71d54b3d931d76df0"
+    },
+    "fr-a2-story-sequence": {
+      "lesson": "7a9f7e5b52ac3db225d4427b22bf7e024e72df39a48462852c702b41b828b5a0"
+    },
+    "fr-a2-inviting-arranging": {
+      "lesson": "bc60f6b590bc055bc8daa4a2034ab5de8a36f77e33bed46d4d96f838fb6d84fa"
+    },
+    "fr-a2-tourism-directions": {
+      "lesson": "0b4fdc201c7a5d0c1e4e1b36cff32bfacfb6c80b0f67142e87295da9c1236740"
+    },
+    "fr-a2-work-duties": {
+      "lesson": "489492b6331f65c876c9d8e00b1e409ebe2369ef0d9c46853194131cae9f5016"
+    },
+    "fr-a2-study-plans": {
+      "lesson": "5294f8bc6df994d90bba0ac51369ffaea8d4206911d5f4b76d31eb53e75d3b45"
+    },
+    "fr-a2-opinions-agreement": {
+      "lesson": "db89eb893fd7b7fb7c059a75fc6c2a650e156e3b3c9504e4534a6bb2880ff905"
+    },
+    "fr-a2-leisure-new-experiences": {
+      "lesson": "8cdd97f333508b592a8d0658e257c4811cd064b7a3439d9da128b68b96014df1"
+    },
+    "fr-a2-life-changes": {
+      "lesson": "8b35239aba43f3739a244f8a6f349e046ca485a942cbea3e14bd07766f38af8a"
+    },
+    "fr-a2-feelings-worries": {
+      "lesson": "d6723ff4079ea9aece923911ca1c4362f011b755dbf1909bc79994d6135f3638"
+    },
+    "fr-a2-reporting-messages": {
+      "lesson": "7b82c3d6e1fc932e7b9b9713e9bbc203fd610120a8a6968fbdc769f1bfaa2075"
+    },
+    "fr-a2-ability-permission": {
+      "lesson": "77d75217dd758f62da82fdded69803391ab8f362161a6f37b587571d72933cb5"
+    },
+    "fr-a2-future-simple-extension": {
+      "lesson": "723d97498133057a08882327803abc2c4ff8afd4b43fc69da7276e8240e12fa0"
+    },
+    "fr-b1-past-story": {
+      "lesson": "a0d3f9ccdaa470376e20facc5c05142efa34912545a0d640b4ce79ac6004203f",
+      "skills": "9aac74e1082a3e0f823c1a5a2e6e2ff62f1078a161b1de7e26706f3da7817b80",
+      "patterns": "522a460d1544c2e51d2db71fc781a265e106deb35c9a6f7ddce3a851d0e61fb6"
+    },
+    "fr-b1-past-contrast": {
+      "lesson": "83c0d05d0ac79b93365d1f4b2317953c1cce21f20e8b16f18a3cb2f554672028",
+      "skills": "b63369d3bff54850bd5e3d320baa356c84e596a7f9b5b653fad9bfdf78845748",
+      "patterns": "4518055679bb9fb1b14c429716a797e33eecb5c0337974065d7b67a2d93b4fc8"
+    },
+    "fr-b1-future-plans": {
+      "lesson": "0f60ab02f3a7c34e2fd6f5e1878e648ab7b7b77966e3896a25d12a7a5749684c",
+      "skills": "ffac18df9a7bc238abfa1eb8836d9b80c145b3171242ed12cc6c9e80bf90b46f",
+      "patterns": "0041f9a222892fbe12d395ee216a953bd5c008d7156895a5401c6cd4dbe57190"
+    },
+    "fr-b1-real-conditions": {
+      "lesson": "cdd1dfc28a6de38b4316d39d515a17df8fddc096677f6ff5341690dffd8e7e25",
+      "skills": "ee3ce507220af20254ed064e8da22df74b9728effe80854ffb9e82e3a21bbdb4",
+      "patterns": "684faa9ae9a6b2436692e04ba46cac12f7a39a04626f92ca8c54c28f499e1773"
+    },
+    "fr-b1-hypothetical": {
+      "lesson": "64481432f23d45e406e6e69592e3f857ca10b8b9c168a57eedf7dd421e273bf8",
+      "skills": "c89c6c9386b8954404f6603163b33c42f3f0cc3aa8aa7c732964a97bdca31605",
+      "patterns": "dd1a867682ba8fd1c4d59232bec1c40f3076563d08f139b5b08a51b3cf5a0709"
+    },
+    "fr-b1-opinions": {
+      "lesson": "d567ea633436ffe4a75c1d63dc1965c90d862f1cd4c622831668a824f436e20b",
+      "skills": "c3d6a21332007d3943f2ee92e870401b21e6ccd7100bc130d2969a607bfaf7ef",
+      "patterns": "ae118cf06bf50f6ed7578688ba75da78f1f0325d9e86e4d2468baddfcd0dcc97"
+    },
+    "fr-b1-compare-options": {
+      "lesson": "5579cc2e331e053e6d518e829ad2662b8a9c2baf2dfce70fac6aebdff218c420",
+      "skills": "9df376cd98b1443bc69dc612b448338f9a892fe1d05760c64ae8130d1cd79855",
+      "patterns": "776f55734bcd79069ad94a073bb05cc6dea86ac10b4ec06bbe12f2eb6cddbba5"
+    },
+    "fr-b1-work-interview": {
+      "lesson": "cfce7b89058191c7dc77756af0c2542742a6c61489bb767d97c20f08698a3be4",
+      "skills": "f1e355308d75ceae3ab74518f659485ef0d0d6097b547b623c0b93dc83097fdc",
+      "patterns": "b98fddf5fb665c676315b29421d494b6c210b201573ab1556a57e3c2104e9ddb"
+    },
+    "fr-b1-study-goals": {
+      "lesson": "8b14b0c86b149869aae0b56c8f3d38b9a6493d8f3985b8dbf6259f3fbec9780a",
+      "skills": "946ff26ce4b2f0cccbc60cee6d375dd4f8762f5e6398ed330f6f13ce129bc650",
+      "patterns": "951bf8b3d065992bcb4b1ff69c50284e818aa6784cfc87a2c09a56c3f5a34b34"
+    },
+    "fr-b1-travel-problem": {
+      "lesson": "aa1a76a50c54da90bee670058fdbdc7073eab0d51a79afe8e895ae16bfc9375a",
+      "skills": "289778f8787be875313956c2c2228bd1b8485258318d8d8c462b46a8e9245b52",
+      "patterns": "6699597c781b10c007dae4aad46353c5bfd6fa5beea8432a2c56b07954ce9540"
+    },
+    "fr-b1-health-advice": {
+      "lesson": "45f02340b03aac7e690307bdda2ccacc49c90818bb8f35de54acd496b8cbd637",
+      "skills": "07ca99c7966c1b5bae4699f8c08e45b86e7e9beb2b838ae5bfc1e4e4941c2a15",
+      "patterns": "6fb7e8d0063976de4e84da82979effb00ae131e4349c84ff15b4f1bd763986fe"
+    },
+    "fr-b1-digital-life": {
+      "lesson": "8a28cee3ec772e649c9921f598b47b883fe29aea38541a0ff6b1228e1cd80040",
+      "skills": "37b2c8f290f676c02b9ddce2e954a6b9393f44c77cc17fc82f52145541632703",
+      "patterns": "098bb134415cbe7d628a016147fad48b96b96f96a24ca20505731e3c2471e349"
+    },
+    "fr-b1-report-summary": {
+      "lesson": "470706f50d0e0b1c47b17e301200c511187278d6964c4013f9cfbb522ed65262",
+      "skills": "d3d24d550d636b1eb921a6ac17e2d087cd52cfea3162fc997ebeda957153ae1c",
+      "patterns": "c43eba79394d281a0e57007c2a3046ad90d9a646bbc620ce5a96942d2dff6e10"
+    },
+    "fr-b1-relative-clauses": {
+      "lesson": "d0eeaee75c6332d58859a2c384eb368c98cb003e22801c1144648cf1d8b803d2",
+      "skills": "2938915b3dff9a239dc54bfab5200683e33203211bf9a058a0ffe3a030b9b9ba",
+      "patterns": "eed8f701cdff1cfbdede4cf66a8b297ac35048ad4ac53d2820a3f9d7946955ad"
+    },
+    "fr-b1-process-passive": {
+      "lesson": "c96ab0f1516835833c7854978f586f2128fe335741d574b28787a42a7938f0d5",
+      "skills": "fb6b804e56d3b5d4ee77f9e5817420522648062fc6ea92ec4886183e8f3607f1",
+      "patterns": "7647dddb1a15c53db78dfafd072e638cec35f0898a25ad5a0799c08dfa486610"
+    },
+    "fr-b1-inference-past-modals": {
+      "lesson": "561b8088b1e99a51926a0684dcbc647a2a89ddee094145de3583c74953f18fbe",
+      "skills": "86a5d53bb2dbe9d3a658e5fd9197ccdf4b5464b436e104ed89ecebd05cad304f",
+      "patterns": "888e4c6da5cb96c93320543aeaf1d8bcd42b0ecafd965f061d74d6f349ed11e3"
+    },
+    "fr-b1-news-events": {
+      "lesson": "956a04c1e71222f4616ccc9c2dc456909c4261cfaed372fe322d8667e50fbea2",
+      "skills": "fe6e22b7bf6880c205c2d86666e6ed7179e3784f4d1353597704d8b6516856be",
+      "patterns": "381586c014adc710d585b5483c6df811ae3c7679ac278247199d1d402e686322"
+    },
+    "fr-b1-culture-exchange": {
+      "lesson": "5fe4aa724824f978a013dd11df8783170d7b3ea102c1783f3e111237f962209b",
+      "skills": "5b97ffcf1b4056a2dcac0440223f8b190aba5da0f0755e4dee70f0c8745e8390",
+      "patterns": "fa063a01417b7b82cf4673c701325edfc04dfa0153d66f6b989635cc965a2519"
+    },
+    "fr-b1-complaint-followup": {
+      "lesson": "9528e7ab53c23d997746e67ebf98229dcd158331edc3bfcbee673125d2c15079",
+      "skills": "4722216fde32656934d46ee16dd4f436e58ec8cddf3d77c4cc556ffe0ac87785",
+      "patterns": "ca1b286cf29a65d627c83c787d66d6c0d751c591abb7d8f3bd3cf455dc1c00cc"
+    },
+    "fr-b1-work-coordination": {
+      "lesson": "d044273a1cb93a9264062111f123584527110d42a830e188fcc470f79ca7f846",
+      "skills": "50438a55dcc6616772588da316abf1aec36d2d3dd617a5fa1bcafe0d4c042166",
+      "patterns": "d8ebb332c4d949d2134fae0a19b02df5adf0d4ad8d49657bbc2b1aa66af7be72"
+    },
+    "fr-b1-negotiating": {
+      "lesson": "7c11a307b486a270ba4efe0344ba4d13a98f486494dc58caf283f5d9485bf751",
+      "skills": "859b0aefffb2453b632cd3eec5b6281f5aab841321ec3411558ae8fac569ae61",
+      "patterns": "2894f86a7f401f612cf844d0c8c2e148af208e996f7c69e00d9322c503c2c1c5"
+    },
+    "fr-b1-purpose-consequences": {
+      "lesson": "f03a970a1cded67188a42106d9f3af57ea04a30e7f0e193156a4b17ff8a71880",
+      "skills": "c13a2539d6a8a0e252f6aa5994f67be5245be2ed742749e237327fd055d99efa",
+      "patterns": "d2c92f97b69ee7c9708ce00234cf13615171a545d0cdd055182208a82f269c43"
+    },
+    "fr-b1-relatives-prepositions": {
+      "lesson": "fdd8578925ba3fcfa988b74649d79c4a21e98261f670305efd280145e2b95366",
+      "skills": "ba2f1974a01e1e71454d81ace8734cfa5ba9062ad6bc75eb2f7341d09d0825ff",
+      "patterns": "c52eb51237453e8f6e650846a2752845408acd59e449fa627bc598a9bbf33be8"
+    },
+    "fr-b1-sequence-incident": {
+      "lesson": "81343a8b09357eb857082acc33cf2580a0d448537a6bac361cce69c8fa5e1bbc",
+      "skills": "bb3fcb734175e93000c69b5eef50c5762550eb40b022ef0dfc2bce927d58a4b4",
+      "patterns": "241871e63ad55c72ebe3a31b696239b1bb4d80738418e930a453c665e1045893"
+    },
+    "fr-b1-short-presentation": {
+      "lesson": "49464894f6922e1cdab58a8e48480c013347700b90a3fa050e522a171482c753",
+      "skills": "70a40d0162e5ea60298414ea374b2cb5b7b49cfb12c863b1e547af3fd80f13e1",
+      "patterns": "be06e0d579ea9154a848e28b42c21604e64bcfa0ab7349b5346eccc34e1ac131"
+    },
+    "fr-b1-conversation-repair": {
+      "lesson": "ae6af77c216623041fbd94bb855ccc1bc6e1fa4dd067e3b1250b199e181c1ddd",
+      "skills": "02c9057fa4125ebc0ab8465dfab0d6c79a24eb9409bda5b5f8cbcc4008a7cc5f",
+      "patterns": "18346455a541942f95fb93e060c51b0bd60b10b98af9adbe964a631212738963"
+    },
+    "fr-b1-emotions-reactions": {
+      "lesson": "f7ce9ef9280e06060731e5b37c0e42daf539663d128ba16870c0c9dd76f953fb",
+      "skills": "981473655b7c1b9bc60e8c4c3b2e9fc0f3f76880d5018951c00abd2650fb107d",
+      "patterns": "c04cd4d5bb85ed1f28ca5a095df47f688c94d141ee8e8f9230f5696cd497e66a"
+    },
+    "fr-b1-advice-rules": {
+      "lesson": "99153e9bb85231732b78b5cb504b163d2beec6fad4faf05b5b95536e76493a56",
+      "skills": "9509616a39953f7e1e41370d560d1dbf54cbba61d321b61efa4cc857c138ae14",
+      "patterns": "dec5295970ca8ad411f3f36cbd57320c156ade87e914c0ff7861cdd6dfb210a8"
+    }
+  },
+  "es": {
+    "es-foundation-sounds-1": {
+      "lesson": "82cf7339816feaefcec9177e9effdf27e85f7216b7a898bbcfbd5a510ad2b5fe"
+    },
+    "es-foundation-sounds-2": {
+      "lesson": "a13415e6a0498dd8f7965727e45e527b4ad820b5b93afb28b4619539d841cca8"
+    },
+    "es-foundation-words-1": {
+      "lesson": "b97e079a4b8f1ee39aa8680aa04ad5e2ad0d2a02378109cd0b92282adac52260"
+    },
+    "es-foundation-words-2": {
+      "lesson": "82e6d3c56af1ab9d8516f1c89e59ce816328f89ebedcde3512fca4604570be48"
+    },
+    "es-foundation-chunks-1": {
+      "lesson": "d215d39019a0060290342449611d2061290f1ef564a50d4b0aaec94bdae90900"
+    },
+    "es-foundation-chunks-2": {
+      "lesson": "ae74011b148274a7022c4061251101ab07eaf29d14912cb2265b2f6d9d135fdb"
+    },
+    "es-pre-11": {
+      "lesson": "33a341542d2453bc90977b28f2aceb84c932032ef3c006ed8061678227a9c8df"
+    },
+    "es-pre-1": {
+      "lesson": "b6a77d54399be6ab5eda287dd3f9e3b44838846fca6858b92827957089987e2c"
+    },
+    "es-pre-3": {
+      "lesson": "47a025f4888f44351597dbd1426ca4a0b1eec87cb3866c8f47f5a4174458c59d"
+    },
+    "es-pre-4": {
+      "lesson": "1ec5228b4c9dc28023135d290f60dccdc910a649567654f7a37882b04dd7c2a6"
+    },
+    "es-pre-5": {
+      "lesson": "8cfcd919cbaae91b8b9dc6ccff6ec5cfb8c6a4f28a5eadf782c43f69dd6a48de"
+    },
+    "es-pre-2": {
+      "lesson": "076161ed66d20246fb4dc9037744a5bb1844d87c35803318faa067194fa8511f"
+    },
+    "es-pre-7": {
+      "lesson": "886d7c8fbacef3bfc517568a717dc1ccfc00df92379711c05adb68bf67fde7a5"
+    },
+    "es-pre-6": {
+      "lesson": "92edd989b116457458a2519c3c462c51132725e8c15211d0ceb182fb5dad899b"
+    },
+    "es-pre-8": {
+      "lesson": "b9f4226b353f9ee17633bd0d844bf516a85b26076dd07528c36ce4cdb00832f4"
+    },
+    "es-pre-9": {
+      "lesson": "fdfa936887ef7d1770198ccd91fb87aaef5d8c71e118eaf40d06562f3ab28454"
+    },
+    "es-pre-10": {
+      "lesson": "335bc902bf52166002d36010035e6b816b43091d865cb78184fa0ec02a46b826"
+    },
+    "es-pre-12": {
+      "lesson": "f2da20b4f6ef5a86b2f754cb96056f8d50d3c2652fab35721989acbd66d86c29"
+    },
+    "es-pre-13": {
+      "lesson": "cfd96a43ef1a994201190824fe7328f7854df402eee97563e90d0c5094264ef8"
+    },
+    "es-pre-14": {
+      "lesson": "fb46a71f81ec4fa85bde0ff80ae68e28cc3881b464379ac15f2919ce2d88cfcd"
+    },
+    "es-pre-15": {
+      "lesson": "3aa0672b25ade5b40c334b9566be437853354cfdda78682e2727c8f496f29c04"
+    },
+    "es-pre-16": {
+      "lesson": "5c762ec66185e8753b71e3ce0572146880946a699350d872c2547d9b4eb1c5ff"
+    },
+    "es-pre-17": {
+      "lesson": "f14319662df4315800c26aea2d5fdb94cb013a1d9d9bb9a0009dcc09ed097d5e"
+    },
+    "es-pre-18": {
+      "lesson": "03e6ca6f99a1b375e0dffdceaecd3607c323be6363d00d0a70cf74a750c318bb"
+    },
+    "es-pre-19": {
+      "lesson": "e41a09d6129ad6b93eabb0cbb8dab6966ce98be0346e2a7ba81e4d7b5e3808ea"
+    },
+    "es-pre-20": {
+      "lesson": "eee7a28a042b5dbe2a98e681d670da3a5acb5a2f16a11f558b15ceb5453ad1c0"
+    },
+    "es-pre-21": {
+      "lesson": "82db3a12e3067bb5e32db4b86430242d01d56120514d24500085cdabd856ed43"
+    },
+    "es-a1-greetings": {
+      "lesson": "47c72bd10f98bbc9f26ee169d11500f941997092b6089d216fbd4dfc539a5d5b"
+    },
+    "es-a1-profile": {
+      "lesson": "31b7e721a2563e6e4a7af4f4f0281c0f8719a70197d3983f17b8609fcd1de647"
+    },
+    "es-a1-subject-pronouns": {
+      "lesson": "87bd6a358580756959f20f1deadd45aea3a81a1beb5139f386a4a6db2126a522"
+    },
+    "es-a1-verb-to-be": {
+      "lesson": "3a9a1903acf61a77a39133312846f67e4a63258092a81f5b579e18c1467ae102"
+    },
+    "es-a1-nationalities": {
+      "lesson": "a21dd0156897f6887f1f589b20f02d98e405c30cce1c9ed56edb15418f870427"
+    },
+    "es-a1-numbers-age": {
+      "lesson": "3e32d9645e4d955f87fe572e3336d8f79dfcb1ef158a52e5357ea3c8c9c8fa8c"
+    },
+    "es-a1-family": {
+      "lesson": "e4d249a5162e38fec8bd97800e589e20cf2ec904c09ac2467bb5fae80d779c58"
+    },
+    "es-a1-possessives": {
+      "lesson": "cf49556f4c3270624588df58cf82da4ea3be4bfb6d748c6c14181478d90148f8"
+    },
+    "es-a1-nouns-gender-plural": {
+      "lesson": "a0403d3707591ec21d69ac9eb7d6359b8ad0ce3006a6404c30dc97f820c0dbb5"
+    },
+    "es-a1-demonstratives": {
+      "lesson": "d609ecfce46d46b0580455a99c86a7357d18530f2a4c4f989127ba453d43d325"
+    },
+    "es-a1-descriptions": {
+      "lesson": "95dafacfa10ff9942cfeb88cb18a132162da5cec7c8eae0a1d4bcef96fb889bd"
+    },
+    "es-a1-colors": {
+      "lesson": "185fb0f4230f28ffd9f652c7439d511b8b321c384f651a9d058511df2d951255"
+    },
+    "es-a1-articles": {
+      "lesson": "261f3230f56160e07854d2aa5533cfca51f276b7fa7a21177e84c300618e22cf"
+    },
+    "es-a1-simple-verbs": {
+      "lesson": "f7a4e61ba6eac58b20ccebd149e9710d6944a2f52ce607b09bf7a250c4044f69"
+    },
+    "es-a1-present-tense": {
+      "lesson": "d00bd4ff2b2d957bb1c9d07729580aa3f8d53c2338b745e02bab09b903fadf01"
+    },
+    "es-a1-verb-conjugation": {
+      "lesson": "3c410a4a346eb7caf8274e3e525e6082a74dbe7852f89363629fa9fbb0d7be59"
+    },
+    "es-a1-positive-negative-questions": {
+      "lesson": "52470a7ea1e93602317d555725ecf51864b74d0e6afb9c94994d0e6f2ed9317c"
+    },
+    "es-a1-question-words": {
+      "lesson": "140f037ae44a0edfbdf8cfb3d834b9279ecfa61fa0127966ec773abf85654ad2"
+    },
+    "es-a1-dates-and-time": {
+      "lesson": "a5802955da35669ad5754ce6af62a04232f327a2381af73a09f833164f1ff9d8"
+    },
+    "es-a1-location": {
+      "lesson": "48e7ede48339cc1e1ab43e7f1b71724464cb56b0031df68e8b871a9d63f83a3b"
+    },
+    "es-a1-wants-needs": {
+      "lesson": "4cdf263b6c9f13231451d81c8ca2af17052e4c48e600b7add3921287b40f91e1"
+    },
+    "es-a1-ability": {
+      "lesson": "413e890bb81bcbc1c19cc27b948b67d3b8efc07dc6a2a684762223908bd6575f"
+    },
+    "es-a1-prepositions": {
+      "lesson": "2bcaea6553149e15cc213bc435003d4d410e61619c3af88e60ded05ccfaaedd8"
+    },
+    "es-a1-daily-routine": {
+      "lesson": "ce258f02e448616f2ed9eb0f5ec1ab221f1a1b474a0218e7a45c9b6e2dc8e2a9"
+    },
+    "es-a1-connectors": {
+      "lesson": "06038bf36d1001cdc96400776e86a8a9efb6c4792d7ba2dca02eddae7965b7c5"
+    },
+    "es-a1-social-chat": {
+      "lesson": "5b22787bb6b41c7a7170875592335f6cfcc504d5d93736b0eee7288a6bdab538"
+    },
+    "es-a1-shopping-payment": {
+      "lesson": "c3ecfd16a9687e9a72a15563f6fc609a432e352e0591c6c85e39a680fbc5ec2b"
+    },
+    "es-a1-ordering-food": {
+      "lesson": "0c01f20b624ff19d65a310fa737457bfab48642ad4ef6dc8ac136593d69fbb1a"
+    },
+    "es-a1-cafe": {
+      "lesson": "1d98318f53d48446015e356f60587c7979496ac609538fc12b4283295255eece"
+    },
+    "es-a1-directions": {
+      "lesson": "c468ab9fc98571351977586ca5c0353b0d43cfa924e56f335b81f24afe8211cb"
+    },
+    "es-a1-metro-directions": {
+      "lesson": "0d78bc7cbb8e5634b355e8768292a119f43f4870456115b3c6422e9e6f4b7f4e"
+    },
+    "es-a1-public-transport": {
+      "lesson": "f9aaba6b28ef399fa7ce50441d650fb05bd868512a98ca15020058a8398827fc"
+    },
+    "es-a1-travel-tickets": {
+      "lesson": "4ef9a9d239b0d8059828698fc7c77dcb0565f2814a2bb2fdcebadb55f1479f48"
+    },
+    "es-a1-hotel-stay": {
+      "lesson": "cbf994348e702ad0c4a6457af82e8a68a538b197eae6bf776caea89864b8758a"
+    },
+    "es-a1-asking-help": {
+      "lesson": "761495ee4414a07c5652ca0bd46e3f6ba6d960f8ba2e4737e42317a1e82d3e66"
+    },
+    "es-a1-doctor-symptoms": {
+      "lesson": "efff1a13416e0fb3cafccc541015a8b373c02a645ac64b1e552cd32b5d9e4a6c"
+    },
+    "es-a1-work-study": {
+      "lesson": "d04432fb6f6a82f5bb3fe4c69c82eadff2d3302f8848489530528b1ada5b9a6b"
+    },
+    "es-a1-weather": {
+      "lesson": "b06a0f5af172c5d23b9a7a849fc0a13bbf65014fb0a507592ff12dea6b2fc5db"
+    },
+    "es-a1-phone-messages": {
+      "lesson": "5a70a8c9a2a7a5987b1a6e3622f4147cfe75570a1ef59b6cc7eb5d54306bbdc4"
+    },
+    "es-a1-invitations": {
+      "lesson": "918bc6997cc6b109122dae189ef5c6229fda32c2cf1f747eb20c51c0ff0448d6"
+    },
+    "es-a1-polite-requests": {
+      "lesson": "f0e859e610b7e145b0dc306e8cccacebdc05364dc29d672e5b0bad0489258f28"
+    },
+    "es-a1-instructions": {
+      "lesson": "33e7c1ca221cbdbdeb67f49baa179ab935fc7633fb609d0334b71c25575f82ff"
+    },
+    "es-a1-suggestions": {
+      "lesson": "770fee9b4147ac5ec1c8c832d1f90e3792d6a15f7168fd8f293f373197e800a8"
+    },
+    "es-a1-past-events": {
+      "lesson": "782be29a43c2b5e537f05c87e55e880eb0bca8992e325cb0350641c41ecb85ef"
+    },
+    "es-a1-future-plans": {
+      "lesson": "69a1a89fbf8627d55297c19027b344d52c1dd12e3ed547fea8b065d0123fb7c6"
+    },
+    "es-a1-feelings": {
+      "lesson": "13666ab15d3c05730e1599d9bd4e88740c44ba1c405fd210c46a62cfe8a7d170"
+    },
+    "es-a1-forms-information": {
+      "lesson": "e7f9d351480758056b2ddf57077e0ed5ddf28db1c3fe8823cd00c6b11ae20f61"
+    },
+    "es-a1-supermarket": {
+      "lesson": "046d60aee84bdd138192c046b0a589c52e629ee6d195201d351daf4405fe8d11"
+    },
+    "es-a1-clothes-shopping": {
+      "lesson": "0c28faf5ad3db2d754c6bac6f06f3a7baa049730149b47fc937cd142ff5a4fff"
+    },
+    "es-a1-home-furniture": {
+      "lesson": "4e96cb995602d88d22e8324fdf18e3eae33fb912e5da22e0f29fd2815add2f4b"
+    },
+    "es-a1-leisure": {
+      "lesson": "884cea5e8e38b0f8607d26eca337ac04d7c6219099fe65acb66e83bc77a615a8"
+    },
+    "es-a1-weekly-schedule": {
+      "lesson": "b0064a39e5f7a9968076178719ce9823084b58d18df0a75a99e45688738027aa"
+    },
+    "es-a1-preferences": {
+      "lesson": "e8562f141b2085822190a0e124d1bdf82204cd10e241740857f08bc5c1c71238"
+    },
+    "es-a1-comparisons": {
+      "lesson": "fd15a63f3429c3ce3041eeed40566b9549d920d5024d6a4297cfa6c8eeeeee65"
+    },
+    "es-a1-reasons": {
+      "lesson": "d17b079cbe2e7dc8ecdaae284d7be536445e88d6843a0488ba22d70b17682e93"
+    },
+    "es-a1-connected-conversation": {
+      "lesson": "f60f0d04cf6a4170ad9404f7ac601eb194dc478f654ddbd8a951a9787a674787"
+    },
+    "es-a2-present": {
+      "lesson": "e1ec3fb90e63adfca8cfaf5946fccc59cfea9b7b709b6c2a30e33a8be7afc816"
+    },
+    "es-a2-routine-now": {
+      "lesson": "bd89322634b91b5e408e090990d036dec524b47af99f19582668d7f825a220dd"
+    },
+    "es-a2-past-activities": {
+      "lesson": "b4e5d203d3486ae33a45ca8e3ec55971cd6ca098472efc2ef6d813fd89f0995b"
+    },
+    "es-a2-experiences": {
+      "lesson": "cc823771ebf57cea4b2e655f2cb90ed761354e85df195fa9af6dbc939b1f56a2"
+    },
+    "es-a2-future-arrangements": {
+      "lesson": "a7017c9150cf6b4e2a10f7dea0d87638f999d5c2ed48ec22e6c21e0c78ab668f"
+    },
+    "es-a2-shopping-return": {
+      "lesson": "85674522c9eb0a98330941e13d523defdf7941d3f1fdaf25e99c67fd0e68c2ad"
+    },
+    "es-a2-comparison-quantity": {
+      "lesson": "d9fce07d95fc507f608dba6281bedcd82db05f7ebd1b67c0702af2aca551b563"
+    },
+    "es-a2-necessity-advice": {
+      "lesson": "4a872c611923cd287e18804028b16afaecf25e001ef81d62f70b0b6dbf5bc0aa"
+    },
+    "es-a2-hotel-change": {
+      "lesson": "f0bbfb21a1809a80403ba4f25b2537d25725a0e4eacbe2c407272018efad15c4"
+    },
+    "es-a2-health-symptoms": {
+      "lesson": "24bbd63c8d66f0d0d519f39e21562583b7dee492f7e9a972f9470de146d3e3f6"
+    },
+    "es-a2-reasons-conditions": {
+      "lesson": "05a7658aaa8e9d1231fa00136233d844761f9bc5c593d389f192a6d2e947cc74"
+    },
+    "es-a2-food-preferences": {
+      "lesson": "90c273e7822c97db0e5286cd3b8e01179747def5a5dfd12b3b2f5ad468ce19fb"
+    },
+    "es-a2-housing-problems": {
+      "lesson": "0a440c4cb74702def9f83f133d93751835eb95b58398bec2c73e5af6ac316152"
+    },
+    "es-a2-objects-and-place": {
+      "lesson": "0d04fa85e4cda092f3709b2480e04b46b4c7cc366cd2ef39c03330022bb3a017"
+    },
+    "es-a2-belonging-relations": {
+      "lesson": "9451e4eb9d58242783ad14574cf96f2e126e2b033bce7f2fad34b5be1be3cf2a"
+    },
+    "es-a2-story-sequence": {
+      "lesson": "d490cdfcbd9a4141610f1bc2ba553c8f52e3ff77480b3b7cedb16048d5a3a311"
+    },
+    "es-a2-inviting-arranging": {
+      "lesson": "5b7f4c7172c29645f82802412b2923d82ef87b2fccd7df3ef1ac997a2ebaab20"
+    },
+    "es-a2-tourism-directions": {
+      "lesson": "4251cdc0faf2d4ef4972d41c3c3e55de0e13511416cd06c433c8a15a9ef7f4d0"
+    },
+    "es-a2-work-duties": {
+      "lesson": "b0da8a70db158710fb8c186ed20114788c9001cb94e2a5fd7e96460e1e81651f"
+    },
+    "es-a2-study-plans": {
+      "lesson": "e1418530ae71187f20afdd1a90ec03223294d3534bd10258d01753cf3621dca3"
+    },
+    "es-a2-opinions-agreement": {
+      "lesson": "7bd10f1e27464cac4fc1fe971e42fe1e483876235a30aaa7807b5923b4fe1103"
+    },
+    "es-a2-leisure-new-experiences": {
+      "lesson": "cb963cc948efb53cad045f6bb940fdcb18c875f76125c23dabaa1399cde5b1ca"
+    },
+    "es-a2-life-changes": {
+      "lesson": "b37b7a9add023703d976fa3dbc0756a7fcc52b18f4068b74ba81f0c65a3a8879"
+    },
+    "es-a2-feelings-worries": {
+      "lesson": "1b7077136c4daeea24b0fdd84c02cb24845d31801ddb23a7caf32879a47ff00e"
+    },
+    "es-a2-reporting-messages": {
+      "lesson": "29291aaf3a941a92ce715df3bac6fc18403ccb32f1350d2e6c0e93962604b46b"
+    },
+    "es-a2-ability-permission": {
+      "lesson": "aa6bed3929c356963d07eaaf590a4d758ef7d902085e095d1a86fef7232cd1da"
+    },
+    "es-a2-future-simple-extension": {
+      "lesson": "568eca7bee726319e951d973f78c3067b1edda319b8473e83b795b16e0bdda2e"
+    },
+    "es-b1-past-story": {
+      "lesson": "b5ac96fdf9b98888e055268dc61497641c8b3a83b243a83de52a7424e85bb589",
+      "skills": "a4ce0508584589341a10c1caaa044b58615ea9896b5a994b427b97f5c7b1ebcd",
+      "patterns": "8ef20af779d61ed8463468618542df3ad88a5bcbb17ef055d4bf892f1d413d5f"
+    },
+    "es-b1-past-contrast": {
+      "lesson": "02927d2f3b952d09cdea27a5c24317991be6a2834ad5d19b5479b06cd49591fa",
+      "skills": "a98dcf523b69cdb0426019121b5aacc8e8fdf3fb3066517b837c40c7618259b6",
+      "patterns": "a6aa5ebf46c7ccaa83a4907cf3fffd4c13b6bc73d2f645c1a17e23297038e0fd"
+    },
+    "es-b1-future-plans": {
+      "lesson": "43148ca1392bb964cff1f91805344abcd0bf10c5b0a47b53de746a265acc6334",
+      "skills": "cde858377425e45fb2ea23a4986e68d8503437ad446845a92552bb8fa9ca06fd",
+      "patterns": "211df0c085aa6f978ab93bbc9a8b276c8d713dfee41e226328bbc5b64b62d534"
+    },
+    "es-b1-real-conditions": {
+      "lesson": "1e4932cc76c068d7736c4a7cad0f8541fbb166466d5a293543bf7b23977f57ae",
+      "skills": "2245e83382938ef18fe497e1d1c83bb600e9ddf806b359ef102e59937cdb96d5",
+      "patterns": "07617af93dcdd18e4979b6c2df66205fc0c044ac31f3d05fc7b0abccf6beab95"
+    },
+    "es-b1-hypothetical": {
+      "lesson": "2ee44bbac94a95f5ebc25a08a0966fe0ff32057cc6b2fee46d2907b59ba74e0b",
+      "skills": "78736306153a81cba693b66e7e7d14515e45d7931f4304b4b7e5a247ef2c1637",
+      "patterns": "e8e80fd072d76438aa1b6a515799f732509bafb689f82df8a9137c16d9682b80"
+    },
+    "es-b1-opinions": {
+      "lesson": "6b8d4273fd8190f9951727c933de5de7b1cf7d9a2f2ffdc8bf8dfd054f0d6127",
+      "skills": "dd107c5c9790babfcd5bcc7c702a7b78bca6514d8e84b9164c0c4fc0589a5912",
+      "patterns": "41a7f54f109bbce40fd940fe9d88b6bcf6599cb0c7841c092a3c2e45355a3d2f"
+    },
+    "es-b1-compare-options": {
+      "lesson": "9d40b515d4d202a0b551bf2c9e909a38fd1be263a7f159b9ad966a3ff4edb332",
+      "skills": "b7d8ebcf832509f365a85d709a6c417c2426929c2a57dc91ebb78cb931ff8292",
+      "patterns": "3afd016529b7915b1b5b7a0a3d47466876c6eb76bac539ccea9dc9ca61d7f1ce"
+    },
+    "es-b1-work-interview": {
+      "lesson": "baeb69a3ba9a165f79ac30094b2e96e4cf70018c28bc6ff4bd99c4d6215985b6",
+      "skills": "b4395ffafad11f670ff33f36fa003e8c678bd10662c527a6a7b2da4190a8345c",
+      "patterns": "a4ef985a59171a37082f64fea2c2efe17a0daf9ff9fe49b48779decb398b36b5"
+    },
+    "es-b1-study-goals": {
+      "lesson": "c1e0471b5e77ba161175cd64a444c54d4dbedec5551c6ff70bb8c4d71eb1fcf8",
+      "skills": "e083215e45fa91459098d2787e2ac0eace5ec3c782dded8d161331010287446b",
+      "patterns": "a19a9139596d93f34d9641c4e5f6ac7bffda377b24d5fbbf749f0a5055c7fe6d"
+    },
+    "es-b1-travel-problem": {
+      "lesson": "340e7aa33e8c0ad2736d150093e2a233bbd8ef8e64aaae44542e0b9f3fbf78fa",
+      "skills": "1aab786dde4da25c4e176ebbc4fa15e281114517398354fa2a92d8b6eee5e482",
+      "patterns": "542ec5e95749c43291eaa7edaacef5c9c7e5ceba8ba088ce2b71cbea064a7fd3"
+    },
+    "es-b1-health-advice": {
+      "lesson": "713a2225236e27b828baca909c3787ad20ae3cc832f42195d2e55b1ab450e2e5",
+      "skills": "10a3906f62ab1471b6310924c73111b97b0edbcb8e2ce7c7b2f77acff5621240",
+      "patterns": "c9a1ecbb84f8924a71cbe251ad6d76d07a1a176dafa9402edf85af9c86a2bb4d"
+    },
+    "es-b1-digital-life": {
+      "lesson": "e1b4e187f1890422ab6af846a6190084f373cfd97ffef0f872618b31ea2a0c5b",
+      "skills": "a6580e0a4f43b71f4958fd7baaf47e5ae68325d5a9477ffa649addada5d39092",
+      "patterns": "5ec1824c53441f9f01db27b04b7fb7f61abbf04f50afbd3d8c36e1440d452f33"
+    },
+    "es-b1-report-summary": {
+      "lesson": "42d58701b4f98958e27ec5412e833e25f9168473896bd8726b19f0c875055c96",
+      "skills": "23afe8bd03b842fd0c44ccf6de0048ff825fe34535725bf961170af73674cef3",
+      "patterns": "e3233709bf0a7f332f53cc4f9d5e3c2587899e439ab5f6ec3d757c8bee8a87c4"
+    },
+    "es-b1-relative-clauses": {
+      "lesson": "41278235359ccc55a41b5b4829e74e9091b3b48b31717d5708d9dedd2e431e6b",
+      "skills": "44f58c28caf8e997b007e965708f106e50c039711d2611075f9cb43b2871b971",
+      "patterns": "d75f648ff82651f8b65912cd320dbaa044a0f54c863be5714fe0ce23469cbc93"
+    },
+    "es-b1-process-passive": {
+      "lesson": "d7387a75c89880a5332a81b0558a21f3464a98dd702fcbb7ba57dc86dd2c9dd9",
+      "skills": "896dd61dafcc8d533e4ae3da0c9b8245df9c0a91781e948ad9943125dc7954af",
+      "patterns": "68e34d9b38e73e2867fcab2bf65a271d76b6cca3fe6b1785636b35678d3f0ef4"
+    },
+    "es-b1-inference-past-modals": {
+      "lesson": "436666a131b4d691e63e14bb77fb09fb241bb5ef9aa574374529dc12199f2d34",
+      "skills": "301f99b3e90af8ebfb27251186b7c2cd82548ee6874a15da7beca7c7a1edd56f",
+      "patterns": "dba29020510f44d9eead077ca214b5d8c6814e5b75d0ac7e57246b1ba6ec53e8"
+    },
+    "es-b1-news-events": {
+      "lesson": "f7417c5f9d050158f21590a5f5a3a7f0834557bea2bdfc619dce15baf5173768",
+      "skills": "51b77a6d6bba1994924e7190ad3d0fb057a36ff84570268a3dd7d65187e1fe66",
+      "patterns": "7c565f096af02afce4388585e84a3a7d571d11924e74817d1f332ba1fa0ebc09"
+    },
+    "es-b1-culture-exchange": {
+      "lesson": "38265bfe9d522ff0b5326299e4c24de86ad5d84df029736990d74ab79902293a",
+      "skills": "43fc2cf617ae84fd1870c5d2218e50dfb180fe5ac29ae5891b0ca3d82d0dea7a",
+      "patterns": "8d54abc1450ba48f0f8496dab9aebdac1526cdfab8495bc0b28395afe109be2b"
+    },
+    "es-b1-complaint-followup": {
+      "lesson": "6b5b5540884a6a8b90f089709a4fee211c980191af79271620fe93ffb85f23da",
+      "skills": "abfdeddf3b8faac603582b2e28529af3f2f0c00ce67d62ebf44dffcb009661a1",
+      "patterns": "8182f8b270252761df1281509ab2380d7c18c0a929e9647831e6ab52b380ea07"
+    },
+    "es-b1-work-coordination": {
+      "lesson": "bccb86331386f7f6232d5766178cb9bb96928a294ceb25ddb3344790f129f63c",
+      "skills": "cc0228feb706faccdff0691819c6210e14190cf5795cfc8d3c6487de38e5d930",
+      "patterns": "8d64ab5d6b2817a8161072d779a3551d7b736f6ed25bc38d22b1b2fc5a0c814f"
+    },
+    "es-b1-negotiating": {
+      "lesson": "1f779186c0ae48e07636ecdb431b7abc4b7d1b194a82479cdd78947e43510644",
+      "skills": "74c56d4edf6ebf496cfe617c6a52c3ff8acd88a5b94c8c61be8ae2d2829d79b1",
+      "patterns": "13d7ba1decd625e99618e54f5ed0458596c3ec30eff679c6d6e77bc2530f1220"
+    },
+    "es-b1-purpose-consequences": {
+      "lesson": "b155a8b55ad130a2f65965710e406a44aac5b1c32b36c5442b93ed2915576153",
+      "skills": "5363fe8f5a3ea9c17883b66b16a548c3bfb9799c4b1bf5d5ccc135b9da5b3a87",
+      "patterns": "309933c223cf711bda8a339a5d44481204357b662926d8ce7490648fd14b2eae"
+    },
+    "es-b1-relatives-prepositions": {
+      "lesson": "9a5b0bed700b2e0d46bfeeb120399d9d559615fa395865791ca70f09e7411038",
+      "skills": "f393b48faa5931ddd6f728e04d85920015c01d64166895b0f2a1ba412f088024",
+      "patterns": "7d43a2e741dd5004cc61e953d757f03a351fdbf92a0c37b4806751c10c76b3ee"
+    },
+    "es-b1-sequence-incident": {
+      "lesson": "88bb8b4e553b2ffac320d4351571ad8f874beb0263354be74b897a7989beaa01",
+      "skills": "44da04f7bb8d16fa360f85aa5f4a4fa5d2c2c88c0a9cb45e69ca5f4d2f6bceb2",
+      "patterns": "668fa16654ec5599aa169dd1e573a99c35ff77ba5fc02f03860247db70b3d282"
+    },
+    "es-b1-short-presentation": {
+      "lesson": "45cb7216a81a14e5d148fd1e88530e2bbe024c5f16c7a64ca29e0c204cbdefb1",
+      "skills": "894892c236d7514a334b939b5c3a51e8bef1f7ad371c108ff0ba8e17e94fca0a",
+      "patterns": "19dc8a12282773317b7b9a92ba1b5ad919f8c1772e1ee1e25229aa1efb4935e3"
+    },
+    "es-b1-conversation-repair": {
+      "lesson": "50ad8439fbd440ce0cf043d25173420b7be6d332b78d22370acef9b4dfd07f55",
+      "skills": "126b9cd403c6a6fec542d53ed9d3db7f852a1d72aa81d6324a2ef475df5a5edc",
+      "patterns": "fc9d947d1f13c0666084ca721c843f0bb3d994629ec1007790d8ebd7aa6ada7c"
+    },
+    "es-b1-emotions-reactions": {
+      "lesson": "6819a04819b8edc5d0ecc5c3f4d24ae146aae66d49a24fc4a3da8a98549f7b74",
+      "skills": "b98404ca9098bf94e1a5a5fe7cea866ebd5db802185220dd27759bb9a8cdcb16",
+      "patterns": "846145806b38ef64326879d7a218d3d3c9edf047384b6f435229da27bb24a1b5"
+    },
+    "es-b1-advice-rules": {
+      "lesson": "9669cfbf4ae817e263bf43b3bd711d20c5135ff787fe860c5929501d70fa9310",
+      "skills": "7c7b41fbdde2e452683a65e3b7891d733ae7bb971eb6803131d652dc76af6a5b",
+      "patterns": "e85f7b65ea6d8422820a27a3282175a91a8a433b6a3aabb7b9e977033e454fc2"
+    }
+  }
+}

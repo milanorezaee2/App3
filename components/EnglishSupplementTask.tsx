@@ -1,5 +1,6 @@
+import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import * as Speech from 'expo-speech';
 import { speechTagFor } from '@/lib/speechLanguage';
 import { isCorrect, SKILLS, type Task } from '@/lib/englishSupplement/content';
@@ -102,7 +103,7 @@ const s = supplementStyles;
 // Assessment sources and options may be Persian or English.
 const contentDirection = (value: string) => /[\u0600-\u06FF]/.test(value)
   ? { textAlign: 'right' as const, writingDirection: 'rtl' as const }
-  : { textAlign: 'left' as const, writingDirection: 'ltr' as const };
+  : { fontFamily: Typography.latinFontFamily, textAlign: 'left' as const, writingDirection: 'ltr' as const };
 
 
 export function EnglishSupplementTask({

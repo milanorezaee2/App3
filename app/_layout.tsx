@@ -15,10 +15,10 @@ import { createAudioPlayer } from 'expo-audio';
 import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { Inter_800ExtraBold } from '@expo-google-fonts/inter/800ExtraBold';
-import { Vazirmatn_400Regular } from '@expo-google-fonts/vazirmatn/400Regular';
-import { Vazirmatn_500Medium } from '@expo-google-fonts/vazirmatn/500Medium';
-import { Vazirmatn_700Bold } from '@expo-google-fonts/vazirmatn/700Bold';
-import { Vazirmatn_900Black } from '@expo-google-fonts/vazirmatn/900Black';
+import { Beiruti_400Regular } from '@expo-google-fonts/beiruti/400Regular';
+import { Beiruti_500Medium } from '@expo-google-fonts/beiruti/500Medium';
+import { Beiruti_700Bold } from '@expo-google-fonts/beiruti/700Bold';
+import { Beiruti_900Black } from '@expo-google-fonts/beiruti/900Black';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AppLockGate } from '@/components/AppLockGate';
@@ -102,23 +102,22 @@ export default function RootLayout() {
   useFrameworkReady();
   const [introComplete, setIntroComplete] = useState(Platform.OS === 'web');
   const [fontsLoaded, fontError] = useFonts({
-    // Bundle Vazir locally so Persian typography and numerals stay identical
+    // Bundle Beiruti locally so Persian typography and numerals stay identical
     // offline and independent of each Android manufacturer's system fonts.
-    Vazir: Vazirmatn_400Regular,
-    'Vazir-Medium': Vazirmatn_500Medium,
-    'Vazir-Bold': Vazirmatn_700Bold,
-    'Vazir-Black': Vazirmatn_900Black,
+    // The default Persian face is medium for legibility; headings and key
+    // actions can still use the separately registered bold/black faces.
+    Beiruti: Beiruti_500Medium,
+    'Beiruti-Medium': Beiruti_500Medium,
+    'Beiruti-Bold': Beiruti_700Bold,
+    'Beiruti-Black': Beiruti_900Black,
     // Latin teaching content uses bundled faces too, eliminating Android OEM
     // font and fallback-metric differences between phones.
     Inter: Inter_400Regular,
     'Inter-SemiBold': Inter_600SemiBold,
     'Inter-ExtraBold': Inter_800ExtraBold,
-    // Legacy aliases now resolve to Vazir too, preventing an old screen from
+    // Legacy aliases resolve to Beiruti, preventing an old screen from
     // silently falling back to an OEM font.
-    Lalezar: Vazirmatn_400Regular,
-    Vazirmatn: Vazirmatn_400Regular,
-    'Vazirmatn-Medium': Vazirmatn_500Medium,
-    'Vazirmatn-Bold': Vazirmatn_700Bold,
+    Lalezar: Beiruti_400Regular,
   });
 
   useEffect(() => {

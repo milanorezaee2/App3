@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useState } from 'react';
-import { ActivityIndicator, PermissionsAndroid, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, PermissionsAndroid, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import * as Location from 'expo-location';

@@ -290,7 +290,7 @@ const esbuild = require('esbuild');
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 2).reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 1050
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 3 && !lesson.b1Section).length === 15
     && app.SENTENCE_LESSONS.filter(lesson => lesson.levelId === 3 && !lesson.b1Section).reduce((sum, lesson) => sum + lesson.sentences.length, 0) === 750);
-  check('language picker adds tr without changing existing en/ru locales', app.LANGUAGES.map(language => language.id).join('|') === 'en|ru|tr'
+  check('language picker adds tr without changing existing en/ru locales', app.LANGUAGES.map(language => language.id).slice(0, 3).join('|') === 'en|ru|tr'
     && app.LANGUAGES.find(language => language.id === 'en').speechLocale === 'en-US'
     && app.LANGUAGES.find(language => language.id === 'ru').speechLocale === 'ru-RU'
     && app.LANGUAGES.find(language => language.id === 'tr').speechLocale === 'tr-TR');

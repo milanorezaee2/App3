@@ -1,6 +1,7 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { Stack } from 'expo-router';
 import { PageNavigation } from '@/components/PageNavigation';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Colors, Typography } from '@/lib/theme';
 
 export default function NotFoundScreen() {

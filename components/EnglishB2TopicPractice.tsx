@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { EnglishSupplementTask, supplementStyles as s } from './EnglishSupplementTask';
 import { B2_TOPIC_PRACTICE, type B2TopicPractice } from '@/lib/englishB2Practice';
 import { loadStudy, recordLessonEvidence } from '@/lib/englishStudyState';

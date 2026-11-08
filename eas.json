@@ -48,7 +48,7 @@
         "EXPO_PUBLIC_MILO_ADMIN_APP": "false",
         "EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN": "false",
         "EXPO_PUBLIC_LEARNER_LOGIN": "false",
-        "EXPO_PUBLIC_LANGUAGE_SCOPE": "en,ru",
+        "EXPO_PUBLIC_LANGUAGE_SCOPE": "en,ru,de,fr,es",
         "EXPO_PUBLIC_SKIP_COMPANION_ONBOARDING": "false"
       }
     },

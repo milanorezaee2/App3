@@ -1,9 +1,10 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 // Agent home (phone 2) — two faces:
 //   not paired → elegant intro with the big "اتصال به گوشی اول" button
 //   paired     → live status dashboard + real device info being reported
 
 import React, { useCallback, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import {

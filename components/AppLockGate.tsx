@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { type ReactNode, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, AppState, Pressable, StyleSheet, View } from 'react-native';
 import { usePathname } from 'expo-router';
 import { Fingerprint, LockKeyhole, RotateCcw, ShieldCheck } from 'lucide-react-native';
 import { PatternGrid } from '@/components/PatternGrid';

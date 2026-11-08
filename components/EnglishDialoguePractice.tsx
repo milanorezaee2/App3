@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { playResponsiveSpeech, stopResponsiveSpeech } from '@/lib/responsiveSpeech';
 import { ChevronLeft, Volume2 } from 'lucide-react-native';
 import type { SentenceLesson } from '@/lib/courseContent';
@@ -90,20 +91,20 @@ export function EnglishDialoguePractice({ dialogue }: { dialogue: SentenceLesson
 const styles = StyleSheet.create({
   card: { width: '100%', backgroundColor: Palette.surface, borderRadius: 18, borderWidth: 1, borderColor: Palette.border, padding: 16, gap: 12 },
   metaRow: { flexDirection: 'row-reverse' as const, justifyContent: 'space-between' as const, alignItems: 'center' as const, gap: 8 },
-  kicker: { flex: 1, fontFamily: 'Vazir', fontSize: 12, fontWeight: '400' as const, color: Palette.primary, textAlign: 'right' as const, writingDirection: 'rtl' as const },
-  counter: { fontFamily: 'Vazir', fontSize: 11, fontWeight: '400' as const, color: Palette.muted },
-  instruction: { fontFamily: 'Vazir', fontSize: 14, lineHeight: 23, color: Palette.text, textAlign: 'right' as const, writingDirection: 'rtl' as const },
+  kicker: { flex: 1, fontFamily: 'Beiruti', fontSize: 12, fontWeight: '400' as const, color: Palette.primary, textAlign: 'right' as const, writingDirection: 'rtl' as const },
+  counter: { fontFamily: 'Beiruti', fontSize: 11, fontWeight: '400' as const, color: Palette.muted },
+  instruction: { fontFamily: 'Beiruti', fontSize: 14, lineHeight: 23, color: Palette.text, textAlign: 'right' as const, writingDirection: 'rtl' as const },
   bubble: { alignSelf: 'flex-start' as const, width: '94%' as const, borderRadius: 15, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surfaceMuted, padding: 14, gap: 7 },
   replyCard: { alignSelf: 'flex-end' as const, width: '94%' as const, borderRadius: 15, borderWidth: 1, borderColor: '#DDE2FF', backgroundColor: Palette.primarySoft, padding: 14, gap: 7 },
-  speaker: { fontFamily: 'Vazir', fontSize: 11, fontWeight: '400' as const, color: Palette.primaryDark, textAlign: 'right' as const, writingDirection: 'rtl' as const },
+  speaker: { fontFamily: 'Beiruti', fontSize: 11, fontWeight: '400' as const, color: Palette.primaryDark, textAlign: 'right' as const, writingDirection: 'rtl' as const },
   english: { fontFamily: 'Inter-ExtraBold', fontSize: 16, fontWeight: '800', lineHeight: 27, color: Palette.ink, textAlign: 'left' as const, writingDirection: 'ltr' as const },
-  persian: { fontFamily: 'Vazir', fontSize: 14, lineHeight: 23, color: Palette.text, textAlign: 'right' as const, writingDirection: 'rtl' as const },
+  persian: { fontFamily: 'Beiruti', fontSize: 14, lineHeight: 23, color: Palette.text, textAlign: 'right' as const, writingDirection: 'rtl' as const },
   soundButton: { alignSelf: 'flex-start' as const, minHeight: 34, flexDirection: 'row-reverse' as const, alignItems: 'center' as const, gap: 5 },
-  soundText: { fontFamily: 'Vazir', fontSize: 12, color: Palette.primary, writingDirection: 'rtl' as const },
+  soundText: { fontFamily: 'Beiruti', fontSize: 12, color: Palette.primary, writingDirection: 'rtl' as const },
   revealButton: { minHeight: 42, alignItems: 'center' as const, justifyContent: 'center' as const, borderRadius: 10, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, paddingHorizontal: 12, marginTop: 4 },
-  revealText: { fontFamily: 'Vazir', fontSize: 13, fontWeight: '400' as const, color: Palette.primaryDark, writingDirection: 'rtl' as const },
+  revealText: { fontFamily: 'Beiruti', fontSize: 13, fontWeight: '400' as const, color: Palette.primaryDark, writingDirection: 'rtl' as const },
   nextButton: { minHeight: 46, flexDirection: 'row-reverse' as const, alignItems: 'center' as const, justifyContent: 'center' as const, gap: 8, borderRadius: 12, backgroundColor: Palette.primary, paddingHorizontal: 14, transform: [{ translateY: -30 }] },
-  nextText: { fontFamily: 'Vazir', fontSize: 14, fontWeight: '400' as const, color: '#FFFFFF', writingDirection: 'rtl' as const },
-  note: { fontFamily: 'Vazir', fontSize: 11, lineHeight: 18, color: Palette.muted, textAlign: 'right' as const, writingDirection: 'rtl' as const },
-  text: { fontFamily: 'Vazir', fontSize: 14, color: Palette.text, textAlign: 'right' as const, writingDirection: 'rtl' as const },
+  nextText: { fontFamily: 'Beiruti', fontSize: 14, fontWeight: '400' as const, color: '#FFFFFF', writingDirection: 'rtl' as const },
+  note: { fontFamily: 'Beiruti', fontSize: 11, lineHeight: 18, color: Palette.muted, textAlign: 'right' as const, writingDirection: 'rtl' as const },
+  text: { fontFamily: 'Beiruti', fontSize: 14, color: Palette.text, textAlign: 'right' as const, writingDirection: 'rtl' as const },
 });

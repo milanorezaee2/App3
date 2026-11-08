@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
-import { AppState, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { AppState, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { useGlobalSearchParams, usePathname, useRouter } from 'expo-router';
 import * as Notifications from 'expo-notifications';
 import { isSupabaseConfigured } from '@/lib/pairing';
@@ -190,8 +191,8 @@ const styles = StyleSheet.create({
   overlay: { ...StyleSheet.absoluteFillObject, zIndex: 1000, elevation: 1000, alignItems: 'center', paddingTop: 8, paddingHorizontal: 14 },
   banner: { width: '100%', maxWidth: 560, minHeight: 64, flexDirection: 'row-reverse', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingVertical: 12, borderRadius: 16, borderWidth: 1, borderColor: '#C9DCF3', backgroundColor: '#FFFFFF', shadowColor: '#211A68', shadowOpacity: 0.18, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 12 },
   copy: { flex: 1, gap: 3 },
-  title: { fontFamily: 'Vazir-Bold', fontSize: 13, color: '#211A68', textAlign: 'right', writingDirection: 'rtl' },
-  body: { fontFamily: 'Vazir', fontSize: 11, lineHeight: 17, color: '#52667C', textAlign: 'right', writingDirection: 'rtl' },
+  title: { fontFamily: 'Beiruti-Bold', fontSize: 13, color: '#211A68', textAlign: 'right', writingDirection: 'rtl' },
+  body: { fontFamily: 'Beiruti', fontSize: 11, lineHeight: 17, color: '#52667C', textAlign: 'right', writingDirection: 'rtl' },
   count: { minWidth: 24, height: 24, paddingHorizontal: 5, borderRadius: 12, alignItems: 'center', justifyContent: 'center', backgroundColor: '#E9E7FF' },
-  countText: { fontFamily: 'Vazir-Bold', fontSize: 10, color: '#5146E5' },
+  countText: { fontFamily: 'Beiruti-Bold', fontSize: 10, color: '#5146E5' },
 });

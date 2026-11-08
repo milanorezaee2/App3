@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { Suspense, lazy } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 const EnglishLessonRoute = lazy(() => import('@/components/EnglishLessonRoute'));
 
@@ -8,7 +9,7 @@ export default function EnglishLessonScreen() {
     <Suspense fallback={
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, backgroundColor: '#F8FAFF' }}>
         <ActivityIndicator color="#635BFF" size="large" />
-        <Text style={{ fontFamily: 'Vazir', color: '#334155', fontSize: 13, textAlign: 'center', writingDirection: 'rtl' }}>
+        <Text style={{ fontFamily: 'Beiruti', color: '#334155', fontSize: 13, textAlign: 'center', writingDirection: 'rtl' }}>
           در حال آماده‌کردن اولین درس…
         </Text>
       </View>

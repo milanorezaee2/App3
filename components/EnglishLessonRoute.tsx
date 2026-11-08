@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import {
@@ -33,7 +34,7 @@ import { loadSupplement } from '@/lib/englishSupplement/progress';
 import { CORE_LESSON_EVIDENCE, isCoreLessonEvidenceComplete } from '@/lib/englishFoundationEvidence';
 import { useEnglishStudyTimer } from '@/components/useEnglishStudyTimer';
 import { PAID_AI_ENABLED, PAID_AI_DISABLED_MESSAGE } from '@/lib/paidAI';
-import { playResponsiveSpeech, stopResponsiveSpeech, warmSpeech } from '@/lib/responsiveSpeech';
+import { ENGLISH_NORMAL_SPEECH_RATE, ENGLISH_SLOW_SPEECH_RATE, playResponsiveSpeech, stopResponsiveSpeech, warmSpeech } from '@/lib/responsiveSpeech';
 import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
 import { B1_INDEPENDENT_UNITS } from '@/lib/courseContentB1Independent';
 import { B2_UPPER_INTERMEDIATE_UNITS } from '@/lib/courseContentB2UpperIntermediate';
@@ -142,12 +143,13 @@ export default function SentenceLessonScreen() {
     }
     setAudioNotice('');
     playResponsiveSpeech({
-      text: current.en, locale: 'en-US', rate: 0.85,
-      onError: () => setAudioNotice('پخش خودکار ممکن نشد. برای شروع صدا، دکمهٔ بلندگو را بزنید و صدای دستگاه را بررسی کنید.'),
+      text: current.en, locale: 'en-US', rate: ENGLISH_NORMAL_SPEECH_RATE,
+      onError: () => setAudioNotice('پخش خودکار ممکن نشد. یکی از دکمه‌های پخش را بزنید و صدای دستگاه را بررسی کنید.'),
     });
   }, [lesson.id, sessionReady, stage, sentenceIndex, current?.en]);
 
   const speak = (text: string, rate?: number) => {
+    setAudioNotice('');
     playResponsiveSpeech({ text, locale: 'en-US', rate, onError: () => setAudioNotice('پخش صدا ممکن نشد. صدای دستگاه و اجازهٔ پخش مرورگر را بررسی کنید.') });
   };
 
@@ -236,6 +238,7 @@ export default function SentenceLessonScreen() {
   if (!sessionReady) return <View style={styles.root}><PageNavigation backFallback="/lang" /><Text style={styles.stageDesc}>{sessionError || 'در حال بازیابی جلسه…'}</Text></View>;
   return (
     <View style={styles.root} onTouchStart={timer.interact}>
+      <ScrollView style={styles.lessonScroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
           <PageNavigation tone="dark" backFallback="/lang" />
@@ -272,7 +275,7 @@ export default function SentenceLessonScreen() {
       </View>
 
       {!!(sessionError || timer.error) && <Text style={styles.speechError}>{sessionError || timer.error}</Text>}
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <View style={styles.content}>
         {stage === 0 && (
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><Sparkles size={34} color={Colors.accent[400]} /></View>
@@ -294,7 +297,7 @@ export default function SentenceLessonScreen() {
           <View style={styles.sentenceStage}>
             <Text style={styles.counter}>جمله {toPersianDigits(sentenceIndex + 1)} از {toPersianDigits(lesson.sentences.length)}</Text>
             <View style={styles.sentenceCard}>
-              <Pressable accessibilityRole="button" accessibilityLabel={`پخش نمونهٔ صوتی جمله: ${current.en}`} accessibilityHint="فقط نمونهٔ گفتاری پخش می‌شود؛ میکروفن فعال نیست." style={styles.soundButton} onPress={() => speak(current.en)}>
+              <Pressable accessibilityRole="button" accessibilityLabel={`پخش نمونهٔ صوتی جمله: ${current.en}`} accessibilityHint="فقط نمونهٔ گفتاری پخش می‌شود؛ میکروفن فعال نیست." style={styles.soundButton} onPress={() => speak(current.en, ENGLISH_NORMAL_SPEECH_RATE)}>
                 <Volume2 size={25} color={Colors.onColor} />
               </Pressable>
               <Text style={styles.english}>{current.en}</Text>
@@ -304,7 +307,8 @@ export default function SentenceLessonScreen() {
               <Text style={styles.persian}>{current.fa}</Text>
               {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternEnglish}>{current.pattern}</Text></View> : null}
             </View>
-            <Text style={styles.hint}>جمله به‌صورت خودکار پخش می‌شود. اگر مرورگر صدا را متوقف کرد، دکمهٔ بلندگو را بزنید.</Text>
+            <EnglishSpeechRateControls onPlay={rate => speak(current.en, rate)} />
+            <Text style={styles.hint}>جمله به‌صورت خودکار پخش می‌شود؛ برای شنیدن دوباره، سرعت دلخواه را انتخاب کنید.</Text>
             {!!audioNotice && <Text accessibilityLiveRegion="polite" style={styles.speechError}>{audioNotice}</Text>}
           </View>
         )}
@@ -345,9 +349,8 @@ export default function SentenceLessonScreen() {
             <View style={styles.speechPractice}>
               <Text style={styles.speechTitle}>جملهٔ انتخاب‌شده</Text>
               <Text style={styles.speechSentence}>{current.en}</Text>
-              <Pressable accessibilityRole="button" style={styles.recordButton} onPress={() => speak(current.en, 0.5)}>
-                <Volume2 size={18} color={Colors.onColor} /><Text style={styles.recordButtonText}>پخش آهستهٔ نمونه</Text>
-              </Pressable>
+              <EnglishSpeechRateControls onPlay={rate => speak(current.en, rate)} disabled={recorderState.isRecording || evaluatingSpeech} />
+              {!!audioNotice && <Text accessibilityRole="alert" accessibilityLiveRegion="polite" style={styles.speechError}>{audioNotice}</Text>}
               <Text style={styles.speechHint}>{recorderState.isRecording ? `در حال ضبط · ${toPersianDigits(Math.max(1, Math.round(recorderState.durationMillis / 1000)))} ثانیه` : evaluatingSpeech ? 'در حال بررسی…' : PAID_AI_ENABLED ? 'در صورت فعال‌بودن سرویس، می‌توانید ضبط و بررسی آنلاین را هم انتخاب کنید.' : 'میکروفن و ارسال آنلاین در حالت بدون هزینه غیرفعال‌اند؛ جمله را با صدای بلند تکرار کنید.'}</Text>
               <Pressable accessibilityRole="button"
                 accessibilityLabel={PAID_AI_ENABLED ? recorderState.isRecording ? 'توقف ضبط و بررسی آنلاین جمله' : 'شروع ضبط اختیاری جمله' : 'ضبط و بررسی آنلاین گفتار غیرفعال است'}
@@ -482,6 +485,7 @@ export default function SentenceLessonScreen() {
           </View>
         )}
         {!!completionError && <Text style={styles.stageDesc}>{completionError}</Text>}
+      </View>
       </ScrollView>
 
       <View style={styles.footer}>
@@ -489,7 +493,7 @@ export default function SentenceLessonScreen() {
           {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && { opacity: .45 }]}>
             <Text style={styles.secondaryControlText}>جمله قبلی</Text>
           </Pressable>}
-          <Pressable accessibilityRole="button" accessibilityState={{ disabled: saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed) }} disabled={saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed)} style={[styles.nextButton, stage === 1 && styles.nextButtonBesidePrevious, (saving || (stage === stages.length - 1 && !evidencePassed)) && { opacity: .45 }]} onPress={() => void next()}>
+          <Pressable accessibilityRole="button" accessibilityState={{ disabled: saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed) }} disabled={saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed)} style={[styles.nextButton, (saving || (stage === stages.length - 1 && !evidencePassed)) && { opacity: .45 }]} onPress={() => void next()}>
             <Text style={styles.nextText}>{stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جمله بعدی' : 'ادامه'}</Text>
             {stage === stages.length - 1 ? <Check size={20} color={Colors.onColor} /> : <ChevronLeft size={20} color={Colors.onColor} />}
           </Pressable>
@@ -499,8 +503,23 @@ export default function SentenceLessonScreen() {
   );
 }
 
+/** Replay the current sentence at an explicit speed on every tap. */
+function EnglishSpeechRateControls({ onPlay, disabled = false }: { onPlay: (rate: number) => void; disabled?: boolean }) {
+  return (
+    <View style={styles.replayRow}>
+      <Pressable accessibilityRole="button" accessibilityLabel="پخش آهستهٔ جملهٔ انگلیسی" accessibilityHint="جملهٔ فعلی را با سرعت آهسته پخش می‌کند." accessibilityState={{ disabled }} disabled={disabled} style={[styles.replayButton, disabled && styles.replayDisabled]} onPress={() => onPlay(ENGLISH_SLOW_SPEECH_RATE)}>
+        <Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text>
+      </Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel="پخش معمولی جملهٔ انگلیسی" accessibilityHint="جملهٔ فعلی را با سرعت معمولی پخش می‌کند." accessibilityState={{ disabled }} disabled={disabled} style={[styles.replayButton, disabled && styles.replayDisabled]} onPress={() => onPlay(ENGLISH_NORMAL_SPEECH_RATE)}>
+        <Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text>
+      </Pressable>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },
+  lessonScroll: { flex: 1, minHeight: 0 },
   // Keep the lesson canvas and vertical safe area consistent.
   header: { width: '100%', maxWidth: 900, minHeight: 64, alignSelf: 'center', paddingTop: 12, paddingHorizontal: 15, paddingBottom: 7, gap: 8, borderBottomLeftRadius: 22, borderBottomRightRadius: 22 },
   headerTop: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
@@ -540,6 +559,10 @@ const styles = StyleSheet.create({
   sentenceStage: { alignItems: 'center', paddingTop: Spacing.lg, width: '100%' },
   counter: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.muted, marginBottom: Spacing.md, alignSelf: 'flex-end', textAlign: 'right', writingDirection: 'rtl' },
   sentenceCard: { width: '100%', borderRadius: Radius.xl, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: Spacing.xl, alignItems: 'center', shadowColor: '#172033', shadowOpacity: 0.05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
+  replayRow: { width: '100%', maxWidth: 320, flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'center', marginTop: 12 },
+  replayButton: { flex: 1, minWidth: 110, minHeight: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingHorizontal: 14, borderRadius: 14, borderWidth: 1, borderColor: Palette.primary, backgroundColor: '#FFFFFF' },
+  replayText: { fontFamily: Typography.fontFamily, fontSize: 14, color: Palette.primary, writingDirection: 'rtl' },
+  replayDisabled: { opacity: .45 },
   soundButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: Spacing.lg },
   english: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 25, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   pronunciation: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'center', writingDirection: 'rtl', marginTop: 8 },
@@ -597,11 +620,10 @@ const styles = StyleSheet.create({
   vocabWord: { fontFamily: 'Inter-ExtraBold', fontSize: 18, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   vocabMeaning: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
   vocabExample: { fontFamily: 'Inter-ExtraBold', fontSize: 13, fontWeight: '800', color: Palette.text, textAlign: 'left', writingDirection: 'ltr', marginTop: 8 },
-  footer: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 15, paddingTop: 7, paddingBottom: 30, backgroundColor: Palette.canvas, borderTopWidth: 1, borderTopColor: Palette.border, shadowColor: '#211A68', shadowOpacity: .07, shadowRadius: 12, shadowOffset: { width: 0, height: -4 }, elevation: 5 },
+  footer: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 15, paddingTop: 7, paddingBottom: 10, backgroundColor: Palette.canvas, borderTopWidth: 1, borderTopColor: Palette.border, shadowColor: '#211A68', shadowOpacity: .07, shadowRadius: 12, shadowOffset: { width: 0, height: -4 }, elevation: 5 },
   footerButtons: { width: '100%', flexDirection: 'row', gap: 8, alignItems: 'center' },
   previousButton: { flex: 1, minHeight: 54, borderRadius: 17, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
   secondaryControlText: { fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 13, textAlign: 'center', writingDirection: 'rtl' },
-  nextButton: { width: '100%', maxWidth: 900, alignSelf: 'center', minHeight: 54, borderRadius: 17, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, shadowColor: Palette.primary, shadowOpacity: .2, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
-  nextButtonBesidePrevious: { flex: 1, width: undefined },
-  nextText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.md + 2, fontWeight: '400', color: Colors.onColor, writingDirection: 'rtl' },
+  nextButton: { flex: 1, minWidth: 0, minHeight: 54, borderRadius: 17, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, shadowColor: Palette.primary, shadowOpacity: .2, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
+  nextText: { fontFamily: Typography.boldFontFamily, fontSize: Typography.sizes.md + 2, fontWeight: '400', color: Colors.onColor, writingDirection: 'rtl' },
 });
