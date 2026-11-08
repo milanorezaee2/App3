@@ -4,6 +4,7 @@ import { Volume2 } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
 import { StarterBottomNav } from '@/components/StarterBottomNav';
 import type { StarterCourse } from '@/lib/languages/newCourses';
+import { starterDisplayPronunciation } from '@/lib/languages/starterEditorial';
 import { playStarterSpeech, stopStarterSpeech } from '@/lib/starterSpeech';
 import { Typography } from '@/lib/theme';
 
@@ -21,7 +22,7 @@ export default function StarterPronunciation({course}: {course: StarterCourse}) 
     <Text style={s.title}>کارگاه تلفظ {course.name}</Text>
     <Text style={s.info}>به صدا گوش دهید و با صدای بلند تکرار کنید. صدای دستگاه به تنظیمات آن وابسته است؛ این تمرین صدای شما را ضبط یا ارزیابی نمی‌کند.</Text>
     <View style={s.card}><Text style={s.heading}>نکتهٔ شنیداری</Text><Text style={s.info}>{tips[course.id]}</Text></View>
-    {course.lessons[0].sentences.slice(0,3).map(sentence => <View key={sentence.id} style={s.card}><Text style={s.foreign}>{sentence.text}</Text><Text style={s.info}>{sentence.fa} · {sentence.pronunciation}</Text><View style={s.actions}>{([['آهسته',.5],['معمولی',1]] as const).map(([label,rate])=><Pressable key={label} accessibilityRole="button" accessibilityLabel={`پخش ${label} ${sentence.text}`} onPress={()=>play(sentence.text,rate)} style={s.button}><Volume2 size={17} color="#5148C8"/><Text style={s.buttonText}>{label}</Text></Pressable>)}</View></View>)}
+    {course.lessons[0].sentences.slice(0,3).map(sentence => <View key={sentence.id} style={s.card}><Text style={s.foreign}>{sentence.text}</Text><Text style={s.info}>{sentence.fa} · {starterDisplayPronunciation(sentence)}</Text><View style={s.actions}>{([['آهسته',.5],['معمولی',1]] as const).map(([label,rate])=><Pressable key={label} accessibilityRole="button" accessibilityLabel={`پخش ${label} ${sentence.text}`} onPress={()=>play(sentence.text,rate)} style={s.button}><Volume2 size={17} color="#5148C8"/><Text style={s.buttonText}>{label}</Text></Pressable>)}</View></View>)}
     {!!error && <Text accessibilityRole="alert" style={s.error}>{error}</Text>}
   </ScrollView><StarterBottomNav course={course}/></View>;
 }

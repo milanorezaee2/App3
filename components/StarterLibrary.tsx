@@ -1,10 +1,33 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BookOpen, BookOpenCheck, Check, ChevronDown, ChevronLeft, ChevronUp, Clock3, Play, Sparkles, Volume2 } from 'lucide-react-native';
 import { EnglishLevelRail, EnglishProgressTrack, EnglishSectionHeading, displayEnglishModuleLabel, ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
+import { getA1Curriculum } from '@/lib/languages/a1Curriculum';
+import StarterA1Checkpoint from '@/components/StarterA1Checkpoint';
+import { getA2Curriculum } from '@/lib/languages/a2Curriculum';
+import { countA2GrammarPatterns } from '@/lib/languages/a2Grammar';
+import { getB1Curriculum } from '@/lib/languages/b1Curriculum';
+import { countB1GrammarPatterns } from '@/lib/languages/b1Units';
+import {getB2Curriculum} from '@/lib/languages/b2Curriculum';
+import {countB2GrammarPatterns} from '@/lib/languages/b2Units';
+import StarterB1Scenarios from '@/components/StarterB1Scenarios';
+import StarterB2Workshops from '@/components/StarterB2Workshops';
+import StarterB2GrammarLab from '@/components/StarterB2GrammarLab';
+import StarterBranchConversations from '@/components/StarterBranchConversations';
+import StarterSkillsAssessment from '@/components/StarterSkillsAssessment';
+import StarterLearningStudio from '@/components/StarterLearningStudio';
+import StarterTopicPractice from '@/components/StarterTopicPractice';
+import StarterC1Curriculum from '@/components/StarterC1Curriculum';
+import {c1DeepeningModules} from '@/lib/languages/c1Deepening';
+import {independentSkills} from '@/lib/languages/independentSkills';
+import {learningStudio,studioLinks} from '@/lib/languages/learningStudio';
+import {b1Intensive} from '@/lib/languages/b1Intensive';
+import {b2Workshops} from '@/lib/languages/b2Workshops';
+import {b2GrammarLab} from '@/lib/languages/b2GrammarLab';
+import {b2GrammarLinks,b2WorkshopLinks} from '@/lib/languages/b2PracticeLinks';
 import type { StarterCourse, StarterLesson } from '@/lib/languages/newCourses';
 import type { CourseLevelId as StarterLevelId } from '@/lib/courseContent';
 import type { CourseProgress } from '@/lib/courseProgress';
@@ -36,6 +59,17 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
   const [sessions, setSessions] = useState<Record<string, StarterLessonSession | null>>({});
   const [error, setError] = useState('');
   const [retry, setRetry] = useState(0);
+  const scrollRef = useRef<ScrollView>(null);
+  const pageRef = useRef<View>(null), workshopRef = useRef<View>(null), grammarRef = useRef<View>(null), studioRef = useRef<View>(null), serial = useRef(0);
+  const [workshopRequest, setWorkshopRequest] = useState<{id:string;serial:number}|null>(null);
+  const [grammarRequest, setGrammarRequest] = useState<{id:string;serial:number}|null>(null);
+  const [studioRequest, setStudioRequest] = useState<{id:string;serial:number}|null>(null);
+  const openPractice = (kind:'workshop'|'grammar'|'studio', id:string) => {
+    const request={id,serial:++serial.current};
+    if(kind==='workshop')setWorkshopRequest(request); else if(kind==='grammar')setGrammarRequest(request); else setStudioRequest(request);
+    const target = kind==='workshop' ? workshopRef.current : kind==='grammar' ? grammarRef.current : studioRef.current;
+    if (target && pageRef.current) target.measureLayout(pageRef.current, (_x, y) => scrollRef.current?.scrollTo({y:Math.max(0,y-16),animated:false}), () => {});
+  };
 
   useEffect(() => setHydrated(true), []);
   const selected = hydrated ? levels.find(item => String(item.id) === String(level)) : undefined;
@@ -75,7 +109,7 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
     ?? selectedLessons.find(item => !completedIds.includes(item.id))
     ?? selectedLessons[0];
   const levelFullyCompleted = selectedLessons.length > 0 && selectedLessons.every(item => completedIds.includes(item.id));
-  const levelStartLabel = levelFullyCompleted ? 'بازبینی این سطح' : levelStartLesson && sessions[levelStartLesson.id] ? 'ادامهٔ درس این سطح' : 'شروع یادگیری از این سطح';
+  const levelStartLabel = levelFullyCompleted ? (selected?.id === 1 || selected?.id === 2 || selected?.id === 3 || selected?.id === 4 ? 'بازبینی درس‌های موجود' : 'بازبینی این سطح') : levelStartLesson && sessions[levelStartLesson.id] ? 'ادامهٔ درس این سطح' : 'شروع یادگیری از این سطح';
   const firstUnfinished = lessons.find(item => !completedIds.includes(item.id)) ?? lessons[lessons.length - 1];
   const activeLevelId = firstUnfinished.levelId;
   const countFor = (levelId: StarterLevelId) => {
@@ -84,7 +118,11 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
   };
   const sentenceCount = selectedLessons.reduce((count, lesson) => count + lesson.sentences.length, 0);
   const words = new Set(selectedLessons.flatMap(lesson => lesson.sentences.flatMap(sentence => sentence.vocabulary.map(item => item.word))));
-  const patternCount = selectedLessons.reduce((count, lesson) => count + lesson.sentences.filter(sentence => !!sentence.pattern).length, 0);
+  const patternCount = selected?.id === 2
+    ? countA2GrammarPatterns(course.id, selectedLessons.map(lesson => lesson.id))
+    : selected?.id === 3 ? countB1GrammarPatterns(course.id, selectedLessons.map(lesson => lesson.id))
+    : selected?.id === 4 ? countB2GrammarPatterns(course.id, selectedLessons.map(lesson => lesson.id))
+    : selectedLessons.reduce((count, lesson) => count + lesson.sentences.filter(sentence => !!sentence.pattern).length, 0);
   const allWords = new Set(lessons.flatMap(lesson => lesson.sentences.flatMap(sentence => sentence.vocabulary.map(item => item.word))));
   const totalSentences = lessons.reduce((count, lesson) => count + lesson.sentences.length, 0);
 
@@ -93,8 +131,8 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
 
   return (
     <View style={styles.root}>
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <View style={styles.page}>
+      <ScrollView ref={scrollRef} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        <View ref={pageRef} collapsable={false} style={styles.page}>
           {!selected ? <>
             <View style={styles.topBar}>
               <Pressable accessibilityRole="button" style={styles.backButton} onPress={() => router.replace(course.home as never)}><ChevronLeft size={18} color={Palette.ink} /><Text style={styles.backText}>بازگشت به آموزش این زبان</Text></Pressable>
@@ -119,7 +157,7 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
             <View style={styles.levelRailCard}>
               <EnglishSectionHeading eyebrow="YOUR CURRENT STEP" title="پیشرفت در هفت سطح" detail="این برچسب‌ها نقشهٔ آموزشی داخلی‌اند و گواهی یا ارزیابی رسمی سطح نیستند." />
               <View style={styles.railWrap}>
-                <EnglishLevelRail activeLevelId={activeLevelId} counts={Object.fromEntries(levels.map(item => [item.id, countFor(item.id)]))} levels={levels} numberOffset={1} onSelect={openLevel} />
+                <EnglishLevelRail activeLevelId={activeLevelId} counts={Object.fromEntries(levels.filter(item => item.id !== 2 && item.id !== 3 && item.id !== 4 && item.id !== 5).map(item => [item.id, countFor(item.id)]))} levels={levels} numberOffset={1} onSelect={openLevel} />
               </View>
               <Text style={styles.railCurrent}>اکنون · {levels.find(item => item.id === activeLevelId)?.title} · سطح {fa(activeLevelId + 1)}</Text>
             </View>
@@ -135,8 +173,8 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
                   <View style={styles.levelOptionContent}>
                     <View style={styles.levelOptionTitleRow}><Text style={styles.levelOptionTitle}>{item.title}</Text><Text style={[styles.levelOptionBand, { color: item.color }]}>{item.cefr}</Text></View>
                     <Text style={styles.levelOptionDescription}>{item.description}</Text>
-                    <View style={styles.levelOptionMeta}><Text style={styles.levelOptionMetaText}>{fa(stats.total)} درس</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{fa(sentenceTotal)} نمونه</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{item.status === 'planned' ? 'در نقشهٔ آینده' : `${fa(stats.completed)} تکمیل`}</Text></View>
-                    <EnglishProgressTrack value={pct} color={item.color} height={5} />
+                    <View style={styles.levelOptionMeta}><Text style={styles.levelOptionMetaText}>{item.id === 5 ? `${fa(c1DeepeningModules.length)} درس موضوعی مستقل` : `${fa(stats.total)} درس`}</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{item.id === 5 ? '۵۵ سرفصل' : `${fa(sentenceTotal)} نمونه`}</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{item.id === 5 ? 'تمرین چهار مهارت' : item.status === 'planned' ? 'در نقشهٔ آینده' : `${fa(stats.completed)} تکمیل`}</Text></View>
+                    {item.id !== 5 && <EnglishProgressTrack value={pct} color={item.color} height={5} />}
                   </View>
                   <ChevronLeft size={19} color={Palette.muted} />
                 </Pressable>;
@@ -153,25 +191,65 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
               <View style={styles.levelHeroTop}><View style={styles.levelHeroTag}><Text style={styles.levelHeroTagText}>{selected.id === -1 ? 'PRE-A1' : `LEVEL ${selected.id}`} </Text></View><Text style={styles.levelHeroBand}>{selected.cefr}</Text></View>
               <Text style={styles.selectedTitle}>{selected.title}</Text>
               <Text style={styles.selectedDescription}>{selected.description}</Text>
-              <View style={styles.selectedProgressHeading}><Text style={styles.selectedProgressLabel}>پیشرفت این سطح</Text><Text style={styles.selectedProgressValue}>{fa(countFor(selected.id).completed)} از {fa(selectedLessons.length)} درس</Text></View>
+              {selected.id !== 5 && <><View style={styles.selectedProgressHeading}><Text style={styles.selectedProgressLabel}>{selected.id === 1 || selected.id === 2 || selected.id === 3 || selected.id === 4 ? 'پیشرفت درس‌های موجود' : 'پیشرفت این سطح'}</Text><Text style={styles.selectedProgressValue}>{fa(countFor(selected.id).completed)} از {fa(selectedLessons.length)} درس</Text></View>
               <View style={styles.selectedProgressTrack}><View style={[styles.selectedProgressFill, { width: `${selectedLessons.length ? countFor(selected.id).completed / selectedLessons.length * 100 : 0}%` }]} /></View>
               <View style={styles.metricGrid}>
                 <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(sentenceCount)}</Text><Text style={styles.heroMetricLabel}>نمونه</Text></View><View style={styles.heroMetricDivider} />
-                <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(patternCount)}</Text><Text style={styles.heroMetricLabel}>الگوی ثبت‌شده</Text></View><View style={styles.heroMetricDivider} />
+                <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(patternCount)}</Text><Text style={styles.heroMetricLabel}>{selected.id === 2 || selected.id === 3 || selected.id === 4 ? 'الگوی متمایز' : 'جمله با الگو'}</Text></View><View style={styles.heroMetricDivider} />
                 <View style={styles.heroMetric}><Text style={styles.heroMetricValue}>{fa(words.size)}</Text><Text style={styles.heroMetricLabel}>واژهٔ یکتا</Text></View>
               </View>
+              {(selected.id === 2 || selected.id === 3 || selected.id === 4) && <Text style={styles.patternCountNote}>هر ساختار ثبت‌شده در درس‌های موجود یک بار شمرده می‌شود.</Text>}
               <Pressable accessibilityRole="button" accessibilityLabel={`${levelStartLabel}: ${selected.title}`} accessibilityState={{ disabled: !levelStartLesson }} disabled={!levelStartLesson} style={({ pressed }) => [styles.levelStartButton, pressed && { opacity: .85 }, !levelStartLesson && styles.levelStartButtonDisabled]} onPress={() => { if (levelStartLesson) openLesson(levelStartLesson.id); }}>
                 <Play size={16} color={selected.color} fill={selected.color} />
                 <Text style={styles.levelStartButtonText}>{levelStartLabel}</Text>
                 <ChevronLeft size={18} color={selected.color} />
-              </Pressable>
+              </Pressable></>}
             </LinearGradient>
 
+            {selected.id === 5 ? <StarterC1Curriculum key={course.id} language={course.id} locale={course.locale}/> : selected.id === 1 || selected.id === 2 || selected.id === 3 || selected.id === 4 ? <View style={styles.groupList}>
+              {selected.id === 4 && <>
+                <View ref={grammarRef} collapsable={false}><StarterB2GrammarLab key={`${course.id}-b2-grammar`} language={course.id} locale={course.locale} request={grammarRequest}/></View>
+                <View ref={workshopRef} collapsable={false}><StarterB2Workshops key={`${course.id}-b2-workshops`} language={course.id} locale={course.locale} request={workshopRequest}/></View>
+              </>}
+              {(selected.id === 3 || selected.id === 4) && <>
+                <View ref={studioRef} collapsable={false}><StarterLearningStudio key={`${course.id}-${selected.id}-studio`} level={selected.id === 3 ? 'b1' : 'b2'} language={course.id} locale={course.locale} request={studioRequest}/></View>
+                <StarterBranchConversations key={`${course.id}-${selected.id}-branch`} level={selected.id === 3 ? 'b1' : 'b2'} language={course.id} locale={course.locale}/>
+                <StarterSkillsAssessment key={`${course.id}-${selected.id}-skills`} level={selected.id === 3 ? 'b1' : 'b2'} language={course.id} locale={course.locale} items={selected.id === 3 ? b1Intensive(course.id) : b2Workshops(course.id)}/>
+                <StarterSkillsAssessment key={`${course.id}-${selected.id}-independent`} level={selected.id === 3 ? 'b1' : 'b2'} language={course.id} locale={course.locale} items={independentSkills(course.id, selected.id === 3 ? 'b1' : 'b2')} independent/>
+              </>}
+              <StarterA1Checkpoint key={`${course.id}-${selected.id}`} language={course.id} locale={course.locale} level={selected.id} />
+              {selected.id === 3 && <StarterB1Scenarios key={`${course.id}-b1-scenarios`} language={course.id} locale={course.locale} />}
+              {selected.id === 3 && <StarterB2Workshops key={`${course.id}-b1-intensives`} language={course.id} locale={course.locale} request={null} level="b1" items={b1Intensive(course.id)}/>}
+              <Text style={styles.focusDescription}>{selected.id === 1 ? 'نقشهٔ اختصاصی A1 این زبان دو بخش دارد. درس‌های موجود فقط پوشش بخشی از موضوع هستند؛ تکمیل یک درس به معنای تکمیل کل سرفصل یا سطح نیست.' : selected.id === 2 ? 'نقشهٔ اختصاصی A2 بر اساس سرفصل‌های درخواستی است؛ ارتباط یک درس با سرفصل به معنی پوشش کامل آن یا احراز سطح نیست.' : selected.id === 3 ? 'نقشهٔ B1 بر اساس سرفصل‌های درخواستی است؛ درس‌های موجود فقط بخشی از هر موضوع مرتبط را تمرین می‌دهند.' : 'نقشهٔ B2 بر اساس سرفصل‌های درخواستی است؛ پیوندها فقط تمرین مرتبط و جزئی را نشان می‌دهند و موضوع‌های بدون درس در حال تدوین‌اند.'}</Text>
+              {(selected.id === 1 ? getA1Curriculum(course.id) : selected.id === 2 ? getA2Curriculum(course.id) : selected.id === 3 ? getB1Curriculum(course.id) : getB2Curriculum(course.id)).map(section => <View key={section.id} style={styles.groupList}>
+                <Text style={styles.lessonSectionTitle}>{section.title} · {fa(section.topics.length)} موضوع</Text>
+                {section.topics.map(topic => <View key={`${section.id}-${topic.number}`} style={styles.focusCard}>
+                  <Text style={styles.topicTitle}>{fa(topic.number)}. {topic.title}</Text>
+                  {selected.id === 2 && course.id === 'es' && section.id === 'foundation' && topic.number === 8 ? <Text style={styles.focusDescription}>در فهرست دستور مؤسسهٔ سروانتس، این زمان در ستون A2 ارائه نشده است؛ سطح‌بندی آن نیازمند بررسی تخصصی است.</Text> : null}
+                  {selected.id === 3 && course.id === 'es' && section.id === 'foundation' && topic.number === 8 ? <Text style={styles.focusDescription}>شرط غیرواقعی با imperfecto de subjuntivo در برخی برنامه‌ها، از جمله دورهٔ B2 سروانتس، قرار دارد و اینجا به درخواست شما معرفی شده است.</Text> : null}
+                  {(selected.id===3 || selected.id===4) && (section.id==='foundation' || section.id==='survival') && <StarterTopicPractice key={`${course.id}-${selected.id}-${section.id}-${topic.number}`} level={selected.id===3?'b1':'b2'} section={section.id} number={topic.number} title={topic.title} language={course.id} locale={course.locale} lessons={topic.relatedLessonIds.flatMap(id=>{const lesson=selectedLessons.find(item=>item.id===id);return lesson?[lesson]:[];})}/>}
+                  {!topic.relatedLessonIds.length && <Text style={styles.focusDescription}>در حال تدوین</Text>}
+                  {selected.id === 4 && b2GrammarLinks(course.id,section.id,topic.number).map(id=>{const item=b2GrammarLab(course.id).find(card=>card.id===id);return item?<Pressable key={`grammar-${id}`} accessibilityRole="button" accessibilityLabel={`باز کردن نکتهٔ دستور ${item.title}`} style={styles.topicButton} onPress={()=>openPractice('grammar',id)}><Text style={styles.topicButtonText}>دستور تکمیلی · {item.title}</Text><ChevronLeft size={16} color={Palette.primary}/></Pressable>:null;})}
+                  {selected.id === 4 && b2WorkshopLinks(section.id,topic.number).map(id=>{const item=b2Workshops(course.id).find(task=>task.id===id);return item?<Pressable key={`workshop-${id}`} accessibilityRole="button" accessibilityLabel={`باز کردن کارگاه ${item.title}`} style={styles.topicButton} onPress={()=>openPractice('workshop',id)}><Text style={styles.topicButtonText}>کارگاه مرتبط · {item.title}</Text><ChevronLeft size={16} color={Palette.primary}/></Pressable>:null;})}
+                  {(selected.id===3 || selected.id===4) && studioLinks(selected.id===3?'b1':'b2',section.id,topic.number).map(id=>{const item=learningStudio(selected.id===3?'b1':'b2').find(task=>task.id===id);return item?<Pressable key={`studio-${id}`} accessibilityRole="button" accessibilityLabel={`باز کردن استودیو ${item.title}`} style={styles.topicButton} onPress={()=>openPractice('studio',id)}><Text style={styles.topicButtonText}>استودیوی مرتبط · {item.title}</Text><ChevronLeft size={16} color={Palette.primary}/></Pressable>:null;})}
+                  {topic.relatedLessonIds.map(id => {
+                    const item = selectedLessons.find(lesson => lesson.id === id);
+                    if (!item) return null;
+                    return <View key={id} style={styles.topicRelated}>
+                      <Text style={styles.focusDescription}>درس مرتبط · پوشش جزئی</Text>
+                      <Pressable accessibilityRole="button" accessibilityLabel={`باز کردن درس ${item.title}`} style={styles.topicButton} onPress={() => openLesson(item.id)}>
+                        <Text style={styles.topicButtonText}>{item.title} · {lessonStatus(item, progress, sessions)}</Text><ChevronLeft size={16} color={Palette.primary}/>
+                      </Pressable>
+                    </View>;
+                  })}
+                </View>)}
+              </View>)}
+            </View> : <>
             <View style={styles.focusCard}>
               <View style={styles.focusHeadingRow}><View style={styles.focusIcon}><Sparkles size={17} color={Palette.primary} /></View><View style={styles.focusHeadingCopy}><Text style={styles.focusEyebrow}>LEVEL FOCUS</Text><Text style={styles.focusTitle}>موضوعات این سطح</Text></View></View>
               <Text style={styles.focusDescription}>{selected.description}</Text>
               <View style={styles.moduleGrid}>{selected.modules.map((module, index) => <View key={`${index}-${module}`} style={styles.moduleChip}><View style={[styles.moduleDot, { backgroundColor: selected.color }]} /><Text style={styles.moduleText}>{displayEnglishModuleLabel(module)}</Text></View>)}</View>
-              <Text style={styles.focusFootnote}>{selected.status === 'planned' ? 'این سطح بخشی از نقشهٔ آینده است؛ تا زمان تدوین، درس یا جمله‌ای به شمار محتوای موجود اضافه نمی‌شود.' : selected.id === 1 ? `این‌ها ${fa(selected.modules.length)} درس آغازین A1 هستند؛ این سطح هنوز کامل نیست و سنجش رسمی CEFR محسوب نمی‌شود.` : `این سطح شامل ${fa(selected.modules.length)} درس است؛ این نقشه سنجش رسمی CEFR نیست.`}</Text>
+              <Text style={styles.focusFootnote}>{selected.status === 'planned' ? 'این سطح بخشی از نقشهٔ آینده است؛ تا زمان تدوین، درس یا جمله‌ای به شمار محتوای موجود اضافه نمی‌شود.' : `این سطح شامل ${fa(selected.modules.length)} درس است؛ این نقشه سنجش رسمی CEFR نیست.`}</Text>
             </View>
 
             <View style={styles.lessonSectionHeading}><View><Text style={styles.brandEyebrow}>SENTENCE-BASED LESSONS</Text><Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text></View><View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{fa(selectedLessons.length)} درس</Text></View></View>
@@ -214,6 +292,7 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
               <Text style={styles.emptyTitle}>درس‌های این سطح هنوز تدوین نشده‌اند</Text>
               <Text style={styles.emptyDescription}>موضوع‌های سطح در نقشه ثبت شده‌اند، اما جمله یا درس ساختگی نمایش داده نمی‌شود. مسیر موجود فعلاً از الفبا تا موقعیت‌های مقدماتی ادامه دارد.</Text>
             </View>}
+            </>}
           </>}
           {!!error && <View style={styles.errorCard}><Text accessibilityRole="alert" style={styles.errorText}>{error}</Text><Pressable accessibilityRole="button" onPress={() => setRetry(value => value + 1)}><Text style={styles.retryText}>تلاش دوباره</Text></Pressable></View>}
         </View>
@@ -223,6 +302,11 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
 }
 
 const styles = StyleSheet.create({
+  patternCountNote: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 19, color: '#E5E7FF', textAlign: 'right', writingDirection: 'rtl' },
+  topicTitle: { fontFamily: Typography.boldFontFamily, color: Palette.ink, fontSize: 15, lineHeight: 25, textAlign: 'right', writingDirection: 'rtl' },
+  topicRelated: { gap: 6 },
+  topicButton: { minHeight: 44, padding: 10, borderRadius: 12, backgroundColor: Palette.primarySoft, flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
+  topicButtonText: { flex: 1, fontFamily: Typography.fontFamily, color: Palette.primaryDark, fontSize: 13, lineHeight: 22, textAlign: 'right', writingDirection: 'rtl' },
   root: { flex: 1, backgroundColor: Palette.canvas },
   scrollContent: { flexGrow: 1 },
   page: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 20, paddingTop: 18, paddingBottom: 50, gap: 17 },

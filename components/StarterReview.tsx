@@ -6,6 +6,7 @@ import { Brain, Check, CheckCircle2, Clock3, RefreshCw, Sparkles, Volume2 } from
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { StarterBottomNav } from '@/components/StarterBottomNav';
 import type { StarterCourse, StarterLesson } from '@/lib/languages/newCourses';
+import { starterDisplayPronunciation } from '@/lib/languages/starterEditorial';
 import type { CourseProgress, ReviewRating, SentenceReviewCard } from '@/lib/courseProgress';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
@@ -104,7 +105,7 @@ export default function StarterReview({course}: {course: StarterCourse}) {
         <View style={styles.reviewCard}>
           <Text style={styles.reviewFa}>{sentence.fa}</Text>
           {!revealed ? <><Text style={styles.sayHint}>پاسخ این زبان را با صدای بلند بگویید.</Text><Pressable accessibilityRole="button" style={styles.revealButton} onPress={() => setRevealed(true)}><Text style={styles.revealButtonText}>نمایش پاسخ</Text></Pressable></> : <View style={styles.answerArea}>
-            <View style={styles.answerDivider} /><Text style={styles.reviewTarget}>{sentence.text}</Text><Text style={styles.reviewPronunciation}>{sentence.pronunciation}</Text>
+            <View style={styles.answerDivider} /><Text style={styles.reviewTarget}>{sentence.text}</Text><Text style={styles.reviewPronunciation}>{starterDisplayPronunciation(sentence)}</Text>
             <Pressable accessibilityRole="button" style={styles.soundButton} onPress={() => speak(sentence.text)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.soundText}>پخش نمونه</Text></Pressable>
             {vocabulary ? <View style={styles.vocabChip}><Sparkles size={13} color={Palette.warning} /><Text style={styles.vocabText}>{vocabulary}</Text></View> : null}
           </View>}

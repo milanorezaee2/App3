@@ -1,0 +1,272 @@
+{
+  "fr": {
+    "lessons": {
+      "fr-b2-complex-narrative": {
+        "lesson": "337ca1fb754826b53c24759bd2c7e21158a3efd794687f48007b539a9356f491",
+        "skills": "1ff0fc789bb58fc10e32d2a4a9f01127af369d3e3ecd5f8f0a67c610463f227a",
+        "patterns": "3207c8cf62412c51d23d67aae942667abdc08cbc41744f47718146b93384d735"
+      },
+      "fr-b2-counterfactual-regret": {
+        "lesson": "7d32ac7053607a29d75bc8081286833374ce99387458564aebbdaa0ce533a633",
+        "skills": "28b520d42d3c180686fa25375982603c18251c551d85571a82db0db0ae4ddbe0",
+        "patterns": "e0fab8aa3b0715800481aeed5172abc92ad85b68e72e9365e2a5f8bf45298eeb"
+      },
+      "fr-b2-evidence-inference": {
+        "lesson": "b2b932d28fa6b49ca659402715914cd5b4ab7de1805deeb5648b2aa5085bd09a",
+        "skills": "e1eee204dd7fd48cf946a7d938b5c5d5e19dc79a2778f13802784e62a2aa70bc",
+        "patterns": "ea515d363299ebed4dd4e682c4b515ba8b84b338e57f6af81182434adcbd442f"
+      },
+      "fr-b2-reported-questions": {
+        "lesson": "83418430d878d3d8befabc8cd74dc09f10a024139a3bc50d4f3805929874b63a",
+        "skills": "fb1385482025738472aff05d4caa289e6b2e1beede92f14772cd0f23a7fc0eb2",
+        "patterns": "82ac7f99447669082da4871d2f894de9f6e1805151c25d6e971239dc1be7a9bd"
+      },
+      "fr-b2-passive-causative": {
+        "lesson": "572df25bbd8eef807f221c5c45b0b2eb2c33b8a17b2ebce8e9b14bf7ff14e596",
+        "skills": "7b94fe2e6e802d654366cfcb16c61ffaaff1fe7a32fed828af133a8a5f2d12d5",
+        "patterns": "0a15f2e2493ca24a05d199ebc4a675ee44ffea0ce0f4043107edde2924c469a7"
+      },
+      "fr-b2-relative-process": {
+        "lesson": "86301e203409ae45ad4b8485490dc3121d7878da74c57b669b209868c3622f0c",
+        "skills": "c0077c718f4258b0f22fa3ae1d74febbee2ee54da16e8f2881bf4688c6d1f325",
+        "patterns": "50e5fc4eeaabf4d6e3cada7124b312f58dc14094f3278f8cc10d31c5dc8f0941"
+      },
+      "fr-b2-structured-argument": {
+        "lesson": "666d6e7505b896b6ebb0f346ec4bfc5410a73f4ba1ecc86c2349bc8c6af76154",
+        "skills": "45b26cb15a1ab79d638134edbd87e69ec0bbd624dbc417dafc0a0ec46be0cfa9",
+        "patterns": "6d343c4a3663049a618dcb90027034f394bae169e4a535e996878655fd236b66"
+      },
+      "fr-b2-negotiation-feedback": {
+        "lesson": "206e7fc62bcce1c412f2cd2654a41acefa0dacb3d5b5759d040ae7680db3af9a",
+        "skills": "0dd591c70d1b94be7df789133070c131c3f67b985f1e661df848e7d1630fe510",
+        "patterns": "09a0322110f7ddda74830dcd572ae43f9fe54694383f3129b48105576a777d89"
+      },
+      "fr-b2-formal-complaint": {
+        "lesson": "6a752292098eff83fbd4fbf8ea660f23ad9e409a1361414147b328f395435fb8",
+        "skills": "c39ef30e76aaa6c76ab2c09d2ca078c574509fbe0105043ab1265f3cf9983186",
+        "patterns": "881f09368c48afa4df52ef94478b60e006dfc20a1e038d2f4c2fc88a251b09cf"
+      },
+      "fr-b2-source-synthesis": {
+        "lesson": "1d18372b3d49e262cc0b8874f26d1d6d571f058aff31946c28facfb1d3b59d28",
+        "skills": "c40e2616316eae8cec85af84d8c56f4327597f1c4e5949485799cf41ae264c46",
+        "patterns": "f330a554605576d33c3edac2f96a617aa07ef762779a7d2dc98e8ad9afda8df2"
+      },
+      "fr-b2-project-risk": {
+        "lesson": "2ac9adf9ad7280b46ee920caad925de0cbebf61d16dbfae7daa3993b06e0de10",
+        "skills": "41657c1c1e9cb149d875d8c084a971595ed05eeb927ed7b90916617e86659cc9",
+        "patterns": "f116288aabc1df2c680d2d0f8d16ce4e9137149e184ff1c388425d4ef4b6702a"
+      },
+      "fr-b2-interview-expertise": {
+        "lesson": "85d25f7a7e0125c882939cac5b22c71d5b80fda2b02d3d947ceb0b2a15b7b315",
+        "skills": "536a9672f36e08553071644bf076d510206640d96d3adb5b3605b72d3ea4c86b",
+        "patterns": "55e4d58e438db601e068a47b20e5ea5e911ed4692c22570255819282bd881785"
+      },
+      "fr-b2-media-analysis": {
+        "lesson": "77c07d4842a7689d547887be88d6563475562ec9e15820256c1a1b7fb05ea132",
+        "skills": "4149c86537a90b31345b5633ec1073894816b78c9be448d99ef71dab02f9e998",
+        "patterns": "1286337f8c98983accfef21220133b3c36b640badb35f6c2dba7f2bf3519319a"
+      },
+      "fr-b2-mixed-conditions": {
+        "lesson": "4e72e5e5ae8f2e932197db00b12db6ad628521af77f7cf9259202c7bf53d079c",
+        "skills": "a2d051995d08d3d29511688528dc9a3f5b589437ba51f93414cd57ff494dbf26",
+        "patterns": "8aae300bb74acec20460076af30704b0f36540cc148a5c61455c31624f1a878b"
+      },
+      "fr-b2-professional-phrases": {
+        "lesson": "6f3e6abf1fa02b6210a3dd0e128d307e83fde556920e0a88bdeadf9a1f2d0292",
+        "skills": "13474f3a6585aa89f7dd1bec44958ca1eba6ce42ce6ce78299a6725ba31b88ec",
+        "patterns": "93bb0c167229dbd79650c01a9721c3d289719a2acb3ea8c3106dd5a73701a46d"
+      },
+      "fr-b2-housing-economy": {
+        "lesson": "e05d118d9e898f27f084d811bab4f49779dd30cf65da7d18642e925838292096",
+        "skills": "3c97b80f082cabcfb334f3493d640043b8b7f8d5ed4c2fa7aae7ca3ecf12cef8",
+        "patterns": "8be05a66a4e59b9a50111deeb9d71d07cabcdfad93401a826d3c062072ecf40d"
+      },
+      "fr-b2-multi-party-discussion": {
+        "lesson": "b83e948d80960f439127f504f0069328e5a300a66166c22db24a8fe3e99e0fe8",
+        "skills": "e8f8351a794012b0e14da03f867fa33786f9146dcf0fe293c24da4d6060503fb",
+        "patterns": "7608be464ec009348e61efad72f1f4687e343855a900f10e9199dec6aa1e8609"
+      }
+    },
+    "checkpoint": "b6c70b40860fa0e0c8773b3e20a079d92419b7789be9b7f7ba43f195adfec3ee"
+  },
+  "de": {
+    "lessons": {
+      "de-b2-complex-narrative": {
+        "lesson": "b118604d8dcf598be4a53eb78a0ef9d640a4165ab4afd3f504e6b963b27dbcc6",
+        "skills": "28927c37ca79047f2c17d90c7dbcc798b37836343bbca075b7318f187a614e44",
+        "patterns": "76ffa2a80ba631bfe0fb28c7a87ed774e6cec81db2e4ef21e86ac732ed7f75f2"
+      },
+      "de-b2-counterfactual-regret": {
+        "lesson": "886690e752cda69bd392065f1ac2386c993fd7f06d970679889b1918d81fc9fd",
+        "skills": "53e3cc123804aa84fb0d6fbb9ba2e70bac39a34cb2845f197d790dd85a97954a",
+        "patterns": "2dc7d6d8bebaa95f4afee2b2df4b60a2a0c58a03ae90ab80652a95df2a07ca5f"
+      },
+      "de-b2-evidence-inference": {
+        "lesson": "61d033e2eb36a7b74dabc87ebc1b1597da9f3eff364ab9b66fcabda1e999d4a9",
+        "skills": "e8d1c5a9db571d7f6d63191b670df01d14b4fe3737a3831c0b1ebb754a065b01",
+        "patterns": "626e917a0efdac5c5e8e284188a9d75a8ce2cdcf683be0c3053ca0bdc75b7386"
+      },
+      "de-b2-reported-questions": {
+        "lesson": "5dd69a3ade12a643ed5ee029eab967f2c7c2e2bdeaa4bbc84811f27c6fb509bb",
+        "skills": "95284ad8e33c2b10e8ad1ed787cb2fbfe53997a1bd059360acb19c4fe3780f6e",
+        "patterns": "0cbca65588175960072938ec2c3a7f3c7bd09b188075974468e3a755ca07237f"
+      },
+      "de-b2-passive-causative": {
+        "lesson": "5ff04fa98baed6cb1012762e3c0381bdeb65215e3b43bcaf679e849b74f23514",
+        "skills": "9f2b9b6881f2fd6fb30e03d642f78fbfebbd59a6513a085a18f358cf6ae1718c",
+        "patterns": "c0bde24d3691466131fe66b054776c83697a56e965515e66dced885b538d19c7"
+      },
+      "de-b2-relative-process": {
+        "lesson": "00784052d0fd0f84169f7c1fedfb1bdeb93415efab33add89ad10aad4df465ea",
+        "skills": "885e1f4d47a437d9d083f942d21e60f2adc254e936be4bf748406ae3bf939f36",
+        "patterns": "6193c19fc52abd06ab28f14667554511868713bf6c6c545cc1e08e2b0eca1380"
+      },
+      "de-b2-structured-argument": {
+        "lesson": "af98c025e3487ff14f0eed942a8293c170c0987bdc18f517fafba5c2de7c270e",
+        "skills": "eeb58ce8c2b3ffce46f1ef2f2d6d402f7983507eaa58b16a9e73a8882107b988",
+        "patterns": "e2baa48a350754d6ee38de6972406d58dff74e549021fa31f1acb45b00d5a5c9"
+      },
+      "de-b2-negotiation-feedback": {
+        "lesson": "8eb54d88744fbaba6fc70bf4fe7edf86521b5b2238030cdb81622af95bfec628",
+        "skills": "a40fdcc3dc8f2a8e31062faa81953105df0c93be7054f84169f13f17e6458ced",
+        "patterns": "06fc1fc1b0c96c807f6e1a6b46ef6c91a96383432ba3b64c3ab73cd2fc499597"
+      },
+      "de-b2-formal-complaint": {
+        "lesson": "0c458ea388427812b90c92b30e6cdcead513edbda038fbba8d59e49e904c1f86",
+        "skills": "4961dbc2d3481dac5974bbb96e05c7c2ca7b46053ff2611acbd69bb58e2e92fc",
+        "patterns": "bf0e74634657fc2414de9c6126d284d77853c3f31f66d8ee16652689a1322635"
+      },
+      "de-b2-source-synthesis": {
+        "lesson": "301a1e8e1849c00c351f31f5e9d6a30f106b8bf8f62cd6e35ed0e5bb71ce87f7",
+        "skills": "8e6a1e15f624b0d2425d1c96b7de5d768c8330c978c3ea99ac17d12d41d927ff",
+        "patterns": "2f0f47d915d60488377301105cdfc8ea581e8f562fb9f2c2a53ad468d05064cc"
+      },
+      "de-b2-project-risk": {
+        "lesson": "020fd077112f338290a6213e20ee97a0689c6a100d4bfb2c2fc17036da25bd0a",
+        "skills": "d31c7d55c0d32eec8e60f4d4aad2f42aa9ceb821d3fcc92efa56890ad8c6b691",
+        "patterns": "73ae6a50b443d21869f9e407fba4cb0a59e9d7efe97fc21a3ba83b3524ed7feb"
+      },
+      "de-b2-interview-expertise": {
+        "lesson": "dd214d3cf7b67875cd20a227bf9e1df72519d1752dcabf6867ac0b5782a420d9",
+        "skills": "332cf83df06f86ef44f55c8831eb598bf50ec2e158f04cc029a33ee3ccc5dba5",
+        "patterns": "2390ade84a6804ff57787f588539b381573efe69a6c163838f76e0cf1b38f9cf"
+      },
+      "de-b2-media-analysis": {
+        "lesson": "3e0b2582da497f08cbc7941a7dafb030ce5e7b969aed68a6dfa136d7d698c777",
+        "skills": "594429494f67698bb198e8c41c562ad9c6552cb048076c0bdc73eff29f750423",
+        "patterns": "8a5f882008634c3567d4a2c1e9cc460b8015e4d6986ec2f4c6c7942aa7b2ca1c"
+      },
+      "de-b2-mixed-conditions": {
+        "lesson": "6238b2f88af21042bf361bb9b6dcbab63d39225b2f0dd9341b31de8792e0ec1b",
+        "skills": "c7d3cc6483519132bd400223bcf6da17b24ced65bb6bbe20a31fa114c1957262",
+        "patterns": "894a4e756d89432f3b9fafd93c3ef8b317467caa081075d4ebdbb1797699bb10"
+      },
+      "de-b2-professional-phrases": {
+        "lesson": "90a3681d0e568a88427aa9c8ae108d7f611c8cd3f8b731d3f81b2d9428cea0ac",
+        "skills": "9ddc24b23582a074695aa1fdaa1adac35c79dd140004fe892a2ce86719b03282",
+        "patterns": "767be5815973d0b09c57c27b8d2cf0166f0c4169c630e499e1a04006f0e1409c"
+      },
+      "de-b2-housing-economy": {
+        "lesson": "63fcbedf900860084357796404acb23f125eedc2451b461d853a91a6a30ec5e1",
+        "skills": "bdad207f03bafa5984cc40a6f22b9f238f4c1e7b1e2a0e66622a7a88a8c03aeb",
+        "patterns": "41ccf0aac5b3a37f3138a6d80e40816adfa386f9a82bdc6abda718a32462b5ba"
+      },
+      "de-b2-multi-party-discussion": {
+        "lesson": "80c42a3e20687d749cf3c80093df227460f9516fbba4174d8972d42003c686f1",
+        "skills": "79c86d948c64039dde0b841e5e5dd5f7ffebf5f894b21d9da6e71ce8c72c80d1",
+        "patterns": "4d254250b25dd121b18606ffd574ea471a38116f93ead38b1750b44de39b6c92"
+      }
+    },
+    "checkpoint": "2e28aaba81f54bbd8b8c9e7d562c923ad391b25052500f67582c7b196dfb788b"
+  },
+  "es": {
+    "lessons": {
+      "es-b2-complex-narrative": {
+        "lesson": "6c676a3ebb0d75264eed6f61427d29b31589da39cd88b53f01c1a7587fcb332e",
+        "skills": "2328410c42aab4f31adeafb30174ae30969c00e80f87968043b6a411a5d9d1e7",
+        "patterns": "08cc8f7eb5d33084c2441ecd0a3288f9e1a597aae46528fe9a44e42f3de01591"
+      },
+      "es-b2-counterfactual-regret": {
+        "lesson": "140df0866808a1c6b166f2a50b9171ea193246715b381f5e5a92a93560cfe82c",
+        "skills": "bb36cf768b018405c17e38d32f3665ab55ffe597375e1c2801003ff5854e4066",
+        "patterns": "d8dfa359da7e5007c4153055703e7a697be5f52a140a272edb0d4ee792700735"
+      },
+      "es-b2-evidence-inference": {
+        "lesson": "e99acead8fadd19f7cb892a5ba1a1708c0d5cc27cde34c0fb89a021d02c0db82",
+        "skills": "6873b4110d3ffef71902008d431c7dbdb2827d5db486e3acbed0831cd49ab321",
+        "patterns": "ed2e2c712ad82e1dc6b5e046c9276df79033790f304eba1baca06baf123f092c"
+      },
+      "es-b2-reported-questions": {
+        "lesson": "01fe854a5fd3563766201c9d264280c4f1b60bae1962a01d2b91aa611e2b2000",
+        "skills": "413eee5e017a1fd3551add0e4edd959499b97f06d1047a319201dae9628cb211",
+        "patterns": "520f13eb48156c9266ecdc959a62d22e675b8afb3f409cb1a21d2a333226d6b6"
+      },
+      "es-b2-passive-causative": {
+        "lesson": "c850a034c6f75dc36f8c134307d1530274cb917c7252cee238b0ee0a6a520aec",
+        "skills": "4a6186fe668930780d53f3e6fb1eaf1fcd79a69175f2741da01b1c4a3a4bf2da",
+        "patterns": "edfebad64397e20d6284560fdaeec0b6c2bf8b5ee06ceea7f842c7bf55d42116"
+      },
+      "es-b2-relative-process": {
+        "lesson": "6f55916e49f202276b4ee442cef8d508741fa58293916755b6b378c27a6338af",
+        "skills": "9011ee70fc2fde65c2d917f647afa80cac992d33d5c238662176e0971d63df54",
+        "patterns": "28ac393e168de3b3c47efbab14690708e8177773b576746067d7bd3836de69cb"
+      },
+      "es-b2-structured-argument": {
+        "lesson": "7eea45e5219a18d6aad2d9cb1a95a1c4dda5e5ad3bece033bc091d31446bac4c",
+        "skills": "7c3b6a2db443371eb31832c0932f6340014a11ddbafec75eda0516aea7a89cbf",
+        "patterns": "7f9f8c11bcbb7d6b84bd22341a4757041db3ad369cd6c743af177e46fb280d8b"
+      },
+      "es-b2-negotiation-feedback": {
+        "lesson": "6a80818f137603aaecf8c1f51c5d6e5f02649275e0293e575a2d74c0c107345a",
+        "skills": "0a4863b1f18866d1e495fbe3060d945d0e859f972db04fccf2f410594c06c571",
+        "patterns": "e448342a2c95e253dff1e9e63aa02c7a81b3089230a36d7052eca8b777b1b5ed"
+      },
+      "es-b2-formal-complaint": {
+        "lesson": "67173b0771007de889e004ccc7cb132f853a2cf6fb413c34697a2b7d519d7345",
+        "skills": "161f07c93193cad1f0472b26b64a6cca0c9905dca2770adb1912499ef2bfc1ad",
+        "patterns": "d16e5785baf46ddc75e13ffafccf025de3b30261494abd47ce3ae9d2083f8baa"
+      },
+      "es-b2-source-synthesis": {
+        "lesson": "d8dc3cfe3387f0089b52afa08dbff8849af0361c08220f49fda70e0b91c95f23",
+        "skills": "413681e5a0c41f25f3bb9991935f244851ec5419e5a9e553fd81faf560cb9e82",
+        "patterns": "26f0ceb3ed6717346637a524b3550936fea1c0dac6feeec89fb28ea8c34da6c5"
+      },
+      "es-b2-project-risk": {
+        "lesson": "7ca89ae3ebd63a5ebdc904a59ee5a8e08a6fb79d2162a16887c1cec29c3841a7",
+        "skills": "3916169b479057c6e79f219da9557a90950931600cbde0d9c26cc3adb67513df",
+        "patterns": "62f1b7f0f79c04a4161995eea203f055ac5d8ddca1b49bdff9a17a2efe89ae30"
+      },
+      "es-b2-interview-expertise": {
+        "lesson": "a116c59cfe0950927e014ea63aacd7e45ec86fe214689a96973d14249a25a81b",
+        "skills": "920f9719c57b06970cb1ff431ebe08dd86f736f0a546687654a7cd7c3455d92e",
+        "patterns": "285eae1bccbb551c01d0dbc616c705db50fca777534379af54047d26133f3e8f"
+      },
+      "es-b2-media-analysis": {
+        "lesson": "4c98ae0ffab718bb16e2da37f8a5fd8fa0e14065aeb9b6ee9eb9367d8d2ffb01",
+        "skills": "0f849fe6d88df6462b3dcb548ddd86970c38fba9a0298a93921cc039c9840f99",
+        "patterns": "e3b6a9cab7be814e4ef4162d73e88fe8d17668558442488d368ab1b22ab91141"
+      },
+      "es-b2-mixed-conditions": {
+        "lesson": "870afc4096473722c754850c2796df08cee12e1f67400b507f17f22af46395bd",
+        "skills": "d3114df9c5453e768a54354259b42f60bacf26a97b0f3a879f3f4127eca7c29c",
+        "patterns": "ff387297eb0da8d45da1f378ac1c3f489bb9d2c15c709e94a485d376e4795418"
+      },
+      "es-b2-professional-phrases": {
+        "lesson": "423f1fc4e628abedacbff1c60009df23358dd14b95e90e82de16d6da36fc660a",
+        "skills": "ab4a08532fff0053146755f326c43ec834a93637e37aff93e1f6bc84b9494572",
+        "patterns": "107854e600a0709c91ad6ce218b5012a119024a6efd7b4da5187ce8be54d75db"
+      },
+      "es-b2-housing-economy": {
+        "lesson": "36c3e8a7f804edfe7e5a612f611f868cfdf4c25fca2412cc8c68cde3d405e0c7",
+        "skills": "1ae2898a2fa69246c451b90ca0ed3f353a0bc4815da4013c5cc2ffc098b4be7f",
+        "patterns": "b5bf7c1699d7d22a8512c714b552ee0913f0db23717c678402ca581c5c8114d8"
+      },
+      "es-b2-multi-party-discussion": {
+        "lesson": "a7d1c9d56a9930cfa113a160bc5c7b37747ed23eabbeeff11102fb86721a8fe4",
+        "skills": "8ddd2bdbc70f7c0bf69ca47803c160a57f99a6b062198229a08e4a163839e584",
+        "patterns": "20f556d37e5ea0177609d0265a8de86482bb5df9be15d63a14e5d7e6417e9ac2"
+      }
+    },
+    "checkpoint": "7afe02c34e5bff5dcb26a708729ffcac3e8cf40e98f8f87c56741791b3abcd72"
+  }
+}

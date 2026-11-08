@@ -10,7 +10,18 @@ import LanguageSentenceBuilder from '@/components/LanguageSentenceBuilder';
 import { StarterWordChoice } from '@/components/StarterWordChoice';
 import StarterExtraPractice from '@/components/StarterExtraPractice';
 import StarterWritingPractice from '@/components/StarterWritingPractice';
-import { starterDisplayChecks, starterTeachingNote } from '@/lib/languages/starterEditorial';
+import StarterA1Skill from '@/components/StarterA1Skill';
+import StarterB1Production from '@/components/StarterB1Production';
+import {b1Production} from '@/lib/languages/b1Production';
+import { A1_SKILLS } from '@/lib/languages/a1Skills';
+import { A2_FIRST_SKILLS } from '@/lib/languages/a2FirstLessons';
+import { a2UnitSkills } from '@/lib/languages/a2Units';
+import { a2ExpansionSkills } from '@/lib/languages/a2Expansion';
+import { b1UnitSkills, b1GrammarPatterns } from '@/lib/languages/b1Units';
+import { b2UnitSkills, b2GrammarPatterns } from '@/lib/languages/b2Units';
+import {b2Production} from '@/lib/languages/b2Production';
+import { a2GrammarPatterns } from '@/lib/languages/a2Grammar';
+import { starterDisplayChecks, starterDisplayDialogue, starterDisplayPronunciation, starterTeachingNote } from '@/lib/languages/starterEditorial';
 import LanguageDialoguePractice from '@/components/LanguageDialoguePractice';
 import type { StarterCourse, StarterLesson } from '@/lib/languages/newCourses';
 import { ENGLISH_ENGINE_STEPS } from '@/lib/englishLearningEngine';
@@ -40,7 +51,7 @@ const SLOW_SPEECH_RATE = 0.5;
 export default function StarterLessonView({ course, lesson, fromStart }: { course: StarterCourse; lesson: StarterCourseLesson; fromStart?: 'listen' | 'restart' }) {
   const {lessons, levels, progress: courseProgress} = course;
   const foundation = !!lesson.learningMode;
-  const a1 = lesson.levelId === 1;
+  const a1 = lesson.levelId === 1 || lesson.levelId === 2 || lesson.levelId === 3 || lesson.levelId === 4;
   const unit = lesson.learningMode === 'chunks' ? 'عبارت' : foundation ? 'واژه' : 'جمله';
   const unitPlural = lesson.learningMode === 'chunks' ? 'عبارت‌ها' : foundation ? 'واژه‌ها' : 'جمله‌ها';
   // The nine saved stage indexes stay identical to the existing lessons.
@@ -75,6 +86,11 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
     }));
     return [...byWord.values()];
   }, [lesson]);
+  const skills = lesson.id === `${course.id}-a2-present` ? A2_FIRST_SKILLS[course.id] : lesson.levelId === 2 ? (a2UnitSkills(course.id)[lesson.id] ?? a2ExpansionSkills(course.id)[lesson.id] ?? []) : lesson.levelId === 3 ? (b1UnitSkills(course.id)[lesson.id] ?? []) : lesson.levelId === 4 ? (b2UnitSkills(course.id)[lesson.id] ?? []) : A1_SKILLS[lesson.id] ?? [];
+  const listeningTask = skills.find(task => task.kind === 'listening');
+  const readingTask = skills.find(task => task.kind === 'reading');
+  const a2Patterns = lesson.levelId === 2 ? a2GrammarPatterns(course.id, lesson.id) : lesson.levelId === 3 ? b1GrammarPatterns(course.id, lesson.id) : lesson.levelId === 4 ? b2GrammarPatterns(course.id, lesson.id) : [];
+  const currentPattern = a2Patterns.find(pattern => pattern.example === sentenceIndex + 1)?.form ?? current.pattern;
   const grammarPatterns = lesson.sentences.flatMap(sentence => sentence.pattern ? [{ sentence, pattern: sentence.pattern }] : []);
 
   // Warm up the device speech engine so the first target sentence is not delayed.
@@ -224,10 +240,10 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           <View style={styles.sentenceCard}>
             <Pressable accessibilityRole="button" accessibilityLabel={foundation ? `شنیدن ${unit} این زبان` : "شنیدن جملهٔ این زبان"} style={styles.soundButton} onPress={() => speak(current.text)}><Volume2 size={25} color="#FFFFFF" /></Pressable>
             <Text style={styles.targetSentence}>{current.text}</Text>
-            <Text style={styles.pronunciation}>{current.pronunciation}</Text>
+            <Text style={styles.pronunciation}>{starterDisplayPronunciation(current)}</Text>
             <View style={styles.divider} />
             <Text style={styles.persian}>{current.fa}</Text>
-            {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternText}>{current.pattern}</Text></View> : null}
+            {currentPattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternText}>{currentPattern}</Text></View> : null}
           </View>
           <View style={styles.replayRow}>
             <Pressable accessibilityRole="button" accessibilityLabel={`پخش آهستهٔ ${unit}`} style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable>
@@ -246,6 +262,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
             <Volume2 size={19} color={Palette.primary} />
           </Pressable>)}</View>
           <View style={styles.shadowTip}><Headphones size={18} color={Palette.primary} /><Text style={styles.shadowText}>فعلاً فقط گوش دهید؛ مرحلهٔ بعد برای تکرار و سایه‌خوانی است.</Text></View>
+          {listeningTask && <StarterA1Skill key={`${lesson.id}-listening`} task={listeningTask} onSpeak={speak} />}
         </View>}
 
         {stage === 3 && <View style={styles.centerStage}>
@@ -284,9 +301,17 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
         {stage === 6 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><BookOpenCheck size={33} color={Palette.primary} /></View>
           <Text style={styles.stageTitle}>{foundation ? 'نکتهٔ نوشتار و کاربرد' : 'دستور در کاربرد'}</Text>
-          <Text style={styles.stageDesc}>{foundation ? 'نکته را بخوانید؛ نمونه‌ها را می‌توانید در بخش شنیدن یا تمرین دوباره بشنوید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به داده‌ها اضافه نمی‌شود.'}</Text>
+          <Text style={styles.stageDesc}>{foundation ? 'نکته را بخوانید؛ نمونه‌ها را می‌توانید در بخش شنیدن یا تمرین دوباره بشنوید.' : (lesson.levelId === 2 || lesson.levelId === 3 || lesson.levelId === 4) ? 'ساختار و توضیح هر الگو را بخوانید و مثال آن را از همین درس بشنوید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به داده‌ها اضافه نمی‌شود.'}</Text>
           {a1 && teachingNote ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ این زبان</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : null}
-          {foundation ? <View style={styles.noteCard}><Text style={styles.noteTitle}>یادآوری</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : grammarPatterns.length ? grammarPatterns.map(({ sentence, pattern }) => <View key={sentence.id} style={styles.vocabCard}>
+          {foundation ? <View style={styles.noteCard}><Text style={styles.noteTitle}>یادآوری</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : a2Patterns.length ? a2Patterns.map(pattern => {
+            const sentence = lesson.sentences[pattern.example - 1];
+            return <View key={pattern.form} style={styles.vocabCard}>
+              <Text style={styles.a2PatternForm}>{pattern.form}</Text>
+              <Text style={styles.noteText}>{pattern.explanationFa}</Text>
+              <Text style={styles.vocabExample}>{sentence.text}</Text><Text style={styles.vocabExampleFa}>{sentence.fa}</Text>
+              <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن جمله: ${sentence.text}`} onPress={() => speak(sentence.text)} style={styles.bubbleSound}><Volume2 size={16} color={Palette.primary} /></Pressable>
+            </View>;
+          }) : grammarPatterns.length ? grammarPatterns.map(({ sentence, pattern }) => <View key={sentence.id} style={styles.vocabCard}>
             <Text style={styles.patternText}>{pattern}</Text><Text style={styles.vocabExample}>{sentence.text}</Text><Text style={styles.vocabExampleFa}>{sentence.fa}</Text>
             <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن جمله: ${sentence.text}`} onPress={() => speak(sentence.text)} style={styles.bubbleSound}><Volume2 size={16} color={Palette.primary} /></Pressable>
           </View>) : <View style={styles.promiseCard}><Text style={styles.promiseTitle}>یادگیری در بافت جمله</Text><Text style={styles.promiseText}>برای این درس الگوی جداگانه‌ای ثبت نشده است؛ جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید.</Text></View>}
@@ -303,7 +328,10 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           </> : <>
             <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
             <Text style={styles.stageDesc}>از دیالوگ همین درس نقش‌آفرینی کنید؛ جملهٔ خود را بگویید و سپس نمونه را بشنوید.</Text>
-            <LanguageDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} languageLabel={course.name} />
+            <LanguageDialoguePractice key={lesson.id} dialogue={starterDisplayDialogue(lesson)} onSpeak={speak} languageLabel={course.name} />
+            {readingTask && <StarterA1Skill key={`${lesson.id}-reading`} task={readingTask} onSpeak={speak} />}
+            {lesson.levelId === 3 && b1Production(course.id,lesson.id) && <StarterB1Production key={`${lesson.id}-production`} prompt={b1Production(course.id,lesson.id)!} lesson={lesson} onSpeak={speak} />}
+            {lesson.levelId === 4 && b2Production(course.id,lesson.id) && <StarterB1Production key={`${lesson.id}-production`} prompt={b2Production(course.id,lesson.id)!} lesson={lesson} onSpeak={speak} />}
           </>}
         </View>}
 
@@ -424,9 +452,10 @@ const styles = StyleSheet.create({
   pronunciation: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl', marginTop: 8 },
   divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 18 },
   persian: { fontFamily: Typography.fontFamily, fontSize: 17, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
-  pattern: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start', gap: 8, alignSelf: 'flex-end', backgroundColor: Palette.warningSoft, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999, marginTop: 14 },
+  a2PatternForm: { fontFamily: Typography.latinFontFamily, fontSize: 14, lineHeight: 23, color: Palette.primaryDark, textAlign: 'left', writingDirection: 'ltr', alignSelf: 'stretch' },
+  pattern: { maxWidth: '100%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start', gap: 8, alignSelf: 'flex-end', backgroundColor: Palette.warningSoft, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999, marginTop: 14 },
   patternLabel: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.warning, writingDirection: 'rtl' },
-  patternText: { fontFamily: Typography.latinFontFamily, fontSize: 10, fontWeight: '800', color: Palette.warning, textAlign: 'right', writingDirection: 'ltr' },
+  patternText: { flexShrink: 1, fontFamily: Typography.latinFontFamily, fontSize: 10, fontWeight: '800', color: Palette.warning, textAlign: 'right', writingDirection: 'ltr' },
   hint: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', lineHeight: 19, marginTop: 14 },
   listenList: { width: '100%', gap: 8, marginTop: 20 },
   listenRow: { minHeight: 62, borderRadius: 16, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, paddingHorizontal: 13, flexDirection: 'row-reverse', alignItems: 'center', gap: 10 },

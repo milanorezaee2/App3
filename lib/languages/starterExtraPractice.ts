@@ -1,4 +1,5 @@
 import type { StarterLesson } from './newCourses';
+import { A1_EXTENSION_SLUGS } from './a1TopicExtensions';
 
 export type ExtraQuestion = { target: string; choices: string[]; correctIndex: number };
 
@@ -11,8 +12,12 @@ export function buildExtraPractice(lesson: StarterLesson): ExtraQuestion[] {
     all.findIndex(other => other.fa.trim() === sentence.fa.trim()) === index
   );
   if (unique.length < 4) return [];
-  return [0, 2, 4].filter(index => index < unique.length).map((index, questionIndex) => {
-    const target = unique[index];
+  const initial = [0, 2, 4].filter(index => index < unique.length).map(index => unique[index]);
+  const slug = lesson.id.replace(/^(fr|de|es)-a1-/, '');
+  const added = lesson.levelId === 1 && A1_EXTENSION_SLUGS.includes(slug)
+    ? lesson.sentences.slice(8).filter(sentence => unique.includes(sentence)).slice(0, 2)
+    : [];
+  return [...initial, ...added].map((target, questionIndex) => {
     const distractors = unique.filter(item => item !== target).slice(0, 3).map(item => item.fa);
     const choices = [...distractors];
     const correctIndex = (questionIndex + 1) % 4;

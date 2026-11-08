@@ -5,6 +5,30 @@ import { createStarterSessions } from './starterSessions';
 import { PRE_A1_EXPANSION } from './preA1Expansion';
 import { PRE_A1_MORE } from './preA1More';
 import { A1_FIRST_UNITS, type A1Seed } from './a1FirstUnits';
+import { A1_NEXT_UNITS } from './a1NextUnits';
+import { A1_GREETINGS } from './a1Greetings';
+import { A1_CORE_UNITS } from './a1CoreUnits';
+import { A1_NATIONALITIES } from './a1Nationalities';
+import { A1_PEOPLE_UNITS } from './a1People';
+import { A1_POSSESSIVES } from './a1Possessives';
+import { A1_SHOPPING } from './a1Shopping';
+import { A1_DIRECTIONS } from './a1Directions';
+import { A1_HELP } from './a1Help';
+import { A1_TOPIC_INTROS, toTopicSeed } from './a1TopicIntroductions';
+import { A1_SCENARIO_INTROS } from './a1ScenarioIntroductions';
+import { A1_GRAMMAR_INTROS } from './a1GrammarIntroductions';
+import { A1_EVERYDAY_INTROS } from './a1EverydayIntroductions';
+import { A1_SOCIAL_INTROS } from './a1SocialIntroductions';
+import { A1_TIME_FEELINGS_INTROS } from './a1TimeFeelingsIntroductions';
+import { A1_PRACTICAL_INTROS } from './a1PracticalIntroductions';
+import { A1_REMAINING_INTROS } from './a1RemainingIntroductions';
+import { topicExtensionRows, topicExtensionNote } from './a1TopicExtensions';
+import { getA1Curriculum } from './a1Curriculum';
+import { A2_FIRST_LESSONS } from './a2FirstLessons';
+import { a2Units } from './a2Units';
+import { a2ExpansionUnits } from './a2Expansion';
+import { b1Units } from './b1Units';
+import { b2Units } from './b2Units';
 import { STARTER_FOUNDATIONS, type FoundationMode, type FoundationSeed } from './starterFoundations';
 
 export type NewLanguageId = 'de' | 'fr' | 'es';
@@ -54,7 +78,7 @@ const pilotExtras: Record<NewLanguageId, SentenceSeed[][]> = {
 };
 const labels = { de: {name:'آلمانی', native:'Deutsch', locale:'de-DE', brand:'GERMAN'}, fr:{name:'فرانسوی',native:'Français',locale:'fr-FR',brand:'FRENCH'}, es:{name:'اسپانیایی',native:'Español',locale:'es-ES',brand:'SPANISH'} } as const;
 const levelSeeds: Array<[CourseLevelId,string,string,string,string]> = [
-  [-1,'Absolute Beginner','Pre-A1 · شروع از صفر','نخستین واژه‌ها و جمله‌ها','#94a3b8'], [0,'Foundation','پایه · شروع از صفر','پایه‌های جمله‌سازی','#6555E9'], [1,'Survival','A1 · کاربرد روزمره','موقعیت‌های ضروری','#27A1D6'], [2,'Everyday','A2–B1 · زندگی روزمره','گفت‌وگو دربارهٔ زندگی روزمره','#19A88B'], [3,'Communication','B1–B2 · ارتباط مستقل','توضیح و بیان نظر','#E4A436'], [4,'Upper-Intermediate','B2 · پیشرفته‌تر','استدلال و ارتباط حرفه‌ای','#9A68E8'], [5,'Advanced Communication','C1 · پیشرفته','تحلیل و دقت در بیان','#D56788'],
+  [-1,'Absolute Beginner','Pre-A1 · شروع از صفر','نخستین واژه‌ها و جمله‌ها','#94a3b8'], [0,'آمادگی','پایه · در حال تدوین','آمادگی پیش از A1','#6555E9'], [1,'A1 · Foundation & Survival','A1 · پایه و کاربرد روزمره','دو بخش پایه و موقعیت‌های روزمره؛ محتوا در حال تدوین است','#27A1D6'], [2,'A2 · Foundation & Survival','A2 · ارتباط پایه','درس‌های مرتبط با سرفصل‌ها در دسترس‌اند؛ پوشش هر موضوع جزئی است','#19A88B'], [3,'B1 · Foundation & Survival','B1 · ارتباط مستقل','نقشه و درس‌های مرتبط؛ پوشش هر سرفصل جزئی است','#E4A436'], [4,'B2 · Foundation & Survival','B2 · ارتباط پیشرفته','نقشه و درس‌های مرتبط؛ پوشش سرفصل‌ها جزئی است','#9A68E8'], [5,'Advanced Communication','C1 · پیشرفته','بیان دقیق، ساختارهای پیشرفته و ارتباط مؤثر در موقعیت‌های حرفه‌ای و دانشگاهی','#D56788'],
 ];
 export function isNewLanguage(value: string | undefined): value is NewLanguageId { return value === 'de' || value === 'fr' || value === 'es'; }
 function buildFoundation(id: NewLanguageId, seed: FoundationSeed): StarterLesson {
@@ -84,14 +108,14 @@ function buildFoundation(id: NewLanguageId, seed: FoundationSeed): StarterLesson
   };
 }
 
-function buildA1(id: NewLanguageId, seed: A1Seed): StarterLesson {
-  const lessonId = `${id}-a1-${seed.slug}`;
+function buildA1(id: NewLanguageId, seed: A1Seed, level: 1 | 2 | 3 | 4 = 1): StarterLesson {
+  const lessonId = `${id}-${level === 4 ? 'b2' : level === 3 ? 'b1' : `a${level}`}-${seed.slug}`;
   const sentences = seed.rows.map(([text, fa, pronunciation, word, meaning, pattern], index) => ({
     id: `${lessonId}-s${index + 1}`, text, fa, pronunciation,
     vocabulary: [{word, meaning}], ...(pattern ? {pattern} : {}),
   }));
   return {
-    id: lessonId, levelId: 1, order: 0, title: seed.title, subtitle: seed.subtitle,
+    id: lessonId, levelId: level, order: 0, title: seed.title, subtitle: seed.subtitle,
     situation: seed.situation, teachingFa: seed.teachingFa, durationMinutes: 20, sentences,
     dialogue: seed.dialogue.map((index, turn) => ({speaker: turn % 2 ? 'همراه' : 'زبان‌آموز', text: sentences[index].text, fa: sentences[index].fa})),
     checks: seed.checks.map(question => ({...question, choices: question.choices.map(index => sentences[index].text)})),
@@ -126,11 +150,47 @@ function buildCourse(id: NewLanguageId) {
   const lessons: StarterLesson[] = [
     ...STARTER_FOUNDATIONS[id].map(seed => buildFoundation(id, seed)),
     ...legacyOrder.map(number => legacy[number - 1]),
-    ...A1_FIRST_UNITS[id].map(seed => buildA1(id, seed)),
+    buildA1(id, A1_GREETINGS[id]),
+    buildA1(id, A1_FIRST_UNITS[id][0]),
+    ...A1_CORE_UNITS[id].map(seed => buildA1(id, seed)),
+    buildA1(id, A1_NATIONALITIES[id]),
+    ...A1_PEOPLE_UNITS[id].map(seed => buildA1(id, seed)),
+    buildA1(id, A1_POSSESSIVES[id]),
+    ...A1_TOPIC_INTROS[id].map(intro => buildA1(id, toTopicSeed({...intro, teachingFa:`${intro.teachingFa} ${topicExtensionNote(id, intro.slug)}`, rows:[...intro.rows, ...topicExtensionRows(id, intro.slug)]}))),
+    ...A1_GRAMMAR_INTROS[id].map(intro => buildA1(id, toTopicSeed({...intro, teachingFa:`${intro.teachingFa} ${topicExtensionNote(id, intro.slug)}`, rows:[...intro.rows, ...topicExtensionRows(id, intro.slug)]}))),
+    ...A1_EVERYDAY_INTROS[id].map(intro => buildA1(id, toTopicSeed({...intro, teachingFa:`${intro.teachingFa} ${topicExtensionNote(id, intro.slug)}`, rows:[...intro.rows, ...topicExtensionRows(id, intro.slug)]}))),
+    buildA1(id, A1_SHOPPING[id]),
+    ...A1_FIRST_UNITS[id].slice(1).map(seed => buildA1(id, seed)),
+    buildA1(id, A1_DIRECTIONS[id]),
+    buildA1(id, A1_HELP[id]),
+    ...A1_NEXT_UNITS[id].map(seed => buildA1(id, seed)),
+    ...A1_SCENARIO_INTROS[id].map(intro => buildA1(id, toTopicSeed({...intro, teachingFa:`${intro.teachingFa} ${topicExtensionNote(id, intro.slug)}`, rows:[...intro.rows, ...topicExtensionRows(id, intro.slug)]}))),
+    ...A1_SOCIAL_INTROS[id].map(intro => buildA1(id, toTopicSeed({...intro, teachingFa:`${intro.teachingFa} ${topicExtensionNote(id, intro.slug)}`, rows:[...intro.rows, ...topicExtensionRows(id, intro.slug)]}))),
+    ...A1_TIME_FEELINGS_INTROS[id].map(intro => buildA1(id, toTopicSeed({...intro, teachingFa:`${intro.teachingFa} ${topicExtensionNote(id, intro.slug)}`, rows:[...intro.rows, ...topicExtensionRows(id, intro.slug)]}))),
+    ...A1_PRACTICAL_INTROS[id].map(intro => buildA1(id, toTopicSeed({...intro, teachingFa:`${intro.teachingFa} ${topicExtensionNote(id, intro.slug)}`, rows:[...intro.rows, ...topicExtensionRows(id, intro.slug)]}))),
+    ...A1_REMAINING_INTROS[id].map(intro => buildA1(id, toTopicSeed({...intro, teachingFa:`${intro.teachingFa} ${topicExtensionNote(id, intro.slug)}`, rows:[...intro.rows, ...topicExtensionRows(id, intro.slug)]}))),
+    buildA1(id, toTopicSeed(A2_FIRST_LESSONS[id]), 2),
+    ...a2Units(id).map(unit => buildA1(id, toTopicSeed(unit), 2)),
+    ...a2ExpansionUnits(id).map(unit => buildA1(id, toTopicSeed(unit), 2)),
+    ...b1Units(id).map(unit => buildA1(id, toTopicSeed(unit), 3)),
+    ...b2Units(id).map(unit => buildA1(id, toTopicSeed(unit), 4)),
+  ];
+  // Navigation follows the requested topic order; saved state remains keyed by ID.
+  const a1Order = getA1Curriculum(id).flatMap(section => section.topics.flatMap(topic => [...topic.relatedLessonIds]));
+  const a1Rank = new Map(a1Order.map((lessonId, index) => [lessonId, index]));
+  const orderedLessons = [
+    ...lessons.filter(lesson => lesson.levelId === -1),
+    ...lessons.filter(lesson => lesson.levelId === 1).sort((a,b) => (a1Rank.get(a.id) ?? Number.MAX_SAFE_INTEGER) - (a1Rank.get(b.id) ?? Number.MAX_SAFE_INTEGER)),
+    ...lessons.filter(lesson => lesson.levelId === 2),
+    ...lessons.filter(lesson => lesson.levelId === 3),
+    ...lessons.filter(lesson => lesson.levelId === 4),
   ].map((lesson, index) => ({...lesson, order: index + 1}));
-  const levels = levelSeeds.map(([levelId,title,cefr,description,color])=>({ id:levelId,title,cefr,description,color,modules:lessons.filter(l=>l.levelId===levelId).map(l=>l.title),status:(levelId === -1 || levelId === 1 ? 'available' : 'planned') as 'available'|'planned' }));
-  const progress = createCourseProgressStore({key:`sentence_course_progress_${id}_starter_v1`,lessons,cloudSync:false,recordEstimatedTime:false,markVocabularyOnCompletion:false});
-  return { id,...labels[id], lessons,levels,progress,sessions:createStarterSessions(id,lessons), home:`/learn/${id}` };
+  const b1Title: Record<NewLanguageId, string> = {fr:'B1 · Communication autonome', de:'B1 · Selbstständige Kommunikation', es:'B1 · Comunicación independiente'};
+  const b2Title: Record<NewLanguageId, string> = {fr:'B2 · Communication avancée', de:'B2 · Selbstständige und differenzierte Kommunikation', es:'B2 · Comunicación avanzada'};
+  const c1Title: Record<NewLanguageId, string> = {fr:'C1 · Communication avancée', de:'C1 · Fortgeschrittene Kommunikation', es:'C1 · Comunicación avanzada'};
+  const levels = levelSeeds.map(([levelId,title,cefr,description,color])=>({ id:levelId,title: levelId === 5 ? c1Title[id] : levelId === 4 ? b2Title[id] : levelId === 3 ? b1Title[id] : title,cefr,description,color,modules:orderedLessons.filter(l=>l.levelId===levelId).map(l=>l.title),status:(levelId === -1 || levelId === 1 || levelId === 2 || levelId === 3 || levelId === 4 || levelId === 5 ? 'available' : 'planned') as 'available'|'planned' }));
+  const progress = createCourseProgressStore({key:`sentence_course_progress_${id}_starter_v1`,lessons:orderedLessons,cloudSync:false,recordEstimatedTime:false,markVocabularyOnCompletion:false});
+  return { id,...labels[id], lessons:orderedLessons,levels,progress,sessions:createStarterSessions(id,orderedLessons), home:`/learn/${id}` };
 }
 export const NEW_COURSES = {de:buildCourse('de'),fr:buildCourse('fr'),es:buildCourse('es')};
 export type StarterCourse = ReturnType<typeof buildCourse>;

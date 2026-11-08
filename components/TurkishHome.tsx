@@ -1,3 +1,4 @@
+import FoundationA1Entry from '@/components/FoundationA1Entry';
 import { useCallback, useMemo, useState } from 'react';
 import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -267,6 +268,8 @@ export default function TurkishHome() {
               </Pressable>
             </View>
           )}
+
+          <FoundationA1Entry language="tr" />
 
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#D94F64', '#E07A5F', '#D94F64']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />

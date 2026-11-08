@@ -1,0 +1,7238 @@
+{
+  "fr-a1-nouns-gender-plural": {
+    "sentences": [
+      "0d30ef8ca4d596601233d41f4fe9f128df1fb94aeaa7ba1b30988d0a655d46a7",
+      "909c71755ab9b872a51b33c3f7bd091667320705905e6a5ee4d2e29d9ae3321a",
+      "2f28048e88ebccc0029eb9a227b12d3707d9a341d3edd3962a2718b28023e06a",
+      "51d457c0f7b5c0cb6fd9089a4d34fbf185108f5d4784d55bf400b52afca9597c",
+      "2ab65d29a4d1baf7028e859f8cc52a4ed953b80f62924e10ea6a9551488a36e8",
+      "a046fafa9d389a4e4b3b6a51a3f4bb009754bc4bb9b67a5246b6cae54cfa113b",
+      "d743dc0f79d251dd332426bfe66afb009bc45eb1db72e0c53c25dcdd8dd9641a",
+      "0038e71ae4043b76d1026600de1d41eb67d6f2ca14d51e781f99f4274a1fdcc1"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-demonstratives": {
+    "sentences": [
+      "4fc14dfa6a1a956b747832423b49c7c016aaf129844de1015086ce2587563e92",
+      "b18ae54a4e7af076176bad4a136a723eaf51740a75005c9d041a5dd596611a32",
+      "574c6524028b263bfad4f94f850d6474d4ba7a0a3c037be05c6e6d4b6e553960",
+      "55593c0ee6d677e49b77845c99ea44a457bb0aa4d35f65704e3d7bc8b3afdfc3",
+      "9b6605e82f19d48b7057c7de20fba3fbaf3e3ac44d08a7663c02e988b8429bc9",
+      "fe4aaa7127a94c782853d5e9942843b55b5f3db01b10ccd34c19c4f7f71b2ef1",
+      "b57d181b941f13cfb01749dc32ed67b4077f24de3a317566006c41e8c389c366",
+      "ec056a31362b7661f60969e9c7bac27e6217c9d9901afd9071b6ca7606685390"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-descriptions": {
+    "sentences": [
+      "8672a46f4e98b0c95db4298c9198ad131b4518257b7be45ce39b1342e92388b2",
+      "62b6b26f3da7b88ce59325ae42a8aac60cda4163708040489436bba115876fbc",
+      "b540bf792912d77a59f260852716887b62b52d4d9ea3ca1ed03bf5f3f4c48647",
+      "159605d63744a30223cb4c19a54764e320fb39f296f17c399a859aa2cccf2f6b",
+      "7169039c29b8a961fe79b2959a028dcf5da29b468431ea236b588f195f47f737",
+      "1ca543d3180a3a8d582fcf8ff11578832c98949e869359c957484662555ba6d3",
+      "d97910c144fa5a22136225dbafd00e62f9e7de5bd78e1c313b1e300cddca6148",
+      "d2ce3fcac131283732a2f16124cd2e2f2e77a60eea7e474e67cfa2dc820e67fa"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-colors": {
+    "sentences": [
+      "21233443dd06b88e0748c23aedda4ba01646bc5bfe2e8db8271c6ed1413e2226",
+      "10d81f8585ba1388c04c0ed0a24095cab984de34681d700a7c5110ceda157c48",
+      "18b322bb1a76b1bc490d933aad6a1db0fa17ab1da90b633d8d610ca549cafd68",
+      "542cec269c03e547e624def7ebd1b3199241413fef60902eade5e206d1cac979",
+      "abe45cfea6d9ecc688db6e6906fc8b5005b13c6933ef94f9b001355b105c3e07",
+      "ec2580c93de1df411ce0883e7b6b82210c49fee3ea1bfc2233c481038f76e2ce",
+      "c5d00dc774d440ef0b0819a71e72bbc5fea85d1791ce916347d8b8986b34e836",
+      "4dde279efe085e9dabf68439c2e6facca0e78238bc066ef16e1896aa3a13d04e"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-articles": {
+    "sentences": [
+      "733031437c90e7e236e70626d307377e8668a3dfdf1bc775267e081ca90c6ab3",
+      "757a1c50a825ecfaf33009e933bbbd9074368556c4b56379711559215f496296",
+      "ba88489f243a0c35456d27ed6cd9a069fbe3d7a3a047e83dc87235b43d097324",
+      "a8454ce1034d58fe3a86ed3520757ab7de421faed7ed34c42836acf630740a77",
+      "64f64761a84fd82e72a7c5722d5bc2c0155a5c52ab161e0764a5b63fc3cb8f24",
+      "9ea0649840ab0118b411f53308dcffd1209658e252361bded7ca9484a2987774",
+      "f403a90dc7b4b9147d0af3d9dbd98fc7ba97eaefa1640fdc83c034c2a2d3268f",
+      "33d2f731afa0e11835f9b6c51659013c88d6ebfde6ce6dad31860d6ed992ba9d"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-simple-verbs": {
+    "sentences": [
+      "5662faedcd3850386a8c02fd14b5b45335bbc10f39443a1d8b942af407d46601",
+      "2d39e1811f08f12e44866fa1d7d544237381e2c96d4c8ea88e42fd1ed287c511",
+      "5976d6aae49e57bc9c97aa9d72aea746a42f577fa40f55403902a047ea01bae3",
+      "411f41cea90d959ffd3ec32d64adae8061338ec93f901a62d8683cbe251c99f7",
+      "9a350c193fea6ff2f119f1c216de96470c4c7c0e6fd377450aca23961fac53fb",
+      "59c463eb751798e3f1613a10981513ac28ff5712fb31a963592a515a4ae01d90",
+      "3b5ab0a9b0e97d950dfee97f6d2b62ad8c29e96954ae82d5287deb78209bf7b0",
+      "0f6ff360ec2b7b25d01a4ab6cd01be910b472c0fd24aa1153406ebf5cfd8b551"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-present-tense": {
+    "sentences": [
+      "352870e036648b59deb538d1e164ee580af187baef9d546debdb46509e442dea",
+      "9e13f80ded03a1a4f5ed7152caf5935c07731eb5fbd381de1989fd1e9acb1d5c",
+      "d794967ce9dc7482f58ee5e3f0239277274b67ebb0646f012fe8d0a5958a8ee5",
+      "98317d1e976b20b14e284f310e2b03260d710b8e82364689032eed7b8d64f09e",
+      "c4e39a749213a77dbc6163916ee429a2632e5a5decfd020659dfdc147725ed92",
+      "42e855c2eb462c7e6522444a09133b00538fc25bf8f9c701218f5ab3d96d6833",
+      "70793c22da4c760d262fa919cab90a3e7494e11f11ca6762d426e1a9bf1b8860",
+      "35d9186f8e162c2a5f1f13f2f0a58f84d790639c75788b37f1471578be4a0fdc"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-verb-conjugation": {
+    "sentences": [
+      "3e1a76c5b412ee1a10837a063dd23a0d46093a213690fdd48819c8705a7c729a",
+      "f26dda428a96caa8ef52bda8026849bfe1e485a5deb57b5569aa9a1e3f41cb35",
+      "31876c39f4aeb318928ec62c61a35de0e07f3c030d328a9df0958bba85be2572",
+      "1005d5d677cf3c4c72275db541a334ed07d22d3292f9664db7ddf50b2eafc681",
+      "e818367f455d7d6080444c76426e3ffdc15a740924e12bf0bc3dda95273563a7",
+      "a22b8c9d22c8cd16ec41c1049d8d53afe562dba78fa73fc5424f2c6aa1cdb7d5",
+      "39899f800c216577ae105391fc216b916260396379c8deefeb9f512f82c9218e",
+      "a13548427283ae91458c068d1d350f62412909852db34d935c7ec9b6cae8bf01"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-positive-negative-questions": {
+    "sentences": [
+      "019d0e982c39bf729093082117b1075f78908f4890c8926c6bddee4f77784d2b",
+      "87a466db1737b4b74b08975516cfc703aace1da291ecf36f20a74ab224e6b76f",
+      "addaea20097db42fa4229f1a499ae94dbe2b7c65d994013c00350bda75239312",
+      "32b9ee104c8a7d6d48e329ddda9bc72eb3c05cc560dfb90bddd19ff2a991b6c0",
+      "d2b2fbe2ffe8b5ba138178b5def1cea1255b112b1218d876b5c0e526bdd6c408",
+      "fdd43ba1edd8377fc98f0f081f3ec689ad374597812ebd83c68e4786e7b18e46",
+      "1b7c0d5374a870bf071f8d793e23d56267c8bde94fd44e3adb57ab7099257ae2",
+      "fe0e25ba13d34373088cf708734fb653f556e9bc9b5aecd0bed307f75760106a"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-question-words": {
+    "sentences": [
+      "ce989703374dffaa805ec73e6e32e5839055bfc9f79b4b64f2fadd9d757f36d0",
+      "90e0541a328e4e861c0457e91011295cfae608c7bde8247a5bb5248cfd166c42",
+      "d09f54dc470d0d212b96300959167a4f154242f4c4a627566d23ba02294d62ba",
+      "7f49e62ebcb3ad9a2e89196353995d6566efb14c0b6092d586b65406ffd234fa",
+      "79304dcddce371c9fd4957f927824788b1ad6de9b442dff1fc72fe224f4f224c",
+      "7d05c0c579351ab0db280a3817b7f26e9e2fef92e0b577e4aeae90e0911fa529",
+      "69d10869bc60b796d55ecaa5e1183f365a21f4f92f091fa1710e08097549a868",
+      "00e43cfe701309293f0985487c59f86b8f33cbfb0a2925d57ff95eb494971ce0"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-dates-and-time": {
+    "sentences": [
+      "e412ee16274f9aad07e0be60c4aa5d7552d77b5422aa75ba350ff58ba132ed9c",
+      "4868cd966031a3b8cbce3a5244a1e5075a1143e42fe5cbcff6ff34a6d8b4c34d",
+      "08dbc4ae556d44437fee23ec0a6820aa62cedea9fd4ad43d1c068c978cae3989",
+      "6ba9c1d96a0489b3fd3d258cc41c6c079195645b489af52773bc0704a31e74f9",
+      "657653b94880976fabbcdb4c2997d26fd4ccd6212bf5923f176b58f185d9fc0d",
+      "1c44e51f2a1259218bb66d26fb4be10bbd42fdf8aaaba1642052a74636534b29",
+      "7cefb965d11f8558c5b11fa97c86e583dd346736f8e0d9e45ffd46dc8b41c42a",
+      "0746d44d76f006ce29b84c0f697328f30b336067570b12c70a44b526af4a9ba8"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-location": {
+    "sentences": [
+      "e6ef42c8390e3cde45bed91eb0af7f8591cfac9fb8874f6dce41f4f78af9423e",
+      "27cec31160c1b2ef2c7cf55e0eee47b36ee999560478eb20ec2544da25fd6148",
+      "4122577a51b0b21038fbb3d5674e7f586462065a8c154a36a19579e9037afb4c",
+      "bbfd4858fe4479fe8c1bc65491d7faf787182d596f749f826e4f826af5a7c318",
+      "d2fc6ff8df64e2ff51eb21b854b0c4b45564955505b134933e4f517c2515f331",
+      "df95fc864ace39b418fa045cfff0aba9ce029f2799582ab6af93bc73052dd04f",
+      "b7f6d1ac043bb277b6b39d2ee86c52f7ab65a3de922f7100409ae664c5c76415",
+      "1370d5f807a36f25b5dd20f5091a15ef8d02980b9aa847a61f3bd0964ba5c605"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-wants-needs": {
+    "sentences": [
+      "959cddd1ec9fdd11408249766674ed925c4826316edd66fb95475fb56cd4d77e",
+      "ce0070c1ad39b864808b927ebeaaa7090329cfeca227e4fc8a143813be7c6e00",
+      "56b0ed82937d4b32f04a12bb7a490ceb0d9164aadd48e84fc838a09d19e794e1",
+      "b45689dff2b7d46b9362d5264d7bcdd43923787fd9b40bdfcebe23570c77e7f3",
+      "3cdd532637bc7cb528b16289d9e011f9700bcff3d7482bd8c30f044b4213701e",
+      "73d0c191e02259588323d50cfe99e7a0a0db70780f3084393c559f59c80a3d13",
+      "2c163b52d6dd169d30a9797cae23f71e8d9360b4f972afbb4a8ecea698da8ed9",
+      "41dd67809a6db6e7ca29732a07d58da81823b67559cdd02b6d1f0814a8a35dd5"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-ability": {
+    "sentences": [
+      "1c702c4b77f90a76261f1e9192f1e67b7e230eec93f38087ff3525cf68ac3a72",
+      "443d4bd7e193ed7bff2f0411a4964dcf9fa7dc8cab7f1e46fc439f474eb5b3a6",
+      "ac85f05659ddfb94230e666475e6d29ed37682c32b5effa0a63f36d745facaf0",
+      "40e1851611a5f4160f85ddc2dd2750c7cde1b0bf382165fba19fe7e5ff8fb777",
+      "b6fdffc6c016f694493bbc94addcca6f3d3def95ad7a32fd2ada80531362b136",
+      "5bf9a6fe786eab450779a01e261bcf6596880226aa64c5a659e35841321c8b41",
+      "c8ad79634e53b09c1eecb48a3bfe57eccea35e9d1ed569e5aa1abefcf34765be",
+      "cbfc12129ed55e1899c21e089f41e75d44750474db6a0c16117d7e34d63d6118"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-prepositions": {
+    "sentences": [
+      "daefb7236d315e9fd80421f635882ef70a84829a73506b2d3d16c7405f9ecb04",
+      "f351d3abad965510c84cf67e475daa7f528f63372b456607aa363f0de34b0f3d",
+      "d5be459a9cca953bd2d85b97d6b7d97afd479a2241ed3b28811b41d4597b4edd",
+      "c1f2fabb3a1889002366ca8f60c3c594c9be249e860e000c4c810a5ed15e5282",
+      "60d41a941517f21f524b9418d79942289d705d1b8e2b4af3816e44fd2a1194ee",
+      "9ee0b1238d5e94288d37f3d23e15b13815fcc07e1bea4ee2eb7f30603effd70d",
+      "bb28c410b70ba6f8d37527eacc9a0594331fbea1f9e54e9ae1dcc4b8d1b2f5e6",
+      "3aa51626df88019eb0b354a716b6da092ea4c9f7779e8ac1c23fede749b949c8"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-daily-routine": {
+    "sentences": [
+      "bd98afc6181b64e742fe13184df66855dd9caeb457987f87febde928bb0d5280",
+      "82f472b2c20c63c96a90351812574daae7565a4f6050467f3b491dc63c51f0bf",
+      "28d362c26b539dd8b6bfc3e8fcaf11b28736b599c195145e34b15484a405c206",
+      "cb60732271211c4c51839b433a6ba5ea5e5724d121c088cef85a6464c24d420b",
+      "eb66e7f30bcd83cf576e5668d225bf73e9cc15e6600d65a5af489b7d2183ae00",
+      "59c2c2a53286648e0c1bdedb92d634bb1f2f7bad6cbac4ec0f3e6f33917ff07c",
+      "35122f16a1111cb2dfd0edcd5a893a615cab38a114bc0ef4ba08f4e0a4e9ede9",
+      "61685b2a6f693950d514cdeb66af4d11d629bc3da1842ff889ac72575e3708df"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-connectors": {
+    "sentences": [
+      "a32a487959ee60afd85d09ed59511f73fe9a657c9c73b9c004ffb19aeb2f4e71",
+      "2017c1ebea5a7506a03a7f524f7382f6d74ecaa37d1144bf3ee9a29434d11a3c",
+      "3077d4e05b0ed472a6ecae233636561f823162819c0f81248710ddb2c71f3a03",
+      "2c1b8ca5392b9bfebc3edf1a0ab77f3a026f156ed619c3902a050a4d153120a6",
+      "68f3bedf7642406c7f20892f55f498eb5c44f7bf06e3e32cd56c7b02f5934e7e",
+      "b135e582844c6ba4b21cb0a5cc1790fe0246a60e1318aaaf18e13fa5ffbb9e2b",
+      "10b7efc0cb3f84cf80dd1d029e6fcdea27a005c5d7aa9cb9ee386f31e39592f1",
+      "16d9c2144ec0b63dcd539a0137066dd6672a520795a1dcc7ceb7927a97667ef4"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-social-chat": {
+    "sentences": [
+      "57463e2095a11e2641fde80e8d2037eb807f8e456daf3acdfb7fba821859551c",
+      "ac7582d57ecdaba5b9365b2611c3e01e95c26020f0de76e5a674136ab4625bcb",
+      "385cde07b6a92dd03cefaecc9786f959e25b4e5a3c7abdb7c1c21addab48a9e9",
+      "3c838d2e37a33e1ecfe07e7b28e0b9507c8f2ed4eba1136b4db9cf286782b54e",
+      "740e75e05dbd0ecdbeeba2fee00bb28b6dd8ae71f73fe7c40bf301097bcdd962",
+      "6204646d76e1c69819d9a84344135292007283136f92b4c6e8fe7637cb50be53",
+      "e5f247a19223440971eb24039ba09643ab31db7bb17f5ebddca3f607720a8dd1",
+      "4eda8b0d58ab8ea1ffdd2b7a3b87d9eeda8ad37cac5114c6ac40031dbc2de1a7"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-ordering-food": {
+    "sentences": [
+      "349691fb9a4c58d7608c65b47828dcec85d5cef8492a6185bc95ce9efaef6157",
+      "b383ff7db9460eb436604eb3fb66a452c297ba68cfccc7cd4a481aa7d598af5d",
+      "de5b52c62b3981cb7246e1dfb45c8c137051081d33068afc050a5fec69d1c6e4",
+      "7f979456f995ce4e1a237a6b6880fbc977e6d31cbe736bd9229945325e9a646e",
+      "08b7dcf1023b387a73f2deb586731a6e77ee881d57db9fd44c5394884f562716",
+      "650680df60e9995a6cc1f5ee58619b5f87902b0e6a4352ee47ce9cd9a074a349",
+      "c86bc308bc267121fc5e8c3fa3bfd01e3d608247a6938ecc5daebbb09ff0d488",
+      "93f6e19c36ca304afb8083bd1fe5fda130fc4b6cc793f72f00a722efdc652107"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-public-transport": {
+    "sentences": [
+      "347651ca3c9b61bec6da6f7d902a1f0bea4982ed32b8d5d3cde059e2576a6e3e",
+      "5c6efeda4cb2e48659371fdc263bd1e00e642bfd1c59b2661bf658d6511ab76d",
+      "af3f0e2cfa96218db47a93e32a544384f61226e907914e066e438f32151bd3a1",
+      "c4e4e8bdc9ea8c5c153ecd42f7b254c42bb8bfed0eec0bf0388de5f37bce3395",
+      "70b992d6f09cd0c4689f3d70410c37dcd7309e49f9fd2b08fd6a146e26299c3c",
+      "499fb25ed6d67ef80aac51bced6720e6b4d58c09fc3a6cb8b5af08153d53a295",
+      "5a66b17cfb96c0cd5c82207f53167b9abb8e5546242297b41850da2ad0787403",
+      "759ce961277be151b72c902b805711a79c43b626da20e5d190bb1b3e94dbfebd"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-travel-tickets": {
+    "sentences": [
+      "328c6fb05f6251a954072bafcfe57b913d3857caa6bb5b3090594064207e830c",
+      "f120a149fa0e888f6ca660f615e4eecefab665c4a54c7664256676a50560a9a4",
+      "2b4c3f8091c966ce2c959b498c0580f1c6defbeebc97d9e55ba53b05019fc685",
+      "9071d648692fe78eedbc03c2e4309d5c9d11e8127a4f9b76e99a2c014db2797f",
+      "cd523012e6f36c0a35cbe2daa088d92807f4e26bc42c52ecec54fb80f06ee0a8",
+      "a5dabd291f336081ac61e78109bc64f88a0e7ec24eafb48e7914badd5b70d55e",
+      "637b8b438ccb4f339b589acf8b466dbe0c38d781d56b649123893bac3f758b9f",
+      "de69bffb7d6f77c3ecf582a0a4ad32e68ffb89f8b8787597997ed8ff3514d399"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-hotel-stay": {
+    "sentences": [
+      "1a4381b1eee4a6f58c120603267540f4931d28291a88d7a0c76af4cb3dce49d3",
+      "4eda6616c25fd7f61fb0791a83b6e27528e8f24a5d7b9b9ac2ad3e3026272a12",
+      "1a04a2f28319e97c48fce1b7de8d6505737a3ca90e00f0617090f572c6f8ad22",
+      "e78d33c8dd7388743f5d02c0f99082404c13321837a2a52051cf464483ceca3b",
+      "9d5ffab7c15a505d8cfb369ff855a4f63902ddcf959f5780d3acb973b225db07",
+      "1717b08ac837e9b4f30a0b50567577bc9dde23de352eee109eada4b811725b14",
+      "eda8b94db959c8572a3ca4eb81ad9f40e0509bc999274a0c400e54a6cfe6780a",
+      "4776c74457b1469dda774fce4db1a8e67e079b1889f39ceec8c41ed0a4ea4908"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-doctor-symptoms": {
+    "sentences": [
+      "afe0ccc293a6f02db2fde5aa1ca17f4b4bb2eadbb3da8283570660d60f7343ce",
+      "3b7055f10da4cc72b94c5c47ed5d007a4a71841ae9ae684f203dcade265a7c48",
+      "f836cd77ba2d802fd794789ea822ee5bbb3be9ea6bece1085b33fc6f79841e26",
+      "210c62a96fe1d1124420f3474a8f67f0ac485f1f897149d3dede29a0b567ae3f",
+      "6a5800b91f625ff026e5419429dd4bdb9b84bed5d573e296427b611bf24ac03b",
+      "f41811c6b402d6ce32bd79084756984d166ce67b8fa804ff2ef0c892c2a7e192",
+      "7172f4ec44c38fd04bf11c3974d77afa70d299c9f64499da5938cd71e45c117d",
+      "9e382bb399139db719ce537b4e0eecec8b8db408bb1dbc3d41427a7754e61f13"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-work-study": {
+    "sentences": [
+      "f4e0a6f1903cdf123fa9da14d892ac27ad0367bda8bd9653881e22b07f26ed6b",
+      "9d6c78297bd0974028ecb3b62a4acb0b2ffac040e631ab25ef3c9d3b2b08ff2d",
+      "f7b810c98ef1d354c586dead6f030999b49ded7cf74e98f9efc277d828326875",
+      "3ef41bb487591842a5e63d6cdd2d49d16aab7a67a7623e0c80943b043f541ac9",
+      "74bd0d934e3c8cb8d2c0719a15626c38695d25c5457544bb3d477c3db2482616",
+      "a82e80b24f371dcf164dbf2410e1d605eccc0be528f083a179b48a023c4f0f02",
+      "f4ca730030f2b343658e9792740e5cc493a4fc08eff8bd9b61b21a950cfd0804",
+      "22f73bcbb0321e31970c887efa1217c9174e7603387ae899730612d0e25b43cb"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-weather": {
+    "sentences": [
+      "495c4b083a8ee71e18cdc8b0733cdb1664d689fadcdf7ac6f87f6e335c45a791",
+      "72582bd8af3bc61eab13ae927f47dcff79b359ad75df54272987c87263ce36ae",
+      "f7cbb4873dfa054b077363835ef681c1d696d95d5489bc5075456ebd5ade6749",
+      "7cfbf74e54cd64efcc6c3103ec01282ecfce477ac475a60b1d8c8aa2bcc0b4f9",
+      "08ff52e2d119d0cb13e00081f974f1922c2b846bbbb7c666e744b3e9f3980dfb",
+      "9f23543eb4349aa1be25197620c02f5350a2843e8865c3a0362ae5d6fef173d6",
+      "5a6b44f0b78ca0ddaa15fa760201216390cb8787c88400409e5cbc0453a55ce4",
+      "832632e3b71e3ddd2fc35d50609c7ea4b83175040834533880f4f0840c0b7090"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-phone-messages": {
+    "sentences": [
+      "b708648fb4bf0f0d0fbf4c2f95e5140a61573503c19247cb1a825cddd2f718a5",
+      "43b4a9ce09f0f5e655a4c7da80343b9658db76b37db1e76c196b43aa26139365",
+      "8999fd95fcec4681d53f0cf28ba2f3fc1c8baa04782b3e55d26cb3c54df65e0a",
+      "08f9c9bace0017a91e90c9fb839931aedd3fdba450efeb5114d9a9f4bc2c7019",
+      "6d00214d3a752cd63ebae17b4c6e38b2a1bc61e13074fc970bc52a483db7c271",
+      "e34c1795b5b42b0c823a608a1e9ce5b6765784b95547ef052751644b6f05ceef",
+      "cb7b2a6f4c286fe1a342356d9dd41d669f18785d268557c4d7fda531ba72d99d",
+      "ff68330adefc4d7c5398b5087ad7a4c2b030578a29660e7a6fb8bc0fdf58dc1e"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-invitations": {
+    "sentences": [
+      "de97a970e53aeb52e775ebba03b350eab72fc0ba6d4fe80699eb201b217356f5",
+      "66438fe73386d6b7a904e079aff0fa9789e72c99fedb80c894f56b666f200089",
+      "365e339969ead6f938ce295b5990c2c7d3be96f2361889adecd6e6705d09fb49",
+      "3cce181da1626f7c60a3eda5734ceb242cd7fa530930d5f3a89adc3b85952061",
+      "a72098415cea33634d71112cca5f9a197d84808d970dc86ab3f3e506458c1e66",
+      "9dbd0f739ae55aab225caacffe8329803f7a4013b67c308086391c74b7ce52af",
+      "8f14a9043308eab6e992ff2e910bde82926ad9f36b7cd309a9992b08997d59c4",
+      "2c0611d0285bd053fe443ab5dcf3598efd8a630f25e21477550adfbec48336cb"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-polite-requests": {
+    "sentences": [
+      "56f21e69674a41f4114a6b1bffedb97360eb3e8ffd356a527aee25b299fa1aa0",
+      "ab030070df12c5fbf80c752d605787879ed671d1fba5436c3cb05e0d37ba5602",
+      "13ee6b0c6028db714c8c78fdbc11efb3b15bce8a1d2aa8c74376e9fd2e6bb15c",
+      "b05a63a372cbbbf5cc657f6911a87ef648286c5b2d511fef14baf912acc6ce19",
+      "eb4067524fc94586f6146f85a9c40eb86a93229aba72cca5c0f31aa7b469943f",
+      "ebd550099063e78f7a386e14a3c1bfe294914294dfac5eff535529e73b5a0ebf",
+      "6b9a710d0cdf588e8ea1d3ff76896387665e92d0db06c0d9733a59cab2dc6e3e",
+      "51750b199de23b1cdaa78d45f7847cd26f0fae8562216b87f61e2ee08401c8a2"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-instructions": {
+    "sentences": [
+      "01439d4348560d13ccd7ae9050a640e4457f1dbd137fc607a56cd104f9ecb2da",
+      "ec1719e386625f72b390e1037b872f4a0d37bc54a8085694568dc5e0b03ed9e7",
+      "a8bf8bbec4a6c8c30d029cd887bf518d59d8462aaa413d670ea3f19d7ed51bbf",
+      "b2434070b48de5b65cfb219e82768c34fab0942aae71ecb8a0470325b0a6eda7",
+      "8b784a6ec18d156ff45d92acda08fde0fafb2e648adaa67a226b0d5843525fb3",
+      "366bf2c443aaed6705b74f3d51137b72c253ee40cb49109886602deef7cd028d",
+      "622ba284467474cd553aad0ca08d791f27852fd78566a602e1125be88f1cd658",
+      "43172610859764ab31befee3324f5c9eb7bffb5a06dd3c35d7a6305b8febdd50"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-suggestions": {
+    "sentences": [
+      "9710a3f6bbcd6e2fd502a1afe03ed5f383e49b3cd28de9495bf774fb08a7100c",
+      "2aedfd5cd58a2b7eefdc9bbdd6a14fe4bde94a559a20f51073642fa0032acc56",
+      "60ffd15ad0d2f5199f77763608ef211138e40c68fbe254fba7c6e2c61eb05dd9",
+      "d877ed90b5639e1b3fa3d8cc2065c27bd2f653ea48f5fa87e653966280013027",
+      "a649c283f620001c27327b9c106276991d40e02e8b01786a96fa4301f269d35c",
+      "8e50bc18adec201ab82359121954d3fcaeb830fd578450016cdb84f381e64b53",
+      "06341b2a1234a71dc1df9c5959f9f4d34438f54fe117b16bd8eea1d00daac216",
+      "203234a81c240d823a022115ea93d9fc0b76d04d7a1efff526e9b0c9409f010f"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-past-events": {
+    "sentences": [
+      "9bb21b257cf9c19913f02babc68d520134b5e68c12e0c82e23e1165a2d494f28",
+      "6d7c85c89eda789411410ed8402892e0b4934d9155d4d34d4870fb955141c8a6",
+      "8e5b9c6aa197c306f5c87a3a121c85c9f4843565102502365ecf17bbcae9432c",
+      "95bfe95fb37f2932a439687c2e1828430c40a0682899966b652ec44eda1d1ec8",
+      "a63137aca015ae482321038366c7e0625aaab8cb7e249e159eb44287ebfeb6d0",
+      "4533b8d4e568774290f40c2de425ef2ff1d01f71dd3b370c09758ebd2ef7e7ef",
+      "924b1f9e94c715cd6b0b649a2bdb8cf9a3b41b54069654ce4556a12859c5df3a",
+      "2abdf44fc7f959376d6d883cdebedce8a89dafbfc3288dae49b6046aaa8970d2"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-future-plans": {
+    "sentences": [
+      "c55f470a3ba1ae1f28a7b906a968fc0de60b47f16cb17987e60d74ee02ee3e94",
+      "9d44e014523595856b4727da2d5b7dbbfe44a576e04d84e4e94a7c9d57910ca7",
+      "8dbf20c91c6b8b206b478a9734406e5d121d8909aac1ecc657c1654c03c241fc",
+      "aa82bb45863ba442a45f708b10d48a00afbd2e955c549f9ae6e91a401c37aea8",
+      "2020c3dbe734591a01fa9fb1e40fc033292d2c55f65d09dde146b9324480ebe9",
+      "f095e1b8aebdb60696723b127940b29cc92b86c40cfdf8fe37ffb54981b8f93e",
+      "81734b83da72835cc15c1e8b327fe8dcce22770faade8501a14cd613a14bec18",
+      "39afa3e2297991eab0b9abdc69d94dd31adc431504b3dc43a99ce61ed52f4606"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-feelings": {
+    "sentences": [
+      "3ea78af11b323f12564c43028a00790c9de9ef6c475d859bc754d01feea9c0da",
+      "8852dc92bf345912ca0bd9467930066b5bad146fea00b06ff82b7411b0893548",
+      "4a0bbb5f0cbec0ffb15fd8a7ca32e1305a9d4e188171fbdbab897be8b1f7c8aa",
+      "42ea090d7ca047caead01b50410ab2be4959afa0c99ae9cecfed77cb59f02660",
+      "8c98d49952207f9f25f5baf33e2293e0606606a9b94cf412075819f24a16b74b",
+      "6c07e43b55437b88ea34b7a61bca1e07fda88acb4eb4bc86c2f41645ee4f32d1",
+      "89b3390305f21a765bbb5d2fa7b2e0a80be735b4afd40e9b9915d0091f63f896",
+      "517dadb0e324762917d9588b628602718e66be8fe3621502111d55642efb1dba"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-forms-information": {
+    "sentences": [
+      "d88e7feab00b2c748fbce49c7c84d1abb338710db474e493371f4ba38c994ad6",
+      "d10bfb4c781d5a533b4728fd77aa975aadb49b3bd8b2fc3da549fcc1f5e99792",
+      "b081caa0215f545bdb2ad497834460ddca41865aa576e35a0d2ba34c821f955e",
+      "8485e9c8323949133c2718b04b8c7aab9c8563c958d275f243bb2b0c199f6129",
+      "d28628dbd24b9202c03a946b97c4eaeff3da2ff129c104727ea76a4b325397fb",
+      "8943a1604661ac0723983950ab7586bbfb6974548b30813ac1ec15352b8840d5",
+      "dbd7f124dbe134f02efe95fdc484cf143a9af1bace3f12a423fa1b103d55f0fe",
+      "a7643d32ede4eb5b2ff251d8a9f1d7bae70e3c0e91f6295d329079a8680f7593"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-supermarket": {
+    "sentences": [
+      "7fd4d29a82f3c340132347fccfc084eb15bfc53a4cba0479cf23e315ee3926da",
+      "860b40b9bab416b329b66bac9ca430780fedf57f139794291f4396a3b7cb68cb",
+      "2a6410dc391902c40b085bc5bf571e1460ca9088ce2f4786918b2f6e39f049ea",
+      "1a021e5455101f12818bc2b26f3b9ef15b2fb2e06d9dad8bee8a9dd1852f8f30",
+      "86afe3f9a8d26a4f79a24278d2eb01595b2f44eb29223a70d2ccc976c1ba984b",
+      "bf77e98ac7c3d51824f25ba815bdbabd1bdbd3ee3013672e7b3535da76a055f1",
+      "1bb1330a8bcb38c36ff8dc5f157b85388c50704f13c065592c49499ccd716cbc",
+      "4c9a9f4c0a5bbebd73c1a8a0294f9001b286aa97bbf03948bdebb0dedb7fcfc3"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-clothes-shopping": {
+    "sentences": [
+      "369ae072f2ae565538994ac6ed5b83bdafcb648596352b029d12d376b3e7ea4e",
+      "48f2d403f8639c31651005aeb754907e1ca6059b1688a51d05aca2e7e441a047",
+      "bf3a8abbbb63e20a256361cd4cb9d17792eac120aef25f883f5a7cf2a1a336ac",
+      "5e5448549f82b41c1c61559022b08aa571447d146f7f2e02b7cc59566c17f29d",
+      "74b652f2f88ba0ca9722c0903c4439fb9320cdfaf8c500b95a918d7c24070ebc",
+      "a19936843f51ff7d2140b4a50c2954a030c11ad8e84b1abe4977a277e2eeeffd",
+      "499432e03e2f61967fa266f1dd2914266b805875a4244ec255ff0d3570448a00",
+      "d8b4d6e3880f70686eaf99c308e92c676634885ea98389ec2d59397a49e7dd08"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-home-furniture": {
+    "sentences": [
+      "344e603cafe653002cb790839e281f7f4b28b6f5184cd3f466a486d363e8525b",
+      "f14753fc9e9fd9528857cde656eb2ca3141c5aec785c616787b539c2d004adf4",
+      "335ec87d9c1bff7a20f7ab67bfee3c37a72a29a481b7bfff7c9eaa1aa8fcf707",
+      "113fb6267eb597836a1ec3e6195ecf307fede9e83146f96d6ab84d546f603e04",
+      "2f33338c5df18ad315a5dba5b73a867402c5ee7fa8b6e7bcf1def07fff1c02e3",
+      "f3d82f0137f391c9ef76b3ed66db258de7f999e0d78a01540f2d620245e189dc",
+      "031da1bde5fd023207e7fe8c74a2f6d3103efa368e21514988b1cc9f0810be69",
+      "d7bc6fd99cc6286aa61914b95ff0c40c0f849c9aca285fdad66f73469c9421fd"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-leisure": {
+    "sentences": [
+      "bfd9d9ec872ccdc653f8e6485fe2efb182f23a191f265a3ec92f8be376223daf",
+      "e7396f303a6acc51d343417c5131e1602675b254997e897ca5081ec54e484fc4",
+      "e0ed04e0fc21d09fe9143acbb0283963934cb1c53a78518511b9c674231a1fa0",
+      "afdaae63dec7d2c01d919e60fb68a8bde85682c4aec2eae0cebe0a20d5893d95",
+      "9b1fb55a8f17d1fb4285f8ccddfc12a9f1c9d0efaabe26f605603f5e806f6e20",
+      "e56185b08022b1a32bc2e5f36b14d5eac29a81d050999736018a6275fdeba60d",
+      "44fd9a9d1fd76c63175c2f63dd9a3499d0d27a7e3ebcd1cd5b3c76486893e494",
+      "84e1b11c6e9482590f8e2921d74ffcdec94d7d93882964ecd717c7059498171c"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-weekly-schedule": {
+    "sentences": [
+      "cd1ee620ba83ef40c7dba1ad5cafb47dcc9cee238a2a31a9d1e47194c469deb1",
+      "471cc7ce72a22fe7aac1dbaf4c1b86d638ba62e8b373ba1a779fcbeee3fd7860",
+      "66d9c95a294464b8fa75ae7864023bb32b863b48625d1758c84813a76df62347",
+      "78cb7050b73050c5b8c4dd17eec704651c085fbd8a9b5fbe5e1109596c72804c",
+      "28b8c0a7b6e125f8b47f8653ee2443301d3c867ce58da852d469f40170bf763f",
+      "95d8b52bf0d57b7d5f7b3536cbda55466175a008255fedb7ea23cac9bd131b9a",
+      "ea00f42a9e1641fb3512da15796e128cf71baf5402422a864355fd4ce084cdd8",
+      "9f0cb57259e17f8b492f93095301012f978f7ced99ba5bf9b64dc9258c5a37e4"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-preferences": {
+    "sentences": [
+      "cf364953632d215d40a662f99225e9ea2a6618e897dd07e533f7cf5dc4eabfc5",
+      "edaded7a91c9f85ae7d62e23a0c87200d5dff98ce0b391d688a14d0866527ba2",
+      "51a532253dca50c1cf8765bb37be291d8e2ded37328820579f9bf230adc8a36a",
+      "399c0ed5f7cd2b43719cdfc5323ed7fd91bee0ffdb40df0316b7259e2abfa290",
+      "328d2482cc0b71927f5842d9b181515cbf8e56b807ce191252ee3ee245f013d0",
+      "d0dc201b786eb785fa72bce6ddd0db5884bdd9d25673335be90deb73569ae52a",
+      "68b9ce20bee1b6a1eb561f952da48f0555586ddeeec22149456215a58ce0b053",
+      "c433de7dff61e80dfd6bf83dee22f7a754b4b24b3c6e7a5ca3c3f264e462ed0c"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-comparisons": {
+    "sentences": [
+      "6050429cc682f233121945d4a59ec7b527fbb94dee48dc2f16773daf075e7a2c",
+      "6d28731f1d76e2fe8520a50ae9c6dbeb620b94a49a732f2c561b4b75686eb32d",
+      "fea4887b196178393223fa2472e2db60aa8b3e20d9745c01227e3f723d9804bc",
+      "2554c6ebbc7f497436d41e92ccbdc98620c9693d6320325c7c4c0fb2accf9654",
+      "87a631678fa8fdf13ea1c23344da55274062bc29e0c3862f6f1d9fe3d9a29615",
+      "f0839f100f4c28bd7724148f00f8d81c4124a7db47e9c991ebdaa238b98bc705",
+      "89f1da0a2b9f5e6750209d4d9c068d7f2fdd4b3c3f12d1444a3caa8288f67010",
+      "2f7cdacf0cbc6eb1b097f782d86a995ebd6a67f129714fa5af14968fd5d883d7"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-reasons": {
+    "sentences": [
+      "fa23c319841b248ef002c2b441854efcc3372d8948aa05814c8739589c8f97c3",
+      "e4658ef49b21472c9bb65624c9c9364d940399b6f8ca00901fc4e9df1847b949",
+      "4b78ec827612291206bfb521c0966cb0fd563972731ab547ee7f762a280c2c38",
+      "afdf0f513c9dad3155020921172b2423c880ca1b482b1212c153e4afc0861c18",
+      "24fd743bce078e7b7a9d7a3397edd93c3ccfe1ccf1e39899bcc04c5cf7229791",
+      "21d8ea382d6ba907a33df7831afc2b46eec839650abc32e596af64df37917d3f",
+      "b13b7b899ad507f25fcb73fcc799693ac7e824a91af94a7533e93ff890318afb",
+      "071165136fcf42e644b08e0326abcbb95d2121916e68d03c7e4e8b695e245967"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "fr-a1-connected-conversation": {
+    "sentences": [
+      "725711a8c444b04c9ec9efc4024cf35b89235d9197997e15b5bfd14a4c8dd8da",
+      "2fae9b2c7d44e55c8e493819edf9808d7fa548f8f4da0653a03fc40b2dde256f",
+      "bdeda0ec1f38d24dc2b725321a98d08f63ef87db7c1d20cc27e40a17604624a0",
+      "6449d4afbb91851eb4a4fc0b94b545481ebb3f2fb981d0c14e753f12e8fcee51",
+      "058c93c1be4b2fd6191d1af3126c1314466204eac722493e9df1da3f059d42e9",
+      "8079ce74e174aa5f2c8604c061e6ae0107c8cf76a4b073749c5fa7692099f75c",
+      "8c2802e7ac69802a1f10d236becfa57130f99ce378cc80ffba03deeab3f361e8",
+      "2467e922e259c8a5f7d3566232adeecd726d8707e54b2bfdbaf12af00407d11a"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-nouns-gender-plural": {
+    "sentences": [
+      "4073239988ea341abbdd0570e028adbb269dc2a4e2236e2d0863f1afaa895674",
+      "8da06c5b5ef9245882f289df00a2edf6dcd0e3522ce6d17006cd2721805b5c07",
+      "2a1c6f6b972915d92791f456287aaa1885fb03ee40dbf924d16ff00259cc7c5f",
+      "c53534712d347fa52582d0db4ce48c58e68e2192a0c654c29acb77be517fa8e8",
+      "dc9ce10e8c53f5b65335f0276c768afa69dc2ea063f47714091d46eb9ecf42b5",
+      "7f5ccca0cf3491240e85f5cbae5b7252ae75d7c0bb0607d3762bf3e5a508883f",
+      "5f82bdf80ee21242addfd20625f2c1074e8d35210261e806ff64e164a1b6bd95",
+      "1f9f6fdb25087d370563615de3fb736277652f3ad41597c0efed7cfa797ec002"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-demonstratives": {
+    "sentences": [
+      "b1c069abafc229918c47261a06c99c6eabd6d55201733b72a263c19898c8352a",
+      "e0e09db586bbdb1cfb70eb58dcf4a09d49e20b7ce4878147ecb0653398146a1d",
+      "4fd2f3ac48d4cccfdde435c289f908d2f7acbb550596bc8413e125bd349b9d88",
+      "e6c877ca53dbbb5484df7d62108af0c432ee5cf9fb30a51e0e11691aaff2ef1a",
+      "8a12aef826820f030a5f6b6b9320706381ce52f2b8334cd2a713ae750d66c794",
+      "1445f8277656f523a14fe7a8f77ab42f8e63643f37140dd2bec58a6a9d6f55a2",
+      "52b1a3e60920469d77efb8064dd175a40219f309111b705ea8669253ec89286b",
+      "7864b88aab612e41eea976e9ef4c6fa007e049919bb6283eb94c540dc7b1fb6f"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-descriptions": {
+    "sentences": [
+      "805b478ea3cabfa1757cfec29f465b23c6ab2f5c6e71fc18d8c99943f6ca295f",
+      "3852f651d259af413cc810ae3cb254d18bd59f31dc5828c1432d081fe8fc302c",
+      "55c734d9bdd35c9892d749b4f80d2608ea0989efc284d73d82aa774ac21da744",
+      "847e813e56525e74babe2a11055abd5167b7ad26d7eac00ec3adeae372774cb9",
+      "18e05481fb21d60cb1aae7ac289fe40e7e8ae367c264f348d893e2a30c6523a0",
+      "5813a45b05d9345d31b5b90f5244e228dfb62a93e2e908069f0236708a695e26",
+      "7e6d38b765b79103d3ca21eb1f43568521bbfb5de0ae33d01142f9497d44c417",
+      "256811071c42c901a74426ffd234af0a4b8b49a12c6044220f5d821b641584d4"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-colors": {
+    "sentences": [
+      "7283fa52b421240e0a75256578307c80e642b16737f1ea5a10d1b97f98dd57f3",
+      "eab96e8cc2167ce4cc6225aaa9f8c5ca882ae103874f237ce751a2f012bd18e1",
+      "468226bee143356ca96c176dd4a8bfa733047d0633d75755ac3a1dc5fc9d4534",
+      "3f8160c8631804e946723e84ed7c6ee4d92d416c24d8b49bc36fe050aeeb21bc",
+      "c3a5819b10ca72b772bcb93140a3506220ae1e6ebb6a5a39edcdfcbe1c5205be",
+      "c9ecdaa558f9eefb2916917b711960b537a221a64d297eb947876c0f697b6d40",
+      "b81bced13beb19ddd57dd43ae35cdf029a249efec8d9bbbf73b52a369b3f4c1b",
+      "42fc6514cde53f02fb3a71c3b55fc849ae7a0b615d182a961d5c0c261a979d8c"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-articles": {
+    "sentences": [
+      "990371a7df667dfdd157344623813be609c97aba7ebeb3e0fd08937843591a0d",
+      "846b04c8d9e265c9a69e415d35ad386acadb39fdc300ba7a8ffdda3681757e5a",
+      "ff54155a5a0179186dccf5e27a94f14e315afbe3015b68a7486868fd35929ff5",
+      "fd92b73ce4cd3d50844a048c21b4df752cc9aaaa5d38adad70f4f6713ac923fe",
+      "3e94c6935db6896afd185a2181415559edbd55a395bd10de5362df2e1c800749",
+      "0a34f64b008becc903e7081868de3a6e69f39c4d80b2e8d8747ae884055aa050",
+      "0171a0ca673365fabbc80e233b6ca80d2ae628020e1388fdd1a2985611af8eb5",
+      "8c877be2412d3c157159f99e915372ce1c6f365f28be2872cfb18c70c77c982b"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-simple-verbs": {
+    "sentences": [
+      "179a684b6bfc68bf00759abc5de9530f0009d0bac479fd3c06a5c2916b0f0eb9",
+      "5aa791ebab5199f60e7723fec8f5a7d7e48ccea56ebf99c10a1c97d3901cd789",
+      "4ff34c453290c229c84ae9e58421e9ceaae8e294a14f7183ba665f9a55cb97d5",
+      "38bfd61a58a98c7fd9e840b335d9418a50046f850e3b8f9e88339bb6d1819c93",
+      "5e5a0c9d9aef9ec8ae2669ff2d6469ab617df5ecc4658fd84b77024ba08c439e",
+      "d033dac95bf64472acb0d29a501873de2e4a1240b987e3b433febaaf82537b2f",
+      "f19671ae02131eee258d38d1dc2b433935fcb8666464a1165e4636cecad0f22e",
+      "a0488544d4a5b9dc77a19c1344d48b0ee40e97ef038e5d79bc4654b25cde2dcd"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-present-tense": {
+    "sentences": [
+      "78266b5ec781fa3717f9e2ab3d14841e03edd24e9b9e4935b08c9709b518a7e8",
+      "b7d2f23229872c5e6c2853ecae63a367ba82682c7a93efbc6d04a57042224f93",
+      "32f0bb33764941be94a0f3ee3dc9fec33aa7d0ec7f568766114204a998d1dd89",
+      "5763203fc77af10d79a036c6db7d72facfad65ed99d26fbc3a81e1f3fc6d4388",
+      "c2617653062899d16d09a623d8d30ee7298e7bc86660a563bdb77a07ab0922b6",
+      "fa2df154846926dc9e738d236d78b987ecd6e8d868649477985bb8508d6ecc50",
+      "5b6dd998b499154e98c1f6b5ff220ce19c9920efe7d8699a0a7bfe6ca6e9cec5",
+      "3a2efafb9637fad7f76e62d08b14bede3cb0dddead83d7fd9c1ffba39ecd3f4e"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-verb-conjugation": {
+    "sentences": [
+      "494ea5919dbb9f7ab46f1fc180bc8cd7f0c3922ba11e914b79f1c528cd81f9b0",
+      "b847ddd00b3cac721008151e2d9ea3cd5c0c87ecfb27f3c1067a76be2aee9c5c",
+      "1be1590f3867e4b73c07c5fa2c43fcb48569dd297725f74b41f74615ba94e2e4",
+      "221c524f25579e8a4d19e25b4fc0c1eecc107cfe6428a94dfb9e424f0c0a1607",
+      "e80cb0d22cddb1c33dc9b69f794c631f0d51ca102c131eb56599d2c4a681098a",
+      "2428457269656031f4a6cb59d85515b3c772097bfd4245facbe43bb553ede322",
+      "0dddf4c6af314d2e225efbfb65d009e62f63ec553c1dfd3d7b8012a809a5a1fa",
+      "558b07fe71a515f4fa7029b46f283e0528545b2d74e262daf0a3861ee1c9e7b9"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-positive-negative-questions": {
+    "sentences": [
+      "f1442718e891b3c85fd17597e02f2932368139d5e46e47b10148269ccf69d98e",
+      "e3acb3ca8d97fbacaae84972b57be286508de93c8db624d1c77a30039887c6ca",
+      "fd61a834eb90d9c4e8f84c5e0ee9ece7b3184669aa12bc54788c828954725a4a",
+      "414f7242326ea66ede5265adad92406b5f56b93b5b6bad08806dd55d3974b17a",
+      "ce8a21d9063836e1236749c0e454b37f172e5e723972f4c8a8b7e79ee4ce7384",
+      "d578ef36f31809bb0df544273504f5d2b01ea7b5ed9709275af87d1dfb253931",
+      "bbf57809d46befe84f1787f4868a73e805c3ee6ebc49cb8fd4548f238a503fbc",
+      "11391c61dc78a20e2c6c27a430506fddd03a3fcbccddca501b10a4d63bc587a3"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-question-words": {
+    "sentences": [
+      "35b6fdfcc7778f1c54e23d35963d747b491168999de0e01fc06a1bb0edee4b3c",
+      "274f7dd5e94ee84ca5cb6790bf7a37581b6bb7e7fa0c76aea07b03ce851a8d98",
+      "2721709c979a13bd76c620da60c557c8efb1bd12b80bb6201bc10435873879ec",
+      "1769a0bccf326c6bfb7a7bebe98a634d576e232a6bd2be8dad96771731eb98ad",
+      "02349d29d1e38515fb3d7ca034e65db9fc7ce73b066fd7f0d51071c59b8807cf",
+      "66154ed5f82742beff84da65447317b4f37bc40b110fadb7df9ba6b795394be8",
+      "b9c320a3037c2ce68ef56fe7c363f571e81f985862a9ec5a3bbb22200b6cc348",
+      "a9b6490fa2f0a41a3bae8f2a0ca207eb423e080978d8ad2f43d850a3c9ea3617"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-dates-and-time": {
+    "sentences": [
+      "8c9b102b6e77405308517a426f74d095ee58f590c9f446602f92936c1f96cbc2",
+      "ef17ed8800f0cc303e111f0349e11c11b789299bdb94f169bdcdb647cd3f3965",
+      "f05c4c70117f406a6be21d6fd8963e1dd6b0d64ff783ff831078e904c806c538",
+      "12bc37eff9e02df991bde9dd66f3c011714570f0e2b45743a19e1f1e063b3232",
+      "16ab834b1bf01896b027a625edbf23fb895f03c7db28e7234f788a175a821801",
+      "55d05866c24f5438c1531d6b280092843be71ddaf9c42c6c5c72dd8d6c62aeac",
+      "5dae9e0af29f2e2355c1e39ff69a71d6114e2faf9dfeefc74ad64a7a62a58be9",
+      "29bf9ee2fe963a32f96462a4ebeabaad41f5ad5cb83f341beb3ed7c2bf0df495"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-location": {
+    "sentences": [
+      "9d535dd83a22e03d68284bb22f47767eb7bb0ba8e1433472c8379330ca5f46d4",
+      "17585714ba8414152353484e4a79ee367dfd987a1a900073383eae31d127c642",
+      "9a174c0daeccceae9cd2e51675d1bd291206dd9f51843aee2a7439442d72d120",
+      "cba6fddd79e147875147ae579acbcbf20b521c6c6c3ce11b91f84e0e8f4e9607",
+      "4c5295d2ad90494fc4fd9530647a72d535296ff1711ff38d4f5a64324eedebc5",
+      "6c7efac2372726a6f541945d9be7b0d0ce01ad5461e7d51f71c12e7a44851686",
+      "4a1df40fccaf9943bd412e4854ed3002656c51242ab6e4563efef50631751e16",
+      "34032625337353e008e9381cb26c34dc4ddfb57fb531df9612e594765ff53ff0"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-wants-needs": {
+    "sentences": [
+      "2f2f53211febf52c48fef07561dbd5ec099d683203d8dffac22634185e9e0cb4",
+      "6ec74d0945fa369394a14a9bf95eabd6f6b707f55f597043797d4e75369393a1",
+      "9a24d9b7edb4a403c944c014b28c1acab1f2e97095e2ea0ceb0de5e0a6773d7a",
+      "ff7239803625ce252e109a5f73f4399fee7d36e2936a5f228122b7401832ecae",
+      "82a39c56028e62b0ddf2db7fe4a9e64604abd4e9604f566f4632e989ef32e16a",
+      "4ea4f025006921aafd0e7c96fe0c3c1f350b743a7a1dff3ce240bad59a3ad068",
+      "f779fe24b9532b222538b6c639ec40c5f800625e955b345ad5730f951abad2d6",
+      "1ad88c4c9d4039d8ba7570ef063a55e0392cc244fe30475a7ac703f600bbe9fd"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-ability": {
+    "sentences": [
+      "6f96b2b1bcaa160e132d7115d90fd5cdc53d4e3c55eba45d7d4294337db29586",
+      "dc3ebe10ea0bdb1bd66479bd16df6833c94396825e704bf98d8fc543d53e12d3",
+      "1acf6d519b1fc74d1ab44234751a3159144d2c268802c65ed118f84dccef94de",
+      "2a658a95930371ad940e6337be52660a8ffa64fe1f5c898659f25ef319efc0a6",
+      "ab845782d1da2f5137246dc0f0629a2ba06bfdb1ebe3d790aa2174abef5bb6fd",
+      "31ed473c0d79f23eb0d1111dfde2169d4cbab31bcec8532041a26d1054b0e8d3",
+      "4d13b457d4b2dfb75e784f66eced567ff40c3e28b43cc5f1d9c22b88a314dedd",
+      "40093288244a872afcf48e2bb0faa51a899f90d582e09b629367fc2b95203040"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-prepositions": {
+    "sentences": [
+      "6380d2d7b53293c0b198bbc4e6ee8369384924a2e16d91bdab7794dcb8454df6",
+      "4eac5012d276b31895e79986307bac5f733714494bbcf9e6060c09cee9447408",
+      "c7977f0cdb051a8fe3418c600e3cbc8ff66d79de6d8a943c0a65bcee8324be0d",
+      "64cc4ecafdf9fc604eee23666904e5746dcb8bcf02c856d3504a6fd4bb8c7dba",
+      "fea58a002f9066db980f5c4fa6a1423d954a1fb181bc2425d369ae41eb9fe7de",
+      "535979831002a98750797514461aebf3ee2695f14a177bac2d62813456d7b702",
+      "48c3942092a40735355378a75000901d73766f36d171c97c6ad34c55df8da850",
+      "dd0da5a51ac9e7db3f9a8c5992d13ce9b0b63d5ddc96db299e8e3baca016d93a"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-daily-routine": {
+    "sentences": [
+      "c2b70aff745c34627a8e6a40b9bc4f187a2e9bfc27ffaba3425bf96796ad35c5",
+      "c5c6142553644255b0362d83d0a85053fe0e03e58e672e12ab26a60bb7080b2b",
+      "889aac20057a94ac11a8a9453003b2f7be2f742917f4ed301973aab8741b8e8b",
+      "8d57655412c21a27bbec5b1f751ed6ee62726da2758d3b0becdaaf729af25f91",
+      "bb75f8ea574d199a5f8f783c01f18e3456c8ff34efffd9765d8cdc7cb0fe8168",
+      "1219613df9fca71be45beee36dc79d302fa2fa8debb6a9cdeeaf877f32274dac",
+      "46b84c590ad5322d232f7feddb5f7d4259617f71c9745d2473fb621557b1865c",
+      "29e6e755c66596d658829b973f793a8ed40c7190b8d947d4b4297aaa749ab59f"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-connectors": {
+    "sentences": [
+      "d57486afae162249dc8cd78ef23047f2a642522f1c676bf15061a474effb0f99",
+      "0b4061d3251cfbae3fc422dbbbd427136358fb4bf7ba1c0f8edddd4e51df3481",
+      "c9d7a54dff0d513b6430b1199635b89d5e8d4a29c83ab39b3f4536221388a81a",
+      "8382e89d5b5be5a80e38181ee69675ac2f13a32c25c554680eaa9b26d98deb53",
+      "da0e7b9f178ef5ce2b562322989c61ca29d1b6e99fbd772a896fd229cf78cef0",
+      "126be7837f5ec0b43471301419466edc972444b7fee06c15aab003cf1e58cfec",
+      "c54ba4fe309b0555e61079a4bff6b481bdcec01a665f77ae558cba60d3c82c42",
+      "56b0d0bd4c85a15d2da1ea75eceb0f9301e9cd7fa72a7b9ca9891e850e751a35"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-social-chat": {
+    "sentences": [
+      "291a50bb7cfe061b21254f47c8b69da3a18c2a7d93e9196429fa2807ef536189",
+      "99e00df099a15bceb6ad47ad424d1ebf0dc1cf94f48386504c6343f95aef9570",
+      "860a4995281ca97cce89f0847494a7570f95d084748ae2a2d0bc7f2850dc4802",
+      "909c868ded4de6eb7cad405191d3530d438c520a730528aa0e36f1ff47d95465",
+      "aea9b3b02c10c690e049290479af9103314a8c3d4eb945ca6023b842b650977a",
+      "2975811141c934e50b0956057e80986c52243df1c7c1c3f66f4e378971f9b3a5",
+      "11da7b7de7cda4861a7008fdab17e5ea516412c400acb8f375e5cf30cfd7606c",
+      "a8609e016a98e8a5fb6dec01a339459673cba047a2f9f3fd39c42a4495092ac8"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-ordering-food": {
+    "sentences": [
+      "a1fff52e072b8e134d2dba81919a99d78801eb76d41cb929472ed77fe7f59882",
+      "0d099482ae80545b016a41540672830f255cca7010f37279fe525532215d4bcd",
+      "f3e155085b078566e80b73ccd495bceede95bb08ee5da28f37ededeb09c50e3a",
+      "0fef455594d693216ce04b2c4e07b635405793ba84d56a5e74c046412245ab12",
+      "f7ef4eb2fc3563e9bd4a8dad58306f40a538ab8024fbab4b1ab7dc2dfc46ec46",
+      "9a5caa68b6b0e94a47eed420705e58290f947bbe15c9477be6f2a4892653d651",
+      "bcce400af857bd5d9708efc1cd00aa93a60ab56aed616944086fe42a1d0b92b8",
+      "d34333659251497afd9342939687453f856b79737b390f2581b0fa8931bb0c73"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-public-transport": {
+    "sentences": [
+      "d1eeb32a11310ee9114962b879c61ec8be224e7cdf1b54978351ffc4922a57cb",
+      "b533df9ba4aecfdcf8f747aed7f58367d7a929fba9540a1700ce1d9715a03ab2",
+      "11923e9457e0dfd1504633f511c6ecc9232e797bef0a49990c4b24a9f785b198",
+      "9a9329be932868ef5344f83edfcf7b630a706679cef2f29e87ba7fae7937f981",
+      "1479011b7ad5ec92522d0db6cdca2a5efd79bd87e27d464ccf849cc98010d836",
+      "6a9b526e28dcb670bc02788a0157bf4f8cc21267f8a616f22634d5027b89e123",
+      "d0dbc262bbcb1701a62b6ceeadf5d5a3b3f5aada1dc8e4a3c0da93a6bc855dfa",
+      "2dd25b0f777a97dbb92db025e6962de270fd6805f338297da24be5ad7443ff40"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-travel-tickets": {
+    "sentences": [
+      "91fe19c76c893ef7d6087ea068d4b845f72d028ea8d4348eab89898907e0ceec",
+      "80d17da44b6c3b6ab74bdb2a35cdd02004cd1581980e00f423fc9ebc8b53df44",
+      "f2885f202acf010795dc8ee04bb1a8e07ca5657be240708519fea813130cb967",
+      "903b5781af95254f1bc7b0a2dd9160e5bbce7803f0d78961bc0da01609320e07",
+      "03b6c222c40af8685362353fa6d4e9e47de72a236f1803d53eb80eb0dc951b00",
+      "eb01244e5d860ef793fa341165ce844d752ab36fe69633f24536661b53cf6929",
+      "25f8e539e26b274c05c05fa1ea33567f83e9a3fcf837ae191f1ba3067b117af3",
+      "783a1a80cc4fa7f3994133f7575daf569686a8ec9e4a54449f96f9d27cfe4781"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-hotel-stay": {
+    "sentences": [
+      "7273c38a90081536db0184bb50c4e22460828c305a974c5764c6bf7d1f406010",
+      "3bd652d4b44d470317610ff9ae14fa9ad92682a7d87a28fe465bdcdb2036fac3",
+      "f42973c4baaf719c25922ca8b919d3e62e8bf7da6b1a8ac4a3c04d6a089616d2",
+      "c04b010aca4b0b7becc670f94407ec3046ffc95abed1c8ae5c6e9dd0e08668a9",
+      "13780a78da3c1def020274dc76940cc98693b51ef564dca959088d61087b5319",
+      "211f946935c44e3f856320876efb17c2a9186568c9aca1ccfa777a7ad0b5ddcd",
+      "e98d49c1d3f52743cc441257c005c5f5dd1a4300be71cb54a86eb42c5459ab98",
+      "f3ed149d2b759b3a049f1b5b2216e52ea91c9cb706762e8aec78982cad43c982"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-doctor-symptoms": {
+    "sentences": [
+      "4e8112cc23dd4e2e467be804893bc9a85ba0c04d28280777577b5cbfe4075c83",
+      "84616e0947d74da5889668a2dbc64b73ef7fda7cb5ff4b1b6e1e64b151deac0f",
+      "256ca79edcd5b0c637c87183fce80128f369d44af28b0e990ba7ed44f85daa2d",
+      "ead1670788aaab848efc2f6829d1c2860fd63a183507250477d40e0f828b2120",
+      "9d23b5e64d9fc60d70ad8d399ebb7319903ceb180ee4992b4af2ab3674e658a7",
+      "60c8e5d53b44cba23691f9193d717984a279bc7ff72d51205d350b7af5e19f07",
+      "7bf21f33f1d064b07c5a56a9729dea312266ace4e4baef50caa5f686dab08e68",
+      "98826710b9cc7300252d99d2807d54b9180ca55c57d937e2b0924c9c7c7b7c7b"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-work-study": {
+    "sentences": [
+      "434c513d2f6d890666457b6e09ba70114c94092e803ffbfe1583d36e0981e4f0",
+      "ec447ed4e2e79d80a49a645f2ebd42003d3803c26dff3125c906125a373b554f",
+      "cdbda4ffccb386b8072eded6497075f3ad0bec57630c4444d9aa666237874930",
+      "7da39d65512e69b14726925e113cc8d0a9f58d51683acaae9744de407c06000e",
+      "4bcdd7d9eb2349cac50cd0ff5b00f884b11a302ac1ca3314b33d5b289e1cb747",
+      "b9da2c4441f042052cd4a7a34bbaff827019803dc4460e7db8260318bffdef36",
+      "21fddad2014db0e7c7005b424bfff9701fd70ab684a8cf0f4d262eacf09c6d64",
+      "1c4a7df652c3908f47cf677e86fb6b7986b6e019ce5f644ca9a906131ad01d05"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-weather": {
+    "sentences": [
+      "de77feb31de2ff809630cfe0d6bcc0b6eb053e01ea3f4c2ce4a72d2949573875",
+      "efac4fd58568b4a7f9caa69cc775f201881f2acb1c549ac1ca82739d865852ef",
+      "a6062799ea7f0991402e8af48f7840c924f530fb5850471c3f2a2c7895d74cea",
+      "b997f56cfb40d8e7dad26969f1b3fc4381dab2cd3725ae43a637a609943a6321",
+      "0f934923d87b1cd6b449d103837d8e63dd2da9ca8636b0da3c9c801993bf2520",
+      "19d0506a221961c0910de2ebb999e32a4f5bfec686549f0a9b7692df9cd540cf",
+      "484a8859319e03de8325a0fdb5ec8604587e267be3d7b207e5a57ad8a7d19854",
+      "cecdd7d7380409f60aa61270702300fea79d8c7c600e84c9ef39e5e3657d70c3"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-phone-messages": {
+    "sentences": [
+      "f3a71d62de2826922e6a087a41966048d8b1cb754004290c45615ce4433ac093",
+      "54e5b9c906ab00d7e2f730d036a651e28b10ec9a60641a97541294a779fb9abb",
+      "f548e750b4c1fd82c9d42a4bdad69ea4e463ac4bb3bf972953960b1868e28a33",
+      "119b03365491274c441b41f6f23ff55774fcddd0b691d9ae731a23717481d631",
+      "28a6e57d5248560794be7d96c9c67e079be430826cef0e8aa5251edf74eb56cb",
+      "a9cb9cd675c1b9f5c49da574b5d10e78a3253abc48bbc66d21585b6b2c2c7cd2",
+      "2ab835d9e5ea83597ad5e8266c64541986fcdf6371752deca9ac24a8c4bbe526",
+      "2700bf9b65d1aad721a1800677bf4ff35e902f1852c60df741cacb88729934ad"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-invitations": {
+    "sentences": [
+      "1d5d4415a24027493ebd7eefda81ac2a252b247c06c72e5bceacd95e3b7926ac",
+      "29671b8dc25f0994f7661dea78a28f1cd801d771fb5fa3d492a1ce642fa6dfcf",
+      "87a604f13a0e6f800722276e222cdcb96f079976d9ae29c406bf4afc6779eabe",
+      "bd4282f9b79657c77169ad51293d8c9b78aa37da9e684f02ed7aa5174ab52680",
+      "7b97f9c151b121c2ec34422560a21f6b358d08d57b8e02f7a34fb6a43e3bda6b",
+      "e5327d0ea6f07fc8fa7c872254acd7d3052e28f79cbbe7f278bf9001fe7c5416",
+      "182448757a97dd54e8be7cdebbb03ce84ff4ca8849c96add235f852646d55fa4",
+      "086df51049a772d4117f7d98172ebf4375d1f224debc5a4277fa0743f4c5e2ee"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-polite-requests": {
+    "sentences": [
+      "bc561ca179b6da36994b3743af224c2b0b9e3c0d7177660cb78a9dc37d1c378b",
+      "1de4beeed697c1f7114116fed6200863925692321729cf58302f6690eab1cb9f",
+      "4840123649e26d85ff80e5f174e2d4527835b806ff2654e534b5c817c465dd6a",
+      "34473067f64ac1178f9451deba8748fcd2574599b78b2312b529dc9b7ba8cf51",
+      "608dcacf6b18c9f37a59a2a7b2886ed29056eed5c5bad7b9a4b3a95eee7781f9",
+      "9aa6ce46bd8780bf90c68063b78646b6dcbfa35726e81014807d03d4c0cf27ab",
+      "cf93c0fbc4d13482790ce5ccfefe37a607e4ac69d0c3e3650e5771d62a7c1c5c",
+      "0e3c0247122b8111ef8c6d03f9d6d9c314fa94b36d116fb171b48600b27efb1a"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-instructions": {
+    "sentences": [
+      "7dc1b26bb6598120c37c795c3ef687b99d691f51f6d0e569f7ca33ff64733b37",
+      "c00dde33d1ce7b9716a31b5032e57490c0f90dc2ce39b7308214671a8d7d2d4b",
+      "cce4a5ffaf843e81714587224f08a66ae41c368cf9aa66f3f8381ea5d64dc9da",
+      "ff3afed94f2d0765a62d82a351bacd20a804048e944971e255a8bad7ed56c204",
+      "f4e9ecd991af29d69ccaed3db25ada58568f4db1130c2a268d8cd4f4c2be1ddd",
+      "adaa4334fddac70700b6665da40285ea2bc920a1e536a684af8ec22202d1a877",
+      "96883b325d2e63408a3cf9666d860485e97f14b802dc755aa2b0f6944cf4dfa5",
+      "2b56623d4a4d9ecfb34e4738cac4c372399be2c6c8f426f44feadcdd2e28f3da"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-suggestions": {
+    "sentences": [
+      "144aa5023e369a4cc19421a4ba55f8176a70366b3161fcd423cd739e5bcbae5a",
+      "93ff9c01c0b9edc792646cd82b5b483e87db7c9b03bf6f0d701883d580219c63",
+      "3e1521a60f26576c992e000bf6e3ada84931a55a9e169a1fea6b9727de9e67b8",
+      "79aefb6296b2145c59b8671beed3dee52b8f6b6441c0e027b41d406d6ae10e90",
+      "2a5ffb0e0ab28b5f73914606289a920f512df9fc3efe2cdf896930034843d83b",
+      "ddb58742d3500808039137d7ac0df2b0493721d4a0c0b929a8bfe1aa79533bd0",
+      "41edeadb853e7d10ed8b6e7a3cbd7909c4a35e4d7b2aad9921ddc249431e820b",
+      "d35484acb82933ac3f3b2470e54765dd8c3a61f19a8e94bfddbf031943d95b0a"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-past-events": {
+    "sentences": [
+      "8d3481af86ca80c4427545aaaa5b69c4728078e6015ccb400ac8b21b63b47157",
+      "27eb7ea2e968c9e61253d0767723d27cca7f5796dc9f5e20381340e5233eea74",
+      "9f775b4d6585c46e7da4f7ae756dddeac6ecb3f235cc957956672ab03598925f",
+      "39b80aecd53614708dcd74d606eb6644018daf2e1e135fb374111897ae281cef",
+      "d5fe4efc3887e799ae61dbb0b001980dd662b574a34ba69e09443895404ace1e",
+      "004e0a148832f8f1e83db6cf2930345b5953be207e83d65455c275ff7b6aaf28",
+      "39d833762ab0a4576e4f54781f0bc7a3fa162e46e65b827fae5a71a0b3a03ace",
+      "09020be51366cdaff08bc17d2382ec9b5682435fd2bf2b11ffd87f39879e1967"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-future-plans": {
+    "sentences": [
+      "ff989cb29a5ab9da9106276af82d1b3557388a2e136eb9466dd3906c65e2b5e4",
+      "02c01658fcee676f6ecae62501f4c5d10811b6cddecfda6889d9a9fcd9685ffc",
+      "cc4ad77d2a7ac56e2b928c64561a4cbf1c29630278d25ab719425d25a9a8b6f7",
+      "96087448af65d6cf02e559afda5798d690b2b846326fc02c17092e51db999efa",
+      "59be56fd953b6ec9c308a03effa2e4892f3e46855ac638efff74d6bf8b17c582",
+      "ab561b1f8d0dc1e9b6f12620e52716239ad9ed59a9deede9018bb9e36c18e41d",
+      "3871658cc809d773fb225ee9519d0db0e5f085dfe56a36753bd0fc8df37f412c",
+      "ae1deeaff662a1e73e9a9337d25a1d150ee476834331c27b3cd6527ca8c1310a"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-feelings": {
+    "sentences": [
+      "6b966aa9f0a1ce0db12b3bd2dd563b01ceb7f1349513afd13f848e7c2de3c22e",
+      "3f12c87cc634236113a2c245989cffe1eecfb12a87ca881a5db2f195ca924162",
+      "367339fd7b7d9f7461bdff722073f5634b06d0debb2b1204e0de98b7e7fcd349",
+      "b2aaab2b1504880ac1b6f4f3bc18da0aed3551a7074fee88d4b55b24ab0b7401",
+      "3552cbaebfe7b422229acd4fa2be5bba70b77f81ba0cb0031965699090d8dc43",
+      "9a1fcc925e78218e075fce324a093f869e7e8355a626f5941d76666771d3bfd5",
+      "286ac5399fe09224406820d5aa9208c8b14ebae5d8eb18b89f351ef54df0864d",
+      "3f1e335c08d0d83e46b91b80e693cd0ec1efc151cec989a573fc80498b90eec3"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-forms-information": {
+    "sentences": [
+      "ea38d476e8314a17c5cf0bcb95b84cfaf5d1a0b9438f9e8d97e1ee412093d8c1",
+      "603bb32f5aa884a0121685280984ef299a0a4aa84b3484814c4aba16c9846c1b",
+      "8d7f90f5860fc0219be0b252838039c004518ea22e14f84e38041b0291889db1",
+      "9df08a8e1f1be515377b4938397a1731d0d3a91f63e5dc0b5b3c8d7827f36127",
+      "bedcab0d4aa9423b3103dff104c3ad1d66415a4503b578c2eaa92d524d86bab2",
+      "c4e71457a4109e767fd085522c3ec9be016ba9192a8fdf728e27a49e29566abf",
+      "39b916a485007edb8e3a24333a55759d7f1cff602eadb29f2f2afaa882f12db8",
+      "4c4c3090daccb22a354b2ea17acb82a7e5d2ca6e6b352cfb0a04c42935a08436"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-supermarket": {
+    "sentences": [
+      "b7235c136fa7233804d24fd7eb7e6a378b2695816a3681830e08ee9edd060fc5",
+      "d3ee4bcff7858f0d339409da366db3dcd198da466710d0891f29237942d061d7",
+      "05336fefab25737ee509c8d76e4d729232f52981f30649a3d1fe88a06c0bb446",
+      "a7bf342eccac70269130052af0c4433f2b24cafd39afab879388f0c9d51b54b2",
+      "97b7b2c7fc4692a6afc3862f65b3aa8ebf1130ef9a32d0624cabcf47467a0b38",
+      "2f60ce4e1ba4ad746c0888add75d0a7f767f2aab54f9675964c4969dc9cf0ec3",
+      "af333b7a624cb139034584dc98d8c0f583ca66c21a9d6018c583800b57954e17",
+      "a9e01a4e2798ef5473e389b20a816a41759cf1dd74b6fcf08eee2bc2d5fa6384"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-clothes-shopping": {
+    "sentences": [
+      "c680db3eed2015b20630af344ee5ad73d899713b6cbebae0c7ab6f0ba541648b",
+      "e93de53f3b2ff60ca6b52664a32338374ea9bc627924aed9089324195d05ec31",
+      "57cd791e76b1a0d9e88138a638f7f124ae0b3b88d306c5415a068aad9bd221cd",
+      "e1fbd8cd0e7e47f42861cc2b25738193499851483a55e2cd25eb3cf5a8ac5d73",
+      "dae653d5711a8a3ecee7bfc177f885fd1670c7b67acdfc57cdfd2f9cbd538181",
+      "98996e02bfa73e7163e8ec5d15cd0e893355ddd0ed91b10668dad6640e578907",
+      "24a7b2b107eb29d76bf6bbf1f2b2e0ba48e54d097e09a96657930d4a6bf7dd88",
+      "f323e689bad93121707549518ddaf974f84250cf376b1b17dbd352fc2e6f6036"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-home-furniture": {
+    "sentences": [
+      "88cbb100d14f7dd2efab8e8884f17831611f72a91897194ae4c2960f665baafb",
+      "14f7a2696fa9a047c990ee4b5a53546313046cb2e19b429812e0e1dd96012b74",
+      "0486c2b47fb39f247d35dcf2ce09a639242c10d667a5a3b37eda0b8d7a0f02fb",
+      "1e6b76aca448a526823d7bcd311bd0e1685dcd3e7437bacfb559f5f3b2000f39",
+      "ff76f9b236640c0e912360c86807c6ad18081696d76263177b4ba0cf66380954",
+      "ddd1772ad36d0bffe5a47cfbd34a7f21716db151ddda800acc341d2de510a07e",
+      "81d122beb3c57a5dc2c17823184f020a6a4447e8d260cb650945728208a96514",
+      "228c00a1a0f8dab9b7f7ea22395b014df77e1751b43ab820e9658b58905c05ea"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-leisure": {
+    "sentences": [
+      "ccb2b88c4f4dc3750ed2212a5b3a27714c8f5b69a0f8e68669544bac8874ad9d",
+      "8fe5aa296edd89d3c8c87340859bcbade7e592a78e9fdb38eb7762f98dfe17ec",
+      "54a2e2ecb476e98bab7d316e62217ff91cd3e11291042ff9fe161460dfa2571e",
+      "7ba0d27b125a1132433aeb460de7eb2d7349b1f3b343ee12161626a7f278be3b",
+      "d62f5471d780617a29126c5ae9ff1f7d9aa76f2339636ff17f79c8e7386fe46d",
+      "bd99b2f471995604714bbe5a17fef548a34807cd2d27c4fa6364630830184043",
+      "0611a79b7dcd370cdaffc341b039d0130b39572d3467e90ab30c37e331867e0c",
+      "0038909b18aef9c59468fc7cffb0b6e2770cd0c47cb9339fd2363347191e80b8"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-weekly-schedule": {
+    "sentences": [
+      "40a85dd0b66f914b52e047f87f0f6a859f90971bae33bf55f8670554012b87a1",
+      "22f0da41fbe0c16367730600d53e4bf1407885988468274b157d86ae29f16fd9",
+      "3b24df4837aa816f3bedf70e9f113ef13ec8efca8b30f324b6c933b743dd3331",
+      "a1661aeb73709be8bd449fd260b60f8bdaec61a73ece9486814bae1f544a4914",
+      "3f29b89e3d202238c8d64fcc1aa271ad34b5f2a2e75c5bda7a6bb590e278cad2",
+      "68b40af8cf7246c2c5d4ab49eb92325c79477db910a5218234c8185b4d0f6110",
+      "eaa2d2b198f5f83ce0f1d705df0ac2f2956b0ddb7d312fbd1ec5877b115f90ef",
+      "f5c360915c7910106f238d540f989ae3b40519faafa5cb5867158f1fd4846db5"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-preferences": {
+    "sentences": [
+      "2e171b7becf9d9bdae8ea326b41c32029bedc8f92cf5ed49c1df6e45c7a157b9",
+      "3d4eac33e923ed5976d0f35108b029adc04e07a7a5ad22a7cf64b9aaffb98273",
+      "6ab572bb3a1382150308ba2f950575b73188f38e4a62afd61dcd8b64fe75a98a",
+      "e785e007aec2eb03ac51471cc5129bb42a6f3f30eaedeb78c2505a66d7e55067",
+      "b2ca88737bc7a9f0879c2610e3bc3180d576485fe23c53abc2f44d956e5add55",
+      "fe853e39a6849711f5773f61ee0c682234c49c980a24bb535d9db85ec23ac984",
+      "bb0731b5d1322a833a359816a8031d660485687eb081c579bfe5c31f838cb548",
+      "507bfd37620bfc6c37e992a90b3c324ff7b961b8072045032e0b6795acdd0a06"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-comparisons": {
+    "sentences": [
+      "c839169092e757237a231c68d8f3459a26aa08db90d3aa6b72c599676b65fe41",
+      "e1a6ccb949401ce259f2928ba608c9ff215b13bd57eb5b6d95db63519ee3eb67",
+      "6b48ab3001ce63ea2e4d92e94f6285afb21ec5e115b504098223020fef0af5bf",
+      "9a7a21c69a2016635171ae81e9a727555ec28a9776a76f60a28ebeb120d26d47",
+      "b2a22c016a05813ea3e3c33cbf001dc97c82964d47eca9ed6b6c282a547e1f62",
+      "c3f46f4399048531d3645e4c29eb216b913d588932f8bd8700831b0bd1b2fc32",
+      "31d50fdf7b649bcfa88f6eabff040f52dfeedf87a9dcc140af342e0b3662ceea",
+      "5eb85a80411c1f2588678fd0a342807d18a65327e0dbe2fd5a2290a3974c1d13"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-reasons": {
+    "sentences": [
+      "bc54b80f981e9ea23edff57a372bb97e0a99a1582d5d20b33108d525302f596c",
+      "b0fe2341c7406356ea9a84e7b46a77bfb535c9c8a408c98caa60ebbd218dc1ef",
+      "69e112af6b02e18f7322ed5dc2ce215e6dce63568a2fc2b2dcf663ac611bfabb",
+      "2a6577cefeb03f8a25bca83761d84efed2abc0f4012c1af3ac6bea1b50b45a5f",
+      "05643dbb04ec568c092deebef4601928668188cd5f5870aa99350e181ad58b9e",
+      "f7da8b6d5af411bea9e8fb1e59b2f4a7b584fb0b46a96f2a539fa3ae86b369ef",
+      "62741e637f1a54d770e4ce617f5c1682e71f02c80119aa444e3627898787bee8",
+      "a75c29b6e4590ce0e9141f1e77cb2628a5c311ced3506f11a197b8456213326a"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "de-a1-connected-conversation": {
+    "sentences": [
+      "90b11d15e12bed937d33d16be65a5e34dc7a942fbd26d7cbdb081b235b284ef7",
+      "729b956cc1a5a294144c23c55de5ee08ec01cd637af2f31394f498c746c18892",
+      "8a76808597ced2ff4202925f7ab21cbc42f2754b570b213952eaf8e2f3c32548",
+      "5e286b2a08c0106e7f83da923719ecddc5c0230333adc6152c658f63ac29e382",
+      "7c9f4d21af518702027389c128e31dc072e6bf9601267d4e4ff7fe10c514fe06",
+      "9322c36d10c32b22df1d9cc6bb757e1e30780f5388febdd2cc7a11755ac0e942",
+      "c9b2c6f653b6dbb80ddb32c3afbe2a9bba9e05751a321e009ef0d94715e3f550",
+      "95d9afedbb2c29f5389301b2dc5c9d9d7bac58e50dfa24de00484f21cde13a68"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-nouns-gender-plural": {
+    "sentences": [
+      "b520a5272f1ff87855ef073f7e3003fe46abfbf9e7e3b9a6f904d8a148236dd6",
+      "e04d18892ae6780d50b77c0deeb7c244af2d4a2ea8cfd1373dc4d6463ac07af4",
+      "cf22cc315cb5350ef033d7a2ab64581b58a88e2422ea46374c4b052f69ba3a82",
+      "ea620707ae9d0291c6319a6958c6c60d57f6f6b2eecde56bc19874c6dfd3e885",
+      "4483fd0cb797127f0eb524fcd62b80bcd3044f7bdc89acc15e78cba674f88643",
+      "1b43d0efa5c9c5b610a247a984189e25e076b340af8659f05a9f0cbdfa7fa5b9",
+      "e6f5556a3514e2853269c17afebec635dcd4011c13ffabcbcbc7b91eb40d9ad8",
+      "289a3c5e30f642e4515e3cc26d2b7cc0c9cd90218433fec0962db3d7809e0076"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-demonstratives": {
+    "sentences": [
+      "af9e12e64c51b9bbd639174581abeb240701b310e6a9f60763bd13dffd9e0944",
+      "d46a47524b698849d79562aa237b75a88e20574e01742ccb675aeb465c24fcec",
+      "b4d54f4bcc7b971cc353ed1fb23e46ac9c14a9bd018bc5bd5a45c854e3145178",
+      "11644de528bfd40b857bccf2e0b3c2fa5305f78d9673d359ff3510fcc9580877",
+      "638c6976caa670bb2c3615415ca31398d060b476e64dee2b95b03dbdf257b272",
+      "978a7923434a3c23539cce2ffa320f84767f79eb44b08746cd7e38365abc2955",
+      "a1e7d1349a4c2bbd054f68e0f40cd553e9f7a7a321f45e43cddc1fd3afcafa53",
+      "aac0bbc7acdf1be4fe066eef0f164f6b81e0b577a9d1f5528daaeb97bfa93c85"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-descriptions": {
+    "sentences": [
+      "4551a6b95bb9c9cbdadebd5e4161203a7e3125650289d008d47820348b2dabdf",
+      "9b90537e8eb88b5d65a87959fa1b1769bbf0c1565cc9937661fe3ccfa89b1312",
+      "49a794691c633222e362a13b142dc45c6a0d0f8eeb9efb3a967e2872903e2561",
+      "8f7739e39f8dacedd05ed298da106caf80e61b8f68959f141e986aed394f4b00",
+      "6defe0a6d0c7d16863b4f65d6692f6fb367ba3caaf8119efadf7565602bac02a",
+      "4ad0328be756db17a4d93d58142d92e7250f1bf73a08ac144ceb9f53b0fc24e8",
+      "734e92cbc4eb7d0a9d0f5adcea5bdb1123f8d06a1638b4cb3b786288727ec2be",
+      "2fc44826962d44ccf74f73c7ee1d2b54786b6f93f29ce0a4a1b64985263350e4"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-colors": {
+    "sentences": [
+      "dde7d87ebfb1730ea0b256903fcfb8e3b91929cb1cc70c715b75442c520b30db",
+      "d642aa879aec9ff53edc0daea88a1bcd21aa856e204126b2ce9ed4eddf65b230",
+      "67034716cf417e7ed495ed1f8c3b7fc59973660cef14c61ed5a2720b5d8f515a",
+      "a202e497faa8b06f241c33682346cb0885b51fa018512aedf68d6bb9fa92487e",
+      "ed2f5f568e94fd332cde06bc684e9266e6b8bc63364e79ec98d70c2545f1b9bc",
+      "5cf5d7104b0b4f46f0f16933b76a72933867e880ef1b035c58a0d9f514b847ca",
+      "1eacba1b1cf150b979aac56be68ce2b5d4da8cb6186798a11519874285dffa9e",
+      "9f01668429ad02716249b088b1e14c7c556d6da6e4094e20ede8c606a7c8bfe2"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-articles": {
+    "sentences": [
+      "798bbb2714009c04cbf327968f418bdb070755a5bf907f73606f502a0b6b4015",
+      "acb4af8fc6e93584aca1d6e169d63b73101c063d263cbf94388c21494de81815",
+      "dae95d3a652dc6dc69950fb68c6f99c193ba249e523507b85a7cfb9c27289798",
+      "d43ecefe3724d67d6957e8891a43308d709a08a92ae946196fb18c36c4593caa",
+      "f36acd9aaddf7c3e3d9523d0c3cca259b3d5f41794a5090b5d3d804524ab8a3c",
+      "4d5a474d47532f85187be1f7adc3f66f5d72d7e737132c4280d90babfba470d7",
+      "213ab25c027d18d51e42bf22afa75a9c946d1e721aefcbc4e3efe10b7e55d824",
+      "23b3d3deb88430dfd26146a890e43c334152b6a6c82b7750e4b9d56894502187"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-simple-verbs": {
+    "sentences": [
+      "4c1aa97cf556273bfc084bcdb88266e77357db53a848e10ab24d759eb5efe115",
+      "82e4eb6c7c4b9284bfee7a3397d01be9cc9de5b01675f839478cb101e3a8f611",
+      "1aaeff5118168607ee0d4eac2fd26496026c466edcc08ac32b70e2a02444bc13",
+      "945ea523e6444cbb28098d36076b47d8f80fc201e06f5ea36f2582be5c8ef9aa",
+      "9f34aa2cb59fab183f3c8ca398bc088e01c220f74e2c640a858eed3b0cf527cc",
+      "5eac5d0d786bf6842fedab647142e90787f61a3e89a279c8fd75209d42fcfa59",
+      "8543052cc3b29635bb765fc93f47008c7fb90d3f48eae583d489390f9d78b78a",
+      "65d4ffbc4463f1fb5470eb5f43557613d76483255d4e1551d7a8836d569c4ee0"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-present-tense": {
+    "sentences": [
+      "dfac47c0f137d4f8e9aa5ae98b4904490a0474c1e606db874c9c416aacb9cb2f",
+      "4ff0b334b4eb3f9806c475c30fa349f6b3a605b794c1a282b33b11a9228e20bc",
+      "cb8e5e16e8d421417dac72f7fb068874f70b7ff1717518c2b2e5f480c28dde3a",
+      "6a7bd6502a7902d71c97b08768e49b414e5c450db82a3d98b8f9d3de791f0bca",
+      "8c175fb4f2044fa87ec68111d2529d064133576e261ff05d4aaea76b50545520",
+      "4856118bd2d2d72137fd4c27ca72ef127903528430db895b339ef7536a28154d",
+      "87931e1d2c82b7cede5326f3cc211d40fbb203d5b59610cd47ef88bb9b9deba6",
+      "b86ac83f7829e41eae9f822105ce3226e63639f83da571564eda97a4ad7b1393"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-verb-conjugation": {
+    "sentences": [
+      "b174cb51a92884cf7daa0f06d1406974bd57579f64128dd10c2349086665fd88",
+      "4a3bfa0580a4b743255c8b8802817e63e0dcd9924e317cced42dba0125af3a22",
+      "226ac77e70f73f6b878bb7b9fa88c95a0ac1f1088da45e41f28f2988418925aa",
+      "55395540ec4eed0105891fae572beb3718b7fd5f967840ddaee5f6bf3641c144",
+      "c406a14e6647ce13f45150a21175c901351416859aa4d813f957bd753d2c6965",
+      "f400b199b2c052ea3d3b7a4c12a810ce4847f06152c9f95529aec45aff1949e5",
+      "99d8970513dcccbf2ff63b8c60ba2568acbe99d7ab4fdae1fc6ca714058f6aeb",
+      "e1605539397b6dbb20edbc95e8a2f6c31468803e17bf2fd18f45d6f29b2d56b3"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-positive-negative-questions": {
+    "sentences": [
+      "585e15fa5f1754cc9e1094fd755328c069bb2127273f8f294f00b3d3a417c8d2",
+      "e23dec4a76dea474d24848e6630ad1acdd0d9c67059172936673a21a3e7a1634",
+      "eaffc0e9ce3333bc66757920af09c9621440074251b688723e6f0b1645c48345",
+      "12acfe3d94128d98077b842793f66b86e0b6afc048db05ae92e3d53d598f6ee2",
+      "fb00b6ca9a3846a7b47bf89f7e4cae77b516ed0b24b6b4d661b1e9da2dfdfc10",
+      "29fe81d6aea1ff4b5c316cb438d6e08bb02c65f00d95a820a6a351c0b7b98953",
+      "5f2a68f4cdbd3ae6206b9f788f755b9169dde37bb82783b8e37a61ff8d61ed99",
+      "8000d12e8ddabacb89b872f2f1a440beee5d53a4cb22fc10604e338dd4597873"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-question-words": {
+    "sentences": [
+      "f006ee044297b6b8705d14b598f50602b219d5b5c841fb1869e4095070306cd2",
+      "dc7dcf25a24540ff3ac878ef7819c8c8bf6f7d8d8508cec3e0207845c4f426d7",
+      "765ece5c28ab72f4b5b792da42913763c980a277821b87d8762bbe084feae99b",
+      "bfb0fa4ec09f2b326d31f8a8abe285913deac920036b330d5ce409bb3e500127",
+      "57cb483ba16255afcf5fcb0be141f247ad253f4edcb92f41cf598f1c5ad24bc7",
+      "fd03de7c2fd6cb7369344b18bd53ceb5f5e5d321c1ff9a52b9b41fd7953082f7",
+      "ebba2cfee46598066585d9f586bd3701b324360aa95445554cc79a7e3065186f",
+      "5871025d4f0b62ce1fc54c6a4300e73862db20cf92303cc94fe1b3887c908bbd"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-dates-and-time": {
+    "sentences": [
+      "52988309e9858ec517df03413753a77fcd46045b9567c691b2f2c44348f5fc24",
+      "1ecb3de13619843feff5ab19f1f459e9cd829ec79df6748a4fd89e66f372ab22",
+      "c5ab2c9893fe71be573bd49d54f8bb38571cf3f720fd8aae5dcf76632b2c33b2",
+      "bb61babc532d6b7f4785f896da09463eb20321c39a1bc152ee6005d3d6858a46",
+      "d5055b49afebff89dc4981bf258d4fb0a4a474ccf3f4c27b239793eeed5a8e03",
+      "f860e8ce7481324cfae9f1dc1ac641e2aa007dc0fb5e6742b16a71b8e13de135",
+      "461641c1a2be7ca04938e582734edd32355aca24fae6874d85793afc5d3c02d6",
+      "6dd1ac303981ad6abc7e14f6d34f573d86968aee680eaffcbaa163204eb6b198"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-location": {
+    "sentences": [
+      "a20d30cf888237b86bbe4b40f7e258d2bbc94094e9807fe259ce1158dd6fb9f7",
+      "9fcf9e481215547296aee32962200ba058824e14b21db43e19d3fc7c5a7176ae",
+      "b5069abc4710c7bdd99b3cb7974a76eb8899afbf24b66b40ce8a25e83712fcec",
+      "52da848156068b6d556753d3943562c467c241393b4cfcd32b31d5857e3c6dac",
+      "5ee8b8b56f86c2f91e3d70c61f7536d5423384da2974d4abc76ed4268be29494",
+      "54feddbd39f6d92ada779879b4c7de7bc905f28becd96ba49593418c0ddf00a7",
+      "dd40705d65677576156db81f74938d194703a9c95208cc3a82c8637d93109d62",
+      "3946b408e215a3ac223304299efe15fd422428fa8c7afdef28c5381b3a7b00cf"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-wants-needs": {
+    "sentences": [
+      "335b3b1132c593f96e46bddcb17dfaa0c8df8afb9b29a305e34449aca24f2777",
+      "06b32e60e980b427d5bbd460a4f7cb88802d7c1d4651db7413bd1e6d48973fb1",
+      "1a72773a3afc490a816c18dae9efd5bd3878399c933d57d0f285ab18cfb65e02",
+      "48a9553bf7b65f8b8d84bd4d9bc955b7a016ef97a4af466eb17c4b9926b0e813",
+      "a26f3634b1704d0e4e7aa0776a2f9a0f619d833748a5b9129cb0570825a7c5db",
+      "e3afb4481c92f08fa5f1cc4c3dc1155265991c5d93a9091e416000bdcd0f46d8",
+      "ae3fae86d8f3a75f912b405166ca8dbe5a7dd8cf6d12ea0ac353167513f8e5b7",
+      "afdcccc0663e0116c092fbd00d8d7a6bc6cfda87ea8a71aea59808c638bc4cea"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-ability": {
+    "sentences": [
+      "0fecbcb6884b0c056e10e650a65d45f32deec6042db220ac485ea16bce5137bc",
+      "836a6f2d8b5185acb593cd88d7eb8db30fb000a82bc56bdc77fad2b2cc3f80dd",
+      "b38ca45eced62079742b38dc8501a2783a08cd509b097cb1e9f7ea9cdfed7392",
+      "88a59fe530e2cd9d6d38beddaed42d0d4be41846274bf339bb8479116a9a9cab",
+      "53f3bf6e82d7257fb9cb050fe90ca4773b9c5dd4792bf8a2c7087665235483f7",
+      "517b079c40770d5728107132b6457c490a0d7121236d64b368d6528fd39beaaf",
+      "a839b0f96326c2e55626c9cf319893e24f803e8b6d04f1c2d8b7898d7a92d4f9",
+      "b347a809583d7aaa2e7c6ee66058e156b4f8beafaaee82f447f6e299b63cbfbc"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-prepositions": {
+    "sentences": [
+      "4c0660ee59f92f82ad7ad153a63ddd75364f7ea697b728c28bc2f8ad4c4bf342",
+      "c9b6bf58180611d85be055f9685b6187b670597bb4e40cb91bbd23eca3f93459",
+      "44bc1af2e0cbfdbced9efc5657aa6a7149590959a52b1274db59b7ee7a65cff5",
+      "46b82bd988f2c5701d3bf92a426454ebe19bfccfc89f99634300a08d05ed7d6a",
+      "4c0f33e3f6271abefd19908e5a1a2666e275f3a34a33da5b729a9a2a3c44bcaa",
+      "c297384a91fbb81dee3412a2b4b2c3ed1c038de0282409e8ffa81768cb8a88cc",
+      "2a52d735c9dcfaa11e968813daa3fc046655ec76a09c11c100511ffd368cbee7",
+      "ee1546c997273cf3e12a1dfa04190589b66f3a5efa431545a53e68da973d2403"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-daily-routine": {
+    "sentences": [
+      "e2ab4899cf61c96687b81bf27d1760856c9e17ddcfd0e11d2bf9afe7f8a1ef8b",
+      "e85df6e7acc17911f141e0d6bace7f1527a4e1fa1c11dbe7934beab84cbbc30f",
+      "24e4be9ba1cd257ee2c4cf9f726615905db0e1e2cbf4de79bf942e4a140236a2",
+      "b12326191f7854f3098ba8b687fe8945980ee5a07748c58d6abe9b485b137dc3",
+      "2813816e0d95ffa4944a2510cc44f82c90622aee1edb7b675d9dbfed88d1079c",
+      "dc3f51a8ff37aa07d46ea6e516ca044347cc499a91eb5eae70b0ca5827a4e1e7",
+      "b01e744d80f2d69908e0114229acb1b63dcbd7f916f0faa8dd228613126baab8",
+      "c63b4962d9ba9c8c456a039996f2ce0c9ca2a281ae7d4b60ad3507c5e6ae6e15"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-connectors": {
+    "sentences": [
+      "bf5e9ddb92be8c1a2a739b9d16b6bf7cd4849ee0b7d84dd5055493a109492a63",
+      "9b56ea8a7b32e00293c69efde149d25eb3aa74a57193ad089edf9f94e3608295",
+      "1f1acc0eb47faa7537324eb70392c14858c3bfb7179408aef2e4a4252c9533aa",
+      "3975f12bc2667af2be85b1874e363e23b139d3373122e4e0972197e0d599653d",
+      "dcd7da1ee4601e9ccf8da9022c560dc5085b6c500b0b57b474f08be2827d5bba",
+      "0bcd6bdf00136d3296fd2123858f512f5d22e2243468c306706a4da16b8f52d5",
+      "35fb7b5dfe8af4ebb246db90108b09c828e08d1fec0e5e95c131d306e86469c0",
+      "d55c96a4982243f5ea89a3e13eb10a1cee93451255c5f3de7a938c23d57ac4e8"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-social-chat": {
+    "sentences": [
+      "50cb59e563a854620da5dc7ef94f1f005d3b012f10ed8b57632af2996bf6670f",
+      "d3bbcab3462feb36a2500776c43cd334363c60f4dc7b4ba0b267cdbe9a85e7a9",
+      "52d989907d7da47aa2970b690ca8e68ed319e32dc4d0cb9234eaf912bceebc4c",
+      "ec7df1c1e0a5f58d4645e69ab7c9adda3b87d388ff4ca2b253a15c6bd82b951c",
+      "46c476f583a802e7ccc1246952c7be419eeb6b37254e30e14d7039e6439243f3",
+      "ec7d610754ff4b12f7615fa0519ed9482d6298a8417d9f11cef67d9973f42471",
+      "424ea807cfe88d99040cdb51b93a9fbf0723577185b81fc3d5fbda54a9d0d7d7",
+      "a1e44823731b686076fede806515380832f972e2f7157eed4049126026a74ad7"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-ordering-food": {
+    "sentences": [
+      "3a49b16cc332319f9c7c23eb0450a2096c5eedcac0936090d41f0d7c939c9bc4",
+      "b2df1283730876e14f763f3957e4ac9b6ef07f44db57ab9cb3e19cb08e8a76d6",
+      "fff6219e255c90abad2c85d0d8d305f6e8b7fdfa91d937170c078477f2213838",
+      "515b24fec9d2b126161a62d8d2f35cf18a54f14bec3e57a180970f23e61e2e5a",
+      "82d550a1a8da6d4a48c50a9a4a40f86feef2ac66bf2ae0d566a57b8a2b2bd4b5",
+      "639f40615166cc817d41a08840605d54d4cf97be5d8790b7dcd3ff58cf930d49",
+      "404ba21cfef543f1f77cbdadff89880a752cb6b8f93e30a2566190265a9b70d8",
+      "82c7e0a76bf8bd79b94c00ac3c35c3e3c928d50f55fae43b9e9dfdcdaba954d9"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-public-transport": {
+    "sentences": [
+      "79b5eca2a71da8ab1f0b173b085dc5adc91f65e56213b81482fd73962733850a",
+      "982f9182cb7c5e4a8ac9c35d3b163ea79f849e28b8a62a429dbe38bf6e38ebf8",
+      "0b43613a4b4bf0c81ccef31c9f819d71c51b8704a7bbefa768fb286767981310",
+      "eabbe1d8eb55fd3d9b24dfb20b2d2afec319c4471e36fc55553f4409c43cb820",
+      "0b8486d7586b1ba357d7f8569fcceefc9f3067768f614236da125df6b502a36e",
+      "8c9a22042f0bb84eb254f7367f5921d7184c4bcdd350b8c158348eba8692a9b0",
+      "023201243f0653eb8ff0649f1f2995874200598f9e7e8bbf031c3c88c17c345c",
+      "d24cdc3f45078ce8c6a03a1184dce69d5141f65c607e8520e64b03e9c398f1cf"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-travel-tickets": {
+    "sentences": [
+      "3530bc16dd5ec136e1a77c214503ed2fe2b1d75f0e296c1713bce8fc1f291088",
+      "32167123d4dba655951b8d733c948914491fbd672a3360f5fff83650ecb1d439",
+      "6d15dd610987276ba435ddc20786f60f1f35b8a105cea2da10fdab87801ebe0e",
+      "86a06708b57ef29e0a865159c0c09d71d8f089a1409529d75669b0d628aba4fc",
+      "d6ea7b1a4607299f8fbb7912613967c3d4efce3e484ae91c224cad6bf6c1b063",
+      "de852b1a8aec607d1f8261b9da5d2c7fc85263f6486187a59e6f2b96004b3d6c",
+      "b405a5a62e57244799db6a835ad5003102e4feed351a869c1c23172f8557eee4",
+      "dba990ed9f5cc9231bfa7c4c0e21e7aac465dc74e60a1f73129aa1a2b02baffb"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-hotel-stay": {
+    "sentences": [
+      "6c86aee1d10a7a2909252e27f2312bb48c60cdb6ecf23ce4d7e75066c51c7285",
+      "983e077dc6538777669f8702c0ab0e855e531ab70c2e87b03fead837edb608de",
+      "113ce9fd28de813189ae3f32cb73776c380cb6f1d1b44c9b65b85c48dc1fe930",
+      "c0f023a0a12d649fac80e976103c21950f25c1bc26e423788a1ce14adac8afb1",
+      "5132000e2b1bfca0d4171207e583bfef31ba05d015e41f3bac962d1025ceaaf5",
+      "5722af4c25abeea9cf95bd3e840041eddd556a4128abe6f816ccc977c63707d8",
+      "7f4f06c24c9730c7a6e432eeec2e1cb092d87a1841281521082044021a2118fd",
+      "f9dd554dc25b306007cfe4b48cea7bd38b5910328bd48bcce6c5c20ecedeb095"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-doctor-symptoms": {
+    "sentences": [
+      "f09fae766edcde62f21f0de2fef04020a3550fdf379985ad1f500bb764d08b0d",
+      "7fdb27305a31e5a996aeb0a411c2b37e3dc15d7322a999f4748171da1f0d3336",
+      "cfb0a2a697e83f0e3a35a059fcbbdf2166fecbd05e0d6101a6f82ed19ff5fd22",
+      "05db28dae63015d20fa49fdef1775d544db7e7d803a278a379c97a9257f31db7",
+      "ac6a69f73bd42d78ab0b19f326068c50bf7e3bd3e94946f82bb8ac2f52f805d0",
+      "286891b0676ca77f95e93ed9cb27b1f38f256e315a063a53ecf5818e8ab69e1f",
+      "958bf3d40a6eeba09a8f652dfc7d4d38845f7c9a441491abaefb4270cbf44dc5",
+      "85d13d98b18a0b9d8982fbe57bff2f74b28e42ac97e285d0a2cc09b35c3af235"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-work-study": {
+    "sentences": [
+      "d1087bdfd89d10465c39af18ff97def6402b8e01fdc77ec46035dbb78dfdf2cc",
+      "c4a365630a439dead109139b8ca08fdd7b705b1096dadfc56d84828cdc0d81e5",
+      "640ab0d5a9df43306209063d3d5ccfba51a9f94df381388ccbdd0c8b2015c2f8",
+      "8f9a8f2cb978a290298a2fb4e0bf3816700e1d8b6f27b9f545e9bd414df6ef84",
+      "0ede6826b8312f7caa44d55dcadcb77ccf2b7fd7a99b5cb42c4524de357a5323",
+      "3e498161e78744efeadb1d657f79c05a24f986ac4357ffac3ea2633534f282c0",
+      "8d3b2846f9ca12c985c1f47d08370fced81a18a99968184d3af41c5320efc551",
+      "9a50c39be1e05dc799fc4c9267f382e296bfb3a1a4ef4c07fd248da8296681dc"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-weather": {
+    "sentences": [
+      "e5ca7b9eb6bf5f143e7b1fd72490b5fc0eee2fea013699d65b5b58f7238f7173",
+      "2e1b64d46fc2c4c639c91fb9bbdbf2682874e13b65ea163891fe67c1f9fb7b45",
+      "0e31ea45c3da997ba854baea6b72ab08512fca17599a0a18a512af133c47de96",
+      "663914ac1bc4daf7d3507f425462b33010790a2cb1e0d1bcbe6a566d3c86ed9e",
+      "12417dd5bbb8791474a4db3c9d0740059a11fd2a326ad0475ac443def0523ccf",
+      "25a5d6cdcbe2b441e00a06a894d6d7bdf40dd9c4c96148ff9a2ad8b96831504e",
+      "1b73d7d064c8e99c7d3c67ad407949a96aa26e5fced78922cec00615f3f88222",
+      "d3e86997c01944beacc28fcbe30736011c4548d732cd1e2e8d7eeab1fc2b8df1"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-phone-messages": {
+    "sentences": [
+      "8a8b4184a41679d5d0e2f9315efade09c553d25df5b73e17888759904f546966",
+      "9d6572adbcdfef69e798d57329089d72634ea234bead365223869de250249216",
+      "a42cb0c407acb2c9afc8c57b6677013d077bbe3f06854f5c6cd50f3e0d1b5f71",
+      "122e0d3568de75d9367bdaa50fbfae632b4f3124e85088df4c096a5b9fe6539e",
+      "a3cd87471e09b2bf65c64e0cdca97e35c4d3736a0ec7eed489628cd3d2602937",
+      "901793f9bf7e325cd8943a520e80489ef2e6d61abeca04665d413a02ec02088f",
+      "25f88935f9cf1d0fc8092e9adf2e4cd3531c2e1ba77f31003dea92ad7677b104",
+      "70471f835f8e9f9f07544d6c7dea88d187a16d41bb5d73ada507bcb522314aac"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-invitations": {
+    "sentences": [
+      "35f5c2736c4ee225c90d34188b3603b3642d5a0cc72055da977dba41c13f9334",
+      "326e6aa9c995c2ebe088f7fb8c87b84887fd11803224ee2b452afb50c8716db2",
+      "5a4312948952eb99d59dc6ddb3ff6af720dc820a7d855f75368511221f3d181d",
+      "9c18e3514f35aee746cdba3ddb4fdeb1b5c28399f6a426f592a60d14b53d82dc",
+      "90244ae3028d8f42c9d2e801651b4e6015382eced9a5393ccec5ee7180523a57",
+      "6fbca15e23bbf44a314d4d82bcb877f1dba1a37fe6f0dd12f3dbd94aecb71b08",
+      "e5ed1a4e9dd5844e7bf97f806da73e0cc2f4adde3d6e374230f11c03ada92d81",
+      "a2e02f428f2757d3d09f9b250ab1672cef3aec795e4410828bc9965dbf812483"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-polite-requests": {
+    "sentences": [
+      "ab428685854e013e0d91647bfae3c1527579e8243a6045ac7e62f9ac704c5a73",
+      "6b7388bfcf45ff784709c6ba297c1de9d5228d525066ed00296d9462839eee75",
+      "59acd9b07b6ccce34ea076ff7b4299ecb74a241e0e7dd3a87180163bf3091d2f",
+      "dd4e807f515883d5483868f4e69202d4c704b3364bcf42e43597f11300bd27a6",
+      "b72434e7b1a6a4ded2ff9a7e554bac27e8ac42443304f917de67be1efc828019",
+      "767b463ad987d6f5894e6e534fa8a57b2d9bab1dc341552dea54484ce4c8268b",
+      "2d41d31b5cfe6b8bf99ca04e0777346e19b46a4236a3c3c3fedf4c227f6f61ca",
+      "94ba79c41dacd087aec7a0a6a7ebb44290fa8df4c3cc466d94de5ddafa199087"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-instructions": {
+    "sentences": [
+      "d4cdbdb5a138f7ccdd7487bd1277bb5e18a7d5914c063d6e5653f94399d45d18",
+      "a17b4f430de1c72d0e7dcf5760d05669b177026e13db731ce9cbc5c8f0d2d6d9",
+      "6aa7468c6d22abc5ca0656765d81cfdc2e04db2f2c641c9b4cda31c0f7631155",
+      "2b9e945d61fc8ebe3e89f4a928d4b0c312f4f27c2b16c54def2de1c9031928f2",
+      "e8b7cdcc55049699fc6375fba848ff9ab812311e952b769df21fb261bca6a30d",
+      "e931f403ff1b93b9b2ffecb38e02a6fe5314501e8846c503b8a1adf4e052b6cf",
+      "5c5e3b08d9acf2f938a533c02a72e9ce82f29b89daf583a827d3b1ce2b025aa9",
+      "a4230d61cfc1b8c67f129376301a9885cf82e886d6c3f068d70e788863852031"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-suggestions": {
+    "sentences": [
+      "709f43ee82be4f01b3cf34446ab9483b050d3791c9d7fda1f6ad311628a64652",
+      "241fd2fa6e4045e1ee27c2cd3a41a9fe5fe4d9ee5734191825999099608b307e",
+      "20f3e6fb5089bf3e8c4475ee3dff1a449fa8e7523607e9c13cd5b28e2e41bc85",
+      "335dff95590c5c2633450ff064d41259a282b7372c6a017aff03a19f7feda1d5",
+      "0e83a6a82a4507da504d56f5a507c04f9a98d9142c14e61d856ecfb243540f74",
+      "a94d49e2bd5d8ca2468d64d06894c9d25861a369a46229752dcebc95dcb94874",
+      "cabd9792abececdd8079d97f59181b7aa06bbd2b27b00d5cc91bffe0fd1ec27b",
+      "30ccaed984df469da966afcd8b47b7a15cc6c130794c4e74394d627856f29807"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-past-events": {
+    "sentences": [
+      "18fd46e0a4bd2e59310464e5fa0cd01b7079fcfdcc63a56c24b28c918eb59aa1",
+      "d35c8da30517dfaf3c35268eea5e0aedb9dbeb1d09b1ebee0c9b7304e2a82100",
+      "73cb03ccb85d912720621e07878ecc0f66d2cdca33a4da08186a1dadd0c174ff",
+      "a85c6e2b39e4bc2ac115f683d7064a3abe79fa1f5c2d410fe9b655ab7137666a",
+      "6fb3c0f525d754a48bec449b70975dd575bc1a9fbc2cf7c58964b78a985e6f78",
+      "65bdba4faa97b8e74ba2f874cc88ec6351c28a3a948d2b20fa236f02f186cd0e",
+      "ee14ec3f35f076a662ffd88be4ec3d57dd7a0cc33a3b0e8395c2b789bf1a2829",
+      "dc166becfa4760b08ac893806f944c132bd60cd6a80688e354d1ceae32b44fcb"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-future-plans": {
+    "sentences": [
+      "6c021c3a80a636113445a89a1479e9218dca7deae824c17453c8a4175da79502",
+      "a20d9e837779134e9a16db98dcb90230c6a53822b539a4b696bd827af5fd9f3e",
+      "50dc7786e0b1144aea2e76f9868b6c7c54120c3d2c9718411dc30df1b607305d",
+      "c65a27d8181afb70a3307a7fb4d7933625efd22d2ce52e1ff4124e7f6767df98",
+      "51a0547a1f5a06ffcf2a51fe4c1b28f74fd866acf47f6a8d07e5c9775f963000",
+      "fb447bbe170213a0f1d707cdceb8479e7a37da21cbca6e29ce46f1953197838c",
+      "2ab9a573be854fbdad05ba11d642dc98468ef026bd748b41d7f9e7a6cb2821c0",
+      "9d0b8433e35884432108625a7d5860f9420820740f90610c0f1e780911f6fa0e"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-feelings": {
+    "sentences": [
+      "e97142c0eb214b3de08810add5134e44f3341fb946a8280d7044d7a123d1f6e3",
+      "157ae8f6f5159ab60af96bdf843ad66302b42ea0803536aec273f7eb4cc271e5",
+      "2d24047e96e8da76499d3df4aa3e2cc18e8e67296cb9cb80227670988b59538e",
+      "fa66ef7354782d0dc524c91c77c91810fc76ace242e4912caba5827edeb33f40",
+      "16e4f82b2fee3e66a12aa26eff0bf2a69c4dc7fcaac37e5ec7b818273f9fb7fb",
+      "e85189198b23c80c32ea64dfcc837faa54a338b655afcb3c9c8270514b481242",
+      "fb27e216eadea9fe09a6815f126ff6bd116a1e686a98e046c04aa6778e3e5bfb",
+      "7f6ad74381174127e4ad15b6584c776bd8dbe1a754c980024efc17b2fd223fa6"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-forms-information": {
+    "sentences": [
+      "1aec3b7ce9e00ae672db868afd79c01eaf14b14036dbf03059a4f1376dcbea25",
+      "8063030634e1dab286836c559914e4247e750cf7d67529a7b40cebd6ec71969a",
+      "fe4b1a388542c8d37044aa8617300cefac688ac6351a017862cb3789d53723fd",
+      "cc93f49a3ca2286e69c31f09df9f2849bfb4e36961139cfe9726a6179182999c",
+      "bc237877a4eec7969ead3687fea7c150d24a6f517f7b6cf5afc6ea83b058d4b7",
+      "9f203e0bc2dafbdcbd141f4dae00d965dc9bbb55c15b96c36e595a1daf7c6fb5",
+      "c469b37db43582eb88d74f7a769301865c82d868a20fa0ac00f86a5c9cc8515d",
+      "71a5d62686701914bc09179e4100d8cd942fc1edd17731eeb99a108e5b1a0f28"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-supermarket": {
+    "sentences": [
+      "bfe095c446f3cdacc308f5c10fa1d1b3d6acd8abf3ee950215488152f62b4596",
+      "5042cff612f30e60ed1d65a88e4a985af23443b796257b6cb3d67ca97485675f",
+      "caa80f12e219df3da806e00e38226cbc08825bc67130cf80a2ab561990fb67b4",
+      "a656015e78d6f38c87d39508bfb0e5d56fce862239bb21544bd205c7c7d54e3f",
+      "1bebb2b607e2743cbd5efff52813ed4df94cbfcf6d2193fc66a6717555a519c9",
+      "b943a296c54b80e90fd5db2025173fd3e3454f3f459c9acefb788464b4a28f10",
+      "31e63ce68c2ed97201a027ee89d65544fe1c7003344ca14e243fcca48f9189a6",
+      "666b2e5956b39f4328a33994763cbda908de76fcfa06beee0c9719189ff42e4a"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-clothes-shopping": {
+    "sentences": [
+      "3705ca4e885d7db89b8fb499f9c0717a232d8057c85d9c79e84d7c34c61355ee",
+      "56471bbb529ae58ddada24798e83f568c9a49a9bd98717468d4b6ee304353478",
+      "be7d698075e7e90aeee1f638ab5c044b0df71e1aaff5420573a582b834a8420f",
+      "a0797cfa5dd2ac80d7fe51ac504805c6f48afb02eb47faf1bf11cb45e392f988",
+      "14c2166cfaf5d206445277be1fb5d6de43e908a99c88cd45e9e9936351612abf",
+      "4995bfe470e278943f57b36a8207b5ab9ebf0ffc01fbd38fc227831873024fa4",
+      "5f63629f08ad5aa5fe2806943863a26f74284f2c956dd4ec4f414fc8403e048e",
+      "b6f9a78ebb9cfdbaaf203ccee111536b0b6a1c256a2faf2c4484f414f2483417"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-home-furniture": {
+    "sentences": [
+      "d1413bdfe17900a34de92345eec2c62dd168847d3c1fc6e19014a41f1ce0fccb",
+      "cab10ec881876afc7cf6978f8e0e14918bed24c44fcea136eeb1bfc11ce107ee",
+      "9279cd14e14b3016bb3a7b4ae4865a1a7efe90bd61b981c0141ec36ad427fe1d",
+      "de2652b29bfd7118d875defca63f018b087d392cfda3e23efcf7da17784e03d9",
+      "373a928b0e0836496d1f6ed0568760161ee09b0345a902e785226d7ff148e108",
+      "37b9f00e3e2aef01436d5ece6f4ac4e48a88a9933656121adb296c0c447670b0",
+      "071f959b0e5686cab9ac2a1955a2bde0812d7841de4a32b6a5b3fbec44efc1fb",
+      "d40c24771190e8715deb57af7a1abe45a406ae22a498d20c1b7d666d6fd4d6a4"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-leisure": {
+    "sentences": [
+      "4eb71ce225ea66e0a040fae62dd10f147787edc8a30f42b31b39b368271e473f",
+      "c78fdd17de950f3b4e5138fbc48c119fbb903a109722ca6cf9b1e82d9d36bc08",
+      "159d382d7f9487a737537a4a21af194206d0c142814252ed678079499b220308",
+      "c08257b8ff8a2bf660befbd3cc2e80a3b68eb3d4d04f6bc7bafd89705dd8c04f",
+      "fc519e26fde8fdbda98ec9376454f90b85009a25019723d39010d5082dedfd5b",
+      "ccbed121adff6371bee72b487c717ca1daacec94c3280a0985a94868fe4452ae",
+      "66772cfaf18a93e34e8897174ff3295cd0d2abd54e9e2c3988ceed08af1816aa",
+      "ed2b9f854576e1ba34d75da777a481cf753277612be6bbdd1ab8af5d1c8f63c9"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-weekly-schedule": {
+    "sentences": [
+      "fd39c6180c195ec219f533949b0064dbb1f1d76563805ce761bb50abe07ceeda",
+      "7013195149474d247fe8f0f8d458204a0cecc739a7e3f66fc55b01281b1afbd5",
+      "cf57c324f9385e4fa3f9b38cdd03287308910b486e59d2400ff181eae9d1d269",
+      "8495d8f4cf9c33352c6646de64a49372c0124f00503bf40403a8b4f1d75e4751",
+      "196f37d24b1ac9441febec111e13d0d2421f15fbb5164d51e043fd296a1360b9",
+      "a3ea18726d750e139e36a75de862916e86ae3349de18550b27945e5a506107ae",
+      "cb7127bde4e9e7a603f76d28fc02566b0b92544b49286552ee2f00ad2c096f9e",
+      "189e3ea5ec949223350e6d785360cbb8db6a06b6df70b0d69b481baf067df124"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-preferences": {
+    "sentences": [
+      "0f32f06e5155df7a068c25ea948fdac1c8eb484a538bc3b1f911dc8e6e800de3",
+      "0e02ae39260bcb99c2c65c3845020e46981ce66ac101eb3383ee5d2653e86ceb",
+      "9517090b650efd7eb0a401a0f64694efe6f06f9beb4e9d2bee9b528ab938a23d",
+      "bbd4dbbd00b0a2fd9aee35ab4bcfb9b49d43fd97bcbc9da285ce4215f53e39f8",
+      "577e504bd8b4dce097b56d7aa6bd331e511e80aa060cf454193c7cb267b26cd8",
+      "42102b03a58cec58758847ca14e33551e574863ebb80fb697802edfb29cfbd56",
+      "ad98040f9cb55f0b5e9571eee1a83e928e96b1b534434d358d0a98f7a0cad755",
+      "b276b3080292a5912ccf8e292615e8f07c2e7699f9b57e3229326e2607e47a76"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-comparisons": {
+    "sentences": [
+      "7e6358608e94352bd47047d7c8e2407bee49e9a41118ddb5df3bf47efc2898d6",
+      "7cda00fec111165afbd3a3daa80aae511a99b444bb854ed6a0f761e2e89628ea",
+      "99f98dbf0f8f8b09ab6bd2fb23479363a71fe0affd9b049753b75f8e6217aebe",
+      "0cde1159ded39947fc712cfcd07af4c4cba43ff6f00729582484dd3d9f2f51c8",
+      "ee1dc2e378de0006604da9260b11e03a7b6d8ce7673db9a94de81123ab556c9f",
+      "e1eff4860fa9ccc49ffbe1e74d7dda2ecbe08fe58e69313cdc1eb22cf5666336",
+      "0ce89917659780eb22648a2b18eabbc997ca1273417e14be9627bc866f9caf58",
+      "2affd54cbe65e7ae5277ace0feb8a740eccc34cfbeaebf379f3353b644f69ca4"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-reasons": {
+    "sentences": [
+      "65aaf410399fdf7652f6c2c013d34f55cb247f6b5b3e8752d21350d752fbc7f5",
+      "2559752bb6d46e35c19f4d93d0af75d096310144f016a3b94f84c899f2a3d01c",
+      "c59399af2af1a0c6423ceee0beae689720006e9740b422c781ea5f960bfe9835",
+      "234d4d0509abfd7f542adbcb7e816116e75703c4001c63632fbce00faf02c947",
+      "c9f11aef6d0bce3e9713eda8f071b347d4f0b50639c1ea9d31639c032126dafd",
+      "ccdff68c835d77506264623a56c5fd7171f1ed166f3d8778098f046911f58f32",
+      "e47da9f409ffe12b25af60c1cb2e5168c885cb1344154dccb9dfbaaeed08d3b6",
+      "4787fdae257a18e5a9b5732a8871a892bcbe8733ca04b8db8931c77cbe65a041"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  },
+  "es-a1-connected-conversation": {
+    "sentences": [
+      "05ee04ee2cb59e7a47a8199b8f79f8e374f9dc8ae0c6d53ad32bd4dd2f48d58c",
+      "f7b7a8f92c3bb372b09466cc2cd313c941877575572aa8b38bda4b21edd56746",
+      "d7854f02ec111d01886944c75e977aba0ea8f8a6192d53748031e7e171763c6f",
+      "eaa10dac88a593e8d08793b6cbd993a5297af33387df5d07946ef3e963fb3c5e",
+      "26137dc204df50bcbb22a1f72b0ab3a8ed7b43c792dea274696e8236b3e5db32",
+      "d10e2f12ad49f148d5888ce58c1034bef224789be934205b9af2cdefcbd9034c",
+      "4d5917b8edebce34415fe2a2601f3b110e6ebab39321a62799b51ed96b43c628",
+      "67cf0a3389e1dc379c68aac3736c1d8920a3aeb02b410d3cb6fd124f7d42651c"
+    ],
+    "dialogue": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "checks": [
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "correctIndex": 0
+      },
+      {
+        "choices": [
+          0,
+          2,
+          1,
+          3
+        ],
+        "correctIndex": 1
+      },
+      {
+        "choices": [
+          0,
+          1,
+          4,
+          2
+        ],
+        "correctIndex": 2
+      },
+      {
+        "choices": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "correctIndex": 3
+      }
+    ]
+  }
+}

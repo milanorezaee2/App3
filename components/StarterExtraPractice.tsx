@@ -25,7 +25,7 @@ export default function StarterExtraPractice({ lesson }: { lesson: StarterLesson
       <Text style={s.toggleIcon}>{open ? '−' : '+'}</Text>
     </Pressable>
     {open && <>
-      <Text style={s.hint}>سه پرسش از نمونه‌های همین درس؛ این تمرین اختیاری است و نتیجهٔ آن ذخیره یا نمره‌گذاری نمی‌شود.</Text>
+      <Text style={s.hint}>{fa(questions.length)} پرسش از نمونه‌های همین درس؛ این تمرین اختیاری است و نتیجهٔ آن ذخیره یا نمره‌گذاری نمی‌شود.</Text>
       {finished ? <>
         <Text accessibilityLiveRegion="polite" style={s.feedback}>تمرین تکمیلی تمام شد. می‌توانید دوباره تمرین کنید.</Text>
         <Pressable accessibilityRole="button" onPress={restart} style={s.action}><Text style={s.actionText}>تمرین دوباره</Text></Pressable>

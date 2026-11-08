@@ -23,6 +23,7 @@ import { PageNavigation } from '@/components/PageNavigation';
 import { StarterBottomNav } from '@/components/StarterBottomNav';
 import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '@/components/LearningHomeStyles';
 import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } from '@/components/EnglishUI';
+import { starterDisplayPronunciation } from '@/lib/languages/starterEditorial';
 import type { StarterCourse, StarterLesson } from '@/lib/languages/newCourses';
 import type { CourseLevelId as StarterLevelId } from '@/lib/courseContent';
 import type { CourseProgress } from '@/lib/courseProgress';
@@ -197,7 +198,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
           </LinearGradient>
 
           <View style={styles.pathPanel}>
-            <Text style={styles.panelHint}>مسیر Pre-A1 و درس‌های آغازین A1 آماده‌اند؛ ادامهٔ A1 و سطح‌های بالاتر در حال تدوین است.{course.id === 'es' ? ' گونهٔ اسپانیای اسپانیا مبناست.' : ''}</Text>
+            <Text style={styles.panelHint}>درس‌های Pre-A1، A1، A2 و درس‌های مقدماتی B1 و B2 در دسترس‌اند؛ درس‌های مرتبط لزوماً همهٔ بخش‌های هر سرفصل را پوشش نمی‌دهند.{course.id === 'es' ? ' گونهٔ اسپانیای اسپانیا مبناست.' : ''}</Text>
             <View style={styles.panelHeadingRow}>
               <View style={styles.panelHeadingText}>
                 <Text style={styles.panelEyebrow}>LEARNING PATH</Text>
@@ -211,7 +212,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             </View>
 
             <View style={styles.railWrap}>
-              <EnglishLevelRail activeLevelId={activeLevel.id} counts={levelCounts} levels={levels} accessibilityLabelPrefix="فهرست درس‌های" direction="rtl" numberOffset={1} onSelect={openLevel} />
+              <EnglishLevelRail activeLevelId={activeLevel.id} counts={{...levelCounts, 2: undefined}} levels={levels} accessibilityLabelPrefix="فهرست درس‌های" direction="rtl" numberOffset={1} onSelect={openLevel} />
             </View>
 
             <View style={styles.currentLevelCard}>
@@ -241,7 +242,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
               <View style={styles.fullRoadmap}>
                 {levels.map(level => {
                   const count = levelCounts[level.id] ?? { completed: 0, total: 0 };
-                  const passed = count.total > 0 && count.completed === count.total;
+                  const passed = level.id !== 2 && level.id !== 3 && level.id !== 4 && count.total > 0 && count.completed === count.total;
                   return (
                     <Pressable
                       key={level.id}
@@ -284,6 +285,21 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             <Pressable accessibilityRole="button" accessibilityLabel="شروع درس‌های پایهٔ جدید" style={starterOnlyStyles.foundationButton} onPress={() => router.push(`${course.home}/lesson?id=${encodeURIComponent(unfinishedFoundation.id)}` as never)}><Text style={starterOnlyStyles.foundationButtonText}>دیدن درس‌های پایه</Text></Pressable>
           </View> : null}
 
+          <Pressable accessibilityRole="button" accessibilityLabel="نقشهٔ A1 این زبان" style={starterOnlyStyles.foundationCard} onPress={() => router.push(`${course.home}/library?level=1` as never)}>
+            <Text style={starterOnlyStyles.foundationTitle}>نقشهٔ A1 · Foundation و Survival</Text>
+            <Text style={starterOnlyStyles.foundationText}>۲۵ موضوع پایه و ۳۰ موضوع کاربردی؛ درس‌های مرتبط موجود و موضوعات در حال تدوین را ببینید.</Text>
+          </Pressable>
+
+          <Pressable accessibilityRole="button" accessibilityLabel="نقشهٔ B1 این زبان" style={starterOnlyStyles.foundationCard} onPress={() => router.push(`${course.home}/library?level=3` as never)}>
+            <Text style={starterOnlyStyles.foundationTitle}>نقشهٔ B1 · Foundation و Survival</Text>
+            <Text style={starterOnlyStyles.foundationText}>۲۵ موضوع پایه و ۳۰ موقعیت کاربردی؛ ارتباط درس‌ها با موضوع‌ها جزئی است و به معنی پوشش کامل نیست.</Text>
+          </Pressable>
+
+          <Pressable accessibilityRole="button" accessibilityLabel="نقشهٔ B2 این زبان" style={starterOnlyStyles.foundationCard} onPress={() => router.push(`${course.home}/library?level=4` as never)}>
+            <Text style={starterOnlyStyles.foundationTitle}>نقشهٔ B2 · Foundation و Survival</Text>
+            <Text style={starterOnlyStyles.foundationText}>۲۵ موضوع پایه و ۳۰ موقعیت پیشرفته؛ درس‌های مرتبط و سرفصل‌های در حال تدوین را ببینید.</Text>
+          </Pressable>
+
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#4D9AF2', '#20C49A', '#4D9AF2']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
             <View style={styles.lessonMetaRow}>
@@ -310,7 +326,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
               </View>
               <Text style={styles.sentenceEnglish}>{firstSentence.text}</Text>
               <Text style={styles.sentencePersian}>{firstSentence.fa}</Text>
-              <Text style={starterOnlyStyles.sentencePronunciation}>{firstSentence.pronunciation}</Text>
+              <Text style={starterOnlyStyles.sentencePronunciation}>{starterDisplayPronunciation(firstSentence)}</Text>
               {!!firstSentence.vocabulary.length && (
                 <View style={styles.wordChipRow}>
                   {firstSentence.vocabulary.map(item => (
@@ -326,7 +342,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
 
             <View style={styles.levelProgressBlock}>
               <View style={styles.levelProgressMeta}>
-                <Text style={styles.levelProgressLabel}>پیشرفت در {activeLevel.title}</Text>
+                <Text style={styles.levelProgressLabel}>پیشرفت درس‌های موجود در {activeLevel.title}</Text>
                 <Text style={styles.levelProgressValue}>{fa(levelCompleted)} از {fa(levelLessons.length)} درس</Text>
               </View>
               <EnglishProgressTrack value={levelProgress} color={activeLevel.color} height={7} />
