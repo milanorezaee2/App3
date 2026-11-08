@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Alert, ImageBackground, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Alert, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { createAudioPlayer } from 'expo-audio';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { ArrowRight, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
+import { ArrowLeft, ArrowRight, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
 import { MiloLanguageBrand } from '@/components/MiloLanguageBrand';
 import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
 import { FEATURES, LANGUAGE_SCOPE, RUSSIAN_ONLY_BUILD } from '@/lib/features';
-import { LtrDirection } from '@/lib/theme';
+import { LtrDirection, RtlDirection } from '@/lib/theme';
 
 const palette = {
   canvas: '#F7F2E8',
@@ -97,7 +97,7 @@ export default function LanguagesHome() {
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         <View style={[styles.page, compact && styles.pageCompact]}>
-          <View style={styles.header}>
+          <View style={[styles.header, Platform.OS === 'web' && styles.headerRtl]}>
             <View style={styles.headerActions}>
               <Pressable
                 accessibilityRole="button"
@@ -130,11 +130,11 @@ export default function LanguagesHome() {
             <LinearGradient
               pointerEvents="none"
               colors={['rgba(247,242,232,0.98)', 'rgba(247,242,232,0.90)', 'rgba(247,242,232,0.12)']}
-              start={{ x: 0, y: 0.5 }}
-              end={{ x: 1, y: 0.5 }}
+              start={{ x: Platform.OS === 'web' ? 1 : 0, y: 0.5 }}
+              end={{ x: Platform.OS === 'web' ? 0 : 1, y: 0.5 }}
               style={StyleSheet.absoluteFillObject}
             />
-            <View style={styles.heroCopy}>
+            <View style={[styles.heroCopy, Platform.OS === 'web' && RtlDirection]}>
               <Text accessibilityRole="header" style={[styles.title, tiny && styles.titleTiny]}>
                 زبان را از زندگی یاد بگیر
               </Text>
@@ -145,7 +145,7 @@ export default function LanguagesHome() {
             </View>
           </ImageBackground>
 
-          <View style={[styles.languageList, languages.length > 3 && styles.languageListWrap]}>
+          <View style={[styles.languageList, Platform.OS === 'web' && RtlDirection, languages.length > 3 && styles.languageListWrap]}>
             {languages.map((language) => {
               const displayName = language.nativeName || language.name;
               const artwork = languageArtwork[language.id] ?? languageArtwork.en;
@@ -157,7 +157,7 @@ export default function LanguagesHome() {
                   accessibilityLabel={`ورود به زبان ${language.name}`}
                   accessibilityHint="برای بازکردن دورهٔ این زبان انتخاب کنید"
                   onPress={() => router.push(language.home as never)}
-                  style={({ pressed }) => [styles.languageCard, languages.length > 3 && styles.languageCardWrap, pressed && styles.pressed]}
+                  style={({ pressed }) => [styles.languageCard, languages.length > 3 && styles.languageCardWrap, Platform.OS === 'web' && styles.languageCardRtl, pressed && styles.pressed]}
                 >
                   <ImageBackground
                     source={artwork}
@@ -167,13 +167,13 @@ export default function LanguagesHome() {
                   >
                     <View style={styles.languagePhotoTint} />
                   </ImageBackground>
-                  <View style={styles.languageCopy}>
-                    <Text numberOfLines={1} style={styles.languageNativeName}>{displayName}</Text>
+                  <View style={[styles.languageCopy, Platform.OS === 'web' && styles.languageCopyRtl]}>
+                    <Text numberOfLines={1} style={[styles.languageNativeName, Platform.OS === 'web' && styles.languageNativeNameRtl]}>{displayName}</Text>
                     <Text style={styles.languageCode}>{language.id.toUpperCase()}</Text>
                     {(language.id === 'de' || language.id === 'fr' || language.id === 'es') && <Text style={styles.sampleLabel}>شروع از صفر</Text>}
                   </View>
-                  <View style={styles.languageArrow}>
-                    <ArrowRight size={18} color={palette.forest} strokeWidth={2.1} />
+                  <View style={[styles.languageArrow, Platform.OS === 'web' && styles.languageArrowRtl]}>
+                    {Platform.OS === 'web' ? <ArrowLeft size={18} color={palette.forest} strokeWidth={2.1} /> : <ArrowRight size={18} color={palette.forest} strokeWidth={2.1} />}
                   </View>
                 </Pressable>
               );
@@ -191,18 +191,18 @@ export default function LanguagesHome() {
           </View>
 
           <View style={styles.learningPath}>
-            <View pointerEvents="none" style={styles.pathRail} />
+            <View pointerEvents="none" style={[styles.pathRail, Platform.OS === 'web' && styles.pathRailRtl]} />
             {learningSteps.map((step, index) => {
               const Icon = step.icon;
               return (
-                <View key={step.title} style={[styles.stepRow, LtrDirection]}>
+                <View key={step.title} style={[styles.stepRow, Platform.OS === 'web' ? RtlDirection : LtrDirection]}>
                   <View style={styles.pathNodeWrap}>
                     <View style={[styles.pathNode, index === 1 && styles.pathNodeAqua]} />
                   </View>
                   <View style={[styles.stepIcon, index === 1 && styles.stepIconAqua]}>
                     <Icon size={24} color={index === 1 ? palette.terracotta : palette.forest} strokeWidth={1.9} />
                   </View>
-                  <View style={styles.stepCopy}>
+                  <View style={[styles.stepCopy, Platform.OS === 'web' && styles.stepCopyRtl]}>
                     <Text style={styles.stepTitle}>{step.title}</Text>
                     <Text style={styles.stepDetail}>{step.detail}</Text>
                   </View>
@@ -226,6 +226,7 @@ const styles = StyleSheet.create({
   page: { width: '100%', maxWidth: 880, alignSelf: 'center', paddingHorizontal: 24, paddingTop: 24, gap: 24 },
   pageCompact: { paddingHorizontal: 18, paddingTop: 14, gap: 17 },
   header: { minHeight: 64, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
+  headerRtl: { flexDirection: 'row-reverse' },
   headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   headerButton: { width: 44, height: 44, borderRadius: 16, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#554C3E', shadowOpacity: 0.06, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   hero: { minHeight: 230, justifyContent: 'center', padding: 24, borderRadius: 24, overflow: 'hidden', backgroundColor: '#ECE4D4', shadowColor: '#514433', shadowOpacity: 0.10, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
@@ -240,6 +241,9 @@ const styles = StyleSheet.create({
   languageListWrap: { flexWrap: 'wrap' },
   languageCardWrap: { flexBasis: '46%', flexGrow: 1, flexShrink: 0 },
   languageCard: { flex: 1, minWidth: 0, borderRadius: 19, overflow: 'hidden', borderWidth: 1, borderColor: palette.border, paddingBottom: 12, alignItems: 'center', backgroundColor: palette.paper, shadowColor: '#514433', shadowOpacity: 0.07, shadowRadius: 12, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
+  languageCardRtl: { alignItems: 'flex-start' },
+  languageCopyRtl: { alignItems: 'flex-start', paddingHorizontal: 12 },
+  languageNativeNameRtl: { alignSelf: 'flex-start' },
   languageArt: { width: '100%', height: 156, justifyContent: 'flex-end', backgroundColor: '#EAE2D4' },
   languageArtImage: { borderTopLeftRadius: 18, borderTopRightRadius: 18 },
   languagePhotoTint: { height: 28, width: '100%', backgroundColor: 'rgba(247,242,232,0.18)' },
@@ -248,6 +252,7 @@ const styles = StyleSheet.create({
   sampleLabel: { fontFamily: 'Beiruti', color: palette.muted, fontSize: 11, textAlign: 'center' },
   languageCode: { fontFamily: 'Inter-ExtraBold', color: palette.muted, fontSize: 10, lineHeight: 14, letterSpacing: 1.2, writingDirection: 'ltr' },
   languageArrow: { width: 32, height: 32, marginTop: 7, borderRadius: 16, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.sage },
+  languageArrowRtl: { marginHorizontal: 12 },
   pathDivider: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 14, paddingVertical: 1, marginTop: 1 },
   dividerLine: { flex: 1, height: 1, backgroundColor: '#DCD5C6' },
   dividerOrnament: { width: 42, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, transform: [{ rotate: '-12deg' }] },
@@ -255,6 +260,7 @@ const styles = StyleSheet.create({
   dividerDiamond: { width: 10, height: 10, borderWidth: 1.5, borderColor: palette.terracotta, transform: [{ rotate: '45deg' }] },
   learningPath: { position: 'relative', gap: 4, padding: 17, borderRadius: 22, backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#514433', shadowOpacity: 0.045, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
   pathRail: { position: 'absolute', left: 18, top: 35, bottom: 35, width: 2, borderRadius: 1, backgroundColor: '#D4DCCB' },
+  pathRailRtl: { left: undefined, right: 18 },
   stepRow: { minHeight: 84, flexDirection: 'row', alignItems: 'center', gap: 14 },
   pathNodeWrap: { width: 20, height: 20, alignItems: 'center', justifyContent: 'center' },
   pathNode: { width: 13, height: 13, borderRadius: 7, backgroundColor: palette.forest, borderWidth: 2, borderColor: palette.paper },
@@ -262,6 +268,7 @@ const styles = StyleSheet.create({
   stepIcon: { width: 60, height: 60, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F0F1E8', borderWidth: 1, borderColor: palette.sageLine, shadowColor: '#514433', shadowOpacity: 0.05, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepIconAqua: { backgroundColor: palette.terracottaSoft, borderColor: '#EAD0C1' },
   stepCopy: { flex: 1, minWidth: 0, alignItems: 'flex-end', gap: 3 },
+  stepCopyRtl: { alignItems: 'flex-start' },
   stepTitle: { fontFamily: 'Beiruti-Bold', color: palette.ink, fontSize: 17, lineHeight: 26, textAlign: 'right', writingDirection: 'rtl' },
   stepDetail: { fontFamily: 'Beiruti', color: palette.muted, fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
   pressed: { opacity: 0.84, transform: [{ scale: 0.985 }] },
