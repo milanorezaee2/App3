@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { C1_READINGS } from '@/lib/englishC1Reading';
 import { playResponsiveSpeech, stopResponsiveSpeech } from '@/lib/responsiveSpeech';
 import { EnglishB2TopicPractice } from './EnglishB2TopicPractice';

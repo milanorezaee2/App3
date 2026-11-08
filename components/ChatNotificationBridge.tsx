@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
-import { AppState, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { AppState, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { useGlobalSearchParams, usePathname, useRouter } from 'expo-router';
 import * as Notifications from 'expo-notifications';
 import { isSupabaseConfigured } from '@/lib/pairing';

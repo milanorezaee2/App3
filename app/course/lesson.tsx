@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { Suspense, lazy } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 const EnglishLessonRoute = lazy(() => import('@/components/EnglishLessonRoute'));
 

@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import {useState} from 'react';
-import {Pressable,StyleSheet,Text,View} from 'react-native';
+import {Pressable,StyleSheet,View} from 'react-native';
 import type {C1FoundationStudio} from '@/lib/languages/c1FoundationStudio';
 import type {NewLanguageId} from '@/lib/languages/newCourses';
 import {c1FoundationDiagnostics} from '@/lib/languages/c1FoundationDiagnostics';

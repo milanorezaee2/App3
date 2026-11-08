@@ -1,4 +1,5 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { LocalizedText as Text } from '@/components/LocalizedText';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { Colors, Typography } from '@/lib/theme';
 
 export function PatternGrid({ value, onChange, disabled = false }: {

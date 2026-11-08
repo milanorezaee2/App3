@@ -1,4 +1,5 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { LocalizedText as Text } from '@/components/LocalizedText';
+import { Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import type { FoundationLanguage } from '@/lib/languages/foundationA1';
 import { Typography } from '@/lib/theme';

@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { Redirect, Slot, useLocalSearchParams } from 'expo-router';
 import { Colors, Typography } from '@/lib/theme';
 import { FEATURES, isLanguageEnabled } from '@/lib/features';

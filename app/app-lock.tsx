@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Fingerprint, LockKeyhole, RotateCcw, ShieldCheck, Unlock } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
 import { PatternGrid } from '@/components/PatternGrid';

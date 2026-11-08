@@ -1,4 +1,5 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { LocalizedText as Text } from '@/components/LocalizedText';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { usePathname, useRouter } from 'expo-router';
 import type { LucideIcon } from 'lucide-react-native';
 import { Radius, Typography } from '@/lib/theme';

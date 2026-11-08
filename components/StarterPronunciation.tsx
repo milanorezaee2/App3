@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Volume2 } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
 import { StarterBottomNav } from '@/components/StarterBottomNav';

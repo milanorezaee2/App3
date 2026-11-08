@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import {useState} from 'react';
-import {Pressable,StyleSheet,Text,View} from 'react-native';
+import {Pressable,StyleSheet,View} from 'react-native';
 import type {SurvivalListening} from '@/lib/languages/c1SurvivalListening';
 import {c1SurvivalDecisions} from '@/lib/languages/c1SurvivalDecisions';
 import {c1SurvivalConversations,c1SurvivalPartnerLines} from '@/lib/languages/c1SurvivalConversation';

@@ -1,9 +1,10 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 // Shared building blocks for the English-learning mini-app ("app 2").
 // The leading underscore means expo-router treats this as a plain module,
 // not a route.
 
 import React from 'react';
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import * as Speech from 'expo-speech';
 import { speechTagFor } from '@/lib/speechLanguage';
 import {

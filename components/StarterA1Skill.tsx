@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { Volume2 } from 'lucide-react-native';
 import type { A1SkillTask } from '@/lib/languages/a1Skills';
 import { Typography } from '@/lib/theme';

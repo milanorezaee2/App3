@@ -1,5 +1,6 @@
+import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import * as Speech from 'expo-speech';
 import { speechTagFor } from '@/lib/speechLanguage';
 import { isCorrect, SKILLS, type Task } from '@/lib/englishSupplement/content';

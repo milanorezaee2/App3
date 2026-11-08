@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import {useState} from 'react';
-import {Pressable,StyleSheet,Text,View} from 'react-native';
+import {Pressable,StyleSheet,View} from 'react-native';
 import {Typography} from '@/lib/theme';
 import type {B1ProductionPrompt} from '@/lib/languages/b1Production';
 import type {StarterLesson} from '@/lib/languages/newCourses';

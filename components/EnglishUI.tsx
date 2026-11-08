@@ -1,4 +1,5 @@
-import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { LocalizedText as Text } from '@/components/LocalizedText';
+import { Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Check } from 'lucide-react-native';
 import { COURSE_LEVELS, type CourseLevelId } from '@/lib/courseContent';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';

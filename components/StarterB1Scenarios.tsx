@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import {useEffect,useState} from 'react';
-import {Pressable,StyleSheet,Text,View} from 'react-native';
+import {Pressable,StyleSheet,View} from 'react-native';
 import {playStarterSpeech,stopStarterSpeech} from '@/lib/starterSpeech';
 import {b1Scenarios,type B1Scenario} from '@/lib/languages/b1Scenarios';
 import type {NewLanguageId} from '@/lib/languages/newCourses';

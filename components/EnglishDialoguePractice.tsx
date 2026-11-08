@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { playResponsiveSpeech, stopResponsiveSpeech } from '@/lib/responsiveSpeech';
 import { ChevronLeft, Volume2 } from 'lucide-react-native';
 import type { SentenceLesson } from '@/lib/courseContent';

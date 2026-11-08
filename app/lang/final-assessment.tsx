@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { PageNavigation } from '@/components/PageNavigation';
 import { EnglishSupplementTask, supplementStyles as s } from '@/components/EnglishSupplementTask';

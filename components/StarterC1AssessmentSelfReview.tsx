@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import {useState} from 'react';
-import {Pressable,StyleSheet,Text,View} from 'react-native';
+import {Pressable,StyleSheet,View} from 'react-native';
 import {Typography} from '@/lib/theme';
 const options=['نیاز به تمرین','تا حدی','به تشخیص من رعایت شده'] as const;
 /** Learner reflection only: does not inspect the response, assign a grade, or certify a level. */

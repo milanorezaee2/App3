@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import {useState} from 'react';
-import {Pressable,StyleSheet,Text,View} from 'react-native';
+import {Pressable,StyleSheet,View} from 'react-native';
 import type {C1RhetoricPractice} from '@/lib/languages/c1RhetoricPractice';
 import type {NewLanguageId} from '@/lib/languages/newCourses';
 import {practiceDraftKey} from '@/lib/languages/localPracticeDraft';

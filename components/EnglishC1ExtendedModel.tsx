@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { C1_EXTENDED_MODELS } from '@/lib/englishC1ExtendedModels';
 import { supplementStyles as s } from './EnglishSupplementTask';
 

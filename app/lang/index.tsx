@@ -1,6 +1,7 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import FoundationA1Entry from '@/components/FoundationA1Entry';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, Image, Pressable, ScrollView, Text, View, useWindowDimensions } from 'react-native';
+import { Alert, Image, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import {

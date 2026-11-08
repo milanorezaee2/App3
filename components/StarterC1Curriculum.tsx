@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import {useEffect, useState} from 'react';
-import {Pressable,StyleSheet,Text,View} from 'react-native';
+import {Pressable,StyleSheet,View} from 'react-native';
 import StarterTopicDeepening from '@/components/StarterTopicDeepening';
 import StarterC1Assessment from '@/components/StarterC1Assessment';
 import {getC1Curriculum,type C1Section} from '@/lib/languages/c1Curriculum';

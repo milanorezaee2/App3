@@ -1,7 +1,8 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { ViewStyle } from 'react-native';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import * as Speech from 'expo-speech';
 import { speechTagFor } from '@/lib/speechLanguage';

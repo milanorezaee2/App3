@@ -1,5 +1,6 @@
+import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import {useEffect,useState} from 'react';
-import {Pressable,StyleSheet,Text,TextInput,View} from 'react-native';
+import {Pressable,StyleSheet,View} from 'react-native';
 import {loadPracticeDraft,removePracticeDraft,savePracticeDraft} from '@/lib/languages/localPracticeDraft';
 import {Typography} from '@/lib/theme';
 

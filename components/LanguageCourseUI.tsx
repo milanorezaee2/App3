@@ -1,6 +1,7 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { Colors, LtrDirection, Spacing, Radius, Typography } from '@/lib/theme';
 import type { ReactNode } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, usePathname } from 'expo-router';
 import { PageNavigation } from '@/components/PageNavigation';
 import { RussianBottomNav } from './RussianBottomNav';

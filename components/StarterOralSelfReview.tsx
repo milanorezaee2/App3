@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import {useState} from 'react';
-import {Pressable,StyleSheet,Text,View} from 'react-native';
+import {Pressable,StyleSheet,View} from 'react-native';
 import {Typography} from '@/lib/theme';
 const metrics=['پیام و پاسخ به موقعیت را کامل رساندم','ایده‌ها را به هم وصل کردم و منظورم روشن بود','تلفظ من برای شنونده قابل فهم بود'] as const;
 const choices=['نیاز به تمرین','تا حدی','برای این تمرین مناسب'] as const;

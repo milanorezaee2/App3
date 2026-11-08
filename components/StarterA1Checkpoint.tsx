@@ -1,5 +1,6 @@
+import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { Volume2 } from 'lucide-react-native';
 import { B2_CHECKPOINT } from '@/lib/languages/b2Checkpoint';
 import { B1_CHECKPOINT } from '@/lib/languages/b1Checkpoint';

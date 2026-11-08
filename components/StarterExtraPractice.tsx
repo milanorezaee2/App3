@@ -1,5 +1,6 @@
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import type { StarterLesson } from '@/lib/languages/newCourses';
 import { buildExtraPractice } from '@/lib/languages/starterExtraPractice';
 import { Typography } from '@/lib/theme';

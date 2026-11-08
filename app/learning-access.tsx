@@ -1,6 +1,7 @@
+import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { FEATURES } from '@/lib/features';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { ShieldCheck } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
 import { supabase } from '@/lib/supabase';

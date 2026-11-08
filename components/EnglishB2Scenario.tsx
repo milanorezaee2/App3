@@ -1,5 +1,6 @@
+import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { useState } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { B2_SCENARIOS, type B2Scenario } from '@/lib/englishB2Scenarios';
 import { supplementStyles as s } from './EnglishSupplementTask';
 
