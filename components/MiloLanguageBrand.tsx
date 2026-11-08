@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 
-/** Compact, accessible wordmark and playful book-and-globe emblem. */
+/** Compact, accessible wordmark and playful headphones-and-book emblem. */
 export function MiloLanguageBrand() {
   return (
     <View accessibilityRole="image" accessibilityLabel="Milo" style={styles.brand}>
