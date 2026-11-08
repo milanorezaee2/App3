@@ -73,6 +73,8 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
   };
 
   useEffect(() => setHydrated(true), []);
+  // Retired empty placeholder: old bookmarks open the course overview instead.
+  useEffect(() => { if (hydrated && level === '0') router.replace(`${course.home}/library` as never); }, [hydrated, level, router, course.home]);
   const selected = hydrated ? levels.find(item => String(item.id) === String(level)) : undefined;
   const selectedLessons = useMemo(() => selected ? lessons.filter(item => item.levelId === selected.id) : [], [selected?.id]);
   const lessonGroups = useMemo(() => {
@@ -144,7 +146,7 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
 
             <LinearGradient colors={['#19204C', '#343B8A', '#5148C8']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
               <View pointerEvents="none" style={styles.heroOrb} />
-              <View style={styles.heroTopRow}><View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View><View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۷ سطح در نقشهٔ این زبان</Text></View></View>
+              <View style={styles.heroTopRow}><View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View><View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>{fa(levels.length)} سطح در نقشهٔ این زبان</Text></View></View>
               <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
               <Text style={styles.overviewTitle}>از صداهای اول؛{ '\n' }گام به گام</Text>
               <Text style={styles.overviewText}>محتوای موجود از پایه آغاز می‌شود. آمار فقط درس‌ها و نمونه‌های منتشرشده را می‌شمارد؛ سطح‌های آینده محتوای ساختگی ندارند.</Text>
@@ -156,11 +158,11 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
             </LinearGradient>
 
             <View style={styles.levelRailCard}>
-              <EnglishSectionHeading eyebrow="YOUR CURRENT STEP" title="پیشرفت در هفت سطح" detail="این برچسب‌ها نقشهٔ آموزشی داخلی‌اند و گواهی یا ارزیابی رسمی سطح نیستند." />
+              <EnglishSectionHeading eyebrow="YOUR CURRENT STEP" title="پیشرفت در سطح‌ها" detail="این برچسب‌ها نقشهٔ آموزشی داخلی‌اند و گواهی یا ارزیابی رسمی سطح نیستند." />
               <View style={styles.railWrap}>
-                <EnglishLevelRail activeLevelId={activeLevelId} counts={Object.fromEntries(levels.filter(item => item.id !== 2 && item.id !== 3 && item.id !== 4 && item.id !== 5).map(item => [item.id, countFor(item.id)]))} levels={levels} numberOffset={1} onSelect={openLevel} />
+                <EnglishLevelRail activeLevelId={activeLevelId} counts={Object.fromEntries(levels.filter(item => item.id !== 2 && item.id !== 3 && item.id !== 4 && item.id !== 5).map(item => [item.id, countFor(item.id)]))} levels={levels} displayNumber={id => Math.max(0, id)} onSelect={openLevel} />
               </View>
-              <Text style={styles.railCurrent}>اکنون · {levels.find(item => item.id === activeLevelId)?.title} · سطح {fa(activeLevelId + 1)}</Text>
+              <Text style={styles.railCurrent}>اکنون · {levels.find(item => item.id === activeLevelId)?.title} · سطح {fa(Math.max(0, activeLevelId))}</Text>
             </View>
 
             <EnglishSectionHeading eyebrow="CHOOSE A LEVEL" title="انتخاب سطح" detail="شمار درس و نمونه از محتوای واقعی هر سطح محاسبه می‌شود." />
@@ -170,7 +172,7 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
                 const sentenceTotal = lessons.filter(lesson => lesson.levelId === item.id).reduce((count, lesson) => count + lesson.sentences.length, 0);
                 const pct = stats.total ? stats.completed / stats.total * 100 : 0;
                 return <Pressable key={item.id} accessibilityRole="button" accessibilityLabel={`فهرست درس‌های ${item.title}`} style={styles.levelOption} onPress={() => openLevel(item.id)}>
-                  <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[item.id]} style={styles.levelOptionMark}><Text style={styles.levelOptionNumber}>{fa(item.id + 1)}</Text></LinearGradient>
+                  <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[item.id]} style={styles.levelOptionMark}><Text style={styles.levelOptionNumber}>{fa(Math.max(0, item.id))}</Text></LinearGradient>
                   <View style={styles.levelOptionContent}>
                     <View style={styles.levelOptionTitleRow}><Text style={styles.levelOptionTitle}>{item.title}</Text><Text style={[styles.levelOptionBand, { color: item.color }]}>{item.cefr}</Text></View>
                     <Text style={styles.levelOptionDescription}>{item.description}</Text>

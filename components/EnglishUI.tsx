@@ -45,6 +45,7 @@ export function EnglishLevelRail<T extends CourseLevelId = CourseLevelId>({
   successColor = Palette.success,
   activeLabelColor = Palette.primaryDark,
   numberOffset = 0,
+  displayNumber,
 }: {
   activeLevelId: T;
   counts?: Partial<Record<T, { completed: number; total: number }>>;
@@ -57,6 +58,7 @@ export function EnglishLevelRail<T extends CourseLevelId = CourseLevelId>({
   successColor?: string;
   activeLabelColor?: string;
   numberOffset?: number;
+  displayNumber?: (levelId: T) => number;
 }) {
   const { width } = useWindowDimensions();
   const narrow = width < 360;
@@ -81,7 +83,7 @@ export function EnglishLevelRail<T extends CourseLevelId = CourseLevelId>({
               <View style={[styles.railNode, active && styles.railNodeActive, done && !active && styles.railNodeDone, (active || done) && { backgroundColor: active ? accentColor : successColor, borderColor: active ? accentColor : successColor, ...(active ? { shadowColor: accentColor } : {}) }]}>
                 {done && !active
                   ? <Check size={15} color="#FFFFFF" strokeWidth={3} />
-                  : <Text style={[styles.railNodeText, active && styles.railNodeTextActive]}>{toPersianDigits(level.id + numberOffset)}</Text>}
+                  : <Text style={[styles.railNodeText, active && styles.railNodeTextActive]}>{toPersianDigits(displayNumber ? displayNumber(level.id) : level.id + numberOffset)}</Text>}
               </View>
               <Text style={[styles.railLabel, active && styles.railLabelActive, active && { color: activeLabelColor }]} numberOfLines={1}>
                 {level.cefr.split(' · ')[0] || startLabel}

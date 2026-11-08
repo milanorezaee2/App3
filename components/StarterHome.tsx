@@ -213,12 +213,12 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             </View>
 
             <View style={styles.railWrap}>
-              <EnglishLevelRail activeLevelId={activeLevel.id} counts={{...levelCounts, 2: undefined}} levels={levels} accessibilityLabelPrefix="فهرست درس‌های" direction="rtl" numberOffset={1} onSelect={openLevel} />
+              <EnglishLevelRail activeLevelId={activeLevel.id} counts={{...levelCounts, 2: undefined}} levels={levels} accessibilityLabelPrefix="فهرست درس‌های" direction="rtl" displayNumber={id => Math.max(0, id)} onSelect={openLevel} />
             </View>
 
             <View style={styles.currentLevelCard}>
               <View style={[styles.levelNumber, { backgroundColor: `${activeLevel.color}14` }]}>
-                <Text style={[styles.levelNumberText, { color: activeLevel.color }]}>{fa(activeLevel.id + 1)}</Text>
+                <Text style={[styles.levelNumberText, { color: activeLevel.color }]}>{fa(Math.max(0, activeLevel.id))}</Text>
               </View>
               <View style={styles.currentLevelCopy}>
                 <Text style={styles.currentLevelName}>{activeLevel.title}</Text>
@@ -253,7 +253,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
                       onPress={() => openLevel(level.id)}
                     >
                       <View style={[styles.levelNumber, { backgroundColor: `${level.color}14` }]}>
-                        {passed ? <Check size={17} color={level.color} strokeWidth={2.6} /> : <Text style={[styles.levelNumberText, { color: level.color }]}>{fa(level.id + 1)}</Text>}
+                        {passed ? <Check size={17} color={level.color} strokeWidth={2.6} /> : <Text style={[styles.levelNumberText, { color: level.color }]}>{fa(Math.max(0, level.id))}</Text>}
                       </View>
                       <View style={styles.levelText}>
                         <View style={styles.levelTitleRow}>

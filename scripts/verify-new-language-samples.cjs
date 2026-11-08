@@ -76,8 +76,8 @@ const legacyHashes = {
     assert.equal(hash(structure),structuralBaseline[id],`${id}: lesson and sentence identities, order, dialogue and saved answer slots unchanged`);
     assert.equal(course.lessons.length,155);
     assert.equal(course.lessons.reduce((sum,lesson)=>sum+lesson.sentences.length,0),1492);
-    assert.equal(course.levels.length,7);
-    assert.equal(course.levels[0].id,-1);
+    assert.deepEqual(course.levels.map(level=>level.id),[-1,1,2,3,4,5]);
+    assert(!course.lessons.some(lesson=>lesson.levelId===0), `${id}: removed placeholder contained no lessons`);
     assert.equal(course.levels.find(level=>level.id===1).status,'available');
     assert.equal(course.levels.find(level=>level.id===2).status,'available');
     assert.equal(course.levels.find(level=>level.id===3).status,'available');
