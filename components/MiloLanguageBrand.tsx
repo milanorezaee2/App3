@@ -17,5 +17,5 @@ export function MiloLanguageBrand() {
 const styles = StyleSheet.create({
   brand: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   mark: { width: 48, height: 48 },
-  wordmark: { fontFamily: 'Milo-Wordmark', color: '#164D46', fontSize: 31, lineHeight: 40, letterSpacing: -0.4, writingDirection: 'ltr' },
+  wordmark: { fontFamily: 'Milo-Wordmark', color: '#164D46', fontSize: 31, lineHeight: 48, letterSpacing: 0, writingDirection: 'ltr' },
 });
