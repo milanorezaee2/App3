@@ -1,11 +1,11 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 
-/** Compact wordmark and illustration used by the selected language-home mockup. */
+/** Compact, accessible wordmark and premium book-and-globe emblem. */
 export function MiloLanguageBrand() {
   return (
     <View accessibilityRole="image" accessibilityLabel="Milo" style={styles.brand}>
       <Image
-        source={require('../assets/images/splash-learning-light.png')}
+        source={require('../assets/images/milo-premium-mark.png')}
         resizeMode="contain"
         style={styles.mark}
       />
@@ -15,7 +15,7 @@ export function MiloLanguageBrand() {
 }
 
 const styles = StyleSheet.create({
-  brand: { flexDirection: 'row', alignItems: 'center', gap: 5 },
-  mark: { width: 52, height: 52 },
-  wordmark: { fontFamily: 'Inter-ExtraBold', color: '#31533B', fontSize: 25, lineHeight: 32, fontWeight: '800', letterSpacing: 0.8, writingDirection: 'ltr' },
+  brand: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  mark: { width: 48, height: 48 },
+  wordmark: { fontFamily: Platform.OS === 'web' ? 'Georgia' : 'serif', color: '#123E31', fontSize: 30, lineHeight: 38, fontWeight: '700', letterSpacing: -0.5, writingDirection: 'ltr' },
 });
