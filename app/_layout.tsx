@@ -104,9 +104,9 @@ export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
     // Bundle Beiruti locally so Persian typography and numerals stay identical
     // offline and independent of each Android manufacturer's system fonts.
-    // The default Persian face is medium for legibility; headings and key
-    // actions can still use the separately registered bold/black faces.
-    Beiruti: Beiruti_500Medium,
+    // Use the regular face for normal copy; headings and key actions use the
+    // separately registered medium, bold and black faces.
+    Beiruti: Beiruti_400Regular,
     'Beiruti-Medium': Beiruti_500Medium,
     'Beiruti-Bold': Beiruti_700Bold,
     'Beiruti-Black': Beiruti_900Black,

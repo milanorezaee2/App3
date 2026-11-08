@@ -74,7 +74,7 @@ const s=StyleSheet.create({
  section:{fontFamily:Typography.boldFontFamily,fontSize:15,color:'#302880',textAlign:'right',writingDirection:'rtl',marginTop:4},
  task:{borderWidth:1,borderColor:'#E1E4F0',borderRadius:14,padding:12,gap:9,backgroundColor:'#FAFAFE'},
  taskHeading:{fontFamily:Typography.boldFontFamily,fontSize:13,lineHeight:22,color:'#5148C8',textAlign:'right',writingDirection:'rtl'},
- target:{fontSize:16,lineHeight:25,color:'#202039',textAlign:'left',writingDirection:'ltr'},
+ target:{fontFamily:Typography.latinFontFamily,fontSize:16,lineHeight:25,color:'#202039',textAlign:'left',writingDirection:'ltr'},
  question:{fontFamily:Typography.boldFontFamily,fontSize:14,lineHeight:24,color:'#202039',textAlign:'right',writingDirection:'rtl'},
  choice:{minHeight:44,borderRadius:10,borderWidth:1,borderColor:'#DFE1EC',padding:10,justifyContent:'center',backgroundColor:'#FFF'},
  selected:{backgroundColor:'#F0EFFF',borderColor:'#5148C8'},
@@ -83,6 +83,6 @@ const s=StyleSheet.create({
  action:{minHeight:44,alignSelf:'flex-start',flexDirection:'row',alignItems:'center',gap:7,paddingHorizontal:10,borderRadius:10,backgroundColor:'#F1F0FF'},
  textAction:{minHeight:44,alignSelf:'flex-end',justifyContent:'center',paddingHorizontal:10},
  actionText:{fontFamily:Typography.boldFontFamily,fontSize:13,color:'#5148C8',writingDirection:'rtl'},
- stimulus:{gap:6},input:{minHeight:55,borderWidth:1,borderColor:'#DCE0EE',borderRadius:10,padding:10,fontSize:16,color:'#202039',backgroundColor:'#FFF',textAlign:'left',writingDirection:'ltr'},
+ stimulus:{gap:6},input:{fontFamily:Typography.latinFontFamily,minHeight:55,borderWidth:1,borderColor:'#DCE0EE',borderRadius:10,padding:10,fontSize:16,color:'#202039',backgroundColor:'#FFF',textAlign:'left',writingDirection:'ltr'},
  error:{fontFamily:Typography.fontFamily,fontSize:13,lineHeight:22,color:'#9B263C',textAlign:'right',writingDirection:'rtl'},
 });

@@ -34,7 +34,7 @@ const s=StyleSheet.create({
   icon:{fontFamily:Typography.boldFontFamily,fontSize:22,color:'#5148C8'},
   text:{fontFamily:Typography.fontFamily,fontSize:13,lineHeight:22,color:'#52566A',textAlign:'right',writingDirection:'rtl'},
   question:{fontFamily:Typography.fontFamily,fontSize:16,lineHeight:24,color:'#202039',textAlign:'right',writingDirection:'rtl'},
-  input:{minHeight:55,borderWidth:1,borderColor:'#DCE0EE',borderRadius:12,padding:12,fontSize:16,color:'#202039',textAlign:'left',writingDirection:'ltr'},
+  input:{fontFamily:Typography.latinFontFamily,minHeight:55,borderWidth:1,borderColor:'#DCE0EE',borderRadius:12,padding:12,fontSize:16,color:'#202039',textAlign:'left',writingDirection:'ltr'},
   button:{minHeight:46,borderRadius:12,backgroundColor:'#5148C8',alignItems:'center',justifyContent:'center',padding:10},
   buttonText:{fontFamily:Typography.boldFontFamily,fontSize:14,color:'#fff'},
   feedback:{fontFamily:Typography.fontFamily,fontSize:14,lineHeight:23,color:'#176B55',textAlign:'right',writingDirection:'rtl'},

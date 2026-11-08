@@ -1,7 +1,6 @@
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { KeyboardStickyView } from '@/components/KeyboardRuntime';
+import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import * as Speech from 'expo-speech';
 import { speechTagFor } from '@/lib/speechLanguage';
@@ -137,7 +136,7 @@ export default function EmmaChat() {
   };
 
   return (
-    <View style={styles.root}>
+    <KeyboardAvoidingView style={styles.root} behavior="height" enabled>
       <View style={styles.header}>
         <PageNavigation tone="dark" backFallback="/conversations" />
         <View style={styles.avatar}><Text style={styles.avatarEmoji}>👩🏻‍🏫</Text><View style={styles.online} /></View>
@@ -210,7 +209,6 @@ export default function EmmaChat() {
         ) : null}
       </View>
 
-      <KeyboardStickyView offset={{ closed: 0, opened: 0 }}>
       <View style={styles.composer}>
         <View style={styles.helper} accessibilityElementsHidden importantForAccessibility="no-hide-descendants"><Languages size={19} color={Colors.neutral[400]} /></View>
         <TextInput
@@ -227,8 +225,7 @@ export default function EmmaChat() {
           {thinking || transcribing ? <ActivityIndicator size="small" color={Colors.onColor} /> : <Send size={18} color={Colors.onColor} />}
         </Pressable>
       </View>
-      </KeyboardStickyView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
