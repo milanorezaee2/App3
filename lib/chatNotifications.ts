@@ -151,7 +151,10 @@ async function askNotificationPermissionOnce(): Promise<boolean> {
 function expoProjectId(): string | null {
   const extraProjectId = Constants.expoConfig?.extra?.eas?.projectId;
   const projectId = Constants.easConfig?.projectId
-    ?? (typeof extraProjectId === 'string' ? extraProjectId : null);
+    ?? (typeof extraProjectId === 'string' ? extraProjectId : null)
+    // Some Android release runtimes omit expoConfig.eas even though the EAS
+    // project is embedded in the native binary.
+    ?? 'be0e368c-0d94-4e95-b4f4-d757fa7beb42';
   return typeof projectId === 'string' && projectId.trim() ? projectId.trim() : null;
 }
 
@@ -181,10 +184,13 @@ export async function registerChatPushTokenForUser(
       state_updated_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }, { onConflict: 'user_id,expo_push_token' });
-    if (error) return null;
+    if (error) {
+      console.warn('[chat-push] token upsert failed', error.message);
+      return null;
+    }
     return token;
-  } catch {
-    // Foreground banners still work if the project has not configured EAS yet.
+  } catch (cause) {
+    console.warn('[chat-push] token registration failed', cause);
     return null;
   }
 }
@@ -380,14 +386,19 @@ export async function startChatNotifications(
       await teardownUserScope();
       return;
     }
-    if (userId === activeUserId) return;
+    if (userId === activeUserId) {
+      if (!activeToken && AppState.currentState === 'active') {
+        activeToken = await registerChatPushTokenForUser(userId, client);
+      }
+      return;
+    }
     await setupUserScope(userId);
   };
 
-  await activate();
   const authSubscription: Subscription = client.auth.onAuthStateChange(() => {
     void activate();
   }).data.subscription;
+  await activate();
 
   const updateDeviceState = async (state: AppStateStatus, allowRegistration = false) => {
     const userId = activeUserId;

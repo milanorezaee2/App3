@@ -8,7 +8,11 @@ export async function registerAdminPushToken(): Promise<void> {
     const { data: sessionData } = await client.auth.getSession();
     const userId = sessionData.session?.user?.id;
     if (!userId) return;
-    await registerChatPushTokenForUser(userId, client);
+    for (const delay of [0, 1500, 5000, 15000]) {
+      if (delay) await new Promise(resolve => setTimeout(resolve, delay));
+      const token = await registerChatPushTokenForUser(userId, client);
+      if (token) return;
+    }
   } catch {
     // Push is best effort; the management panel remains usable without it.
   }
