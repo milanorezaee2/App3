@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 
-/** Compact, accessible wordmark and playful headphones-and-book emblem. */
+/** Compact, accessible wordmark and playful globe-and-headphones emblem. */
 export function MiloLanguageBrand() {
   return (
     <View accessibilityRole="image" accessibilityLabel="Milo" style={styles.brand}>
@@ -17,5 +17,5 @@ export function MiloLanguageBrand() {
 const styles = StyleSheet.create({
   brand: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   mark: { width: 48, height: 48 },
-  wordmark: { fontFamily: 'Inter-SemiBold', color: '#164D46', fontSize: 29, lineHeight: 38, fontWeight: '600', letterSpacing: -0.7, writingDirection: 'ltr' },
+  wordmark: { fontFamily: 'Milo-Wordmark', color: '#164D46', fontSize: 31, lineHeight: 40, letterSpacing: -0.4, writingDirection: 'ltr' },
 });
