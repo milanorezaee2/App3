@@ -5,7 +5,7 @@ const base = process.env.B1_BASE_URL || 'http://localhost:8090/App3';
 (async () => {
   const binary = process.env.CHROME_BIN || await require('@sparticuz/chromium').default.executablePath();
   const args = process.env.CHROME_BIN ? ['--no-sandbox'] : require('@sparticuz/chromium').default.args;
-  const browser = await chromium.launch({ executablePath: binary, args });
+  const browser = await chromium.launch({ executablePath: binary, args: [...args, '--autoplay-policy=no-user-gesture-required'] });
   const page = await browser.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
@@ -22,7 +22,10 @@ const base = process.env.B1_BASE_URL || 'http://localhost:8090/App3';
     const headingBox = await wordmark.boundingBox(), subtitleBox = await subtitle.boundingBox();
     assert(subtitleBox.y >= headingBox.y + headingBox.height, 'multilanguage appears below Milo');
     assert((await wordmark.evaluate(e => getComputedStyle(e).fontFamily)).includes('Times New Roman'), 'Wordmark uses Times New Roman when available');
-    assert.equal(await brandElement.locator('img').count(), 0, 'Brand lockup has no icon');
+    const mark = page.getByTestId('milo-brand-mark');
+    await mark.waitFor();
+    await page.waitForFunction(() => { const img = document.querySelector('[data-testid="milo-brand-mark"] img'); return img && img.complete && img.naturalWidth > 0; });
+    assert.equal(await brandElement.locator('img').count(), 1, 'Brand includes the logo');
     const brand = await brandElement.boundingBox();
     const support = await page.getByRole('button', { name: 'گفتگو با پشتیبانی', exact: true }).boundingBox();
     assert(brand.x > support.x, 'The brand is on the right of the header');
@@ -34,6 +37,23 @@ const base = process.env.B1_BASE_URL || 'http://localhost:8090/App3';
   }
   await page.getByRole('button', { name: 'ورود به زبان ترکی استانبولی', exact: true }).click();
   await page.getByText('مسیر یادگیری ترکی استانبولی', { exact: true }).waitFor();
+  await page.addInitScript(() => {
+    window.__markTransforms = [];
+    new MutationObserver(records => records.forEach(record => {
+      const target = record.target;
+      if (target instanceof HTMLElement && target.dataset.testid === 'milo-brand-mark') window.__markTransforms.push(target.style.transform);
+    })).observe(document, { subtree: true, attributes: true, attributeFilter: ['style'] });
+  });
+  for (const preference of ['no-preference', 'reduce']) {
+    await page.emulateMedia({ reducedMotion: preference });
+    await page.goto(`${base}/languages`, { waitUntil: 'networkidle' });
+    await page.getByTestId('milo-brand-mark').waitFor();
+    await page.waitForTimeout(1500); // The entrance finishes in 1.2 seconds.
+    const transforms = await page.evaluate(() => window.__markTransforms);
+    if (preference === 'reduce') assert.equal(transforms.length, 0, 'Reduced motion keeps the mark still');
+    else assert(new Set(transforms).size > 1, 'The logo plays its entrance animation');
+    console.log(`${preference}: logo motion preference passed`);
+  }
   assert.deepEqual(errors, []);
   await browser.close();
 })().catch(error => { console.error(error); process.exit(1); });
