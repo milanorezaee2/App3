@@ -88,9 +88,12 @@ check(/recorder\.stop\(\)[\s\S]*?sendVoiceMessage\(conversationId,\s*recorder\.u
 check(/disabled=\{sending\s*\|\|\s*!ONLINE_AUDIO_ENABLED\}/.test(human), 'human voice-message control remains protected by the explicit online-audio policy');
 check(/requireOnlineAudioEnabled\(\);\s*const user = await ensureChatIdentity\(\);/.test(read('lib/conversations.ts')), 'lower-level voice upload API retains its product-policy gate before identity or upload work');
 check(/playResponsiveSpeech\(\{\s*text,\s*locale:\s*'en-US',\s*rate(?:\s*,|\s*\})/.test(lesson), 'device/platform speech playback remains available');
-const stickyComposer = /<KeyboardStickyView\b[^>]*>\s*<View style=\{styles\.composer\}>/;
+// KeyboardStickyView owns the complete keyboard-aware footer. Human chat may
+// render the coach, recording state, and audio notice before the composer, so
+// the composer is not necessarily its first child.
+const stickyComposer = /<KeyboardStickyView\b[^>]*>[\s\S]*?<View style=\{styles\.composer\}>[\s\S]*?<\/KeyboardStickyView>/;
 check(stickyComposer.test(human) && stickyComposer.test(emma),
-  'both chat composers animate as complete units with the keyboard');
+      'both chat composers animate as complete units with the keyboard');
 check(!/Platform\.OS === 'android' \? 'height'/.test(human) && !/Platform\.OS === 'android' \? 'height'/.test(emma),
   'Android avoids the double keyboard-height subtraction that clipped the composer');
 check(!/marginBottom:\s*100/.test(human) && !/marginBottom:\s*100/.test(emma), 'fixed chat offsets no longer fight keyboard and safe-area movement');
