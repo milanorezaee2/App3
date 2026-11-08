@@ -1,4 +1,4 @@
-import { Alert, AppState, Platform, type AppStateStatus } from 'react-native';
+import { Alert, AppState, Linking, Platform, type AppStateStatus } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Device from 'expo-device';
 import Constants from 'expo-constants';
@@ -88,15 +88,32 @@ async function askNotificationPermissionOnce(): Promise<boolean> {
     // manually after the one-time prompt can register without reinstalling.
     const current = await Notifications.getPermissionsAsync();
     if (current.granted) return true;
-    if (current.canAskAgain === false) return false;
+    if (current.canAskAgain === false) {
+      // Android keeps a permanently denied notification permission in Settings.
+      // The manager build must surface the recovery path; otherwise it can look
+      // healthy while never registering a token and all server pushes stay queued.
+      if (MANAGEMENT_BUILD) {
+        Alert.alert(
+          'اعلان‌های مدیر خاموش است',
+          'برای دریافت فوری پیام زبان‌آموزان، اعلان‌های Milo Admin را در تنظیمات گوشی فعال کنید.',
+          [
+            { text: 'بعداً', style: 'cancel' },
+            { text: 'بازکردن تنظیمات', onPress: () => { void Linking.openSettings().catch(() => undefined); } },
+          ],
+        );
+      }
+      return false;
+    }
     if (permissionPromptPromise) return permissionPromptPromise;
 
     promptPromise = (async () => {
       const alreadyPrompted = await AsyncStorage.getItem(PERMISSION_PROMPTED_KEY);
-      if (alreadyPrompted) return false;
+      // Learner builds keep the one-time prompt. Manager builds must retry after
+      // a temporary dismissal because missing manager tokens stop all alerts.
+      if (alreadyPrompted && !MANAGEMENT_BUILD) return false;
       // Mark before opening the dialog so remounts or login changes can never
       // prompt repeatedly. The user can enable it later in Android Settings.
-      await AsyncStorage.setItem(PERMISSION_PROMPTED_KEY, '1');
+      if (!MANAGEMENT_BUILD) await AsyncStorage.setItem(PERMISSION_PROMPTED_KEY, '1');
       return await new Promise<boolean>(resolve => {
         let settled = false;
         const finish = (granted: boolean) => {
