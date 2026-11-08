@@ -1,4 +1,5 @@
 import Constants from 'expo-constants';
+import { Platform } from 'react-native';
 
 /** Deployment switches, not authorization. Server roles/RLS remain mandatory. */
 const privateAdminBuild = Constants.expoConfig?.extra?.appRole === 'admin';
@@ -16,7 +17,7 @@ const configuredLanguageScope = (process.env.EXPO_PUBLIC_LANGUAGE_SCOPE || '')
 export const LANGUAGE_SCOPE: ReadonlyArray<'en' | 'ru' | 'tr' | 'de' | 'fr' | 'es'> = Object.freeze(
   configuredLanguageScope.length
     ? Array.from(new Set(configuredLanguageScope)) as Array<'en' | 'ru' | 'tr' | 'de' | 'fr' | 'es'>
-    : MANAGEMENT_BUILD ? ['en', 'tr'] : ['en', 'ru', 'de', 'fr', 'es'],
+    : MANAGEMENT_BUILD ? ['en', 'tr'] : Platform.OS === 'web' ? ['en', 'ru', 'tr', 'de', 'fr', 'es'] : ['en', 'ru', 'de', 'fr', 'es'],
 );
 export const isLanguageEnabled = (language: string | undefined): boolean =>
   language === 'en' || LANGUAGE_SCOPE.includes(language as 'en' | 'ru' | 'tr' | 'de' | 'fr' | 'es');

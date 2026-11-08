@@ -41,3 +41,6 @@ for (const file of workflowFiles) {
 }
 
 console.log(`${checks} language-entry removal and OTP-preservation checks passed.`);
+
+// Keep web course availability and explicitly scoped builds covered in CI.
+require('./verify-language-scope.cjs');
