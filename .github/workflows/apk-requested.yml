@@ -26,6 +26,13 @@ on:
         description: 'Publish the APKs as a downloadable GitHub release'
         type: boolean
         default: true
+  # A push trigger keeps this usable from a feature branch, where the
+  # workflow_dispatch endpoint is not registered by GitHub.
+  push:
+    branches:
+      - arena/1d4c82b4-app3
+    paths:
+      - '.github/workflows/apk-requested.yml'
 
 permissions:
   contents: write
@@ -119,7 +126,7 @@ jobs:
           EXPO_PUBLIC_MILO_ADMIN_APP: 'false'
           EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'false'
           EXPO_PUBLIC_LEARNER_LOGIN: 'true'
-          EXPO_PUBLIC_LANGUAGE_SCOPE: ${{ inputs.language_scope_login }}
+          EXPO_PUBLIC_LANGUAGE_SCOPE: ${{ inputs.language_scope_login || 'en,de,fr,tr,es' }}
         run: |
           rm -rf android
           npx expo prebuild --platform android --no-install --non-interactive
@@ -132,7 +139,7 @@ jobs:
           EXPO_PUBLIC_MILO_ADMIN_APP: 'false'
           EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'false'
           EXPO_PUBLIC_LEARNER_LOGIN: 'false'
-          EXPO_PUBLIC_LANGUAGE_SCOPE: ${{ inputs.language_scope_nologin }}
+          EXPO_PUBLIC_LANGUAGE_SCOPE: ${{ inputs.language_scope_nologin || 'en,ru' }}
         run: |
           rm -rf android
           npx expo prebuild --platform android --no-install --non-interactive
@@ -168,7 +175,7 @@ jobs:
           retention-days: 30
 
       - name: Publish a downloadable release
-        if: ${{ inputs.publish_release }}
+        if: ${{ github.event_name == 'push' || inputs.publish_release }}
         uses: softprops/action-gh-release@v2
         with:
           tag_name: milo-requested-${{ github.run_number }}
@@ -179,8 +186,8 @@ jobs:
             Three installable Android APKs.
 
             - `MiloAdmin.apk` — manager app (languages: en, tr)
-            - `MiloLearner-Login.apk` — learner app with login (languages: ${{ inputs.language_scope_login }})
-            - `MiloLearner-NoLogin.apk` — learner app without login (languages: ${{ inputs.language_scope_nologin }})
+            - `MiloLearner-Login.apk` — learner app with login (languages: ${{ inputs.language_scope_login || 'en,de,fr,tr,es' }})
+            - `MiloLearner-NoLogin.apk` — learner app without login (languages: ${{ inputs.language_scope_nologin || 'en,ru' }})
           files: |
             MiloAdmin.apk
             MiloLearner-Login.apk
