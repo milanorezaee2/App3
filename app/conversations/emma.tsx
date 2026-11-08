@@ -11,6 +11,7 @@ import { clearEmmaHistory, loadEmmaHistory, saveEmmaHistory, type EmmaStoredMess
 import { transcribeLearnerSpeech } from '@/lib/speechPractice';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
 import { PageNavigation } from '@/components/PageNavigation';
+import { KeyboardStickyView } from '@/components/KeyboardRuntime';
 
 import { PAID_AI_ENABLED, PAID_AI_DISABLED_MESSAGE } from '@/lib/paidAI';
 
@@ -193,6 +194,7 @@ export default function EmmaChat() {
         {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
       </ScrollView>
 
+      <KeyboardStickyView enabled offset={{ closed: 0, opened: 0 }}>
       <View style={styles.coachArea}>
         <Pressable accessibilityRole="button" accessibilityLabel="باز و بسته‌کردن پیشنهادهای خصوصی Emma" accessibilityState={{ expanded: showTools }} style={styles.coachToggle} onPress={() => setShowTools((value) => !value)}>
           <Sparkles size={15} color={Colors.warning[400]} />
@@ -225,6 +227,7 @@ export default function EmmaChat() {
           {thinking || transcribing ? <ActivityIndicator size="small" color={Colors.onColor} /> : <Send size={18} color={Colors.onColor} />}
         </Pressable>
       </View>
+      </KeyboardStickyView>
     </KeyboardAvoidingView>
   );
 }

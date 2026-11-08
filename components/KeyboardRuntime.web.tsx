@@ -5,7 +5,7 @@ export function KeyboardProvider({ children }: React.PropsWithChildren) {
   return <>{children}</>;
 }
 
-export function KeyboardStickyView({ children, ...props }: React.PropsWithChildren<ViewProps>) {
+export function KeyboardStickyView({ children, offset: _offset, enabled: _enabled, ...props }: React.PropsWithChildren<ViewProps & { offset?: unknown; enabled?: boolean }>) {
   return <View {...props}>{children}</View>;
 }
 
