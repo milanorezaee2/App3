@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-import { Text as NativeText, TextInput as NativeTextInput, type TextProps, type TextInputProps, type TextStyle } from 'react-native';
+import { StyleSheet, Text as NativeText, TextInput as NativeTextInput, type TextProps, type TextInputProps, type TextStyle } from 'react-native';
 import { Typography } from '@/lib/theme';
 
 // Persian and Arabic letters share the app's existing Persian presentation.
@@ -33,7 +33,64 @@ function childrenText(children: React.ReactNode): string {
 }
 
 const persian: TextStyle = { fontFamily: 'Beiruti', fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' };
-const latinFont: TextStyle = { fontFamily: Typography.latinFontFamily };
+// Non-Persian text (English, German, French, Spanish, Turkish, Russian …) and
+// every Times New Roman run render bold; Persian keeps its own weight.
+const latinFont: TextStyle = { fontFamily: Typography.latinFontFamily, fontWeight: '700' };
+const TIMES_FAMILY = /times/i;
+
+// ---- reading colour: dark/medium text becomes pure black; light text on
+// coloured or dark surfaces is left alone so it stays legible.
+const BLACK = '#000000';
+const LIGHT_THRESHOLD = 0.6;
+const colorCache = new Map<string, string>();
+function parseColor(value: string): { r: number; g: number; b: number; a: number } | null {
+  const hex = value.trim().match(/^#([0-9a-f]{3,8})$/i);
+  if (hex) {
+    let h = hex[1];
+    if (h.length === 3 || h.length === 4) h = h.split('').map(c => c + c).join('');
+    if (h.length !== 6 && h.length !== 8) return null;
+    const n = parseInt(h, 16);
+    const a = h.length === 8 ? (n & 255) / 255 : 1;
+    const rgb = h.length === 8 ? n >>> 8 : n;
+    return { r: (rgb >> 16) & 255, g: (rgb >> 8) & 255, b: rgb & 255, a };
+  }
+  const fn = value.trim().match(/^rgba?\(([^)]+)\)$/i);
+  if (fn) {
+    const parts = fn[1].split(',').map(part => parseFloat(part));
+    if (parts.length < 3 || parts.some(Number.isNaN)) return null;
+    return { r: parts[0], g: parts[1], b: parts[2], a: parts.length > 3 ? parts[3] : 1 };
+  }
+  return null;
+}
+export function readingColor(color: unknown): string | undefined {
+  if (color === undefined || color === null) return BLACK;
+  if (typeof color !== 'string') return undefined; // platform colours / animated values stay as they are
+  const cached = colorCache.get(color);
+  if (cached) return cached;
+  const lower = color.trim().toLowerCase();
+  let result: string;
+  if (lower === 'transparent') result = color;
+  else if (lower === 'white' || lower === '#fff' || lower === '#ffffff') result = color;
+  else {
+    const parsed = parseColor(color);
+    if (!parsed) result = BLACK;
+    else if (parsed.a === 0) result = color;
+    else {
+      const luminance = (0.2126 * parsed.r + 0.7152 * parsed.g + 0.0722 * parsed.b) / 255;
+      result = luminance >= LIGHT_THRESHOLD ? color : BLACK;
+    }
+  }
+  colorCache.set(color, result);
+  return result;
+}
+function presentationStyle(style: TextProps['style'], extra?: TextStyle): TextStyle | undefined {
+  const flat = StyleSheet.flatten([style, extra]) as TextStyle | undefined;
+  const out: TextStyle = {};
+  const color = readingColor(flat?.color);
+  if (color !== undefined && color !== flat?.color) out.color = color;
+  if (flat?.fontFamily && TIMES_FAMILY.test(String(flat.fontFamily)) && flat.fontWeight !== '700' && flat.fontWeight !== 'bold') out.fontWeight = '700';
+  return Object.keys(out).length ? out : undefined;
+}
 const leftToRight: TextStyle = { ...latinFont, textAlign: 'left', writingDirection: 'ltr' };
 
 // Keep combining marks with their base character. In particular a keycap such
@@ -107,7 +164,8 @@ function styleMixedChildren(children: React.ReactNode): React.ReactNode {
 /** Preserve the outer Text, all accessibility/interaction props and layout. */
 export const LocalizedText = forwardRef<NativeText, TextProps>(function LocalizedText({ style, children, ...props }, ref) {
   const content = childrenText(children);
-  return <NativeText ref={ref} {...props} style={[style, scriptStyle(content)]}>
+  const script = scriptStyle(content);
+  return <NativeText ref={ref} {...props} style={[style, script, presentationStyle(style, script)]}>
     {textScript(content) === 'persian' && clusters(content).some(isForeignCluster) ? styleMixedChildren(children) : children}
   </NativeText>;
 });
@@ -120,5 +178,5 @@ export const LocalizedTextInput = forwardRef<NativeTextInput, TextInputProps>(fu
   const content = value ?? uncontrolled;
   return <NativeTextInput ref={ref} {...props} value={value} defaultValue={defaultValue} placeholder={placeholder}
     onChangeText={text => { if (value === undefined) setUncontrolled(text); onChangeText?.(text); }}
-    style={[style, scriptStyle(content || placeholder || '')]} />;
+    style={[style, scriptStyle(content || placeholder || ''), presentationStyle(style, scriptStyle(content || placeholder || ''))]} />;
 });

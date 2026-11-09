@@ -19,9 +19,10 @@ type Props = {
 /** Brand logo: a glossy mark, a light sweep, then the word "Milo" letter by letter. */
 export function MiloLogoMotion({ size = 'intro', play = true, onDone }: Props) {
   const isIntro = size === 'intro';
-  const markSize = isIntro ? 104 : 40;
-  const iconSize = isIntro ? 40 : 18;
-  const fontSize = isIntro ? 46 : 22;
+  // The startup logo is deliberately large; the in-app header logo is unchanged.
+  const markSize = isIntro ? 188 : 40;
+  const iconSize = isIntro ? 132 : 18;
+  const fontSize = isIntro ? 64 : 22;
 
   const mark = useRef(new Animated.Value(play ? 0 : 1)).current;
   const sheen = useRef(new Animated.Value(0)).current;
@@ -95,10 +96,10 @@ export function MiloLogoMotion({ size = 'intro', play = true, onDone }: Props) {
 
 const styles = StyleSheet.create({
   wrap: { alignItems: 'center' },
-  wrapIntro: { flexDirection: 'column', gap: 14 },
+  wrapIntro: { flexDirection: 'column', gap: 18 },
   wrapHeader: { flexDirection: 'row', gap: 10 },
   word: { flexDirection: 'row', direction: 'ltr', alignItems: 'center' },
   letter: { fontFamily: Typography.latinFontFamily, color: '#211A68', letterSpacing: 1.5, writingDirection: 'ltr' },
-  tagline: { fontFamily: Typography.latinFontFamily, fontSize: 10, color: '#6882A6', writingDirection: 'ltr', textAlign: 'center' },
+  tagline: { fontFamily: Typography.latinFontFamily, fontWeight: '700', fontSize: 13, color: '#6882A6', writingDirection: 'ltr', textAlign: 'center' },
   measureOnly: { position: 'absolute', opacity: 0, letterSpacing: 0 },
 });
