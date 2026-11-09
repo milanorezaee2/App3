@@ -1,6 +1,7 @@
 import { LocalizedText as Text } from '@/components/LocalizedText';
+import { Typography } from '@/lib/theme';
 import { useEffect, useRef } from 'react';
-import { AccessibilityInfo, Animated, Easing, Platform, StyleSheet, View } from 'react-native';
+import { AccessibilityInfo, Animated, Easing, StyleSheet, View } from 'react-native';
 
 /** The existing wordmark, accompanied by the globe-and-headphones mark. */
 export function MiloLanguageBrand() {
@@ -45,11 +46,10 @@ export function MiloLanguageBrand() {
   );
 }
 
-const times = Platform.OS === 'web' ? "'Times New Roman', Times, serif" : Platform.OS === 'ios' ? 'Times New Roman' : 'serif';
 const styles = StyleSheet.create({
   brand: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 48, gap: 8 },
   mark: { width: 48, height: 48 },
   lockup: { alignItems: 'center', justifyContent: 'center' },
-  wordmark: { fontFamily: times, color: '#16443A', fontSize: 35, lineHeight: 38, fontWeight: '700', writingDirection: 'ltr' },
-  subtitle: { fontFamily: times, color: '#526A5A', fontSize: 11, lineHeight: 14, letterSpacing: 0.8, writingDirection: 'ltr' },
+  wordmark: { fontFamily: Typography.latinFontFamily, color: '#16443A', fontSize: 35, lineHeight: 38, fontWeight: '700', writingDirection: 'ltr' },
+  subtitle: { fontFamily: Typography.latinFontFamily, color: '#526A5A', fontSize: 11, lineHeight: 14, letterSpacing: 0.8, writingDirection: 'ltr' },
 });

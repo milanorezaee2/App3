@@ -8,7 +8,9 @@ import { fileURLToPath } from 'node:url';
 const dist = path.resolve(process.env.DIST_DIR || path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist'));
 const port = parseInt(process.env.PORT || '8081', 10);
 const appConfig = JSON.parse(fs.readFileSync(new URL('../app.json', import.meta.url), 'utf8'));
-const baseUrl = (appConfig.expo?.experiments?.baseUrl || '').replace(/\/$/, '');
+const baseUrl = process.env.EXPO_PUBLIC_WEB_ROOT === 'true'
+  ? ''
+  : (appConfig.expo?.experiments?.baseUrl || '').replace(/\/$/, '');
 const gzipCache = new Map();
 
 function contentType(p) {

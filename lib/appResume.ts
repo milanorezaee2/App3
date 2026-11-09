@@ -71,9 +71,12 @@ export function parseResumeSnapshot(raw: string | null): ResumeSnapshot | null {
   } catch { return null; }
 }
 
-export function resumeDestination(snapshot: ResumeSnapshot, now: number): string {
+export function resumeDestination(snapshot: ResumeSnapshot, now: number, learnerLoginEnabled = false): string {
   const awaySince = snapshot.backgroundAt ?? snapshot.updatedAt;
-  if (now - awaySince > RESUME_MAX_INACTIVE_MS) {
+  // Old account screens must not reappear on open builds. This does not alter
+  // optional app-lock enforcement, lesson snapshots, sessions, or local data.
+  const disabledAccountRoute = !learnerLoginEnabled && snapshot.href.split('?')[0] === '/personal-sync';
+  if (disabledAccountRoute || now - awaySince > RESUME_MAX_INACTIVE_MS) {
     if (snapshot.language === 'en') return '/lang';
     return snapshot.language ? `/learn/${snapshot.language}` : '/languages';
   }

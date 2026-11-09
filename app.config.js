@@ -1,7 +1,11 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const base = require('./app.json').expo;
+const originalBase = require('./app.json').expo;
+// GitHub Pages keeps /App3; managed root-domain builds opt into a root URL.
+const base = process.env.EXPO_PUBLIC_WEB_ROOT === 'true'
+  ? { ...originalBase, experiments: { ...originalBase.experiments, baseUrl: '' } }
+  : originalBase;
 
 // Android push delivery (FCM v1) needs the Firebase client config inside the
 // native build. Each APK variant has its own package name, so each one needs

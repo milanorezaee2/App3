@@ -7,6 +7,10 @@ on:
         description: 'Build only the Russian learner APK (MiloRussian.apk) and publish it as a release'
         type: boolean
         default: false
+      learner_login:
+        description: 'Explicitly build an additional login-enabled learner APK'
+        type: boolean
+        default: false
   push:
     branches:
       - arena/b2da2695-app1
@@ -29,6 +33,7 @@ jobs:
     env:
       CI: "1"
       EXPO_NO_TELEMETRY: "1"
+      EXPO_PUBLIC_LEARNER_LOGIN: "false"
       EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID }}
       EXPO_PUBLIC_RUSSIAN_ONLY: ${{ ((github.event_name == 'workflow_dispatch' && inputs.russian_only) || (github.event_name == 'push' && contains(github.event.head_commit.message, '[russian-apk]'))) && 'true' || 'false' }}
     steps:
@@ -80,6 +85,8 @@ jobs:
           npm run validate:hygiene
           npm run validate:registration-admin
           npm run validate:language-entry
+          npm run validate:personal-sync
+          node scripts/verify-app-resume.cjs
           npm run validate:a11y
           npm run validate:requested-updates
 
@@ -155,7 +162,7 @@ jobs:
           PY
 
       - name: Generate and build the learner login APK
-        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' }}
+        if: ${{ env.EXPO_PUBLIC_RUSSIAN_ONLY != 'true' && github.event_name == 'workflow_dispatch' && inputs.learner_login }}
         shell: bash
         run: |
           rm -rf android
@@ -202,7 +209,7 @@ jobs:
 
       - name: Confirm both release APKs are ready
         if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[apk-release]') }}
-        run: test -s MiloMultilang.apk && test -s MiloAdmin.apk && (test '${{ env.EXPO_PUBLIC_RUSSIAN_ONLY }}' = 'true' || test -s MiloMultilang-Login.apk)
+        run: test -s MiloMultilang.apk && (test '${{ env.EXPO_PUBLIC_RUSSIAN_ONLY }}' = 'true' || test -s MiloAdmin.apk)
 
       - name: Publish direct APK downloads
         if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[apk-release]') }}
@@ -211,11 +218,10 @@ jobs:
           tag_name: milomultilang-android-${{ github.run_number }}
           target_commitish: ${{ github.sha }}
           name: "MiloMultilang Android build #${{ github.run_number }}"
-          body: Installable learner (no login), learner (with login) and private management Android APKs. All are signed for sideloading.
+          body: Installable learner (no login) and private management Android APKs. Both are signed for sideloading.
           prerelease: true
           files: |
             MiloMultilang.apk
-            MiloMultilang-Login.apk
             MiloAdmin.apk
           fail_on_unmatched_files: true
         env:

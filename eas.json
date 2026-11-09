@@ -10,6 +10,7 @@
         "buildType": "apk"
       },
       "env": {
+        "EXPO_PUBLIC_LEARNER_LOGIN": "false",
         "EXPO_PUBLIC_SKIP_COMPANION_ONBOARDING": "false"
       }
     },
@@ -20,6 +21,7 @@
         "buildType": "apk"
       },
       "env": {
+        "EXPO_PUBLIC_LEARNER_LOGIN": "false",
         "EXPO_PUBLIC_SKIP_COMPANION_ONBOARDING": "false"
       }
     },
@@ -52,7 +54,7 @@
         "EXPO_PUBLIC_SKIP_COMPANION_ONBOARDING": "false"
       }
     },
-    "learner-tr-login": {
+    "learner-tr": {
       "distribution": "internal",
       "autoIncrement": true,
       "android": {
@@ -61,7 +63,7 @@
       "env": {
         "EXPO_PUBLIC_MILO_ADMIN_APP": "false",
         "EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN": "false",
-        "EXPO_PUBLIC_LEARNER_LOGIN": "true",
+        "EXPO_PUBLIC_LEARNER_LOGIN": "false",
         "EXPO_PUBLIC_LANGUAGE_SCOPE": "en,tr",
         "EXPO_PUBLIC_SKIP_COMPANION_ONBOARDING": "false"
       }

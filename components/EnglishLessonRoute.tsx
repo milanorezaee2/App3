@@ -30,7 +30,7 @@ import { ENGLISH_ENGINE_STEPS, getLessonPatterns, getLessonVocabulary } from '@/
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import { PageNavigation } from '@/components/PageNavigation';
 
-import { loadStudy, saveLessonSession, freshSession } from '@/lib/englishStudyState';
+import { loadStudy, saveLessonSession, resetLessonSession, freshSession, withStudyStorageLock, type LessonAttempt } from '@/lib/englishStudyState';
 import { loadSupplement } from '@/lib/englishSupplement/progress';
 import { CORE_LESSON_EVIDENCE, isCoreLessonEvidenceComplete } from '@/lib/englishFoundationEvidence';
 import { useEnglishStudyTimer } from '@/components/useEnglishStudyTimer';
@@ -63,61 +63,74 @@ export default function SentenceLessonScreen() {
   const [sessionReady,setSessionReady]=useState(false);
   const [invalidLesson,setInvalidLesson]=useState(false);
   const [sessionError,setSessionError]=useState('');
+  const [resetting, setResetting] = useState(false);
+  const [reload, setReload] = useState(0);
+  const [attemptEvidence, setAttemptEvidence] = useState<Record<string, boolean> | undefined>();
   const completing=useRef(false);
   const loadedLesson=useRef<string|null>(null);
-  const startFirstLesson = useRef(fromStart === '1');
-  const preserveExistingSession = useRef(false);
+  const attempt = useRef<LessonAttempt | undefined>(undefined);
+  const resettingRef = useRef(false);
+  const screenRun = useRef(0);
   const [audioNotice, setAudioNotice] = useState('');
-  const timer=useEnglishStudyTimer(sessionReady && !!getSentenceLesson(id || ''));
+  const timer=useEnglishStudyTimer(sessionReady && !resetting && !!getSentenceLesson(id || ''));
   useEffect(() => {
     let alive = true;
+    const run = ++screenRun.current;
     loadedLesson.current = null;
-    preserveExistingSession.current = false;
+    resettingRef.current = false;
     setAudioNotice('');
     setSessionError('');
+    setResetting(false);
     setSessionReady(false);
     setInvalidLesson(!!id && !getSentenceLesson(id));
     if (id && !getSentenceLesson(id)) return;
 
-    void loadStudy().then(async state => {
+    const startFromBeginning = fromStart === '1';
+    void (startFromBeginning ? resetLessonSession(lesson.id) : withStudyStorageLock(loadStudy)).then(async state => {
       if (!alive) return;
       const saved = state.sessions[lesson.id] ?? freshSession();
-      const startAtFirstSentence = startFirstLesson.current;
-      // Replay without overwriting a saved position or any completed evidence.
-      preserveExistingSession.current = startAtFirstSentence && !!state.sessions[lesson.id];
-      startFirstLesson.current = false;
-      if (startAtFirstSentence) router.setParams({ fromStart: undefined });
-      setStage(startAtFirstSentence ? 1 : saved.stage);
-      setSentenceIndex(startAtFirstSentence ? 0 : Math.min(saved.sentenceIndex, lesson.sentences.length - 1));
-      setRevealed(startAtFirstSentence ? false : saved.revealed);
-
-      if (CORE_LESSON_EVIDENCE[lesson.id]) {
-        setEvidencePassed(isCoreLessonEvidenceComplete(lesson.id, state.lessonEvidence[lesson.id] ?? {}));
+      let passed = saved.evidencePassed;
+      if (saved.attempt) {
+        // A new attempt does not inherit completion flags from historical evidence.
+        passed = saved.evidencePassed;
+      } else if (CORE_LESSON_EVIDENCE[lesson.id]) {
+        passed = isCoreLessonEvidenceComplete(lesson.id, state.lessonEvidence[lesson.id] ?? {});
       } else {
         const proof = await loadSupplement();
         if (!alive) return;
-        setEvidencePassed(saved.evidencePassed
+        passed = saved.evidencePassed
           && !!proof.evidence[`legacy-${lesson.id}-listening`]?.correct
           && !!proof.evidence[`legacy-${lesson.id}-listening`]?.heard
-          && !!proof.evidence[`legacy-${lesson.id}-writing`]?.correct);
+          && !!proof.evidence[`legacy-${lesson.id}-writing`]?.correct;
       }
-
+      if (!alive || screenRun.current !== run) return;
+      attempt.current = saved.attempt;
+      setAttemptEvidence(saved.attempt ? (saved.attemptEvidence ?? {}) : undefined);
+      setStage(saved.stage);
+      setSentenceIndex(Math.min(saved.sentenceIndex, lesson.sentences.length - 1));
+      setRevealed(saved.revealed);
+      setEvidencePassed(passed);
+      setCompletionError('');
       loadedLesson.current = lesson.id;
       setSessionReady(true);
+      if (startFromBeginning) router.setParams({ fromStart: undefined });
     }).catch(() => {
-      if (alive) setSessionError('جلسه قبلی خوانده نشد؛ برای حفظ اطلاعات، ذخیره متوقف است. صفحه را دوباره باز کنید.');
+      if (alive) setSessionError(startFromBeginning
+        ? 'شروع مجدد ذخیره نشد؛ اطلاعات قبلی حفظ شده‌اند. دوباره تلاش کنید.'
+        : 'جلسه قبلی خوانده نشد؛ برای حفظ اطلاعات، ذخیره متوقف است. صفحه را دوباره باز کنید.');
     });
-    return () => { alive = false; void stopResponsiveSpeech(); };
-  }, [lesson.id, lesson.levelId, lesson.sentences.length, id]);
+    return () => { alive = false; screenRun.current++; void stopResponsiveSpeech(); };
+  }, [lesson.id, lesson.levelId, lesson.sentences.length, id, fromStart, reload]);
   useEffect(() => {
     let currentSave = true;
-    if (sessionReady && loadedLesson.current === lesson.id && !completing.current && !preserveExistingSession.current) {
-      void saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed })
-        .then(() => { if (currentSave) setSessionError(''); })
-        .catch(() => { if (currentSave) setSessionError('جلسه ذخیره نشد؛ دوباره یکی از کنترل‌های درس را بزنید تا ذخیره تکرار شود.'); });
+    const run = screenRun.current;
+    if (sessionReady && loadedLesson.current === lesson.id && !completing.current && !resettingRef.current && !sessionError) {
+      void saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed, attempt: attempt.current, attemptEvidence })
+        .then(() => { if (currentSave && screenRun.current === run) setSessionError(''); })
+        .catch(() => { if (currentSave && screenRun.current === run) setSessionError('جلسه ذخیره نشد؛ درس را دوباره باز کنید.'); });
     }
     return () => { currentSave = false; };
-  }, [lesson.id, sessionReady, stage, sentenceIndex, revealed, evidencePassed]);
+  }, [lesson.id, sessionReady, stage, sentenceIndex, revealed, evidencePassed, attemptEvidence, resetting, sessionError]);
   const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
   const recorderState = useAudioRecorderState(recorder, 250);
   const [evaluatingSpeech, setEvaluatingSpeech] = useState(false);
@@ -154,49 +167,83 @@ export default function SentenceLessonScreen() {
     playResponsiveSpeech({ text, locale: 'en-US', rate, onError: () => setAudioNotice('پخش صدا ممکن نشد. صدای دستگاه و اجازهٔ پخش مرورگر را بررسی کنید.') });
   };
 
-  const startCurrentLessonFromBeginning = () => {
+  const startCurrentLessonFromBeginning = async () => {
+    if (resettingRef.current || completing.current || saving) return;
+    resettingRef.current = true;
+    setResetting(true);
+    const run = ++screenRun.current;
     void stopResponsiveSpeech();
-    preserveExistingSession.current = false;
-    setStage(0);
-    setSentenceIndex(0);
-    setRevealed(false);
-    setAudioNotice('');
-    setSpeechResult(null);
-    setSpeechError(null);
+    try {
+      if (recorderState.isRecording) {
+        await recorder.stop();
+        await setAudioModeAsync({ allowsRecording: false, playsInSilentMode: true });
+      }
+      const state = await resetLessonSession(lesson.id);
+      if (screenRun.current !== run) return;
+      const saved = state.sessions[lesson.id];
+      attempt.current = saved.attempt;
+      setAttemptEvidence(saved.attemptEvidence ?? {});
+      setStage(saved.stage);
+      setSentenceIndex(saved.sentenceIndex);
+      setRevealed(saved.revealed);
+      setEvidencePassed(false);
+      setAudioNotice('');
+      setSpeechResult(null);
+      setSpeechError(null);
+      setEvaluatingSpeech(false);
+      setCompletionError('');
+      setSessionError('');
+    } catch {
+      if (screenRun.current === run) setSessionError('شروع مجدد ذخیره نشد؛ اطلاعات قبلی حفظ شده‌اند. دوباره تلاش کنید.');
+    } finally {
+      if (screenRun.current === run) {
+        resettingRef.current = false;
+        setResetting(false);
+      }
+    }
   };
   const startSpeechPractice = async () => {
-    if (!PAID_AI_ENABLED) { setSpeechError(PAID_AI_DISABLED_MESSAGE); return; }
+    if (resettingRef.current || !PAID_AI_ENABLED) { if (!resettingRef.current) setSpeechError(PAID_AI_DISABLED_MESSAGE); return; }
+    const run = screenRun.current;
     try {
       setSpeechError(null);
       setSpeechResult(null);
       await stopResponsiveSpeech();
       const permission = await requestRecordingPermissionsAsync();
+      if (screenRun.current !== run) return;
       if (!permission.granted) {
         setSpeechError('برای تمرین گفتاری، اجازه استفاده از میکروفن را فعال کنید.');
         return;
       }
       await setAudioModeAsync({ allowsRecording: true, playsInSilentMode: true });
       await recorder.prepareToRecordAsync();
+      if (screenRun.current !== run) {
+        await setAudioModeAsync({ allowsRecording: false, playsInSilentMode: true });
+        return;
+      }
       recorder.record();
     } catch {
-      setSpeechError('ضبط صدا شروع نشد. دوباره تلاش کنید.');
+      if (screenRun.current === run) setSpeechError('ضبط صدا شروع نشد. دوباره تلاش کنید.');
     }
   };
 
   const stopAndEvaluateSpeech = async () => {
     if (!PAID_AI_ENABLED) { setSpeechError(PAID_AI_DISABLED_MESSAGE); return; }
-    if (!recorderState.isRecording || evaluatingSpeech) return;
+    if (!recorderState.isRecording || evaluatingSpeech || resettingRef.current) return;
+    const run = screenRun.current;
     try {
       await recorder.stop();
       await setAudioModeAsync({ allowsRecording: false, playsInSilentMode: true });
+      if (screenRun.current !== run) return;
       if (!recorder.uri) throw new Error('Recording URI is missing');
       setEvaluatingSpeech(true);
       setSpeechError(null);
-      setSpeechResult(await evaluateSpokenSentence(recorder.uri, current.en));
+      const result = await evaluateSpokenSentence(recorder.uri, current.en);
+      if (screenRun.current === run) setSpeechResult(result);
     } catch (cause) {
-      setSpeechError(cause instanceof Error && cause.message !== 'Recording URI is missing' ? cause.message : 'صدای شما بررسی نشد. دوباره تلاش کنید.');
+      if (screenRun.current === run) setSpeechError(cause instanceof Error && cause.message !== 'Recording URI is missing' ? cause.message : 'صدای شما بررسی نشد. دوباره تلاش کنید.');
     } finally {
-      setEvaluatingSpeech(false);
+      if (screenRun.current === run) setEvaluatingSpeech(false);
     }
   };
 
@@ -209,7 +256,7 @@ export default function SentenceLessonScreen() {
   };
 
   const next = async () => {
-    if (!sessionReady || sessionError || completing.current) return;
+    if (!sessionReady || sessionError || completing.current || resettingRef.current) return;
     if (stage === 1 && sentenceIndex < lesson.sentences.length - 1) {
       setSentenceIndex((value) => value + 1);
       setRevealed(false);
@@ -229,7 +276,7 @@ export default function SentenceLessonScreen() {
     const nextLesson = nextLessonInOrder(SENTENCE_LESSONS, lesson.id);
     // Persist both the completed path and its final session before navigating.
     await completeSentenceLesson(lesson.id, nextLesson?.id);
-    await saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed });
+    await saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed, attempt: attempt.current, attemptEvidence });
     void stopResponsiveSpeech();
     if (nextLesson) router.replace({ pathname: '/course/lesson', params: { id: nextLesson.id } } as never);
     else router.replace('/lang' as never);
@@ -246,14 +293,15 @@ export default function SentenceLessonScreen() {
   };
 
   if (invalidLesson) return <View style={styles.root}><PageNavigation backFallback="/lang/library" /><Text style={styles.stageDesc}>درس پیدا نشد.</Text><Pressable accessibilityRole="button" onPress={()=>router.replace('/lang/library' as never)}><Text style={styles.stageTitle}>فهرست درس‌ها</Text></Pressable></View>;
-  if (!sessionReady) return <View style={styles.root}><PageNavigation backFallback="/lang" /><Text style={styles.stageDesc}>{sessionError || 'در حال بازیابی جلسه…'}</Text></View>;
+  if (!sessionReady) return <View style={styles.root}><PageNavigation backFallback="/lang" /><Text style={styles.stageDesc}>{sessionError || 'در حال بازیابی جلسه…'}</Text>{!!sessionError && <Pressable accessibilityRole="button" onPress={() => setReload(value => value + 1)}><Text style={styles.stageTitle}>تلاش دوباره</Text></Pressable>}</View>;
   return (
     <View style={styles.root} onTouchStart={timer.interact}>
-      <ScrollView style={styles.lessonScroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      {resetting && <Text accessibilityLiveRegion="polite" style={styles.stageDesc}>در حال ذخیرهٔ شروع مجدد…</Text>}
+      <ScrollView pointerEvents={resetting ? 'none' : 'auto'} style={styles.lessonScroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
           <PageNavigation tone="dark" backFallback="/lang" />
-          <Pressable accessibilityRole="button" accessibilityLabel="شروع از ابتدای این درس" style={styles.restartLessonButton} onPress={startCurrentLessonFromBeginning}><RotateCcw size={15} color="#FFFFFF" /><Text style={styles.restartLessonButtonText}>شروع از ابتدا</Text></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel="شروع از ابتدای این درس" accessibilityState={{ disabled: resetting || saving }} disabled={resetting || saving} style={styles.restartLessonButton} onPress={() => void startCurrentLessonFromBeginning()}><RotateCcw size={15} color="#FFFFFF" /><Text style={styles.restartLessonButtonText}>شروع از ابتدا</Text></Pressable>
           <View style={styles.headerText}>
             <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
@@ -493,14 +541,14 @@ export default function SentenceLessonScreen() {
               ? CORE_LESSON_EVIDENCE[lesson.id]
                 ? <Text style={styles.stageDesc}>همهٔ {toPersianDigits(CORE_LESSON_EVIDENCE[lesson.id].length)} سنجشِ این درس با پاسخ درست ثبت شد ✓</Text>
                 : <View><Text style={styles.stageDesc}>شنیداری: ثبت شد ✓</Text><Text style={styles.stageDesc}>نوشتاری: ثبت شد ✓</Text></View>
-              : <EnglishLessonEvidence key={lesson.id} lesson={lesson} onPassed={() => setEvidencePassed(true)} />}
+              : <EnglishLessonEvidence key={`${lesson.id}-${attempt.current?.id ?? 'legacy'}`} lesson={lesson} attemptEvidence={attemptEvidence} onAttemptResult={(taskId, correct) => { if (!resettingRef.current) setAttemptEvidence(previous => previous ? { ...previous, [taskId]: correct } : previous); }} onPassed={() => { if (!resettingRef.current) setEvidencePassed(true); }} />}
           </View>
         )}
         {!!completionError && <Text style={styles.stageDesc}>{completionError}</Text>}
       </View>
       </ScrollView>
 
-      <View style={styles.footer}>
+      <View pointerEvents={resetting ? 'none' : 'auto'} style={styles.footer}>
         <View style={styles.footerButtons}>
           {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && { opacity: .45 }]}>
             <Text style={styles.secondaryControlText}>جمله قبلی</Text>

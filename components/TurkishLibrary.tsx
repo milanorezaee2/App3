@@ -9,7 +9,7 @@ import { EnglishLevelRail, EnglishProgressTrack, EnglishSectionHeading, displayE
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { TURKISH_LEVELS, TURKISH_LESSONS, turkishProgress, type TurkishLevelId } from '@/lib/languages/turkish';
 import type { CourseProgress } from '@/lib/courseProgress';
-import { loadTurkishLessonSession, type TurkishLessonSession } from '@/lib/languages/turkishStudyState';
+import { loadTurkishLessonSessionWithPresence, type TurkishLessonSession } from '@/lib/languages/turkishStudyState';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 
@@ -20,9 +20,9 @@ function lessonUnitLabel(mode: 'words' | 'chunks' | 'sentences') {
 }
 
 function lessonStatus(lessonId: string, progress: CourseProgress | null, sessions: Record<string, TurkishLessonSession | null>) {
-  if (progress?.completedLessonIds.includes(lessonId)) return 'تکمیل‌شده · قابل مرور';
   const session = sessions[lessonId];
-  if (session && (session.stage > 0 || session.sentenceIndex > 0)) {
+  if (progress?.completedLessonIds.includes(lessonId)) return session ? 'تکمیل‌شده · ادامهٔ مرور' : 'تکمیل‌شده · قابل مرور';
+  if (session) {
     return `ادامه از مرحله ${fa(session.stage + 1)}، واحد ${fa(session.sentenceIndex + 1)}`;
   }
   return 'شروع درس';
@@ -52,8 +52,8 @@ export default function TurkishLibrary() {
     void Promise.all([
       turkishProgress.getCourseProgress(),
       Promise.all(TURKISH_LESSONS.map(async lesson => {
-        try { return [lesson.id, await loadTurkishLessonSession(lesson.id)] as const; }
-        catch { return [lesson.id, null] as const; }
+        const saved = await loadTurkishLessonSessionWithPresence(lesson.id);
+        return [lesson.id, saved.hasSavedSession ? saved.session : null] as const;
       })),
     ]).then(([nextProgress, nextSessions]) => {
       if (!alive) return;

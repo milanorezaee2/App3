@@ -30,7 +30,7 @@ for (const entry of LANGUAGE_REGISTRY) {
   check(entry.home === '/lang' || /^\/learn\/[a-z]{2,3}$/.test(entry.home), `language ${label} points at a real course route`);
 }
 check(registryModule.exports.isLanguageId('en') === true && registryModule.exports.isLanguageId('zz') === false, 'unknown codes are rejected before they reach routing');
-check(NATIVE_DEFAULT_SCOPE.every(id => LANGUAGE_IDS.includes(id)) && !NATIVE_DEFAULT_SCOPE.includes('tr'), 'native builds exclude the Turkish course and stay inside the registry');
+check(NATIVE_DEFAULT_SCOPE.every(id => LANGUAGE_IDS.includes(id)) && LANGUAGE_IDS.every(id => NATIVE_DEFAULT_SCOPE.includes(id)), 'native learner builds include all registered languages');
 check(ADMIN_DEFAULT_SCOPE.includes('en') && ADMIN_DEFAULT_SCOPE.includes('tr'), 'the admin build still ships English and Turkish');
 check(STATIC_ROUTE_LANGUAGES.length >= 1 && STATIC_ROUTE_LANGUAGES.every(id => LANGUAGE_IDS.includes(id)), 'static web routes are generated from the registry');
 

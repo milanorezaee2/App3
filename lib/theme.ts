@@ -117,13 +117,14 @@ export const Radius = {
 };
 
 export const Typography = {
-  // Persian UI and Persian numerals use bundled Beiruti; explicit LTR teaching
-  // copy uses bundled Inter, so neither path depends on an OEM font.
+  // Persian keeps its bundled Beiruti. Times New Roman is a system font, not
+  // bundled: Android has no reliable system-font availability API and usually
+  // lacks Times, so request its generic serif instead of falling back to Roboto.
   fontFamily: 'Beiruti',
   mediumFontFamily: 'Beiruti-Medium',
   boldFontFamily: 'Beiruti',
   numberFontFamily: 'Beiruti',
-  latinFontFamily: 'Times New Roman',
+  latinFontFamily: Platform.OS === 'web' ? "'Times New Roman', Times, serif" : Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
   sizes: {
     xs: 11,
     sm: 13,

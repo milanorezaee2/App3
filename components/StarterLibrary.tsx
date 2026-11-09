@@ -42,9 +42,9 @@ const groupLabels = { sounds:'صدا و نوشتار', words:'واژه‌های 
 
 function lessonStatus(lesson: StarterLesson, progress: CourseProgress | null, sessions: Record<string, StarterLessonSession | null>) {
   const lessonId = lesson.id;
-  if (progress?.completedLessonIds.includes(lessonId)) return 'تکمیل‌شده · قابل مرور';
   const session = sessions[lessonId];
-  if (session && (session.stage > 0 || session.sentenceIndex > 0)) {
+  if (progress?.completedLessonIds.includes(lessonId)) return session ? 'تکمیل‌شده · ادامهٔ مرور' : 'تکمیل‌شده · قابل مرور';
+  if (session) {
     return `ادامه از مرحله ${fa(session.stage + 1)}، ${lesson.learningMode === 'chunks' ? 'عبارت' : lesson.learningMode ? 'واژه' : 'جمله'} ${fa(session.sentenceIndex + 1)}`;
   }
   return 'شروع درس';
@@ -94,8 +94,8 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
     void Promise.all([
       courseProgress.getCourseProgress(),
       Promise.all(lessons.map(async lesson => {
-        try { const saved = await loadStarterLessonSessionWithPresence(lesson.id); return [lesson.id, saved.hasSavedSession ? saved.session : null] as const; }
-        catch { return [lesson.id, null] as const; }
+        const saved = await loadStarterLessonSessionWithPresence(lesson.id);
+        return [lesson.id, saved.hasSavedSession ? saved.session : null] as const;
       })),
     ]).then(([nextProgress, nextSessions]) => {
       if (!alive) return;

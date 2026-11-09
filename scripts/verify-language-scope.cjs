@@ -32,9 +32,16 @@ function load(platform, env = {}, admin = false) {
 }
 const six = ['en', 'ru', 'tr', 'de', 'fr', 'es'];
 const values = scope => Array.from(scope.LANGUAGE_SCOPE);
+for (const platform of ['web', 'android', 'ios']) {
+  assert.equal(load(platform).FEATURES.learnerLogin, false, `${platform}: unset login flag is off`);
+  for (const value of ['false', '', 'TRUE', '1', ' true ']) {
+    assert.equal(load(platform, { EXPO_PUBLIC_LEARNER_LOGIN: value }).FEATURES.learnerLogin, false, `${platform}: ${JSON.stringify(value)} does not enable login`);
+  }
+  assert.equal(load(platform, { EXPO_PUBLIC_LEARNER_LOGIN: 'true' }).FEATURES.learnerLogin, true, `${platform}: explicit true enables login`);
+}
 assert.deepEqual(values(load('web')), six);
 assert.equal(load('web').isLanguageEnabled('tr'), true);
-assert.deepEqual(values(load('android')), ['en', 'ru', 'de', 'fr', 'es']);
+assert.deepEqual(values(load('android')), six);
 assert.deepEqual(values(load('web', {}, true)), ['en', 'tr']);
 assert.deepEqual(values(load('web', { EXPO_PUBLIC_LANGUAGE_SCOPE: ' en,fr, en ' })), ['en', 'fr']);
 assert.equal(load('web', { EXPO_PUBLIC_LANGUAGE_SCOPE: 'en,fr' }).isLanguageEnabled('tr'), false);
@@ -42,4 +49,4 @@ const learnerScript = require('../package.json').scripts['build:web:learner'];
 assert(learnerScript.includes('EXPO_PUBLIC_LANGUAGE_SCOPE=en,ru,tr,de,fr,es'));
 assert(read('app/languages.tsx').includes('LANGUAGE_SCOPE.includes(language.id)'));
 assert(read('app/learn/[language]/_layout.tsx').includes('!isLanguageEnabled(language)'));
-console.log('Web default and explicit learner scope include Turkish; explicit scope, admin and native defaults remain isolated.');
+console.log('Web and native learner defaults include all six languages; explicit and admin scopes remain isolated.');

@@ -138,60 +138,23 @@ if ! timeout 30s adb exec-out screencap -p > "$screenshot_file"; then
   echo 'Warning: screenshot capture failed; continuing with the UI hierarchy check.'
 fi
 
-failed_step="verifying the mandatory learner OTP gate rendered"
-registration_gate=false
-if { grep -Fq 'ورود به حساب' "$ui_file" && grep -Fq 'ارسال کد ورود به ایمیل' "$ui_file"; } \
-  || { grep -Fq 'ساخت حساب زبان‌آموز' "$ui_file" && grep -Fq 'ساخت حساب و ارسال کد' "$ui_file"; }; then
-  registration_gate=true
-  echo 'Android emulator opened MiloMultilang and rendered its email OTP login or registration gate.'
-elif (grep -Fq 'MILO' "$ui_file" || grep -Fq 'Milo' "$ui_file") && grep -Fq 'هر روز، یک قدم' "$ui_file"; then
-  echo 'Android emulator restored an authenticated learner and rendered the language home.'
-else
-  echo 'Neither the learner registration gate nor the authenticated language home was found.'
+failed_step="verifying the open learner language screen"
+for attempt in 1 2 3; do
+  if grep -Fq 'زبان را از زندگی یاد بگیر' "$ui_file"; then break; fi
+  sleep 10
+  capture_ui
+done
+if ! grep -Fq 'زبان را از زندگی یاد بگیر' "$ui_file"; then
+  echo 'The open learner language selection screen was not found.'
   exit 1
 fi
-
-if [[ "$registration_gate" == true ]]; then
-  failed_step="opening the keyboard in the learner registration form"
-  registration_coords="$(python3 - "$ui_file" <<'PY'
-import re, sys, xml.etree.ElementTree as ET
-for node in ET.parse(sys.argv[1]).getroot().iter():
-    if node.attrib.get('content-desc', '') == 'ایمیل حساب':
-        match = re.search(r'\[(\d+),(\d+)\]\[(\d+),(\d+)\]', node.attrib.get('bounds', ''))
-        if match:
-            x1,y1,x2,y2=map(int,match.groups()); print((x1+x2)//2,(y1+y2)//2); break
-PY
-)"
-  [[ -n "$registration_coords" ]] || { echo 'Registration email input was not found.'; exit 1; }
-  read -r registration_x registration_y <<< "$registration_coords"
-  adb shell settings put secure show_ime_with_hard_keyboard 1
-  adb shell input tap "$registration_x" "$registration_y"
-  sleep 5
-  capture_ui
-  keyboard_state="$(adb shell dumpsys input_method 2>/dev/null || true)"
-  grep -Eq 'mInputShown=true|isInputViewShown=true|inputShown=true' <<< "$keyboard_state" || { echo 'Registration keyboard did not open.'; exit 1; }
-  python3 - "$ui_file" <<'PY'
-import re, sys, xml.etree.ElementTree as ET
-root=ET.parse(sys.argv[1]).getroot(); input_bottom=None; keyboard_tops=[]
-for node in root.iter():
-    bounds=re.search(r'\[(\d+),(\d+)\]\[(\d+),(\d+)\]',node.attrib.get('bounds',''))
-    if not bounds: continue
-    x1,y1,x2,y2=map(int,bounds.groups())
-    if node.attrib.get('content-desc','') == 'ایمیل حساب': input_bottom=y2
-    package=node.attrib.get('package','').lower()
-    if 'inputmethod' in package or 'keyboard' in package: keyboard_tops.append(y1)
-if input_bottom is None: raise SystemExit('Registration input disappeared with keyboard open.')
-if keyboard_tops and input_bottom > min(keyboard_tops):
-    raise SystemExit(f'Registration input overlaps keyboard by {input_bottom-min(keyboard_tops)}px.')
-print('Registration input remains fully visible above the software keyboard.')
-PY
-  adb shell input keyevent KEYCODE_BACK
+if grep -Fq 'ارسال کد ورود به ایمیل' "$ui_file" || grep -Fq 'ساخت حساب زبان‌آموز' "$ui_file"; then
+  echo 'The open learner APK unexpectedly displayed a login prompt.'
+  exit 1
 fi
+echo 'Android emulator opened learner language selection without an account prompt.'
 
-# A clean CI install intentionally has no production learner credentials. Chat
-# geometry remains covered when an authenticated test session is restored; on a
-# first install we verify the account gate and continue with the separate admin APK.
-if [[ "$registration_gate" == false ]]; then
+# The open build makes the existing chat keyboard checks available on a clean install.
 failed_step="opening the Emma chat keyboard test route"
 timeout 60s adb shell am start -W -a android.intent.action.VIEW -d 'companionenglish:///conversations/emma' com.devicecontrol.companion
 sleep 8
@@ -366,7 +329,6 @@ PY
 
 timeout 30s adb exec-out screencap -p > "$screenshot_file"
 echo 'Android emulator verified both complete chat composers and their side buttons with the keyboard open.'
-fi
 
 failed_step="installing the private management APK"
 adb install -r "$admin_apk_path"
@@ -411,7 +373,7 @@ if [[ -s "$login_apk_path" ]]; then
   # re-dump before deciding the login variant failed to render.
   login_rendered=false
   for login_attempt in 1 2 3; do
-    if grep -Fq 'ساخت حساب زبان‌آموز' "$ui_file" || grep -Fq 'هر روز، یک قدم' "$ui_file"; then
+    if grep -Fq 'ورود به حساب' "$ui_file" || grep -Fq 'ساخت حساب زبان‌آموز' "$ui_file" || grep -Fq 'زبان را از زندگی یاد بگیر' "$ui_file"; then
       login_rendered=true
       echo 'Android emulator launched the learner login APK and rendered its first screen.'
       break

@@ -2,7 +2,7 @@ import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import FoundationA1Entry from '@/components/FoundationA1Entry';
 import { useCallback, useMemo, useState } from 'react';
-import { Alert, Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import {
@@ -91,7 +91,7 @@ export default function TurkishHome() {
         const currentLesson = TURKISH_LESSONS.find(lesson => lesson.id === nextProgress.currentLessonId && !completed.has(lesson.id))
           ?? TURKISH_LESSONS.find(lesson => !completed.has(lesson.id));
         const savedSession = currentLesson
-          ? await loadTurkishLessonSessionWithPresence(currentLesson.id).catch(() => null)
+          ? await loadTurkishLessonSessionWithPresence(currentLesson.id)
           : null;
         if (!alive) return;
         setHasStartedCourse(nextProgress.completedLessonIds.length > 0 || !!savedSession?.hasSavedSession);
@@ -124,12 +124,8 @@ export default function TurkishHome() {
 
   const openLevel = (levelId: TurkishLevelId) => router.push(`/learn/tr/library?level=${levelId}` as never);
 
-  const restartFromBeginnerLevel = () => {
-    Alert.alert('شروع مجدد از سطح ابتدایی', 'می‌خواهید دوباره از اولین درسِ سطح ابتداییِ ترکی استانبولی شروع کنید؟ محتوای درس‌ها دست‌نخورده می‌ماند.', [
-      { text: 'انصراف', style: 'cancel' },
-      { text: 'شروع مجدد', style: 'destructive', onPress: () => { void turkishProgress.setCurrentLesson(TURKISH_LESSONS[0].id).then(() => router.push({ pathname: '/learn/tr/lesson', params: { id: TURKISH_LESSONS[0].id, fromStart: '1' } } as never)).catch(() => undefined); } },
-    ]);
-  };
+  // Level replay is temporary; only the same-lesson reset replaces a saved attempt.
+  const replayBeginnerLevel = () => router.push({ pathname: '/learn/tr/lesson', params: { id: TURKISH_LESSONS[0].id, levelReplay: '1' } } as never);
   const openNextLesson = () => {
     if (resumeLesson) router.push(`/learn/tr/lesson?id=${encodeURIComponent(resumeLesson.id)}` as never);
     else openLevel(3);
@@ -349,12 +345,12 @@ export default function TurkishHome() {
             </Pressable>
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel="شروع مجدد آموزش ترکی استانبولی از سطح ابتدایی"
+              accessibilityLabel="مرور از ابتدای سطح ترکی استانبولی"
               style={({ pressed }) => [styles.startFromBeginningButton, pressed && styles.buttonPressed]}
-              onPress={restartFromBeginnerLevel}
+              onPress={replayBeginnerLevel}
             >
               <RotateCcw size={17} color={HomeColors.accent} />
-              <Text style={styles.startFromBeginningText}>شروع مجدد از سطح ابتدایی</Text>
+              <Text style={styles.startFromBeginningText}>مرور از ابتدای سطح</Text>
             </Pressable>
           </View>
 

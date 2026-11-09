@@ -10,10 +10,11 @@ import {
   View,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useRouter } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import { Cloud, LockKeyhole, Mail, RefreshCw, ShieldCheck, Smartphone, UserRound, X } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
 import { isSupabaseConfigured } from '@/lib/pairing';
+import { FEATURES } from '@/lib/features';
 import { syncPersonalLearningData } from '@/lib/personalLearningSync';
 import { supabase } from '@/lib/supabase';
 import { Typography } from '@/lib/theme';
@@ -23,6 +24,13 @@ const configured = isSupabaseConfigured();
 type Step = 'email' | 'code';
 
 export default function PersonalSyncScreen() {
+  // Do not mount the account screen or its auth/sync effects in open builds.
+  // Existing sessions and learning data are left untouched.
+  if (!FEATURES.learnerLogin) return <Redirect href={'/languages' as never} />;
+  return <PersonalSyncEnabledScreen />;
+}
+
+function PersonalSyncEnabledScreen() {
   const router = useRouter();
   const [step, setStep] = useState<Step>('email');
   const [email, setEmail] = useState('');

@@ -31,7 +31,8 @@ async function readRaw(): Promise<string | null> {
 
 async function writeRaw(value: string): Promise<void> {
   if (Platform.OS === 'web') {
-    if (typeof window !== 'undefined') window.localStorage.setItem(storageKey, value);
+    if (typeof window === 'undefined') throw new Error('ذخیرهٔ محلی در دسترس نیست.');
+    window.localStorage.setItem(storageKey, value);
     return;
   }
   await AsyncStorage.setItem(storageKey, value);
@@ -74,11 +75,13 @@ function validateSession(lessonId: string, value: unknown): StarterLessonSession
   };
 }
 
-async function loadStarterLessonSessionWithPresence(lessonId: string): Promise<{ session: StarterLessonSession; hasSavedSession: boolean }> {
-  if (!lessons.some(item => item.id === lessonId)) throw new Error('درس این زبان پیدا نشد.');
-  const state = parseState(await readRaw());
-  const saved = state.sessions[lessonId];
-  return { session: saved === undefined ? freshStarterLessonSession() : validateSession(lessonId, saved), hasSavedSession: saved !== undefined };
+function loadStarterLessonSessionWithPresence(lessonId: string): Promise<{ session: StarterLessonSession; hasSavedSession: boolean }> {
+  return serial(async () => {
+    if (!lessons.some(item => item.id === lessonId)) throw new Error('درس این زبان پیدا نشد.');
+    const state = parseState(await readRaw());
+    const saved = state.sessions[lessonId];
+    return { session: saved === undefined ? freshStarterLessonSession() : validateSession(lessonId, saved), hasSavedSession: saved !== undefined };
+  });
 }
 
 async function loadStarterLessonSession(lessonId: string): Promise<StarterLessonSession> {
@@ -100,6 +103,13 @@ function saveStarterLessonSession(lessonId: string, value: StarterLessonSession)
   });
 }
 
+/** Replace only this lesson's attempt, after any earlier queued saves. */
+async function resetStarterLessonSession(lessonId: string): Promise<StarterLessonSession> {
+  const fresh = freshStarterLessonSession();
+  await saveStarterLessonSession(lessonId, fresh);
+  return fresh;
+}
+
 function clearStarterLessonSession(lessonId: string): Promise<void> {
   return serial(async () => {
     if (!lessons.some(item => item.id === lessonId)) throw new Error('درس این زبان پیدا نشد.');
@@ -113,5 +123,5 @@ function clearStarterLessonSession(lessonId: string): Promise<void> {
   });
 }
 
-return { loadStarterLessonSessionWithPresence, loadStarterLessonSession, saveStarterLessonSession, clearStarterLessonSession };
+return { loadStarterLessonSessionWithPresence, loadStarterLessonSession, saveStarterLessonSession, resetStarterLessonSession, clearStarterLessonSession };
 }

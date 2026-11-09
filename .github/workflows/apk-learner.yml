@@ -46,6 +46,7 @@ jobs:
     env:
       CI: '1'
       EXPO_NO_TELEMETRY: '1'
+      EXPO_PUBLIC_LEARNER_LOGIN: 'false'
       NODE_OPTIONS: '--max-old-space-size=8192'
       # Real phones need arm64-v8a (current) or armeabi-v7a (old). x86/x86_64
       # only exist for emulators and roughly double the native payload.
@@ -94,6 +95,8 @@ jobs:
           npm run validate:pronunciation
           npm run validate:registration-admin
           npm run validate:language-entry
+          npm run validate:personal-sync
+          node scripts/verify-app-resume.cjs
           npm run validate:a11y
           npm run validate:requested-updates
 

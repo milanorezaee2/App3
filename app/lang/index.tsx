@@ -29,6 +29,7 @@ import { PageNavigation } from '@/components/PageNavigation';
 import { COURSE_LEVELS, SENTENCE_LESSONS } from '@/lib/courseContent';
 import { getCourseProgress, setCurrentLesson, type CourseProgress } from '@/lib/courseProgress';
 import { syncPersonalLearningData } from '@/lib/personalLearningSync';
+import { FEATURES } from '@/lib/features';
 import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '@/components/LearningHomeStyles';
 import { toPersianDigits } from '@/lib/format';
 import { loadStudy, studyDay } from '@/lib/englishStudyState';
@@ -392,7 +393,7 @@ export default function LearningHome() {
               <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Volume2 size={18} color={HomeColors.accent} /></View>
               <View style={styles.quickCopy}>
                 <Text style={styles.quickTitle}>کارگاه تلفظ انگلیسی</Text>
-                <Text style={styles.quickDesc}>تمرین صداها، تکیه و آهنگ جمله؛ خودارزیابی و همگام‌سازی حساب</Text>
+                <Text style={styles.quickDesc}>{FEATURES.learnerLogin ? 'تمرین صداها، تکیه و آهنگ جمله؛ خودارزیابی و همگام‌سازی حساب' : 'تمرین صداها، تکیه و آهنگ جمله؛ خودارزیابی'}</Text>
               </View>
               <ChevronLeft size={17} color={HomeColors.muted} />
             </Pressable>
@@ -404,14 +405,14 @@ export default function LearningHome() {
               </View>
               <ChevronLeft size={17} color={HomeColors.muted} />
             </Pressable>
-            <Pressable accessibilityRole="button" accessibilityLabel="ورود ایمیلی و همگام‌سازی شخصی" style={({ pressed }) => [styles.quickCard, pressed && styles.buttonPressed]} onPress={() => router.push('/personal-sync' as never)}>
+            {FEATURES.learnerLogin && <Pressable accessibilityRole="button" accessibilityLabel="ورود ایمیلی و همگام‌سازی شخصی" style={({ pressed }) => [styles.quickCard, pressed && styles.buttonPressed]} onPress={() => router.push('/personal-sync' as never)}>
               <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Cloud size={18} color={HomeColors.accent} /></View>
               <View style={styles.quickCopy}>
                 <Text style={styles.quickTitle}>حساب و همگام‌سازی</Text>
                 <Text style={styles.quickDesc}>پیشرفت و تلفظ هر دو زبان میان دستگاه‌ها</Text>
               </View>
               <ChevronLeft size={17} color={HomeColors.muted} />
-            </Pressable>
+            </Pressable>}
           </View>
 
           <View style={styles.noteCard}>
