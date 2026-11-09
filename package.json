@@ -39,6 +39,7 @@
     "validate:english-lesson-flow": "node scripts/verify-english-lesson-flow.cjs",
     "validate:web-shell": "node scripts/verify-web-shell.mjs",
     "apk:report": "node scripts/apk-report.mjs",
+    "podcast:audio": "node scripts/generate-podcast-audio.mjs",
     "validate:background-notifications": "node scripts/verify-background-notifications.mjs"
   },
   "dependencies": {

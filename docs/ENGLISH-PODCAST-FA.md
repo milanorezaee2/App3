@@ -42,3 +42,35 @@ EXPO_PUBLIC_PODCAST_AUDIO_URL=https://YOUR_PROJECT.supabase.co/storage/v1/object
 ## فاز ۳ — سؤالات درک مطلب
 پس از پایان هر اپیزود، ۵ سؤال از جمله‌های همان درس ساخته می‌شود (معنی جمله، جملهٔ انگلیسی شنیده‌شده، معنی واژه).
 پاسخ‌های اشتباه با `addSentenceToReview` به کارت‌های مرور فاصله‌دار (`/review`) اضافه می‌شوند و بهترین نمره به‌صورت محلی ذخیره می‌شود.
+
+## تولید خودکار MP3 (`scripts/generate-podcast-audio.mjs`)
+
+از همان مدل اپیزودهای اپ، برای هر اپیزود یک MP3 و `manifest.json` (با `durationSec` و `cues` دقیق) می‌سازد.
+هر جمله یک‌بار عادی و یک‌بار آهسته (۰٫۷×) خوانده می‌شود؛ بین بخش‌ها سکوت کوتاه قرار می‌گیرد.
+
+پیش‌نیاز: `ffmpeg` و `ffprobe` روی PATH، و کلید یکی از سرویس‌ها (هرگز در Git قرار نگیرد):
+
+```bash
+# OpenAI TTS (پیش‌فرض)
+export OPENAI_API_KEY=sk-...            # اختیاری: OPENAI_TTS_MODEL=gpt-4o-mini-tts  OPENAI_TTS_VOICE=alloy
+# یا ElevenLabs
+export PODCAST_TTS_PROVIDER=elevenlabs ELEVENLABS_API_KEY=... ELEVENLABS_VOICE_ID=...
+
+npm run podcast:audio -- --dry-run                 # فقط برآورد حجم متن، بدون هزینه
+npm run podcast:audio -- --level 0 --limit 3       # آزمایش روی ۳ اپیزود Foundation
+npm run podcast:audio                              # همهٔ ۲۱۲ اپیزود → dist-podcast/
+```
+
+گزینه‌ها: `--out DIR`، `--level N`، `--ids id1,id2`، `--limit N`، `--provider`، `--voice`، `--concurrency 3`، `--force` (بازسازی)، `--upload`.
+کلیپ‌های هر بخش در `dist-podcast/.cache` ذخیره می‌شوند تا اجرای دوباره هزینهٔ اضافه نداشته باشد.
+
+آپلود مستقیم به Supabase Storage (bucket عمومی):
+
+```bash
+export SUPABASE_URL=https://YOUR_PROJECT.supabase.co SUPABASE_SERVICE_ROLE_KEY=... PODCAST_BUCKET=podcast
+npm run podcast:audio -- --upload
+# سپس در .env:
+# EXPO_PUBLIC_PODCAST_AUDIO_URL=https://YOUR_PROJECT.supabase.co/storage/v1/object/public/podcast
+```
+
+`dist-podcast/` در `.gitignore` است؛ فایل‌های صوتی را در Git قرار ندهید.

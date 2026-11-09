@@ -43,3 +43,6 @@ yarn-error.*
 dist-final-*/
 dist-preview-focused-home/
 dist-focused-coach-dark-home/
+
+# Generated podcast audio (large; host externally)
+dist-podcast/
