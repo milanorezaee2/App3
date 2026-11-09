@@ -20,7 +20,7 @@ function childrenText(children: React.ReactNode): string {
   return textScript(direct) ? direct : nested;
 }
 
-const persian: TextStyle = { fontFamily: 'Beiruti-Bold', fontWeight: '700', textAlign: 'right', writingDirection: 'rtl' };
+const persian: TextStyle = { fontFamily: 'Beiruti', fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' };
 const leftToRight: TextStyle = { fontFamily: Typography.latinFontFamily, textAlign: 'left', writingDirection: 'ltr' };
 function scriptStyle(text: string): TextStyle | undefined {
   const script = textScript(text);

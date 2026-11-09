@@ -307,9 +307,9 @@ export default function LearningHome() {
                 <Text style={styles.lessonCountLabel}>جمله</Text>
               </View>
             </View>
-            <Pressable accessibilityRole="button" accessibilityLabel="گوش دادن از ابتدای آموزش انگلیسی" style={styles.startFromBeginningButton} onPress={() => router.push({ pathname: '/course/lesson', params: { id: SENTENCE_LESSONS[0].id, fromStart: '1' } } as never)}>
+            <Pressable accessibilityRole="button" accessibilityLabel="شروع از ابتدای درس انگلیسی" style={styles.startFromBeginningButton} onPress={() => router.push({ pathname: '/course/lesson', params: { id: currentLesson.id, fromStart: '1' } } as never)}>
               <Volume2 size={17} color={HomeColors.accent} />
-              <Text style={styles.startFromBeginningText}>گوش دادن از ابتدا</Text>
+              <Text style={styles.startFromBeginningText}>شروع از ابتدا</Text>
             </Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="شروع مجدد آموزش انگلیسی از سطح ابتدایی" style={styles.startFromBeginningButton} onPress={restartFromBeginnerLevel}>
               <RotateCcw size={17} color={HomeColors.accent} />

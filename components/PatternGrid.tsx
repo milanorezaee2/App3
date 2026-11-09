@@ -44,5 +44,5 @@ const styles = StyleSheet.create({
   cellPressed: { opacity: .72 },
   dot: { width: 30, height: 30, borderRadius: 15, borderWidth: 2, borderColor: Colors.neutral[500], backgroundColor: Colors.neutral[900], alignItems: 'center', justifyContent: 'center' },
   dotSelected: { width: 42, height: 42, borderRadius: 21, borderColor: Colors.primary[300], backgroundColor: Colors.primary[500] },
-  order: { fontFamily: Typography.fontFamily, color: Colors.onColor, fontSize: 14, fontWeight: '700' },
+  order: { fontFamily: Typography.fontFamily, color: Colors.onColor, fontSize: 14, fontWeight: '400' },
 });

@@ -337,12 +337,12 @@ export default function RussianHome() {
             </View>
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel="گوش دادن از ابتدای آموزش روسی"
+              accessibilityLabel="شروع از ابتدای این درس"
               style={({ pressed }) => [styles.startFromBeginningButton, pressed && styles.buttonPressed]}
-              onPress={() => router.push({ pathname: '/learn/ru/lesson', params: { id: RUSSIAN_LESSONS[0].id, fromStart: '1' } } as never)}
+              onPress={() => router.push({ pathname: '/learn/ru/lesson', params: { id: heroLesson.id, fromStart: '1' } } as never)}
             >
               <Volume2 size={17} color={HomeColors.accent} />
-              <Text style={styles.startFromBeginningText}>گوش دادن از ابتدا</Text>
+              <Text style={styles.startFromBeginningText}>شروع از ابتدا</Text>
             </Pressable>
             <Pressable
               accessibilityRole="button"

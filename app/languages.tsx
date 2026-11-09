@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   heroImage: { borderRadius: 24 },
   heroCompact: { minHeight: 188, padding: 19 },
   heroCopy: { width: '78%', alignItems: 'flex-start', gap: 8 },
-  title: { width: '100%', fontFamily: 'Beiruti-Bold', color: palette.ink, fontSize: 30, lineHeight: 46, textAlign: 'left', writingDirection: 'rtl' },
+  title: { width: '100%', fontFamily: 'Beiruti', color: palette.ink, fontSize: 30, lineHeight: 46, textAlign: 'left', writingDirection: 'rtl' },
   titleTiny: { fontSize: 25, lineHeight: 38 },
   subtitle: { width: '100%', fontFamily: 'Beiruti', color: '#5B6257', fontSize: 15, lineHeight: 25, textAlign: 'left', writingDirection: 'rtl' },
   eyebrow: { alignSelf: 'flex-start', marginTop: 5, fontFamily: 'Times New Roman', color: palette.forest, fontSize: 9, lineHeight: 15, letterSpacing: 1.7, writingDirection: 'ltr' },
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
   stepIconAqua: { backgroundColor: palette.terracottaSoft, borderColor: '#EAD0C1' },
   stepCopy: { flex: 1, minWidth: 0, alignItems: 'flex-end', gap: 3 },
   stepCopyRtl: { alignItems: 'flex-start' },
-  stepTitle: { fontFamily: 'Beiruti-Bold', color: palette.ink, fontSize: 17, lineHeight: 26, textAlign: 'right', writingDirection: 'rtl' },
+  stepTitle: { fontFamily: 'Beiruti', color: palette.ink, fontSize: 17, lineHeight: 26, textAlign: 'right', writingDirection: 'rtl' },
   stepDetail: { fontFamily: 'Beiruti', color: palette.muted, fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
   pressed: { opacity: 0.84, transform: [{ scale: 0.985 }] },
 });

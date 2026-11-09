@@ -121,8 +121,8 @@ export const Typography = {
   // copy uses bundled Inter, so neither path depends on an OEM font.
   fontFamily: 'Beiruti',
   mediumFontFamily: 'Beiruti-Medium',
-  boldFontFamily: 'Beiruti-Bold',
-  numberFontFamily: 'Beiruti-Black',
+  boldFontFamily: 'Beiruti',
+  numberFontFamily: 'Beiruti',
   latinFontFamily: 'Times New Roman',
   sizes: {
     xs: 11,
