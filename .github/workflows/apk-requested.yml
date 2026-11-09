@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 11: Android hardware back returns to the previous page instead of closing the app.
 # rev 10: native light theme with black default text; admin phone-lock toggle.
 # rev 9: lesson content scales to fit any screen; chat composer +36dp above keyboard.
 # rev 8: re-run; the previous publish job never started on GitHub.

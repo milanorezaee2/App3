@@ -22,6 +22,7 @@ import { Beiruti_900Black } from '@expo-google-fonts/beiruti/900Black';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AppLockGate } from '@/components/AppLockGate';
+import { AndroidBackHistory } from '@/components/AndroidBackHistory';
 import { WebStatusBarSpacer } from '@/components/WebStatusBarSpacer';
 import { ChatNotificationBridge } from '@/components/ChatNotificationBridge';
 import { reconcileBackgroundChatChecks } from '@/lib/backgroundChatChecks';
@@ -186,6 +187,7 @@ export default function RootLayout() {
               {!IS_ADMIN_APP && <RuntimeGate />}
               <Stack screenOptions={{ headerShown: false }} />
               <AppResumeGuard />
+              <AndroidBackHistory />
               <ChatNotificationBridge />
             </RegistrationGate>
           </AppLockGate>
