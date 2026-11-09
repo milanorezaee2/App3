@@ -2,6 +2,7 @@ import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { FitScrollView } from '@/components/FitScrollView';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as Speech from 'expo-speech';
@@ -216,7 +217,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
 
   return (
     <View style={styles.root}>
-      <ScrollView ref={lessonScrollRef} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <FitScrollView ref={lessonScrollRef} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
       <View style={styles.brandRow}><MiloGlobeHeadphoneMark size={48} /><Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color="#4F438D" strokeWidth={2.4} /></Pressable></View>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
@@ -360,7 +361,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
         {!!(sessionError || completionError) && <Text accessibilityRole="alert" style={styles.error}>{sessionError || completionError}</Text>}
         {sessionError ? <Pressable accessibilityRole="button" style={styles.retrySaveButton} onPress={() => setSaveRetry(value => value + 1)}><Text style={styles.retrySaveText}>تلاش دوباره برای ذخیرهٔ جلسه</Text></Pressable> : null}
       </View>
-      </ScrollView>
+      </FitScrollView>
 
       <View style={styles.footer}>
         <View style={styles.footerActions}>

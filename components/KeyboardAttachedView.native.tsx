@@ -10,6 +10,10 @@ import { KeyboardEvents } from 'react-native-keyboard-controller';
  * where the keyboard's top edge actually is, moves the view by exactly that
  * difference, then re-measures once and corrects any residual gap.
  */
+/** Fixed extra lift above the measured keyboard edge (Android keyboards report a
+ * top edge that sits lower than the visible keys, so part of the composer was hidden). */
+const EXTRA_LIFT = Platform.OS === 'android' ? 36 : 0;
+
 export function KeyboardAttachedView({ children, style, ...props }: React.PropsWithChildren<ViewProps>) {
   const container = useRef<View>(null);
   const translate = useRef(new Animated.Value(0)).current;
@@ -31,7 +35,7 @@ export function KeyboardAttachedView({ children, style, ...props }: React.PropsW
     node.measureInWindow((_x, y, _w, h) => {
       if (!alive.current || keyboardTop.current === null) return;
       const bottomNow = y + h; // includes the translation already applied
-      const gap = top - bottomNow; // > 0: floating above the keyboard; < 0: hidden behind it
+      const gap = top - EXTRA_LIFT - bottomNow; // > 0: floating above the keyboard; < 0: hidden behind it
       if (Math.abs(gap) >= 1) animateTo(current.current + gap);
       // Verify once more after layout and animation settle.
       if (attempt < 2) setTimeout(() => attach(attempt + 1), 180);

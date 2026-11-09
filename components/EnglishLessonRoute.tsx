@@ -2,6 +2,7 @@ import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { FitScrollView } from '@/components/FitScrollView';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import {
@@ -307,7 +308,7 @@ export default function SentenceLessonScreen() {
   return (
     <View style={styles.root} onTouchStart={timer.interact}>
       {resetting && <Text accessibilityLiveRegion="polite" style={styles.stageDesc}>در حال ذخیرهٔ شروع مجدد…</Text>}
-      <ScrollView ref={lessonScrollRef} pointerEvents={resetting ? 'none' : 'auto'} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <FitScrollView ref={lessonScrollRef} pointerEvents={resetting ? 'none' : 'auto'} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
       <View style={styles.brandRow}><MiloGlobeHeadphoneMark size={48} /><PageNavigation backFallback="/lang" /></View>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
@@ -555,7 +556,7 @@ export default function SentenceLessonScreen() {
         )}
         {!!completionError && <Text style={styles.stageDesc}>{completionError}</Text>}
       </View>
-      </ScrollView>
+      </FitScrollView>
 
       <View pointerEvents={resetting ? 'none' : 'auto'} style={styles.footer}>
         <View style={styles.footerButtons}>
