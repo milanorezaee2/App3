@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 6: bigger startup logo, black reading colour, bold Latin/Times text.
 # rev 5: podcast + header/chat fixes; branch pushes build all three flavours.
 # rev 4: rebuilds after every registered language gained a pronunciation
 # workshop (German, French, Spanish). Each flavour is built in its own clean runner. Building the three
