@@ -141,7 +141,7 @@ export default function TurkishLibrary() {
             </View>
           </> : <>
             <View style={styles.selectedTopBar}>
-              <Pressable accessibilityRole="button" style={styles.backButton} onPress={() => router.replace('/learn/tr/library' as never)}><ChevronLeft size={18} color={Palette.ink} /><Text style={styles.backText}>همهٔ سطح‌ها</Text></Pressable>
+              <View style={styles.selectedBrandRow}><MiloGlobeHeadphoneMark size={48} /><Pressable accessibilityRole="button" style={styles.backButton} onPress={() => router.replace('/learn/tr/library' as never)}><ChevronLeft size={18} color={Palette.ink} /><Text style={styles.backText}>همهٔ سطح‌ها</Text></Pressable></View>
               <Text style={styles.brandEyebrow}>LEVEL {selected.id} · TURKISH COURSE MAP</Text>
             </View>
 
@@ -229,6 +229,7 @@ const styles = StyleSheet.create({
   scrollContent: { flexGrow: 1 },
   page: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 20, paddingTop: 18, paddingBottom: 50, gap: 17 },
   topBar: { gap: 4 },
+  selectedBrandRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 },
   selectedTopBar: { gap: 5 },
   backButton: { alignSelf: 'flex-start', minHeight: 38, flexDirection: 'row-reverse', alignItems: 'center', gap: 5, paddingHorizontal: 10, borderRadius: 12, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, marginBottom: 7 },
   backText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 11, fontWeight: '400', writingDirection: 'rtl' },

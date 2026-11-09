@@ -193,7 +193,7 @@ export default function EnglishLessonList() {
           ) : (
             <>
               <View style={styles.selectedTopBar}>
-                <PageNavigation backFallback="/lang/library" />
+                <View style={styles.selectedBrandRow}><MiloGlobeHeadphoneMark size={48} /><PageNavigation backFallback="/lang/library" /></View>
                 <Text style={styles.brandEyebrow}>LEVEL {selected.id} · COURSE MAP</Text>
               </View>
 
@@ -395,6 +395,7 @@ const styles = StyleSheet.create({
   scrollContent: { flexGrow: 1 },
   page: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 20, paddingTop: 18, paddingBottom: 50, gap: 17 },
   topBar: { gap: 4 },
+  selectedBrandRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 },
   selectedTopBar: { gap: 5 },
   brandEyebrow: { fontFamily: 'Times New Roman', color: Palette.primary, fontSize: 7, fontWeight: '800', letterSpacing: 1.2, writingDirection: 'ltr' },
   pageTitle: { fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 29, lineHeight: 39, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
