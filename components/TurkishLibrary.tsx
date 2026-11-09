@@ -1,9 +1,10 @@
+import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import { BookOpen, BookOpenCheck, Check, ChevronDown, ChevronLeft, ChevronUp, Clock3, Play, Sparkles, Volume2 } from 'lucide-react-native';
+import { BookOpen, Check, ChevronDown, ChevronLeft, ChevronUp, Clock3, Play, Sparkles, Volume2 } from 'lucide-react-native';
 import { EnglishLevelRail, EnglishProgressTrack, EnglishSectionHeading, displayEnglishModuleLabel, ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { TURKISH_LEVELS, TURKISH_LESSONS, turkishProgress, type TurkishLevelId } from '@/lib/languages/turkish';
@@ -101,7 +102,7 @@ export default function TurkishLibrary() {
 
             <LinearGradient colors={['#4A1828', '#832843', '#B83D56']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
               <View pointerEvents="none" style={styles.heroOrb} />
-              <View style={styles.heroTopRow}><View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View><View style={styles.heroPill}><Sparkles size={13} color="#FFD6DE" /><Text style={styles.heroPillText}>۷ گام در نقشهٔ ترکی استانبولی</Text></View></View>
+              <View style={styles.heroTopRow}><View style={styles.heroIcon}><MiloGlobeHeadphoneMark size={18} /></View><View style={styles.heroPill}><Sparkles size={13} color="#FFD6DE" /><Text style={styles.heroPillText}>۷ گام در نقشهٔ ترکی استانبولی</Text></View></View>
               <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
               <Text style={styles.overviewTitle}>از واژهٔ نخست تا جمله؛{'\n'}گام‌به‌گام</Text>
               <Text style={styles.overviewText}>در Pre-A1 از واژه‌های مستقل می‌آغازید، بعد ترکیب کوتاه و جمله می‌سازید؛ آموزش الفبا و دستور به‌تدریج در A1 Foundation ادامه می‌یابد. آمار از محتوای واقعی دوره می‌آید.</Text>

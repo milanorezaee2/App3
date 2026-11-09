@@ -1,8 +1,8 @@
+import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { BookOpenCheck } from 'lucide-react-native';
 
 const LETTERS = ['M', 'i', 'l', 'o'];
 const SUBTITLE = 'MULTILANGUAGE';
@@ -61,7 +61,7 @@ export function MiloLogoMotion({ size = 'intro', play = true, onDone }: Props) {
           end={{ x: 1, y: 1 }}
           style={{ width: markSize, height: markSize, borderRadius: isIntro ? 32 : 13, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}
         >
-          <BookOpenCheck size={iconSize} color="#FFFFFF" strokeWidth={2.4} />
+          <MiloGlobeHeadphoneMark size={iconSize} />
           <Animated.View
             pointerEvents="none"
             style={{

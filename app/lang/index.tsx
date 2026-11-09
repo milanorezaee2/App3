@@ -1,3 +1,4 @@
+import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import FoundationA1Entry from '@/components/FoundationA1Entry';
 import { useCallback, useEffect, useState } from 'react';
@@ -7,7 +8,6 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import {
   ArrowLeft,
   BookOpen,
-  BookOpenCheck,
   Check,
   ChevronDown,
   ChevronLeft,
@@ -119,7 +119,7 @@ export default function LearningHome() {
           <View style={styles.header}>
             <View style={styles.brandLockup}>
               <LinearGradient colors={['#635BFF', '#4338CA']} start={{ x: .9, y: 0 }} end={{ x: .1, y: 1 }} style={styles.brandMark}>
-                <BookOpenCheck size={20} color="#F9E8B9" strokeWidth={2} />
+                <MiloGlobeHeadphoneMark size={20} />
               </LinearGradient>
               <View style={styles.brandCopy}>
                 <Text style={styles.brandEyebrow}>LANGUAGE JOURNEY</Text>

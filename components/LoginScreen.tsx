@@ -1,8 +1,9 @@
+import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, ImageBackground, Platform, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ArrowLeft, BookOpenCheck, LockKeyhole, Mail, ShieldCheck, UserRound } from 'lucide-react-native';
+import { ArrowLeft, LockKeyhole, Mail, ShieldCheck, UserRound } from 'lucide-react-native';
 import { KeyboardAwareScrollView, KeyboardAvoidingView } from '@/components/KeyboardRuntime';
 import { Typography } from '@/lib/theme';
 
@@ -80,7 +81,7 @@ function LoginHero({ wide }: { wide: boolean }) {
             end={{ x: 1, y: 1 }}
             style={styles.brandMark}
           >
-            <BookOpenCheck size={19} color="#FFFFFF" strokeWidth={2.4} />
+            <MiloGlobeHeadphoneMark size={19} />
           </LinearGradient>
           <View style={styles.brandCopy}>
             <Text style={styles.brandName}>Milo</Text>

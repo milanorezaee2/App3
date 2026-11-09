@@ -1,3 +1,4 @@
+import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -5,7 +6,6 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   BookOpen,
-  BookOpenCheck,
   Check,
   ChevronDown,
   ChevronLeft,
@@ -130,7 +130,7 @@ export default function EnglishLessonList() {
               <LinearGradient colors={['#19204C', '#343B8A', '#5148C8']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
                 <View pointerEvents="none" style={styles.heroOrb} />
                 <View style={styles.heroTopRow}>
-                  <View style={styles.heroIcon}><BookOpenCheck size={18} color="#FFFFFF" /></View>
+                  <View style={styles.heroIcon}><MiloGlobeHeadphoneMark size={18} /></View>
                   <View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۵ سطح آموزشی</Text></View>
                 </View>
                 <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
