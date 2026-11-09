@@ -1,38 +1,43 @@
 import React, { forwardRef, useState } from 'react';
-import { ScrollView, View, type ScrollViewProps } from 'react-native';
-
-const BOTTOM_GAP = 8;
+import { ScrollView, View, useWindowDimensions, type ScrollViewProps } from 'react-native';
 
 /**
- * A ScrollView that never lets its content overflow: when the natural content
- * height is taller than the viewport, the whole content is scaled down
- * (uniformly, like lowering the resolution) so that everything — including the
- * last buttons — stays visible on any screen size. On tall screens it renders
- * at full size.
+ * Lesson pages render at a slightly lower "resolution" on phones: the whole
+ * content is drawn at a fixed scale (layout stays identical, everything is
+ * simply smaller and fills the full width), so more of the lesson fits on the
+ * screen. Scrolling behaves exactly as before. Wide screens render at 1:1.
  */
-export const FitScrollView = forwardRef<ScrollView, ScrollViewProps>(function FitScrollView({ children, contentContainerStyle, onLayout, ...props }, ref) {
-  const [available, setAvailable] = useState(0);
+const PHONE_SCALE = 0.86;
+const WIDE_BREAKPOINT = 700;
+
+export const FitScrollView = forwardRef<ScrollView, ScrollViewProps>(function FitScrollView({ children, onLayout, ...props }, ref) {
+  const { width: windowWidth } = useWindowDimensions();
+  const scale = windowWidth >= WIDE_BREAKPOINT ? 1 : PHONE_SCALE;
+  const [width, setWidth] = useState(0);
   const [natural, setNatural] = useState(0);
-  const limit = available - BOTTOM_GAP;
-  const scale = available > 0 && natural > limit ? limit / natural : 1;
-  const shrunk = scale < 1;
+  const ready = scale < 1 && width > 0;
 
   return (
-    <ScrollView
-      ref={ref}
-      {...props}
-      scrollEnabled={!shrunk && props.scrollEnabled !== false}
-      contentContainerStyle={[contentContainerStyle, shrunk && { paddingBottom: BOTTOM_GAP }]}
-      onLayout={event => { onLayout?.(event); setAvailable(event.nativeEvent.layout.height); }}
-    >
-      <View style={shrunk ? { height: natural * scale, overflow: 'visible' } : undefined}>
-        <View
-          onLayout={event => { const h = event.nativeEvent.layout.height; if (Math.abs(h - natural) >= 1) setNatural(h); }}
-          style={shrunk ? { transform: [{ translateY: -(natural * (1 - scale)) / 2 }, { scale }] } : undefined}
-        >
-          {children}
+    <ScrollView ref={ref} {...props} onLayout={event => { onLayout?.(event); setWidth(event.nativeEvent.layout.width); }}>
+      {ready ? (
+        <View style={{ width, height: natural ? natural * scale : undefined, overflow: 'visible' }}>
+          <View
+            onLayout={event => { const h = event.nativeEvent.layout.height; if (Math.abs(h - natural) >= 1) setNatural(h); }}
+            style={{
+              width: width / scale,
+              // Scale around the top-left corner so the content starts at the top and spans the full width.
+              transform: [{ translateX: -(width / scale) * (1 - scale) / 2 }, { translateY: -(natural * (1 - scale)) / 2 }, { scale }],
+            }}
+          >
+            {children}
+          </View>
         </View>
-      </View>
+      ) : children}
     </ScrollView>
   );
 });
+
+/** Converts a content-space y offset into scroll-space for `scrollTo`. */
+export function lessonScrollOffset(contentY: number, windowWidth: number): number {
+  return contentY * (windowWidth >= WIDE_BREAKPOINT ? 1 : PHONE_SCALE);
+}

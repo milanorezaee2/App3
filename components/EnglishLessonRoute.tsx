@@ -1,8 +1,8 @@
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { FitScrollView } from '@/components/FitScrollView';
+import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { FitScrollView, lessonScrollOffset } from '@/components/FitScrollView';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import {
@@ -67,7 +67,7 @@ export default function SentenceLessonScreen() {
   const lessonScrollRef = useRef<ScrollView>(null);
   const stageOffsetRef = useRef(0);
   useEffect(() => {
-    const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: stage === 1 ? Math.max(0, stageOffsetRef.current - 8) : 0, animated: true }), 60);
+    const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: stage === 1 ? Math.max(0, lessonScrollOffset(stageOffsetRef.current, Dimensions.get('window').width) - 8) : 0, animated: true }), 60);
     return () => clearTimeout(handle);
   }, [stage, sentenceIndex]);
   const [revealed, setRevealed] = useState(false);
