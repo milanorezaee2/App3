@@ -109,8 +109,8 @@ export default function RootLayout() {
     // separately registered medium, bold and black faces.
     Beiruti: Beiruti_400Regular,
     'Beiruti-Medium': Beiruti_500Medium,
-    'Beiruti': Beiruti_700Bold,
-    'Beiruti': Beiruti_900Black,
+    'Beiruti-Bold': Beiruti_700Bold,
+    'Beiruti-Black': Beiruti_900Black,
     // Latin teaching content uses bundled faces too, eliminating Android OEM
     // font and fallback-metric differences between phones.
     Inter: Inter_400Regular,
