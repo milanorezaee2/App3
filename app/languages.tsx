@@ -52,20 +52,42 @@ export default function LanguagesHome() {
   useEffect(() => {
     if (welcomeVoicePlayed) return;
     welcomeVoicePlayed = true;
+    let player: ReturnType<typeof createAudioPlayer> | null = null;
+    let cleanup: ReturnType<typeof setTimeout> | null = null;
+    const safeRemove = () => {
+      const current = player;
+      player = null;
+      if (!current) return;
+      try {
+        current.pause();
+      } catch {
+        // ignore
+      }
+      try {
+        current.remove();
+      } catch {
+        // Browsers can abort the media fetch (e.g. autoplay blocked); ignore.
+      }
+    };
     const start = setTimeout(() => {
       try {
-        const player = createAudioPlayer(require('../assets/audio/welcome-voice.wav'));
+        player = createAudioPlayer(require('../assets/audio/welcome-voice.wav'));
         player.volume = 0.9;
         const playback = player.play() as unknown;
         if (playback && typeof (playback as Promise<unknown>).catch === 'function') {
           (playback as Promise<unknown>).catch(() => undefined);
         }
-        setTimeout(() => player.remove(), 4000);
+        cleanup = setTimeout(safeRemove, 4000);
       } catch {
         // The screen remains usable when audio playback is unavailable.
+        player = null;
       }
     }, 400);
-    void start;
+    return () => {
+      clearTimeout(start);
+      if (cleanup) clearTimeout(cleanup);
+      safeRemove();
+    };
   }, []);
 
   const openSupport = () => {

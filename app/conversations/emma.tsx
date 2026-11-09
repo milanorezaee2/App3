@@ -1,6 +1,7 @@
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import * as Speech from 'expo-speech';
 import { speechTagFor } from '@/lib/speechLanguage';
@@ -10,7 +11,7 @@ import { askEmma, getEmmaPracticeContext, type EmmaCorrection, type EmmaPractice
 import { clearEmmaHistory, loadEmmaHistory, saveEmmaHistory, type EmmaStoredMessage } from '@/lib/emmaHistory';
 import { transcribeLearnerSpeech } from '@/lib/speechPractice';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
-import { PageNavigation } from '@/components/PageNavigation';
+import { ChatBackButton } from '@/components/ChatBackButton';
 import { KeyboardStickyView } from '@/components/KeyboardRuntime';
 
 import { PAID_AI_ENABLED, PAID_AI_DISABLED_MESSAGE } from '@/lib/paidAI';
@@ -26,6 +27,7 @@ const initialSuggestions = ['My name is Sara.', 'Hello Emma! Nice to meet you.',
 
 export default function EmmaChat() {
   const scrollRef = useRef<ScrollView>(null);
+  const insets = useSafeAreaInsets();
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState('');
   const [showTools, setShowTools] = useState(false);
@@ -137,9 +139,9 @@ export default function EmmaChat() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.root} behavior="height" enabled>
+    <View style={styles.root}>
       <View style={styles.header}>
-        <PageNavigation tone="dark" backFallback="/conversations" />
+        <ChatBackButton fallback="/conversations" />
         <View style={styles.avatar}><Text style={styles.avatarEmoji}>👩🏻‍🏫</Text><View style={styles.online} /></View>
         <View style={styles.headerText}>
           <View style={styles.nameRow}><Text style={styles.name}>Emma</Text><Bot size={14} color={Colors.accent[400]} /></View>
@@ -194,7 +196,7 @@ export default function EmmaChat() {
         {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
       </ScrollView>
 
-      <KeyboardStickyView enabled offset={{ closed: 0, opened: 0 }}>
+      <KeyboardStickyView enabled offset={{ closed: 0, opened: Platform.OS === 'web' ? 0 : -insets.bottom }}>
       <View style={styles.coachArea}>
         <Pressable accessibilityRole="button" accessibilityLabel="باز و بسته‌کردن پیشنهادهای خصوصی Emma" accessibilityState={{ expanded: showTools }} style={styles.coachToggle} onPress={() => setShowTools((value) => !value)}>
           <Sparkles size={15} color={Colors.warning[400]} />
@@ -228,7 +230,7 @@ export default function EmmaChat() {
         </Pressable>
       </View>
       </KeyboardStickyView>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 

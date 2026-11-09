@@ -26,7 +26,7 @@ import {
 } from '@/lib/conversations';
 import { requestHumanChatAssist, type HumanAssistMode, type HumanAssistResult } from '@/lib/humanChatAssist';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
-import { PageNavigation } from '@/components/PageNavigation';
+import { ChatBackButton } from '@/components/ChatBackButton';
 import { KeyboardStickyView } from '@/components/KeyboardRuntime';
 import { ONLINE_AUDIO_DISABLED_MESSAGE, ONLINE_AUDIO_ENABLED } from '@/lib/onlineAudioPolicy';
 
@@ -213,7 +213,7 @@ export default function HumanConversationScreen() {
   return (
     <View style={styles.root}>
       <View style={styles.header}>
-        <PageNavigation tone="dark" backFallback="/conversations" />
+        <ChatBackButton fallback="/conversations" />
         <View style={styles.avatar}><UserRound size={22} color={Colors.primary[300]} /></View>
         <View style={styles.headerText}><Text style={[styles.name, containsRtlScript(name || 'مخاطب واقعی') ? styles.rtlText : styles.ltrText]}>{name || 'مخاطب واقعی'}</Text><Text style={styles.status}>گفتگوی خصوصی</Text></View>
         <Pressable accessibilityRole="button" accessibilityLabel="حذف این مخاطب و گفتگو" accessibilityState={{ disabled: sending }} style={styles.deleteButton} onPress={confirmDeleteConversation} disabled={sending}><Trash2 size={18} color={Colors.error[300]} /></Pressable>
@@ -247,7 +247,7 @@ export default function HumanConversationScreen() {
         </ScrollView>
       )}
 
-      <KeyboardStickyView enabled offset={{ closed: 0, opened: Platform.OS === 'android' ? -insets.bottom : 0 }}>
+      <KeyboardStickyView enabled offset={{ closed: 0, opened: Platform.OS === 'web' ? 0 : -insets.bottom }}>
       {showCoach ? (
         <View style={styles.coach}>
           <View style={styles.coachTitleRow}><Sparkles size={15} color={Colors.warning[400]} /><Text style={styles.coachTitle}>دستیار خصوصی — چیزی خودکار ارسال نمی‌شود</Text></View>
