@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 5: podcast + header/chat fixes; branch pushes build all three flavours.
 # rev 4: rebuilds after every registered language gained a pronunciation
 # workshop (German, French, Spanish). Each flavour is built in its own clean runner. Building the three
 # variants sequentially on one runner let Metro reuse the first bundle, so every
@@ -31,6 +32,7 @@ on:
   push:
     branches:
       - arena/1d4c82b4-app3
+      - arena/0525d0d2-app3
     paths:
       - '.github/workflows/apk-requested.yml'
 
@@ -166,7 +168,9 @@ jobs:
 
   # -------------------------------------------------- learner WITH login
   learner-login:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.learner_login }}
+    # Branch pushes (where workflow_dispatch is unavailable) build all three
+    # requested flavours; manual runs still opt in explicitly.
+    if: ${{ github.event_name == 'push' || inputs.learner_login }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
@@ -253,8 +257,8 @@ jobs:
             Installable Android APKs, each built on its own clean runner.
 
             - `MiloAdmin.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
-            - `MiloLearner-NoLogin.apk` — learner app without login, package `com.devicecontrol.companion`
-            - An additional learner login APK is included only when explicitly requested.
+            - `MiloLearner-Login.apk` — MiloMultiLanguage WITH login, package `com.devicecontrol.milomultilang`, languages en, de, fr, tr, es
+            - `MiloLearner-NoLogin.apk` — MiloMultiLanguage WITHOUT login, package `com.devicecontrol.companion`, languages en, ru
           files: |
             out/MiloAdmin.apk/MiloAdmin.apk
             out/MiloLearner-NoLogin.apk/MiloLearner-NoLogin.apk
