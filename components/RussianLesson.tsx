@@ -207,10 +207,10 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
   return (
     <View style={styles.root}>
       <ScrollView style={styles.lessonScroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <View style={styles.brandRow}><MiloGlobeHeadphoneMark size={48} /></View>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
           <Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color="#FFFFFF" /></Pressable>
-          <Pressable accessibilityRole="button" accessibilityLabel="شروع از ابتدای این درس" accessibilityState={{ disabled: saving }} disabled={saving} style={styles.restartLessonButton} onPress={startCurrentLessonFromBeginning}><RotateCcw size={15} color="#FFFFFF" /><Text style={styles.restartLessonButtonText}>شروع از ابتدا</Text></Pressable>
           <View style={styles.headerText}>
             <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
@@ -218,7 +218,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           </View>
           <View style={styles.percentBadge}><Text style={styles.percent}>{fa(progressPercent)}٪</Text><Text style={styles.percentLabel}>پیشرفت</Text></View>
         </View>
-        <View style={styles.headerBottom}><View style={styles.headerInfoChip}><MiloGlobeHeadphoneMark size={48} /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View><Text style={styles.headerInfoText}>{fa(lesson.sentences.length)} جملهٔ اصلی</Text></View>
+        <View style={styles.headerBottom}><View style={styles.headerInfoChip}><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View><Text style={styles.headerInfoText}>{fa(lesson.sentences.length)} جملهٔ اصلی</Text></View>
       </LinearGradient>
 
       <View style={styles.stepperCard}>
@@ -373,6 +373,7 @@ type LearningLessonVocabulary = RussianCourseLesson['sentences'][number]['vocabu
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },
   lessonScroll: { flex: 1, minHeight: 0 },
+  brandRow: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', paddingHorizontal: 15, paddingTop: 10, paddingBottom: 6 },
   loadingCard: { flex: 1, minHeight: 260, alignItems: 'center', justifyContent: 'center', padding: 24, gap: 13 },
   loadingText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 13, textAlign: 'right', writingDirection: 'rtl' },
   loadingButton: { minHeight: 44, justifyContent: 'center', paddingHorizontal: 18, borderRadius: 13, backgroundColor: Palette.primary },

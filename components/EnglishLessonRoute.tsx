@@ -298,10 +298,10 @@ export default function SentenceLessonScreen() {
     <View style={styles.root} onTouchStart={timer.interact}>
       {resetting && <Text accessibilityLiveRegion="polite" style={styles.stageDesc}>در حال ذخیرهٔ شروع مجدد…</Text>}
       <ScrollView pointerEvents={resetting ? 'none' : 'auto'} style={styles.lessonScroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <View style={styles.brandRow}><MiloGlobeHeadphoneMark size={48} /></View>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
           <PageNavigation tone="dark" backFallback="/lang" />
-          <Pressable accessibilityRole="button" accessibilityLabel="شروع از ابتدای این درس" accessibilityState={{ disabled: resetting || saving }} disabled={resetting || saving} style={styles.restartLessonButton} onPress={() => void startCurrentLessonFromBeginning()}><RotateCcw size={15} color="#FFFFFF" /><Text style={styles.restartLessonButtonText}>شروع از ابتدا</Text></Pressable>
           <View style={styles.headerText}>
             <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
@@ -313,7 +313,7 @@ export default function SentenceLessonScreen() {
           </View>
         </View>
         <View style={styles.headerBottom}>
-          <View style={styles.headerInfoChip}><MiloGlobeHeadphoneMark size={48} /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View>
+          <View style={styles.headerInfoChip}><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View>
           <Text style={styles.headerInfoText}>{toPersianDigits(lesson.sentences.length)} جملهٔ اصلی</Text>
         </View>
       </LinearGradient>
@@ -580,6 +580,7 @@ function EnglishSpeechRateControls({ onPlay, disabled = false }: { onPlay: (rate
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },
   lessonScroll: { flex: 1, minHeight: 0 },
+  brandRow: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', paddingHorizontal: 15, paddingTop: 10, paddingBottom: 6 },
   // Keep the lesson canvas and vertical safe area consistent.
   header: { width: '100%', maxWidth: 900, minHeight: 64, alignSelf: 'center', paddingTop: 12, paddingHorizontal: 15, paddingBottom: 7, gap: 8, borderBottomLeftRadius: 22, borderBottomRightRadius: 22 },
   headerTop: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
