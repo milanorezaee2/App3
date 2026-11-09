@@ -1,6 +1,6 @@
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
   RecordingPresets,
@@ -199,7 +199,7 @@ export default function HumanConversationScreen() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.root} behavior="height" enabled>
+    <View style={styles.root}>
       <View style={styles.header}>
         <PageNavigation tone="dark" backFallback="/conversations" />
         <View style={styles.avatar}><UserRound size={22} color={Colors.primary[300]} /></View>
@@ -278,7 +278,7 @@ export default function HumanConversationScreen() {
         )}
       </View>
       </KeyboardStickyView>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
