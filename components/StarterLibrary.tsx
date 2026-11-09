@@ -206,7 +206,13 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
                 <Play size={16} color={selected.color} fill={selected.color} />
                 <Text style={styles.levelStartButtonText}>{levelStartLabel}</Text>
                 <ChevronLeft size={18} color={selected.color} />
-              </Pressable></>}
+              </Pressable>
+              <Pressable accessibilityRole="button" accessibilityLabel={`شروع از ابتدای سطح: ${selected.title}`} accessibilityState={{ disabled: !selectedLessons[0] }} disabled={!selectedLessons[0]} style={({ pressed }) => [styles.levelStartBeginningButton, pressed && { opacity: .85 }, !selectedLessons[0] && styles.levelStartButtonDisabled]} onPress={() => { if (selectedLessons[0]) openLesson(selectedLessons[0].id); }}>
+                <Play size={16} color={selected.color} fill={selected.color} />
+                <Text style={styles.levelStartButtonText}>شروع از ابتدا</Text>
+                <ChevronLeft size={18} color={selected.color} />
+              </Pressable>
+              </>}
             </LinearGradient>
 
             {selected.id === 5 ? <StarterC1Curriculum key={course.id} language={course.id} locale={course.locale}/> : selected.id === 1 || selected.id === 2 || selected.id === 3 || selected.id === 4 ? <View style={styles.groupList}>
@@ -363,6 +369,7 @@ const styles = StyleSheet.create({
   selectedProgressTrack: { height: 7, borderRadius: 999, overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.22)' },
   selectedProgressFill: { height: '100%', alignSelf: 'flex-end', borderRadius: 999, backgroundColor: '#B8F28F' },
   levelStartButton: { minHeight: 48, marginTop: 5, paddingHorizontal: 15, borderRadius: 15, backgroundColor: '#FFFFFF', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 9 },
+  levelStartBeginningButton: { minHeight: 48, marginTop: 8, paddingHorizontal: 15, borderRadius: 15, backgroundColor: '#F5F2FF', borderWidth: 1, borderColor: '#D8D2FF', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 9 },
   levelStartButtonDisabled: { opacity: 0.55 },
   levelStartButtonText: { flex: 1, fontFamily: Typography.fontFamily, color: Palette.ink, fontSize: 12, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   metricGrid: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', paddingTop: 12, marginTop: 2, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.18)' },
