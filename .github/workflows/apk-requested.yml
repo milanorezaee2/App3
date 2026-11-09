@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 8: re-run; the previous publish job never started on GitHub.
 # rev 7: lesson auto-scroll/spacing fix + self-measuring chat composer.
 # rev 6: bigger startup logo, black reading colour, bold Latin/Times text.
 # rev 5: podcast + header/chat fixes; branch pushes build all three flavours.
