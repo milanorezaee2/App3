@@ -313,7 +313,7 @@ export default function SentenceLessonScreen() {
           </View>
         </View>
         <View style={styles.headerBottom}>
-          <View style={styles.headerInfoChip}><MiloGlobeHeadphoneMark size={13} /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View>
+          <View style={styles.headerInfoChip}><MiloGlobeHeadphoneMark size={48} /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View>
           <Text style={styles.headerInfoText}>{toPersianDigits(lesson.sentences.length)} جملهٔ اصلی</Text>
         </View>
       </LinearGradient>

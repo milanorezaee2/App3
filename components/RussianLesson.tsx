@@ -218,7 +218,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           </View>
           <View style={styles.percentBadge}><Text style={styles.percent}>{fa(progressPercent)}٪</Text><Text style={styles.percentLabel}>پیشرفت</Text></View>
         </View>
-        <View style={styles.headerBottom}><View style={styles.headerInfoChip}><MiloGlobeHeadphoneMark size={13} /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View><Text style={styles.headerInfoText}>{fa(lesson.sentences.length)} جملهٔ اصلی</Text></View>
+        <View style={styles.headerBottom}><View style={styles.headerInfoChip}><MiloGlobeHeadphoneMark size={48} /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View><Text style={styles.headerInfoText}>{fa(lesson.sentences.length)} جملهٔ اصلی</Text></View>
       </LinearGradient>
 
       <View style={styles.stepperCard}>

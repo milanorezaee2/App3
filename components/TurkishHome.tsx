@@ -138,7 +138,7 @@ export default function TurkishHome() {
           <View style={styles.header}>
             <View style={styles.brandLockup}>
               <View style={styles.brandMark}>
-                <MiloGlobeHeadphoneMark size={20} />
+                <MiloGlobeHeadphoneMark size={48} />
               </View>
               <View style={styles.brandCopy}>
                 <Text style={styles.brandEyebrow}>LANGUAGE JOURNEY</Text>

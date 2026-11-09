@@ -36,7 +36,7 @@ export const learningHomeStyles = StyleSheet.create({
   page: { width: '100%', maxWidth: 760, alignSelf: 'center', paddingHorizontal: 14, paddingTop: 12, paddingBottom: 24, gap: 14 },
   header: { minHeight: 52, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 12, paddingHorizontal: 3 },
   brandLockup: { flex: 1, minWidth: 0, flexDirection: 'row-reverse', alignItems: 'center', gap: 11 },
-  brandMark: { width: 46, height: 46, alignItems: 'center', justifyContent: 'center' },
+  brandMark: { width: 48, height: 48, alignItems: 'center', justifyContent: 'center' },
   brandCopy: { flexShrink: 1, minWidth: 0, gap: 2 },
   brandEyebrow: { fontFamily: 'Times New Roman', color: '#6B675F', fontSize: 8, fontWeight: '800', letterSpacing: 1.45, textAlign: 'left', writingDirection: 'ltr' },
   headerTitle: { fontFamily: Typography.fontFamily, fontSize: 18, lineHeight: 27, fontWeight: '400', color: '#191919', textAlign: 'right', writingDirection: 'rtl' },

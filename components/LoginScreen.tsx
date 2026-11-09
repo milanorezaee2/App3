@@ -76,7 +76,7 @@ function LoginHero({ wide }: { wide: boolean }) {
       <View style={styles.heroColumn}>
         <View style={styles.brand}>
           <View style={styles.brandMark}>
-            <MiloGlobeHeadphoneMark size={19} />
+            <MiloGlobeHeadphoneMark size={48} />
           </View>
           <View style={styles.brandCopy}>
             <Text style={styles.brandName}>Milo</Text>
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
   },
   heroColumn: { width: '100%', maxWidth: 430, alignSelf: 'center', paddingHorizontal: 22 },
   brand: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 },
-  brandMark: { width: 42, height: 42, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
+  brandMark: { width: 48, height: 48, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
   brandCopy: { gap: 1 },
   brandName: {
     fontFamily: Typography.latinFontFamily,

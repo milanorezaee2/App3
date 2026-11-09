@@ -97,7 +97,7 @@ export default function RussianLibrary() {
 
             <LinearGradient colors={['#19204C', '#343B8A', '#5148C8']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
               <View pointerEvents="none" style={styles.heroOrb} />
-              <View style={styles.heroTopRow}><View style={styles.heroIcon}><MiloGlobeHeadphoneMark size={18} /></View><View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۶ سطح در نقشهٔ روسی</Text></View></View>
+              <View style={styles.heroTopRow}><View style={styles.heroIcon}><MiloGlobeHeadphoneMark size={48} /></View><View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۶ سطح در نقشهٔ روسی</Text></View></View>
               <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
               <Text style={styles.overviewTitle}>از الفبا؛{ '\n' }جمله به جمله</Text>
               <Text style={styles.overviewText}>محتوای موجود از پایه آغاز می‌شود. آمار فقط درس‌ها و جمله‌های منتشرشده را می‌شمارد؛ سطح‌های آینده محتوای ساختگی ندارند.</Text>
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   overviewHero: { position: 'relative', overflow: 'hidden', marginTop: 60, borderRadius: 25, padding: 20, gap: 10, shadowColor: '#282671', shadowOpacity: .16, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 5 },
   heroOrb: { position: 'absolute', top: -50, left: -42, width: 180, height: 180, borderRadius: 90, backgroundColor: 'rgba(255,255,255,0.09)' },
   heroTopRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' },
-  heroIcon: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
+  heroIcon: { width: 48, height: 48, alignItems: 'center', justifyContent: 'center' },
   heroPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.12)', paddingHorizontal: 10, paddingVertical: 6 },
   heroPillText: { fontFamily: Typography.fontFamily, color: '#FFFFFF', fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
   overviewEyebrow: { fontFamily: 'Times New Roman', color: '#C6C9FF', fontSize: 6, fontWeight: '800', letterSpacing: 1.4, writingDirection: 'ltr', marginTop: 4 },
