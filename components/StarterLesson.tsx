@@ -298,7 +298,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
             <Text style={styles.targetSentence}>{current.text}</Text>
             <Text style={styles.pronunciation}>{starterDisplayPronunciation(current)}</Text>
             <View style={styles.divider} />
-            <Text keepColor style={styles.persian}>{current.fa}</Text>
+            <Text style={styles.persian}>{current.fa}</Text>
             {currentPattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternText}>{currentPattern}</Text></View> : null}
           </View>
           <View style={styles.replayRow}>
@@ -509,7 +509,7 @@ const styles = StyleSheet.create({
   targetSentence: { fontFamily: 'Times New Roman', width: '100%', fontSize: 23, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
   pronunciation: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl', marginTop: 8 },
   divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 12 },
-  persian: { fontFamily: Typography.fontFamily, fontSize: 17, color: '#3B35B8', textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', backgroundColor: '#EEF0FF', borderRadius: 14, borderRightWidth: 3, borderRightColor: '#5146E5', paddingVertical: 10, paddingHorizontal: 14, lineHeight: 28, overflow: 'hidden' },
+  persian: { fontFamily: Typography.fontFamily, fontSize: 17, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   a2PatternForm: { fontFamily: Typography.latinFontFamily, fontSize: 14, lineHeight: 23, color: Palette.primaryDark, textAlign: 'left', writingDirection: 'ltr', alignSelf: 'stretch' },
   pattern: { maxWidth: '100%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start', gap: 8, alignSelf: 'flex-end', backgroundColor: Palette.warningSoft, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999, marginTop: 14 },
   patternLabel: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.warning, writingDirection: 'rtl' },

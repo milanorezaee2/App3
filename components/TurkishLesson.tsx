@@ -262,7 +262,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
             <Text style={styles.turkishSentence}>{current.text}</Text>
             <Text style={styles.pronunciation}>{current.pronunciation}</Text>
             <View style={styles.divider} />
-            <Text keepColor style={styles.persian}>{current.fa}</Text>
+            <Text style={styles.persian}>{current.fa}</Text>
             {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternText}>{current.pattern}</Text></View> : null}
           </View>
           <View style={styles.replayRow}>
@@ -302,7 +302,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           {lesson.learningMode === 'words' ? <>
             <Text style={styles.stageTitle}>یادآوری واژهٔ مستقل</Text>
             <Text style={styles.stageDesc}>معنی را از روی خود واژه حدس بزنید؛ سپس پاسخ را آشکار کنید. اینجا هنوز واژه را به جمله تبدیل نمی‌کنیم.</Text>
-            <View style={styles.sentenceCard}><Text style={styles.turkishSentence}>{current.text}</Text><Pressable accessibilityRole="button" accessibilityState={{ expanded: revealed }} style={styles.showAnswersButton} onPress={() => setRevealed(value => !value)}><Text style={styles.showAnswersText}>{revealed ? 'پنهان‌کردن معنی' : 'نمایش معنی'}</Text></Pressable>{revealed ? <><View style={styles.divider} /><Text keepColor style={styles.persian}>{current.fa}</Text><Text style={styles.patternText}>{current.pattern ?? 'واژهٔ مستقل'}</Text></> : null}</View>
+            <View style={styles.sentenceCard}><Text style={styles.turkishSentence}>{current.text}</Text><Pressable accessibilityRole="button" accessibilityState={{ expanded: revealed }} style={styles.showAnswersButton} onPress={() => setRevealed(value => !value)}><Text style={styles.showAnswersText}>{revealed ? 'پنهان‌کردن معنی' : 'نمایش معنی'}</Text></Pressable>{revealed ? <><View style={styles.divider} /><Text style={styles.persian}>{current.fa}</Text><Text style={styles.patternText}>{current.pattern ?? 'واژهٔ مستقل'}</Text></> : null}</View>
           </> : <>
             <Text style={styles.stageTitle}>{lesson.learningMode === 'chunks' ? 'ساخت ترکیب کوتاه' : 'ساخت جمله'}</Text>
             <Text style={styles.stageDesc}>{lesson.learningMode === 'chunks' ? 'معنی را بخوانید و واژه‌های همان ترکیب را به ترتیب بچینید.' : 'معنی را بخوانید و واژه‌های همان جمله را به ترتیب بچینید؛ تمرین به محتوای همین درس متصل است.'}</Text>
@@ -340,7 +340,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
             <View style={styles.sentenceCard}>
               <Text style={styles.turkishSentence}>{current.text}</Text>
               <Pressable accessibilityRole="button" accessibilityState={{ expanded: revealed }} style={styles.showAnswersButton} onPress={() => setRevealed(value => !value)}><Text style={styles.showAnswersText}>{revealed ? 'پنهان‌کردن معنی' : 'یادآوری و نمایش معنی'}</Text></Pressable>
-              {revealed ? <><View style={styles.divider} /><Text keepColor style={styles.persian}>{current.fa}</Text></> : null}
+              {revealed ? <><View style={styles.divider} /><Text style={styles.persian}>{current.fa}</Text></> : null}
             </View>
             <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`واژه ${fa(index + 1)}`} accessibilityState={{ selected: index === sentenceIndex }} onPress={() => { setSentenceIndex(index); setRevealed(false); }} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
           </> : <>
@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
   turkishSentence: { fontFamily: 'Times New Roman', width: '100%', fontSize: 23, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
   pronunciation: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl', marginTop: 8 },
   divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 12 },
-  persian: { fontFamily: Typography.fontFamily, fontSize: 17, color: '#3B35B8', textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', backgroundColor: '#EEF0FF', borderRadius: 14, borderRightWidth: 3, borderRightColor: '#5146E5', paddingVertical: 10, paddingHorizontal: 14, lineHeight: 28, overflow: 'hidden' },
+  persian: { fontFamily: Typography.fontFamily, fontSize: 17, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   pattern: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start', gap: 8, alignSelf: 'flex-end', backgroundColor: Palette.warningSoft, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999, marginTop: 14 },
   patternLabel: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.warning, writingDirection: 'rtl' },
   patternText: { fontFamily: Typography.latinFontFamily, fontSize: 10, fontWeight: '800', color: Palette.warning, textAlign: 'right', writingDirection: 'ltr' },

@@ -1,7 +1,8 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useContext, useState } from 'react';
 import { StyleSheet, Text as NativeText, TextInput as NativeTextInput, type TextProps, type TextInputProps, type TextStyle } from 'react-native';
 import { Typography } from '@/lib/theme';
 import { FEATURES } from '@/lib/features';
+import { TextScaleContext } from '@/components/FitScrollView';
 
 // Persian and Arabic letters share the app's existing Persian presentation.
 // Unicode letters also cover accented Latin, Cyrillic and IPA, not just ASCII.
@@ -45,6 +46,8 @@ const TIMES_FAMILY = /times/i;
 // ---- reading colour: dark/medium text becomes pure black; light text on
 // coloured or dark surfaces is left alone so it stays legible.
 const BLACK = '#000000';
+// Five-language app: Persian copy in a minimal smoky black instead of pure black.
+const PERSIAN_BLACK = FEATURES.learnerLogin ? '#2E2E2E' : BLACK;
 const LIGHT_THRESHOLD = 0.6;
 const colorCache = new Map<string, string>();
 function parseColor(value: string): { r: number; g: number; b: number; a: number } | null {
@@ -87,11 +90,17 @@ export function readingColor(color: unknown): string | undefined {
   colorCache.set(color, result);
   return result;
 }
-function presentationStyle(style: TextProps['style'], extra?: TextStyle, keepColor = false): TextStyle | undefined {
+function presentationStyle(style: TextProps['style'], extra?: TextStyle, keepColor = false, textScale = 1): TextStyle | undefined {
   const flat = StyleSheet.flatten([style, extra]) as TextStyle | undefined;
   const out: TextStyle = {};
-  const color = keepColor ? flat?.color : readingColor(flat?.color);
+  let color = keepColor ? flat?.color : readingColor(flat?.color);
+  if (color === BLACK && extra === persian) color = PERSIAN_BLACK;
   if (color !== undefined && color !== flat?.color) out.color = color;
+  if (textScale !== 1) {
+    const size = flat?.fontSize ?? 14;
+    out.fontSize = Math.round(size * textScale * 10) / 10;
+    if (flat?.lineHeight) out.lineHeight = Math.round(flat.lineHeight * textScale * 10) / 10;
+  }
   if (flat?.fontFamily && TIMES_FAMILY.test(String(flat.fontFamily)) && flat.fontWeight !== '700' && flat.fontWeight !== 'bold') out.fontWeight = '700';
   return Object.keys(out).length ? out : undefined;
 }
@@ -170,7 +179,8 @@ export type LocalizedTextProps = TextProps & { /** Keep the style's own colour (
 export const LocalizedText = forwardRef<NativeText, LocalizedTextProps>(function LocalizedText({ style, children, keepColor, ...props }, ref) {
   const content = childrenText(children);
   const script = scriptStyle(content);
-  return <NativeText ref={ref} {...props} style={[style, script, presentationStyle(style, script, keepColor)]}>
+  const textScale = useContext(TextScaleContext);
+  return <NativeText ref={ref} {...props} style={[style, script, presentationStyle(style, script, keepColor, textScale)]}>
     {textScript(content) === 'persian' && clusters(content).some(isForeignCluster) ? styleMixedChildren(children) : children}
   </NativeText>;
 });

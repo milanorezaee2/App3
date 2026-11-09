@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { createContext, forwardRef, useState } from 'react';
 import { ScrollView, View, useWindowDimensions, type ScrollViewProps } from 'react-native';
 
 /**
@@ -7,7 +7,10 @@ import { ScrollView, View, useWindowDimensions, type ScrollViewProps } from 'rea
  * simply smaller and fills the full width), so more of the lesson fits on the
  * screen. Scrolling behaves exactly as before. Wide screens render at 1:1.
  */
-const PHONE_SCALE = 0.86;
+const PHONE_SCALE = 0.78;
+/** Text keeps the visual size it had at the earlier 86% layout scale. */
+const TEXT_REFERENCE_SCALE = 0.86;
+export const TextScaleContext = createContext(1);
 const WIDE_BREAKPOINT = 700;
 
 export const FitScrollView = forwardRef<ScrollView, ScrollViewProps>(function FitScrollView({ children, onLayout, ...props }, ref) {
@@ -29,7 +32,7 @@ export const FitScrollView = forwardRef<ScrollView, ScrollViewProps>(function Fi
               transform: [{ translateX: -(width / scale) * (1 - scale) / 2 }, { translateY: -(natural * (1 - scale)) / 2 }, { scale }],
             }}
           >
-            {children}
+            <TextScaleContext.Provider value={TEXT_REFERENCE_SCALE / scale}>{children}</TextScaleContext.Provider>
           </View>
         </View>
       ) : children}
