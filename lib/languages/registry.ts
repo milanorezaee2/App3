@@ -3,8 +3,10 @@
  *
  * Adding a language means editing THIS file (one entry) and adding its course
  * content module. The build-time scope filter, the language picker, resume
- * routing, static web routes and the CI language checks all read from here, so
- * no other configuration has to be touched.
+ * routing, static web routes, the pronunciation workshop palette and the CI
+ * language checks all read from here, so no other configuration has to be
+ * touched. Pronunciation units in `pronunciationCourse.ts` are the only extra
+ * content: the workshop opens as soon as a language has at least one unit.
  *
  * Fields
  *  - id            stable code used in routes (/learn/<id>), scope strings and
@@ -61,7 +63,7 @@ export const LANGUAGE_REGISTRY = [
     name: 'آلمانی',
     nativeName: 'Deutsch',
     speechLocale: 'de-DE',
-    accent: '#6555E9',
+    accent: '#365A7D',
     description: 'Pre-A1 و درس‌های آغازین A1',
     status: 'starter',
     home: '/learn/de',
@@ -71,7 +73,7 @@ export const LANGUAGE_REGISTRY = [
     name: 'فرانسوی',
     nativeName: 'Français',
     speechLocale: 'fr-FR',
-    accent: '#6555E9',
+    accent: '#7E3A57',
     description: 'Pre-A1 و درس‌های آغازین A1',
     status: 'starter',
     home: '/learn/fr',
@@ -81,7 +83,7 @@ export const LANGUAGE_REGISTRY = [
     name: 'اسپانیایی',
     nativeName: 'Español',
     speechLocale: 'es-ES',
-    accent: '#6555E9',
+    accent: '#9E4B1F',
     description: 'Pre-A1 و درس‌های آغازین A1، گونهٔ اسپانیا',
     status: 'starter',
     home: '/learn/es',

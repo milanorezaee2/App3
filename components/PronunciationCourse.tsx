@@ -14,74 +14,28 @@ import { TurkishBottomNav } from '@/components/TurkishBottomNav';
 import { PageNavigation } from '@/components/PageNavigation';
 import { toPersianDigits as fa } from '@/lib/format';
 import {
-  PRONUNCIATION_COURSES,
+  pronunciationUnits,
   type PronunciationLanguage,
   type PronunciationUnit,
 } from '@/lib/languages/pronunciationCourse';
+import { pronunciationTheme } from '@/lib/languages/pronunciationTheme';
+import { NEW_COURSES, isNewLanguage } from '@/lib/languages/newCourses';
+import { StarterBottomNav } from '@/components/StarterBottomNav';
 import {
+  SYNCED_PRONUNCIATION_LANGUAGES,
   loadPronunciationMarks,
   savePronunciationMark,
   type PronunciationMark,
   type PronunciationMarks,
 } from '@/lib/languages/pronunciationProgress';
 
-const THEMES = {
-  en: {
-    accent: '#6654CE',
-    accentDark: '#40327F',
-    soft: '#F0ECFA',
-    canvas: '#F5F3F7',
-    surface: '#FFFFFF',
-    ink: '#191A31',
-    text: '#56566D',
-    muted: '#858398',
-    border: '#E7E2EC',
-    gold: '#D8B76E',
-    home: '/lang',
-    locale: 'en-US',
-    languageFa: 'انگلیسی',
-    brand: 'ENGLISH · PRONUNCIATION',
-  },
-  tr: {
-    accent: '#C94F62',
-    accentDark: '#74303D',
-    soft: '#FBECEF',
-    canvas: '#FCF6F7',
-    surface: '#FFFFFF',
-    ink: '#43242B',
-    text: '#74545B',
-    muted: '#96797F',
-    border: '#EED9DE',
-    gold: '#D8B76E',
-    home: '/learn/tr',
-    locale: 'tr-TR',
-    languageFa: 'ترکی استانبولی',
-    brand: 'İSTANBUL TÜRKÇESİ · TELAFFUZ',
-  },
-  ru: {
-    accent: '#3565B8',
-    accentDark: '#243F78',
-    soft: '#EAF0FB',
-    canvas: '#F4F7FC',
-    surface: '#FFFFFF',
-    ink: '#1D3152',
-    text: '#4E607D',
-    muted: '#78869D',
-    border: '#D8E2F2',
-    gold: '#C6A65D',
-    home: '/learn/ru',
-    locale: 'ru-RU',
-    languageFa: 'روسی',
-    brand: 'РУССКИЙ · ПРОИЗНОШЕНИЕ',
-  },
-} as const;
-
 export function PronunciationCourse({ language }: { language: PronunciationLanguage }) {
   const router = useRouter();
   const scrollRef = useRef<ScrollView>(null);
   const speechGeneration = useRef(0);
-  const units = PRONUNCIATION_COURSES[language];
-  const theme = THEMES[language];
+  const units = pronunciationUnits(language);
+  const syncsToAccount = SYNCED_PRONUNCIATION_LANGUAGES.includes(language);
+  const theme = pronunciationTheme(language);
   const [index, setIndex] = useState(0);
   const [marks, setMarks] = useState<PronunciationMarks>({});
   const [storageReady, setStorageReady] = useState(false);
@@ -176,11 +130,14 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
     try {
       const next = await savePronunciationMark(language, unit.id, nextMark);
       setMarks(next);
+      const where = syncsToAccount
+        ? 'اگر وارد حساب باشید، این تغییر میان دستگاه‌ها همگام می‌شود.'
+        : 'این یادداشت روی همین دستگاه ذخیره می‌شود.';
       setStorageMessage(nextMark === null
-        ? 'علامت این تمرین پاک شد؛ اگر وارد حساب باشید، حذف آن همگام می‌شود.'
+        ? `علامت این تمرین پاک شد؛ ${where}`
         : nextMark === 'practiced'
-          ? 'یادداشت «تمرین کردم» ذخیره شد؛ در صورت ورود به حساب، همگام می‌شود.'
-          : 'این تمرین برای مرور بعدی علامت خورد؛ در صورت ورود به حساب، همگام می‌شود.');
+          ? `یادداشت «تمرین کردم» ذخیره شد؛ ${where}`
+          : `این تمرین برای مرور بعدی علامت خورد؛ ${where}`);
     } catch {
       setStorageMessage('یادداشت ذخیره نشد؛ فضای ذخیره‌سازی دستگاه را بررسی کنید. متن درس و صدای نمونه در دسترس می‌مانند.');
     } finally {
@@ -202,7 +159,9 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
     }
   };
 
-  const bottomNav = language === 'ru' ? <RussianBottomNav /> : language === 'tr' ? <TurkishBottomNav /> : <AppBottomNav />;
+  const bottomNav = isNewLanguage(language)
+    ? <StarterBottomNav course={NEW_COURSES[language]} />
+    : language === 'ru' ? <RussianBottomNav /> : language === 'tr' ? <TurkishBottomNav /> : <AppBottomNav />;
 
   if (!unit) {
     return (
@@ -272,7 +231,7 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
 
           <View style={[styles.noticeCard, { backgroundColor: theme.soft, borderColor: theme.border }]}>
             <Text style={[styles.noticeTitle, { color: theme.accentDark }]}>تمرین خودارزیابی؛ خصوصی و قابل‌همگام‌سازی</Text>
-            <Text style={[styles.body, { color: theme.text }]}>نمونه‌ها با موتور گفتار سیستم‌عامل درخواست می‌شوند؛ موجودبودن و آفلاین‌بودن صدا به تنظیمات دستگاه بستگی دارد. این بخش میکروفن را باز نمی‌کند، صدای شما را ضبط یا ارسال نمی‌کند و تلفظ را نمره نمی‌دهد. وضعیت‌ها خودارزیابی‌اند؛ برای همگام‌سازی میان دستگاه‌ها، از صفحهٔ «حساب و همگام‌سازی» وارد شوید.</Text>
+            <Text style={[styles.body, { color: theme.text }]}>نمونه‌ها با موتور گفتار سیستم‌عامل درخواست می‌شوند؛ موجودبودن و آفلاین‌بودن صدا به تنظیمات دستگاه بستگی دارد. این بخش میکروفن را باز نمی‌کند، صدای شما را ضبط یا ارسال نمی‌کند و تلفظ را نمره نمی‌دهد. وضعیت‌ها خودارزیابی‌اند؛ {syncsToAccount ? 'برای همگام‌سازی میان دستگاه‌ها، از صفحهٔ «حساب و همگام‌سازی» وارد شوید.' : 'این یادداشت‌ها فعلاً فقط روی همین دستگاه می‌مانند و به حساب فرستاده نمی‌شوند.'}</Text>
           </View>
 
           <View style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>

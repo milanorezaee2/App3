@@ -1,4 +1,11 @@
-export type PronunciationLanguage = 'en' | 'ru' | 'tr';
+import { LANGUAGE_IDS, type LanguageId } from './registry';
+
+/**
+ * Every registered language can carry a pronunciation workshop. The type is the
+ * registry union, so a new language needs no edit here: add its units below (or
+ * none, and the route simply stays closed) and the rest follows automatically.
+ */
+export type PronunciationLanguage = LanguageId;
 
 export interface PronunciationExample {
   text: string;
@@ -22,7 +29,7 @@ export interface PronunciationUnit {
  * Persian descriptions explain mouth movement and listening focus; they are not
  * phonetic transcriptions or claims that a single accent is the only valid one.
  */
-export const PRONUNCIATION_COURSES: Record<PronunciationLanguage, readonly PronunciationUnit[]> = {
+const PRONUNCIATION_UNITS: Partial<Record<PronunciationLanguage, readonly PronunciationUnit[]>> = {
   tr: [
     {
       id: 'tr-vowels-i-dotless',
@@ -127,6 +134,21 @@ export const PRONUNCIATION_COURSES: Record<PronunciationLanguage, readonly Pronu
       practiceFa: 'یک‌بار گوش کنید، سپس جمله را با مکث طبیعی و آهنگ پرسشی تکرار کنید.',
       practiceText: 'Как дела? Спасибо, хорошо.',
       practiceMeaningFa: 'حالت چطور است؟ ممنون، خوبم.',
+    },
+    {
+      id: 'ru-vowels-y-i',
+      title: 'واکهٔ ы در برابر и',
+      focusFa: 'ы واکهٔ عقب‌تر و کم‌رنگ‌تری است؛ در فارسی معادل دقیقی ندارد و نباید با «ای» یکی شود.',
+      explanationFa: 'در روسی، и واکهٔ جلو و روشن است و ы واکه‌ای عقب‌تر که زبان در آن کمی جمع می‌شود. پس از همخوان‌های همیشه‌سخت مثل ж و ш معمولاً ы شنیده می‌شود. نمونه‌ها را با صدای دستگاه گوش کنید و تفاوت جفت‌ها را بشنوید؛ این تمرین فقط شنیداری است.',
+      examples: [
+        { text: 'мы · ми', meaningFa: 'ما · حرف می (نام نت)', focusFa: 'ы عقب‌تر در برابر и جلویی' },
+        { text: 'быть', meaningFa: 'بودن', focusFa: 'ы پس از ب سخت' },
+        { text: 'машина', meaningFa: 'ماشین', focusFa: 'ши با ы شنیده می‌شود' },
+        { text: 'спасибо', meaningFa: 'ممنون', focusFa: 'и روشن و جلویی' },
+      ],
+      practiceFa: 'جفت мы و ми را چند بار پشت سر هم گوش کنید؛ سپس بدون کشیدن «ای» در ы، آهسته تکرار کنید.',
+      practiceText: 'Мы были в машине.',
+      practiceMeaningFa: 'ما در ماشین بودیم.',
     },
   ],
   en: [
@@ -265,8 +287,207 @@ export const PRONUNCIATION_COURSES: Record<PronunciationLanguage, readonly Pronu
     },
   ],
 
+  de: [
+    {
+      id: 'de-umlauts-round-front',
+      title: 'واکه‌های ü و ö در برابر u و o',
+      focusFa: 'لب‌ها گرد می‌مانند، اما زبان جلو می‌آید؛ جایگزینی آن‌ها با u و o معنی را عوض می‌کند.',
+      explanationFa: 'برای ü لب‌ها مثل «او» گرد می‌شوند و هم‌زمان زبان در جایگاه «ای» قرار می‌گیرد؛ در ö لب‌ها گرد می‌مانند و زبان به جایگاه «اِ» می‌آید. نمونه‌ها را با صدای دستگاه گوش کنید و جفت‌ها را پشت سر هم مقایسه کنید. این تمرین نمونهٔ شنیداری است و تلفظ شما را نمره نمی‌دهد.',
+      examples: [
+        { text: 'schon · schön', meaningFa: 'قبلاً · زیبا', focusFa: 'یک جفت با تفاوت o و ö' },
+        { text: 'Bruder · Brüder', meaningFa: 'برادر · برادران', focusFa: 'u پسین در برابر ü جلویی' },
+        { text: 'müde', meaningFa: 'خسته', focusFa: 'ü در تک‌هجا' },
+        { text: 'König', meaningFa: 'پادشاه', focusFa: 'ö در آغاز واژه' },
+      ],
+      practiceFa: 'هر جفت را نخست آهسته گوش کنید؛ سپس فقط ö و ü را با لبِ گرد و زبانِ جلو تکرار کنید.',
+      practiceText: 'Schöne Grüße von meinem Bruder.',
+      practiceMeaningFa: 'سلام گرم از طرف برادرم.',
+    },
+    {
+      id: 'de-ch-soft-hard',
+      title: 'صدای ch: نرمِ ich و سختِ ach',
+      focusFa: 'ch پس از واکه‌های پیشین نرم و پس از a، o، u سخت‌تر و عقب‌تر شنیده می‌شود.',
+      explanationFa: 'در آلمانی معیار، ch دو چهره دارد: پس از i، e، ä، ö، ü نرم و بی‌لرزش در جلوی دهان ادا می‌شود (نه «ش»)، و پس از a، o، u در عقب دهان کمی خشن‌تر. در آغاز چند واژهٔ وام‌گرفته ch مانند «ک» خوانده می‌شود، مثل Christ. به جای صدا در دهان گوش کنید.',
+      examples: [
+        { text: 'ich', meaningFa: 'من', focusFa: 'ch نرم؛ به «ش» تبدیل نشود' },
+        { text: 'Buch', meaningFa: 'کتاب', focusFa: 'ch سخت پس از u' },
+        { text: 'Kirche', meaningFa: 'کلیسا', focusFa: 'k سخت در آغاز، ch نرم در پایان' },
+        { text: 'Christ', meaningFa: 'مسیح', focusFa: 'ch آغازین مانند k' },
+      ],
+      practiceFa: 'دوست و Buch را پشت سر هم گوش کنید؛ تفاوت جای صدا را حس کنید و ch را با «ش» عوض نکنید.',
+      practiceText: 'Ich möchte das Buch in der Kirche lesen.',
+      practiceMeaningFa: 'می‌خواهم کتاب را در کلیسا بخوانم.',
+    },
+    {
+      id: 'de-consonant-surprises',
+      title: 'حروف فریب‌دهنده: z، v، w، s و ß',
+      focusFa: 'z همیشه «تس» است، w «و»، v در بیشتر واژه‌ها «ف» و s پیش از واکه «ز».',
+      explanationFa: 'این حروف در آلمانی با انگلیسی فرق دارند: z «تس»، w «و»، v در بسیاری از واژه‌ها «ف»، و s پیش از واکه «ز» شنیده می‌شود؛ s در پایان هجا «س» می‌ماند. حرف ß همان «س» بی‌لرزش است. نمونه‌ها را بشنوید تا نوشتار گمراهتان نکند.',
+      examples: [
+        { text: 'Zeit', meaningFa: 'زمان', focusFa: 'z = تس در آغاز واژه' },
+        { text: 'Vater · Wasser', meaningFa: 'پدر · آب', focusFa: 'v = ف و w = و' },
+        { text: 'Haus · sagen', meaningFa: 'خانه · گفتن', focusFa: 's پایانی «س»، s پیش از واکه «ز»' },
+        { text: 'Straße', meaningFa: 'خیابان', focusFa: 'ß صدای «س» بی‌لرزش' },
+      ],
+      practiceFa: 'هر واژه را یک بار آهسته و یک بار عادی بشنوید؛ سپس حرف‌های z و w و v را جدا تمرین کنید.',
+      practiceText: 'Wir sagen: Zeit ist Geld.',
+      practiceMeaningFa: 'می‌گوییم: زمان پول است.',
+    },
+    {
+      id: 'de-r-endings-stress',
+      title: 'r، پایانه‌ها و تکیهٔ واژه',
+      focusFa: 'r در عقب دهان ساخته می‌شود، پایانهٔ -er کم‌رنگ است و تکیه معمولاً روی بخش نخست می‌نشیند.',
+      explanationFa: 'r آلمانی در آغاز واژه لرزش ملایمی در عقب دهان دارد و پس از واکه‌های بلند و در پایانه‌های -er بسیار کم‌رنگ می‌شود. همخوان‌های b، d، g در پایان هجا سخت‌تر شنیده می‌شوند؛ مثلاً Tag نزدیک به «تاک». واژه‌های چندبخشی معمولاً تکیه را روی بخش نخست دارند.',
+      examples: [
+        { text: 'rot', meaningFa: 'قرمز', focusFa: 'r آغازین در عقب دهان' },
+        { text: 'Lehrer', meaningFa: 'معلم', focusFa: 'پایانهٔ -er کوتاه و بی‌تکیه' },
+        { text: 'Tag · Tage', meaningFa: 'روز · روزها', focusFa: 'g پایانی سخت، g میان واکه‌ها نرم' },
+        { text: 'Arbeit', meaningFa: 'کار', focusFa: 'تکیه روی بخش نخست' },
+      ],
+      practiceFa: 'جمله را یک‌تکه گوش کنید؛ سپس با همان آهنگ و بدون تکیهٔ اضافه روی بخش‌های دیگر تکرار کنید.',
+      practiceText: 'Der Lehrer kommt am Tag zurück.',
+      practiceMeaningFa: 'معلم روز برمی‌گردد.',
+    },
+  ],
+  fr: [
+    {
+      id: 'fr-nasal-vowels',
+      title: 'واکه‌های خیشومی: on، an، in، un',
+      focusFa: 'هوا در این واکه‌ها از بینی می‌گذرد و n پایانی به‌صورت همخوان جدا شنیده نمی‌شود.',
+      explanationFa: 'در فرانسوی حروف on، an، in و un یک واکهٔ خیشومی می‌سازند: بخش اصلی صدا از بینی می‌آید و همخوان n در پایان ادا نمی‌شود. نمونه‌ها را بشنوید و جفت‌ها را مقایسه کنید؛ این کارگاه تلفظ را ارزیابی نمی‌کند و فقط گوش شما را راه می‌اندازد.',
+      examples: [
+        { text: 'bon', meaningFa: 'خوب', focusFa: 'on خیشومی، بدون n پایانی' },
+        { text: 'vin', meaningFa: 'شراب', focusFa: 'in خیشومی' },
+        { text: 'grand', meaningFa: 'بزرگ', focusFa: 'an خیشومی؛ d پایانی خاموش' },
+        { text: 'un · une', meaningFa: 'یک (مذکر) · یک (مؤنث)', focusFa: 'خیشومی در un، واکهٔ کامل در une' },
+      ],
+      practiceFa: 'نخست واژه‌های تک‌هجایی را آهسته گوش کنید؛ سپس همان جمله را با بینیِ آزاد و بدون افزودن n جدا تکرار کنید.',
+      practiceText: 'Mon grand frère a un bon pain.',
+      practiceMeaningFa: 'برادر بزرگم یک نان خوب دارد.',
+    },
+    {
+      id: 'fr-u-versus-ou',
+      title: 'واکهٔ u در برابر ou',
+      focusFa: 'برای u لب‌ها گرد می‌شوند و زبان در جلوی دهان می‌ماند؛ در ou زبان به عقب می‌رود.',
+      explanationFa: 'u فرانسوی صدایی است میان «ای» و «او»: لب‌ها گرد، زبان جلو. اگر زبان عقب برود، شنونده آن را ou می‌شنود و در واژه‌هایی مثل tu و tout معنی عوض می‌شود. جفت‌ها را پس از گوش‌دادن تکرار کنید.',
+      examples: [
+        { text: 'tu · tout', meaningFa: 'تو · همه', focusFa: 'u جلویی در برابر ou پسین' },
+        { text: 'rue', meaningFa: 'خیابان', focusFa: 'u پس از r' },
+        { text: 'vous', meaningFa: 'شما', focusFa: 'ou گرد و پسین' },
+        { text: 'lune', meaningFa: 'ماه', focusFa: 'u در تک‌هجا' },
+      ],
+      practiceFa: 'جفت‌ها را پشت سر هم بشنوید؛ برای u لب را گرد نگه دارید اما زبان را عقب نبرید.',
+      practiceText: 'Tu vas tout voir dans la rue.',
+      practiceMeaningFa: 'همه‌چیز را در خیابان خواهی دید.',
+    },
+    {
+      id: 'fr-silent-endings-liaison',
+      title: 'حروف خاموش پایانی و پیوند (liaison)',
+      focusFa: 'بسیاری از حروف پایانی نوشته می‌شوند اما شنیده نمی‌شوند؛ در پیوند برخی دوباره زنده می‌شوند.',
+      explanationFa: 'در فرانسوی حروفی مانند e، s، t، d و x در پایان واژه‌ها معمولاً خاموش‌اند. وقتی واژهٔ بعد با واکه آغاز شود، برخی از همین حروف در گفتار پیوسته دوباره شنیده می‌شوند (مثلاً les amis). این پیوند در همهٔ جایگاه‌ها اجباری نیست؛ نمونه را بشنوید و همان را تکرار کنید.',
+      examples: [
+        { text: 'petit', meaningFa: 'کوچک', focusFa: 't پایانی خاموش' },
+        { text: 'les amis', meaningFa: 'دوستان', focusFa: 's در les معمولاً خاموش، در پیوند «ز»' },
+        { text: 'vous avez', meaningFa: 'شما دارید', focusFa: 'پیوند با صدای «ز»' },
+        { text: 'beaucoup', meaningFa: 'خیلی', focusFa: 'p پایانی خاموش' },
+      ],
+      practiceFa: 'جمله را یک بار با پیوند و یک بار بدون پیوند گوش دهید؛ تفاوت شنیده‌شدن s را در همان نمونه پیدا کنید.',
+      practiceText: 'Les amis ont un petit chat.',
+      practiceMeaningFa: 'دوستان یک گربهٔ کوچک دارند.',
+    },
+    {
+      id: 'fr-r-and-rhythm',
+      title: 'r و آهنگ جمله',
+      focusFa: 'r در عقب دهان ساخته می‌شود و تکیه روی واکهٔ پایانی هر گروه واژه می‌نشیند.',
+      explanationFa: 'r فرانسوی در عقب دهان و با لرزش ملایم ساخته می‌شود، نه با نوک زبان. در جمله، تکیه روی آخرین واکهٔ هر گروه واژه می‌نشیند و واکه‌های دیگر کوتاه و یکنواخت می‌مانند. به جریان پیوستهٔ جمله گوش کنید و واژه‌ها را جدا از هم قطع نکنید.',
+      examples: [
+        { text: 'Paris', meaningFa: 'پاریس', focusFa: 'r عقبی و s پایانی خاموش' },
+        { text: 'merci', meaningFa: 'متشکرم', focusFa: 'r پس از e' },
+        { text: 'au revoir', meaningFa: 'خداحافظ', focusFa: 'دو گروه کوتاه با تکیهٔ پایانی' },
+        { text: 'ordinateur', meaningFa: 'کامپیوتر', focusFa: 'تکیهٔ واژه روی بخش پایانی' },
+      ],
+      practiceFa: 'جمله را آهسته گوش کنید و همان آهنگ پایانی را در تکرار حفظ کنید؛ تکیهٔ اضافه روی واژه‌های میانی نگذارید.',
+      practiceText: 'Merci, au revoir, à demain.',
+      practiceMeaningFa: 'متشکرم، خداحافظ، تا فردا.',
+    },
+  ],
+  es: [
+    {
+      id: 'es-r-versus-rr',
+      title: 'r ساده در برابر rr',
+      focusFa: 'r یک ضربهٔ کوتاه زبان است و rr چند ضربهٔ پشت‌سرهم؛ جابه‌جایی‌شان معنی را عوض می‌کند.',
+      explanationFa: 'در اسپانیایی r میان دو واکه یک ضربهٔ کوتاه است، اما rr و r در آغاز واژه با چند ضربه ساخته می‌شوند. نمونه‌ها را نخست با صدای دستگاه بشنوید و بعد آهسته تکرار کنید. این تمرین نمره‌ای برای تلفظ نمی‌دهد.',
+      examples: [
+        { text: 'pero · perro', meaningFa: 'اما · سگ', focusFa: 'یک ضربه در برابر چند ضربه' },
+        { text: 'caro · carro', meaningFa: 'گران · گاری', focusFa: 'r در برابر rr' },
+        { text: 'rosa', meaningFa: 'گل سرخ', focusFa: 'r آغازین چندضربه' },
+        { text: 'arroz', meaningFa: 'برنج', focusFa: 'rr میان دو واکه' },
+      ],
+      practiceFa: 'هر جفت را سه بار پشت سر هم گوش کنید؛ سپس آهسته و بدون فشار دادن زبان تکرار کنید.',
+      practiceText: 'El perro come arroz, pero el carro es caro.',
+      practiceMeaningFa: 'سگ برنج می‌خورد، اما گاری گران است.',
+    },
+    {
+      id: 'es-c-z-spain',
+      title: 'c و z در گونهٔ اسپانیا',
+      focusFa: 'در اسپانیای معیار ce/ci و z نزدیک به th انگلیسی در think شنیده می‌شوند و s صدای «س» دارد.',
+      explanationFa: 'در بیشتر مناطق اسپانیا ce، ci و z با نوک زبان میان دندان‌ها ادا می‌شوند، اما در آمریکای لاتین و بخشی از اندلس مانند «س» شنیده می‌شوند. هیچ‌کدام غلط نیست؛ این دوره گونهٔ اسپانیا را نمونه می‌گیرد. به تفاوت gracias و casa گوش کنید.',
+      examples: [
+        { text: 'gracias', meaningFa: 'متشکرم', focusFa: 'ci نزدیک به th در think' },
+        { text: 'cena', meaningFa: 'شام', focusFa: 'ce در آغاز واژه' },
+        { text: 'zapato', meaningFa: 'کفش', focusFa: 'z نزدیک به th' },
+        { text: 'casa', meaningFa: 'خانه', focusFa: 'ca صدای «ک» دارد، نه th' },
+      ],
+      practiceFa: 'سه واژهٔ gracias و cena و zapato را آهسته گوش کنید؛ سپس casa را برای مقایسه بشنوید.',
+      practiceText: 'Gracias por la cena y los zapatos.',
+      practiceMeaningFa: 'متشکرم برای شام و کفش‌ها.',
+    },
+    {
+      id: 'es-j-g-b-v',
+      title: 'j و g نرم، و b/v',
+      focusFa: 'j و g پیش از e/i صدای خشن عقب دهان دارند و b و v در اسپانیایی یک صدا هستند.',
+      explanationFa: 'حرف j و همچنین g پیش از e یا i صدایی خشن در عقب دهان می‌سازند (نزدیک به «خ»). حرف‌های b و v یک واج‌اند و تفاوتشان شنیده نمی‌شود. میان دو واکه، b و v و d نرم و کشیده ادا می‌شوند. نمونه‌ها را بشنوید و همان شکل پیوسته را تکرار کنید.',
+      examples: [
+        { text: 'trabajo', meaningFa: 'کار', focusFa: 'j در پایان واژه' },
+        { text: 'gente', meaningFa: 'مردم', focusFa: 'g پیش از e' },
+        { text: 'vivir · beber', meaningFa: 'زندگی کردن · نوشیدن', focusFa: 'b و v یک صدا' },
+        { text: 'nada', meaningFa: 'هیچ‌چیز', focusFa: 'd میان دو واکه نرم' },
+      ],
+      practiceFa: 'واژه‌ها را آهسته گوش کنید؛ سپس جمله را یک‌تکه و بدون قطع کردن میان واکه‌ها تکرار کنید.',
+      practiceText: 'La gente trabaja para vivir y beber agua.',
+      practiceMeaningFa: 'مردم برای زندگی کردن و نوشیدن آب کار می‌کنند.',
+    },
+    {
+      id: 'es-open-vowels-stress',
+      title: 'پنج واکهٔ روشن و جای تکیه',
+      focusFa: 'واکه‌ها کوتاه و روشن‌اند و محو نمی‌شوند؛ علامت ´ جای تکیه را مشخص می‌کند.',
+      explanationFa: 'اسپانیایی پنج واکهٔ ساده دارد و هر واکه روشن ادا می‌شود، حتی وقتی تکیه ندارد. اگر واژه علامت ´ داشته باشد تکیه روی همان بخش است؛ واژهٔ بدون علامت که به واکه یا n یا s پایان یابد، تکیه را روی بخش یکی‌مانده از آخر می‌گیرد. آهنگ پرسش هم در نمونه شنیدنی است.',
+      examples: [
+        { text: 'casa', meaningFa: 'خانه', focusFa: 'تکیه روی بخش نخست' },
+        { text: 'café', meaningFa: 'قهوه', focusFa: 'علامت تکیه روی é' },
+        { text: 'teléfono', meaningFa: 'تلفن', focusFa: 'تکیه روی بخش دوم' },
+        { text: '¿Cómo estás?', meaningFa: 'چطوری؟', focusFa: 'آهنگ پرسشی روشن' },
+      ],
+      practiceFa: 'واژه‌های تک‌تکیه را گوش کنید و همان جای تکیه را در تکرار نگه دارید؛ واکه‌های بی‌تکیه را کوتاه نکنید.',
+      practiceText: 'Mi teléfono está en casa, ¿cómo estás?',
+      practiceMeaningFa: 'تلفنم در خانه است، چطوری؟',
+    },
+  ],
 };
 
+/** Units for one language; an unknown or content-less language returns an empty list. */
+export function pronunciationUnits(language: string | undefined): readonly PronunciationUnit[] {
+  if (!language) return [];
+  return PRONUNCIATION_UNITS[language as PronunciationLanguage] ?? [];
+}
+
+/** Languages that currently ship a workshop, derived from the content itself. */
+export const PRONUNCIATION_LANGUAGES: readonly PronunciationLanguage[] =
+  LANGUAGE_IDS.filter(language => pronunciationUnits(language).length > 0);
+
+/** Backwards-compatible view of the same content. */
+export const PRONUNCIATION_COURSES: Readonly<Partial<Record<PronunciationLanguage, readonly PronunciationUnit[]>>> = PRONUNCIATION_UNITS;
+
 export function isPronunciationLanguage(value: string | undefined): value is PronunciationLanguage {
-  return value === 'en' || value === 'ru' || value === 'tr';
+  return pronunciationUnits(value).length > 0;
 }

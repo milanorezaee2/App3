@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
-import { PRONUNCIATION_COURSES, type PronunciationLanguage } from './pronunciationCourse';
+import { pronunciationUnits, type PronunciationLanguage } from './pronunciationCourse';
+import { LANGUAGE_IDS } from './registry';
 
 export type PronunciationMark = 'practiced' | 'review';
 export interface PronunciationMarkEntry {
@@ -10,11 +11,20 @@ export interface PronunciationMarkEntry {
 }
 export type PronunciationMarks = Partial<Record<string, PronunciationMarkEntry>>;
 
-export const PRONUNCIATION_PROGRESS_KEYS: Record<PronunciationLanguage, string> = {
-  en: 'pronunciation_practice_en_v1',
-  ru: 'pronunciation_practice_ru_v1',
-  tr: 'pronunciation_practice_tr_v1',
-};
+/**
+ * One local storage key per registered language, derived from the registry so a
+ * new language never needs a hand-written key here.
+ */
+export const PRONUNCIATION_PROGRESS_KEYS = Object.fromEntries(
+  LANGUAGE_IDS.map(language => [language, `pronunciation_practice_${language}_v1`]),
+) as Record<PronunciationLanguage, string>;
+
+/**
+ * Languages whose marks are uploaded to the account row. The cloud column
+ * `pronunciation_progress` is merged for English only, so every other language
+ * keeps its self-review marks on this device and the UI says exactly that.
+ */
+export const SYNCED_PRONUNCIATION_LANGUAGES: readonly PronunciationLanguage[] = ['en'];
 
 interface StoredPronunciationProgress {
   schemaVersion: 2;
@@ -29,7 +39,7 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 /** Validate a local or cloud mark map without ever treating malformed data as an empty record. */
 export function parsePronunciationMarks(value: unknown, language: PronunciationLanguage): PronunciationMarks {
   if (!isRecord(value)) throw new Error('Pronunciation marks must be an object');
-  const allowedIds = new Set(PRONUNCIATION_COURSES[language].map(unit => unit.id));
+  const allowedIds = new Set(pronunciationUnits(language).map(unit => unit.id));
   const result: PronunciationMarks = {};
   for (const [id, candidate] of Object.entries(value)) {
     if (!allowedIds.has(id)) throw new Error('Pronunciation progress contains an unknown lesson');
@@ -114,11 +124,9 @@ async function readProgress(language: PronunciationLanguage): Promise<Pronunciat
   return parseStoredProgress(parsed, language);
 }
 
-const writeQueues: Record<PronunciationLanguage, Promise<unknown>> = {
-  en: Promise.resolve(),
-  ru: Promise.resolve(),
-  tr: Promise.resolve(),
-};
+const writeQueues: Record<PronunciationLanguage, Promise<unknown>> = Object.fromEntries(
+  LANGUAGE_IDS.map(language => [language, Promise.resolve()]),
+) as Record<PronunciationLanguage, Promise<unknown>>;
 
 function serialWrite<T>(language: PronunciationLanguage, job: () => Promise<T>): Promise<T> {
   const next = writeQueues[language].catch(() => undefined).then(job);
@@ -161,7 +169,7 @@ export function savePronunciationMark(
   unitId: string,
   mark: PronunciationMark | null,
 ): Promise<PronunciationMarks> {
-  if (!PRONUNCIATION_COURSES[language].some(unit => unit.id === unitId)) {
+  if (!pronunciationUnits(language).some(unit => unit.id === unitId)) {
     return Promise.reject(new Error('Unknown pronunciation unit'));
   }
   if (mark !== null && mark !== 'practiced' && mark !== 'review') {

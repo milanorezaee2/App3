@@ -11,6 +11,7 @@ const entry = path.join(cache, 'entry.ts');
 writeFileSync(entry, `
 export * as course from '${path.join(root, 'lib/languages/pronunciationCourse.ts')}';
 export * as progress from '${path.join(root, 'lib/languages/pronunciationProgress.ts')}';
+export * as registry from '${path.join(root, 'lib/languages/registry.ts')}';
 export { default as mockAsyncStorage } from '@react-native-async-storage/async-storage';
 `);
 const esbuild = await import('esbuild');
@@ -32,35 +33,49 @@ const check = (condition, message) => assert.ok(condition, message);
 let checks = 0;
 const verify = (condition, message) => { check(condition, message); checks += 1; };
 
-const { PRONUNCIATION_COURSES } = app.course;
-for (const language of ['en']) {
-  const units = PRONUNCIATION_COURSES[language];
-  verify(units.length >= 8, `${language} has a structured multi-lesson pronunciation course`);
+const { pronunciationUnits, PRONUNCIATION_LANGUAGES } = app.course;
+const { LANGUAGE_IDS } = app.registry;
+const persian = /[\u0600-\u06FF]/;
+const targetLanguages = LANGUAGE_IDS;
+
+verify(targetLanguages.every(language => pronunciationUnits(language).length >= 4), 'every registered language ships a multi-unit pronunciation workshop (no language is an exception)');
+verify(PRONUNCIATION_LANGUAGES.length === targetLanguages.length, 'the workshop list is derived from the content, so no language is left behind');
+for (const language of targetLanguages) {
+  const units = pronunciationUnits(language);
   verify(new Set(units.map(unit => unit.id)).size === units.length, `${language} unit IDs are unique`);
-  verify(units.every(unit => unit.title && unit.explanationFa && unit.practiceFa && unit.practiceText && unit.examples.length >= 2), `${language} units include instruction, examples and a practice sentence`);
+  verify(units.every(unit => unit.id.startsWith(`${language}-`)), `${language} unit IDs are namespaced by language`);
+  verify(units.every(unit => unit.title && unit.explanationFa && unit.focusFa && unit.practiceFa && unit.practiceText && unit.practiceMeaningFa), `${language} units include title, focus, instruction and practice sentence`);
+  verify(units.every(unit => unit.examples.length >= 3), `${language} units carry at least three listening examples`);
+  verify(units.every(unit => unit.examples.every(example => example.text && example.meaningFa && example.focusFa)), `${language} examples carry text, meaning and listening focus`);
+  verify(units.every(unit => unit.examples.every(example => !persian.test(example.text)) && !persian.test(unit.practiceText)), `${language} sample sentences stay in the target language`);
+  verify(units.every(unit => persian.test(unit.explanationFa) && persian.test(unit.practiceFa)), `${language} guidance is still written in Persian`);
+  verify(units.every(unit => unit.practiceText.length <= 120), `${language} practice sentences stay short enough for slow speech`);
 }
-verify(PRONUNCIATION_COURSES.ru.length >= 3, 'Russian has a focused pronunciation course without altering its core lesson catalog');
-verify(PRONUNCIATION_COURSES.ru.every(unit => unit.examples.length >= 2 && unit.practiceText), 'Russian pronunciation units include TTS-ready practice examples');
-verify(PRONUNCIATION_COURSES.tr.length >= 4, 'Turkish has a focused Istanbul Turkish pronunciation course');
-verify(new Set(PRONUNCIATION_COURSES.tr.map(unit => unit.id)).size === PRONUNCIATION_COURSES.tr.length, 'Turkish pronunciation unit IDs are unique');
-verify(PRONUNCIATION_COURSES.tr.every(unit => unit.title && unit.explanationFa && unit.practiceFa && unit.practiceText && unit.examples.length >= 3), 'Turkish pronunciation units include instruction, examples, and a practice sentence');
-verify(PRONUNCIATION_COURSES.en.some(unit => /thin و this/.test(unit.title)), 'English course teaches the two TH sounds');
-verify(PRONUNCIATION_COURSES.en.some(unit => /s و ed/.test(unit.title)), 'English course teaches common suffix pronunciations');
+const allUnitIds = targetLanguages.flatMap(language => pronunciationUnits(language).map(unit => unit.id));
+verify(new Set(allUnitIds).size === allUnitIds.length, 'no pronunciation unit is shared between languages');
+verify(pronunciationUnits('en').length >= 8, 'English has a structured multi-lesson pronunciation course');
+verify(pronunciationUnits('ru').length >= 3, 'Russian has a focused pronunciation course without altering its core lesson catalog');
+verify(pronunciationUnits('tr').length === 4, 'Turkish keeps its four Istanbul Turkish units');
+verify(pronunciationUnits('de').length === 4 && pronunciationUnits('fr').length === 4 && pronunciationUnits('es').length === 4, 'German, French and Spanish each ship four units');
+verify(pronunciationUnits('en').some(unit => /thin و this/.test(unit.title)), 'English course teaches the two TH sounds');
+verify(pronunciationUnits('en').some(unit => /s و ed/.test(unit.title)), 'English course teaches common suffix pronunciations');
+verify(pronunciationUnits('de').some(unit => /ü و ö/.test(unit.title)) && pronunciationUnits('de').some(unit => /ch/.test(unit.title)), 'German course covers umlauts and the two ch sounds');
+verify(pronunciationUnits('fr').some(unit => /خیشومی/.test(unit.title)) && pronunciationUnits('fr').some(unit => /liaison|پیوند/.test(unit.title)), 'French course covers nasal vowels and liaison');
+verify(pronunciationUnits('es').some(unit => /rr/.test(unit.title)) && pronunciationUnits('es').some(unit => /c و z/.test(unit.title)), 'Spanish course covers r/rr and Spain c/z');
+verify(pronunciationUnits('zz').length === 0 && !app.course.isPronunciationLanguage('zz'), 'unknown languages never open the workshop');
 
 const storage = app.mockAsyncStorage;
 await storage.clear();
 const englishKey = app.progress.PRONUNCIATION_PROGRESS_KEYS.en;
-const enUnit = PRONUNCIATION_COURSES.en[0];
-const ruUnit = PRONUNCIATION_COURSES.ru[0];
-const trUnit = PRONUNCIATION_COURSES.tr[0];
+const enUnit = pronunciationUnits('en')[0];
+verify(targetLanguages.every(language => app.progress.PRONUNCIATION_PROGRESS_KEYS[language] === `pronunciation_practice_${language}_v1`), 'every language gets its own storage key from the registry');
 verify(Object.keys(await app.progress.loadPronunciationMarks('en')).length === 0, 'missing English local marks start empty');
-await app.progress.savePronunciationMark('en', enUnit.id, 'practiced');
-await app.progress.savePronunciationMark('ru', ruUnit.id, 'practiced');
-await app.progress.savePronunciationMark('tr', trUnit.id, 'practiced');
-verify((await app.progress.loadPronunciationMarks('en'))[enUnit.id]?.mark === 'practiced', 'English self-review status persists locally');
-verify((await app.progress.loadPronunciationMarks('ru'))[ruUnit.id]?.mark === 'practiced', 'Russian pronunciation progress persists locally');
-verify((await app.progress.loadPronunciationMarks('tr'))[trUnit.id]?.mark === 'practiced', 'Turkish pronunciation progress persists locally');
-verify(Object.keys(await app.progress.loadPronunciationMarks('en')).length === 1, 'English, Russian, and Turkish progress remain separate');
+for (const language of targetLanguages) {
+  await app.progress.savePronunciationMark(language, pronunciationUnits(language)[0].id, 'practiced');
+  verify((await app.progress.loadPronunciationMarks(language))[pronunciationUnits(language)[0].id]?.mark === 'practiced', `${language} pronunciation progress persists locally`);
+}
+verify(Object.keys(await app.progress.loadPronunciationMarks('en')).length === 1, 'each language keeps its own separate progress');
+await assert.rejects(app.progress.savePronunciationMark('de', pronunciationUnits('en')[0].id, 'practiced')); checks += 1;
 await app.progress.savePronunciationMark('en', enUnit.id, null);
 verify((await app.progress.loadPronunciationMarks('en'))[enUnit.id]?.mark === null, 'cleared marks persist as cross-device tombstones');
 
@@ -80,5 +95,14 @@ verify(readFileSync(path.join(root, 'app/lang/index.tsx'), 'utf8').includes("'/l
 verify(readFileSync(path.join(root, 'components/AppBottomNav.tsx'), 'utf8').includes("'/learn/en/pronunciation'"), 'English navigation includes the pronunciation course');
 verify(readFileSync(path.join(root, 'components/RussianBottomNav.tsx'), 'utf8').includes("'/learn/ru/pronunciation'"), 'Russian navigation includes pronunciation');
 verify(readFileSync(path.join(root, 'components/RussianBottomNav.tsx'), 'utf8').includes("'/conversations'"), 'Russian navigation opens real contact conversations');
+const route = readFileSync(path.join(root, 'app/learn/[language]/pronunciation.tsx'), 'utf8');
+verify(!/StarterPronunciation/.test(route) && /isPronunciationLanguage/.test(route), 'one shared workshop serves every language, including the starter courses');
+const nav = readFileSync(path.join(root, 'components/StarterBottomNav.tsx'), 'utf8');
+verify(/'تلفظ'/.test(nav), 'starter course navigation keeps its pronunciation tab');
 
-console.log(`${checks} checks passed; English/Russian pronunciation lessons, durable self-review storage, language navigation and speech privacy verified.`);
+const synced = app.progress.SYNCED_PRONUNCIATION_LANGUAGES;
+const syncModule = readFileSync(path.join(root, 'lib/personalLearningSync.ts'), 'utf8');
+verify(synced.every(language => syncModule.includes(`mergeRemotePronunciationMarks('${language}'`)), 'every language flagged for account sync really merges in the sync module');
+verify(targetLanguages.filter(language => !synced.includes(language)).length > 0 && /syncsToAccount/.test(ui), 'languages without account sync say their marks stay on this device');
+
+console.log(`${checks} checks passed; every language now has a pronunciation workshop with durable per-language self-review storage, navigation and speech privacy verified.`);
