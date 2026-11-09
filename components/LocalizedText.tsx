@@ -46,8 +46,10 @@ const TIMES_FAMILY = /times/i;
 // ---- reading colour: dark/medium text becomes pure black; light text on
 // coloured or dark surfaces is left alone so it stays legible.
 const BLACK = '#000000';
-// Five-language app: Persian copy in a minimal smoky black instead of pure black.
-const PERSIAN_BLACK = FEATURES.learnerLogin ? '#2E2E2E' : BLACK;
+// Five-language app: Persian copy in grey instead of pure black.
+const PERSIAN_BLACK = FEATURES.learnerLogin ? '#4B5563' : BLACK;
+/** Persian translations that mirror a course-language sentence: lighter grey. */
+export const PERSIAN_TRANSLATION_COLOR = FEATURES.learnerLogin ? '#8A929E' : BLACK;
 const LIGHT_THRESHOLD = 0.6;
 const colorCache = new Map<string, string>();
 function parseColor(value: string): { r: number; g: number; b: number; a: number } | null {

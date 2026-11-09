@@ -13,9 +13,15 @@ const TEXT_REFERENCE_SCALE = 0.86;
 export const TextScaleContext = createContext(1);
 const WIDE_BREAKPOINT = 700;
 
-export const FitScrollView = forwardRef<ScrollView, ScrollViewProps>(function FitScrollView({ children, onLayout, ...props }, ref) {
+type FitScrollViewProps = ScrollViewProps & {
+  /** 'classic': the earlier uniform 86% rendering (text scales with the layout). */
+  variant?: 'default' | 'classic';
+};
+
+export const FitScrollView = forwardRef<ScrollView, FitScrollViewProps>(function FitScrollView({ children, onLayout, variant = 'default', ...props }, ref) {
   const { width: windowWidth } = useWindowDimensions();
-  const scale = windowWidth >= WIDE_BREAKPOINT ? 1 : PHONE_SCALE;
+  const phoneScale = variant === 'classic' ? TEXT_REFERENCE_SCALE : PHONE_SCALE;
+  const scale = windowWidth >= WIDE_BREAKPOINT ? 1 : phoneScale;
   const [width, setWidth] = useState(0);
   const [natural, setNatural] = useState(0);
   const ready = scale < 1 && width > 0;
@@ -41,6 +47,6 @@ export const FitScrollView = forwardRef<ScrollView, ScrollViewProps>(function Fi
 });
 
 /** Converts a content-space y offset into scroll-space for `scrollTo`. */
-export function lessonScrollOffset(contentY: number, windowWidth: number): number {
-  return contentY * (windowWidth >= WIDE_BREAKPOINT ? 1 : PHONE_SCALE);
+export function lessonScrollOffset(contentY: number, windowWidth: number, variant: 'default' | 'classic' = 'default'): number {
+  return contentY * (windowWidth >= WIDE_BREAKPOINT ? 1 : variant === 'classic' ? TEXT_REFERENCE_SCALE : PHONE_SCALE);
 }

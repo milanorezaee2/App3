@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 15: grammar stage back to classic 86% rendering; Persian grey, translations lighter grey (login app).
 # rev 14: lesson layout 78% with text kept at previous size; Persian smoky black in login app; translation pill reverted.
 # rev 13: login app Persian in Beiruti Bold; lesson translation styled as indigo accent pill.
 # rev 12: lesson pages back to normal scrolling layout, drawn at 86% scale on phones.

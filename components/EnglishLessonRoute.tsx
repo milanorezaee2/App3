@@ -1,5 +1,5 @@
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
-import { LocalizedText as Text } from '@/components/LocalizedText';
+import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/LocalizedText';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { FitScrollView, lessonScrollOffset } from '@/components/FitScrollView';
@@ -308,7 +308,7 @@ export default function SentenceLessonScreen() {
   return (
     <View style={styles.root} onTouchStart={timer.interact}>
       {resetting && <Text accessibilityLiveRegion="polite" style={styles.stageDesc}>در حال ذخیرهٔ شروع مجدد…</Text>}
-      <FitScrollView ref={lessonScrollRef} pointerEvents={resetting ? 'none' : 'auto'} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <FitScrollView ref={lessonScrollRef} variant={stage === 6 ? 'classic' : 'default'} pointerEvents={resetting ? 'none' : 'auto'} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
       <View style={styles.brandRow}><MiloGlobeHeadphoneMark size={48} /><PageNavigation backFallback="/lang" /></View>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
@@ -374,7 +374,7 @@ export default function SentenceLessonScreen() {
               <Text style={[styles.pronunciation,current.pronunciation.startsWith('/ ')&&{fontFamily: 'Times New Roman',textAlign:'left',writingDirection:'ltr'}]}>{current.pronunciation}</Text>
               {!lesson.b2Section && !lesson.c1Section && lesson.order >= 89 + B1_INDEPENDENT_UNITS.length + A2_FOUNDATION_LESSONS.length && <Text style={styles.hint}>راهنمای واجی آمریکایی از واژه‌نامه؛ بدون تکیه و پیوند گفتار. واژه داخل کروشه آوانویسی نشده است. برای آهنگ جمله به صدا گوش دهید.</Text>}
               <View style={styles.divider} />
-              <Text style={styles.persian}>{current.fa}</Text>
+              <Text keepColor style={styles.persian}>{current.fa}</Text>
               {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternEnglish}>{current.pattern}</Text></View> : null}
             </View>
             <EnglishSpeechRateControls onPlay={rate => speak(current.en, rate)} />
@@ -478,7 +478,7 @@ export default function SentenceLessonScreen() {
                     <Text style={styles.vocabMeaning}>{item.meaning}</Text>
                   </View>
                   <Text style={styles.vocabExample}>{item.exampleEn}</Text>
-                  <Text style={styles.bubbleFa}>{item.exampleFa}</Text>
+                  <Text keepColor style={styles.bubbleFa}>{item.exampleFa}</Text>
                 </View>
               ))}
             </View>
@@ -504,7 +504,7 @@ export default function SentenceLessonScreen() {
               <View key={item.sentenceId} style={styles.vocabCard}>
                 <Text style={styles.patternEnglish}>{item.pattern}</Text>
                 <Text style={styles.vocabExample}>{item.exampleEn}</Text>
-                <Text style={styles.bubbleFa}>{item.exampleFa}</Text>
+                <Text keepColor style={styles.bubbleFa}>{item.exampleFa}</Text>
                 <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن جمله: ${item.exampleEn}`} onPress={() => speak(item.exampleEn)} style={styles.bubbleSound}>
                   <Volume2 size={16} color={Colors.primary[400]} />
                 </Pressable>
@@ -639,7 +639,7 @@ const styles = StyleSheet.create({
   english: { fontFamily: 'Times New Roman', width: '100%', fontSize: 25, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   pronunciation: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'center', writingDirection: 'rtl', marginTop: 8 },
   divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 12 },
-  persian: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg + 2, fontWeight: '400', color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
+  persian: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg + 2, fontWeight: '400', color: PERSIAN_TRANSLATION_COLOR, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   pattern: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start', gap: 8, alignSelf: 'flex-end', backgroundColor: Palette.warningSoft, paddingHorizontal: 10, paddingVertical: 6, borderRadius: Radius.full, marginTop: Spacing.md },
   patternLabel: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.warning, writingDirection: 'rtl' },
   patternEnglish: { fontFamily: 'Times New Roman', fontSize: Typography.sizes.xs + 2, fontWeight: '800', color: Palette.warning, textAlign: 'left', writingDirection: 'ltr' },
@@ -684,7 +684,7 @@ const styles = StyleSheet.create({
   bubbleLearner: { alignSelf: 'flex-end', backgroundColor: Palette.primarySoft, borderColor: '#DDE2FF', borderBottomRightRadius: 5 },
   bubbleSpeaker: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: Palette.primaryDark, marginBottom: 4, textAlign: 'right', writingDirection: 'rtl' },
   bubbleEn: { fontFamily: 'Times New Roman', fontSize: 16, fontWeight: '800', color: Palette.ink, lineHeight: 23, textAlign: 'left', writingDirection: 'ltr' },
-  bubbleFa: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', marginTop: 5 },
+  bubbleFa: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: PERSIAN_TRANSLATION_COLOR, textAlign: 'right', writingDirection: 'rtl', marginTop: 5 },
   bubbleSound: { alignSelf: 'flex-end', marginTop: 6 },
   vocabList: { width: '100%', gap: Spacing.sm, marginTop: Spacing.xl },
   vocabCard: { borderRadius: Radius.lg, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: Spacing.md },
