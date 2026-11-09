@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 16: redesigned "Grammar Through Usage" stage (numbered, right-aligned pattern cards) in all languages.
 # rev 15: grammar stage back to classic 86% rendering; Persian grey, translations lighter grey (login app).
 # rev 14: lesson layout 78% with text kept at previous size; Persian smoky black in login app; translation pill reverted.
 # rev 13: login app Persian in Beiruti Bold; lesson translation styled as indigo accent pill.

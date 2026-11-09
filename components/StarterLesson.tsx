@@ -3,6 +3,7 @@ import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/L
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { FitScrollView, lessonScrollOffset } from '@/components/FitScrollView';
+import { GrammarNoteCard, GrammarPatternCard, GrammarStageHeader } from '@/components/GrammarUsage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as Speech from 'expo-speech';
@@ -354,23 +355,15 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           </View>)}</View>
         </View>}
 
-        {stage === 6 && <View style={styles.centerStage}>
-          <View style={styles.bigIcon}><MiloGlobeHeadphoneMark size={33} /></View>
-          <Text style={styles.stageTitle}>{foundation ? 'نکتهٔ نوشتار و کاربرد' : 'دستور در کاربرد'}</Text>
-          <Text style={styles.stageDesc}>{foundation ? 'نکته را بخوانید؛ نمونه‌ها را می‌توانید در بخش شنیدن یا تمرین دوباره بشنوید.' : (lesson.levelId === 2 || lesson.levelId === 3 || lesson.levelId === 4) ? 'ساختار و توضیح هر الگو را بخوانید و مثال آن را از همین درس بشنوید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به داده‌ها اضافه نمی‌شود.'}</Text>
-          {a1 && teachingNote ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ این زبان</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : null}
-          {foundation ? <View style={styles.noteCard}><Text style={styles.noteTitle}>یادآوری</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : a2Patterns.length ? a2Patterns.map(pattern => {
+        {stage === 6 && <View style={styles.grammarStage}>
+          <GrammarStageHeader title={foundation ? 'نکتهٔ نوشتار و کاربرد' : 'دستور در کاربرد'} subtitle="Grammar Through Usage" description={foundation ? 'نکته را بخوانید؛ نمونه‌ها را می‌توانید در بخش شنیدن یا تمرین دوباره بشنوید.' : (lesson.levelId === 2 || lesson.levelId === 3 || lesson.levelId === 4) ? 'ساختار و توضیح هر الگو را بخوانید و مثال آن را از همین درس بشنوید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به داده‌ها اضافه نمی‌شود.'} />
+          {a1 && teachingNote ? <GrammarNoteCard title="نکتهٔ این زبان" text={teachingNote} /> : null}
+          {foundation ? <GrammarNoteCard title="یادآوری" text={teachingNote ?? ''} /> : a2Patterns.length ? a2Patterns.map((pattern, index) => {
             const sentence = lesson.sentences[pattern.example - 1];
-            return <View key={pattern.form} style={styles.vocabCard}>
-              <Text style={styles.a2PatternForm}>{pattern.form}</Text>
-              <Text style={styles.noteText}>{pattern.explanationFa}</Text>
-              <Text style={styles.vocabExample}>{sentence.text}</Text><Text keepColor style={styles.vocabExampleFa}>{sentence.fa}</Text>
-              <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن جمله: ${sentence.text}`} onPress={() => speak(sentence.text)} style={styles.bubbleSound}><Volume2 size={16} color={Palette.primary} /></Pressable>
-            </View>;
-          }) : grammarPatterns.length ? grammarPatterns.map(({ sentence, pattern }) => <View key={sentence.id} style={styles.vocabCard}>
-            <Text style={styles.patternText}>{pattern}</Text><Text style={styles.vocabExample}>{sentence.text}</Text><Text keepColor style={styles.vocabExampleFa}>{sentence.fa}</Text>
-            <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن جمله: ${sentence.text}`} onPress={() => speak(sentence.text)} style={styles.bubbleSound}><Volume2 size={16} color={Palette.primary} /></Pressable>
-          </View>) : <View style={styles.promiseCard}><Text style={styles.promiseTitle}>یادگیری در بافت جمله</Text><Text style={styles.promiseText}>برای این درس الگوی جداگانه‌ای ثبت نشده است؛ جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید.</Text></View>}
+            return <GrammarPatternCard key={pattern.form} index={index + 1} pattern={pattern.form} explanation={pattern.explanationFa} example={sentence.text} translation={sentence.fa} onSpeak={() => speak(sentence.text)} />;
+          }) : grammarPatterns.length ? grammarPatterns.map(({ sentence, pattern }, index) => (
+            <GrammarPatternCard key={sentence.id} index={index + 1} pattern={pattern} example={sentence.text} translation={sentence.fa} onSpeak={() => speak(sentence.text)} />
+          )) : <GrammarNoteCard title="یادگیری در بافت جمله" text="برای این درس الگوی جداگانه‌ای ثبت نشده است؛ جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید." />}
         </View>}
 
         {stage === 7 && <View style={styles.centerStage}>
@@ -491,6 +484,7 @@ const styles = StyleSheet.create({
   retrySaveText: { fontFamily: Typography.fontFamily, color: Palette.primary, fontSize: 11, fontWeight: '400', writingDirection: 'rtl' },
   content: { width: '100%', maxWidth: 820, alignSelf: 'center', paddingHorizontal: 15, paddingTop: 12, paddingBottom: 24, gap: 12 },
   centerStage: { alignItems: 'center', width: '100%' },
+  grammarStage: { width: '100%', alignItems: 'stretch' },
   bigIcon: { width: 72, height: 72, borderRadius: 36, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF', alignItems: 'center', justifyContent: 'center', marginVertical: 18 },
   stageEyebrow: { fontFamily: Typography.fontFamily, fontSize: 11, fontWeight: '400', color: Palette.primary, marginBottom: 4, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   stageTitle: { fontFamily: Typography.boldFontFamily, fontSize: 25, lineHeight: 36, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },

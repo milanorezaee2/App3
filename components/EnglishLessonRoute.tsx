@@ -3,6 +3,7 @@ import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/L
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { FitScrollView, lessonScrollOffset } from '@/components/FitScrollView';
+import { GrammarNoteCard, GrammarPatternCard, GrammarStageHeader } from '@/components/GrammarUsage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import {
@@ -486,33 +487,13 @@ export default function SentenceLessonScreen() {
         )}
 
         {stage === 6 && (
-          <View style={styles.centerStage}>
-            <View style={styles.bigIcon}><MiloGlobeHeadphoneMark size={33} /></View>
-            <Text style={styles.stageTitle}>Grammar Through Usage · دستور در کاربرد</Text>
-            <Text style={styles.stageDesc}>{(lesson.b2Section || lesson.c1Section) ? 'نکته‌های کاربردی را بخوانید و سپس الگوها و مثال‌ها را مرور کنید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به محتوا اضافه نشده است.'}</Text>
-            {B2_GUIDANCE[lesson.id]?.map((note, index) => (
-              <View key={`${lesson.id}-guide-${index}`} style={styles.vocabCard}>
-                <Text style={styles.promiseTitle}>{lessonTopics?.[index]}</Text>
-                <Text style={styles.promiseText}>{note}</Text>
-              </View>
-            ))}
-            {c1Unit?.topics.map((topic, index) => <View key={`${lesson.id}-c1-guide-${index}`} style={styles.vocabCard}>
-              <Text style={styles.promiseTitle}>{topic[0]}</Text>
-              <Text style={styles.promiseText}>{topic[5]}</Text>
-            </View>)}
-            {grammarPatterns.length ? grammarPatterns.map(item => (
-              <View key={item.sentenceId} style={styles.vocabCard}>
-                <Text style={styles.patternEnglish}>{item.pattern}</Text>
-                <Text style={styles.vocabExample}>{item.exampleEn}</Text>
-                <Text keepColor style={styles.bubbleFa}>{item.exampleFa}</Text>
-                <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن جمله: ${item.exampleEn}`} onPress={() => speak(item.exampleEn)} style={styles.bubbleSound}>
-                  <Volume2 size={16} color={Colors.primary[400]} />
-                </Pressable>
-              </View>
-            )) : <View style={styles.promiseCard}>
-              <Text style={styles.promiseTitle}>یادگیری در بافت جمله</Text>
-              <Text style={styles.promiseText}>برای این درس الگوی دستوری جداگانه‌ای ثبت نشده است؛ جملهٔ اصلی را بشنوید و ساختارش را در کاربرد واقعی ببینید.</Text>
-            </View>}
+          <View style={styles.grammarStage}>
+            <GrammarStageHeader title="دستور در کاربرد" subtitle="Grammar Through Usage" description={(lesson.b2Section || lesson.c1Section) ? 'نکته‌های کاربردی را بخوانید و سپس الگوها و مثال‌ها را مرور کنید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به محتوا اضافه نشده است.'} />
+            {B2_GUIDANCE[lesson.id]?.map((note, index) => <GrammarNoteCard key={`${lesson.id}-guide-${index}`} title={lessonTopics?.[index] ?? ''} text={note} />)}
+            {c1Unit?.topics.map((topic, index) => <GrammarNoteCard key={`${lesson.id}-c1-guide-${index}`} title={topic[0]} text={topic[5]} />)}
+            {grammarPatterns.length ? grammarPatterns.map((item, index) => (
+              <GrammarPatternCard key={item.sentenceId} index={index + 1} pattern={item.pattern} example={item.exampleEn} translation={item.exampleFa} onSpeak={() => speak(item.exampleEn)} />
+            )) : <GrammarNoteCard title="یادگیری در بافت جمله" text="برای این درس الگوی دستوری جداگانه‌ای ثبت نشده است؛ جملهٔ اصلی را بشنوید و ساختارش را در کاربرد واقعی ببینید." />}
             {lesson.c1Section && lessonTopics && <EnglishB2TopicPractice key={lesson.id} lessonId={lesson.id} topics={lessonTopics} practice={C1_TOPIC_PRACTICE[lesson.id]} />}
             {lesson.c1Section && <EnglishB2TopicPractice key={`${lesson.id}-application`} lessonId={lesson.id} topics={['تحلیل موقعیت']} practice={C1_APPLICATION_PRACTICE[lesson.id]} heading="کاربرد در موقعیت تازه · اختیاری" description="با توجه به موقعیت تازه بهترین پاسخ را انتخاب کنید؛ این تمرین شرط پایان درس نیست." />}
             {lesson.c1Section && <EnglishB2TopicPractice key={`${lesson.id}-application-extra`} lessonId={lesson.id} topics={['سنجش کاربرد در بافت جدید']} practice={C1_ADDITIONAL_APPLICATION[lesson.id]} heading="سنجش کاربردی تکمیلی · اختیاری" description="به موقعیت تازه پاسخ دهید. نتیجه با بازخورد ثبت می‌شود؛ برای حفظ پیشرفت قبلی شرط تازه‌ای برای پایان درس ایجاد نمی‌کند." />}
@@ -620,6 +601,7 @@ const styles = StyleSheet.create({
   stepperEndText: { fontFamily: 'Times New Roman', color: Palette.muted, fontSize: 8, fontWeight: '800', writingDirection: 'ltr' },
   content: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 15, paddingTop: 9, paddingBottom: 22, gap: 11 },
   centerStage: { alignItems: 'center', width: '100%' },
+  grammarStage: { width: '100%', alignItems: 'stretch' },
   bigIcon: { width: 72, height: 72, borderRadius: 36, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF', alignItems: 'center', justifyContent: 'center', marginVertical: Spacing.lg },
   stageEyebrow: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.primary, marginBottom: 4, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   stageTitle: { fontFamily: Typography.fontFamily, fontSize: 27, lineHeight: 36, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
