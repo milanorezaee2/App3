@@ -7,8 +7,13 @@ import { EnglishSupplementTask, supplementStyles as s } from './EnglishSupplemen
 import { CORE_LESSON_EVIDENCE } from '@/lib/englishFoundationEvidence';
 import { loadStudy, recordLessonEvidence } from '@/lib/englishStudyState';
 
-/** Existing end-of-lesson stage: mapped Foundation, Survival and new Everyday lessons use goal-based checks; all other lessons retain their current checks. */
-export function EnglishLessonEvidence({ lesson, onPassed }: { lesson: SentenceLesson; onPassed: () => void }) {
+/** Historical evidence is retained, but restarted attempts track their own checks. */
+export function EnglishLessonEvidence({ lesson, onPassed, attemptEvidence, onAttemptResult }: {
+  lesson: SentenceLesson;
+  onPassed: () => void;
+  attemptEvidence?: Record<string, boolean>;
+  onAttemptResult?: (taskId: string, correct: boolean) => void;
+}) {
   const goalTasks = CORE_LESSON_EVIDENCE[lesson.id];
   const isCoreEvidence = !!goalTasks;
   const tasks = useMemo(() => {
@@ -32,9 +37,12 @@ export function EnglishLessonEvidence({ lesson, onPassed }: { lesson: SentenceLe
     ] satisfies Task[];
   }, [goalTasks, lesson]);
 
-  const [done, setDone] = useState<Record<string, boolean>>({});
+  const initialAttemptEvidence = useRef(attemptEvidence);
+  const isNewAttempt = initialAttemptEvidence.current !== undefined;
+  const activeRef = useRef(false);
+  const [done, setDone] = useState<Record<string, boolean>>(initialAttemptEvidence.current ?? {});
   const doneRef = useRef(done);
-  const [loading, setLoading] = useState(isCoreEvidence);
+  const [loading, setLoading] = useState(isCoreEvidence && !isNewAttempt);
   const [loadError, setLoadError] = useState('');
   const onPassedRef = useRef(onPassed);
   doneRef.current = done;
@@ -42,6 +50,15 @@ export function EnglishLessonEvidence({ lesson, onPassed }: { lesson: SentenceLe
   useEffect(() => { onPassedRef.current = onPassed; }, [onPassed]);
 
   useEffect(() => {
+    activeRef.current = true;
+    return () => { activeRef.current = false; };
+  }, []);
+
+  useEffect(() => {
+    if (isNewAttempt) {
+      if (tasks.every(item => !!initialAttemptEvidence.current?.[item.id])) onPassedRef.current();
+      return;
+    }
     if (!isCoreEvidence) return;
     let active = true;
     void loadStudy().then(state => {
@@ -62,20 +79,24 @@ export function EnglishLessonEvidence({ lesson, onPassed }: { lesson: SentenceLe
       setLoading(false);
     });
     return () => { active = false; };
-  }, [isCoreEvidence, lesson.id, tasks]);
+  }, [isCoreEvidence, isNewAttempt, lesson.id, tasks]);
 
   async function saveCoreLessonResult(task: Task, correct: boolean, heard: boolean) {
     await recordLessonEvidence(lesson.id, task.id, task.skill, correct, heard);
+    if (!activeRef.current) return;
     const next = { ...doneRef.current, [task.id]: correct && (task.skill !== 'listening' || heard) };
     doneRef.current = next;
     setDone(next);
+    if (isNewAttempt) onAttemptResult?.(task.id, next[task.id]);
     if (tasks.every(item => next[item.id])) onPassedRef.current();
   }
 
   function saveExistingResult(task: Task, correct: boolean) {
+    if (!activeRef.current) return;
     const next = { ...doneRef.current, [task.id]: correct };
     doneRef.current = next;
     setDone(next);
+    if (isNewAttempt) onAttemptResult?.(task.id, correct);
     if (tasks.every(item => next[item.id])) onPassedRef.current();
   }
 

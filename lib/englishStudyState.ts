@@ -5,11 +5,20 @@ import { ENGLISH_ENGINE_STEPS } from './englishLearningEngine';
 
 export const STUDY_KEY = 'english_study_state_v1';
 
+/** Absent on legacy sessions. Generation orders causally later resets; id breaks concurrent ties. */
+export interface LessonAttempt {
+  generation: number;
+  id: string;
+}
+
 export interface LessonSession {
   stage: number;
   sentenceIndex: number;
   revealed: boolean;
   evidencePassed: boolean;
+  attempt?: LessonAttempt;
+  /** Correct checks in this attempt, distinct from the learner's historical evidence. */
+  attemptEvidence?: Record<string, boolean>;
 }
 
 export interface CourseLessonEvidence {
@@ -46,7 +55,12 @@ export function parseStudy(raw: string | null): StudyState {
     || Object.values(parsed.sessions).some(value => !value || !Number.isInteger(value.stage)
       || value.stage < 0 || value.stage >= ENGLISH_ENGINE_STEPS.length
       || !Number.isInteger(value.sentenceIndex) || value.sentenceIndex < 0
-      || typeof value.revealed !== 'boolean' || typeof value.evidencePassed !== 'boolean')) {
+      || typeof value.revealed !== 'boolean' || typeof value.evidencePassed !== 'boolean'
+      || (value.attempt !== undefined && (!isRecord(value.attempt)
+        || !Number.isSafeInteger(value.attempt.generation) || value.attempt.generation < 1
+        || typeof value.attempt.id !== 'string' || !value.attempt.id || value.attempt.id.length > 128))
+      || (value.attemptEvidence !== undefined && (!value.attempt || !isRecord(value.attemptEvidence)
+        || Object.values(value.attemptEvidence).some(result => typeof result !== 'boolean'))))) {
     throw Error('اطلاعات جلسه خوانده نشد؛ داده‌های قبلی بازنویسی نشدند.');
   }
 
@@ -75,13 +89,28 @@ export async function loadStudy(): Promise<StudyState> {
 }
 
 let queue: Promise<unknown> = Promise.resolve();
+/** Serialize every study-store mutation, including backup/cloud merges, within this app instance. */
+export function withStudyStorageLock<T>(operation: () => Promise<T>): Promise<T> {
+  const job = queue.then(operation);
+  queue = job.catch(() => {});
+  return job;
+}
+
+export function compareLessonAttempts(left?: LessonAttempt, right?: LessonAttempt): number {
+  const generation = (left?.generation ?? 0) - (right?.generation ?? 0);
+  if (generation) return Math.sign(generation);
+  const a = left?.id ?? '';
+  const b = right?.id ?? '';
+  return a === b ? 0 : a < b ? -1 : 1;
+}
+
 function scheduleAccountSync() {
   void import('./personalLearningSync')
     .then(({ schedulePersonalLearningSync }) => schedulePersonalLearningSync())
     .catch(() => undefined);
 }
 function update(change: (state: StudyState) => void): Promise<StudyState> {
-  const job = queue.then(async () => {
+  return withStudyStorageLock(async () => {
     const state = await loadStudy();
     change(state);
     const raw = JSON.stringify(state);
@@ -92,12 +121,27 @@ function update(change: (state: StudyState) => void): Promise<StudyState> {
     scheduleAccountSync();
     return state;
   });
-  queue = job.catch(() => {});
-  return job;
 }
 
 export function saveLessonSession(id: string, value: LessonSession) {
-  return update(state => { state.sessions[id] = value; });
+  return update(state => {
+    if (compareLessonAttempts(value.attempt, state.sessions[id]?.attempt) !== 0) {
+      throw Error('این جلسه تغییر کرده است؛ درس را دوباره باز کنید.');
+    }
+    state.sessions[id] = value;
+  });
+}
+
+/** Replace only the current attempt, after reading and validating the latest local state. */
+export function resetLessonSession(id: string): Promise<StudyState> {
+  if (!id.trim()) return Promise.reject(Error('درس معتبر نیست.'));
+  return update(state => {
+    const generation = (state.sessions[id]?.attempt?.generation ?? 0) + 1;
+    if (!Number.isSafeInteger(generation)) throw Error('شروع مجدد این جلسه ممکن نیست.');
+    // A unique tie-breaker lets independently restarted devices converge without wall-clock ordering.
+    const attempt = { generation, id: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}` };
+    state.sessions[id] = { ...freshSession(), attempt, attemptEvidence: {} };
+  });
 }
 
 export function recordLessonEvidence(lessonId: string, taskId: string, skill: Skill, correct: boolean, heard: boolean) {

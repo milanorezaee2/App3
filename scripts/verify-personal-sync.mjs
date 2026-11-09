@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import vm from 'node:vm';
+import ts from 'typescript';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const cache = path.join(root, 'node_modules', '.cache', 'personal-sync-test');
@@ -159,6 +161,73 @@ verify(/FOR ALL TO authenticated/i.test(migration) && !/GRANT .*DELETE/i.test(mi
 const authScreen = readFileSync(path.join(root, 'app/personal-sync.tsx'), 'utf8');
 verify(/signInWithOtp\(/.test(authScreen) && /verifyOtp\(/.test(authScreen) && /type:\s*'email'/.test(authScreen), 'account screen sends and verifies email OTP codes');
 verify(!/signInWithPassword|autoComplete="password"|textContentType="password"/i.test(authScreen), 'account UI has no password-authentication field or flow');
+
+// Render just the route wrapper with test doubles: a disabled screen must
+// redirect before mounting any hooks, session listeners, sync, or OTP handlers.
+const compiledScreen = ts.transpileModule(authScreen, { compilerOptions: {
+  module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2020,
+} }).outputText;
+const featureFlags = { learnerLogin: false };
+const redirect = Symbol('Redirect');
+let sideEffects = 0;
+const forbidden = () => { sideEffects += 1; throw new Error('Disabled account screen mounted a hook or auth operation'); };
+const modules = {
+  'react/jsx-runtime': { jsx: (type, props) => ({ type, props }), jsxs: (type, props) => ({ type, props }) },
+  react: { useCallback: forbidden, useEffect: forbidden, useState: forbidden },
+  'react-native': { StyleSheet: { create: styles => styles }, Platform: { OS: 'web' } },
+  'expo-router': { Redirect: redirect, useRouter: forbidden },
+  '@/lib/features': { FEATURES: featureFlags },
+  '@/lib/pairing': { isSupabaseConfigured: () => false },
+  '@/lib/theme': { Typography: {} },
+};
+const mockExports = {};
+const mockModule = { exports: mockExports };
+vm.runInNewContext(compiledScreen, { module: mockModule, exports: mockExports, require: name => modules[name] ?? {} });
+const closedRoute = mockModule.exports.default();
+verify(closedRoute.type === redirect && closedRoute.props.href === '/languages' && sideEffects === 0,
+  'a direct account route in an open build redirects before mounting hooks or authentication');
+featureFlags.learnerLogin = true;
+const enabledRoute = mockModule.exports.default();
+verify(typeof enabledRoute.type === 'function' && enabledRoute.type.name === 'PersonalSyncEnabledScreen',
+  'the retained account screen can mount when a future build explicitly enables login');
+
+const gateSource = readFileSync(path.join(root, 'components/RegistrationGate.tsx'), 'utf8');
+const compiledGate = ts.transpileModule(gateSource, { compilerOptions: {
+  module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2020,
+} }).outputText;
+function renderGate(loginEnabled, admin = false) {
+  const counters = { inspections: 0, listeners: 0, signOuts: 0 };
+  const children = { screen: 'learner content' };
+  const fragment = Symbol('Fragment');
+  const gateModules = {
+    'react/jsx-runtime': { Fragment: fragment, jsx: (type, props) => ({ type, props }), jsxs: (type, props) => ({ type, props }) },
+    react: { useCallback: fn => fn, useEffect: fn => { fn(); }, useRef: value => ({ current: value }), useState: value => [value, () => {}] },
+    'react-native': { StyleSheet: { create: styles => styles }, Platform: { OS: 'android' }, AppState: { addEventListener: () => ({ remove() {} }) } },
+    'expo-constants': { default: { expoConfig: { extra: { appRole: admin ? 'admin' : 'learner' } } } },
+    'expo-router': { useRouter: () => ({ replace() {} }) },
+    '@/lib/features': { FEATURES: { learnerLogin: loginEnabled } },
+    '@/lib/theme': { Typography: {} },
+    '@/lib/supabase': { supabase: { auth: {
+      onAuthStateChange: () => { counters.listeners += 1; return { data: { subscription: { unsubscribe() {} } } }; },
+      signOut: () => { counters.signOuts += 1; },
+    } } },
+    '@/lib/userRegistration': { getRegisteredSession: async () => { counters.inspections += 1; return { session: null, profile: null }; } },
+  };
+  const resultExports = {};
+  vm.runInNewContext(compiledGate, { exports: resultExports, module: { exports: resultExports }, process: { env: {} },
+    require: name => gateModules[name] ?? {}, setTimeout, clearTimeout });
+  return { element: resultExports.RegistrationGate({ children }), children, fragment, counters };
+}
+const openGate = renderGate(false);
+verify(openGate.element.type === openGate.fragment && openGate.element.props.children === openGate.children
+  && openGate.counters.inspections === 0 && openGate.counters.listeners === 0 && openGate.counters.signOuts === 0,
+  'open learner gate returns children without checking, subscribing to, or signing out an existing session');
+const futureGate = renderGate(true);
+verify(futureGate.element.type !== futureGate.fragment && futureGate.counters.inspections === 1 && futureGate.counters.listeners === 1,
+  'an explicitly enabled learner gate retains session inspection and auth-state monitoring');
+const adminGate = renderGate(true, true);
+verify(adminGate.element.type === adminGate.fragment && adminGate.counters.inspections === 0 && adminGate.counters.signOuts === 0,
+  'the management build bypasses the learner gate without altering its separate manager login');
 
 // Run the actual migration against a disposable PostgreSQL-compatible test DB.
 const { PGlite } = await import('@electric-sql/pglite');

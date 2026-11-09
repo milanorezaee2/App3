@@ -306,9 +306,9 @@ const esbuild = require('esbuild');
   const russianHome = fs.readFileSync('components/RussianHome.tsx', 'utf8');
   const russianLesson = fs.readFileSync('components/RussianLesson.tsx', 'utf8');
   const russianRoute = fs.readFileSync('app/learn/ru/lesson.tsx', 'utf8');
-  check('Russian home opens the first lesson in replay mode through the actual route', russianHome.includes("fromStart: '1'")
-    && russianHome.includes('RUSSIAN_LESSONS[0].id') && russianRoute.includes("fromStart === '1'"));
-  check('Russian replay protects saved sessions and completion navigates after saving', russianLesson.includes('preserveExistingSession.current')
+  check('Russian home resets the displayed lesson while level replay is separate', russianHome.includes("id: heroLesson.id, fromStart: '1'")
+    && russianHome.includes('id: RUSSIAN_LESSONS[0].id, levelReplay:') && russianRoute.includes("fromStart === '1'"));
+  check('Russian restart saves a fresh session and completion navigates after saving', russianLesson.includes('resetRussianLessonSession(lesson.id)')
     && russianLesson.includes('await russianProgress.completeSentenceLesson') && russianLesson.includes('params: { id: nextLesson.id }')
     && russianLesson.includes('currentProgressIndex > nextIndex') && russianLesson.includes('جملهٔ قبلی'));
 

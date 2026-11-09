@@ -3,14 +3,14 @@ import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as Speech from 'expo-speech';
 import { ArrowRight, Check, ChevronLeft, Headphones, MessageCircle, Mic2, RefreshCw, RotateCcw, Sparkles, Volume2 } from 'lucide-react-native';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import RussianSentenceBuilder from '@/components/RussianSentenceBuilder';
 import RussianDialoguePractice from '@/components/RussianDialoguePractice';
-import { clearRussianLessonSession, loadRussianLessonSessionWithPresence, saveRussianLessonSession } from '@/lib/languages/russianStudyState';
+import { clearRussianLessonSession, loadRussianLessonSessionWithPresence, saveRussianLessonSession, resetRussianLessonSession } from '@/lib/languages/russianStudyState';
 import { RUSSIAN_LESSONS, RUSSIAN_LEVELS, RUSSIAN_LESSON_STAGES, russianProgress, type RussianCourseLesson } from '@/lib/languages/russian';
 import type { RussianLessonSession } from '@/lib/languages/russianStudyState';
 import { toPersianDigits as fa } from '@/lib/format';
@@ -26,6 +26,7 @@ const SLOW_SPEECH_RATE = 0.5;
 
 export default function RussianLesson({ lesson, fromStart = false }: { lesson: RussianCourseLesson; fromStart?: boolean }) {
   const router = useRouter();
+  const { levelReplay } = useLocalSearchParams<{ levelReplay?: string }>();
   const courseLevel = RUSSIAN_LEVELS.find(item => item.id === lesson.levelId) ?? RUSSIAN_LEVELS[0];
   const [stage, setStage] = useState(0);
   const [sentenceIndex, setSentenceIndex] = useState(0);
@@ -40,8 +41,12 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
   const [saveRetry, setSaveRetry] = useState(0);
   const [saving, setSaving] = useState(false);
   const completing = useRef(false);
-  const startFirstLesson = useRef(fromStart);
+  const levelReplayRequested = useRef(levelReplay === '1');
   const preserveExistingSession = useRef(false);
+  const restartRequested = useRef(!!fromStart);
+  const restartPending = useRef(!!fromStart);
+  const restartPromise = useRef<Promise<RussianLessonSession> | null>(null);
+  const saveGeneration = useRef(0);
   const current = lesson.sentences[sentenceIndex];
   const checks = lesson.checks ?? [];
   const allChecksPassed = checks.every((question, index) => answers[String(index)] === question.correctIndex);
@@ -62,34 +67,59 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
 
   useEffect(() => {
     let alive = true;
+    const restarting = restartRequested.current;
+    const replayingLevel = levelReplayRequested.current && !restarting;
+    restartPending.current = restarting;
     completing.current = false;
     setSessionReady(false);
     setSessionError('');
     setCompletionError('');
-    void loadRussianLessonSessionWithPresence(lesson.id).then(({ session: saved, hasSavedSession }) => {
+    if (restarting || replayingLevel) void stopRussianSpeech();
+    // A restart is a queued, durable write, not a temporary replay or an autosave side effect.
+    const session = restarting
+      ? (restartPromise.current ??= resetRussianLessonSession(lesson.id)).then(saved => ({ session: saved, hasSavedSession: true }))
+      : loadRussianLessonSessionWithPresence(lesson.id);
+    void session.then(result => {
       if (!alive) return;
-      const replay = !!startFirstLesson.current;
-      startFirstLesson.current = false;
-      preserveExistingSession.current = replay && hasSavedSession;
-      if (replay) router.setParams({ fromStart: undefined });
-      setStage(replay ? 1 : saved.stage);
-      setSentenceIndex(replay ? 0 : Math.min(saved.sentenceIndex, lesson.sentences.length - 1));
-      setRevealed(replay ? false : saved.revealed);
-      setAnswers(replay ? {} : saved.answers);
-      setShowCheckAnswers(replay ? false : saved.showCheckAnswers);
+      // A level replay is explicitly temporary when it would otherwise overwrite a saved attempt.
+      preserveExistingSession.current = replayingLevel && result.hasSavedSession;
+      const saved = replayingLevel
+        ? { stage: 0, sentenceIndex: 0, revealed: false, answers: {}, showCheckAnswers: false }
+        : result.session;
+      if (restarting) {
+        restartPromise.current = null;
+        restartRequested.current = false;
+        restartPending.current = false;
+        router.setParams({ fromStart: undefined });
+      } else if (replayingLevel) {
+        levelReplayRequested.current = false;
+        router.setParams({ levelReplay: undefined });
+      }
+      setStage(saved.stage);
+      setSentenceIndex(Math.min(saved.sentenceIndex, lesson.sentences.length - 1));
+      setRevealed(saved.revealed);
+      setAnswers(saved.answers);
+      setShowCheckAnswers(saved.showCheckAnswers);
+      setSpeechError('');
       setSessionReady(true);
     }).catch(() => {
-      if (alive) setSessionError('جلسهٔ قبلی خوانده نشد؛ برای حفظ اطلاعات، ذخیره متوقف است. دوباره تلاش کنید.');
+      if (!alive) return;
+      restartPending.current = false;
+      if (restarting) restartPromise.current = null;
+      setSessionError(restarting
+        ? 'شروع مجدد ذخیره نشد؛ دوباره تلاش کنید.'
+        : 'جلسهٔ قبلی خوانده نشد؛ برای حفظ اطلاعات، ذخیره متوقف است. دوباره تلاش کنید.');
     });
-    return () => { alive = false; void stopRussianSpeech(); };
+    return () => { alive = false; saveGeneration.current += 1; void stopRussianSpeech(); };
   }, [lesson.id, lesson.sentences.length, loadingRetry]);
 
   useEffect(() => {
-    if (!sessionReady || completing.current || preserveExistingSession.current) return;
+    if (!sessionReady || completing.current || restartPending.current || restartRequested.current || preserveExistingSession.current) return;
+    const generation = saveGeneration.current;
     const nextSession: RussianLessonSession = { stage, sentenceIndex, revealed, answers, showCheckAnswers };
     void saveRussianLessonSession(lesson.id, nextSession)
-      .then(() => setSessionError(''))
-      .catch(() => setSessionError('جلسه ذخیره نشد؛ پیشرفت درس کامل ثبت نشده است. دوباره ذخیره کنید.'));
+      .then(() => { if (generation === saveGeneration.current) setSessionError(''); })
+      .catch(() => { if (generation === saveGeneration.current) setSessionError('جلسه ذخیره نشد؛ پیشرفت درس کامل ثبت نشده است. دوباره ذخیره کنید.'); });
   }, [lesson.id, sessionReady, stage, sentenceIndex, revealed, answers, showCheckAnswers, saveRetry]);
 
   const speak = useCallback((text: string, rate = 0.78) => {
@@ -104,13 +134,18 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
   }, [lesson.id, sessionReady, stage, sentenceIndex, current?.text, speak]);
 
   const startCurrentLessonFromBeginning = () => {
-    preserveExistingSession.current = false;
-    setStage(0);
-    setSentenceIndex(0);
-    setRevealed(false);
-    setAnswers({});
-    setShowCheckAnswers(false);
-    setSpeechError('');
+    if (saving || completing.current || restartPending.current) return;
+    // Block stale autosaves synchronously before queuing the reset.
+    restartRequested.current = true;
+    restartPending.current = true;
+    saveGeneration.current += 1;
+    void stopRussianSpeech();
+    // Queue immediately even if the screen is left before React runs the next effect.
+    restartPromise.current = resetRussianLessonSession(lesson.id);
+    void restartPromise.current.catch(() => undefined);
+    setSessionReady(false);
+    setSessionError('');
+    setLoadingRetry(value => value + 1);
   };
   const selectSentence = (index: number, rate = 0.72) => {
     setSentenceIndex(index);
@@ -167,7 +202,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
     }
   };
 
-  if (!sessionReady) return <View style={styles.root}><View style={styles.loadingCard}><ActivityIndicator color={Palette.primary} /><Text accessibilityRole={sessionError ? 'alert' : undefined} style={styles.loadingText}>{sessionError || 'در حال بازیابی جلسهٔ روسی…'}</Text>{sessionError ? <Pressable accessibilityRole="button" style={styles.loadingButton} onPress={() => setLoadingRetry(value => value + 1)}><Text style={styles.loadingButtonText}>تلاش دوباره</Text></Pressable> : null}</View></View>;
+  if (!sessionReady) return <View style={styles.root}><View style={styles.loadingCard}><ActivityIndicator color={Palette.primary} /><Text accessibilityRole={sessionError ? 'alert' : undefined} style={styles.loadingText}>{sessionError || 'در حال بازیابی جلسهٔ روسی…'}</Text>{sessionError ? <Pressable accessibilityRole="button" style={styles.loadingButton} onPress={() => setLoadingRetry(value => value + 1)}><Text style={styles.loadingButtonText}>تلاش دوباره</Text></Pressable> : null}{sessionError ? <Pressable accessibilityRole="button" style={styles.loadingButton} onPress={() => router.back()}><Text style={styles.loadingButtonText}>بازگشت</Text></Pressable> : null}</View></View>;
 
   return (
     <View style={styles.root}>
@@ -175,7 +210,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
           <Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color="#FFFFFF" /></Pressable>
-          <Pressable accessibilityRole="button" accessibilityLabel="شروع از ابتدای این درس" style={styles.restartLessonButton} onPress={startCurrentLessonFromBeginning}><RotateCcw size={15} color="#FFFFFF" /><Text style={styles.restartLessonButtonText}>شروع از ابتدا</Text></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel="شروع از ابتدای این درس" accessibilityState={{ disabled: saving }} disabled={saving} style={styles.restartLessonButton} onPress={startCurrentLessonFromBeginning}><RotateCcw size={15} color="#FFFFFF" /><Text style={styles.restartLessonButtonText}>شروع از ابتدا</Text></Pressable>
           <View style={styles.headerText}>
             <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>

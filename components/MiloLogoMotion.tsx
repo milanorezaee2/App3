@@ -1,5 +1,6 @@
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
+import { Typography } from '@/lib/theme';
 import { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
   wrapIntro: { flexDirection: 'column', gap: 14 },
   wrapHeader: { flexDirection: 'row', gap: 10 },
   word: { flexDirection: 'row', direction: 'ltr', alignItems: 'center' },
-  letter: { fontFamily: 'Times New Roman', color: '#211A68', letterSpacing: 1.5, writingDirection: 'ltr' },
-  tagline: { fontFamily: 'Times New Roman', fontSize: 10, color: '#6882A6', writingDirection: 'ltr', textAlign: 'center' },
+  letter: { fontFamily: Typography.latinFontFamily, color: '#211A68', letterSpacing: 1.5, writingDirection: 'ltr' },
+  tagline: { fontFamily: Typography.latinFontFamily, fontSize: 10, color: '#6882A6', writingDirection: 'ltr', textAlign: 'center' },
   measureOnly: { position: 'absolute', opacity: 0, letterSpacing: 0 },
 });

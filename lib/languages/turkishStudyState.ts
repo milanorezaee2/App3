@@ -28,7 +28,8 @@ async function readRaw(): Promise<string | null> {
 
 async function writeRaw(value: string): Promise<void> {
   if (Platform.OS === 'web') {
-    if (typeof window !== 'undefined') window.localStorage.setItem(TURKISH_STUDY_STORAGE_KEY, value);
+    if (typeof window === 'undefined') throw new Error('ذخیرهٔ محلی در دسترس نیست.');
+    window.localStorage.setItem(TURKISH_STUDY_STORAGE_KEY, value);
     return;
   }
   await AsyncStorage.setItem(TURKISH_STUDY_STORAGE_KEY, value);
@@ -77,16 +78,18 @@ function validateSession(lessonId: string, value: unknown): TurkishLessonSession
   };
 }
 
-export async function loadTurkishLessonSessionWithPresence(
+export function loadTurkishLessonSessionWithPresence(
   lessonId: string,
 ): Promise<{ session: TurkishLessonSession; hasSavedSession: boolean }> {
-  if (!TURKISH_LESSONS.some(item => item.id === lessonId)) throw new Error('درس ترکی پیدا نشد.');
-  const state = parseState(await readRaw());
-  const saved = state.sessions[lessonId];
-  return {
-    session: saved === undefined ? freshTurkishLessonSession() : validateSession(lessonId, saved),
-    hasSavedSession: saved !== undefined,
-  };
+  return serial(async () => {
+    if (!TURKISH_LESSONS.some(item => item.id === lessonId)) throw new Error('درس ترکی پیدا نشد.');
+    const state = parseState(await readRaw());
+    const saved = state.sessions[lessonId];
+    return {
+      session: saved === undefined ? freshTurkishLessonSession() : validateSession(lessonId, saved),
+      hasSavedSession: saved !== undefined,
+    };
+  });
 }
 
 export async function loadTurkishLessonSession(lessonId: string): Promise<TurkishLessonSession> {
@@ -106,6 +109,13 @@ export function saveTurkishLessonSession(lessonId: string, value: TurkishLessonS
     const state = parseState(await readRaw());
     await writeRaw(JSON.stringify({ ...state, sessions: { ...state.sessions, [lessonId]: safe } }));
   });
+}
+
+/** Replace only this lesson's attempt, after any earlier queued saves. */
+export async function resetTurkishLessonSession(lessonId: string): Promise<TurkishLessonSession> {
+  const fresh = freshTurkishLessonSession();
+  await saveTurkishLessonSession(lessonId, fresh);
+  return fresh;
 }
 
 export function clearTurkishLessonSession(lessonId: string): Promise<void> {

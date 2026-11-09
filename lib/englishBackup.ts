@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import { SENTENCE_LESSONS } from './courseContent';
 import { COURSE_PROGRESS_STORAGE_KEY, parseCourseProgressBackup, type CourseProgress } from './courseProgress';
-import { STUDY_KEY, parseStudy, type StudyState } from './englishStudyState';
+import { STUDY_KEY, compareLessonAttempts, parseStudy, withStudyStorageLock, type StudyState } from './englishStudyState';
 import { SUPPLEMENT_KEY, parseProgress, type SupplementProgress } from './englishSupplement/progress';
 
 export const ENGLISH_BACKUP_FORMAT = 'english-journey-progress';
@@ -178,6 +178,12 @@ function mergeStudyState(current: StudyState, incoming: StudyState): StudyState 
       sessions[lessonId] = currentSession;
       continue;
     }
+    const attemptOrder = compareLessonAttempts(currentSession.attempt, incomingSession.attempt);
+    if (attemptOrder !== 0) {
+      // A newer attempt replaces the old one wholesale: no old flags or position leak through.
+      sessions[lessonId] = attemptOrder > 0 ? currentSession : incomingSession;
+      continue;
+    }
     const preferred = currentSession.stage > incomingSession.stage
       || (currentSession.stage === incomingSession.stage && currentSession.sentenceIndex >= incomingSession.sentenceIndex)
       ? currentSession
@@ -186,6 +192,12 @@ function mergeStudyState(current: StudyState, incoming: StudyState): StudyState 
       ...preferred,
       revealed: incomingSession.revealed || currentSession.revealed,
       evidencePassed: incomingSession.evidencePassed || currentSession.evidencePassed,
+      ...(preferred.attempt ? {
+        attemptEvidence: Object.fromEntries([...new Set([
+          ...Object.keys(currentSession.attemptEvidence ?? {}),
+          ...Object.keys(incomingSession.attemptEvidence ?? {}),
+        ])].map(taskId => [taskId, !!currentSession.attemptEvidence?.[taskId] || !!incomingSession.attemptEvidence?.[taskId]])),
+      } : {}),
     };
   }
   const days: StudyState['days'] = { ...incoming.days };
@@ -262,6 +274,7 @@ export async function exportEnglishSyncExtras(storage: BackupStorage = deviceSto
 
 /** Merge cloud self-assessment/evidence while intentionally keeping free-text drafts local. */
 export async function mergeEnglishSyncExtras(remote: unknown, storage: BackupStorage = deviceStorage): Promise<EnglishSyncExtras> {
+  return withStudyStorageLock(async () => {
   if (!isRecord(remote) || !isRecord(remote.study) || !isRecord(remote.supplement)) {
     throw new Error('پیشرفت تکمیلی انگلیسی در حساب معتبر نیست؛ دادهٔ محلی تغییر نکرد.');
   }
@@ -298,9 +311,11 @@ export async function mergeEnglishSyncExtras(remote: unknown, storage: BackupSto
     throw new Error('ذخیرهٔ ادغام پیشرفت انگلیسی انجام نشد؛ هر دو بخش محلی به وضعیت قبلی بازگردانده شدند.');
   }
   return { study: mergedStudy, supplement: mergedSupplement };
+  });
 }
 
 export async function restoreEnglishBackup(text: string, storage: BackupStorage = deviceStorage, now = new Date()): Promise<EnglishBackupSummary> {
+  return withStudyStorageLock(async () => {
   const incoming = parseEnglishBackup(text).data;
   const current = await readLocalData(storage);
   const merged = mergeEnglishBackupData(current, incoming, now);
@@ -326,4 +341,5 @@ export async function restoreEnglishBackup(text: string, storage: BackupStorage 
     throw new Error('ذخیرهٔ بازیابی انجام نشد؛ تلاش برای بازگرداندن هر سه سابقهٔ قبلی انجام شد. دوباره تلاش کنید.');
   }
   return summarize(merged);
+  });
 }

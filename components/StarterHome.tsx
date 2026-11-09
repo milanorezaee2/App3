@@ -1,7 +1,7 @@
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useMemo, useState } from 'react';
-import { Alert, Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import {
@@ -98,7 +98,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
         const currentLesson = lessons.find(lesson => lesson.id === nextProgress.currentLessonId && !completed.has(lesson.id))
           ?? lessons.find(lesson => !completed.has(lesson.id));
         const savedSession = currentLesson
-          ? await loadStarterLessonSessionWithPresence(currentLesson.id).catch(() => null)
+          ? await loadStarterLessonSessionWithPresence(currentLesson.id)
           : null;
         if (!alive) return;
         setHasStartedCourse(nextProgress.completedLessonIds.length > 0 || !!savedSession?.hasSavedSession);
@@ -133,12 +133,8 @@ export default function StarterHome({course}: {course: StarterCourse}) {
 
   const openLevel = (levelId: StarterLevelId) => router.push(`${course.home}/library?level=${levelId}` as never);
 
-  const restartFromBeginnerLevel = () => {
-    Alert.alert('شروع مجدد از سطح ابتدایی', 'می‌خواهید دوباره از اولین درسِ سطح ابتداییِ این زبان شروع کنید؟ پیشرفت و جلسهٔ قبلی شما محفوظ می‌ماند.', [
-      { text: 'انصراف', style: 'cancel' },
-      { text: 'شروع مجدد', onPress: () => router.push({ pathname: `${course.home}/lesson`, params: { id: lessons[0].id, fromStart: 'restart' } } as never) },
-    ]);
-  };
+  // Level replay is temporary; only the same-lesson reset replaces a saved attempt.
+  const replayBeginnerLevel = () => router.push({ pathname: `${course.home}/lesson`, params: { id: lessons[0].id, levelReplay: '1' } } as never);
   const openNextLesson = () => {
     if (resumeLesson) router.push(`${course.home}/lesson?id=${encodeURIComponent(resumeLesson.id)}` as never);
     else openLevel(-1);
@@ -378,12 +374,12 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             </Pressable>
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel="شروع مجدد آموزش این زبان از سطح ابتدایی"
+              accessibilityLabel="مرور از ابتدای سطح این زبان"
               style={({ pressed }) => [styles.startFromBeginningButton, pressed && styles.buttonPressed]}
-              onPress={restartFromBeginnerLevel}
+              onPress={replayBeginnerLevel}
             >
               <RotateCcw size={17} color={HomeColors.accent} />
-              <Text style={styles.startFromBeginningText}>شروع مجدد از سطح ابتدایی</Text>
+              <Text style={styles.startFromBeginningText}>مرور از ابتدای سطح</Text>
             </Pressable>
           </View>
 

@@ -9,16 +9,16 @@ import { EnglishLevelRail, EnglishProgressTrack, EnglishSectionHeading, displayE
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { RUSSIAN_LEVELS, RUSSIAN_LESSONS, russianProgress, type RussianLevelId } from '@/lib/languages/russian';
 import type { CourseProgress } from '@/lib/courseProgress';
-import { loadRussianLessonSession, type RussianLessonSession } from '@/lib/languages/russianStudyState';
+import { loadRussianLessonSessionWithPresence, type RussianLessonSession } from '@/lib/languages/russianStudyState';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 
 const LESSONS_PER_GROUP = 10;
 
 function lessonStatus(lessonId: string, progress: CourseProgress | null, sessions: Record<string, RussianLessonSession | null>) {
-  if (progress?.completedLessonIds.includes(lessonId)) return 'تکمیل‌شده · قابل مرور';
   const session = sessions[lessonId];
-  if (session && (session.stage > 0 || session.sentenceIndex > 0)) {
+  if (progress?.completedLessonIds.includes(lessonId)) return session ? 'تکمیل‌شده · ادامهٔ مرور' : 'تکمیل‌شده · قابل مرور';
+  if (session) {
     return `ادامه از مرحله ${fa(session.stage + 1)}، جمله ${fa(session.sentenceIndex + 1)}`;
   }
   return 'شروع درس';
@@ -48,8 +48,8 @@ export default function RussianLibrary() {
     void Promise.all([
       russianProgress.getCourseProgress(),
       Promise.all(RUSSIAN_LESSONS.map(async lesson => {
-        try { return [lesson.id, await loadRussianLessonSession(lesson.id)] as const; }
-        catch { return [lesson.id, null] as const; }
+        const saved = await loadRussianLessonSessionWithPresence(lesson.id);
+        return [lesson.id, saved.hasSavedSession ? saved.session : null] as const;
       })),
     ]).then(([nextProgress, nextSessions]) => {
       if (!alive) return;

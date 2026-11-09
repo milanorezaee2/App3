@@ -37,15 +37,17 @@ PY
 phase='install APK'
 adb install -r "$apk_path"
 adb logcat -c
-phase='launch learner login screen'
+phase='launch the open learner language screen'
 adb shell am start -W -n "$package/.MainActivity"
-wait_for_text 'ورود به حساب'
-wait_for_text 'ارسال کد ورود به ایمیل'
+wait_for_text 'زبان را از زندگی یاد بگیر'
 python3 - <<'PY2'
 import xml.etree.ElementTree as ET
 root = ET.parse('/tmp/window.xml').getroot()
 if not any(node.attrib.get('package') == 'com.devicecontrol.companion' for node in root.iter()):
     raise SystemExit('Learner package is not visible.')
+values = [node.attrib.get(key, '') for node in root.iter() for key in ('text', 'content-desc')]
+if any('ارسال کد ورود به ایمیل' in value or 'ساخت حساب زبان‌آموز' in value for value in values):
+    raise SystemExit('The open learner build unexpectedly showed an account prompt.')
 PY2
 
 phase='inspect app errors'
@@ -53,4 +55,4 @@ if adb logcat -d | grep -E 'FATAL EXCEPTION|Unable to load script'; then
   echo 'A native crash or bundle load error occurred.'
   exit 1
 fi
-echo 'Android emulator: learner OTP login screen rendered without a native crash. Authenticated routes and mailbox delivery are covered separately because CI has no test mailbox.'
+echo 'Android emulator: language selection rendered without learner login or a native crash.'

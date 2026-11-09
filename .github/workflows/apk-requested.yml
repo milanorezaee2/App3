@@ -10,6 +10,10 @@ name: Build requested APKs
 on:
   workflow_dispatch:
     inputs:
+      learner_login:
+        description: 'Explicitly build an additional login-enabled learner APK'
+        type: boolean
+        default: false
       language_scope_login:
         description: 'Languages for the learner build WITH login'
         required: false
@@ -162,6 +166,7 @@ jobs:
 
   # -------------------------------------------------- learner WITH login
   learner-login:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.learner_login }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
@@ -223,10 +228,11 @@ jobs:
   # ----------------------------------------------------------- publish
   publish:
     needs: [admin, learner-login, learner-nologin]
+    if: ${{ always() && needs.admin.result == 'success' && needs.learner-nologin.result == 'success' && (needs.learner-login.result == 'success' || needs.learner-login.result == 'skipped') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Download the three APK artifacts
+      - name: Download available APK artifacts
         uses: actions/download-artifact@v4
         with:
           path: out
@@ -244,18 +250,28 @@ jobs:
           name: 'Milo APKs #${{ github.run_number }}'
           prerelease: true
           body: |
-            Three installable Android APKs, each built on its own clean runner.
+            Installable Android APKs, each built on its own clean runner.
 
             - `MiloAdmin.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
-            - `MiloLearner-Login.apk` — learner app with login, package `com.devicecontrol.milomultilang`
             - `MiloLearner-NoLogin.apk` — learner app without login, package `com.devicecontrol.companion`
+            - An additional learner login APK is included only when explicitly requested.
           files: |
             out/MiloAdmin.apk/MiloAdmin.apk
-            out/MiloLearner-Login.apk/MiloLearner-Login.apk
             out/MiloLearner-NoLogin.apk/MiloLearner-NoLogin.apk
             out/MiloAdmin.apk/MiloAdmin.apk.sha256
-            out/MiloLearner-Login.apk/MiloLearner-Login.apk.sha256
             out/MiloLearner-NoLogin.apk/MiloLearner-NoLogin.apk.sha256
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Add explicitly requested login APK to the release
+        if: ${{ needs.learner-login.result == 'success' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: milo-requested-${{ github.run_number }}
+          files: |
+            out/MiloLearner-Login.apk/MiloLearner-Login.apk
+            out/MiloLearner-Login.apk/MiloLearner-Login.apk.sha256
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ github.token }}

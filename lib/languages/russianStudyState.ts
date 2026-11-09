@@ -28,7 +28,8 @@ async function readRaw(): Promise<string | null> {
 
 async function writeRaw(value: string): Promise<void> {
   if (Platform.OS === 'web') {
-    if (typeof window !== 'undefined') window.localStorage.setItem(RUSSIAN_STUDY_STORAGE_KEY, value);
+    if (typeof window === 'undefined') throw new Error('ذخیرهٔ محلی در دسترس نیست.');
+    window.localStorage.setItem(RUSSIAN_STUDY_STORAGE_KEY, value);
     return;
   }
   await AsyncStorage.setItem(RUSSIAN_STUDY_STORAGE_KEY, value);
@@ -71,11 +72,13 @@ function validateSession(lessonId: string, value: unknown): RussianLessonSession
   };
 }
 
-export async function loadRussianLessonSessionWithPresence(lessonId: string): Promise<{ session: RussianLessonSession; hasSavedSession: boolean }> {
-  if (!RUSSIAN_LESSONS.some(item => item.id === lessonId)) throw new Error('درس روسی پیدا نشد.');
-  const state = parseState(await readRaw());
-  const saved = state.sessions[lessonId];
-  return { session: saved === undefined ? freshRussianLessonSession() : validateSession(lessonId, saved), hasSavedSession: saved !== undefined };
+export function loadRussianLessonSessionWithPresence(lessonId: string): Promise<{ session: RussianLessonSession; hasSavedSession: boolean }> {
+  return serial(async () => {
+    if (!RUSSIAN_LESSONS.some(item => item.id === lessonId)) throw new Error('درس روسی پیدا نشد.');
+    const state = parseState(await readRaw());
+    const saved = state.sessions[lessonId];
+    return { session: saved === undefined ? freshRussianLessonSession() : validateSession(lessonId, saved), hasSavedSession: saved !== undefined };
+  });
 }
 
 export async function loadRussianLessonSession(lessonId: string): Promise<RussianLessonSession> {
@@ -95,6 +98,13 @@ export function saveRussianLessonSession(lessonId: string, value: RussianLessonS
     const state = parseState(await readRaw());
     await writeRaw(JSON.stringify({ ...state, sessions: { ...state.sessions, [lessonId]: safe } }));
   });
+}
+
+/** Replace only this lesson's attempt, after any earlier queued saves. */
+export async function resetRussianLessonSession(lessonId: string): Promise<RussianLessonSession> {
+  const fresh = freshRussianLessonSession();
+  await saveRussianLessonSession(lessonId, fresh);
+  return fresh;
 }
 
 export function clearRussianLessonSession(lessonId: string): Promise<void> {

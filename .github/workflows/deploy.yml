@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      EXPO_PUBLIC_LEARNER_LOGIN: 'false'
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -34,6 +36,8 @@ jobs:
           npm run validate:web-shell
           npm run validate:registration-admin
           npm run validate:language-entry
+          npm run validate:personal-sync
+          node scripts/verify-app-resume.cjs
           npm run validate:a11y
           npm run validate:requested-updates
       - name: Load public Supabase credentials

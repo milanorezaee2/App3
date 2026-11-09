@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = file => readFileSync(path.join(root, file), 'utf8');
@@ -22,13 +23,15 @@ check(pkg.dependencies['@expo-google-fonts/inter'], 'bundled Inter dependency is
 check(pkg.dependencies['@expo-google-fonts/beiruti'], 'bundled open-source Beiruti dependency is declared');
 check(/Inter_400Regular[\s\S]*Inter_600SemiBold[\s\S]*Inter_800ExtraBold/.test(layout), 'regular, semibold and extrabold Inter faces are bundled');
 check(/Beiruti:[\s\S]*Beiruti_400Regular[\s\S]*'Beiruti-Black': Beiruti_900Black/.test(layout), 'Beiruti regular through black faces are bundled locally');
-check(/fontFamily:\s*'Beiruti'/.test(theme) && /numberFontFamily:\s*'Beiruti-Black'/.test(theme), 'Persian copy and decorative Persian digits use Beiruti');
+check(/fontFamily:\s*'Beiruti'/.test(theme) && /numberFontFamily:\s*'Beiruti'/.test(theme), 'Persian copy and Persian digits use Beiruti');
 check(/I18nManager\.allowRTL\(false\)/.test(entry) && /I18nManager\.forceRTL\(false\)/.test(entry)
   && !/I18nManager\.(?:allowRTL|forceRTL)\(true\)/.test(entry + layout),
   'entry point and root layout cannot alternate native direction between launches');
-check(/latinFontFamily:\s*'Times New Roman'/.test(theme), 'shared Latin typography points to Times New Roman');
+check(/latinFontFamily:[^\n]*Times New Roman[^\n]*serif/.test(theme), 'shared non-Persian typography prefers system Times with a serif fallback');
 check(/allowFontScaling:\s*false/.test(layout) && /maxFontSizeMultiplier:\s*1/.test(layout), 'OEM/user font scaling cannot destabilize layouts');
 check(/includeFontPadding:\s*false/.test(layout) && /textBreakStrategy:\s*'simple'/.test(layout), 'Android OEM font padding and line-breaking differences are neutralized');
+
+createRequire(import.meta.url)('./verify-localized-text.cjs');
 
 const missing = [];
 for (const file of [...walk('app'), ...walk('components')]) {
@@ -41,7 +44,7 @@ for (const file of [...walk('app'), ...walk('components')]) {
     }
   });
 }
-check(missing.length === 0, `every explicit LTR style has a bundled font (${missing.join(', ')})`);
+check(missing.length === 0, `every explicit LTR style has an explicit font (${missing.join(', ')})`);
 
 const emma = read('app/conversations/emma.tsx');
 const human = read('app/conversations/human/[conversationId].tsx');
@@ -63,12 +66,11 @@ check(/composer:\s*\{\s*flexShrink:\s*0,\s*minHeight:\s*64,\s*overflow:\s*'visib
 check((human.match(/containsRtlScript/g) || []).length >= 4
   && /rtlText:\s*\{\s*fontFamily:\s*Typography\.fontFamily/.test(human)
   && /ltrText:\s*\{\s*fontFamily:\s*Typography\.latinFontFamily/.test(human),
-  'mixed human chat selects a deterministic bundled font per script');
+  'mixed human chat selects the shared font per script');
 check((personalSync.match(/fontFamily:\s*Typography\.fontFamily/g) || []).length >= 18
   && (personalSync.match(/fontFamily:\s*Typography\.latinFontFamily/g) || []).length >= 3,
-  'personal sync Persian UI and Latin account fields both use bundled fonts');
+  'personal sync Persian UI and Latin account fields both use shared fonts');
 check(!/Platform\.OS === 'android' \? 'height'/.test(emma) && !/Platform\.OS === 'android' \? 'height'/.test(human), 'Android native adjustResize is not double-applied');
 check(/automaticallyAdjustKeyboardInsets=\{Platform\.OS === 'ios'\}/.test(emma)
   && /automaticallyAdjustKeyboardInsets=\{Platform\.OS === 'ios'\}/.test(human), 'iOS scroll insets track the keyboard');
-
 console.log(`${checks} typography and keyboard-stability checks passed.`);

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, AppState, Platform, StyleSheet, View } from 'react-native';
 import { useGlobalSearchParams, useNavigationContainerRef, usePathname, useRouter } from 'expo-router';
-import { MANAGEMENT_BUILD } from '@/lib/features';
+import { FEATURES, MANAGEMENT_BUILD } from '@/lib/features';
 import { languageForResume, readResumeSnapshot, resumeDestination, resumeHref, writeResumeSnapshot, type ResumeParams, type ResumeSnapshot } from '@/lib/appResume';
 
 /** Keep learner navigation stable across Android/iOS background and process restarts. */
@@ -50,7 +50,7 @@ export function AppResumeGuard() {
       ready.current = true;
       initial.current = null;
       if (saved) {
-        const target = resumeDestination(saved, Date.now());
+        const target = resumeDestination(saved, Date.now(), FEATURES.learnerLogin);
         pendingHref.current = target;
         router.replace(target as never);
       } else setRestoring(false);
@@ -61,7 +61,7 @@ export function AppResumeGuard() {
       const saved = initial.current;
       initial.current = null;
       if (saved) {
-        const target = resumeDestination(saved, Date.now());
+        const target = resumeDestination(saved, Date.now(), FEATURES.learnerLogin);
         if (target !== href) {
           pendingHref.current = target;
           router.replace(target as never);
@@ -113,7 +113,7 @@ export function AppResumeGuard() {
         active.current = true;
         const saved = snapshot.current;
         if (ready.current && saved) {
-          const target = resumeDestination(saved, Date.now());
+          const target = resumeDestination(saved, Date.now(), FEATURES.learnerLogin);
           if (target !== currentHref.current) {
             setRestoring(true);
             pendingHref.current = target;

@@ -103,7 +103,7 @@ export const isLanguageId = (value: unknown): value is LanguageId =>
  * Build defaults. A language is included everywhere unless it appears in one of
  * these lists, so a new entry needs no extra wiring.
  */
-export const NATIVE_SCOPE_EXCLUSIONS: ReadonlySet<string> = new Set(['tr']);
+export const NATIVE_SCOPE_EXCLUSIONS: ReadonlySet<string> = new Set();
 export const ADMIN_SCOPE_IDS: readonly string[] = ['en', 'tr'];
 export const STARTS_FROM_ZERO: ReadonlySet<string> = new Set(['de', 'fr', 'es']);
 

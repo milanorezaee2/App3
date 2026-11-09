@@ -37,15 +37,26 @@ check(/education_admins_single_owner_idx/.test(migration), 'the database enforce
 check(/registeredUsers/.test(admin) && /کاربران ثبت‌شده/.test(admin), 'the management UI lists registered learners');
 check(/LinearGradient/.test(admin) && /sidebarMobile/.test(admin) && /mobileNavItem/.test(admin) && /navTextActive/.test(admin), 'the management UI keeps a polished responsive sidebar on mobile');
 check(!/flexDirection:\s*'column'\s*}\]}[^\n]*sidebar/.test(admin), 'the management navigation does not collapse into top tabs');
-check(/sidebarMobile:\{width:90/.test(admin) && /statNumber:\{fontFamily:'Beiruti-Bold',fontSize:16/.test(admin) && /borderRadius:15,padding:12,gap:10/.test(admin), 'all management tabs keep a compact mobile density and smaller Beiruti numbers');
+check(/sidebarMobile:\{width:90/.test(admin) && /statNumber:\{fontFamily:'Beiruti',fontSize:16/.test(admin) && /borderRadius:15,padding:12,gap:10/.test(admin), 'all management tabs keep a compact mobile density and smaller Beiruti numbers');
 check(/admin_registered_users/.test(adminApi), 'the management client loads the protected directory RPC');
 check(/com\.devicecontrol\.miloadmin/.test(appConfig) && /com\.devicecontrol\.companion/.test(read('app.json')), 'learner and management APKs have separate Android package IDs');
 check(/MiloAdmin\.apk/.test(workflow) && /MiloMultilang\.apk/.test(workflow), 'CI builds and publishes both standalone APKs');
 check(/EXPO_PUBLIC_MILO_ADMIN_APP/.test(read('app/index.tsx')), 'the management APK boots directly into its protected panel');
 check(/پیام‌های خصوصی/.test(loginFlow) && /پیام‌های خصوصی/.test(admin), 'both apps disclose and preserve private-message boundaries');
-check(/learnerLogin: process\.env\.EXPO_PUBLIC_LEARNER_LOGIN !== 'false'/.test(read('lib/features.ts'))
-  && /BYPASS_GATE/.test(read('components/RegistrationGate.tsx')), 'learner routes keep the login gate unless the open no-login build disables it explicitly');
-check(/MiloMultilang-Login\.apk/.test(workflow) && /EXPO_PUBLIC_LEARNER_LOGIN=true/.test(workflow), 'CI builds and publishes the learner login APK');
+check(/learnerLogin: process\.env\.EXPO_PUBLIC_LEARNER_LOGIN === 'true'/.test(read('lib/features.ts'))
+  && /IS_ADMIN_APP \|\| !FEATURES\.learnerLogin/.test(gate)
+  && /if \(BYPASS_GATE\) return;/.test(gate), 'the gate is skipped unless learner login is explicitly enabled, without changing admin authorization');
+check(/learner_login:[\s\S]*?default: false/.test(workflow)
+  && /github\.event_name == 'workflow_dispatch' && inputs\.learner_login/.test(workflow)
+  && /EXPO_PUBLIC_LEARNER_LOGIN=true/.test(workflow), 'CI builds an optional learner login APK only when manually requested');
+check(/FEATURES\.learnerLogin && <Pressable[^\n]*personal-sync/.test(read('app/lang/index.tsx'))
+  && /if \(!FEATURES\.learnerLogin\) return <Redirect href=\{'\/languages'/.test(read('app/personal-sync.tsx')), 'open builds hide the account entry and redirect direct account links');
+check(Object.values(JSON.parse(read('eas.json')).build).every(profile => profile.env.EXPO_PUBLIC_LEARNER_LOGIN === 'false')
+  && /EXPO_PUBLIC_LEARNER_LOGIN=false/.test(read('.env.example')), 'all EAS profiles and the documented example default to no learner login');
+check(/learner_login:[\s\S]*?default: false/.test(read('.github/workflows/apk-requested.yml'))
+  && /github\.event_name == 'workflow_dispatch' && inputs\.learner_login/.test(read('.github/workflows/apk-requested.yml'))
+  && /EXPO_PUBLIC_LEARNER_LOGIN: 'false'/.test(read('.github/workflows/apk-learner.yml'))
+  && /EXPO_PUBLIC_LEARNER_LOGIN: 'false'/.test(read('.github/workflows/deploy.yml')), 'ordinary APK and web CI builds are open and the alternate login job is opt-in');
 check(/com\.devicecontrol\.milomultilang/.test(appConfig) && /name: 'MiloMultiLanguage Admin'/.test(appConfig), 'login APK keeps its own package and management branding includes MiloMultiLanguage');
 check(/is_education_admin/.test(read('supabase/functions/admin-delete-user/index.ts')) && /deleteUser\(/.test(read('supabase/functions/admin-delete-user/index.ts')), 'account deletion is manager-only and runs on the server');
 check(/deleteRegisteredUser/.test(read('app/admin/index.tsx')) && /downloadRegisteredUsers/.test(read('app/admin/index.tsx')), 'manager app can delete users and export users');
