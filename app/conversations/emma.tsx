@@ -1,7 +1,6 @@
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import * as Speech from 'expo-speech';
 import { speechTagFor } from '@/lib/speechLanguage';
@@ -12,8 +11,7 @@ import { clearEmmaHistory, loadEmmaHistory, saveEmmaHistory, type EmmaStoredMess
 import { transcribeLearnerSpeech } from '@/lib/speechPractice';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
 import { ChatBackButton } from '@/components/ChatBackButton';
-import { KeyboardStickyView } from '@/components/KeyboardRuntime';
-import { composerKeyboardOffset } from '@/lib/chatKeyboard';
+import { KeyboardAttachedView } from '@/components/KeyboardAttachedView';
 
 import { PAID_AI_ENABLED, PAID_AI_DISABLED_MESSAGE } from '@/lib/paidAI';
 
@@ -28,7 +26,6 @@ const initialSuggestions = ['My name is Sara.', 'Hello Emma! Nice to meet you.',
 
 export default function EmmaChat() {
   const scrollRef = useRef<ScrollView>(null);
-  const insets = useSafeAreaInsets();
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState('');
   const [showTools, setShowTools] = useState(false);
@@ -197,7 +194,7 @@ export default function EmmaChat() {
         {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
       </ScrollView>
 
-      <KeyboardStickyView enabled offset={composerKeyboardOffset(insets.bottom)}>
+      <KeyboardAttachedView>
       <View style={styles.coachArea}>
         <Pressable accessibilityRole="button" accessibilityLabel="باز و بسته‌کردن پیشنهادهای خصوصی Emma" accessibilityState={{ expanded: showTools }} style={styles.coachToggle} onPress={() => setShowTools((value) => !value)}>
           <Sparkles size={15} color={Colors.warning[400]} />
@@ -230,7 +227,7 @@ export default function EmmaChat() {
           {thinking || transcribing ? <ActivityIndicator size="small" color={Colors.onColor} /> : <Send size={18} color={Colors.onColor} />}
         </Pressable>
       </View>
-      </KeyboardStickyView>
+      </KeyboardAttachedView>
     </View>
   );
 }

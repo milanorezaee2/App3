@@ -2,7 +2,6 @@ import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/compon
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, BackHandler, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   RecordingPresets,
   requestRecordingPermissionsAsync,
@@ -27,8 +26,7 @@ import {
 import { requestHumanChatAssist, type HumanAssistMode, type HumanAssistResult } from '@/lib/humanChatAssist';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
 import { ChatBackButton } from '@/components/ChatBackButton';
-import { KeyboardStickyView } from '@/components/KeyboardRuntime';
-import { composerKeyboardOffset } from '@/lib/chatKeyboard';
+import { KeyboardAttachedView } from '@/components/KeyboardAttachedView';
 import { ONLINE_AUDIO_DISABLED_MESSAGE, ONLINE_AUDIO_ENABLED } from '@/lib/onlineAudioPolicy';
 
 const containsRtlScript = (value: string) => /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/.test(value);
@@ -70,7 +68,6 @@ function VoiceMessage({ message }: { message: DirectMessage }) {
 export default function HumanConversationScreen() {
   const router = useRouter();
   const { conversationId, name } = useLocalSearchParams<{ conversationId: string; name?: string }>();
-  const insets = useSafeAreaInsets();
   const scrollRef = useRef<ScrollView>(null);
   const [messages, setMessages] = useState<DirectMessage[]>([]);
   const [myId, setMyId] = useState<string | null>(null);
@@ -248,7 +245,7 @@ export default function HumanConversationScreen() {
         </ScrollView>
       )}
 
-      <KeyboardStickyView enabled offset={composerKeyboardOffset(insets.bottom)}>
+      <KeyboardAttachedView>
       {showCoach ? (
         <View style={styles.coach}>
           <View style={styles.coachTitleRow}><Sparkles size={15} color={Colors.warning[400]} /><Text style={styles.coachTitle}>دستیار خصوصی — چیزی خودکار ارسال نمی‌شود</Text></View>
@@ -290,7 +287,7 @@ export default function HumanConversationScreen() {
           </Pressable>
         )}
       </View>
-      </KeyboardStickyView>
+      </KeyboardAttachedView>
     </View>
   );
 }
