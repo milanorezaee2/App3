@@ -13,6 +13,7 @@ import { transcribeLearnerSpeech } from '@/lib/speechPractice';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
 import { ChatBackButton } from '@/components/ChatBackButton';
 import { KeyboardStickyView } from '@/components/KeyboardRuntime';
+import { composerKeyboardOffset } from '@/lib/chatKeyboard';
 
 import { PAID_AI_ENABLED, PAID_AI_DISABLED_MESSAGE } from '@/lib/paidAI';
 
@@ -196,7 +197,7 @@ export default function EmmaChat() {
         {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
       </ScrollView>
 
-      <KeyboardStickyView enabled offset={{ closed: 0, opened: Platform.OS === 'web' ? 0 : -insets.bottom }}>
+      <KeyboardStickyView enabled offset={composerKeyboardOffset(insets.bottom)}>
       <View style={styles.coachArea}>
         <Pressable accessibilityRole="button" accessibilityLabel="باز و بسته‌کردن پیشنهادهای خصوصی Emma" accessibilityState={{ expanded: showTools }} style={styles.coachToggle} onPress={() => setShowTools((value) => !value)}>
           <Sparkles size={15} color={Colors.warning[400]} />

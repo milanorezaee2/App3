@@ -28,6 +28,7 @@ import { requestHumanChatAssist, type HumanAssistMode, type HumanAssistResult } 
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
 import { ChatBackButton } from '@/components/ChatBackButton';
 import { KeyboardStickyView } from '@/components/KeyboardRuntime';
+import { composerKeyboardOffset } from '@/lib/chatKeyboard';
 import { ONLINE_AUDIO_DISABLED_MESSAGE, ONLINE_AUDIO_ENABLED } from '@/lib/onlineAudioPolicy';
 
 const containsRtlScript = (value: string) => /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/.test(value);
@@ -247,7 +248,7 @@ export default function HumanConversationScreen() {
         </ScrollView>
       )}
 
-      <KeyboardStickyView enabled offset={{ closed: 0, opened: Platform.OS === 'web' ? 0 : -insets.bottom }}>
+      <KeyboardStickyView enabled offset={composerKeyboardOffset(insets.bottom)}>
       {showCoach ? (
         <View style={styles.coach}>
           <View style={styles.coachTitleRow}><Sparkles size={15} color={Colors.warning[400]} /><Text style={styles.coachTitle}>دستیار خصوصی — چیزی خودکار ارسال نمی‌شود</Text></View>
