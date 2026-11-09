@@ -3,6 +3,7 @@ import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/L
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { FitScrollView, lessonScrollOffset } from '@/components/FitScrollView';
+import { useFirstTimeHint } from '@/lib/useFirstTimeHint';
 import { GrammarNoteCard, GrammarPatternCard, GrammarStageHeader } from '@/components/GrammarUsage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
@@ -66,6 +67,7 @@ export default function SentenceLessonScreen() {
   // scroll so the stage block (card + its buttons) starts near the top and is
   // never left half-hidden behind the footer.
   const lessonScrollRef = useRef<ScrollView>(null);
+  const showHint = useFirstTimeHint(`en:${stage}`);
   const stageOffsetRef = useRef(0);
   useEffect(() => {
     const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: stage === 1 ? Math.max(0, lessonScrollOffset(stageOffsetRef.current, Dimensions.get('window').width) - 8) : 0, animated: true }), 60);
@@ -314,7 +316,6 @@ export default function SentenceLessonScreen() {
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
           <View style={styles.headerText}>
-            <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
             <Text style={styles.headerSub}>{stages[stage].labelFa} · مرحله {toPersianDigits(stage + 1)} از {toPersianDigits(stages.length)}</Text>
           </View>
@@ -331,18 +332,16 @@ export default function SentenceLessonScreen() {
       <View style={styles.stepperCard}>
         <View style={styles.stepperHeading}>
           <View>
-            <Text style={styles.stepperEyebrow}>LESSON FLOW · 09 STAGES</Text>
             <Text style={styles.stepperTitle}>جریان این درس</Text>
           </View>
           <View style={styles.stepperNow}>
-            <Text style={styles.stepperNowEn}>{stages[stage].labelEn}</Text>
+            
             <Text style={styles.stepperNowFa}>{stages[stage].labelFa}</Text>
           </View>
         </View>
         <View style={styles.stepSegments}>
           {stages.map((item, index) => <View key={item.id} accessibilityLabel={`${item.labelEn} ${index + 1} از ${stages.length}`} style={[styles.stepSegment, index <= stage && styles.stepSegmentDone, index === stage && styles.stepSegmentCurrent]} />)}
         </View>
-        <View style={styles.stepperEnds}><Text style={styles.stepperEndText}>Situation</Text><Text style={styles.stepperEndText}>Spaced Review</Text></View>
       </View>
 
       {!!(sessionError || timer.error) && <Text style={styles.speechError}>{sessionError || timer.error}</Text>}
@@ -373,13 +372,11 @@ export default function SentenceLessonScreen() {
               </Pressable>
               <Text style={styles.english}>{current.en}</Text>
               <Text style={[styles.pronunciation,current.pronunciation.startsWith('/ ')&&{fontFamily: 'Times New Roman',textAlign:'left',writingDirection:'ltr'}]}>{current.pronunciation}</Text>
-              {!lesson.b2Section && !lesson.c1Section && lesson.order >= 89 + B1_INDEPENDENT_UNITS.length + A2_FOUNDATION_LESSONS.length && <Text style={styles.hint}>راهنمای واجی آمریکایی از واژه‌نامه؛ بدون تکیه و پیوند گفتار. واژه داخل کروشه آوانویسی نشده است. برای آهنگ جمله به صدا گوش دهید.</Text>}
               <View style={styles.divider} />
               <Text keepColor style={styles.persian}>{current.fa}</Text>
               {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternEnglish}>{current.pattern}</Text></View> : null}
             </View>
             <EnglishSpeechRateControls onPlay={rate => speak(current.en, rate)} />
-            <Text style={styles.hint}>جمله به‌صورت خودکار پخش می‌شود؛ برای شنیدن دوباره، سرعت دلخواه را انتخاب کنید.</Text>
             {!!audioNotice && <Text accessibilityLiveRegion="polite" style={styles.speechError}>{audioNotice}</Text>}
           </View>
         )}
@@ -388,7 +385,7 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><Headphones size={34} color={Colors.primary[400]} /></View>
             <Text style={styles.stageTitle}>شنیدن جمله‌ها</Text>
-            <Text style={styles.stageDesc}>هر جمله را جداگانه گوش دهید و معنی همان جمله را به یاد بیاورید. واژه‌ها همیشه کنار جملهٔ اصلی می‌مانند.</Text>
+            {showHint && <Text style={styles.stageDesc}>هر جمله را گوش دهید و معنی‌اش را به یاد بیاورید.</Text>}
             <View style={styles.listenList}>
               {lesson.sentences.map((sentence, index) => (
                 <Pressable
@@ -416,7 +413,7 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><Mic2 size={34} color={Colors.success[400]} /></View>
             <Text style={styles.stageTitle}>سایه‌خوانی · Shadowing</Text>
-            <Text style={styles.stageDesc}>یک جمله را پخش کنید، مکث کنید و با همان آهنگ تکرار کنید. این تمرین بدون ضبط صدا هم کامل است.</Text>
+            {showHint && <Text style={styles.stageDesc}>بشنوید، مکث کنید و با همان آهنگ تکرار کنید.</Text>}
             <View style={styles.speechPractice}>
               <Text style={styles.speechTitle}>جملهٔ انتخاب‌شده</Text>
               <Text style={styles.speechSentence}>{current.en}</Text>
@@ -456,7 +453,7 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><RotateCcw size={33} color={Colors.success[400]} /></View>
             <Text style={styles.stageTitle}>ساخت جمله</Text>
-            <Text style={styles.stageDesc}>معنی جمله را بخوانید و واژه‌های همان جمله را به ترتیب بچینید.</Text>
+            {showHint && <Text style={styles.stageDesc}>معنی را بخوانید و واژه‌ها را به ترتیب بچینید.</Text>}
             <EnglishSentenceBuilder sentence={current} />
             <View style={styles.dots}>
               {lesson.sentences.map((sentence, index) => (
@@ -470,7 +467,7 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><Sparkles size={34} color={Colors.warning[400]} /></View>
             <Text style={styles.stageTitle}>واژگان از دل جمله‌ها</Text>
-            <Text style={styles.stageDesc}>هر واژه در کنار معنی و همان جمله‌ای دیده می‌شود که از آن آمده است.</Text>
+            {showHint && <Text style={styles.stageDesc}>هر واژه را با معنی و جمله‌اش مرور کنید.</Text>}
             <View style={styles.vocabList}>
               {vocabulary.map(item => (
                 <View key={item.word} style={styles.vocabCard}>
@@ -488,12 +485,12 @@ export default function SentenceLessonScreen() {
 
         {stage === 6 && (
           <View style={styles.grammarStage}>
-            <GrammarStageHeader title="دستور در کاربرد" subtitle="Grammar Through Usage" description={(lesson.b2Section || lesson.c1Section) ? 'نکته‌های کاربردی را بخوانید و سپس الگوها و مثال‌ها را مرور کنید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به محتوا اضافه نشده است.'} />
+            <GrammarStageHeader title="دستور در کاربرد" description={showHint ? (lesson.b2Section || lesson.c1Section) ? 'نکته‌ها را بخوانید و الگوها را مرور کنید.' : 'الگوی هر جمله را ببینید و مثالش را بشنوید.' : undefined} />
             {B2_GUIDANCE[lesson.id]?.map((note, index) => <GrammarNoteCard key={`${lesson.id}-guide-${index}`} title={lessonTopics?.[index] ?? ''} text={note} />)}
             {c1Unit?.topics.map((topic, index) => <GrammarNoteCard key={`${lesson.id}-c1-guide-${index}`} title={topic[0]} text={topic[5]} />)}
             {grammarPatterns.length ? grammarPatterns.map((item, index) => (
               <GrammarPatternCard key={item.sentenceId} index={index + 1} pattern={item.pattern} example={item.exampleEn} translation={item.exampleFa} onSpeak={() => speak(item.exampleEn)} />
-            )) : <GrammarNoteCard title="یادگیری در بافت جمله" text="برای این درس الگوی دستوری جداگانه‌ای ثبت نشده است؛ جملهٔ اصلی را بشنوید و ساختارش را در کاربرد واقعی ببینید." />}
+            )) : <GrammarNoteCard title="یادگیری در بافت جمله" text="جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید." />}
             {lesson.c1Section && lessonTopics && <EnglishB2TopicPractice key={lesson.id} lessonId={lesson.id} topics={lessonTopics} practice={C1_TOPIC_PRACTICE[lesson.id]} />}
             {lesson.c1Section && <EnglishB2TopicPractice key={`${lesson.id}-application`} lessonId={lesson.id} topics={['تحلیل موقعیت']} practice={C1_APPLICATION_PRACTICE[lesson.id]} heading="کاربرد در موقعیت تازه · اختیاری" description="با توجه به موقعیت تازه بهترین پاسخ را انتخاب کنید؛ این تمرین شرط پایان درس نیست." />}
             {lesson.c1Section && <EnglishB2TopicPractice key={`${lesson.id}-application-extra`} lessonId={lesson.id} topics={['سنجش کاربرد در بافت جدید']} practice={C1_ADDITIONAL_APPLICATION[lesson.id]} heading="سنجش کاربردی تکمیلی · اختیاری" description="به موقعیت تازه پاسخ دهید. نتیجه با بازخورد ثبت می‌شود؛ برای حفظ پیشرفت قبلی شرط تازه‌ای برای پایان درس ایجاد نمی‌کند." />}
@@ -505,7 +502,7 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><MessageCircle size={34} color={Colors.accent[400]} /></View>
             <Text style={styles.stageTitle}>Conversation Practice · مکالمهٔ هدایت‌شده</Text>
-            <Text style={styles.stageDesc}>فعلاً به‌جای سرویس AI آنلاین، از گفت‌وگوی همین درس به شکل تمرین نقش‌آفرینی رایگان استفاده کنید.</Text>
+            {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
             <EnglishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} />
             {lesson.c1Section && <EnglishB2Scenario key={lesson.id} lessonId={lesson.id} speak={speak} scenario={C1_SCENARIOS[lesson.id]} />}
             {lesson.c1Section && <EnglishC1ExtendedModel key={`${lesson.id}-extended`} lessonId={lesson.id} speak={speak} />}
@@ -523,7 +520,6 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><RefreshCw size={33} color={Colors.success[400]} /></View>
             <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
-            <Text style={styles.stageDesc}>با ثبت پایان درس، جمله‌ها و واژه‌های وابسته به آن وارد برنامهٔ مرور می‌شوند؛ مرور بر اساس پاسخ شما فاصله‌گذاری می‌شود.</Text>
             <View style={styles.promiseCard}>
               <Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text>
               <Text style={styles.promiseText}>{toPersianDigits(lesson.sentences.length)} جمله و {toPersianDigits(vocabulary.length)} واژهٔ یکتا؛ محتوا همان محتوای اصلی درس است.</Text>

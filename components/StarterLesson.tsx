@@ -3,6 +3,7 @@ import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/L
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { FitScrollView, lessonScrollOffset } from '@/components/FitScrollView';
+import { useFirstTimeHint } from '@/lib/useFirstTimeHint';
 import { GrammarNoteCard, GrammarPatternCard, GrammarStageHeader } from '@/components/GrammarUsage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -71,6 +72,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
   // scroll so the stage block (card + its buttons) starts near the top and is
   // never left half-hidden behind the footer.
   const lessonScrollRef = useRef<ScrollView>(null);
+  const showHint = useFirstTimeHint(`starter:${stage}`);
   const stageOffsetRef = useRef(0);
   useEffect(() => {
     const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: stage === 1 ? Math.max(0, lessonScrollOffset(stageOffsetRef.current, Dimensions.get('window').width) - 8) : 0, animated: true }), 60);
@@ -263,7 +265,6 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
           <View style={styles.headerText}>
-            <Text style={styles.headerEyebrow}>{courseLevel.id === -1 ? 'PRE-A1' : `LEVEL ${courseLevel.id}`} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
             <Text style={styles.headerSub}>{stages[stage].labelFa} · مرحلهٔ {fa(stage + 1)} از {fa(stages.length)}</Text>
           </View>
@@ -274,11 +275,10 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
 
       <View style={styles.stepperCard}>
         <View style={styles.stepperHeading}>
-          <View><Text style={styles.stepperEyebrow}>LESSON FLOW · 09 STAGES</Text><Text style={styles.stepperTitle}>جریان این درس</Text></View>
-          <View style={styles.stepperNow}><Text style={styles.stepperNowEn}>{stages[stage].labelEn}</Text><Text style={styles.stepperNowFa}>{stages[stage].labelFa}</Text></View>
+          <View><Text style={styles.stepperTitle}>جریان این درس</Text></View>
+          <View style={styles.stepperNow}><Text style={styles.stepperNowFa}>{stages[stage].labelFa}</Text></View>
         </View>
         <View style={styles.stepSegments}>{stages.map((item, index) => <View key={item.id} accessibilityLabel={`${item.labelEn} ${index + 1} از ${stages.length}`} style={[styles.stepSegment, index <= stage && styles.stepSegmentDone, index === stage && styles.stepSegmentCurrent]} />)}</View>
-        <View style={styles.stepperEnds}><Text style={styles.stepperEndText}>{stages[0].labelEn}</Text><Text style={styles.stepperEndText}>{stages[stages.length - 1].labelEn}</Text></View>
       </View>
 
       {!!(sessionError || speechError) && <Text accessibilityRole="alert" style={styles.error}>{sessionError || speechError}</Text>}
@@ -306,13 +306,12 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
             <Pressable accessibilityRole="button" accessibilityLabel={`پخش آهستهٔ ${unit}`} style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel={`پخش معمولی ${unit}`} style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable>
           </View>
-          <Text style={styles.hint}>{unit} به‌صورت خودکار پخش می‌شود. می‌توانید آهسته یا معمولی دوباره بشنوید و با صدای بلند تکرار کنید.</Text>
         </View>}
 
         {stage === 2 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><Headphones size={34} color={Palette.primary} /></View>
           <Text style={styles.stageTitle}>شنیدن {unitPlural}</Text>
-          <Text style={styles.stageDesc}>{foundation ? `هر ${unit} را جداگانه گوش دهید و معنی آن را به یاد بیاورید.` : 'هر جمله را جداگانه گوش دهید و معنی همان جمله را به یاد بیاورید. واژه‌ها کنار جملهٔ اصلی می‌مانند.'}</Text>
+          {showHint && <Text style={styles.stageDesc}>{foundation ? `هر ${unit} را جداگانه گوش دهید و معنی آن را به یاد بیاورید.` : 'هر جمله را گوش دهید و معنی‌اش را به یاد بیاورید.'}</Text>}
           <View style={styles.listenList}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityState={{ selected: index === sentenceIndex }} style={[styles.listenRow, index === sentenceIndex && styles.listenRowActive]} onPress={() => selectSentence(index)}>
             <View style={styles.listenNumber}><Text style={styles.listenNumberText}>{fa(index + 1)}</Text></View>
             <Text style={styles.listenTarget}>{sentence.text}</Text>
@@ -325,7 +324,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
         {stage === 3 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><Mic2 size={34} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>سایه‌خوانی · Shadowing</Text>
-          <Text style={styles.stageDesc}>نمونه را آهسته پخش کنید، مکث کنید و با همان آهنگ تکرار کنید. ضبط صدا یا ارزیابی گفتار لازم نیست.</Text>
+          {showHint && <Text style={styles.stageDesc}>بشنوید، مکث کنید و با همان آهنگ تکرار کنید.</Text>}
           <View style={styles.speechPractice}>
             <Text style={styles.speechTitle}>{unit} انتخاب‌شده</Text>
             <Text style={styles.speechSentence}>{current.text}</Text>
@@ -338,7 +337,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
         {stage === 4 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><RotateCcw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>{foundation ? `انتخاب ${unit}` : 'ساخت جمله'}</Text>
-          <Text style={styles.stageDesc}>{foundation ? `معنی ثبت‌شده را بخوانید و ${unit} مربوط به همان نمونهٔ درس را انتخاب کنید.` : 'معنی را بخوانید و واژه‌های همان جمله را به ترتیب بچینید؛ تمرین به جمله‌های همین درس متصل است.'}</Text>
+          {showHint && <Text style={styles.stageDesc}>{foundation ? `معنی ثبت‌شده را بخوانید و ${unit} مربوط به همان نمونهٔ درس را انتخاب کنید.` : 'معنی را بخوانید و واژه‌ها را به ترتیب بچینید.'}</Text>}
           {foundation || current.text.trim().replace(/\s+([!?.;,:])/g, '$1').split(/\s+/).length === 1 ? <StarterWordChoice key={current.id} sentence={current} sentences={lesson.sentences} /> : <LanguageSentenceBuilder key={current.id} sentence={current} placeholder="واژه‌ها را به ترتیب انتخاب کنید" />}
           <PracticeNavigation index={sentenceIndex} count={lesson.sentences.length} onChange={setSentenceIndex} />
           {a1 && <StarterWritingPractice key={current.id} sentence={current} />}
@@ -347,7 +346,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
         {stage === 5 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><Sparkles size={34} color={Palette.warning} /></View>
           <Text style={styles.stageTitle}>{foundation ? 'واژه‌ها و معنی‌ها' : 'واژگان از دل جمله‌ها'}</Text>
-          <Text style={styles.stageDesc}>{foundation ? `هر ${unit} را همراه معنی ببینید و دوباره بشنوید.` : 'هر واژه را همراه معنی و همان جمله‌ای ببینید که از آن آمده است.'}</Text>
+          {showHint && <Text style={styles.stageDesc}>{foundation ? `هر ${unit} را همراه معنی ببینید و دوباره بشنوید.` : 'هر واژه را با معنی و جمله‌اش مرور کنید.'}</Text>}
           <View style={styles.vocabList}>{vocabulary.map(({ word, sentence }) => <View key={`${word.word}-${sentence.id}`} style={styles.vocabCard}>
             <View style={styles.vocabTop}><Text style={styles.vocabWord}>{word.word}</Text><Text style={styles.vocabMeaning}>{word.meaning}</Text></View>
             <Text style={styles.vocabExample}>{sentence.text}</Text><Text keepColor style={styles.vocabExampleFa}>{sentence.fa}</Text>
@@ -356,27 +355,27 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
         </View>}
 
         {stage === 6 && <View style={styles.grammarStage}>
-          <GrammarStageHeader title={foundation ? 'نکتهٔ نوشتار و کاربرد' : 'دستور در کاربرد'} subtitle="Grammar Through Usage" description={foundation ? 'نکته را بخوانید؛ نمونه‌ها را می‌توانید در بخش شنیدن یا تمرین دوباره بشنوید.' : (lesson.levelId === 2 || lesson.levelId === 3 || lesson.levelId === 4) ? 'ساختار و توضیح هر الگو را بخوانید و مثال آن را از همین درس بشنوید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به داده‌ها اضافه نمی‌شود.'} />
+          <GrammarStageHeader title={foundation ? 'نکتهٔ نوشتار و کاربرد' : 'دستور در کاربرد'} description={showHint ? foundation ? 'نکته را بخوانید.' : (lesson.levelId === 2 || lesson.levelId === 3 || lesson.levelId === 4) ? 'توضیح هر الگو را بخوانید و مثالش را بشنوید.' : 'الگوی هر جمله را ببینید و مثالش را بشنوید.' : undefined} />
           {a1 && teachingNote ? <GrammarNoteCard title="نکتهٔ این زبان" text={teachingNote} /> : null}
           {foundation ? <GrammarNoteCard title="یادآوری" text={teachingNote ?? ''} /> : a2Patterns.length ? a2Patterns.map((pattern, index) => {
             const sentence = lesson.sentences[pattern.example - 1];
             return <GrammarPatternCard key={pattern.form} index={index + 1} pattern={pattern.form} explanation={pattern.explanationFa} example={sentence.text} translation={sentence.fa} onSpeak={() => speak(sentence.text)} />;
           }) : grammarPatterns.length ? grammarPatterns.map(({ sentence, pattern }, index) => (
             <GrammarPatternCard key={sentence.id} index={index + 1} pattern={pattern} example={sentence.text} translation={sentence.fa} onSpeak={() => speak(sentence.text)} />
-          )) : <GrammarNoteCard title="یادگیری در بافت جمله" text="برای این درس الگوی جداگانه‌ای ثبت نشده است؛ جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید." />}
+          )) : <GrammarNoteCard title="یادگیری در بافت جمله" text="جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید." />}
         </View>}
 
         {stage === 7 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><MessageCircle size={34} color={Palette.primary} /></View>
           {foundation ? <>
             <Text style={styles.stageTitle}>تمرین یادآوری</Text>
-            <Text style={styles.stageDesc}>معنی ثبت‌شده در درس را بخوانید و گزینهٔ مربوط به آن نمونه را پیدا کنید. با دکمه‌ها نمونهٔ دیگری را انتخاب کنید.</Text>
+            {showHint && <Text style={styles.stageDesc}>معنی را بخوانید و گزینهٔ درست را انتخاب کنید.</Text>}
             <StarterWordChoice key={current.id} sentence={current} sentences={lesson.sentences} />
             <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن ${unit} انتخاب‌شده`} style={styles.bubbleSound} onPress={() => speak(current.text)}><Volume2 size={20} color={Palette.primary} /></Pressable>
             <PracticeNavigation index={sentenceIndex} count={lesson.sentences.length} onChange={setSentenceIndex} />
           </> : <>
             <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
-            <Text style={styles.stageDesc}>از دیالوگ همین درس نقش‌آفرینی کنید؛ جملهٔ خود را بگویید و سپس نمونه را بشنوید.</Text>
+            {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
             <LanguageDialoguePractice key={lesson.id} dialogue={starterDisplayDialogue(lesson)} onSpeak={speak} languageLabel={course.name} />
             {readingTask && <StarterA1Skill key={`${lesson.id}-reading`} task={readingTask} onSpeak={speak} />}
             {lesson.levelId === 3 && b1Production(course.id,lesson.id) && <StarterB1Production key={`${lesson.id}-production`} prompt={b1Production(course.id,lesson.id)!} lesson={lesson} onSpeak={speak} />}
@@ -387,7 +386,6 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
         {stage === 8 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><RefreshCw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
-          <Text style={styles.stageDesc}>با پایان درس، {unitPlural} وارد مرور محلی می‌شوند؛ فاصلهٔ بعدی براساس پاسخی که در مرور می‌دهید تنظیم می‌شود.</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} {unit} و {fa(vocabulary.length)} واژه/عبارت یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
           <View style={styles.evidenceCard}>
             <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
