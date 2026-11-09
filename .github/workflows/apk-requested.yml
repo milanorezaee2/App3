@@ -116,6 +116,9 @@ jobs:
           rm -rf android
           npx expo prebuild --platform android --no-install --non-interactive
           echo "applicationId: $(grep -m1 applicationId android/app/build.gradle)"
+      - &validate
+        name: Verify the Firebase-free chat alert path
+        run: npm run validate:background-notifications
       - &build
         name: Build the release APK
         run: |
@@ -182,6 +185,7 @@ jobs:
       - *java
       - *sdk
       - *prebuild
+      - *validate
       - *build
       - *verify
       - *upload
@@ -211,6 +215,7 @@ jobs:
       - *java
       - *sdk
       - *prebuild
+      - *validate
       - *build
       - *verify
       - *upload

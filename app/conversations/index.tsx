@@ -9,6 +9,7 @@ import { deleteConversationForMe, ensureSupportConversation, listRealContacts, t
 import { readableSupabaseError } from '@/lib/errors';
 import { isSupabaseConfigured } from '@/lib/pairing';
 import { SupabaseSetupNotice } from '@/components/SupabaseSetupNotice';
+import { ChatAlertSettingsCard } from '@/components/ChatAlertSettingsCard';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
 
 export default function ConversationsHome() {
@@ -94,6 +95,7 @@ export default function ConversationsHome() {
       </View>
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        {configured ? <ChatAlertSettingsCard /> : null}
         {configured && (
           <Pressable accessibilityRole="button" style={styles.inviteButton} disabled={openingSupport} onPress={openSupport}>
             <MessageCircle size={17} color={Colors.primary[300]} />
