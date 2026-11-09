@@ -55,25 +55,9 @@ export function MiloLogoMotion({ size = 'intro', play = true, onDone }: Props) {
   return (
     <View accessibilityRole="image" accessibilityLabel="MiloMultiLanguage" style={[styles.wrap, isIntro ? styles.wrapIntro : styles.wrapHeader]}>
       <Animated.View style={{ opacity: mark, transform: [{ scale: mark.interpolate({ inputRange: [0, 1], outputRange: [0.35, 1] }) }] }}>
-        <LinearGradient
-          colors={['#8D86FF', '#5146E5', '#312E81']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={{ width: markSize, height: markSize, borderRadius: isIntro ? 32 : 13, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}
-        >
+        <View style={{ width: markSize, height: markSize, alignItems: 'center', justifyContent: 'center' }}>
           <MiloGlobeHeadphoneMark size={iconSize} />
-          <Animated.View
-            pointerEvents="none"
-            style={{
-              position: 'absolute',
-              top: -markSize * 0.3,
-              bottom: -markSize * 0.3,
-              width: markSize * 0.28,
-              backgroundColor: 'rgba(255,255,255,0.38)',
-              transform: [{ translateX: sheenX }, { rotate: '18deg' }],
-            }}
-          />
-        </LinearGradient>
+        </View>
       </Animated.View>
       <View style={styles.word} onLayout={event => setWordWidth(event.nativeEvent.layout.width)}>
         {LETTERS.map((letter, index) => (

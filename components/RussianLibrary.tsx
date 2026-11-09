@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   overviewHero: { position: 'relative', overflow: 'hidden', marginTop: 60, borderRadius: 25, padding: 20, gap: 10, shadowColor: '#282671', shadowOpacity: .16, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 5 },
   heroOrb: { position: 'absolute', top: -50, left: -42, width: 180, height: 180, borderRadius: 90, backgroundColor: 'rgba(255,255,255,0.09)' },
   heroTopRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' },
-  heroIcon: { width: 40, height: 40, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.15)', alignItems: 'center', justifyContent: 'center' },
+  heroIcon: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
   heroPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.12)', paddingHorizontal: 10, paddingVertical: 6 },
   heroPillText: { fontFamily: Typography.fontFamily, color: '#FFFFFF', fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
   overviewEyebrow: { fontFamily: 'Times New Roman', color: '#C6C9FF', fontSize: 6, fontWeight: '800', letterSpacing: 1.4, writingDirection: 'ltr', marginTop: 4 },

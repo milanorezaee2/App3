@@ -141,9 +141,9 @@ export default function TurkishHome() {
         <View style={styles.page}>
           <View style={styles.header}>
             <View style={styles.brandLockup}>
-              <LinearGradient colors={['#D94F64', '#A83249']} start={{ x: .9, y: 0 }} end={{ x: .1, y: 1 }} style={styles.brandMark}>
+              <View style={styles.brandMark}>
                 <MiloGlobeHeadphoneMark size={20} />
-              </LinearGradient>
+              </View>
               <View style={styles.brandCopy}>
                 <Text style={styles.brandEyebrow}>LANGUAGE JOURNEY</Text>
                 <Text style={styles.headerTitle}>مسیر یادگیری ترکی استانبولی</Text>

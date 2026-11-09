@@ -75,14 +75,9 @@ function LoginHero({ wide }: { wide: boolean }) {
       <View style={styles.heroGlow} pointerEvents="none" />
       <View style={styles.heroColumn}>
         <View style={styles.brand}>
-          <LinearGradient
-            colors={['#D8E0CB', '#55704B', '#31533B']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.brandMark}
-          >
+          <View style={styles.brandMark}>
             <MiloGlobeHeadphoneMark size={19} />
-          </LinearGradient>
+          </View>
           <View style={styles.brandCopy}>
             <Text style={styles.brandName}>Milo</Text>
             <Text style={styles.brandCaption}>MULTILANGUAGE</Text>
