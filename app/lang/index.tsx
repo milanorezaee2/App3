@@ -19,6 +19,7 @@ import {
   Flame,
   MessageCircle,
   Play,
+  Podcast,
   RefreshCw,
   RotateCcw,
   Sparkles,
@@ -394,6 +395,20 @@ export default function LearningHome() {
               <View style={styles.quickCopy}>
                 <Text style={styles.quickTitle}>کارگاه تلفظ انگلیسی</Text>
                 <Text style={styles.quickDesc}>{FEATURES.learnerLogin ? 'تمرین صداها، تکیه و آهنگ جمله؛ خودارزیابی و همگام‌سازی حساب' : 'تمرین صداها، تکیه و آهنگ جمله؛ خودارزیابی'}</Text>
+              </View>
+              <ChevronLeft size={17} color={HomeColors.muted} />
+            </Pressable>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="باز کردن پادکست انگلیسی"
+              accessibilityHint="هر درس یک اپیزود شنیداری با متن و ترجمهٔ هم‌زمان"
+              style={({ pressed }) => [styles.quickCard, pressed && styles.buttonPressed]}
+              onPress={() => router.push('/lang/podcast' as never)}
+            >
+              <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Podcast size={18} color={HomeColors.accent} /></View>
+              <View style={styles.quickCopy}>
+                <Text style={styles.quickTitle}>پادکست انگلیسی</Text>
+                <Text style={styles.quickDesc}>هر درس یک اپیزود؛ گوش دادن، تکرار آهسته و متن هم‌زمان</Text>
               </View>
               <ChevronLeft size={17} color={HomeColors.muted} />
             </Pressable>
