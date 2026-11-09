@@ -64,6 +64,16 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
   const courseLevel = levels.find(item => item.id === lesson.levelId) ?? levels[0];
   const [stage, setStage] = useState(0);
   const [sentenceIndex, setSentenceIndex] = useState(0);
+
+  // Keep the active stage fully visible: when the stage or sentence changes,
+  // scroll so the stage block (card + its buttons) starts near the top and is
+  // never left half-hidden behind the footer.
+  const lessonScrollRef = useRef<ScrollView>(null);
+  const stageOffsetRef = useRef(0);
+  useEffect(() => {
+    const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: stage === 1 ? Math.max(0, stageOffsetRef.current - 8) : 0, animated: true }), 60);
+    return () => clearTimeout(handle);
+  }, [stage, sentenceIndex]);
   const [revealed, setRevealed] = useState(false);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [showCheckAnswers, setShowCheckAnswers] = useState(false);
@@ -246,7 +256,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
 
   return (
     <View style={styles.root}>
-      <ScrollView style={styles.lessonScroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <ScrollView ref={lessonScrollRef} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
       <View style={styles.brandRow}><MiloGlobeHeadphoneMark size={48} /><Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color="#4F438D" strokeWidth={2.4} /></Pressable></View>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
@@ -280,7 +290,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           {teachingNote ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ این زبان به فارسی</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : null}
         </View>}
 
-        {stage === 1 && <View style={styles.sentenceStage}>
+        {stage === 1 && <View style={styles.sentenceStage} onLayout={event => { stageOffsetRef.current = event.nativeEvent.layout.y; }}>
           <Text style={styles.counter}>{foundation ? unit : 'جملهٔ'} {fa(sentenceIndex + 1)} از {fa(lesson.sentences.length)}</Text>
           <View style={styles.sentenceCard}>
             <Pressable accessibilityRole="button" accessibilityLabel={foundation ? `شنیدن ${unit} این زبان` : "شنیدن جملهٔ این زبان"} style={styles.soundButton} onPress={() => speak(current.text)}><Volume2 size={25} color="#FFFFFF" /></Pressable>
@@ -443,6 +453,7 @@ type LearningLessonVocabulary = StarterCourseLesson['sentences'][number]['vocabu
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },
   lessonScroll: { flex: 1, minHeight: 0 },
+  lessonScrollContent: { paddingBottom: 28 },
   brandRow: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15, paddingTop: 10, paddingBottom: 6 },
   loadingCard: { flex: 1, minHeight: 260, alignItems: 'center', justifyContent: 'center', padding: 24, gap: 13 },
   loadingText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 13, textAlign: 'right', writingDirection: 'rtl' },
@@ -461,7 +472,7 @@ const styles = StyleSheet.create({
   headerBottom: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingTop: 9, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.18)' },
   headerInfoChip: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
   headerInfoText: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.78)', fontSize: 9, writingDirection: 'rtl' },
-  stepperCard: { width: '94%', maxWidth: 820, alignSelf: 'center', marginTop: 13, padding: 13, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10, shadowColor: '#211A68', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  stepperCard: { width: '94%', maxWidth: 820, alignSelf: 'center', marginTop: 8, padding: 13, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10, shadowColor: '#211A68', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepperHeading: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   stepperEyebrow: { fontFamily: 'Times New Roman', color: Palette.primary, fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
   stepperTitle: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 18, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
@@ -490,13 +501,13 @@ const styles = StyleSheet.create({
   noteCard: { width: '100%', marginTop: 14, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 17, gap: 8 },
   noteTitle: { fontFamily: Typography.boldFontFamily, color: Palette.primaryDark, fontSize: 13, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   noteText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 12, lineHeight: 25, textAlign: 'right', writingDirection: 'rtl' },
-  sentenceStage: { alignItems: 'center', paddingTop: 18, width: '100%' },
+  sentenceStage: { alignItems: 'center', paddingTop: 10, width: '100%' },
   counter: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, marginBottom: 12, alignSelf: 'flex-end', textAlign: 'right', writingDirection: 'rtl' },
   sentenceCard: { width: '100%', borderRadius: 22, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 22, alignItems: 'center', shadowColor: '#172033', shadowOpacity: .05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
-  soundButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: 18 },
+  soundButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
   targetSentence: { fontFamily: 'Times New Roman', width: '100%', fontSize: 23, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
   pronunciation: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl', marginTop: 8 },
-  divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 18 },
+  divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 12 },
   persian: { fontFamily: Typography.fontFamily, fontSize: 17, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   a2PatternForm: { fontFamily: Typography.latinFontFamily, fontSize: 14, lineHeight: 23, color: Palette.primaryDark, textAlign: 'left', writingDirection: 'ltr', alignSelf: 'stretch' },
   pattern: { maxWidth: '100%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start', gap: 8, alignSelf: 'flex-end', backgroundColor: Palette.warningSoft, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999, marginTop: 14 },
