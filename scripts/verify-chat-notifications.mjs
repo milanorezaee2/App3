@@ -67,6 +67,9 @@ check(/app_state/.test(notifications) && /FOREGROUND_PRESENCE_INTERVAL_MS/.test(
 check(/shouldPlaySound: !foreground/.test(notifications)
   && /shouldShowBanner: !foreground/.test(notifications), 'native notification presentation is silent while foreground');
 check(/onForegroundEvent/.test(bridge) && /incrementChatUnreadCount/.test(bridge), 'foreground events show a quiet in-app banner and increment unread count');
+check(/if \(!isSupabaseConfigured\(\)\) return/.test(bridge)
+  && /Platform\.OS === 'web'/.test(bridge), 'Web keeps the in-app banner path while native badge and OS listeners stay guarded');
+check(/Platform\.OS !== 'web' && !Device\.isDevice/.test(notifications), 'Web starts Supabase Realtime without requiring a physical native device');
 check(/chatNotificationState/.test(navigation) && /item\.path === '\/conversations'/.test(navigation), 'conversation tab displays the unread counter');
 check(/requestPermissionsAsync/.test(notifications) && /PERMISSION_PROMPTED_KEY/.test(notifications)
   && /فقط یک‌بار/.test(notifications), 'notification permission is requested politely no more than once');

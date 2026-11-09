@@ -263,7 +263,9 @@ async function messageNotificationEvent(
 export async function startChatNotifications(
   options: ChatNotificationOptions = {},
 ): Promise<() => Promise<void>> {
-  if (Platform.OS === 'web' || !Device.isDevice) return async () => undefined;
+  // Web uses Supabase Realtime for in-app banners. Native push registration
+  // remains guarded by Device.isDevice inside registerChatPushTokenForUser.
+  if (Platform.OS !== 'web' && !Device.isDevice) return async () => undefined;
   await configureAndroidChannels();
   // The bridge still listens for in-app events if permission is denied; only
   // OS token registration is gated by the one-time permission request.

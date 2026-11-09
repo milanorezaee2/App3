@@ -20,6 +20,11 @@ import {
 
 const asText = (value: unknown): string => typeof value === 'string' ? value : '';
 
+function updateNativeBadge(count: number): void {
+  if (Platform.OS === 'web') return;
+  void Notifications.setBadgeCountAsync(count).catch(() => undefined);
+}
+
 /** Keeps the server-push registration active and shows quiet in-app banners. */
 export function ChatNotificationBridge() {
   const router = useRouter();
@@ -52,7 +57,7 @@ export function ChatNotificationBridge() {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => setBanner(null), 6500);
     void incrementChatUnreadCount().then(count => {
-      void Notifications.setBadgeCountAsync(count).catch(() => undefined);
+      updateNativeBadge(count);
     });
   };
 
@@ -64,12 +69,12 @@ export function ChatNotificationBridge() {
   useEffect(() => subscribeToChatUnreadCount(setUnreadCount), []);
 
   useEffect(() => {
-    if (!isSupabaseConfigured() || Platform.OS === 'web') return;
+    if (!isSupabaseConfigured()) return;
     let mounted = true;
     let stop: (() => Promise<void>) | null = null;
 
     void loadChatUnreadCount().then(count => {
-      if (mounted) void Notifications.setBadgeCountAsync(count).catch(() => undefined);
+      if (mounted) updateNativeBadge(count);
     });
 
     const handleResponse = (response: Notifications.NotificationResponse | null) => {
@@ -96,7 +101,7 @@ export function ChatNotificationBridge() {
       }
       setBanner(null);
       if (timerRef.current) clearTimeout(timerRef.current);
-      void clearChatUnreadCount().then(() => Notifications.setBadgeCountAsync(0).catch(() => undefined));
+      void clearChatUnreadCount().then(() => updateNativeBadge(0));
       if (targetConversationId) {
         router.push({
           pathname: '/conversations/human/[conversationId]',
@@ -109,24 +114,30 @@ export function ChatNotificationBridge() {
       }
     };
 
-    const receivedSubscription = Notifications.addNotificationReceivedListener(notification => {
-      const content = notification.request.content;
-      const data = content.data;
-      foregroundEventRef.current({
-        eventId: asText(data.eventId) || `expo:${notification.request.identifier}`,
-        title: asText(content.title) || 'اعلان تازه',
-        body: asText(content.body) || 'برای مشاهده، برنامه را باز کنید.',
-        conversationId: asText(data.conversationId) || undefined,
-        route: asText(data.route) || undefined,
-      });
-    });
-    const responseSubscription = Notifications.addNotificationResponseReceivedListener(response => {
-      handleResponse(response);
-    });
+    const receivedSubscription = Platform.OS === 'web'
+      ? null
+      : Notifications.addNotificationReceivedListener(notification => {
+          const content = notification.request.content;
+          const data = content.data;
+          foregroundEventRef.current({
+            eventId: asText(data.eventId) || `expo:${notification.request.identifier}`,
+            title: asText(content.title) || 'اعلان تازه',
+            body: asText(content.body) || 'برای مشاهده، برنامه را باز کنید.',
+            conversationId: asText(data.conversationId) || undefined,
+            route: asText(data.route) || undefined,
+          });
+        });
+    const responseSubscription = Platform.OS === 'web'
+      ? null
+      : Notifications.addNotificationResponseReceivedListener(response => {
+          handleResponse(response);
+        });
 
-    void Notifications.getLastNotificationResponseAsync()
-      .then(response => { if (mounted) handleResponse(response); })
-      .catch(() => undefined);
+    if (Platform.OS !== 'web') {
+      void Notifications.getLastNotificationResponseAsync()
+        .then(response => { if (mounted) handleResponse(response); })
+        .catch(() => undefined);
+    }
 
     void startChatNotifications({
       requireSession: MANAGEMENT_BUILD,
@@ -140,8 +151,8 @@ export function ChatNotificationBridge() {
 
     return () => {
       mounted = false;
-      receivedSubscription.remove();
-      responseSubscription.remove();
+      receivedSubscription?.remove();
+      responseSubscription?.remove();
       if (timerRef.current) clearTimeout(timerRef.current);
       if (stop) void stop();
     };
@@ -151,9 +162,7 @@ export function ChatNotificationBridge() {
     if (!isHumanConversation && pathname !== '/conversations') return;
     setBanner(null);
     if (timerRef.current) clearTimeout(timerRef.current);
-    void clearChatUnreadCount().then(() => {
-      void Notifications.setBadgeCountAsync(0).catch(() => undefined);
-    });
+    void clearChatUnreadCount().then(() => updateNativeBadge(0));
   }, [isHumanConversation, pathname]);
 
   const openBanner = () => {
@@ -161,7 +170,7 @@ export function ChatNotificationBridge() {
     const targetConversationId = banner.conversationId;
     setBanner(null);
     if (timerRef.current) clearTimeout(timerRef.current);
-    void clearChatUnreadCount().then(() => Notifications.setBadgeCountAsync(0).catch(() => undefined));
+    void clearChatUnreadCount().then(() => updateNativeBadge(0));
     if (targetConversationId) {
       router.push({
         pathname: '/conversations/human/[conversationId]',
