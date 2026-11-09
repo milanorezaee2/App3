@@ -51,7 +51,7 @@ const s = StyleSheet.create({
   hint:{fontFamily:Typography.fontFamily,fontSize:13,lineHeight:22,color:'#52566A',textAlign:'right',writingDirection:'rtl'},
   counter:{fontFamily:Typography.fontFamily,fontSize:13,color:'#5148C8',textAlign:'right'},
   prompt:{fontFamily:Typography.fontFamily,fontSize:15,lineHeight:24,color:'#202039',textAlign:'right',writingDirection:'rtl'},
-  target:{fontFamily:'Inter-SemiBold',fontSize:16,lineHeight:25,color:'#202039',textAlign:'left',writingDirection:'ltr'},
+  target:{fontFamily: 'Times New Roman',fontSize:16,lineHeight:25,color:'#202039',textAlign:'left',writingDirection:'ltr'},
   choice:{minHeight:46,borderColor:'#DCE0EE',borderWidth:1,borderRadius:12,paddingHorizontal:12,paddingVertical:9,justifyContent:'center'},
   choiceSelected:{borderColor:'#5148C8',backgroundColor:'#F1EFFF'},
   choiceText:{fontFamily:Typography.fontFamily,fontSize:15,lineHeight:23,color:'#202039',textAlign:'right',writingDirection:'rtl'},

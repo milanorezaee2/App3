@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   wrapIntro: { flexDirection: 'column', gap: 14 },
   wrapHeader: { flexDirection: 'row', gap: 10 },
   word: { flexDirection: 'row', direction: 'ltr', alignItems: 'center' },
-  letter: { fontFamily: 'Inter-ExtraBold', color: '#211A68', letterSpacing: 1.5, writingDirection: 'ltr' },
-  tagline: { fontFamily: 'Inter-ExtraBold', fontSize: 10, color: '#6882A6', writingDirection: 'ltr', textAlign: 'center' },
+  letter: { fontFamily: 'Times New Roman', color: '#211A68', letterSpacing: 1.5, writingDirection: 'ltr' },
+  tagline: { fontFamily: 'Times New Roman', fontSize: 10, color: '#6882A6', writingDirection: 'ltr', textAlign: 'center' },
   measureOnly: { position: 'absolute', opacity: 0, letterSpacing: 0 },
 });

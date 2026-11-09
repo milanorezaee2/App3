@@ -308,7 +308,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
                 <View style={[styles.levelTagDot, { backgroundColor: activeLevel.color }]} />
                 <Text style={[styles.levelTagName, { color: activeLevel.color }]}>{activeLevel.title}</Text>
                 <Text style={styles.levelTagDivider}>·</Text>
-                <Text style={[styles.levelTagText, { fontFamily: 'Inter-SemiBold', color: activeLevel.color, writingDirection: 'ltr' }]}>{activeLevel.cefr}</Text>
+                <Text style={[styles.levelTagText, { fontFamily: 'Times New Roman', color: activeLevel.color, writingDirection: 'ltr' }]}>{activeLevel.cefr}</Text>
               </View>
               <Text style={styles.lessonOrder}>{fa(heroLessonOrder)} از {fa(lessons.length)}</Text>
             </View>

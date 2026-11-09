@@ -72,15 +72,15 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
     setCompletionError('');
     void loadTurkishLessonSessionWithPresence(lesson.id).then(({ session: saved, hasSavedSession }) => {
       if (!alive) return;
-      const replay = startFirstLesson.current && lesson.id === TURKISH_LESSONS[0].id;
+      const replay = !!startFirstLesson.current;
       startFirstLesson.current = false;
       preserveExistingSession.current = replay && hasSavedSession;
       if (replay) router.setParams({ fromStart: undefined });
       setStage(replay ? 1 : saved.stage);
       setSentenceIndex(replay ? 0 : Math.min(saved.sentenceIndex, lesson.sentences.length - 1));
       setRevealed(replay ? false : saved.revealed);
-      setAnswers(saved.answers);
-      setShowCheckAnswers(saved.showCheckAnswers);
+      setAnswers(replay ? {} : saved.answers);
+      setShowCheckAnswers(replay ? false : saved.showCheckAnswers);
       setSessionReady(true);
     }).catch(() => {
       if (alive) setSessionError('جلسهٔ قبلی خوانده نشد؛ برای حفظ اطلاعات، ذخیره متوقف است. دوباره تلاش کنید.');
@@ -107,6 +107,15 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
     speak(current.text, NORMAL_SPEECH_RATE);
   }, [lesson.id, sessionReady, stage, sentenceIndex, current?.text, speak]);
 
+  const startCurrentLessonFromBeginning = () => {
+    preserveExistingSession.current = false;
+    setStage(0);
+    setSentenceIndex(0);
+    setRevealed(false);
+    setAnswers({});
+    setShowCheckAnswers(false);
+    setSpeechError('');
+  };
   const selectSentence = (index: number, rate = 0.72) => {
     setSentenceIndex(index);
     setRevealed(false);
@@ -169,6 +178,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
           <Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color="#FFFFFF" /></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel="شروع از ابتدای این درس" style={styles.restartLessonButton} onPress={startCurrentLessonFromBeginning}><RotateCcw size={15} color="#FFFFFF" /><Text style={styles.restartLessonButtonText}>شروع از ابتدا</Text></Pressable>
           <View style={styles.headerText}>
             <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
@@ -357,7 +367,7 @@ const styles = StyleSheet.create({
   headerTop: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
   back: { width: 40, height: 40, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.14)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.20)', alignItems: 'center', justifyContent: 'center' },
   headerText: { flex: 1, alignItems: 'flex-end', gap: 2 },
-  headerEyebrow: { fontFamily: 'Inter-ExtraBold', color: 'rgba(255,255,255,0.72)', fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
+  headerEyebrow: { fontFamily: 'Times New Roman', color: 'rgba(255,255,255,0.72)', fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
   headerTitle: { fontFamily: Typography.fontFamily, fontSize: 18, lineHeight: 27, fontWeight: '400', color: '#FFFFFF', textAlign: 'right', writingDirection: 'rtl' },
   headerSub: { fontFamily: Typography.fontFamily, fontSize: 10, color: 'rgba(255,255,255,0.78)', textAlign: 'right', writingDirection: 'rtl' },
   percentBadge: { minWidth: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.14)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.18)' },
@@ -368,17 +378,17 @@ const styles = StyleSheet.create({
   headerInfoText: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.78)', fontSize: 9, writingDirection: 'rtl' },
   stepperCard: { width: '94%', maxWidth: 820, alignSelf: 'center', marginTop: 13, padding: 13, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10, shadowColor: '#211A68', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepperHeading: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
-  stepperEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
+  stepperEyebrow: { fontFamily: 'Times New Roman', color: Palette.primary, fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
   stepperTitle: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 18, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
   stepperNow: { alignItems: 'flex-end', gap: 1 },
-  stepperNowEn: { fontFamily: 'Inter-ExtraBold', color: Palette.primaryDark, fontSize: 7, fontWeight: '800', writingDirection: 'ltr' },
+  stepperNowEn: { fontFamily: 'Times New Roman', color: Palette.primaryDark, fontSize: 7, fontWeight: '800', writingDirection: 'ltr' },
   stepperNowFa: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 8, writingDirection: 'rtl' },
   stepSegments: { flexDirection: 'row-reverse', gap: 4 },
   stepSegment: { flex: 1, height: 5, borderRadius: 999, backgroundColor: Palette.border },
   stepSegmentDone: { backgroundColor: Palette.primary },
   stepSegmentCurrent: { height: 8, marginTop: -1.5, backgroundColor: Palette.teal },
   stepperEnds: { flexDirection: 'row-reverse', justifyContent: 'space-between' },
-  stepperEndText: { fontFamily: 'Inter-ExtraBold', color: Palette.muted, fontSize: 6, fontWeight: '800', writingDirection: 'ltr' },
+  stepperEndText: { fontFamily: 'Times New Roman', color: Palette.muted, fontSize: 6, fontWeight: '800', writingDirection: 'ltr' },
   error: { width: '94%', maxWidth: 820, alignSelf: 'center', marginTop: 10, padding: 12, borderRadius: 12, backgroundColor: Palette.dangerSoft, color: Palette.danger, fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
   retrySaveButton: { alignSelf: 'center', marginBottom: 10, padding: 10 },
   retrySaveText: { fontFamily: Typography.fontFamily, color: Palette.primary, fontSize: 11, fontWeight: '400', writingDirection: 'rtl' },
@@ -399,7 +409,7 @@ const styles = StyleSheet.create({
   counter: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, marginBottom: 12, alignSelf: 'flex-end', textAlign: 'right', writingDirection: 'rtl' },
   sentenceCard: { width: '100%', borderRadius: 22, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 22, alignItems: 'center', shadowColor: '#172033', shadowOpacity: .05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
   soundButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: 18 },
-  turkishSentence: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 23, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
+  turkishSentence: { fontFamily: 'Times New Roman', width: '100%', fontSize: 23, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
   pronunciation: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl', marginTop: 8 },
   divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 18 },
   persian: { fontFamily: Typography.fontFamily, fontSize: 17, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
@@ -412,12 +422,12 @@ const styles = StyleSheet.create({
   listenRowActive: { borderColor: Palette.primary, backgroundColor: Palette.primarySoft },
   listenNumber: { width: 30, height: 30, borderRadius: 15, backgroundColor: Palette.primarySoft, alignItems: 'center', justifyContent: 'center' },
   listenNumberText: { fontFamily: Typography.numberFontFamily, fontSize: 11, color: Palette.primaryDark, writingDirection: 'rtl' },
-  listenTurkish: { fontFamily: 'Inter-ExtraBold', flex: 1, fontSize: 13, fontWeight: '800', lineHeight: 22, color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
+  listenTurkish: { fontFamily: 'Times New Roman', flex: 1, fontSize: 13, fontWeight: '800', lineHeight: 22, color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
   shadowTip: { width: '100%', marginTop: 18, borderRadius: 14, backgroundColor: Palette.warningSoft, padding: 13, flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
   shadowText: { flex: 1, fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', lineHeight: 19 },
   speechPractice: { width: '100%', borderRadius: 22, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 18, alignItems: 'center', marginTop: 18, shadowColor: '#172033', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   speechTitle: { fontFamily: Typography.fontFamily, fontSize: 14, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
-  speechSentence: { fontFamily: 'Inter-ExtraBold', width: '100%', fontSize: 17, lineHeight: 28, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr', marginTop: 8 },
+  speechSentence: { fontFamily: 'Times New Roman', width: '100%', fontSize: 17, lineHeight: 28, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr', marginTop: 8 },
   playSlowButton: { minHeight: 48, minWidth: 155, borderRadius: 999, paddingHorizontal: 18, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, marginTop: 14 },
   recordButtonText: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: '#FFFFFF', writingDirection: 'rtl' },
   speechHint: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', lineHeight: 19, marginTop: 8 },
@@ -427,9 +437,9 @@ const styles = StyleSheet.create({
   vocabList: { width: '100%', gap: 9, marginTop: 18 },
   vocabCard: { width: '100%', borderRadius: 16, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 14, gap: 7 },
   vocabTop: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', gap: 10 },
-  vocabWord: { fontFamily: 'Inter-ExtraBold', fontSize: 16, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
+  vocabWord: { fontFamily: 'Times New Roman', fontSize: 16, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
   vocabMeaning: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
-  vocabExample: { fontFamily: 'Inter-ExtraBold', fontSize: 13, fontWeight: '800', lineHeight: 22, color: Palette.text, textAlign: 'right', writingDirection: 'ltr' },
+  vocabExample: { fontFamily: 'Times New Roman', fontSize: 13, fontWeight: '800', lineHeight: 22, color: Palette.text, textAlign: 'right', writingDirection: 'ltr' },
   vocabExampleFa: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 19, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl' },
   bubbleSound: { alignSelf: 'flex-end', marginTop: 4, padding: 5 },
   evidenceCard: { width: '100%', marginTop: 20, borderRadius: 20, padding: 17, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 12 },
@@ -440,7 +450,7 @@ const styles = StyleSheet.create({
   choice: { minHeight: 48, borderRadius: 12, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surfaceMuted, paddingHorizontal: 13, paddingVertical: 11, justifyContent: 'center' },
   choiceSelected: { borderColor: Palette.primary, backgroundColor: Palette.primarySoft },
   choiceCorrect: { borderColor: Palette.success, backgroundColor: Palette.successSoft },
-  choiceTurkish: { fontFamily: 'Inter-ExtraBold', fontSize: 12, fontWeight: '800', lineHeight: 21, color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
+  choiceTurkish: { fontFamily: 'Times New Roman', fontSize: 12, fontWeight: '800', lineHeight: 21, color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
   choicePersian: { fontFamily: Typography.fontFamily, fontSize: 13, lineHeight: 21, color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
   feedbackBox: { borderRadius: 12, padding: 12, backgroundColor: Palette.surfaceMuted, gap: 5 },
   feedbackTitle: { fontFamily: Typography.fontFamily, color: Palette.success, fontSize: 12, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
@@ -455,6 +465,8 @@ const styles = StyleSheet.create({
   footerActions: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', gap: 10 },
   previousButton: { flex: 1, minHeight: 54, borderRadius: 17, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
   previousButtonText: { fontFamily: Typography.fontFamily, color: Palette.primary, fontSize: 12, writingDirection: 'rtl' },
+  restartLessonButton: { minHeight: 38, paddingHorizontal: 10, borderRadius: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.38)', backgroundColor: 'rgba(255,255,255,0.12)', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 5 },
+  restartLessonButtonText: { fontFamily: Typography.fontFamily, color: '#FFFFFF', fontSize: 10, writingDirection: 'rtl' },
   nextButton: { flex: 1, minWidth: 0, minHeight: 54, borderRadius: 17, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, shadowColor: Palette.primary, shadowOpacity: .2, shadowRadius: 9, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
   replayRow: { flexDirection: 'row', gap: 10, justifyContent: 'center', marginTop: 12 },
   replayButton: { flexDirection: 'row', alignItems: 'center', gap: 6, minHeight: 44, paddingHorizontal: 18, borderRadius: 14, borderWidth: 1, borderColor: Palette.primary, backgroundColor: '#FFFFFF' },

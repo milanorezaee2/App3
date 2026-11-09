@@ -26,7 +26,7 @@ check(/fontFamily:\s*'Beiruti'/.test(theme) && /numberFontFamily:\s*'Beiruti-Bla
 check(/I18nManager\.allowRTL\(false\)/.test(entry) && /I18nManager\.forceRTL\(false\)/.test(entry)
   && !/I18nManager\.(?:allowRTL|forceRTL)\(true\)/.test(entry + layout),
   'entry point and root layout cannot alternate native direction between launches');
-check(/latinFontFamily:\s*'Inter-ExtraBold'/.test(theme), 'shared Latin typography points to the bundled deterministic face');
+check(/latinFontFamily:\s*'Times New Roman'/.test(theme), 'shared Latin typography points to Times New Roman');
 check(/allowFontScaling:\s*false/.test(layout) && /maxFontSizeMultiplier:\s*1/.test(layout), 'OEM/user font scaling cannot destabilize layouts');
 check(/includeFontPadding:\s*false/.test(layout) && /textBreakStrategy:\s*'simple'/.test(layout), 'Android OEM font padding and line-breaking differences are neutralized');
 

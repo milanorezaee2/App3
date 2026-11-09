@@ -123,7 +123,7 @@ export const Typography = {
   mediumFontFamily: 'Beiruti-Medium',
   boldFontFamily: 'Beiruti-Bold',
   numberFontFamily: 'Beiruti-Black',
-  latinFontFamily: 'Inter-ExtraBold',
+  latinFontFamily: 'Times New Roman',
   sizes: {
     xs: 11,
     sm: 13,

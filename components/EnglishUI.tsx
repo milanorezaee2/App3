@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   railConnector: { height: 3, flex: 1, borderRadius: 99, backgroundColor: Palette.border, marginTop: 15 },
   railConnectorActive: { backgroundColor: Palette.success },
   sectionHeading: { gap: 3, alignItems: 'flex-end' },
-  sectionEyebrow: { fontFamily: 'Inter-ExtraBold', color: Palette.primary, fontSize: 8, fontWeight: '800', letterSpacing: 1, textAlign: 'left', writingDirection: 'ltr' },
+  sectionEyebrow: { fontFamily: 'Times New Roman', color: Palette.primary, fontSize: 8, fontWeight: '800', letterSpacing: 1, textAlign: 'left', writingDirection: 'ltr' },
   sectionTitle: { fontFamily: 'Beiruti', color: Palette.ink, fontSize: 19, lineHeight: 28, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   sectionDetail: { fontFamily: 'Beiruti', color: Palette.muted, fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
 });
