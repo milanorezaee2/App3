@@ -1,6 +1,6 @@
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
-import FoundationA1Entry from '@/components/FoundationA1Entry';
+import EnglishPodcastEntry from '@/components/EnglishPodcastEntry';
 import { useCallback, useEffect, useState } from 'react';
 import { Alert, Image, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -240,7 +240,7 @@ export default function LearningHome() {
             )}
           </View>
 
-          <FoundationA1Entry language="en" />
+          <EnglishPodcastEntry />
 
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#5146E5', '#20C49A', '#5146E5']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
