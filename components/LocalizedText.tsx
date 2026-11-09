@@ -1,6 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import { StyleSheet, Text as NativeText, TextInput as NativeTextInput, type TextProps, type TextInputProps, type TextStyle } from 'react-native';
 import { Typography } from '@/lib/theme';
+import { FEATURES } from '@/lib/features';
 
 // Persian and Arabic letters share the app's existing Persian presentation.
 // Unicode letters also cover accented Latin, Cyrillic and IPA, not just ASCII.
@@ -32,7 +33,10 @@ function childrenText(children: React.ReactNode): string {
   return text;
 }
 
-const persian: TextStyle = { fontFamily: 'Beiruti', fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' };
+// The five-language (login) app renders all Persian copy in Beiruti Bold.
+const persian: TextStyle = FEATURES.learnerLogin
+  ? { fontFamily: 'Beiruti-Bold', fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' }
+  : { fontFamily: 'Beiruti', fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' };
 // Non-Persian text (English, German, French, Spanish, Turkish, Russian …) and
 // every Times New Roman run render bold; Persian keeps its own weight.
 const latinFont: TextStyle = { fontFamily: Typography.latinFontFamily, fontWeight: '700' };
@@ -83,10 +87,10 @@ export function readingColor(color: unknown): string | undefined {
   colorCache.set(color, result);
   return result;
 }
-function presentationStyle(style: TextProps['style'], extra?: TextStyle): TextStyle | undefined {
+function presentationStyle(style: TextProps['style'], extra?: TextStyle, keepColor = false): TextStyle | undefined {
   const flat = StyleSheet.flatten([style, extra]) as TextStyle | undefined;
   const out: TextStyle = {};
-  const color = readingColor(flat?.color);
+  const color = keepColor ? flat?.color : readingColor(flat?.color);
   if (color !== undefined && color !== flat?.color) out.color = color;
   if (flat?.fontFamily && TIMES_FAMILY.test(String(flat.fontFamily)) && flat.fontWeight !== '700' && flat.fontWeight !== 'bold') out.fontWeight = '700';
   return Object.keys(out).length ? out : undefined;
@@ -162,10 +166,11 @@ function styleMixedChildren(children: React.ReactNode): React.ReactNode {
 }
 
 /** Preserve the outer Text, all accessibility/interaction props and layout. */
-export const LocalizedText = forwardRef<NativeText, TextProps>(function LocalizedText({ style, children, ...props }, ref) {
+export type LocalizedTextProps = TextProps & { /** Keep the style's own colour (accent text such as the lesson translation). */ keepColor?: boolean };
+export const LocalizedText = forwardRef<NativeText, LocalizedTextProps>(function LocalizedText({ style, children, keepColor, ...props }, ref) {
   const content = childrenText(children);
   const script = scriptStyle(content);
-  return <NativeText ref={ref} {...props} style={[style, script, presentationStyle(style, script)]}>
+  return <NativeText ref={ref} {...props} style={[style, script, presentationStyle(style, script, keepColor)]}>
     {textScript(content) === 'persian' && clusters(content).some(isForeignCluster) ? styleMixedChildren(children) : children}
   </NativeText>;
 });

@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 13: login app Persian in Beiruti Bold; lesson translation styled as indigo accent pill.
 # rev 12: lesson pages back to normal scrolling layout, drawn at 86% scale on phones.
 # rev 11: Android hardware back returns to the previous page instead of closing the app.
 # rev 10: native light theme with black default text; admin phone-lock toggle.
