@@ -50,7 +50,8 @@ export default function LanguagesHome() {
   const tiny = width < 370;
 
   useEffect(() => {
-    if (welcomeVoicePlayed) return;
+    // Browsers block autoplay and expo-audio web leaves the play() promise unhandled; skip on web.
+    if (Platform.OS === 'web' || welcomeVoicePlayed) return;
     welcomeVoicePlayed = true;
     let player: ReturnType<typeof createAudioPlayer> | null = null;
     let cleanup: ReturnType<typeof setTimeout> | null = null;
