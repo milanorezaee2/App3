@@ -1,6 +1,7 @@
 name: Build requested APKs
 
-# rev 3: each flavour is built in its own clean runner. Building the three
+# rev 4: rebuilds after every registered language gained a pronunciation
+# workshop (German, French, Spanish). Each flavour is built in its own clean runner. Building the three
 # variants sequentially on one runner let Metro reuse the first bundle, so every
 # APK shipped the admin JavaScript. A fresh job per flavour makes that
 # impossible, and every job now reports its applicationId and inlined language
