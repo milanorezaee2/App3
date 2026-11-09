@@ -1,7 +1,8 @@
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, BackHandler, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   RecordingPresets,
   requestRecordingPermissionsAsync,
@@ -68,6 +69,7 @@ function VoiceMessage({ message }: { message: DirectMessage }) {
 export default function HumanConversationScreen() {
   const router = useRouter();
   const { conversationId, name } = useLocalSearchParams<{ conversationId: string; name?: string }>();
+  const insets = useSafeAreaInsets();
   const scrollRef = useRef<ScrollView>(null);
   const [messages, setMessages] = useState<DirectMessage[]>([]);
   const [myId, setMyId] = useState<string | null>(null);
@@ -103,6 +105,16 @@ export default function HumanConversationScreen() {
       void unsubscribeFromMessages(channel);
     };
   }, [conversationId]);
+
+  useEffect(() => {
+    if (Platform.OS !== 'android') return;
+    const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (router.canGoBack()) router.back();
+      else router.replace('/conversations' as never);
+      return true;
+    });
+    return () => subscription.remove();
+  }, [router]);
 
   const send = async () => {
     const clean = input.trim();
@@ -235,7 +247,7 @@ export default function HumanConversationScreen() {
         </ScrollView>
       )}
 
-      <KeyboardStickyView enabled offset={{ closed: 0, opened: 0 }}>
+      <KeyboardStickyView enabled offset={{ closed: 0, opened: Platform.OS === 'android' ? -insets.bottom : 0 }}>
       {showCoach ? (
         <View style={styles.coach}>
           <View style={styles.coachTitleRow}><Sparkles size={15} color={Colors.warning[400]} /><Text style={styles.coachTitle}>دستیار خصوصی — چیزی خودکار ارسال نمی‌شود</Text></View>

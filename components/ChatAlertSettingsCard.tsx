@@ -1,6 +1,7 @@
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Switch, View } from 'react-native';
+import { ActivityIndicator, Platform, Pressable, StyleSheet, Switch, View } from 'react-native';
+import * as Notifications from 'expo-notifications';
 import { Bell, BellOff, Clock3, ShieldCheck } from 'lucide-react-native';
 import {
   BACKGROUND_CHAT_INTERVAL_MINUTES,
@@ -27,15 +28,42 @@ const STATUS_TEXT: Record<BackgroundChatStatus, string> = {
 export function ChatAlertSettingsCard() {
   const [status, setStatus] = useState<BackgroundChatStatus | 'loading'>('loading');
   const [busy, setBusy] = useState(false);
+  const [permission, setPermission] = useState<'granted' | 'denied' | 'unknown'>('unknown');
+  const [testing, setTesting] = useState(false);
 
   useEffect(() => {
     let active = true;
+    void Notifications.getPermissionsAsync()
+      .then(next => { if (active) setPermission(next.granted ? 'granted' : 'denied'); })
+      .catch(() => { if (active) setPermission('unknown'); });
     void reconcileBackgroundChatChecks()
       .then(() => backgroundChatChecksStatus())
       .then(next => { if (active) setStatus(next); })
       .catch(() => { if (active) setStatus('disabled'); });
     return () => { active = false; };
   }, []);
+
+  const testLocalNotification = async () => {
+    if (Platform.OS !== 'android' || testing) return;
+    setTesting(true);
+    try {
+      const current = await Notifications.getPermissionsAsync();
+      const next = current.granted ? current : await Notifications.requestPermissionsAsync();
+      setPermission(next.granted ? 'granted' : 'denied');
+      if (!next.granted) return;
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: 'تست اعلان Milo',
+          body: 'اعلان‌های این گوشی فعال هستند.',
+          data: { eventId: `local-test:${Date.now()}` },
+          sound: 'default',
+        },
+        trigger: null,
+      });
+    } finally {
+      setTesting(false);
+    }
+  };
 
   const toggle = async () => {
     if (busy || status === 'loading' || status === 'unsupported') return;
@@ -79,6 +107,13 @@ export function ChatAlertSettingsCard() {
       </View>
 
       {status !== 'loading' ? <Text style={styles.status}>{STATUS_TEXT[status]}</Text> : null}
+      <Text style={styles.diagnostic}>وضعیت اعلان Android: {permission === 'granted' ? 'مجاز' : permission === 'denied' ? 'غیرفعال' : 'در حال بررسی'}</Text>
+      {Platform.OS === 'android' ? (
+        <Pressable accessibilityRole="button" accessibilityLabel="آزمایش اعلان این گوشی" style={styles.testButton} onPress={() => void testLocalNotification()} disabled={testing}>
+          {testing ? <ActivityIndicator size="small" color={Colors.primary[300]} /> : <Bell size={15} color={Colors.primary[300]} />}
+          <Text style={styles.testButtonText}>{testing ? 'در حال آزمایش…' : 'آزمایش اعلان روی همین گوشی'}</Text>
+        </Pressable>
+      ) : null}
 
       <View style={styles.factRow}>
         <Clock3 size={15} color={Colors.neutral[500]} />
@@ -140,6 +175,9 @@ const styles = StyleSheet.create({
     fontSize: Typography.sizes.xs,
     lineHeight: 20,
   },
+  diagnostic: { fontFamily: Typography.fontFamily, writingDirection: 'rtl', textAlign: 'right', color: Colors.primary[300], fontSize: 10 },
+  testButton: { minHeight: 38, borderRadius: Radius.md, borderWidth: 1, borderColor: Colors.primary[500] + '50', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7 },
+  testButtonText: { fontFamily: Typography.fontFamily, fontSize: 11, color: Colors.primary[300] },
   factRow: { flexDirection: 'row-reverse', alignItems: 'flex-start', gap: 8 },
   fact: {
     flex: 1,
