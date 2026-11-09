@@ -23,6 +23,7 @@ import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AppLockGate } from '@/components/AppLockGate';
 import { WebStatusBarSpacer } from '@/components/WebStatusBarSpacer';
+import { GlobalBrandBar } from '@/components/GlobalBrandBar';
 import { ChatNotificationBridge } from '@/components/ChatNotificationBridge';
 import { reconcileBackgroundChatChecks } from '@/lib/backgroundChatChecks';
 import { AppResumeGuard } from '@/components/AppResumeGuard';
@@ -184,6 +185,7 @@ export default function RootLayout() {
           <AppLockGate>
             <RegistrationGate>
               {!IS_ADMIN_APP && <RuntimeGate />}
+              <GlobalBrandBar />
               <Stack screenOptions={{ headerShown: false }} />
               <AppResumeGuard />
               <ChatNotificationBridge />
