@@ -102,6 +102,9 @@ export interface EpisodeProgress {
   segmentIndex: number;
   completed: boolean;
   updatedAt: string;
+  /** Phase 3 comprehension quiz: best score out of `quizTotal`. */
+  quizScore?: number;
+  quizTotal?: number;
 }
 
 export interface PodcastProgress {
@@ -141,7 +144,12 @@ export function savePodcastProgress(episodeId: string, update: Partial<EpisodePr
   const run = async () => {
     const state = await loadPodcastProgress();
     const previous = state.episodes[episodeId] ?? { segmentIndex: 0, completed: false, updatedAt: new Date().toISOString() };
-    state.episodes[episodeId] = { ...previous, ...update, updatedAt: new Date().toISOString() };
+    const merged = { ...previous, ...update, updatedAt: new Date().toISOString() };
+    // Keep the best quiz result.
+    if (update.quizScore !== undefined && previous.quizScore !== undefined && previous.quizTotal === update.quizTotal && previous.quizScore > update.quizScore) {
+      merged.quizScore = previous.quizScore;
+    }
+    state.episodes[episodeId] = merged;
     state.lastEpisodeId = episodeId;
     await writeRaw(JSON.stringify(state));
     return state;

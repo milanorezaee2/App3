@@ -1,9 +1,10 @@
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import { CheckCircle2, Eye, EyeOff, Pause, Play, Podcast, SkipBack, SkipForward, Snail, Volume2 } from 'lucide-react-native';
+import { Brain, CheckCircle2, Download, Eye, EyeOff, FileAudio, Mic2, Pause, Play, Podcast, SkipBack, SkipForward, Snail, Trash2, Volume2 } from 'lucide-react-native';
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { PageNavigation } from '@/components/PageNavigation';
 import { Typography } from '@/lib/theme';
@@ -19,6 +20,14 @@ import {
   stopPodcastSpeech,
   type PodcastSpeed,
 } from '@/lib/englishPodcast';
+import {
+  OFFLINE_DOWNLOADS_SUPPORTED,
+  deleteDownloadedEpisode,
+  downloadEpisode,
+  resolveRecordedSource,
+  segmentIndexForTime,
+  type RecordedEpisodeInfo,
+} from '@/lib/englishPodcastAudio';
 
 const P = { ink: '#191919', muted: '#6B675F', soft: '#F4F1EA', border: '#E8E3DA', accent: '#5146E5', accentSoft: '#E9E7FF', success: '#2E8B57', white: '#FFFFFF' };
 const PAUSE_BETWEEN_MS = 700;
@@ -38,6 +47,14 @@ export default function EnglishPodcastPlayer() {
   const [showFa, setShowFa] = useState(true);
   const [completed, setCompleted] = useState(false);
   const [ready, setReady] = useState(false);
+  const [recorded, setRecorded] = useState<{ uri: string; offline: boolean; info: RecordedEpisodeInfo } | null>(null);
+  const [mode, setMode] = useState<'tts' | 'recorded'>('tts');
+  const [downloading, setDownloading] = useState<number | null>(null);
+
+  // Phase 2: recorded MP3 (downloaded or online); falls back to TTS when absent.
+  const recordedActive = mode === 'recorded' && !!recorded;
+  const player = useAudioPlayer(recordedActive ? { uri: recorded!.uri } : null, { updateInterval: 400 });
+  const playerStatus = useAudioPlayerStatus(player);
 
   const scrollRef = useRef<ScrollView>(null);
   const rowOffsets = useRef<Record<number, number>>({});
@@ -58,8 +75,29 @@ export default function EnglishPodcastPlayer() {
       setCompleted(!!saved?.completed);
       setReady(true);
     }).catch(() => setReady(true));
+    resolveRecordedSource(episode.id).then(source => {
+      if (!active) return;
+      setRecorded(source);
+      if (source) setMode('recorded');
+    }).catch(() => undefined);
     return () => { active = false; runId.current += 1; void stopPodcastSpeech(); };
   }, [episode]);
+
+  // Recorded playback: keep rate, transcript position and completion in sync.
+  useEffect(() => { if (recordedActive) { try { player.setPlaybackRate(speed, 'high'); } catch { /* not loaded yet */ } } }, [recordedActive, player, speed]);
+  useEffect(() => {
+    if (!recordedActive || !episode) return;
+    if (playerStatus.playing) {
+      const next = segmentIndexForTime(playerStatus.currentTime, recorded?.info.cues, episode.segments.length, recorded?.info.durationSec || playerStatus.duration);
+      if (next !== indexRef.current) { setIndex(next); persistRef.current(next); }
+    }
+    if (playerStatus.didJustFinish) {
+      setPlaying(false);
+      setCompleted(true);
+      persistRef.current(episode.segments.length - 1, true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recordedActive, playerStatus.playing, playerStatus.currentTime, playerStatus.didJustFinish]);
 
   // Keep the current line in view.
   useEffect(() => {
@@ -71,13 +109,16 @@ export default function EnglishPodcastPlayer() {
     if (!episode) return;
     void savePodcastProgress(episode.id, { segmentIndex, completed: done || undefined }).catch(() => undefined);
   }, [episode]);
+  const persistRef = useRef(persist);
+  persistRef.current = persist;
 
   const stop = useCallback(() => {
     runId.current += 1;
     setPlaying(false);
     setPhase(null);
     void stopPodcastSpeech();
-  }, []);
+    if (recordedActive) { try { player.pause(); } catch { /* ignore */ } }
+  }, [recordedActive, player]);
 
   const playFrom = useCallback(async (start: number) => {
     if (!episode) return;
@@ -110,6 +151,15 @@ export default function EnglishPodcastPlayer() {
   }, [episode, persist]);
 
   const togglePlay = () => {
+    if (recordedActive) {
+      if (playerStatus.playing) { player.pause(); setPlaying(false); persist(indexRef.current); return; }
+      void (async () => {
+        if (completed && playerStatus.didJustFinish) await player.seekTo(0);
+        player.play();
+        setPlaying(true);
+      })();
+      return;
+    }
     if (playing) { stop(); persist(indexRef.current); return; }
     const start = completed && indexRef.current >= (episode?.segments.length ?? 1) - 1 ? 0 : indexRef.current;
     void playFrom(start);
@@ -118,11 +168,43 @@ export default function EnglishPodcastPlayer() {
   const jump = (target: number) => {
     if (!episode) return;
     const clamped = Math.max(0, Math.min(episode.segments.length - 1, target));
+    if (recordedActive) {
+      const cues = recorded?.info.cues;
+      const total = recorded?.info.durationSec || playerStatus.duration || 0;
+      const seconds = cues && cues[clamped] !== undefined ? cues[clamped] : total ? (clamped / episode.segments.length) * total : 0;
+      setIndex(clamped);
+      persist(clamped);
+      void player.seekTo(seconds).catch(() => undefined);
+      return;
+    }
     const wasPlaying = playing;
     stop();
     setIndex(clamped);
     persist(clamped);
     if (wasPlaying) void playFrom(clamped);
+  };
+
+  const switchMode = (next: 'tts' | 'recorded') => {
+    if (next === mode) return;
+    stop();
+    setMode(next);
+  };
+
+  const startDownload = () => {
+    if (!episode) return;
+    setDownloading(0);
+    downloadEpisode(episode.id, fraction => setDownloading(fraction))
+      .then(uri => { setRecorded(current => ({ uri, offline: true, info: current?.info ?? {} })); setMode('recorded'); })
+      .catch(cause => Alert.alert('دانلود پادکست', cause instanceof Error ? cause.message : 'دانلود انجام نشد.'))
+      .finally(() => setDownloading(null));
+  };
+
+  const removeDownload = () => {
+    if (!episode) return;
+    Alert.alert('حذف فایل آفلاین', 'فایل دانلودشدهٔ این اپیزود از دستگاه حذف شود؟', [
+      { text: 'انصراف', style: 'cancel' },
+      { text: 'حذف', style: 'destructive', onPress: () => { stop(); void deleteDownloadedEpisode(episode.id).then(() => resolveRecordedSource(episode.id)).then(source => { setRecorded(source); if (!source) setMode('tts'); }); } },
+    ]);
   };
 
   const cycleSpeed = () => {
@@ -164,7 +246,13 @@ export default function EnglishPodcastPlayer() {
             </View>
           </View>
           <View style={styles.progressTrack}><View style={[styles.progressFill, { width: `${Math.min(100, percent)}%` }]} /></View>
-          <Text style={styles.progressLabel}>بخش {fa(index + 1)} از {fa(episode.segments.length)}</Text>
+          <View style={styles.headerMetaRow}>
+            <Text style={styles.progressLabel}>بخش {fa(index + 1)} از {fa(episode.segments.length)}</Text>
+            <View style={styles.sourceChip}>
+              {recordedActive ? <FileAudio size={12} color={P.white} /> : <Mic2 size={12} color={P.white} />}
+              <Text style={styles.sourceChipText}>{recordedActive ? (recorded?.offline ? 'صدای ضبط‌شده · آفلاین' : 'صدای ضبط‌شده · آنلاین') : 'صدای دستگاه (TTS)'}</Text>
+            </View>
+          </View>
         </LinearGradient>
 
         <ScrollView ref={scrollRef} style={styles.transcript} contentContainerStyle={styles.transcriptContent} showsVerticalScrollIndicator={false}>
@@ -197,14 +285,38 @@ export default function EnglishPodcastPlayer() {
               <CheckCircle2 size={20} color={P.success} />
               <Text style={styles.doneText}>این اپیزود را کامل شنیدید.</Text>
               <View style={styles.doneActions}>
+                <Pressable accessibilityRole="button" style={[styles.doneAction, styles.doneActionPrimary]} onPress={() => { stop(); router.push({ pathname: '/lang/podcast/quiz', params: { id: episode.id } } as never); }}><Brain size={14} color={P.white} /><Text style={[styles.doneActionText, styles.doneActionTextPrimary]}>سؤالات درک مطلب</Text></Pressable>
                 <Pressable accessibilityRole="button" style={styles.doneAction} onPress={() => router.push('/learn/en/pronunciation' as never)}><Text style={styles.doneActionText}>کارگاه تلفظ</Text></Pressable>
-                {next ? <Pressable accessibilityRole="button" style={[styles.doneAction, styles.doneActionPrimary]} onPress={() => { stop(); router.replace({ pathname: '/lang/podcast/[id]', params: { id: next.id } } as never); }}><Text style={[styles.doneActionText, styles.doneActionTextPrimary]}>اپیزود بعدی</Text></Pressable> : null}
+                {next ? <Pressable accessibilityRole="button" style={styles.doneAction} onPress={() => { stop(); router.replace({ pathname: '/lang/podcast/[id]', params: { id: next.id } } as never); }}><Text style={styles.doneActionText}>اپیزود بعدی</Text></Pressable> : null}
               </View>
             </View>
           ) : null}
         </ScrollView>
 
         <View style={styles.controls}>
+          {(recorded || OFFLINE_DOWNLOADS_SUPPORTED || completed) ? (
+            <View style={styles.sourceRow}>
+              {recorded ? (
+                <>
+                  <Pressable accessibilityRole="button" accessibilityState={{ selected: mode === 'recorded' }} style={[styles.sourceButton, mode === 'recorded' && styles.optionOn]} onPress={() => switchMode('recorded')}><FileAudio size={14} color={mode === 'recorded' ? P.white : P.ink} /><Text style={[styles.optionText, mode === 'recorded' && styles.optionTextOn]}>ضبط‌شده</Text></Pressable>
+                  <Pressable accessibilityRole="button" accessibilityState={{ selected: mode === 'tts' }} style={[styles.sourceButton, mode === 'tts' && styles.optionOn]} onPress={() => switchMode('tts')}><Mic2 size={14} color={mode === 'tts' ? P.white : P.ink} /><Text style={[styles.optionText, mode === 'tts' && styles.optionTextOn]}>TTS</Text></Pressable>
+                </>
+              ) : null}
+              {OFFLINE_DOWNLOADS_SUPPORTED ? (
+                recorded?.offline ? (
+                  <Pressable accessibilityRole="button" accessibilityLabel="حذف فایل آفلاین" style={styles.sourceButton} onPress={removeDownload}><Trash2 size={14} color={P.ink} /><Text style={styles.optionText}>حذف آفلاین</Text></Pressable>
+                ) : (
+                  <Pressable accessibilityRole="button" accessibilityLabel="دانلود برای شنیدن آفلاین" disabled={downloading !== null} style={[styles.sourceButton, downloading !== null && styles.disabled]} onPress={startDownload}>
+                    {downloading !== null ? <ActivityIndicator size="small" color={P.accent} /> : <Download size={14} color={P.ink} />}
+                    <Text style={styles.optionText}>{downloading !== null ? `${fa(Math.round(downloading * 100))}٪` : 'دانلود آفلاین'}</Text>
+                  </Pressable>
+                )
+              ) : null}
+              {completed ? (
+                <Pressable accessibilityRole="button" accessibilityLabel="سؤالات درک مطلب" style={[styles.sourceButton, styles.quizButton]} onPress={() => { stop(); router.push({ pathname: '/lang/podcast/quiz', params: { id: episode.id } } as never); }}><Brain size={14} color={P.white} /><Text style={[styles.optionText, styles.optionTextOn]}>سؤالات</Text></Pressable>
+              ) : null}
+            </View>
+          ) : null}
           <View style={styles.optionRow}>
             <Pressable accessibilityRole="button" accessibilityLabel="تغییر سرعت پخش" style={styles.option} onPress={cycleSpeed}><Text style={styles.optionText}>{speed}×</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="تکرار آهستهٔ هر جمله" accessibilityState={{ checked: slowRepeat }} style={[styles.option, slowRepeat && styles.optionOn]} onPress={() => setSlowRepeat(value => !value)}><Snail size={15} color={slowRepeat ? P.white : P.ink} /><Text style={[styles.optionText, slowRepeat && styles.optionTextOn]}>تکرار آهسته</Text></Pressable>
@@ -213,7 +325,7 @@ export default function EnglishPodcastPlayer() {
           <View style={styles.transportRow}>
             <Pressable accessibilityRole="button" accessibilityLabel="اپیزود قبلی" disabled={!previous} style={[styles.episodeNav, !previous && styles.disabled]} onPress={() => { if (previous) { stop(); router.replace({ pathname: '/lang/podcast/[id]', params: { id: previous.id } } as never); } }}><Text style={styles.episodeNavText}>قبلی</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="بخش قبلی" style={styles.skip} onPress={() => jump(index - 1)}><SkipForward size={20} color={P.ink} /></Pressable>
-            <Pressable accessibilityRole="button" accessibilityLabel={playing ? 'توقف' : 'پخش'} style={styles.playButton} disabled={!ready} onPress={togglePlay}>{playing ? <Pause size={28} color={P.white} fill={P.white} /> : <Play size={28} color={P.white} fill={P.white} />}</Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel={playing ? 'توقف' : 'پخش'} style={styles.playButton} disabled={!ready} onPress={togglePlay}>{(recordedActive ? playerStatus.playing : playing) ? <Pause size={28} color={P.white} fill={P.white} /> : <Play size={28} color={P.white} fill={P.white} />}</Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="بخش بعدی" style={styles.skip} onPress={() => jump(index + 1)}><SkipBack size={20} color={P.ink} /></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="اپیزود بعدی" disabled={!next} style={[styles.episodeNav, !next && styles.disabled]} onPress={() => { if (next) { stop(); router.replace({ pathname: '/lang/podcast/[id]', params: { id: next.id } } as never); } }}><Text style={styles.episodeNavText}>بعدی</Text></Pressable>
           </View>
@@ -236,6 +348,12 @@ const styles = StyleSheet.create({
   headerSub: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.8)', fontSize: 11, textAlign: 'right', writingDirection: 'rtl' },
   progressTrack: { height: 5, borderRadius: 3, backgroundColor: 'rgba(255,255,255,0.2)', overflow: 'hidden' },
   progressFill: { height: 5, borderRadius: 3, backgroundColor: P.white },
+  headerMetaRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
+  sourceChip: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.14)', paddingHorizontal: 9, paddingVertical: 4 },
+  sourceChipText: { fontFamily: Typography.fontFamily, color: P.white, fontSize: 9 },
+  sourceRow: { flexDirection: 'row-reverse', flexWrap: 'wrap', gap: 8 },
+  sourceButton: { minHeight: 34, borderRadius: 12, borderWidth: 1, borderColor: P.border, backgroundColor: P.soft, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 5, paddingHorizontal: 10 },
+  quizButton: { backgroundColor: P.success, borderColor: P.success },
   progressLabel: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.8)', fontSize: 10, textAlign: 'right', writingDirection: 'rtl' },
   transcript: { flex: 1, minHeight: 0 },
   transcriptContent: { gap: 8, paddingBottom: 12 },

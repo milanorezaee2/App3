@@ -3,12 +3,13 @@ import { useCallback, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import { CheckCircle2, ChevronLeft, Headphones, Play, Podcast } from 'lucide-react-native';
+import { Brain, CheckCircle2, ChevronLeft, Download, Headphones, Play, Podcast } from 'lucide-react-native';
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { PageNavigation } from '@/components/PageNavigation';
 import { Typography } from '@/lib/theme';
 import { toPersianDigits as fa } from '@/lib/format';
 import { PODCAST_EPISODES, PODCAST_LEVELS, loadPodcastProgress, type PodcastProgress } from '@/lib/englishPodcast';
+import { listDownloadedEpisodes } from '@/lib/englishPodcastAudio';
 
 const P = { ink: '#191919', muted: '#6B675F', soft: '#F4F1EA', border: '#E8E3DA', accent: '#5146E5', accentSoft: '#E9E7FF', success: '#2E8B57', successSoft: '#E6F4EC', white: '#FFFFFF' };
 
@@ -16,6 +17,7 @@ export default function EnglishPodcastList() {
   const router = useRouter();
   const [progress, setProgress] = useState<PodcastProgress>({ episodes: {} });
   const [openLevel, setOpenLevel] = useState<number | null>(null);
+  const [downloaded, setDownloaded] = useState<Set<string>>(new Set());
 
   useFocusEffect(useCallback(() => {
     let active = true;
@@ -27,6 +29,7 @@ export default function EnglishPodcastList() {
         setOpenLevel(last ? last.levelId : PODCAST_LEVELS[0]?.level.id ?? 0);
       }
     }).catch(() => undefined);
+    listDownloadedEpisodes().then(set => { if (active) setDownloaded(set); }).catch(() => undefined);
     return () => { active = false; };
   }, [openLevel]));
 
@@ -87,6 +90,10 @@ export default function EnglishPodcastList() {
                         <Text style={styles.episodeNumber}>EPISODE {episode.number}</Text>
                         <Text style={styles.episodeTitle}>{episode.title}</Text>
                         <Text style={styles.episodeMeta}>{fa(episode.estimatedMinutes)} دقیقه · {fa(episode.segments.filter(segment => segment.kind === 'sentence').length)} جمله{percent > 0 && !state?.completed ? ` · ${fa(percent)}٪ شنیده‌شده` : ''}</Text>
+                        <View style={styles.tagRow}>
+                          {downloaded.has(episode.id) ? <View style={styles.tag}><Download size={10} color={P.accent} /><Text style={styles.tagText}>آفلاین</Text></View> : null}
+                          {state?.quizTotal ? <View style={[styles.tag, { backgroundColor: P.successSoft }]}><Brain size={10} color={P.success} /><Text style={[styles.tagText, { color: P.success }]}>آزمون {fa(state.quizScore ?? 0)}/{fa(state.quizTotal)}</Text></View> : null}
+                        </View>
                         <View style={styles.bar}><View style={[styles.barFill, { width: `${percent}%` }, state?.completed && { backgroundColor: P.success }]} /></View>
                       </View>
                       <Play size={16} color={P.muted} />
@@ -131,6 +138,9 @@ const styles = StyleSheet.create({
   episodeNumber: { fontFamily: 'Times New Roman', color: P.muted, fontSize: 8, letterSpacing: 1.3, textAlign: 'left', writingDirection: 'ltr' },
   episodeTitle: { fontFamily: Typography.fontFamily, color: P.ink, fontSize: 14, lineHeight: 22, textAlign: 'right', writingDirection: 'rtl' },
   episodeMeta: { fontFamily: Typography.fontFamily, color: P.muted, fontSize: 10, textAlign: 'right', writingDirection: 'rtl' },
+  tagRow: { flexDirection: 'row-reverse', gap: 6, flexWrap: 'wrap' },
+  tag: { flexDirection: 'row-reverse', alignItems: 'center', gap: 4, borderRadius: 999, backgroundColor: P.accentSoft, paddingHorizontal: 8, paddingVertical: 2 },
+  tagText: { fontFamily: Typography.fontFamily, color: P.accent, fontSize: 9 },
   bar: { height: 4, borderRadius: 2, backgroundColor: P.soft, overflow: 'hidden', marginTop: 3 },
   barFill: { height: 4, borderRadius: 2, backgroundColor: P.accent },
   pressed: { opacity: .75 },
