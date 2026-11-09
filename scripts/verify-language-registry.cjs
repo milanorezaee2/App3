@@ -36,9 +36,14 @@ check(STATIC_ROUTE_LANGUAGES.length >= 1 && STATIC_ROUTE_LANGUAGES.every(id => L
 
 const catalog = read('lib/languages/catalog.ts');
 check(/LANGUAGE_REGISTRY\.map/.test(catalog), 'the picker catalog is generated from the registry');
+const lessonTotalsBlock = catalog.split('LESSON_TOTALS')[1] || '';
+const starterIds = (read('lib/languages/newCourses.ts').match(/NEW_COURSES\s*=\s*\{([^}]*)\}/) || [, ''])[1]
+  .split(',').map(part => part.split(':')[0].trim()).filter(Boolean);
 for (const id of LANGUAGE_IDS) {
-  check(new RegExp(`\\b${id}:`).test(catalog.split('LESSON_TOTALS')[1] || ''), `lesson totals in the catalog cover language ${id}`);
+  const covered = new RegExp(`\\b${id}:`).test(lessonTotalsBlock) || (/\.\.\.STARTER_COURSE_TOTALS/.test(lessonTotalsBlock) && starterIds.includes(id));
+  check(covered, `lesson totals in the catalog cover language ${id}`);
 }
+check(starterIds.length >= 1, 'starter courses still report their own lesson counts');
 check(!/id:\s*'ru',\s*\n\s*name:/.test(catalog), 'the catalog no longer hard-codes language entries');
 const features = read('lib/features.ts');
 check(/from '\.\/languages\/registry'/.test(features), 'scope filtering reads the registry');

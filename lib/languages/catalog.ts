@@ -10,13 +10,15 @@ import { LANGUAGE_REGISTRY, STARTS_FROM_ZERO } from './registry';
  * the registry so the registry stays free of course data (and of import cycles).
  * A language without an entry simply reports 0 lessons until its course lands.
  */
+const STARTER_COURSE_TOTALS: Record<string, number> = Object.fromEntries(
+  Object.entries(NEW_COURSES).map(([id, course]) => [id, course.lessons.length]),
+);
+
 const LESSON_TOTALS: Record<string, number> = {
   en: SENTENCE_LESSONS.length,
   ru: RUSSIAN_LESSONS.length,
   tr: TURKISH_LESSONS.length,
-  de: NEW_COURSES.de.lessons.length,
-  fr: NEW_COURSES.fr.lessons.length,
-  es: NEW_COURSES.es.lessons.length,
+  ...STARTER_COURSE_TOTALS,
 };
 
 export const LANGUAGES: readonly LanguageDefinition[] = LANGUAGE_REGISTRY.map(entry => ({
