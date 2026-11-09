@@ -4,6 +4,7 @@ import { ActivityIndicator, View } from 'react-native';
 import { Redirect, Slot, useLocalSearchParams } from 'expo-router';
 import { Colors, Typography } from '@/lib/theme';
 import { FEATURES, isLanguageEnabled } from '@/lib/features';
+import { STATIC_ROUTE_LANGUAGES } from '@/lib/languages/registry';
 /** Static exports have no query/route-specific local progress on the server.
  * Keep the first client tree identical, then open the correct language/lesson.
  * This does not change learning content or any persisted progress. */
@@ -17,5 +18,5 @@ export default function LanguageLayout(){
 
 /** Emit concrete URLs for static hosting as well as client-side navigation. */
 export function generateStaticParams() {
-  return ['tr', 'de', 'fr', 'es'].map(language => ({ language }));
+  return STATIC_ROUTE_LANGUAGES.map(language => ({ language }));
 }

@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LANGUAGE_IDS, isLanguageId, type LanguageId } from './languages/registry';
 
 export const APP_RESUME_KEY = 'milo_navigation_resume_v1';
 export const RESUME_MAX_INACTIVE_MS = 24 * 60 * 60 * 1000;
-export type ResumeLanguage = 'en' | 'ru' | 'tr' | 'de' | 'fr' | 'es' | null;
+export type ResumeLanguage = LanguageId | null;
 export type ResumeParams = Record<string, string | string[] | undefined>;
 export interface ResumeSnapshot {
   version: 1;
@@ -14,7 +15,10 @@ export interface ResumeSnapshot {
 
 // Save only parameters required to reconstruct screens; never replay one-shot actions.
 const allowedParams = new Set(['id', 'lessonId', 'level', 'name', 'language']);
-const allowedPaths = /^\/(?:languages|lang(?:\/[^?#]*)?|course(?:\/[^?#]*)?|review(?:\/[^?#]*)?|personal-sync|app-lock|learning-access|permissions|agent(?:\/[^?#]*)?|admin(?:\/[^?#]*)?|learn\/(?:en|ru|tr|de|fr|es)(?:\/[^?#]*)?|conversations(?:\/[^?#]*)?)$/;
+const learnRouteIds = LANGUAGE_IDS.join('|');
+const allowedPaths = new RegExp(
+  `^\\/(?:languages|lang(?:\\/[^?#]*)?|course(?:\\/[^?#]*)?|review(?:\\/[^?#]*)?|personal-sync|app-lock|learning-access|permissions|agent(?:\\/[^?#]*)?|admin(?:\\/[^?#]*)?|learn\\/(?:${learnRouteIds})(?:\\/[^?#]*)?|conversations(?:\\/[^?#]*)?)$`,
+);
 
 export function resumeHref(pathname: string, params: ResumeParams): string | null {
   if (!allowedPaths.test(pathname) || pathname.includes('//') || /[\x00-\x1f\\]/.test(pathname)) return null;
@@ -30,11 +34,10 @@ export function resumeHref(pathname: string, params: ResumeParams): string | nul
 }
 
 export function languageForResume(pathname: string, previous: ResumeLanguage): ResumeLanguage {
-  for (const id of ['de', 'fr', 'es'] as const) {
+  for (const id of LANGUAGE_IDS) {
+    if (id === 'en') continue;
     if (pathname === `/learn/${id}` || pathname.startsWith(`/learn/${id}/`)) return id;
   }
-  if (pathname === '/learn/tr' || pathname.startsWith('/learn/tr/')) return 'tr';
-  if (pathname === '/learn/ru' || pathname.startsWith('/learn/ru/')) return 'ru';
   if (pathname === '/lang' || pathname.startsWith('/lang/') || pathname.startsWith('/course/')
     || pathname === '/review' || pathname.startsWith('/review/')
     || pathname === '/learn/en' || pathname.startsWith('/learn/en/') || pathname === '/conversations/emma') return 'en';
@@ -61,7 +64,7 @@ export function parseResumeSnapshot(raw: string | null): ResumeSnapshot | null {
   try {
     const value = JSON.parse(raw) as Partial<ResumeSnapshot>;
     if (!value || value.version !== 1 || typeof value.href !== 'string' || !validHref(value.href)
-      || !(value.language === null || value.language === 'en' || value.language === 'ru' || value.language === 'tr' || value.language === 'de' || value.language === 'fr' || value.language === 'es')
+      || !(value.language === null || isLanguageId(value.language))
       || !(value.backgroundAt === null || (typeof value.backgroundAt === 'number' && Number.isFinite(value.backgroundAt) && value.backgroundAt >= 0))
       || typeof value.updatedAt !== 'number' || !Number.isFinite(value.updatedAt) || value.updatedAt < 0) return null;
     return value as ResumeSnapshot;
@@ -71,8 +74,8 @@ export function parseResumeSnapshot(raw: string | null): ResumeSnapshot | null {
 export function resumeDestination(snapshot: ResumeSnapshot, now: number): string {
   const awaySince = snapshot.backgroundAt ?? snapshot.updatedAt;
   if (now - awaySince > RESUME_MAX_INACTIVE_MS) {
-    if (snapshot.language === 'de' || snapshot.language === 'fr' || snapshot.language === 'es') return `/learn/${snapshot.language}`;
-    return snapshot.language === 'tr' ? '/learn/tr' : snapshot.language === 'ru' ? '/learn/ru' : snapshot.language === 'en' ? '/lang' : '/languages';
+    if (snapshot.language === 'en') return '/lang';
+    return snapshot.language ? `/learn/${snapshot.language}` : '/languages';
   }
   return snapshot.href;
 }

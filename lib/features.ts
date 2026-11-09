@@ -1,5 +1,12 @@
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
+import {
+  ADMIN_DEFAULT_SCOPE,
+  LANGUAGE_IDS,
+  NATIVE_DEFAULT_SCOPE,
+  isLanguageId,
+  type LanguageId,
+} from './languages/registry';
 
 /** Deployment switches, not authorization. Server roles/RLS remain mandatory. */
 const privateAdminBuild = Constants.expoConfig?.extra?.appRole === 'admin';
@@ -13,14 +20,14 @@ export const RUSSIAN_ONLY_BUILD = process.env.EXPO_PUBLIC_RUSSIAN_ONLY === 'true
 const configuredLanguageScope = (process.env.EXPO_PUBLIC_LANGUAGE_SCOPE || '')
   .split(',')
   .map(value => value.trim().toLowerCase())
-  .filter(value => value === 'en' || value === 'ru' || value === 'tr' || value === 'de' || value === 'fr' || value === 'es');
-export const LANGUAGE_SCOPE: ReadonlyArray<'en' | 'ru' | 'tr' | 'de' | 'fr' | 'es'> = Object.freeze(
+  .filter(isLanguageId);
+export const LANGUAGE_SCOPE: ReadonlyArray<LanguageId> = Object.freeze(
   configuredLanguageScope.length
-    ? Array.from(new Set(configuredLanguageScope)) as Array<'en' | 'ru' | 'tr' | 'de' | 'fr' | 'es'>
-    : MANAGEMENT_BUILD ? ['en', 'tr'] : Platform.OS === 'web' ? ['en', 'ru', 'tr', 'de', 'fr', 'es'] : ['en', 'ru', 'de', 'fr', 'es'],
+    ? Array.from(new Set(configuredLanguageScope)) as LanguageId[]
+    : MANAGEMENT_BUILD ? [...ADMIN_DEFAULT_SCOPE] : Platform.OS === 'web' ? [...LANGUAGE_IDS] : [...NATIVE_DEFAULT_SCOPE],
 );
 export const isLanguageEnabled = (language: string | undefined): boolean =>
-  language === 'en' || LANGUAGE_SCOPE.includes(language as 'en' | 'ru' | 'tr' | 'de' | 'fr' | 'es');
+  language === 'en' || (isLanguageId(language) && LANGUAGE_SCOPE.includes(language));
 
 export const FEATURES = Object.freeze({
   /**

@@ -3,14 +3,27 @@ import { SENTENCE_LESSONS } from '../courseContent';
 import { RUSSIAN_LESSONS, russianProgress } from './russian';
 import { TURKISH_LESSONS, turkishProgress } from './turkish';
 import { NEW_COURSES } from './newCourses';
+import { LANGUAGE_REGISTRY, STARTS_FROM_ZERO } from './registry';
 
-export const LANGUAGES: readonly LanguageDefinition[] = [
-  { id: 'en', name: 'انگلیسی', nativeName: 'English', speechLocale: 'en-US', accent: '#6356d9', lessonsCount: SENTENCE_LESSONS.length, description: 'جمله‌های کاربردی، کارگاه تلفظ، مرور و مجموعه ۵۰۴', status: 'available', home: '/lang' },
-  { id: 'ru', name: 'روسی', nativeName: 'Русский', speechLocale: 'ru-RU', accent: '#4267a8', lessonsCount: RUSSIAN_LESSONS.length, description: 'مسیر آغازین مستقل با خط سیریلیک، جمله‌های کاربردی و مرور محلی', status: 'starter', home: '/learn/ru' },
-  { id: 'tr', name: 'ترکی استانبولی', nativeName: 'İstanbul Türkçesi', speechLocale: 'tr-TR', accent: '#C94F62', lessonsCount: TURKISH_LESSONS.length, description: 'مسیر مستقل Pre-A1 تا C1 ترکی استانبولی با جمله‌های بومی، هماهنگی واکه‌ها و مرور محلی', status: 'starter', home: '/learn/tr' },
-  { id: 'de', name: 'آلمانی', nativeName: 'Deutsch', speechLocale: 'de-DE', accent: '#6555E9', lessonsCount: NEW_COURSES.de.lessons.length, description: 'Pre-A1 و درس‌های آغازین A1', status: 'starter', home: '/learn/de' },
-  { id: 'fr', name: 'فرانسوی', nativeName: 'Français', speechLocale: 'fr-FR', accent: '#6555E9', lessonsCount: NEW_COURSES.fr.lessons.length, description: 'Pre-A1 و درس‌های آغازین A1', status: 'starter', home: '/learn/fr' },
-  { id: 'es', name: 'اسپانیایی', nativeName: 'Español', speechLocale: 'es-ES', accent: '#6555E9', lessonsCount: NEW_COURSES.es.lessons.length, description: 'Pre-A1 و درس‌های آغازین A1، گونهٔ اسپانیا', status: 'starter', home: '/learn/es' },
-];
+/**
+ * Lesson totals per language. Content modules are imported here rather than in
+ * the registry so the registry stays free of course data (and of import cycles).
+ * A language without an entry simply reports 0 lessons until its course lands.
+ */
+const LESSON_TOTALS: Record<string, number> = {
+  en: SENTENCE_LESSONS.length,
+  ru: RUSSIAN_LESSONS.length,
+  tr: TURKISH_LESSONS.length,
+  de: NEW_COURSES.de.lessons.length,
+  fr: NEW_COURSES.fr.lessons.length,
+  es: NEW_COURSES.es.lessons.length,
+};
+
+export const LANGUAGES: readonly LanguageDefinition[] = LANGUAGE_REGISTRY.map(entry => ({
+  ...entry,
+  lessonsCount: LESSON_TOTALS[entry.id] ?? 0,
+  startsFromZero: STARTS_FROM_ZERO.has(entry.id),
+}));
+
 export { russianProgress, turkishProgress };
 export function findLanguage(id: string | undefined) { return LANGUAGES.find(l => l.id === id); }

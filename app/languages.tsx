@@ -171,7 +171,7 @@ export default function LanguagesHome() {
                   <View style={[styles.languageCopy, Platform.OS === 'web' && styles.languageCopyRtl]}>
                     <Text numberOfLines={1} style={[styles.languageNativeName, Platform.OS === 'web' && styles.languageNativeNameRtl]}>{displayName}</Text>
                     <Text style={styles.languageCode}>{language.id.toUpperCase()}</Text>
-                    {(language.id === 'de' || language.id === 'fr' || language.id === 'es') && <Text style={styles.sampleLabel}>شروع از صفر</Text>}
+                    {language.startsFromZero && <Text style={styles.sampleLabel}>شروع از صفر</Text>}
                   </View>
                   <View style={[styles.languageArrow, Platform.OS === 'web' && styles.languageArrowRtl]}>
                     {Platform.OS === 'web' ? <ArrowLeft size={18} color={palette.forest} strokeWidth={2.1} /> : <ArrowRight size={18} color={palette.forest} strokeWidth={2.1} />}

@@ -1,4 +1,6 @@
-export type LanguageId = 'en' | 'ru' | 'tr' | 'de' | 'fr' | 'es';
+import type { LanguageId } from './registry';
+
+export type { LanguageId };
 export interface LearningSentence {
   id: string;
   text: string;
@@ -26,5 +28,7 @@ export interface LanguageDefinition {
   lessonsCount: number;
   description: string;
   status: 'available' | 'starter' | 'planned';
-  home: '/lang' | '/learn/ru' | '/learn/tr' | '/learn/de' | '/learn/fr' | '/learn/es';
+  home: string;
+  /** Shows the "starts from zero" badge on the language card. */
+  startsFromZero?: boolean;
 }
