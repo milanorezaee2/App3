@@ -10,6 +10,7 @@ const check = (condition, message) => { assert.ok(condition, message); checks +=
 const languageScreen = read('app/languages.tsx');
 const englishHome = read('app/lang/index.tsx');
 const catalog = read('lib/languages/catalog.ts');
+const registry = read('lib/languages/registry.ts');
 const gate = read('components/RegistrationGate.tsx');
 const auth = read('lib/userRegistration.ts');
 const resume = read('lib/appResume.ts');
@@ -20,7 +21,8 @@ const workflowFiles = [
 ];
 
 check(/onPress=\{\(\) => router\.push\(language\.home as never\)\}/.test(languageScreen), 'language cards navigate directly to their existing home route');
-check(/home: '\/lang'/.test(catalog) && /home: '\/learn\/ru'/.test(catalog), 'English and Russian cards keep the original course destinations');
+check(/home: '\/lang'/.test(registry) && /home: '\/learn\/ru'/.test(registry), 'English and Russian cards keep the original course destinations');
+check(/LANGUAGE_REGISTRY\.map/.test(catalog) && !/id: 'ru'/.test(catalog), 'the catalog is generated from the single language registry instead of hard-coded entries');
 check(/زبان را از زندگی یاد بگیر/.test(languageScreen) && /کوتاه، شنیدنی، ماندگار/.test(languageScreen), 'language chooser follows the approved warm-journal copy');
 check(/MiloLanguageBrand/.test(languageScreen) && !/MiloLogoMotion/.test(languageScreen) && />Milo</.test(read('components/MiloLanguageBrand.tsx')) && />multilanguage</.test(read('components/MiloLanguageBrand.tsx')) && /Times New Roman/.test(read('components/MiloLanguageBrand.tsx')), 'language chooser uses the Times-style Milo multilanguage wordmark');
 check(/languages\.map\(\(language\)/.test(languageScreen) && /styles\.languageCard/.test(languageScreen) && /languageList: \{ flexDirection: 'row'/.test(languageScreen), 'language choices remain catalog-driven cards in one selection row');
@@ -44,3 +46,6 @@ console.log(`${checks} language-entry removal and OTP-preservation checks passed
 
 // Keep web course availability and explicitly scoped builds covered in CI.
 require('./verify-language-scope.cjs');
+
+// Single-entry language configuration: the registry is the only place a language is declared.
+require('./verify-language-registry.cjs');

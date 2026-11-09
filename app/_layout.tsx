@@ -24,6 +24,7 @@ import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AppLockGate } from '@/components/AppLockGate';
 import { WebStatusBarSpacer } from '@/components/WebStatusBarSpacer';
 import { ChatNotificationBridge } from '@/components/ChatNotificationBridge';
+import { reconcileBackgroundChatChecks } from '@/lib/backgroundChatChecks';
 import { AppResumeGuard } from '@/components/AppResumeGuard';
 import { RegistrationGate } from '@/components/RegistrationGate';
 import { getPairingState, isOnboardingComplete } from '@/lib/storage';
@@ -119,6 +120,11 @@ export default function RootLayout() {
     // silently falling back to an OEM font.
     Lalezar: Beiruti_400Regular,
   });
+
+  // Restores the Firebase-free chat alert worker after an update or reboot.
+  useEffect(() => {
+    void reconcileBackgroundChatChecks();
+  }, []);
 
   useEffect(() => {
     if (!fontsLoaded && !fontError) return;

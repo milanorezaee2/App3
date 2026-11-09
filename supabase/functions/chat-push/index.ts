@@ -448,12 +448,37 @@ async function processReceipts(admin: ReturnType<typeof createClient>): Promise<
   return { checked, deadTokens };
 }
 
+async function isAuthorized(
+  admin: ReturnType<typeof createClient>,
+  request: Request,
+): Promise<boolean> {
+  const provided = request.headers.get('x-chat-webhook-secret') || '';
+  if (!provided) return false;
+
+  const envSecret = Deno.env.get('CHAT_WEBHOOK_SECRET') || '';
+  if (envSecret && provided === envSecret) return true;
+
+  // The dashboard secret and the database copy can drift apart. The database
+  // value is what the trigger actually sends, so it is accepted as well and
+  // keeps webhook delivery working while both copies are being aligned.
+  const { data, error } = await admin
+    .from('chat_push_config')
+    .select('webhook_secret')
+    .eq('id', true)
+    .maybeSingle();
+  if (error || !data?.webhook_secret) return false;
+  return provided === String(data.webhook_secret);
+}
+
 Deno.serve(async request => {
   if (request.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
-  const secret = Deno.env.get('CHAT_WEBHOOK_SECRET');
-  if (!secret || request.headers.get('x-chat-webhook-secret') !== secret) {
-    return json({ error: 'Unauthorized' }, 401);
-  }
+
+  const url = Deno.env.get('SUPABASE_URL');
+  const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  if (!url || !serviceKey) return json({ error: 'Server configuration is incomplete' }, 500);
+  const admin = createClient(url, serviceKey, { auth: { persistSession: false } });
+
+  if (!await isAuthorized(admin, request)) return json({ error: 'Unauthorized' }, 401);
 
   let payload: WebhookPayload;
   try {
@@ -461,11 +486,6 @@ Deno.serve(async request => {
   } catch {
     return json({ error: 'Invalid JSON payload' }, 400);
   }
-
-  const url = Deno.env.get('SUPABASE_URL');
-  const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-  if (!url || !serviceKey) return json({ error: 'Server configuration is incomplete' }, 500);
-  const admin = createClient(url, serviceKey, { auth: { persistSession: false } });
 
   try {
     if (payload.type === 'CRON') {

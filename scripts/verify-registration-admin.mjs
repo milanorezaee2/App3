@@ -43,7 +43,8 @@ check(/com\.devicecontrol\.miloadmin/.test(appConfig) && /com\.devicecontrol\.co
 check(/MiloAdmin\.apk/.test(workflow) && /MiloMultilang\.apk/.test(workflow), 'CI builds and publishes both standalone APKs');
 check(/EXPO_PUBLIC_MILO_ADMIN_APP/.test(read('app/index.tsx')), 'the management APK boots directly into its protected panel');
 check(/پیام‌های خصوصی/.test(loginFlow) && /پیام‌های خصوصی/.test(admin), 'both apps disclose and preserve private-message boundaries');
-check(/learnerLogin: true/.test(read('lib/features.ts')), 'learner routes keep the requested login gate enabled');
+check(/learnerLogin: process\.env\.EXPO_PUBLIC_LEARNER_LOGIN !== 'false'/.test(read('lib/features.ts'))
+  && /BYPASS_GATE/.test(read('components/RegistrationGate.tsx')), 'learner routes keep the login gate unless the open no-login build disables it explicitly');
 check(/MiloMultilang-Login\.apk/.test(workflow) && /EXPO_PUBLIC_LEARNER_LOGIN=true/.test(workflow), 'CI builds and publishes the learner login APK');
 check(/com\.devicecontrol\.milomultilang/.test(appConfig) && /name: 'MiloMultiLanguage Admin'/.test(appConfig), 'login APK keeps its own package and management branding includes MiloMultiLanguage');
 check(/is_education_admin/.test(read('supabase/functions/admin-delete-user/index.ts')) && /deleteUser\(/.test(read('supabase/functions/admin-delete-user/index.ts')), 'account deletion is manager-only and runs on the server');

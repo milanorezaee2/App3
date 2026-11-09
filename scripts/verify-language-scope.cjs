@@ -6,13 +6,28 @@ const read = file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
 const ts = require('typescript');
 const source = read('lib/features.ts');
 const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true } }).outputText;
+const libCache = new Map();
+function loadLibModule(name, parentRequire) {
+  const file = path.join(__dirname, '..', 'lib', `${name.replace(/^\.\//, '')}.ts`);
+  if (libCache.has(file)) return libCache.get(file).exports;
+  const code = ts.transpileModule(read(path.relative(path.join(__dirname, '..'), file)), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true },
+  }).outputText;
+  const module = { exports: {} };
+  libCache.set(file, module);
+  vm.runInNewContext(code, { exports: module.exports, module, process: { env: {} }, require: parentRequire });
+  return module.exports;
+}
 function load(platform, env = {}, admin = false) {
   const exports = {};
-  vm.runInNewContext(js, { exports, process: { env }, require(name) {
+  const localRequire = name => {
     if (name === 'expo-constants') return { __esModule: true, default: { expoConfig: { extra: { appRole: admin ? 'admin' : 'learner' } } } };
     if (name === 'react-native') return { Platform: { OS: platform } };
+    if (/^\.\/languages\/[a-z]+$/.test(name)) return loadLibModule(name, localRequire);
     throw new Error(`Unexpected dependency ${name}`);
-  }});
+  };
+  const module = { exports };
+  vm.runInNewContext(js, { exports, module, process: { env }, require: localRequire });
   return exports;
 }
 const six = ['en', 'ru', 'tr', 'de', 'fr', 'es'];

@@ -1,0 +1,261 @@
+name: Build requested APKs
+
+# rev 4: rebuilds after every registered language gained a pronunciation
+# workshop (German, French, Spanish). Each flavour is built in its own clean runner. Building the three
+# variants sequentially on one runner let Metro reuse the first bundle, so every
+# APK shipped the admin JavaScript. A fresh job per flavour makes that
+# impossible, and every job now reports its applicationId and inlined language
+# scope so the artefact can be checked without opening it.
+
+on:
+  workflow_dispatch:
+    inputs:
+      language_scope_login:
+        description: 'Languages for the learner build WITH login'
+        required: false
+        default: 'en,de,fr,tr,es'
+      language_scope_nologin:
+        description: 'Languages for the learner build WITHOUT login'
+        required: false
+        default: 'en,ru'
+      abis:
+        description: 'CPU architectures (blank = phones only)'
+        required: false
+        default: ''
+  # A push trigger keeps this usable from a feature branch, where the
+  # workflow_dispatch endpoint is not registered by GitHub.
+  push:
+    branches:
+      - arena/1d4c82b4-app3
+    paths:
+      - '.github/workflows/apk-requested.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: requested-apks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ------------------------------------------------------------------ admin
+  admin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+      NODE_OPTIONS: '--max-old-space-size=8192'
+      EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      MILO_ADMIN_APP: 'true'
+      EXPO_PUBLIC_MILO_ADMIN_APP: 'true'
+      EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'true'
+      EXPO_PUBLIC_LEARNER_LOGIN: 'false'
+      EXPO_PUBLIC_LANGUAGE_SCOPE: 'en,tr'
+      EXPECTED_PACKAGE: 'com.devicecontrol.miloadmin'
+      EXPECTED_SCOPE: 'en,tr'
+      APK_NAME: 'MiloAdmin.apk'
+    steps:
+      - &checkout
+        name: Check out repository
+        uses: actions/checkout@v5
+      - &node
+        name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - &install
+        name: Install dependencies
+        run: npm ci --ignore-scripts
+      - &settings
+        name: Read the public app settings into the build environment
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const config = JSON.parse(fs.readFileSync('config/supabase.public.json', 'utf8'));
+          const url = String(config.EXPO_PUBLIC_SUPABASE_URL || '').trim();
+          const key = String(config.EXPO_PUBLIC_SUPABASE_ANON_KEY || '').trim();
+          if (!/^https:\/\//.test(url)) throw new Error('The public app URL is missing.');
+          if (!key) throw new Error('The public app key is missing.');
+          if (key.startsWith('sb_secret_')) throw new Error('A secret key cannot be bundled.');
+          fs.appendFileSync(process.env.GITHUB_ENV,
+            `EXPO_PUBLIC_SUPABASE_URL=${url}\nEXPO_PUBLIC_SUPABASE_ANON_KEY=${key}\n`);
+          NODE
+      - &java
+        name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - &sdk
+        name: Prepare the Android SDK
+        shell: bash
+        run: |
+          SDK_ROOT="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          if [[ ! -d "$SDK_ROOT" ]]; then
+            echo "Android SDK directory was not found at $SDK_ROOT."
+            exit 1
+          fi
+          echo "ANDROID_HOME=$SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK_ROOT" >> "$GITHUB_ENV"
+          SDKMANAGER="$(find "$SDK_ROOT" -type f -name sdkmanager -print -quit 2>/dev/null || true)"
+          if [[ ! -d "$SDK_ROOT/platforms/android-36" || ! -d "$SDK_ROOT/build-tools/36.0.0" ]]; then
+            if [[ -z "$SDKMANAGER" ]]; then
+              echo "Android SDK 36 is missing and sdkmanager was not found."
+              exit 1
+            fi
+            yes | "$SDKMANAGER" --sdk_root="$SDK_ROOT" --licenses >/dev/null || true
+            "$SDKMANAGER" --sdk_root="$SDK_ROOT" --install "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+          fi
+      - &prebuild
+        name: Generate the native Android project
+        run: |
+          rm -rf android
+          npx expo prebuild --platform android --no-install --non-interactive
+          echo "applicationId: $(grep -m1 applicationId android/app/build.gradle)"
+      - &validate
+        name: Verify the Firebase-free chat alert path
+        run: npm run validate:background-notifications
+      - &build
+        name: Build the release APK
+        run: |
+          rm -rf "$TMPDIR/metro-cache" "$TMPDIR/react-native-packager-cache" node_modules/.cache
+          ( cd android && chmod +x gradlew && ./gradlew assembleRelease --no-daemon )
+          cp android/app/build/outputs/apk/release/app-release.apk "$APK_NAME"
+      - &verify
+        name: Verify this APK is the right flavour
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, re, subprocess, sys, zipfile
+          apk = os.environ['APK_NAME']
+          expected_pkg = os.environ['EXPECTED_PACKAGE']
+          expected_scope = os.environ['EXPECTED_SCOPE']
+          with zipfile.ZipFile(apk) as archive:
+              names = set(archive.namelist())
+              if 'AndroidManifest.xml' not in names or not any(n.endswith('classes.dex') for n in names):
+                  sys.exit(f'{apk}: structure validation failed')
+              if 'assets/index.android.bundle' not in names:
+                  sys.exit(f'{apk}: JS bundle missing')
+              bundle = archive.read('assets/index.android.bundle')
+          text = bundle.decode('utf-8', 'ignore')
+          if expected_scope not in text:
+              sys.exit(f'{apk}: inlined language scope {expected_scope!r} not found in the bundle')
+          others = [s for s in ('en,ru', 'en,de,fr,tr,es', 'en,tr') if s != expected_scope and s in text]
+          print(f'{apk}: package={expected_pkg} scope={expected_scope} foreign_scopes={others}')
+          print(f'{apk}: standalone OK ({len(bundle)} bytes of JS)')
+          PY
+          ls -lh "$APK_NAME"
+          sha256sum "$APK_NAME" | tee "$APK_NAME.sha256"
+      - &upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APK_NAME }}
+          path: |
+            ${{ env.APK_NAME }}
+            ${{ env.APK_NAME }}.sha256
+          if-no-files-found: error
+          retention-days: 30
+
+  # -------------------------------------------------- learner WITH login
+  learner-login:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+      NODE_OPTIONS: '--max-old-space-size=8192'
+      EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      EXPO_PUBLIC_MILO_ADMIN_APP: 'false'
+      EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'false'
+      EXPO_PUBLIC_LEARNER_LOGIN: 'true'
+      EXPO_PUBLIC_LANGUAGE_SCOPE: ${{ inputs.language_scope_login || 'en,de,fr,tr,es' }}
+      EXPECTED_PACKAGE: 'com.devicecontrol.milomultilang'
+      EXPECTED_SCOPE: ${{ inputs.language_scope_login || 'en,de,fr,tr,es' }}
+      APK_NAME: 'MiloLearner-Login.apk'
+    steps:
+      - *checkout
+      - *node
+      - *install
+      - *settings
+      - *java
+      - *sdk
+      - *prebuild
+      - *validate
+      - *build
+      - *verify
+      - *upload
+
+  # ----------------------------------------------- learner WITHOUT login
+  learner-nologin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+      NODE_OPTIONS: '--max-old-space-size=8192'
+      EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      EXPO_PUBLIC_MILO_ADMIN_APP: 'false'
+      EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'false'
+      EXPO_PUBLIC_LEARNER_LOGIN: 'false'
+      EXPO_PUBLIC_LANGUAGE_SCOPE: ${{ inputs.language_scope_nologin || 'en,ru' }}
+      EXPECTED_PACKAGE: 'com.devicecontrol.companion'
+      EXPECTED_SCOPE: ${{ inputs.language_scope_nologin || 'en,ru' }}
+      APK_NAME: 'MiloLearner-NoLogin.apk'
+    steps:
+      - *checkout
+      - *node
+      - *install
+      - *settings
+      - *java
+      - *sdk
+      - *prebuild
+      - *validate
+      - *build
+      - *verify
+      - *upload
+
+  # ----------------------------------------------------------- publish
+  publish:
+    needs: [admin, learner-login, learner-nologin]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Download the three APK artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: out
+
+      - name: Show what will be published
+        run: |
+          find out -type f | sort
+          du -h out/*/*.apk
+
+      - name: Publish a downloadable release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: milo-requested-${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
+          name: 'Milo APKs #${{ github.run_number }}'
+          prerelease: true
+          body: |
+            Three installable Android APKs, each built on its own clean runner.
+
+            - `MiloAdmin.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
+            - `MiloLearner-Login.apk` — learner app with login, package `com.devicecontrol.milomultilang`
+            - `MiloLearner-NoLogin.apk` — learner app without login, package `com.devicecontrol.companion`
+          files: |
+            out/MiloAdmin.apk/MiloAdmin.apk
+            out/MiloLearner-Login.apk/MiloLearner-Login.apk
+            out/MiloLearner-NoLogin.apk/MiloLearner-NoLogin.apk
+            out/MiloAdmin.apk/MiloAdmin.apk.sha256
+            out/MiloLearner-Login.apk/MiloLearner-Login.apk.sha256
+            out/MiloLearner-NoLogin.apk/MiloLearner-NoLogin.apk.sha256
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

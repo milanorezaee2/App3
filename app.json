@@ -85,7 +85,9 @@
             "enableMinifyInReleaseBuilds": true
           }
         }
-      ]
+      ],
+      "expo-task-manager",
+      "expo-background-task"
     ],
     "experiments": {
       "baseUrl": "/App3",
