@@ -10,6 +10,8 @@ import { adminClient, deleteRegisteredUser, loadAdminData, demoStudents, educati
 import { listRealContacts, listSupportRequestStatuses, loadAdminChatModeration, setChatConversationDeleted, setChatUserBlocked, updateSupportRequestStatus, type RealContact, type SupportRequestStatus } from '@/lib/conversations';
 import { downloadRegisteredUsers } from '@/lib/userExport';
 import { registerAdminPushToken } from '@/lib/adminPush';
+import { authenticateWithDeviceLock, getAppLockConfig, setDeviceLockEnabled } from '@/lib/appLock';
+import { Fingerprint } from 'lucide-react-native';
 import { COURSE_LEVELS, SENTENCE_LESSONS } from '@/lib/courseContent';
 import { getEssential504Coverage } from '@/lib/essential504';
 import { toPersianDigits as fa } from '@/lib/format';
@@ -143,6 +145,21 @@ function EducationAdmin() {
     })();
     return () => { mounted = false; };
   }, []);
+  // Admin app: the panel is protected by the phone's own lock (fingerprint /
+  // PIN / pattern) instead of repeated sign-ins; the admin session stays on
+  // the device so the login form is never shown again after the first time.
+  const [deviceLock, setDeviceLock] = useState(false);
+  useEffect(() => { void getAppLockConfig().then(config => setDeviceLock(config.deviceEnabled)); }, []);
+  const toggleDeviceLock = () => task(async () => {
+    if (deviceLock) {
+      if (!(await authenticateWithDeviceLock())) throw new Error('قفل گوشی تأیید نشد؛ قفل همچنان فعال است.');
+      await setDeviceLockEnabled(false); setDeviceLock(false); setNotice('قفل گوشی برای این برنامه غیرفعال شد.');
+      return;
+    }
+    if (!(await authenticateWithDeviceLock())) throw new Error('قفل گوشی تأیید نشد و فعال‌سازی انجام نشد.');
+    await setDeviceLockEnabled(true); setDeviceLock(true);
+    setNotice('قفل گوشی فعال شد؛ از این پس برای بازکردن برنامه، قفل گوشی (اثر انگشت، پین یا الگو) خواسته می‌شود.');
+  });
   const login = () => task(async () => {
     const { error } = await adminClient().auth.signInWithPassword({ email: email.trim(), password });
     if (error) throw error;
@@ -190,7 +207,11 @@ function EducationAdmin() {
         </View>
         <View style={{ flex: 1 }} />
         {wide && <View style={s.privacy}><ShieldCheck size={24} color="#5146E5" /><Text style={s.cardTitle}>فقط آموزش، با رضایت</Text><Text style={s.small}>بدون دسترسی به پیام‌ها، مخاطبان یا صفحه گوشی زبان‌آموز.</Text></View>}
-        <Pressable style={[s.navItem, !wide && s.mobileLogout]} onPress={() => void task(async () => { if (!demo) {const {error} = await adminClient().auth.signOut(); if(error) throw error;} setMode('login');setStudents([]);setInvites([]);setRegisteredUsers([]);setSelected(null); })}><LogOut size={18} color="#64748B" /><Text numberOfLines={2} style={[s.navText, !wide && s.mobileNavText]}>{demo ? (wide ? 'ورود به پنل واقعی' : 'ورود') : (wide ? 'خروج از حساب مدیر' : 'خروج')}</Text></Pressable>
+        {!demo && Platform.OS !== 'web' ? (
+          <Pressable accessibilityRole="switch" accessibilityState={{ checked: deviceLock }} style={[s.navItem, !wide && s.mobileLogout, deviceLock && s.navActive]} onPress={() => void toggleDeviceLock()}><Fingerprint size={18} color={deviceLock ? '#5146E5' : '#64748B'} /><Text numberOfLines={2} style={[s.navText, !wide && s.mobileNavText, deviceLock && s.navTextActive]}>{deviceLock ? (wide ? 'قفل گوشی فعال است' : 'قفل فعال') : (wide ? 'فعال‌کردن قفل گوشی' : 'قفل گوشی')}</Text></Pressable>
+        ) : (
+          <Pressable style={[s.navItem, !wide && s.mobileLogout]} onPress={() => void task(async () => { if (!demo) {const {error} = await adminClient().auth.signOut(); if(error) throw error;} setMode('login');setStudents([]);setInvites([]);setRegisteredUsers([]);setSelected(null); })}><LogOut size={18} color="#64748B" /><Text numberOfLines={2} style={[s.navText, !wide && s.mobileNavText]}>{demo ? (wide ? 'ورود به پنل واقعی' : 'ورود') : (wide ? 'خروج از حساب مدیر' : 'خروج')}</Text></Pressable>
+        )}
       </View>
       <ScrollView style={s.content} contentContainerStyle={[s.main, !wide && s.mainMobile]}>
         <LinearGradient colors={['#EAF4FF', '#F8FBFF', '#FFFFFF']} start={{x:0,y:0}} end={{x:1,y:1}} style={[s.header, !wide && s.headerMobile]}><View style={{flex:1}}><Text style={s.eyebrow}>مدیریت آموزشی / {tabs.find(t => t.id === tab)?.title}</Text><Text style={[s.title, !wide && s.titleMobile]}>{tab === 'overview' ? 'رشد زبان‌آموزان، پیش چشم شما' : tabs.find(t => t.id === tab)?.title}</Text><Text style={s.subtitle}>یادگیری را دنبال کنید، نه زندگی خصوصی افراد را.</Text></View><View style={[s.pill, !wide && s.pillMobile]}><View style={s.dot} /><Text style={s.pillText}>{demo ? 'نمایشی' : 'مدیر'}</Text></View></LinearGradient>
