@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   railNode: { width: 32, height: 32, borderRadius: 16, borderWidth: 1.5, borderColor: Palette.border, backgroundColor: Palette.surfaceMuted, alignItems: 'center', justifyContent: 'center' },
   railNodeActive: { backgroundColor: Palette.primary, borderColor: Palette.primary, shadowColor: Palette.primary, shadowOpacity: 0.24, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 3 },
   railNodeDone: { backgroundColor: Palette.success, borderColor: Palette.success },
-  railNodeText: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 11, fontWeight: '400', writingDirection: 'rtl' },
+  railNodeText: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 12, fontWeight: '400', writingDirection: 'rtl' },
   railNodeTextActive: { color: '#FFFFFF' },
   railLabel: { fontFamily: Typography.fontFamily, maxWidth: 42, color: Palette.muted, fontSize: 9, fontWeight: '400', textAlign: 'center', writingDirection: 'ltr' },
   railLabelActive: { color: Palette.primaryDark },

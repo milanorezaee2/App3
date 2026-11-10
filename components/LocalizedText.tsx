@@ -38,6 +38,7 @@ function childrenText(children: React.ReactNode): string {
 const persian: TextStyle = { fontFamily: 'Beiruti-Bold', fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' };
 // Non-Persian text (English, German, French, Spanish, Turkish, Russian …) and
 // every Times New Roman run render bold; Persian keeps its own weight.
+const persianDigits: TextStyle = { fontFamily: 'Beiruti-Bold', fontWeight: '400' };
 const latinFont: TextStyle = { fontFamily: Typography.latinFontFamily, fontWeight: '700' };
 const TIMES_FAMILY = /times/i;
 
@@ -48,7 +49,9 @@ const BLACK = '#000000';
 const PERSIAN_BLACK = '#4B5563';
 /** Persian translations that mirror a course-language sentence: lighter grey. */
 export const PERSIAN_TRANSLATION_COLOR = '#8A929E';
-const LIGHT_THRESHOLD = 0.6;
+// Mid greys (e.g. #94a3b8) read as faded on white, so only genuinely light
+// colours on coloured/dark surfaces are preserved.
+const LIGHT_THRESHOLD = 0.72;
 const colorCache = new Map<string, string>();
 function parseColor(value: string): { r: number; g: number; b: number; a: number } | null {
   const hex = value.trim().match(/^#([0-9a-f]{3,8})$/i);
@@ -132,7 +135,10 @@ function scriptStyle(text: string): TextStyle | undefined {
   if (script === 'persian') return persian;
   if (script === 'left-to-right') return leftToRight;
   // Standalone Western digits use the serif without changing alignment or direction.
-  return hasForeignDigit(text) ? latinFont : undefined;
+  if (hasForeignDigit(text)) return latinFont;
+  // Letterless text (Persian digits, percentages, counters): Beiruti's regular
+  // digits are hairline-thin on Android, so use the bold cut.
+  return /[\u06F0-\u06F9\u0660-\u0669]/.test(text) ? persianDigits : undefined;
 }
 
 /** Style only non-Persian runs. Do not assign a direction to inline spans: the
