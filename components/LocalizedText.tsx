@@ -1,7 +1,6 @@
 import React, { forwardRef, useContext, useState } from 'react';
 import { StyleSheet, Text as NativeText, TextInput as NativeTextInput, type TextProps, type TextInputProps, type TextStyle } from 'react-native';
 import { Typography } from '@/lib/theme';
-import { FEATURES } from '@/lib/features';
 import { TextScaleContext } from '@/components/FitScrollView';
 
 // Persian and Arabic letters share the app's existing Persian presentation.
@@ -34,10 +33,9 @@ function childrenText(children: React.ReactNode): string {
   return text;
 }
 
-// The five-language (login) app renders all Persian copy in Beiruti Bold.
-const persian: TextStyle = FEATURES.learnerLogin
-  ? { fontFamily: 'Beiruti-Bold', fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' }
-  : { fontFamily: 'Beiruti', fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' };
+// Persian copy renders in Beiruti Bold everywhere: the regular cut is too thin
+// on Android and reads as faint/blurry.
+const persian: TextStyle = { fontFamily: 'Beiruti-Bold', fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' };
 // Non-Persian text (English, German, French, Spanish, Turkish, Russian …) and
 // every Times New Roman run render bold; Persian keeps its own weight.
 const latinFont: TextStyle = { fontFamily: Typography.latinFontFamily, fontWeight: '700' };
@@ -47,9 +45,9 @@ const TIMES_FAMILY = /times/i;
 // coloured or dark surfaces is left alone so it stays legible.
 const BLACK = '#000000';
 // Five-language app: Persian copy in grey instead of pure black.
-const PERSIAN_BLACK = FEATURES.learnerLogin ? '#4B5563' : BLACK;
+const PERSIAN_BLACK = '#4B5563';
 /** Persian translations that mirror a course-language sentence: lighter grey. */
-export const PERSIAN_TRANSLATION_COLOR = FEATURES.learnerLogin ? '#8A929E' : BLACK;
+export const PERSIAN_TRANSLATION_COLOR = '#8A929E';
 const LIGHT_THRESHOLD = 0.6;
 const colorCache = new Map<string, string>();
 function parseColor(value: string): { r: number; g: number; b: number; a: number } | null {

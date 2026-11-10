@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 22: Persian text bold + grey in every build (regular cut rendered faint).
 # rev 21: add five-language no-login flavour (MiloLearner5-NoLogin.apk).
 # rev 20: new language introductions on dashboards and language registry.
 # rev 19: third copy-trimming pass across supplement, account, backup, lock, B2/C1 practice and dialogue screens.
