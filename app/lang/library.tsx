@@ -122,9 +122,8 @@ export default function EnglishLessonList() {
             <>
               <View style={styles.topBar}>
                 <PageNavigation backFallback="/lang" />
-                <Text style={styles.brandEyebrow}>ENGLISH PATH · MAIN COURSE</Text>
                 <Text style={styles.pageTitle}>مسیر یادگیری انگلیسی</Text>
-                <Text style={styles.pageIntro}>یک سطح را انتخاب کنید؛ درس‌ها بر اساس موقعیت و جمله پیش می‌روند و واژگان زیر جملهٔ مربوط می‌مانند.</Text>
+                <Text style={styles.pageIntro}>یک سطح را انتخاب کنید.</Text>
               </View>
 
               <LinearGradient colors={['#19204C', '#343B8A', '#5148C8']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
@@ -133,9 +132,7 @@ export default function EnglishLessonList() {
                   <View style={styles.heroIcon}><MiloGlobeHeadphoneMark size={48} /></View>
                   <View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۵ سطح آموزشی</Text></View>
                 </View>
-                <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
                 <Text style={styles.overviewTitle}>یک مسیر روشن؛{ '\n' }جمله به جمله</Text>
-                <Text style={styles.overviewText}>ساختار سطح‌ها را ببینید و با محتوای واقعاً موجود در هر مرحله پیش بروید.</Text>
                 <View style={styles.overviewMetrics}>
                   <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{toPersianDigits(SENTENCE_LESSONS.length)}</Text><Text style={styles.overviewMetricLabel}>درس موجود</Text></View>
                   <View style={styles.overviewMetricDivider} />
@@ -235,7 +232,6 @@ export default function EnglishLessonList() {
                 <View style={styles.focusHeadingRow}>
                   <View style={styles.focusIcon}><Sparkles size={17} color={Palette.primary} /></View>
                   <View style={styles.focusHeadingCopy}>
-                    <Text style={styles.focusEyebrow}>LEVEL FOCUS</Text>
                     <Text style={styles.focusTitle}>موضوعات این سطح</Text>
                   </View>
                 </View>
@@ -248,22 +244,10 @@ export default function EnglishLessonList() {
                     </View>
                   ))}
                 </View>
-                {selected.id === 5 ? (
-                  <Text style={styles.focusFootnote}>این درس‌ها برای ۵۵ محور درخواست‌شده دو نمونه، توضیح و تمرین دارند. تعیین سطح فعلی C1 را ارزیابی نمی‌کند و این تمرین‌ها گواهی مهارت C1 نیستند.</Text>
-                ) : selected.id === 4 ? (
-                  <Text style={styles.focusFootnote}>
-                    بخش‌های B2 برای هر محور سه نمونه، نکته و یک تمرین اختیاری دارند؛ هر درس یک موقعیت کاربردی نیز دارد. محتوای پیشین شامل {toPersianDigits(advancedComposition.scenarioLessonCount)} درس سناریومحور و {toPersianDigits(advancedComposition.vocabularyPracticeLessonCount)} مجموعهٔ مرور واژگان وجود دارد. مجموعه‌های مرور شامل مثال‌های مستقل‌اند و گفت‌وگوی پیوسته یا سنجش رسمی محسوب نمی‌شوند و سطح یکسان B2 آن‌ها تأیید نشده است.
-                  </Text>
-                ) : selected.id === 2 ? (
-                  <Text style={styles.focusFootnote}>درس‌های پایه تازه‌اند؛ بعضی درس‌های موقعیتی قدیمی برای A2–B1 نوشته شده‌اند و در حال ساده‌سازی‌اند.</Text>
-                ) : (
-                  <Text style={styles.focusFootnote}>موضوعات نقشه، هدف مسیرند؛ شمار درس‌ها، جمله‌ها و واژه‌های یکتای این سطح از محتوای موجود محاسبه شده است.</Text>
-                )}
               </View>
 
               <View style={styles.lessonSectionHeading}>
                 <View>
-                  <Text style={styles.brandEyebrow}>SENTENCE-BASED LESSONS</Text>
                   <Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text>
                 </View>
                 <View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{toPersianDigits(lessons.length)} درس</Text></View>
@@ -374,7 +358,6 @@ export default function EnglishLessonList() {
               </View>
 
               <View style={styles.licenseArea}>
-                <Text style={styles.licenseIntro}>راهنمای واجی درس‌های ۱۰۴ تا ۱۶۱ از واژه‌نامه مشتق شده؛ جایگزین شنیدن نمونه نیست.</Text>
                 <Pressable accessibilityRole="button" style={styles.licenseButton} onPress={() => setShowLicense(value => !value)}>
                   <Text style={styles.licenseButtonText}>{showLicense ? 'بستن منبع راهنمای واجی' : 'منبع و مجوز راهنمای واجی'}</Text>
                   {showLicense ? <ChevronUp size={16} color={Palette.primary} /> : <ChevronDown size={16} color={Palette.primary} />}

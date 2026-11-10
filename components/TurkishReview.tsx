@@ -115,12 +115,12 @@ export default function TurkishReview() {
   }
 
   return <View style={styles.root}>
-    <View style={styles.header}><Text style={styles.title}>مرور ترکی استانبولی</Text><Text style={styles.subtitle}>فقط جمله‌هایی که زمان مرورشان رسیده است</Text></View>
+    <View style={styles.header}><Text style={styles.title}>مرور ترکی استانبولی</Text><Text style={styles.subtitle}>جمله‌های امروز</Text></View>
     <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-      {finished ? <View style={styles.finishedCard}><View style={styles.finishedIcon}><Check size={32} color={Palette.success} /></View><Text style={styles.finishedTitle}>مرور امروز تمام شد</Text><Text style={styles.finishedDesc}>زمان مرور بعدی هر جمله بر اساس پاسخ شما تنظیم شد.</Text></View> : null}
+      {finished ? <View style={styles.finishedCard}><View style={styles.finishedIcon}><Check size={32} color={Palette.success} /></View><Text style={styles.finishedTitle}>مرور امروز تمام شد</Text></View> : null}
       <LinearGradient colors={['#4A1828', '#832843', '#B83D56']} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.summaryCard}>
         <View pointerEvents="none" style={styles.summaryOrb} />
-        <View style={styles.summaryTop}><View style={styles.brain}><Brain size={23} color="#FFD9E1" /></View><View style={styles.summaryTag}><RefreshCw size={12} color="#FFD9E1" /><Text style={styles.summaryTagText}>SPACED REVIEW</Text></View></View>
+        <View style={styles.summaryTop}><View style={styles.brain}><Brain size={23} color="#FFD9E1" /></View><View style={styles.summaryTag}><RefreshCw size={12} color="#FFD9E1" /></View></View>
         <Text style={styles.summaryTitle}>{loading ? 'در حال بارگذاری مرور…' : reviewCount ? `${fa(reviewCount)} جمله برای مرور` : 'فعلاً مروری ندارید'}</Text>
         <Text style={styles.summaryDesc}>{loading ? 'در حال بررسی موعد مرور جمله‌های ترکی استانبولی…' : reviewCount ? 'جمله‌های دشوار زودتر و جمله‌های آسان دیرتر برمی‌گردند.' : progress?.completedLessonIds.length ? 'مرور بعدی در زمان مناسب به‌طور خودکار اینجا ظاهر می‌شود.' : 'پس از پایان اولین درس ترکی استانبولی، جمله‌های آن وارد برنامهٔ مرور می‌شوند.'}</Text>
         {!!error && <Text accessibilityRole="alert" style={styles.summaryError}>{error}</Text>}
@@ -128,7 +128,7 @@ export default function TurkishReview() {
       </LinearGradient>
       <Text style={styles.sectionTitle}>مرور چگونه تنظیم می‌شود؟</Text>
       <View style={styles.methodList}><Method num="۱" title="معنی را ببین و جمله را بگو" desc="پیش از دیدن پاسخ، جملهٔ ترکی استانبولی را با صدای بلند به یاد بیاورید." /><Method num="۲" title="پاسخ را ببین و بشنو" desc="متن ترکی و راهنمای خوانش را با پاسخ خود مقایسه کنید." /><Method num="۳" title="میزان سختی را انتخاب کن" desc="برنامه زمان مرور بعدی را روی همین دستگاه تنظیم می‌کند." /></View>
-      <View style={styles.note}><CheckCircle2 size={18} color={Palette.success} /><Text style={styles.noteText}>مرور ترکی استانبولی جدا از انگلیسی و روسی، فقط در حافظهٔ همین دستگاه ذخیره می‌شود.</Text></View>
+      <View style={styles.note}><CheckCircle2 size={18} color={Palette.success} /></View>
     </ScrollView>
     <TurkishBottomNav />
   </View>;

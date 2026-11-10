@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 18: dashboards, libraries and review screens trimmed (no Latin eyebrows, no app-mechanics copy).
 # rev 17: lesson copy trimmed — one-sentence stage hints shown once, no app-mechanics text, no Latin subtitles.
 # rev 16: redesigned "Grammar Through Usage" stage (numbered, right-aligned pattern cards) in all languages.
 # rev 15: grammar stage back to classic 86% rendering; Persian grey, translations lighter grey (login app).

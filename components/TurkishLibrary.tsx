@@ -95,17 +95,14 @@ export default function TurkishLibrary() {
           {!selected ? <>
             <View style={styles.topBar}>
               <Pressable accessibilityRole="button" style={styles.backButton} onPress={() => router.replace('/learn/tr' as never)}><ChevronLeft size={18} color={Palette.ink} /><Text style={styles.backText}>بازگشت به آموزش ترکی استانبولی</Text></Pressable>
-              <Text style={styles.brandEyebrow}>TURKISH PATH · MAIN COURSE</Text>
               <Text style={styles.pageTitle}>مسیر یادگیری ترکی استانبولی</Text>
-              <Text style={styles.pageIntro}>یک سطح را انتخاب کنید؛ در بخش Foundation ساختار زبان و جمله‌سازی را گام‌به‌گام می‌آموزید و در Survival مکالمهٔ موقعیت‌های واقعی روزمره را تمرین می‌کنید.</Text>
+              <Text style={styles.pageIntro}>یک سطح را انتخاب کنید.</Text>
             </View>
 
             <LinearGradient colors={['#4A1828', '#832843', '#B83D56']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
               <View pointerEvents="none" style={styles.heroOrb} />
               <View style={styles.heroTopRow}><View style={styles.heroIcon}><MiloGlobeHeadphoneMark size={48} /></View><View style={styles.heroPill}><Sparkles size={13} color="#FFD6DE" /><Text style={styles.heroPillText}>۷ گام در نقشهٔ ترکی استانبولی</Text></View></View>
-              <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
               <Text style={styles.overviewTitle}>از واژهٔ نخست تا جمله؛{'\n'}گام‌به‌گام</Text>
-              <Text style={styles.overviewText}>در Pre-A1 از واژه‌های مستقل می‌آغازید، بعد ترکیب کوتاه و جمله می‌سازید؛ آموزش الفبا و دستور به‌تدریج در A1 Foundation ادامه می‌یابد. آمار از محتوای واقعی دوره می‌آید.</Text>
               <View style={styles.overviewMetrics}>
                 <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(TURKISH_LESSONS.length)}</Text><Text style={styles.overviewMetricLabel}>درس موجود</Text></View><View style={styles.overviewMetricDivider} />
                 <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(totalSentences)}</Text><Text style={styles.overviewMetricLabel}>مورد آموزشی</Text></View><View style={styles.overviewMetricDivider} />
@@ -170,13 +167,13 @@ export default function TurkishLibrary() {
             </LinearGradient>
 
             <View style={styles.focusCard}>
-              <View style={styles.focusHeadingRow}><View style={styles.focusIcon}><Sparkles size={17} color={Palette.primary} /></View><View style={styles.focusHeadingCopy}><Text style={styles.focusEyebrow}>LEVEL FOCUS</Text><Text style={styles.focusTitle}>موضوعات این سطح</Text></View></View>
+              <View style={styles.focusHeadingRow}><View style={styles.focusIcon}><Sparkles size={17} color={Palette.primary} /></View><View style={styles.focusHeadingCopy}><Text style={styles.focusTitle}>موضوعات این سطح</Text></View></View>
               <Text style={styles.focusDescription}>{selected.description || 'برای این سطح هنوز سرفصلی منتشر نشده است.'}</Text>
               {selected.modules.length > 0 ? <View style={styles.moduleGrid}>{selected.modules.map((module, index) => <View key={`${index}-${module}`} style={styles.moduleChip}><View style={[styles.moduleDot, { backgroundColor: selected.color }]} /><Text style={styles.moduleText}>{displayEnglishModuleLabel(module)}</Text></View>)}</View> : null}
               <Text style={styles.focusFootnote}>{selected.status === 'planned' ? 'این سطح بخشی از نقشهٔ آینده است؛ تا زمان تدوین، درس یا محتوای آموزشی به شمار محتوای موجود اضافه نمی‌شود.' : selected.id === -1 ? 'Pre-A1 از واژه‌های مستقل به ترکیب‌ها و جمله‌ها می‌رسد؛ این نقشه سنجش رسمی CEFR نیست.' : 'محتوای منتشرشده بر پایهٔ جمله‌های ترکی استانبولی و راهنمای فارسی است؛ این نقشه سنجش رسمی CEFR نیست.'}</Text>
             </View>
 
-            <View style={styles.lessonSectionHeading}><View><Text style={styles.brandEyebrow}>{selected?.id === -1 ? 'WORDS · CHUNKS · SENTENCES' : 'SENTENCE-BASED LESSONS'}</Text><Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text></View><View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{fa(selectedLessons.length)} درس</Text></View></View>
+            <View style={styles.lessonSectionHeading}><View><Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text></View><View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{fa(selectedLessons.length)} درس</Text></View></View>
 
             {selectedLessons.length ? <View style={styles.groupList}>{lessonGroups.map((group, index) => {
               const first = group[0];
@@ -214,7 +211,7 @@ export default function TurkishLibrary() {
             })}</View> : <View style={styles.emptyLevel}>
               <View style={styles.emptyIcon}><Sparkles size={24} color={Palette.primary} /></View>
               <Text style={styles.emptyTitle}>درس‌های این سطح هنوز تدوین نشده‌اند</Text>
-              <Text style={styles.emptyDescription}>این سطح در نقشهٔ دوره ثبت شده است، اما جمله یا درس ساختگی نمایش داده نمی‌شود. مسیر کامل سطح‌های A1 و A2 در دسترس شماست.</Text>
+              <Text style={styles.emptyDescription}>به‌زودی اضافه می‌شود.</Text>
             </View>}
           </>}
           {!!error && <View style={styles.errorCard}><Text accessibilityRole="alert" style={styles.errorText}>{error}</Text><Pressable accessibilityRole="button" onPress={() => setRetry(value => value + 1)}><Text style={styles.retryText}>تلاش دوباره</Text></Pressable></View>}

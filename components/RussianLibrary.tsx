@@ -90,17 +90,14 @@ export default function RussianLibrary() {
           {!selected ? <>
             <View style={styles.topBar}>
               <Pressable accessibilityRole="button" style={styles.backButton} onPress={() => router.replace('/learn/ru' as never)}><ChevronLeft size={18} color={Palette.ink} /><Text style={styles.backText}>بازگشت به آموزش روسی</Text></Pressable>
-              <Text style={styles.brandEyebrow}>RUSSIAN PATH · MAIN COURSE</Text>
               <Text style={styles.pageTitle}>مسیر یادگیری روسی</Text>
-              <Text style={styles.pageIntro}>یک سطح را انتخاب کنید؛ از شناخت خط سیریلیک و نخستین جمله‌ها شروع می‌کنیم و مرحله‌به‌مرحله به موقعیت‌های روزمره می‌رسیم.</Text>
+              <Text style={styles.pageIntro}>یک سطح را انتخاب کنید.</Text>
             </View>
 
             <LinearGradient colors={['#19204C', '#343B8A', '#5148C8']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
               <View pointerEvents="none" style={styles.heroOrb} />
               <View style={styles.heroTopRow}><View style={styles.heroIcon}><MiloGlobeHeadphoneMark size={48} /></View><View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۶ سطح در نقشهٔ روسی</Text></View></View>
-              <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
               <Text style={styles.overviewTitle}>از الفبا؛{ '\n' }جمله به جمله</Text>
-              <Text style={styles.overviewText}>محتوای موجود از پایه آغاز می‌شود. آمار فقط درس‌ها و جمله‌های منتشرشده را می‌شمارد؛ سطح‌های آینده محتوای ساختگی ندارند.</Text>
               <View style={styles.overviewMetrics}>
                 <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(RUSSIAN_LESSONS.length)}</Text><Text style={styles.overviewMetricLabel}>درس موجود</Text></View><View style={styles.overviewMetricDivider} />
                 <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(totalSentences)}</Text><Text style={styles.overviewMetricLabel}>جملهٔ اصلی</Text></View><View style={styles.overviewMetricDivider} />
@@ -165,13 +162,13 @@ export default function RussianLibrary() {
             </LinearGradient>
 
             <View style={styles.focusCard}>
-              <View style={styles.focusHeadingRow}><View style={styles.focusIcon}><Sparkles size={17} color={Palette.primary} /></View><View style={styles.focusHeadingCopy}><Text style={styles.focusEyebrow}>LEVEL FOCUS</Text><Text style={styles.focusTitle}>موضوعات این سطح</Text></View></View>
+              <View style={styles.focusHeadingRow}><View style={styles.focusIcon}><Sparkles size={17} color={Palette.primary} /></View><View style={styles.focusHeadingCopy}><Text style={styles.focusTitle}>موضوعات این سطح</Text></View></View>
               <Text style={styles.focusDescription}>{selected.description}</Text>
               <View style={styles.moduleGrid}>{selected.modules.map((module, index) => <View key={`${index}-${module}`} style={styles.moduleChip}><View style={[styles.moduleDot, { backgroundColor: selected.color }]} /><Text style={styles.moduleText}>{displayEnglishModuleLabel(module)}</Text></View>)}</View>
               <Text style={styles.focusFootnote}>{selected.status === 'planned' ? 'این سطح بخشی از نقشهٔ آینده است؛ تا زمان تدوین، درس یا جمله‌ای به شمار محتوای موجود اضافه نمی‌شود.' : 'محتوای منتشرشده بر پایهٔ جمله‌های روسی و راهنمای فارسی است؛ این نقشه سنجش رسمی CEFR نیست.'}</Text>
             </View>
 
-            <View style={styles.lessonSectionHeading}><View><Text style={styles.brandEyebrow}>SENTENCE-BASED LESSONS</Text><Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text></View><View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{fa(selectedLessons.length)} درس</Text></View></View>
+            <View style={styles.lessonSectionHeading}><View><Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text></View><View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{fa(selectedLessons.length)} درس</Text></View></View>
 
             {selectedLessons.length ? <View style={styles.groupList}>{lessonGroups.map((group, index) => {
               const first = group[0];
@@ -209,7 +206,7 @@ export default function RussianLibrary() {
             })}</View> : <View style={styles.emptyLevel}>
               <View style={styles.emptyIcon}><Sparkles size={24} color={Palette.primary} /></View>
               <Text style={styles.emptyTitle}>درس‌های این سطح هنوز تدوین نشده‌اند</Text>
-              <Text style={styles.emptyDescription}>موضوع‌های سطح در نقشه ثبت شده‌اند، اما جمله یا درس ساختگی نمایش داده نمی‌شود. مسیر موجود فعلاً از الفبا تا موقعیت‌های مقدماتی ادامه دارد.</Text>
+              <Text style={styles.emptyDescription}>به‌زودی اضافه می‌شود.</Text>
             </View>}
           </>}
           {!!error && <View style={styles.errorCard}><Text accessibilityRole="alert" style={styles.errorText}>{error}</Text><Pressable accessibilityRole="button" onPress={() => setRetry(value => value + 1)}><Text style={styles.retryText}>تلاش دوباره</Text></Pressable></View>}

@@ -150,7 +150,6 @@ export default function StarterHome({course}: {course: StarterCourse}) {
                 <MiloGlobeHeadphoneMark size={48} />
               </View>
               <View style={styles.brandCopy}>
-                <Text style={styles.brandEyebrow}>LANGUAGE JOURNEY</Text>
                 <Text style={styles.headerTitle}>مسیر یادگیری {course.name}</Text>
               </View>
             </View>
@@ -168,7 +167,6 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             <View style={styles.welcomeCopy}>
               <View style={styles.welcomeEyebrowRow}>
                 <Sparkles size={13} color={HomeColors.gold} />
-                <Text style={styles.welcomeEyebrow}>LANGUAGE JOURNEY</Text>
               </View>
               <Text style={styles.welcomeTitle}>سلام! آماده‌ای {course.name} را ادامه بدهی؟</Text>
               <Text style={styles.welcomeDescription}>یک واژه یا عبارت کاربردی {course.name}، یک قدم دیگر در مسیر یادگیری.</Text>
@@ -198,7 +196,6 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             <Text style={styles.panelHint}>درس‌های Pre-A1، A1، A2 و درس‌های مقدماتی B1 و B2 در دسترس‌اند؛ درس‌های مرتبط لزوماً همهٔ بخش‌های هر سرفصل را پوشش نمی‌دهند.{course.id === 'es' ? ' گونهٔ اسپانیای اسپانیا مبناست.' : ''}</Text>
             <View style={styles.panelHeadingRow}>
               <View style={styles.panelHeadingText}>
-                <Text style={styles.panelEyebrow}>LEARNING PATH</Text>
                 <Text style={styles.panelTitle}>سطح {course.name} خودت را انتخاب کن</Text>
                 <Text style={styles.panelHint}>از هر سطحی که درس دارد شروع کن.</Text>
               </View>
@@ -385,7 +382,6 @@ export default function StarterHome({course}: {course: StarterCourse}) {
 
           <View style={styles.sectionHeader}>
             <View style={styles.sectionTitleBlock}>
-              <Text style={styles.sectionEyebrow}>TODAY AT A GLANCE</Text>
               <Text style={styles.sectionTitle}>برنامهٔ امروز</Text>
             </View>
             <View style={styles.dailyGoalPill}>
@@ -418,7 +414,6 @@ export default function StarterHome({course}: {course: StarterCourse}) {
           <View style={styles.quickSection}>
             <View style={styles.sectionHeading}>
               <View style={styles.sectionTitleBlock}>
-                <Text style={styles.sectionEyebrow}>KEEP GOING</Text>
                 <Text style={styles.sectionTitle}>میان‌برهای تو</Text>
               </View>
             </View>
