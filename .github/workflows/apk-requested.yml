@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 20: new language introductions on dashboards and language registry.
 # rev 19: third copy-trimming pass across supplement, account, backup, lock, B2/C1 practice and dialogue screens.
 # rev 18: dashboards, libraries and review screens trimmed (no Latin eyebrows, no app-mechanics copy).
 # rev 17: lesson copy trimmed — one-sentence stage hints shown once, no app-mechanics text, no Latin subtitles.

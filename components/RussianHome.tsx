@@ -158,8 +158,8 @@ export default function RussianHome() {
               <View style={styles.welcomeEyebrowRow}>
                 <Sparkles size={13} color={HomeColors.gold} />
               </View>
-              <Text style={styles.welcomeTitle}>سلام! آماده‌ای روسی را ادامه بدهی؟</Text>
-              <Text style={styles.welcomeDescription}>یک جملهٔ کاربردی، یک قدم دیگر.</Text>
+              <Text style={styles.welcomeTitle}>روسی؛ از خط سیریلیک تا گفت‌وگوی روزمره</Text>
+              <Text style={styles.welcomeDescription}>زبان بیش از ۲۵۰ میلیون نفر، با جمله‌هایی که از روز اول به کار می‌آیند.</Text>
               <View style={styles.welcomeTags}>
                 <View style={styles.welcomeTag}>
                   <BookOpen size={12} color={HomeColors.gold} />

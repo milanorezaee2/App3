@@ -73,6 +73,12 @@ const starterOnlyStyles = StyleSheet.create({
   },
 });
 
+const COURSE_WELCOME: Record<string, { title: string; text: string }> = {
+  de: { title: 'آلمانی؛ زبان دقت، دانش و فرصت', text: 'از نخستین سلام تا گفت‌وگوی روزمره، گام‌به‌گام و منظم؛ کلید تحصیل و کار در قلب اروپا.' },
+  fr: { title: 'فرانسوی؛ زبان فرهنگ، هنر و دیپلماسی', text: 'آوای ظریف فرانسه را با جمله‌های واقعی زندگی روزمره بیاموزید.' },
+  es: { title: 'اسپانیایی؛ زبان بیست کشور و نیم‌میلیارد انسان', text: 'گرم، روشن و پرکاربرد؛ از همین اولین جمله حرف بزنید.' },
+};
+
 export default function StarterHome({course}: {course: StarterCourse}) {
   const {lessons, levels, progress: courseProgress} = course;
   const {loadStarterLessonSessionWithPresence} = course.sessions;
@@ -168,8 +174,8 @@ export default function StarterHome({course}: {course: StarterCourse}) {
               <View style={styles.welcomeEyebrowRow}>
                 <Sparkles size={13} color={HomeColors.gold} />
               </View>
-              <Text style={styles.welcomeTitle}>سلام! آماده‌ای {course.name} را ادامه بدهی؟</Text>
-              <Text style={styles.welcomeDescription}>یک واژه یا عبارت کاربردی {course.name}، یک قدم دیگر در مسیر یادگیری.</Text>
+              <Text style={styles.welcomeTitle}>{COURSE_WELCOME[course.id]?.title ?? course.name}</Text>
+              <Text style={styles.welcomeDescription}>{COURSE_WELCOME[course.id]?.text ?? 'از نخستین سلام تا گفت‌وگوی روزمره، گام‌به‌گام.'}</Text>
               <View style={styles.welcomeTags}>
                 <View style={styles.welcomeTag}>
                   <BookOpen size={12} color={HomeColors.gold} />

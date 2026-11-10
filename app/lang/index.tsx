@@ -142,8 +142,8 @@ export default function LearningHome() {
               <View style={styles.welcomeEyebrowRow}>
                 <Sparkles size={13} color={HomeColors.gold} />
               </View>
-              <Text style={styles.welcomeTitle}>سلام! آماده‌ای ادامه بدی؟</Text>
-              <Text style={styles.welcomeDescription}>یک جملهٔ کاربردی، یک قدم دیگر.</Text>
+              <Text style={styles.welcomeTitle}>انگلیسی؛ زبان کار، سفر و دنیای دیجیتال</Text>
+              <Text style={styles.welcomeDescription}>از جمله‌های روزمره تا گفت‌وگوی حرفه‌ای؛ هر درس یک موقعیت واقعی.</Text>
               <View style={styles.welcomeTags}>
                 <View style={styles.welcomeTag}>
                   <BookOpen size={12} color={HomeColors.gold} />

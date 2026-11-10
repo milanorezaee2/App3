@@ -159,8 +159,8 @@ export default function TurkishHome() {
               <View style={styles.welcomeEyebrowRow}>
                 <Sparkles size={13} color={HomeColors.gold} />
               </View>
-              <Text style={styles.welcomeTitle}>سلام! آماده‌ای ترکی استانبولی را ادامه بدهی؟</Text>
-              <Text style={styles.welcomeDescription}>یک جملهٔ کاربردی، یک قدم دیگر.</Text>
+              <Text style={styles.welcomeTitle}>ترکی استانبولی؛ همسایهٔ نزدیک، زبان آشنا</Text>
+              <Text style={styles.welcomeDescription}>ساختار منظم و واژه‌های مشترک با فارسی؛ زودتر از آنچه فکر می‌کنید حرف می‌زنید.</Text>
               <View style={styles.welcomeTags}>
                 <View style={styles.welcomeTag}>
                   <BookOpen size={12} color={HomeColors.gold} />

@@ -165,7 +165,6 @@ export default function LanguagesHome() {
               <Text style={styles.subtitle}>
                 کوتاه، شنیدنی، ماندگار
               </Text>
-              <Text style={styles.eyebrow}>LEARN THROUGH LIFE</Text>
             </View>
           </ImageBackground>
 
