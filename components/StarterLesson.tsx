@@ -16,6 +16,7 @@ import { StarterWordChoice } from '@/components/StarterWordChoice';
 import StarterExtraPractice from '@/components/StarterExtraPractice';
 import StarterWritingPractice from '@/components/StarterWritingPractice';
 import StarterA1Skill from '@/components/StarterA1Skill';
+import SpeakCheck from '@/components/SpeakCheck';
 import StarterB1Production from '@/components/StarterB1Production';
 import {b1Production} from '@/lib/languages/b1Production';
 import { A1_SKILLS } from '@/lib/languages/a1Skills';
@@ -329,7 +330,8 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
             <Text style={styles.speechTitle}>{unit} انتخاب‌شده</Text>
             <Text style={styles.speechSentence}>{current.text}</Text>
             <View style={styles.replayRow}><Pressable accessibilityRole="button" accessibilityLabel={`پخش آهستهٔ ${unit}`} style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable><Pressable accessibilityRole="button" accessibilityLabel={`پخش معمولی ${unit}`} style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable></View>
-            <Text style={styles.speechHint}>پس از شنیدن، {unit} را با صدای بلند تکرار کنید؛ گفتار ضبط یا نمره‌گذاری نمی‌شود.</Text>
+            <Text style={styles.speechHint}>پس از شنیدن، {unit} را با صدای بلند تکرار کنید.</Text>
+            <SpeakCheck key={current.id} text={current.text} locale={course.locale} accent={Palette.success} />
           </View>
           {a1 ? <PracticeNavigation index={sentenceIndex} count={lesson.sentences.length} onChange={index => selectSentence(index, .68)} /> : <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`${unit} ${fa(index + 1)}`} onPress={() => selectSentence(index, .68)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>}
         </View>}

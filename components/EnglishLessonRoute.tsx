@@ -30,6 +30,7 @@ import { EnglishB2Scenario } from '@/components/EnglishB2Scenario';
 import { EnglishC1Reading } from '@/components/EnglishC1Reading';
 import { EnglishC1ExtendedModel } from '@/components/EnglishC1ExtendedModel';
 import { ENGLISH_ENGINE_STEPS, getLessonPatterns, getLessonVocabulary } from '@/lib/englishLearningEngine';
+import SpeakCheck from '@/components/SpeakCheck';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import { PageNavigation } from '@/components/PageNavigation';
 
@@ -419,26 +420,8 @@ export default function SentenceLessonScreen() {
               <Text style={styles.speechSentence}>{current.en}</Text>
               <EnglishSpeechRateControls onPlay={rate => speak(current.en, rate)} disabled={recorderState.isRecording || evaluatingSpeech} />
               {!!audioNotice && <Text accessibilityRole="alert" accessibilityLiveRegion="polite" style={styles.speechError}>{audioNotice}</Text>}
-              <Text style={styles.speechHint}>{recorderState.isRecording ? `در حال ضبط · ${toPersianDigits(Math.max(1, Math.round(recorderState.durationMillis / 1000)))} ثانیه` : evaluatingSpeech ? 'در حال بررسی…' : PAID_AI_ENABLED ? 'در صورت فعال‌بودن سرویس، می‌توانید ضبط و بررسی آنلاین را هم انتخاب کنید.' : 'میکروفن و ارسال آنلاین در حالت بدون هزینه غیرفعال‌اند؛ جمله را با صدای بلند تکرار کنید.'}</Text>
-              <Pressable accessibilityRole="button"
-                accessibilityLabel={PAID_AI_ENABLED ? recorderState.isRecording ? 'توقف ضبط و بررسی آنلاین جمله' : 'شروع ضبط اختیاری جمله' : 'ضبط و بررسی آنلاین گفتار غیرفعال است'}
-                accessibilityHint={!PAID_AI_ENABLED ? PAID_AI_DISABLED_MESSAGE : 'در صورت فعال‌سازی و رضایت جداگانه، صدا برای بررسی فرستاده می‌شود.'}
-                accessibilityState={{ disabled: !PAID_AI_ENABLED || evaluatingSpeech }}
-                disabled={!PAID_AI_ENABLED || evaluatingSpeech}
-                style={[styles.recordButton, recorderState.isRecording && styles.recordButtonActive, (!PAID_AI_ENABLED || evaluatingSpeech) && styles.recordButtonDisabled]}
-                onPress={() => recorderState.isRecording ? void stopAndEvaluateSpeech() : void startSpeechPractice()}
-              >
-                {evaluatingSpeech ? <Text style={styles.recordButtonText}>در حال بررسی…</Text> : recorderState.isRecording ? <><Square size={17} color={Colors.onColor} fill={Colors.onColor} /><Text style={styles.recordButtonText}>توقف و بررسی</Text></> : <><Mic2 size={19} color={Colors.onColor} /><Text style={styles.recordButtonText}>{PAID_AI_ENABLED ? 'شروع ضبط اختیاری' : 'ضبط آنلاین غیرفعال'}</Text></>}
-              </Pressable>
-              {speechResult ? (
-                <View style={styles.speechResult}>
-                  <View style={styles.scoreRow}><Text style={styles.scoreLabel}>شباهت متن تشخیص‌داده‌شده</Text><Text style={styles.scoreValue}>{toPersianDigits(speechResult.score)}٪</Text></View>
-                  <Text style={styles.recognizedLabel}>آنچه شنیده شد:</Text>
-                  <Text style={styles.recognizedText}>{speechResult.recognized || 'صدای قابل‌تشخیصی دریافت نشد.'}</Text>
-                  <Text style={styles.feedbackText}>{speechResult.feedbackFa}</Text>
-                  {speechResult.missingWords.length ? <Text style={styles.missingWords}>دوباره تمرین کنید: {speechResult.missingWords.join(' · ')}</Text> : null}
-                </View>
-              ) : null}
+              <Text style={styles.speechHint}>پس از شنیدن، جمله را با صدای بلند تکرار کنید.</Text>
+              <SpeakCheck key={current.id} text={current.en} locale="en-US" accent={Colors.success[400]} />
               {speechError ? <Text style={styles.speechError}>{speechError}</Text> : null}
             </View>
             <View style={styles.dots}>

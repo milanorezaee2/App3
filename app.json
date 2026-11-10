@@ -72,6 +72,14 @@
         }
       ],
       [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "برای تمرین گفتاری، اجازه استفاده از میکروفن را بدهید.",
+          "speechRecognitionPermission": "برای بررسی گفتار شما، اجازه تشخیص گفتار را بدهید.",
+          "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox", "com.google.android.tts"]
+        }
+      ],
+      [
         "expo-build-properties",
         {
           "android": {

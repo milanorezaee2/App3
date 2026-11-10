@@ -9,6 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as Speech from 'expo-speech';
 import { ArrowRight, Check, ChevronLeft, Headphones, MessageCircle, Mic2, RefreshCw, RotateCcw, Sparkles, Volume2 } from 'lucide-react-native';
+import SpeakCheck from '@/components/SpeakCheck';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import RussianSentenceBuilder from '@/components/RussianSentenceBuilder';
@@ -288,7 +289,8 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
             <Text style={styles.speechTitle}>جملهٔ انتخاب‌شده</Text>
             <Text style={styles.speechSentence}>{current.text}</Text>
             <Pressable accessibilityRole="button" style={styles.playSlowButton} onPress={() => speak(current.text, .68)}><Volume2 size={18} color="#FFFFFF" /><Text style={styles.recordButtonText}>پخش آهستهٔ نمونه</Text></Pressable>
-            <Text style={styles.speechHint}>پس از شنیدن، جمله را با صدای بلند تکرار کنید؛ گفتار ضبط یا نمره‌گذاری نمی‌شود.</Text>
+            <Text style={styles.speechHint}>پس از شنیدن، جمله را با صدای بلند تکرار کنید.</Text>
+            <SpeakCheck key={current.id} text={current.text} locale="ru-RU" accent={Palette.success} />
           </View>
           <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`جمله ${fa(index + 1)}`} onPress={() => selectSentence(index, .68)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
         </View>}

@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 25: speaking practice (on-device speech recognition) in the Shadowing stage of all six languages
 # rev 24: remove "شروع از صفر" label and equal-size language cards
 # rev 23: Persian digits in bold cut; mid-grey text colours forced dark (faded numbers/badges).
 # rev 22: Persian text bold + grey in every build (regular cut rendered faint).
