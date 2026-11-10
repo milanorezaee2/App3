@@ -31,6 +31,8 @@ import { EnglishC1Reading } from '@/components/EnglishC1Reading';
 import { EnglishC1ExtendedModel } from '@/components/EnglishC1ExtendedModel';
 import { ENGLISH_ENGINE_STEPS, getLessonPatterns, getLessonVocabulary } from '@/lib/englishLearningEngine';
 import SpeakCheck from '@/components/SpeakCheck';
+import SpeakDrill from '@/components/SpeakDrill';
+import { autoRead } from '@/lib/autoRead';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import { PageNavigation } from '@/components/PageNavigation';
 
@@ -270,6 +272,13 @@ export default function SentenceLessonScreen() {
     if (stage === 2 || index === sentenceIndex) speak(lesson.sentences[index].en);
   };
 
+  // «شنیدن»: read the whole list aloud automatically when the stage opens; the Continue button keeps working.
+  useEffect(() => {
+    if (stage !== 2) return;
+    return autoRead(lesson.sentences.length, index => selectListeningSentence(index), undefined, 900);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage, lesson.id]);
+
   const next = async () => {
     if (!sessionReady || sessionError || completing.current || resettingRef.current) return;
     if (stage === 1 && sentenceIndex < lesson.sentences.length - 1) {
@@ -379,6 +388,7 @@ export default function SentenceLessonScreen() {
             </View>
             <EnglishSpeechRateControls onPlay={rate => speak(current.en, rate)} />
             {!!audioNotice && <Text accessibilityLiveRegion="polite" style={styles.speechError}>{audioNotice}</Text>}
+            <SpeakCheck key={current.id} text={current.en} locale="en-US" accent={Colors.success[400]} />
           </View>
         )}
 
@@ -404,7 +414,7 @@ export default function SentenceLessonScreen() {
             </View>
             <View style={styles.shadowTip}>
               <Headphones size={18} color={Colors.primary[400]} />
-              <Text style={styles.shadowText}>فعلاً فقط به صدا گوش دهید؛ مرحلهٔ بعد برای تکرار و سایه‌خوانی است.</Text>
+              <Text style={styles.shadowText}>جمله‌ها به‌ترتیب خودکار پخش می‌شوند؛ هر زمان خواستید «ادامه» را بزنید.</Text>
             </View>
             {lesson.c1Section && <EnglishC1Reading key={lesson.id} lessonId={lesson.id} />}
           </View>
@@ -460,6 +470,7 @@ export default function SentenceLessonScreen() {
                   </View>
                   <Text style={styles.vocabExample}>{item.exampleEn}</Text>
                   <Text keepColor style={styles.bubbleFa}>{item.exampleFa}</Text>
+                  <SpeakCheck compact text={item.word} locale="en-US" accent={Colors.success[400]} />
                 </View>
               ))}
             </View>
@@ -507,6 +518,7 @@ export default function SentenceLessonScreen() {
               <Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text>
               <Text style={styles.promiseText}>{toPersianDigits(lesson.sentences.length)} جمله و {toPersianDigits(vocabulary.length)} واژهٔ یکتا؛ محتوا همان محتوای اصلی درس است.</Text>
             </View>
+            <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} />
             {evidencePassed
               ? CORE_LESSON_EVIDENCE[lesson.id]
                 ? <Text style={styles.stageDesc}>همهٔ {toPersianDigits(CORE_LESSON_EVIDENCE[lesson.id].length)} سنجشِ این درس با پاسخ درست ثبت شد ✓</Text>

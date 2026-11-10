@@ -10,6 +10,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as Speech from 'expo-speech';
 import { ArrowRight, Check, ChevronLeft, Headphones, MessageCircle, Mic2, RefreshCw, RotateCcw, Sparkles, Volume2 } from 'lucide-react-native';
 import SpeakCheck from '@/components/SpeakCheck';
+import SpeakDrill from '@/components/SpeakDrill';
+import { autoRead } from '@/lib/autoRead';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import RussianSentenceBuilder from '@/components/RussianSentenceBuilder';
@@ -169,6 +171,13 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
     speak(lesson.sentences[index].text, rate);
   };
 
+  // «شنیدن»: read the whole list aloud automatically when the stage opens; the Continue button keeps working.
+  useEffect(() => {
+    if (stage !== 2) return;
+    return autoRead(lesson.sentences.length, index => selectSentence(index, 0.72), undefined, 900);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage, lesson.id]);
+
   const goToPreviousSentence = () => {
     if (!sessionReady || saving || sessionError || stage !== 1 || sentenceIndex === 0) return;
     setSentenceIndex(previousSentenceIndex(sentenceIndex));
@@ -267,6 +276,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
             <Pressable accessibilityRole="button" accessibilityLabel="پخش آهستهٔ جمله" style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="پخش معمولی جمله" style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable>
           </View>
+          <SpeakCheck key={current.id} text={current.text} locale="ru-RU" accent={Palette.success} />
         </View>}
 
         {stage === 2 && <View style={styles.centerStage}>
@@ -278,7 +288,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
             <Text style={styles.listenRussian}>{sentence.text}</Text>
             <Volume2 size={19} color={Palette.primary} />
           </Pressable>)}</View>
-          <View style={styles.shadowTip}><Headphones size={18} color={Palette.primary} /><Text style={styles.shadowText}>فعلاً فقط گوش دهید؛ مرحلهٔ بعد برای تکرار و سایه‌خوانی است.</Text></View>
+          <View style={styles.shadowTip}><Headphones size={18} color={Palette.primary} /><Text style={styles.shadowText}>جمله‌ها به‌ترتیب خودکار پخش می‌شوند؛ هر زمان خواستید «ادامه» را بزنید.</Text></View>
         </View>}
 
         {stage === 3 && <View style={styles.centerStage}>
@@ -311,6 +321,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
             <View style={styles.vocabTop}><Text style={styles.vocabWord}>{word.word}</Text><Text style={styles.vocabMeaning}>{word.meaning}</Text></View>
             <Text style={styles.vocabExample}>{sentence.text}</Text><Text keepColor style={styles.vocabExampleFa}>{sentence.fa}</Text>
             <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن مثال: ${sentence.text}`} style={styles.bubbleSound} onPress={() => speak(sentence.text)}><Volume2 size={16} color={Palette.primary} /></Pressable>
+            <SpeakCheck compact text={word.word} locale="ru-RU" accent={Palette.success} />
           </View>)}</View>
         </View>}
 
@@ -325,13 +336,14 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           <View style={styles.bigIcon}><MessageCircle size={34} color={Palette.primary} /></View>
           <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
           {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
-          <RussianDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} />
+          <RussianDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} locale="ru-RU" />
         </View>}
 
         {stage === 8 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><RefreshCw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} جمله و {fa(vocabulary.length)} واژه/عبارت یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
+          <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale="ru-RU" accent={Palette.success} onSpeak={text => speak(text)} />
           <View style={styles.evidenceCard}>
             <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
             <Text style={styles.evidenceIntro}>پرسش‌ها به جمله‌های همین درس وصل‌اند. پاسخ نادرست را می‌توانید دوباره امتحان کنید یا توضیح پاسخ نمونه را ببینید.</Text>

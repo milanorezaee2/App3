@@ -58,14 +58,14 @@ function feedbackFor(score: number) {
   return 'واضح شنیده نشد؛ ابتدا نمونه را گوش دهید و دوباره بگویید.';
 }
 
-type Props = { text: string; locale: string; accent?: string; onResult?: (result: SpeakCheckResult) => void };
+type Props = { text: string; locale: string; accent?: string; compact?: boolean; title?: string; onResult?: (result: SpeakCheckResult) => void };
 
 /**
  * «بگو» — the learner says the sentence aloud; the device speech recogniser transcribes it and
  * each expected word is shown green (heard) or red (missed) together with a percentage.
  * Works on Android/iOS through the native recogniser and on web through the browser's Web Speech API.
  */
-export default function SpeakCheck({ text, locale, accent = '#2563EB', onResult }: Props) {
+export default function SpeakCheck({ text, locale, accent = '#2563EB', compact = false, title, onResult }: Props) {
   const [listening, setListening] = useState(false);
   const [partial, setPartial] = useState('');
   const [result, setResult] = useState<SpeakCheckResult | null>(null);
@@ -128,9 +128,9 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', onResult 
   const stop = useCallback(() => { ExpoSpeechRecognitionModule.stop(); }, []);
 
   return (
-    <View style={styles.wrap}>
-      <Text style={styles.title}>بگو · Speak</Text>
-      <Text style={styles.hint}>{listening ? 'در حال شنیدن… جمله را با صدای واضح بگویید.' : result ? feedbackFor(result.score) : 'میکروفن را بزنید و همین جمله را با صدای بلند بگویید.'}</Text>
+    <View style={[styles.wrap, compact && styles.wrapCompact]}>
+      {!compact && <Text style={styles.title}>{title ?? 'بگو · Speak'}</Text>}
+      {(!compact || listening || result) && <Text style={styles.hint}>{listening ? 'در حال شنیدن… با صدای واضح بگویید.' : result ? feedbackFor(result.score) : 'میکروفن را بزنید و همین جمله را با صدای بلند بگویید.'}</Text>}
       {result ? (
         <View style={styles.wordsRow}>
           {result.words.map((item, index) => <Text key={`${item.word}-${index}`} keepColor style={[styles.word, item.ok ? styles.wordOk : styles.wordMiss]}>{item.word}</Text>)}
@@ -144,10 +144,10 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', onResult 
         accessibilityRole="button"
         accessibilityLabel={listening ? 'پایان گفتن' : result ? 'دوباره بگو' : 'شروع گفتن'}
         onPress={() => listening ? stop() : void start()}
-        style={({ pressed }) => [styles.button, { backgroundColor: listening ? '#B91C1C' : accent }, pressed && styles.buttonPressed]}
+        style={({ pressed }) => [styles.button, compact && styles.buttonCompact, { backgroundColor: listening ? '#B91C1C' : accent }, pressed && styles.buttonPressed]}
       >
-        {listening ? <Square size={16} color="#FFFFFF" fill="#FFFFFF" /> : result ? <RefreshCw size={18} color="#FFFFFF" /> : <Mic2 size={19} color="#FFFFFF" />}
-        <Text keepColor style={styles.buttonText}>{listening ? 'تمام شد' : result ? 'دوباره بگو' : 'بگو'}</Text>
+        {listening ? <Square size={compact ? 13 : 16} color="#FFFFFF" fill="#FFFFFF" /> : result ? <RefreshCw size={compact ? 15 : 18} color="#FFFFFF" /> : <Mic2 size={compact ? 16 : 19} color="#FFFFFF" />}
+        <Text keepColor style={[styles.buttonText, compact && styles.buttonTextCompact]}>{listening ? 'تمام شد' : result ? 'دوباره بگو' : 'بگو'}</Text>
       </Pressable>
     </View>
   );
@@ -155,6 +155,9 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', onResult 
 
 const styles = StyleSheet.create({
   wrap: { width: '100%', marginTop: 10, padding: 12, borderRadius: 16, backgroundColor: '#F8FAFC', borderWidth: 1, borderColor: '#E2E8F0', alignItems: 'center', gap: 6 },
+  wrapCompact: { marginTop: 8, padding: 8, gap: 4, backgroundColor: 'transparent', borderStyle: 'dashed' },
+  buttonCompact: { paddingHorizontal: 14, paddingVertical: 7, marginTop: 0 },
+  buttonTextCompact: { fontSize: 13 },
   title: { fontSize: 15, fontWeight: '700', color: '#0F172A' },
   hint: { fontSize: 12.5, lineHeight: 20, color: '#475569', textAlign: 'center' },
   wordsRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6, marginTop: 2 },

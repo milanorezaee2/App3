@@ -1,3 +1,4 @@
+import SpeakCheck from '@/components/SpeakCheck';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -15,11 +16,13 @@ import { toPersianDigits as fa } from '@/lib/format';
  * its own `languageLabel` (used only in that hint).
  */
 
-export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLabel }: {
+export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLabel, locale }: {
   dialogue: LearningLesson['dialogue'];
   onSpeak: (text: string) => void;
   /** Course name in Persian, e.g. "روسی" or "ترکی". Used in the recall hint. */
   languageLabel: string;
+  /** BCP-47 locale for the speech recogniser; when set, the learner's lines get a «بگو» check. */
+  locale?: string;
 }) {
   const speakers = [...new Set(dialogue.map(line => line.speaker))];
   const [myRole, setMyRole] = useState(speakers[0]);
@@ -45,6 +48,7 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
         {isMyLine && !revealed
           ? <Pressable accessibilityRole="button" style={styles.revealButton} onPress={() => setRevealed(true)}><Text style={styles.revealText}>نمایش پاسخ نمونه</Text></Pressable>
           : <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن: ${current.text}`} style={styles.soundButton} onPress={() => onSpeak(current.text)}><Volume2 size={17} color={Palette.primary} /><Text style={styles.soundText}>{isMyLine ? 'شنیدن پاسخ' : 'شنیدن طرف مقابل'}</Text></Pressable>}
+        {isMyLine && revealed && locale ? <SpeakCheck key={`${index}-${current.text}`} text={current.text} locale={locale} accent={Palette.success} /> : null}
       </View>}
       {isMyLine && !revealed ? null : index < dialogue.length - 1
         ? <Pressable accessibilityRole="button" style={styles.nextButton} onPress={advance}><Text style={styles.nextText}>{isMyLine ? 'گفتم؛ ادامه' : 'ادامهٔ گفت‌وگو'}</Text><ChevronLeft size={18} color="#FFFFFF" /></Pressable>

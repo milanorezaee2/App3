@@ -1,3 +1,4 @@
+import SpeakCheck from '@/components/SpeakCheck';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -76,6 +77,7 @@ export function EnglishDialoguePractice({ dialogue }: { dialogue: SentenceLesson
         <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن پاسخ: ${current.learner.text}`} style={styles.soundButton} onPress={() => speak(current.learner.text)}>
           <Volume2 size={17} color={Palette.primary} /><Text style={styles.soundText}>شنیدن پاسخ</Text>
         </Pressable>
+        <SpeakCheck key={`${pairIndex}-${current.learner.text}`} text={current.learner.text} locale="en-US" accent={Palette.success} />
       </>}
     </View>
     {revealed && <Pressable accessibilityRole="button" style={styles.nextButton} onPress={() => { setPairIndex(currentIndex => (currentIndex + 1) % pairs.length); setRevealed(false); }}>
