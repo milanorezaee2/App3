@@ -100,7 +100,6 @@ export default function EnglishFinalAssessmentScreen() {
     {level && <>
       <Text style={s.pageTitle}>سنجش پایانی {level}</Text>
       <Text style={s.text}>{level === 'Foundation' ? '۱۲ پرسش تازه از خواندن، شنیدن، دستور و نوشتن پایه.' : '۳۲ پرسش تازه از خواندن، شنیدن، دستور و واژگان و نوشتن هدایت‌شده.'}</Text>
-      <Text style={s.text}>این سنجش برای مرور یادگیری است. پاسخ‌ها و تلاش‌ها روی همین دستگاه ذخیره می‌شوند؛ معیار داخلی گذر ۸۰٪ است و به‌هیچ‌وجه گواهی رسمی یا ارزیابی مستقل CEFR نیست. گفتار آزاد و تلفظ در این صفحه نمره‌گذاری نمی‌شوند.</Text>
       {!!message && <Text accessibilityLiveRegion="polite" style={s.error}>{message}</Text>}
       {!ready && !message && <Text style={s.text}>در حال خواندن سابقهٔ دوره…</Text>}
       {ready && !active && !score && <View style={s.card}>
@@ -114,7 +113,7 @@ export default function EnglishFinalAssessmentScreen() {
         {!!current && <EnglishSupplementTask key={`${attempt.id}-${current.id}`} task={current} lockAfterSave deferFeedback onSave={saveAnswer} />}
         {saved && !!current && <Text accessibilityLiveRegion="polite" style={s.success}>پاسخ این سؤال ذخیره شد؛ برای حفظ سنجش مستقل، امکان تغییر آن پس از ثبت وجود ندارد.</Text>}
         {active && saved && nextUnanswered >= 0 && <Pressable accessibilityRole="button" style={s.button} onPress={() => { setIndex(nextUnanswered); setSaved(false); }}><Text style={s.buttonText}>رفتن به سؤال بعد</Text></Pressable>}
-        {allAnswered && <><Text style={s.text}>به همهٔ پرسش‌ها پاسخ داده شد. با ثبت نتیجه، خلاصهٔ تلاش ذخیره می‌شود.</Text><Pressable accessibilityRole="button" disabled={busy} style={[s.button, busy && s.disabled]} onPress={() => void complete()}><Text style={s.buttonText}>{busy ? 'در حال ثبت…' : 'ثبت نتیجهٔ پایانی'}</Text></Pressable></>}
+        {allAnswered && <><Pressable accessibilityRole="button" disabled={busy} style={[s.button, busy && s.disabled]} onPress={() => void complete()}><Text style={s.buttonText}>{busy ? 'در حال ثبت…' : 'ثبت نتیجهٔ پایانی'}</Text></Pressable></>}
       </View>}
       {score && <View style={s.card}>
         <Text style={score.percent >= ASSESSMENT_PASS_PERCENT ? s.success : s.heading}>{score.percent >= ASSESSMENT_PASS_PERCENT ? 'معیار داخلی سنجش گذرانده شد' : 'این تلاش به معیار داخلی نرسید'}</Text>

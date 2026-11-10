@@ -91,7 +91,7 @@ export default function InviteContactScreen() {
           <View style={styles.card}>
             <View style={styles.icon}><QrCode size={34} color={Colors.primary[400]} /></View>
             <Text style={styles.cardTitle}>کد دعوت شما</Text>
-            <Text style={styles.cardDesc}>این کد ۲۴ ساعت اعتبار دارد. آن را فقط برای فرد موردنظرتان ارسال کنید.</Text>
+            <Text style={styles.cardDesc}>این کد ۲۴ ساعت اعتبار دارد.</Text>
             <View style={styles.codeBox}>
               {busy && !inviteCode ? <ActivityIndicator color={Colors.primary[400]} /> : <Text style={styles.code}>{inviteCode ? toPersianDigits(inviteCode) : '------'}</Text>}
               <Copy size={18} color={Colors.neutral[500]} />
@@ -104,7 +104,7 @@ export default function InviteContactScreen() {
           <View style={styles.card}>
             <View style={styles.icon}><UserPlus size={34} color={Colors.accent[400]} /></View>
             <Text style={styles.cardTitle}>کد دوستتان را وارد کنید</Text>
-            <Text style={styles.cardDesc}>پس از تأیید کد، گفتگوی خصوصی شما فوراً ساخته می‌شود.</Text>
+            <Text style={styles.cardDesc}>با تأیید کد، گفتگو ساخته می‌شود.</Text>
             <TextInput style={styles.input} value={code} onChangeText={(text) => setCode(text.replace(/\D/g, '').slice(0, 6))} keyboardType="number-pad" maxLength={6} placeholder="------" placeholderTextColor={Colors.neutral[700]} textAlign="center" />
             <Pressable style={[styles.primary, (code.length !== 6 || busy) && styles.disabled]} disabled={code.length !== 6 || busy} onPress={() => void claimInvite()}>
               {busy ? <ActivityIndicator color={Colors.onColor} /> : <><Link2 size={18} color={Colors.onColor} /><Text style={styles.primaryText}>اتصال و شروع گفتگو</Text></>}
@@ -114,7 +114,7 @@ export default function InviteContactScreen() {
 
         {configured ? null : <SupabaseSetupNotice />}
         {error && configured ? <Text style={styles.error}>{error}</Text> : null}
-        <View style={styles.security}><ShieldCheck size={19} color={Colors.success[400]} /><Text style={styles.securityText}>پیام‌ها با قوانین امنیتی Supabase فقط برای دو عضو همان گفتگو قابل مشاهده هستند.</Text></View>
+        <View style={styles.security}><ShieldCheck size={19} color={Colors.success[400]} /></View>
       </View>
     </View>
   );

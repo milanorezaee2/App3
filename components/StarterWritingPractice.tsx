@@ -18,12 +18,11 @@ export default function StarterWritingPractice({ sentence }: { sentence: Learnin
   return <View style={s.card}>
     <Pressable accessibilityRole="button" accessibilityState={{expanded:open}} onPress={() => setOpen(v => !v)} style={s.toggle}><Text style={s.title}>{open ? 'بستن تمرین نوشتن' : 'تمرین نوشتن اختیاری'}</Text><Text style={s.icon}>{open ? '−' : '+'}</Text></Pressable>
     {open && <>
-      <Text style={s.text}>نمونهٔ همین درس را بر اساس معنی بنویسید. حروف دارای نشانه را رعایت کنید؛ بزرگی حروف و نشانه‌گذاری بررسی نمی‌شود. پاسخ‌های متفاوت ممکن است درست باشند، اما اینجا فقط با نمونهٔ درس مقایسه می‌شوند.</Text>
+      <Text style={s.text}>نمونهٔ همین درس را بر اساس معنی بنویسید.</Text>
       <Text style={s.question}>{sentence.fa}</Text>
       <TextInput accessibilityLabel="نوشتن نمونهٔ این درس" value={value} onChangeText={next => {setValue(next); setChecked(false);}} placeholder="…" autoCapitalize="none" autoCorrect={false} multiline style={s.input} />
       <Pressable accessibilityRole="button" accessibilityState={{disabled:!value.trim()}} disabled={!value.trim()} onPress={() => setChecked(true)} style={[s.button, !value.trim() && s.disabled]}><Text style={s.buttonText}>مقایسه با نمونه</Text></Pressable>
       {checked && <Text accessibilityLiveRegion="polite" style={s.feedback}>{correct ? 'نوشته با نمونهٔ درس مطابقت دارد.' : 'نوشته با نمونهٔ ثبت‌شده یکسان نیست؛ دوباره بررسی کنید.'}</Text>}
-      <Text style={s.note}>اختیاری است؛ پاسخ ذخیره نمی‌شود و در پایان درس اثری ندارد.</Text>
     </>}
   </View>;
 }

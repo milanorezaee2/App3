@@ -34,8 +34,8 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
 
   return (
     <View style={styles.card}>
-      <View style={styles.metaRow}><Text style={styles.kicker}>گفت‌وگوی هدایت‌شده · بدون نیاز به سرویس آنلاین</Text><Text style={styles.counter}>{fa(index + 1)} / {fa(dialogue.length)}</Text></View>
-      <Text style={styles.instruction}>نقش خود را انتخاب کنید. جملهٔ طرف مقابل را بشنوید، پاسخ را بلند بگویید و بعد نمونه را ببینید.</Text>
+      <View style={styles.metaRow}><Text style={styles.counter}>{fa(index + 1)} / {fa(dialogue.length)}</Text></View>
+      <Text style={styles.instruction}>نقش خود را انتخاب کنید و پاسخ را بلند بگویید.</Text>
       <View style={styles.roleRow}>{speakers.map(speaker => <Pressable key={speaker} accessibilityRole="button" accessibilityState={{ selected: myRole === speaker }} onPress={() => changeRole(speaker)} style={[styles.roleButton, myRole === speaker && styles.roleButtonActive]}><Text style={[styles.roleText, myRole === speaker && styles.roleTextActive]}>{speaker}</Text></Pressable>)}</View>
       {current && <View style={[styles.bubble, isMyLine ? styles.bubbleLearner : styles.bubblePartner]}>
         <Text style={styles.speaker}>{isMyLine ? 'نوبت شما' : current.speaker}</Text>
@@ -48,7 +48,7 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
       </View>}
       {isMyLine && !revealed ? null : index < dialogue.length - 1
         ? <Pressable accessibilityRole="button" style={styles.nextButton} onPress={advance}><Text style={styles.nextText}>{isMyLine ? 'گفتم؛ ادامه' : 'ادامهٔ گفت‌وگو'}</Text><ChevronLeft size={18} color="#FFFFFF" /></Pressable>
-        : <><Text style={styles.note}>گفت‌وگو تمام شد. نمونه‌ها از جمله‌های همین درس هستند؛ صدا ضبط یا ارزیابی خودکار نمی‌شود.</Text><Pressable accessibilityRole="button" style={styles.restartButton} onPress={restart}><Text style={styles.restartText}>تمرین دوباره از آغاز</Text></Pressable></>}
+        : <><Pressable accessibilityRole="button" style={styles.restartButton} onPress={restart}><Text style={styles.restartText}>تمرین دوباره از آغاز</Text></Pressable></>}
     </View>
   );
 }

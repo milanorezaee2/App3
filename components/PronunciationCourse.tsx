@@ -190,7 +190,6 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
             </View>
             <View style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>
               <Text style={[styles.sectionTitle, { color: theme.ink }]}>محتوای تلفظ خالی است</Text>
-              <Text style={[styles.body, { color: theme.text }]}>هیچ تمرین، مثال یا جملهٔ ساختگی برای این زبان نمایش داده نمی‌شود.</Text>
             </View>
           </View>
         </ScrollView>
@@ -230,7 +229,7 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
           </View>
 
           <View style={[styles.noticeCard, { backgroundColor: theme.soft, borderColor: theme.border }]}>
-            <Text style={[styles.noticeTitle, { color: theme.accentDark }]}>تمرین خودارزیابی؛ خصوصی و قابل‌همگام‌سازی</Text>
+            <Text style={[styles.noticeTitle, { color: theme.accentDark }]}>خودارزیابی تلفظ</Text>
             <Text style={[styles.body, { color: theme.text }]}>نمونه‌ها با موتور گفتار سیستم‌عامل درخواست می‌شوند؛ موجودبودن و آفلاین‌بودن صدا به تنظیمات دستگاه بستگی دارد. این بخش میکروفن را باز نمی‌کند، صدای شما را ضبط یا ارسال نمی‌کند و تلفظ را نمره نمی‌دهد. وضعیت‌ها خودارزیابی‌اند؛ {syncsToAccount ? 'برای همگام‌سازی میان دستگاه‌ها، از صفحهٔ «حساب و همگام‌سازی» وارد شوید.' : 'این یادداشت‌ها فعلاً فقط روی همین دستگاه می‌مانند و به حساب فرستاده نمی‌شوند.'}</Text>
           </View>
 
@@ -302,7 +301,7 @@ export function PronunciationCourse({ language }: { language: PronunciationLangu
 
           <View style={[styles.selfCheck, { backgroundColor: theme.surface, borderColor: theme.border }]}>
             <Text style={[styles.sectionTitle, { color: theme.ink }]}>یادداشت خودت</Text>
-            <Text style={[styles.body, { color: theme.text }]}>پس از گوش‌دادن و تکرار، فقط برای برنامه‌ریزی مرور انتخاب کن؛ این علامت، سنجش درست یا نادرست‌بودن تلفظ نیست.</Text>
+            <Text style={[styles.body, { color: theme.text }]}>پس از گوش‌دادن و تکرار، وضعیت را انتخاب کن. این علامت، سنجش درست یا نادرست‌بودن تلفظ نیست.</Text>
             {!storageReady && !storageError ? <Text style={[styles.smallText, { color: theme.muted }]}>در حال خواندن یادداشت‌های همین دستگاه…</Text> : null}
             {storageError ? (
               <View style={styles.storageErrorWrap}>

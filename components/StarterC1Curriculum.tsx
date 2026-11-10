@@ -17,7 +17,7 @@ function Topic({language,locale,section,number,title}:{language:NewLanguageId;lo
  return <View style={s.topic}><Text style={s.topicTitle}>{fa(number)}. {title}</Text>
   {item?<><Pressable accessibilityRole="button" accessibilityLabel={`درس مستقل ${title}`} accessibilityState={{expanded:open}} style={s.toggle} onPress={()=>{if(open)void stopStarterSpeech();setOpen(!open);}}><Text style={s.link}>{open?'بستن درس مستقل':'باز کردن درس مستقل'}</Text><Text style={s.link}>{open?'−':'+'}</Text></Pressable>
    {open&&<><StarterTopicDeepening key={`${language}-${item.id}`} item={item} language={language} onSpeak={speak}/>{!!error&&<Text accessibilityRole="alert" style={s.error}>{error}</Text>}</>}
-  </>:<Text style={s.pending}>درس مستقل این سرفصل هنوز تدوین نشده است.</Text>}
+  </>:<Text style={s.pending}>به‌زودی اضافه می‌شود.</Text>}
  </View>;
 }
 const sampleTranslation:Record<NewLanguageId,string>={

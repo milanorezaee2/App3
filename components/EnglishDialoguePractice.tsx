@@ -54,10 +54,9 @@ export function EnglishDialoguePractice({ dialogue }: { dialogue: SentenceLesson
 
   return <View style={styles.card}>
     <View style={styles.metaRow}>
-      <Text style={styles.kicker}>گفت‌وگوی هدایت‌شده · بدون نیاز به سرویس آنلاین</Text>
       <Text style={styles.counter}>{pairIndex + 1} / {pairs.length}</Text>
     </View>
-    <Text style={styles.instruction}>جملهٔ طرف مقابل را گوش کنید، پاسخ خود را بلند بگویید، سپس نمونهٔ همین درس را ببینید.</Text>
+    <Text style={styles.instruction}>جملهٔ طرف مقابل را بشنوید، پاسخ خود را بلند بگویید، سپس نمونه را ببینید.</Text>
     <View style={styles.bubble}>
       <Text style={styles.speaker}>طرف مقابل</Text>
       <Text style={styles.english}>{current.partner.text}</Text>
@@ -84,7 +83,6 @@ export function EnglishDialoguePractice({ dialogue }: { dialogue: SentenceLesson
       <ChevronLeft size={18} color="#FFFFFF" />
     </Pressable>}
     {!!audioNotice && <Text accessibilityLiveRegion="polite" style={styles.note}>{audioNotice}</Text>}
-    <Text style={styles.note}>این تمرین از دیالوگ موجود استفاده می‌کند؛ گفتار ضبط یا برای هوش مصنوعی ارسال نمی‌شود.</Text>
   </View>;
 }
 
