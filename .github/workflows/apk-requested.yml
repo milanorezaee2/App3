@@ -1,6 +1,6 @@
 name: Build requested APKs
 
-# rev 31: chat alert card simplified (switch + friendly copy; technical disclaimers removed)
+# rev 31: chat alert card simplified (switch + friendly copy; technical disclaimers removed); validator updated
 # rev 30: chat list keeps newest message visible above the keyboard/composer
 # rev 29: readable chat bubbles (light green mine / white theirs, dark text)
 # rev 28: conversation hub in de/fr/es bottom nav (same as en/tr/ru); Emma AI coach disabled in all languages
