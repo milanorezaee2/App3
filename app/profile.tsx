@@ -15,6 +15,7 @@ import { supabase } from '@/lib/supabase';
 import { completeLearnerProfile, getRegisteredSession, registrationError, type RegistrationProfile } from '@/lib/userRegistration';
 import { syncPersonalLearningData } from '@/lib/personalLearningSync';
 import { beginLocalProfile, clearLocalProfile, getLocalProfile, localProfileError, normalizeLocalCode, regenerateLocalCode, touchLocalProfile, updateLocalProfileName, verifyLocalProfile, type LocalProfile } from '@/lib/localProfile';
+import { ensureOpenLearnerRegistered, registerOpenLearnerOnServer } from '@/lib/openLearnerAccount';
 import { loadLearnerProfileSummary, nameInitials, type Achievement, type LanguageProfileStat, type LearnerProfileSummary } from '@/lib/learnerProfile';
 import { toPersianDigits as fa, timeAgo } from '@/lib/format';
 import { Typography } from '@/lib/theme';
@@ -88,6 +89,7 @@ function lastActiveLabel(key: string | null): string {
 
 function ProfileEnabledScreen({ local }: { local: boolean }) {
   const router = useRouter();
+  const deviceAccount = local && FEATURES.openLearnerAccount;
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<RegistrationProfile | null>(null);
   const [localProfile, setLocalProfile] = useState<LocalProfile | null>(null);
@@ -112,6 +114,13 @@ function ProfileEnabledScreen({ local }: { local: boolean }) {
           setProfile({ user_id: 'local', full_name: stored.fullName, email: stored.email, registered_at: stored.createdAt, last_seen_at: stored.lastSeenAt });
           setLastSignIn(stored.verifiedAt);
           void touchLocalProfile();
+          if (deviceAccount) {
+            void ensureOpenLearnerRegistered().then(async () => {
+              const { data } = await supabase.auth.getSession();
+              setUserId(data.session?.user.id ?? '');
+              setLocalProfile(await getLocalProfile());
+            });
+          }
         } else {
           setProfile(null);
         }
@@ -130,7 +139,7 @@ function ProfileEnabledScreen({ local }: { local: boolean }) {
     } finally {
       setLoading(false);
     }
-  }, [local]);
+  }, [local, deviceAccount]);
 
   useFocusEffect(useCallback(() => { void load(); }, [load]));
   useEffect(() => {
@@ -146,7 +155,7 @@ function ProfileEnabledScreen({ local }: { local: boolean }) {
     setSaving(true);
     setError('');
     try {
-      if (local) await updateLocalProfileName(nameDraft); else await completeLearnerProfile(nameDraft);
+      if (local) { await updateLocalProfileName(nameDraft); if (deviceAccount) await registerOpenLearnerOnServer().catch(() => undefined); } else await completeLearnerProfile(nameDraft);
       setEditing(false);
       setNotice('نام نمایشی به‌روزرسانی شد.');
       await load();
@@ -225,7 +234,17 @@ function ProfileEnabledScreen({ local }: { local: boolean }) {
             <LocalProfileSetup
               pending={localProfile}
               onChanged={() => { setNotice(''); void load(); }}
-              onVerified={() => { setNotice('پروفایل شما روی این دستگاه فعال شد.'); void load(); }}
+              onVerified={() => {
+                setNotice('پروفایل شما روی این دستگاه فعال شد.');
+                if (deviceAccount) {
+                  void registerOpenLearnerOnServer()
+                    .then(result => { if (result === 'registered') setNotice('پروفایل فعال شد و در پنل مدیریت ثبت گردید.'); })
+                    .catch(cause => setError(cause instanceof Error ? cause.message : 'ثبت در پنل مدیریت انجام نشد.'))
+                    .finally(() => void load());
+                } else {
+                  void load();
+                }
+              }}
             />
           ) : !profile ? (
             <View style={styles.card}>
@@ -306,6 +325,15 @@ function ProfileEnabledScreen({ local }: { local: boolean }) {
               {tab === 'account' && (
                 <AccountTab
                   local={local}
+                  deviceAccount={deviceAccount}
+                  serverRegisteredAt={localProfile?.serverRegisteredAt ?? null}
+                  onRegister={() => {
+                    setError(''); setNotice('');
+                    void registerOpenLearnerOnServer()
+                      .then(() => { setNotice('در پنل مدیریت ثبت شد.'); })
+                      .catch(cause => setError(cause instanceof Error ? cause.message : 'ثبت انجام نشد.'))
+                      .finally(() => void load());
+                  }}
                   localCode={localProfile?.code ?? ''}
                   profile={profile}
                   userId={userId}
@@ -518,8 +546,8 @@ function AchievementsTab({ achievements }: { achievements: Achievement[] }) {
 
 /* ───────────────────────── Account ───────────────────────── */
 
-function AccountTab({ local, localCode, profile, userId, lastSignIn, lastSynced, syncing, onSync, onManage, onBackup, onSignOut }: {
-  local: boolean; localCode: string; profile: RegistrationProfile; userId: string; lastSignIn: string | null; lastSynced: string; syncing: boolean;
+function AccountTab({ local, deviceAccount, serverRegisteredAt, onRegister, localCode, profile, userId, lastSignIn, lastSynced, syncing, onSync, onManage, onBackup, onSignOut }: {
+  local: boolean; deviceAccount: boolean; serverRegisteredAt: string | null; onRegister: () => void; localCode: string; profile: RegistrationProfile; userId: string; lastSignIn: string | null; lastSynced: string; syncing: boolean;
   onSync: () => void; onManage: () => void; onBackup: () => void; onSignOut: () => void;
 }) {
   const appVersion = Application.nativeApplicationVersion || '1.0.0';
@@ -534,6 +562,7 @@ function AccountTab({ local, localCode, profile, userId, lastSignIn, lastSynced,
           ['فعال‌سازی', lastSignIn ? formatDate(lastSignIn, true) : '—'],
           ['آخرین فعالیت', profile.last_seen_at ? timeAgo(profile.last_seen_at) : '—'],
           ['کد ورود این دستگاه', localCode ? fa(localCode) : '—', true],
+          ...(deviceAccount ? [['شناسهٔ دستگاه', userId ? `${userId.slice(0, 8)}…${userId.slice(-4)}` : 'در انتظار اتصال', true] as [string, string, boolean]] : []),
         ] : [
           ['نام نمایشی', profile.full_name || '—'],
           ['ایمیل', profile.email, true],
@@ -544,7 +573,21 @@ function AccountTab({ local, localCode, profile, userId, lastSignIn, lastSynced,
         ]} />
       </Section>
 
-      {local ? (
+      {deviceAccount && (
+        <Section icon={<BadgeCheck size={17} color={palette.forest} />} title="ثبت در پنل مدیریت" subtitle="نام و ایمیل شما برای مدیر برنامه قابل مشاهده است؛ کد ورود هرگز ارسال نمی‌شود.">
+          <KeyValueList rows={[
+            ['وضعیت', serverRegisteredAt ? 'ثبت‌شده' : 'هنوز ثبت نشده'],
+            ['زمان ثبت', serverRegisteredAt ? formatDate(serverRegisteredAt, true) : '—'],
+          ]} />
+          {!serverRegisteredAt && (
+            <Pressable accessibilityRole="button" onPress={onRegister} style={({ pressed }) => [styles.secondaryButton, pressed && styles.pressed]}>
+              <RefreshCw size={16} color={palette.forest} /><Text style={styles.secondaryButtonText}>تلاش دوباره برای ثبت</Text>
+            </Pressable>
+          )}
+        </Section>
+      )}
+
+      {local && !deviceAccount ? (
         <Section icon={<Smartphone size={17} color={palette.forest} />} title="ذخیرهٔ محلی" subtitle="این پروفایل و پیشرفت شما فقط روی همین دستگاه نگهداری می‌شود و هیچ داده‌ای به سرور فرستاده نمی‌شود.">
           <KeyValueList rows={[
             ['وضعیت', 'فعال روی این دستگاه'],
@@ -562,6 +605,7 @@ function AccountTab({ local, localCode, profile, userId, lastSignIn, lastSynced,
           ['وضعیت', lastSynced ? 'همگام' : 'آمادهٔ همگام‌سازی'],
           ['آخرین تأیید سرور', lastSynced ? formatDate(lastSynced, true) : 'در این نشست انجام نشده'],
           ['محتوای همگام‌شده', 'پیشرفت درس‌ها، کارت‌های مرور و زمان تمرین انگلیسی'],
+          ...(deviceAccount ? [['دامنهٔ همگام‌سازی', 'پشتیبان ابری همین دستگاه؛ برای انتقال به دستگاه دیگر از پشتیبان محلی استفاده کنید'] as [string, string]] : []),
         ]} />
       </Section>
       )}

@@ -7,6 +7,7 @@ import { useRouter } from 'expo-router';
 import { ArrowLeft, ArrowRight, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
 import { MiloLanguageBrand } from '@/components/MiloLanguageBrand';
 import { ProfileIcon } from '@/components/ProfileIcon';
+import { ensureOpenLearnerRegistered } from '@/lib/openLearnerAccount';
 import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
@@ -49,6 +50,8 @@ export default function LanguagesHome() {
   const { width } = useWindowDimensions();
   const compact = width < 680;
   const tiny = width < 370;
+
+  useEffect(() => { void ensureOpenLearnerRegistered(); }, []);
 
   useEffect(() => {
     // Browsers block autoplay and expo-audio web leaves the play() promise unhandled; skip on web.

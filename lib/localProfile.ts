@@ -15,6 +15,8 @@ export interface LocalProfile {
   createdAt: string;
   verifiedAt: string | null;
   lastSeenAt: string;
+  /** Set once the device account is registered on the server (open five-language app). */
+  serverRegisteredAt: string | null;
 }
 
 const KEY = 'milo_local_profile_v1';
@@ -44,6 +46,7 @@ function parse(raw: string | null): LocalProfile | null {
       createdAt: typeof value.createdAt === 'string' ? value.createdAt : new Date().toISOString(),
       verifiedAt: typeof value.verifiedAt === 'string' ? value.verifiedAt : null,
       lastSeenAt: typeof value.lastSeenAt === 'string' ? value.lastSeenAt : new Date().toISOString(),
+      serverRegisteredAt: typeof value.serverRegisteredAt === 'string' ? value.serverRegisteredAt : null,
     };
   } catch {
     return null;
@@ -95,6 +98,7 @@ export async function beginLocalProfile(fullName: string, email: string): Promis
     createdAt: now,
     verifiedAt: null,
     lastSeenAt: now,
+    serverRegisteredAt: null,
   };
   await writeRaw(JSON.stringify(profile));
   return profile;
@@ -123,6 +127,12 @@ export async function updateLocalProfileName(fullName: string): Promise<LocalPro
   const next = { ...current, fullName: normalizeLocalName(fullName) };
   await writeRaw(JSON.stringify(next));
   return next;
+}
+
+export async function markLocalProfileRegistered(): Promise<void> {
+  const current = await getLocalProfile();
+  if (!current) return;
+  await writeRaw(JSON.stringify({ ...current, serverRegisteredAt: new Date().toISOString() }));
 }
 
 export async function touchLocalProfile(): Promise<void> {
