@@ -20,8 +20,8 @@ const STATUS_TEXT: Partial<Record<BackgroundChatStatus, string>> = {
 };
 
 /**
- * Honest control for the Firebase-free chat alerts. It never promises instant
- * delivery: Android runs background work at 15-minute granularity at best.
+ * Firebase-free alert switch. Android opts into a native foreground service;
+ * Doze and device power policies can still defer network delivery.
  */
 export function ChatAlertSettingsCard() {
   const [status, setStatus] = useState<BackgroundChatStatus | 'loading'>('loading');

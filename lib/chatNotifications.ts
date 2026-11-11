@@ -8,6 +8,13 @@ import { supabase } from './supabase';
 import { ensureChatIdentity } from './conversations';
 import { adminClient } from './educationAdmin';
 import { MANAGEMENT_BUILD } from './features';
+import { isBackgroundChatChecksEnabled } from './backgroundChatChecks';
+import {
+  restoreLatestAndroidChatSession,
+  setAndroidChatServiceAppForegrounded,
+  startAndroidChatForegroundService,
+  stopAndroidChatForegroundServiceForClient,
+} from './chatForegroundService';
 
 export const CHAT_NOTIFICATION_CHANNEL = 'milo-chat';
 export const QUIET_CHAT_NOTIFICATION_CHANNEL = 'milo-chat-quiet';
@@ -42,15 +49,18 @@ export function setActiveChatNotificationConversation(conversationId: string | n
 }
 
 Notifications.setNotificationHandler({
-  handleNotification: async () => {
+  handleNotification: async notification => {
     const foreground = AppState.currentState === 'active';
+    const eventId = notification.request.content.data?.eventId;
+    const isLocalTest = typeof eventId === 'string' && eventId.startsWith('local-test:');
     // Foreground delivery is shown by the quiet in-app banner below, not as an
-    // OS notification. Background delivery uses Expo's normal OS presentation.
+    // OS notification. The explicit local test is the exception: it must be
+    // visible while the user is on the settings screen to test this device.
     return {
-      shouldShowBanner: !foreground,
-      shouldShowList: !foreground,
-      shouldPlaySound: !foreground,
-      shouldSetBadge: !foreground,
+      shouldShowBanner: !foreground || isLocalTest,
+      shouldShowList: !foreground || isLocalTest,
+      shouldPlaySound: !foreground || isLocalTest,
+      shouldSetBadge: !foreground && !isLocalTest,
     };
   },
 });
@@ -162,12 +172,12 @@ function nativeAppState(state: AppStateStatus): 'active' | 'background' {
   return state === 'active' ? 'active' : 'background';
 }
 
-/** Registers one Expo token using only the current authenticated user's client. */
+/** Expo remote tokens remain for iOS; Android now uses its native no-FCM service. */
 export async function registerChatPushTokenForUser(
   userId: string,
   client: SupabaseClient,
 ): Promise<string | null> {
-  if (Platform.OS === 'web' || !Device.isDevice || !userId) return null;
+  if (Platform.OS !== 'ios' || !Device.isDevice || !userId) return null;
   try {
     await configureAndroidChannels();
     if (!await askNotificationPermissionOnce()) return null;
@@ -263,25 +273,34 @@ async function messageNotificationEvent(
 export async function startChatNotifications(
   options: ChatNotificationOptions = {},
 ): Promise<() => Promise<void>> {
-  // Web uses Supabase Realtime for in-app banners. Native push registration
-  // remains guarded by Device.isDevice inside registerChatPushTokenForUser.
+  // Web uses Supabase Realtime for in-app banners; iOS retains Expo/APNs push,
+  // while opted-in Android devices use the native Supabase WebSocket service.
   if (Platform.OS !== 'web' && !Device.isDevice) return async () => undefined;
   await configureAndroidChannels();
-  // The bridge still listens for in-app events if permission is denied; only
-  // OS token registration is gated by the one-time permission request.
-  await askNotificationPermissionOnce();
+  // Foreground Realtime banners remain available when permission is denied;
+  // Android background delivery is permission-gated.
+  let notificationsAllowed = await askNotificationPermissionOnce();
 
   let stopped = false;
   let activeUserId: string | null = null;
   let activeToken: string | null = null;
   let realtimeChannels: RealtimeChannel[] = [];
   const client = currentClient();
+  if (Platform.OS === 'android') {
+    try {
+      await restoreLatestAndroidChatSession(client);
+      await client.auth.startAutoRefresh();
+    } catch {
+      // Auth recovery is best-effort; the normal login flow remains available.
+    }
+  }
 
   const teardownUserScope = async () => {
     const current = realtimeChannels;
     realtimeChannels = [];
     await removeChannels(client, current);
     activeToken = null;
+    if (Platform.OS === 'android') await stopAndroidChatForegroundServiceForClient(client);
   };
 
   const emitForegroundEvent = (event: ChatNotificationEvent) => {
@@ -293,6 +312,9 @@ export async function startChatNotifications(
     if (stopped) return;
     activeUserId = userId;
     activeToken = await registerChatPushTokenForUser(userId, client);
+    if (Platform.OS === 'android' && notificationsAllowed && await isBackgroundChatChecksEnabled()) {
+      await startAndroidChatForegroundService(client, userId, MANAGEMENT_BUILD).catch(() => false);
+    }
 
     const messages = client
       .channel(`chat-notifications:messages:${userId}`)
@@ -392,12 +414,21 @@ export async function startChatNotifications(
       if (!activeToken && AppState.currentState === 'active') {
         activeToken = await registerChatPushTokenForUser(userId, client);
       }
+      if (Platform.OS === 'android' && notificationsAllowed && await isBackgroundChatChecksEnabled()) {
+        await startAndroidChatForegroundService(client, userId, MANAGEMENT_BUILD).catch(() => false);
+      }
       return;
     }
     await setupUserScope(userId);
   };
 
-  const authSubscription: Subscription = client.auth.onAuthStateChange(() => {
+  const authSubscription: Subscription = client.auth.onAuthStateChange((_event, session) => {
+    if (Platform.OS === 'android' && session && session.user.id === activeUserId && notificationsAllowed) {
+      void isBackgroundChatChecksEnabled().then(enabled => {
+        if (enabled) return startAndroidChatForegroundService(client, session.user.id, MANAGEMENT_BUILD);
+        return false;
+      }).catch(() => undefined);
+    }
     void activate();
   }).data.subscription;
   await activate();
@@ -405,6 +436,27 @@ export async function startChatNotifications(
   const updateDeviceState = async (state: AppStateStatus, allowRegistration = false) => {
     const userId = activeUserId;
     if (!userId) return;
+    if (Platform.OS === 'android') {
+      try {
+        if (state === 'active') {
+          notificationsAllowed = await askNotificationPermissionOnce();
+          await restoreLatestAndroidChatSession(client);
+          await client.auth.startAutoRefresh();
+          if (notificationsAllowed && await isBackgroundChatChecksEnabled()) {
+            await startAndroidChatForegroundService(client, userId, MANAGEMENT_BUILD);
+            await setAndroidChatServiceAppForegrounded(true);
+          } else if (!notificationsAllowed) {
+            await stopAndroidChatForegroundServiceForClient(client);
+          }
+        } else {
+          await client.auth.stopAutoRefresh();
+          await setAndroidChatServiceAppForegrounded(false);
+        }
+      } catch {
+        // The native service retries network/auth failures independently.
+      }
+      return;
+    }
     try {
       let token = activeToken;
       if (!token && state === 'active' && allowRegistration) {
@@ -428,7 +480,7 @@ export async function startChatNotifications(
     void updateDeviceState(state, true);
   });
   const heartbeat = setInterval(() => {
-    if (AppState.currentState === 'active') void updateDeviceState('active');
+    if (Platform.OS !== 'android' && AppState.currentState === 'active') void updateDeviceState('active');
   }, FOREGROUND_PRESENCE_INTERVAL_MS);
 
   return async () => {
