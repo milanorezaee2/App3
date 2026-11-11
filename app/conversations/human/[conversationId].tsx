@@ -18,6 +18,8 @@ import {
   getVoiceMessageUrl,
   listMessages,
   sendTextMessage,
+  isConversationClosedError,
+  recoverSupportConversation,
   sendVoiceMessage,
   subscribeToMessages,
   unsubscribeFromMessages,
@@ -146,6 +148,22 @@ export default function HumanConversationScreen() {
       addMessage(await sendTextMessage(conversationId, clean));
       setError(null);
     } catch (cause) {
+      if (isConversationClosedError(cause)) {
+        // The manager closed this thread; move to the fresh support conversation and resend there.
+        const replacement = await recoverSupportConversation(conversationId);
+        if (replacement) {
+          try {
+            await sendTextMessage(replacement, clean);
+            setError(null);
+            router.replace(`/conversations/human/${replacement}` as never);
+            return;
+          } catch (retryCause) {
+            setInput(clean);
+            setError(retryCause instanceof Error ? retryCause.message : 'پیام ارسال نشد.');
+            return;
+          }
+        }
+      }
       setInput(clean);
       setError(cause instanceof Error ? cause.message : 'پیام ارسال نشد.');
     } finally {
