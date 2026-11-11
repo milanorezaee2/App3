@@ -11,6 +11,7 @@ import { ensureChatIdentity } from './conversations';
 import {
   authStorageKey,
   startAndroidChatForegroundService,
+  getLastChatServiceFailure,
   stopAndroidChatForegroundServiceForClient,
 } from './chatForegroundService';
 import { getChatForegroundServiceStatus, isChatForegroundServiceConfigured } from '@/modules/milo-chat-foreground';
@@ -184,8 +185,14 @@ export async function runBackgroundChatCheck(): Promise<number> {
 }
 
 /** User opt-in: native persistent WebSocket on Android, existing scheduler elsewhere. */
+let lastFailure = '';
+function setLastBackgroundChatFailure(reason: string) { lastFailure = reason; }
+/** Why the last enable attempt failed (Android), for the settings card. */
+export function lastBackgroundChatFailure(): string { return lastFailure || getLastChatServiceFailure(); }
+
 export async function enableBackgroundChatChecks(): Promise<BackgroundChatStatus> {
   if (Platform.OS === 'web') return 'unsupported';
+  lastFailure = '';
   await ensureChatChannel();
   const permission = await Notifications.getPermissionsAsync();
   if (!permission.granted) {
@@ -196,7 +203,7 @@ export async function enableBackgroundChatChecks(): Promise<BackgroundChatStatus
   if (Platform.OS === 'android') {
     const active = client();
     const userId = await resolveAndroidUserId(active);
-    if (!userId) return 'restricted';
+    if (!userId) { setLastBackgroundChatFailure('ابتدا وارد حساب شوید؛ بدون ورود، اعلان پیام فعال نمی‌شود.'); return 'restricted'; }
     await unregisterLegacyTask();
     try {
       const started = await startAndroidChatForegroundService(active, userId, MANAGEMENT_BUILD);
@@ -207,7 +214,8 @@ export async function enableBackgroundChatChecks(): Promise<BackgroundChatStatus
       }
       await AsyncStorage.setItem(BACKGROUND_CHAT_ENABLED_KEY, '1');
       return 'enabled';
-    } catch {
+    } catch (cause) {
+      setLastBackgroundChatFailure(`خطا هنگام فعال‌سازی: ${cause instanceof Error ? cause.message : String(cause)}`);
       await AsyncStorage.removeItem(BACKGROUND_CHAT_ENABLED_KEY).catch(() => undefined);
       await stopAndroidChatForegroundServiceForClient(active).catch(() => undefined);
       return 'restricted';
