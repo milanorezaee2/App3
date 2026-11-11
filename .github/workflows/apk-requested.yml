@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 34: language-specific invitation message when sharing a contact code
 # rev 33: admin flavour renamed to "Admin App" (AdminApp.apk)
 # rev 32: rebuild all flavours from main merge cfb2900 (admin app requested)
 # rev 31: chat alert card simplified (switch + friendly copy; technical disclaimers removed); validator updated
