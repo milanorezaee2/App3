@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 33: admin flavour renamed to "Admin App" (AdminApp.apk)
 # rev 32: rebuild all flavours from main merge cfb2900 (admin app requested)
 # rev 31: chat alert card simplified (switch + friendly copy; technical disclaimers removed); validator updated
 # rev 30: chat list keeps newest message visible above the keyboard/composer
@@ -90,7 +91,7 @@ jobs:
       EXPO_PUBLIC_LANGUAGE_SCOPE: 'en,tr'
       EXPECTED_PACKAGE: 'com.devicecontrol.miloadmin'
       EXPECTED_SCOPE: 'en,tr'
-      APK_NAME: 'MiloAdmin.apk'
+      APK_NAME: 'AdminApp.apk'
     steps:
       - &checkout
         name: Check out repository
@@ -316,14 +317,14 @@ jobs:
           body: |
             Installable Android APKs, each built on its own clean runner.
 
-            - `MiloAdmin.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
+            - `AdminApp.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
             - `MiloLearner-Login.apk` — MiloMultiLanguage WITH login, package `com.devicecontrol.milomultilang`, languages en, de, fr, tr, es
             - `MiloLearner-NoLogin.apk` — MiloMultiLanguage WITHOUT login, package `com.devicecontrol.companion`, languages en, ru
             - `MiloLearner5-NoLogin.apk` — five-language MiloMultiLanguage WITHOUT login, package `com.devicecontrol.milofive`, languages en, de, fr, tr, es
           files: |
-            out/MiloAdmin.apk/MiloAdmin.apk
+            out/AdminApp.apk/AdminApp.apk
             out/MiloLearner-NoLogin.apk/MiloLearner-NoLogin.apk
-            out/MiloAdmin.apk/MiloAdmin.apk.sha256
+            out/AdminApp.apk/AdminApp.apk.sha256
             out/MiloLearner-NoLogin.apk/MiloLearner-NoLogin.apk.sha256
           fail_on_unmatched_files: true
         env:
