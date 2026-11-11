@@ -11,6 +11,10 @@ web-build/
 expo-env.d.ts
 android/
 ios/
+# Unlike the generated root android/ project, this is source code for a local
+# Expo module and must be included in Git/EAS builds.
+!modules/milo-chat-foreground/android/
+!modules/milo-chat-foreground/android/**
 
 # native
 *.orig.*

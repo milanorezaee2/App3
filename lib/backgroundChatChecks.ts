@@ -7,29 +7,19 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { supabase } from './supabase';
 import { adminClient } from './educationAdmin';
 import { MANAGEMENT_BUILD } from './features';
+import { ensureChatIdentity } from './conversations';
+import {
+  authStorageKey,
+  startAndroidChatForegroundService,
+  stopAndroidChatForegroundServiceForClient,
+} from './chatForegroundService';
+import { getChatForegroundServiceStatus, isChatForegroundServiceConfigured } from '@/modules/milo-chat-foreground';
 
-/**
- * Chat alerts without Firebase.
- *
- * Android delivers remote push only through Google's FCM service, which needs a
- * Firebase project that cannot be created from Iran. Instead of a push token,
- * this module asks Android's own scheduler (WorkManager) to wake Milo about
- * every 15 minutes — the smallest interval Android allows — and to post a
- * **local** notification when the signed-in user received a new chat message.
- *
- * Consequences that the UI states plainly:
- *  - alerts can arrive up to ~15 minutes late, and battery saving can delay
- *    them further;
- *  - the message text itself is never copied or stored, only the fact that a
- *    message exists and who sent it.
- */
-
+/** Retained for old installed builds and the non-Android fallback. */
 export const BACKGROUND_CHAT_TASK = 'milo-background-chat-check';
 export const BACKGROUND_CHAT_ENABLED_KEY = 'milo_background_chat_check_v1';
 const LAST_SEEN_PREFIX = 'milo_background_chat_last_seen_v1';
-/** Matches the channel already declared in app.json and lib/chatNotifications.ts. */
 const CHAT_CHANNEL = 'milo-chat';
-/** Android refuses shorter background intervals; the value is in minutes. */
 export const BACKGROUND_CHAT_INTERVAL_MINUTES = 15;
 
 export type BackgroundChatStatus =
@@ -55,7 +45,7 @@ async function ensureChatChannel(): Promise<void> {
   if (Platform.OS !== 'android') return;
   await Notifications.setNotificationChannelAsync(CHAT_CHANNEL, {
     name: 'پیام‌ها و درخواست‌های چت',
-    description: 'بررسی دوره‌ای پیام‌های تازه و نمایش اعلان محلی',
+    description: 'پیام‌های خصوصی و درخواست‌های پشتیبانی',
     importance: Notifications.AndroidImportance.HIGH,
     vibrationPattern: [0, 180, 100, 180],
     lightColor: '#635BFF',
@@ -71,6 +61,26 @@ async function signedInUserId(active: SupabaseClient): Promise<string | null> {
     return data.session?.user?.id ?? null;
   } catch {
     return null;
+  }
+}
+
+async function resolveAndroidUserId(active: SupabaseClient): Promise<string | null> {
+  const current = await signedInUserId(active);
+  if (current || MANAGEMENT_BUILD) return current;
+  try {
+    return (await ensureChatIdentity()).id;
+  } catch {
+    return null;
+  }
+}
+
+async function unregisterLegacyTask(): Promise<void> {
+  try {
+    if (await TaskManager.isTaskRegisteredAsync(BACKGROUND_CHAT_TASK)) {
+      await BackgroundTask.unregisterTaskAsync(BACKGROUND_CHAT_TASK);
+    }
+  } catch {
+    // An old WorkManager registration is best-effort cleanup only.
   }
 }
 
@@ -98,18 +108,27 @@ export async function backgroundChatChecksStatus(): Promise<BackgroundChatStatus
   if (!await isBackgroundChatChecksEnabled()) return 'disabled';
   const permission = await Notifications.getPermissionsAsync();
   if (!permission.granted) return 'permission-denied';
+
+  if (Platform.OS === 'android') {
+    try {
+      const active = client();
+      return await isChatForegroundServiceConfigured(authStorageKey(active)) ? 'enabled' : 'restricted';
+    } catch {
+      return 'restricted';
+    }
+  }
+
   const status = await BackgroundTask.getStatusAsync();
-  if (status !== BackgroundTask.BackgroundTaskStatus.Available) return 'restricted';
-  return 'enabled';
+  return status === BackgroundTask.BackgroundTaskStatus.Available ? 'enabled' : 'restricted';
 }
 
 /**
- * Runs one check. Returns how many new messages produced an alert.
- * The first run only records a starting point, so installing the feature never
- * announces week-old history.
+ * Android no longer polls: the explicitly enabled native service listens to
+ * Supabase Realtime. Keep this worker inert on Android so an old WorkManager
+ * task cannot generate delayed duplicates after upgrading.
  */
 export async function runBackgroundChatCheck(): Promise<number> {
-  if (Platform.OS === 'web') return 0;
+  if (Platform.OS === 'web' || Platform.OS === 'android') return 0;
   if (!await isBackgroundChatChecksEnabled()) return 0;
   const active = client();
   const userId = await signedInUserId(active);
@@ -131,10 +150,7 @@ export async function runBackgroundChatCheck(): Promise<number> {
     .order('created_at', { ascending: true })
     .limit(20);
   if (error) throw new Error(error.message);
-
   const rows = (data ?? []) as MessageRow[];
-  // Nothing new: leave the marker untouched. Moving it to "now" here would skip
-  // messages whenever the server clock runs slightly ahead of the phone.
   if (!rows.length) return 0;
 
   const newest = rows[rows.length - 1];
@@ -166,7 +182,7 @@ export async function runBackgroundChatCheck(): Promise<number> {
   return count;
 }
 
-/** Asks for the notification permission, then registers the periodic check. */
+/** User opt-in: native persistent WebSocket on Android, existing scheduler elsewhere. */
 export async function enableBackgroundChatChecks(): Promise<BackgroundChatStatus> {
   if (Platform.OS === 'web') return 'unsupported';
   await ensureChatChannel();
@@ -175,6 +191,21 @@ export async function enableBackgroundChatChecks(): Promise<BackgroundChatStatus
     const requested = await Notifications.requestPermissionsAsync();
     if (!requested.granted) return 'permission-denied';
   }
+
+  if (Platform.OS === 'android') {
+    const active = client();
+    const userId = await resolveAndroidUserId(active);
+    if (!userId) return 'restricted';
+    await AsyncStorage.setItem(BACKGROUND_CHAT_ENABLED_KEY, '1');
+    await unregisterLegacyTask();
+    const started = await startAndroidChatForegroundService(active, userId, MANAGEMENT_BUILD);
+    if (!started) {
+      await AsyncStorage.removeItem(BACKGROUND_CHAT_ENABLED_KEY);
+      return 'restricted';
+    }
+    return 'enabled';
+  }
+
   const status = await BackgroundTask.getStatusAsync();
   if (status !== BackgroundTask.BackgroundTaskStatus.Available) return 'restricted';
   await BackgroundTask.registerTaskAsync(BACKGROUND_CHAT_TASK, {
@@ -182,32 +213,35 @@ export async function enableBackgroundChatChecks(): Promise<BackgroundChatStatus
   });
   await AsyncStorage.setItem(BACKGROUND_CHAT_ENABLED_KEY, '1');
   const userId = await signedInUserId(client());
-  if (userId) {
-    // Start counting from now so older messages never arrive as a burst.
-    await AsyncStorage.setItem(`${LAST_SEEN_PREFIX}:${userId}`, new Date().toISOString());
-  }
+  if (userId) await AsyncStorage.setItem(`${LAST_SEEN_PREFIX}:${userId}`, new Date().toISOString());
   return 'enabled';
 }
 
 export async function disableBackgroundChatChecks(): Promise<BackgroundChatStatus> {
   if (Platform.OS === 'web') return 'unsupported';
   await AsyncStorage.removeItem(BACKGROUND_CHAT_ENABLED_KEY);
-  try {
-    if (await TaskManager.isTaskRegisteredAsync(BACKGROUND_CHAT_TASK)) {
-      await BackgroundTask.unregisterTaskAsync(BACKGROUND_CHAT_TASK);
-    }
-  } catch {
-    // The flag is already off, so the worker does nothing even if unregistering fails.
+  await unregisterLegacyTask();
+  if (Platform.OS === 'android') {
+    try { await stopAndroidChatForegroundServiceForClient(client()); } catch { /* no active session to stop */ }
   }
   return 'disabled';
 }
 
-/** Restores the registration after an app update or a device reboot. */
+/** Re-establishes an opted-in native connection when the user opens the app. */
 export async function reconcileBackgroundChatChecks(): Promise<void> {
-  if (Platform.OS === 'web') return;
+  if (Platform.OS === 'web' || !await isBackgroundChatChecksEnabled()) return;
   try {
-    if (!await isBackgroundChatChecksEnabled()) return;
     await ensureChatChannel();
+    if (Platform.OS === 'android') {
+      await unregisterLegacyTask();
+      const active = client();
+      const permission = await Notifications.getPermissionsAsync();
+      if (!permission.granted) return;
+      const userId = await resolveAndroidUserId(active);
+      if (userId) await startAndroidChatForegroundService(active, userId, MANAGEMENT_BUILD);
+      return;
+    }
+
     const registered = await TaskManager.isTaskRegisteredAsync(BACKGROUND_CHAT_TASK);
     if (!registered) {
       await BackgroundTask.registerTaskAsync(BACKGROUND_CHAT_TASK, {
@@ -215,8 +249,7 @@ export async function reconcileBackgroundChatChecks(): Promise<void> {
       });
     }
   } catch {
-    // A denied permission or restricted device leaves the switch on and the UI
-    // reports the real state instead of pretending alerts work.
+    // A denied permission, expired session or restricted device is reported by the settings card.
   }
 }
 
