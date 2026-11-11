@@ -86,6 +86,10 @@ class MiloChatForegroundService : Service() {
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     when (intent?.action) {
       ACTION_START -> {
+        // Android starts the foreground-service deadline before onStartCommand.
+        // Promote immediately: Keystore reads/writes below can be slow on the
+        // first run (notably on Xiaomi/MIUI) and must not precede startForeground.
+        if (!startInForeground(if (joined) CONNECTED_STATUS else CONNECTING_STATUS)) return START_NOT_STICKY
         val raw = intent.getStringExtra(EXTRA_CONFIG)
         if (raw.isNullOrBlank()) {
           stopSelf(startId)
@@ -99,8 +103,14 @@ class MiloChatForegroundService : Service() {
         config = incoming
         stopRequested = false
         appForeground = incoming.optBoolean("appForeground", true)
-        EncryptedChatSessionStore.write(this, incoming)
-        startInForeground(if (joined) CONNECTED_STATUS else CONNECTING_STATUS)
+        try {
+          EncryptedChatSessionStore.write(this, incoming)
+        } catch (error: Exception) {
+          Log.e(TAG, "Could not save the foreground-service session", error)
+          EncryptedChatSessionStore.setStatus(this, "stopped")
+          stopSelf(startId)
+          return START_NOT_STICKY
+        }
         startHeartbeatLoop()
         executor.execute {
           val oldToken = previous?.optJSONObject("session")?.optString("access_token")
@@ -132,6 +142,9 @@ class MiloChatForegroundService : Service() {
         }
       }
       else -> {
+        // START_STICKY may restart the service without an intent. Enter
+        // foreground before touching encrypted storage here as well.
+        if (!startInForeground(CONNECTING_STATUS)) return START_NOT_STICKY
         val saved = EncryptedChatSessionStore.read(this)
         if (saved == null) {
           stopSelf(startId)
@@ -140,7 +153,6 @@ class MiloChatForegroundService : Service() {
         config = saved
         stopRequested = false
         appForeground = false
-        startInForeground(CONNECTING_STATUS)
         startHeartbeatLoop()
         executor.execute { connectRealtime() }
       }
@@ -184,19 +196,22 @@ class MiloChatForegroundService : Service() {
     )
   }
 
-  private fun startInForeground(state: String) {
-    EncryptedChatSessionStore.setStatus(this, state)
-    val notification = buildServiceNotification(state)
+  private fun startInForeground(state: String): Boolean {
     try {
+      val notification = buildServiceNotification(state)
       if (Build.VERSION.SDK_INT >= 34) {
         startForeground(FOREGROUND_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
       } else {
         startForeground(FOREGROUND_ID, notification)
       }
+      EncryptedChatSessionStore.setStatus(this, state)
+      return true
     } catch (error: Exception) {
       Log.e(TAG, "Could not enter foreground state", error)
+      EncryptedChatSessionStore.setStatus(this, "stopped")
       stopRequested = true
       stopSelf()
+      return false
     }
   }
 

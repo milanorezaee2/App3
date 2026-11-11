@@ -51,6 +51,17 @@ check(/realtime\/v1\/websocket/.test(service) && /"vsn", "1\.0\.0"/.test(service
 check(/phx_join/.test(service) && /postgres_changes/.test(service) && /access_token/.test(service), 'WebSocket joins authenticated message and support-request change subscriptions');
 check(/"messages"/.test(service) && /"support_requests"/.test(service), 'incoming chat and support events are handled');
 check(/channelJoinRef = ref/.test(service) && /"heartbeat"/.test(service) && /scheduleReconnect/.test(service), 'the client retains its join reference, sends Phoenix heartbeats and reconnects');
+const initialServiceStart = service.slice(service.indexOf('ACTION_START ->'), service.indexOf('ACTION_APP_STATE ->'));
+check(initialServiceStart.indexOf('startInForeground(') >= 0
+  && initialServiceStart.indexOf('startInForeground(') < initialServiceStart.indexOf('EncryptedChatSessionStore.read(this)')
+  && initialServiceStart.indexOf('startInForeground(') < initialServiceStart.indexOf('EncryptedChatSessionStore.write(this, incoming)'), 'initial startForeground happens before any potentially slow Keystore/session access');
+const stickyServiceRestart = service.slice(service.indexOf('      else -> {', service.indexOf('override fun onStartCommand')), service.indexOf('\n    }\n    return START_STICKY'));
+check(stickyServiceRestart.indexOf('startInForeground(') >= 0
+  && stickyServiceRestart.indexOf('startInForeground(') < stickyServiceRestart.indexOf('EncryptedChatSessionStore.read(this)'), 'sticky service restarts enter foreground before reading the encrypted session');
+check(/private fun startInForeground\(state: String\): Boolean/.test(service)
+  && service.indexOf('startForeground(FOREGROUND_ID') < service.indexOf('EncryptedChatSessionStore.setStatus(this, state)'), 'service health is reported only after Android accepts foreground promotion');
+check(/EncryptedChatSessionStore\.setStatus\(context, "starting"\)/.test(nativeModule)
+  && /catch \(_: Exception\)/.test(nativeModule), 'native launch initializes status and converts platform launch exceptions into a controlled failure');
 check(/if \(appForeground \|\| stopRequested/.test(service), 'the service suppresses operating-system notifications while the app is foregrounded');
 check(/record\.optString\("sender_id"\) == userId/.test(service), 'the user’s own message is not announced back to them');
 check(/postMessageNotification\(current, "message:\$messageId"/.test(service)
@@ -64,6 +75,12 @@ check(/ic_stat_milo_chat/.test(service), 'native foreground and chat alerts use 
 check(/Platform\.OS === 'android'/.test(background) && /startAndroidChatForegroundService/.test(background), 'Android starts the native service only through the user alert switch');
 check(/Platform\.OS === 'web' \|\| Platform\.OS === 'android'\) return 0/.test(background), 'legacy background polling cannot create delayed Android duplicates');
 check(/stopAndroidChatForegroundServiceForClient/.test(background), 'turning the switch off stops the Android service');
+const androidOptIn = background.slice(
+  background.indexOf('export async function enableBackgroundChatChecks'),
+  background.indexOf('export async function disableBackgroundChatChecks'),
+);
+check(androidOptIn.indexOf('startAndroidChatForegroundService') < androidOptIn.indexOf("AsyncStorage.setItem(BACKGROUND_CHAT_ENABLED_KEY, '1')"), 'Android opt-in is saved only after native service startup is confirmed');
+check(/reconcileInFlight/.test(background) && /Clear the saved opt-in before recovery/.test(background), 'boot-time recovery is single-flight and clears the opt-in before retrying a potentially failing native start');
 check(/restoreLatestAndroidChatSession/.test(notifications) && /stopAutoRefresh/.test(notifications) && /startAutoRefresh/.test(notifications), 'JS auth refresh is coordinated across foreground/background transitions');
 check(/Platform\.OS !== 'ios' \|\| !Device\.isDevice/.test(notifications), 'Android no longer attempts Expo FCM push-token registration');
 check(/getStoredChatServiceSession/.test(authStorage) && /stopChatForegroundService\(key\)/.test(authStorage), 'auth storage restores native-rotated sessions and stops service on sign-out');
