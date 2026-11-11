@@ -33,7 +33,7 @@ check(!/\.select\([^)]*\bbody\b/.test(moduleSource), 'the worker never fetches t
 check(/scheduleNotificationAsync/.test(moduleSource) && /trigger:\s*null/.test(moduleSource), 'alerts are posted as immediate local notifications');
 check(/isTaskRegisteredAsync/.test(moduleSource) && /reconcileBackgroundChatChecks/.test(layout), 'the worker is restored when the app starts after an update or reboot');
 check(/ChatAlertSettingsCard/.test(conversations), 'the switch lives where the conversations are, not in a hidden screen');
-check(/تأخیر/.test(card) && /۱۵ دقیقه/.test(card) && /متن پیام ذخیره یا ارسال نمی‌شود/.test(card), 'the switch states the delay and the privacy limit plainly');
+check(/<Switch/.test(card) && /permission-denied/.test(card) && /restricted/.test(card), 'the card is a plain switch that still surfaces a denied permission or a restricted phone');
 check(/permission-denied/.test(moduleSource) && /restricted/.test(moduleSource), 'a denied permission or a restricted phone is reported instead of pretending alerts work');
 
 // ---------------------------------------------------------------------------
