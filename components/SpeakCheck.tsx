@@ -16,6 +16,20 @@ function tokens(text: string) {
     .filter(Boolean);
 }
 
+/**
+ * Loose phonetic key: recognisers often return a homophone or a spelling variant for very
+ * short words (German «Tee» → "T", "The", "Te"; «Ei» → "Ай"). Collapse doubled letters,
+ * drop silent/soft letters and fold umlauts so those variants still match.
+ */
+function phonetic(word: string) {
+  return word
+    .replace(/ä/g, 'e').replace(/ö/g, 'o').replace(/ü/g, 'u').replace(/ß/g, 's')
+    .replace(/ph/g, 'f').replace(/th/g, 't').replace(/ck/g, 'k').replace(/c(?=[eiy])/g, 's').replace(/[cq]/g, 'k')
+    .replace(/z/g, 's').replace(/y/g, 'i').replace(/w/g, 'v')
+    .replace(/h/g, '')
+    .replace(/(.)\1+/g, '$1');
+}
+
 function similarity(a: string, b: string) {
   if (a === b) return 1;
   const m = a.length, n = b.length;
@@ -33,17 +47,28 @@ export function scoreSpeech(target: string, heard: string): SpeakCheckResult {
   const expected = target.trim().split(/\s+/).filter(Boolean);
   const pool = tokens(heard);
   const used = new Set<number>();
+  const joined = pool.join('');
   const words = expected.map(raw => {
     const want = tokens(raw)[0] ?? '';
     if (!want) return { word: raw, ok: true };
+    const wantKey = phonetic(want);
     let best = -1, bestScore = 0;
     pool.forEach((got, index) => {
       if (used.has(index)) return;
-      const s = similarity(want, got);
+      const s = Math.max(similarity(want, got), similarity(wantKey, phonetic(got)));
       if (s > bestScore) { bestScore = s; best = index; }
     });
-    const ok = bestScore >= (want.length <= 3 ? 0.67 : 0.75);
-    if (ok) used.add(best);
+    // Short words are the hardest for recognisers: accept a close phonetic match, and for a
+    // single-word target also accept the whole transcript run together ("te e" → "tee").
+    const short = wantKey.length <= 3;
+    const gotKey = best >= 0 ? phonetic(pool[best]) : '';
+    let ok = bestScore >= (short ? 0.75 : want.length <= 5 ? 0.67 : 0.75)
+      || (short && bestScore >= 0.5 && gotKey[0] === wantKey[0] && gotKey.length <= wantKey.length + 1);
+    if (!ok && expected.length === 1 && joined) {
+      const joinedScore = Math.max(similarity(want, joined), similarity(wantKey, phonetic(joined)));
+      ok = joinedScore >= 0.75 || (joinedScore >= 0.6 && phonetic(joined)[0] === wantKey[0]);
+    }
+    if (ok && best >= 0) used.add(best);
     return { word: raw, ok };
   });
   const scored = words.filter(w => tokens(w.word).length);
@@ -85,8 +110,13 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
 
   useSpeechRecognitionEvent('start', () => { setListening(true); setError(''); });
   useSpeechRecognitionEvent('result', event => {
-    const transcript = event.results?.[0]?.transcript ?? '';
-    if (event.isFinal) finalRef.current = transcript; else setPartial(transcript);
+    const alternatives = (event.results ?? []).map(item => item.transcript).filter(Boolean);
+    const transcript = alternatives[0] ?? '';
+    if (event.isFinal) {
+      // Pick the alternative that matches the target best; recognisers rank homophones arbitrarily.
+      const ranked = [...alternatives].sort((a, b) => scoreSpeech(targetRef.current, b).score - scoreSpeech(targetRef.current, a).score);
+      finalRef.current = ranked[0] ?? transcript;
+    } else setPartial(transcript);
   });
   useSpeechRecognitionEvent('end', () => {
     setListening(false);
@@ -119,11 +149,11 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
       }
       const permission = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
       if (!permission.granted) { setError('برای تمرین گفتاری، اجازهٔ میکروفن لازم است.'); return; }
-      ExpoSpeechRecognitionModule.start({ lang: locale, interimResults: true, continuous: false, maxAlternatives: 1, requiresOnDeviceRecognition: false, addsPunctuation: false });
+      ExpoSpeechRecognitionModule.start({ lang: locale, interimResults: true, continuous: false, maxAlternatives: 5, contextualStrings: [text], requiresOnDeviceRecognition: false, addsPunctuation: false });
     } catch {
       setError('تشخیص گفتار در دسترس نیست؛ سرویس گفتار گوگل را روی دستگاه بررسی کنید.');
     }
-  }, [locale]);
+  }, [locale, text]);
 
   const stop = useCallback(() => { ExpoSpeechRecognitionModule.stop(); }, []);
 

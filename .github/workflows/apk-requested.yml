@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 27: speech check tolerant to short-word homophones (de "Tee"), best-of-5 alternatives, biasing strings
 # rev 26: more speaking checks (core sentences, vocabulary, dialogue, speaking test in review) + auto-read in Listening stage
 # rev 25: speaking practice (expo-speech-recognition 3.1.3 for Expo SDK 54) in the Shadowing stage of all six languages
 # rev 24: remove "شروع از صفر" label and equal-size language cards
