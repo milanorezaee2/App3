@@ -18,6 +18,7 @@ type NativeChatForegroundModule = {
   setAppForegrounded(foreground: boolean): Promise<boolean>;
   getStoredSession(storageKey: string): Promise<string | null>;
   getStatus(): Promise<string>;
+  getLastError?(): Promise<string>;
   isConfigured(storageKey: string): Promise<boolean>;
 };
 
@@ -57,4 +58,11 @@ export async function getChatForegroundServiceStatus(): Promise<string> {
 export async function isChatForegroundServiceConfigured(storageKey: string): Promise<boolean> {
   const module = getNativeModule();
   return module ? module.isConfigured(storageKey) : false;
+}
+
+/** Native detail of the most recent start/stop failure (empty when none). */
+export async function getChatForegroundServiceLastError(): Promise<string> {
+  const module = getNativeModule();
+  if (!module || typeof module.getLastError !== 'function') return '';
+  return module.getLastError().catch(() => '');
 }

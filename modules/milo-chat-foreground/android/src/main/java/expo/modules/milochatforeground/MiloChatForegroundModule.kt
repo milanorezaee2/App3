@@ -18,21 +18,29 @@ class MiloChatForegroundModule : Module() {
       val intent = Intent(context, MiloChatForegroundService::class.java)
         .setAction(MiloChatForegroundService.ACTION_START)
         .putExtra(MiloChatForegroundService.EXTRA_CONFIG, config.toString())
+      EncryptedChatSessionStore.clearLastError(context)
       EncryptedChatSessionStore.setStatus(context, "starting")
       try {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) context.startForegroundService(intent)
         else context.startService(intent)
         true
-      } catch (_: Exception) {
+      } catch (error: Exception) {
+        EncryptedChatSessionStore.setLastError(context, "start-service:" + error.javaClass.simpleName + ":" + (error.message ?: ""))
         EncryptedChatSessionStore.setStatus(context, "stopped")
         false
       }
+    }
+
+    AsyncFunction("getLastError") {
+      val context = appContext.reactContext ?: return@AsyncFunction ""
+      EncryptedChatSessionStore.getLastError(context)
     }
 
     AsyncFunction("stop") { storageKey: String ->
       val context = appContext.reactContext ?: return@AsyncFunction false
       val current = EncryptedChatSessionStore.read(context)
       if (current != null && current.optString("storageKey") == storageKey) {
+        MiloChatForegroundService.markStopRequested()
         context.stopService(Intent(context, MiloChatForegroundService::class.java))
         EncryptedChatSessionStore.clear(context)
         true

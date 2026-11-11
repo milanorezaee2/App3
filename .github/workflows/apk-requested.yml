@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 38: bespoke profile icon; chat service no longer reports a transient "stopped" (stale backup config, keystore fallback, failure detail)
 # rev 37: detailed learner profile (tabs: overview, languages, achievements, account)
 # rev 36: learner profile screen (account, level, per-language progress, sync, sign-out)
 # rev 35: chat alert switch reports the real reason when enabling fails (Android foreground service)

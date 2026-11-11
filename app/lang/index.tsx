@@ -26,6 +26,7 @@ import {
   Volume2,
 } from 'lucide-react-native';
 import { AppBottomNav } from '@/components/AppBottomNav';
+import { ProfileIcon } from '@/components/ProfileIcon';
 import { PageNavigation } from '@/components/PageNavigation';
 import { COURSE_LEVELS, SENTENCE_LESSONS } from '@/lib/courseContent';
 import { getCourseProgress, setCurrentLesson, type CourseProgress } from '@/lib/courseProgress';
@@ -416,7 +417,7 @@ export default function LearningHome() {
               <ChevronLeft size={17} color={HomeColors.muted} />
             </Pressable>
             {FEATURES.learnerLogin && <Pressable accessibilityRole="button" accessibilityLabel="پروفایل و حساب کاربری" style={({ pressed }) => [styles.quickCard, pressed && styles.buttonPressed]} onPress={() => router.push('/profile' as never)}>
-              <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Cloud size={18} color={HomeColors.accent} /></View>
+              <View style={[styles.quickIcon, { backgroundColor: 'transparent' }]}><ProfileIcon size={34} /></View>
               <View style={styles.quickCopy}>
                 <Text style={styles.quickTitle}>پروفایل من</Text>
                 <Text style={styles.quickDesc}>حساب، سطح و پیشرفت</Text>

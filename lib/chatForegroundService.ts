@@ -2,6 +2,7 @@ import Constants from 'expo-constants';
 import { AppState, Platform } from 'react-native';
 import type { Session, SupabaseClient } from '@supabase/supabase-js';
 import {
+  getChatForegroundServiceLastError,
   getChatForegroundServiceStatus,
   getStoredChatServiceSession,
   setChatServiceAppForegrounded,
@@ -77,16 +78,28 @@ export async function startAndroidChatForegroundService(
 
     const deadline = Date.now() + 8000;
     let last = 'starting';
+    let stoppedStreak = 0;
     while (Date.now() < deadline) {
       const status = await getChatForegroundServiceStatus().catch(() => 'unavailable');
       last = status;
       if (status === 'connecting' || status === 'connected' || status === 'reconnecting') return true;
-      if (status === 'stopped' || status === 'unavailable' || status === 'unsupported') return fail(`سرویس اعلان بلافاصله متوقف شد (کد: ${status}).`);
+      if (status === 'stopped' || status === 'unavailable' || status === 'unsupported') {
+        // "stopped" can be a transient value while the service is still being
+        // created; only treat it as final once it persists for about a second.
+        stoppedStreak += 1;
+        if (stoppedStreak >= 5) {
+          const detail = await getChatForegroundServiceLastError();
+          return fail(`سرویس اعلان بلافاصله متوقف شد (کد: ${status}${detail ? ` · ${detail}` : ''}).`);
+        }
+      } else {
+        stoppedStreak = 0;
+      }
       await new Promise(resolve => setTimeout(resolve, 200));
     }
 
     await stopChatForegroundService(authStorageKey(client)).catch(() => false);
-    return fail(`سرویس اعلان در زمان مقرر شروع نشد (کد: timeout/${last}).`);
+    const detail = await getChatForegroundServiceLastError();
+    return fail(`سرویس اعلان در زمان مقرر شروع نشد (کد: timeout/${last}${detail ? ` · ${detail}` : ''}).`);
   } catch (cause) {
     return fail(`خطای سرویس اعلان: ${cause instanceof Error ? cause.message : String(cause)}`);
   }

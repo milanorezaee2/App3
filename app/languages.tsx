@@ -4,8 +4,9 @@ import { Alert, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Vi
 import { createAudioPlayer } from 'expo-audio';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { ArrowLeft, ArrowRight, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle, UserRound } from 'lucide-react-native';
+import { ArrowLeft, ArrowRight, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
 import { MiloLanguageBrand } from '@/components/MiloLanguageBrand';
+import { ProfileIcon } from '@/components/ProfileIcon';
 import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
@@ -127,10 +128,10 @@ export default function LanguagesHome() {
                 <Pressable
                   accessibilityRole="button"
                   accessibilityLabel="پروفایل من"
-                  style={({ pressed }) => [styles.headerButton, pressed && styles.pressed]}
+                  style={({ pressed }) => [styles.headerButton, styles.profileButton, pressed && styles.pressed]}
                   onPress={() => router.push('/profile' as never)}
                 >
-                  <UserRound size={18} color={palette.forest} strokeWidth={1.9} />
+                  <ProfileIcon size={30} />
                 </Pressable>
               )}
               <Pressable
@@ -260,6 +261,7 @@ const styles = StyleSheet.create({
   header: { minHeight: 64, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
   headerRtl: { flexDirection: 'row-reverse' },
   headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  profileButton: { borderColor: '#D7DECE', backgroundColor: '#F3F6EE' },
   headerButton: { width: 44, height: 44, borderRadius: 16, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#554C3E', shadowOpacity: 0.06, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   hero: { minHeight: 230, justifyContent: 'center', padding: 24, borderRadius: 24, overflow: 'hidden', backgroundColor: '#ECE4D4', shadowColor: '#514433', shadowOpacity: 0.10, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
   heroImage: { borderRadius: 24 },

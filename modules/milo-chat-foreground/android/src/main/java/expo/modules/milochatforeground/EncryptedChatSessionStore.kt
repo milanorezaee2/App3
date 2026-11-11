@@ -16,6 +16,7 @@ internal object EncryptedChatSessionStore {
   private const val PREFS = "milo_chat_foreground_service_v1"
   private const val CONFIG_KEY = "encrypted_config"
   private const val STATUS_KEY = "connection_status"
+  private const val ERROR_KEY = "last_error"
   private const val KEY_ALIAS = "milo_chat_foreground_aes_v1"
   private const val IV_BYTES = 12
 
@@ -46,10 +47,28 @@ internal object EncryptedChatSessionStore {
       val cipher = Cipher.getInstance("AES/GCM/NoPadding")
       cipher.init(Cipher.DECRYPT_MODE, secretKey(), GCMParameterSpec(128, iv))
       JSONObject(String(cipher.doFinal(encrypted), Charsets.UTF_8))
-    } catch (_: Exception) {
-      clear(context)
+    } catch (error: Exception) {
+      // A blob restored from a device backup cannot be decrypted with a fresh
+      // Keystore key. Drop it silently; this must not flip the live status to
+      // "stopped" while a start is in flight.
+      setLastError(context, "stale-config:" + (error.javaClass.simpleName))
+      context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().remove(CONFIG_KEY).apply()
       null
     }
+  }
+
+  fun setLastError(context: Context, detail: String) {
+    context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+      .edit()
+      .putString(ERROR_KEY, detail.take(200))
+      .apply()
+  }
+
+  fun getLastError(context: Context): String =
+    context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(ERROR_KEY, "") ?: ""
+
+  fun clearLastError(context: Context) {
+    context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().remove(ERROR_KEY).apply()
   }
 
   fun clear(context: Context) {

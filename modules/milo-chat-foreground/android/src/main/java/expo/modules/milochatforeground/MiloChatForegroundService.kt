@@ -50,6 +50,10 @@ class MiloChatForegroundService : Service() {
     private val JSON_MEDIA = "application/json; charset=utf-8".toMediaType()
     @Volatile private var liveInstance: MiloChatForegroundService? = null
 
+    fun markStopRequested() {
+      liveInstance?.stopRequested = true
+    }
+
     fun updateLiveAppState(storageKey: String, foreground: Boolean): Boolean {
       val service = liveInstance ?: return false
       val current = service.config ?: return false
@@ -68,7 +72,7 @@ class MiloChatForegroundService : Service() {
   @Volatile private var config: JSONObject? = null
   @Volatile private var socket: WebSocket? = null
   @Volatile private var appForeground = false
-  @Volatile private var stopRequested = false
+  @Volatile internal var stopRequested = false
   @Volatile private var reconnectScheduled = false
   @Volatile private var joined = false
   @Volatile private var lastHeartbeatReplyAt = 0L
@@ -106,10 +110,10 @@ class MiloChatForegroundService : Service() {
         try {
           EncryptedChatSessionStore.write(this, incoming)
         } catch (error: Exception) {
+          // Keystore is unavailable on some devices/first runs. Keep the connection
+          // alive from memory for this process instead of refusing to start.
           Log.e(TAG, "Could not save the foreground-service session", error)
-          EncryptedChatSessionStore.setStatus(this, "stopped")
-          stopSelf(startId)
-          return START_NOT_STICKY
+          EncryptedChatSessionStore.setLastError(this, "keystore-write:" + error.javaClass.simpleName + ":" + (error.message ?: ""))
         }
         startHeartbeatLoop()
         executor.execute {
@@ -168,6 +172,7 @@ class MiloChatForegroundService : Service() {
   }
 
   override fun onDestroy() {
+    if (!stopRequested) EncryptedChatSessionStore.setLastError(this, "destroyed-by-system")
     stopRequested = true
     closeSocket()
     EncryptedChatSessionStore.setStatus(this, "stopped")
@@ -208,6 +213,7 @@ class MiloChatForegroundService : Service() {
       return true
     } catch (error: Exception) {
       Log.e(TAG, "Could not enter foreground state", error)
+      EncryptedChatSessionStore.setLastError(this, "start-foreground:" + error.javaClass.simpleName + ":" + (error.message ?: ""))
       EncryptedChatSessionStore.setStatus(this, "stopped")
       stopRequested = true
       stopSelf()

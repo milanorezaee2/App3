@@ -61,7 +61,7 @@ check(stickyServiceRestart.indexOf('startInForeground(') >= 0
 check(/private fun startInForeground\(state: String\): Boolean/.test(service)
   && service.indexOf('startForeground(FOREGROUND_ID') < service.indexOf('EncryptedChatSessionStore.setStatus(this, state)'), 'service health is reported only after Android accepts foreground promotion');
 check(/EncryptedChatSessionStore\.setStatus\(context, "starting"\)/.test(nativeModule)
-  && /catch \(_: Exception\)/.test(nativeModule), 'native launch initializes status and converts platform launch exceptions into a controlled failure');
+  && /catch \((_|error): Exception\)/.test(nativeModule), 'native launch initializes status and converts platform launch exceptions into a controlled failure');
 check(/if \(appForeground \|\| stopRequested/.test(service), 'the service suppresses operating-system notifications while the app is foregrounded');
 check(/record\.optString\("sender_id"\) == userId/.test(service), 'the user’s own message is not announced back to them');
 check(/postMessageNotification\(current, "message:\$messageId"/.test(service)
