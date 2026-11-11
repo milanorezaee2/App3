@@ -1,9 +1,14 @@
 import { LocalizedText as Text } from '@/components/LocalizedText';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
-import { Bot, ChevronLeft, MessageCircle, Mic2, Plus, QrCode, ShieldCheck, Sparkles, Trash2, UserRound } from 'lucide-react-native';
+import { ChevronLeft, MessageCircle, Mic2, Plus, QrCode, ShieldCheck, Sparkles, Trash2, UserRound } from 'lucide-react-native';
 import { AppBottomNav } from '@/components/AppBottomNav';
+import { RussianBottomNav } from '@/components/RussianBottomNav';
+import { TurkishBottomNav } from '@/components/TurkishBottomNav';
+import { StarterBottomNav } from '@/components/StarterBottomNav';
+import { NEW_COURSES } from '@/lib/languages/newCourses';
+import { readResumeSnapshot, type ResumeLanguage } from '@/lib/appResume';
 import { PageNavigation } from '@/components/PageNavigation';
 import { deleteConversationForMe, ensureSupportConversation, listRealContacts, type RealContact } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
@@ -21,6 +26,10 @@ export default function ConversationsHome() {
 
   const configured = isSupabaseConfigured();
   const [openingSupport, setOpeningSupport] = useState(false);
+  // The conversation hub is shared by every language; keep the learner's own course navigation under it.
+  const [activeLanguage, setActiveLanguage] = useState<ResumeLanguage>(null);
+  useEffect(() => { let alive = true; void readResumeSnapshot().then(snapshot => { if (alive) setActiveLanguage(snapshot?.language ?? null); }).catch(() => undefined); return () => { alive = false; }; }, []);
+  const homePath = activeLanguage && activeLanguage !== 'en' ? `/learn/${activeLanguage}` : activeLanguage === 'en' ? '/lang' : '/languages';
 
   const openSupport = () => {
     if (openingSupport) return;
@@ -90,7 +99,7 @@ export default function ConversationsHome() {
             <Text style={styles.title}>مکالمه</Text>
             <Text style={styles.subtitle}>تمرین واقعی، بدون ترس از اشتباه</Text>
           </View>
-          <PageNavigation tone="dark" backFallback="/languages" />
+          <PageNavigation tone="dark" backFallback={homePath} />
         </View>
       </View>
 
@@ -102,27 +111,6 @@ export default function ConversationsHome() {
             <Text style={styles.addAnotherText}>{openingSupport ? 'در حال باز کردن...' : 'گفتگو با پشتیبانی Milo'}</Text>
           </Pressable>
         )}
-        <Text style={styles.sectionLabel}>مربی همیشگی شما</Text>
-        <Pressable style={styles.emmaCard} onPress={() => router.push('/conversations/emma' as never)}>
-          <View style={styles.avatarWrap}>
-            <View style={styles.emmaAvatar}><Text style={styles.avatarEmoji}>👩🏻‍🏫</Text></View>
-            <View style={styles.onlineDot} />
-          </View>
-          <View style={styles.contactText}>
-            <View style={styles.nameRow}>
-              <Text style={styles.contactName}>Emma</Text>
-              <View style={styles.aiBadge}><Bot size={12} color={Colors.accent[300]} /><Text style={styles.aiBadgeText}>مربی هوش مصنوعی</Text></View>
-            </View>
-            <Text style={styles.contactDesc}>همیشه آماده برای تمرین جمله‌های درس شما</Text>
-            <View style={styles.capabilities}>
-              <Text style={styles.capability}>اصلاح خصوصی</Text>
-              <Text style={styles.capability}>پیشنهاد پاسخ</Text>
-              <Text style={styles.capability}>مکالمه صوتی</Text>
-            </View>
-          </View>
-          <ChevronLeft size={21} color={Colors.neutral[500]} />
-        </Pressable>
-
         <View style={styles.sectionRow}>
           <Text style={styles.sectionLabel}>مخاطبان واقعی</Text>
           <Text style={styles.sectionHint}>دعوت و تأیید دوطرفه</Text>
@@ -164,7 +152,7 @@ export default function ConversationsHome() {
           <View style={styles.emptyContacts}>
             <View style={styles.peopleIcon}><UserRound size={30} color={Colors.primary[400]} /></View>
             <Text style={styles.emptyTitle}>{contactsError ? 'دریافت مخاطبان انجام نشد' : 'هنوز مخاطبی اضافه نکرده‌اید'}</Text>
-            <Text style={styles.emptyDesc}>{contactsError || 'دوست مسلط به انگلیسی خود را با کد دعوت اضافه کنید و در محیطی خصوصی تمرین کنید.'}</Text>
+            <Text style={styles.emptyDesc}>{contactsError || 'دوست مسلط به این زبان را با کد دعوت اضافه کنید و در محیطی خصوصی تمرین کنید.'}</Text>
             <Pressable style={styles.inviteButton} onPress={() => router.push('/conversations/invite' as never)}>
               <Plus size={19} color={Colors.onColor} />
               <Text style={styles.inviteText}>افزودن مخاطب واقعی</Text>
@@ -189,7 +177,7 @@ export default function ConversationsHome() {
           <View style={styles.modeCard}><Mic2 size={20} color={Colors.error[300]} /><Text style={styles.modeTitle}>پیام صوتی</Text><Text style={styles.modeDesc}>تمرین تلفظ طبیعی</Text></View>
         </View>
       </ScrollView>
-      <AppBottomNav />
+      {activeLanguage === 'ru' ? <RussianBottomNav /> : activeLanguage === 'tr' ? <TurkishBottomNav /> : activeLanguage && activeLanguage !== 'en' && NEW_COURSES[activeLanguage as keyof typeof NEW_COURSES] ? <StarterBottomNav course={NEW_COURSES[activeLanguage as keyof typeof NEW_COURSES]} /> : <AppBottomNav />}
     </View>
   );
 }
