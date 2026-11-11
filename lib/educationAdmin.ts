@@ -1,9 +1,9 @@
 import { FEATURES } from './features';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import { isSupabaseConfigured } from './pairing';
 import { SUPABASE_PUBLIC_ANON_KEY, SUPABASE_PUBLIC_URL } from './supabaseConfig';
+import { createChatServiceAuthStorage } from './chatServiceAuthStorage';
 import { SENTENCE_LESSONS } from './courseContent';
 import canonical from '../assets/data/essential504.json';
 
@@ -18,7 +18,7 @@ export function adminClient() {
         getItem: (key) => typeof window === 'undefined' ? null : window.localStorage.getItem(key),
         setItem: (key, value) => { if (typeof window !== 'undefined') window.localStorage.setItem(key, value); },
         removeItem: (key) => { if (typeof window !== 'undefined') window.localStorage.removeItem(key); },
-      } : AsyncStorage },
+      } : createChatServiceAuthStorage() },
   });
   return client;
 }

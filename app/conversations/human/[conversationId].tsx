@@ -1,6 +1,6 @@
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, BackHandler, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, BackHandler, Keyboard, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
   RecordingPresets,
@@ -69,6 +69,28 @@ export default function HumanConversationScreen() {
   const router = useRouter();
   const { conversationId, name } = useLocalSearchParams<{ conversationId: string; name?: string }>();
   const scrollRef = useRef<ScrollView>(null);
+  // The composer is translated up over the message list when the keyboard opens, so the
+  // list itself is not resized; reserve exactly the hidden height at the bottom and keep
+  // the newest message in view.
+  const [keyboardInset, setKeyboardInset] = useState(0);
+  const composerHeight = useRef(0);
+  useEffect(() => {
+    const measure = (keyboardTop: number) => {
+      const node = scrollRef.current as unknown as { measureInWindow?: (callback: (x: number, y: number, width: number, height: number) => void) => void } | null;
+      if (!node?.measureInWindow) return;
+      node.measureInWindow((_x, y, _w, h) => {
+        // Hidden = list bottom minus the composer's new top (keyboard edge − composer − Android lift).
+        const composerTop = keyboardTop - composerHeight.current - (Platform.OS === 'android' ? 36 : 0);
+        setKeyboardInset(Math.max(0, Math.round(y + h - composerTop)));
+        setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 60);
+      });
+    };
+    const subscriptions = [
+      Keyboard.addListener('keyboardDidShow', event => measure(event.endCoordinates.screenY)),
+      Keyboard.addListener('keyboardDidHide', () => setKeyboardInset(0)),
+    ];
+    return () => subscriptions.forEach(subscription => subscription.remove());
+  }, []);
   const [messages, setMessages] = useState<DirectMessage[]>([]);
   const [myId, setMyId] = useState<string | null>(null);
   const [input, setInput] = useState('');
@@ -224,7 +246,7 @@ export default function HumanConversationScreen() {
         <ScrollView
           ref={scrollRef}
           style={styles.messages}
-          contentContainerStyle={styles.messageContent}
+          contentContainerStyle={[styles.messageContent, keyboardInset > 0 && { paddingBottom: keyboardInset + Spacing.md }]}
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
           automaticallyAdjustKeyboardInsets={Platform.OS === 'ios'}
@@ -245,7 +267,7 @@ export default function HumanConversationScreen() {
         </ScrollView>
       )}
 
-      <KeyboardAttachedView>
+      <KeyboardAttachedView onLayout={event => { composerHeight.current = event.nativeEvent.layout.height; }}>
       {showCoach ? (
         <View style={styles.coach}>
           <View style={styles.coachTitleRow}><Sparkles size={15} color={Colors.warning[400]} /><Text style={styles.coachTitle}>دستیار خصوصی — چیزی خودکار ارسال نمی‌شود</Text></View>

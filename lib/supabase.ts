@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import { SUPABASE_PUBLIC_ANON_KEY, SUPABASE_PUBLIC_URL } from '@/lib/supabaseConfig';
+import { createChatServiceAuthStorage } from './chatServiceAuthStorage';
 
 const FALLBACK_URL = 'https://placeholder.supabase.co';
 const FALLBACK_KEY = 'placeholder-anon-key';
@@ -82,7 +82,7 @@ const authOptions = {
   persistSession: true,
   autoRefreshToken: true,
   detectSessionInUrl: false,
-  storage: Platform.OS === 'web' ? webSafeStorage : AsyncStorage,
+  storage: Platform.OS === 'web' ? webSafeStorage : createChatServiceAuthStorage(),
 };
 
 function createSafeClient() {

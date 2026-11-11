@@ -1,10 +1,9 @@
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Platform, Pressable, StyleSheet, Switch, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Switch, View } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import { Bell, BellOff, Clock3, ShieldCheck } from 'lucide-react-native';
+import { Bell, BellOff } from 'lucide-react-native';
 import {
-  BACKGROUND_CHAT_INTERVAL_MINUTES,
   backgroundChatChecksStatus,
   disableBackgroundChatChecks,
   enableBackgroundChatChecks,
@@ -13,23 +12,21 @@ import {
 } from '@/lib/backgroundChatChecks';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
 
-const STATUS_TEXT: Record<BackgroundChatStatus, string> = {
-  enabled: 'روشن است: گوشی هر ۱۵ دقیقه یک بار پیام‌های تازه را بررسی می‌کند.',
-  disabled: 'خاموش است: تا وقتی خودت برنامه را باز نکنی، اعلانی نمی‌آید.',
-  'permission-denied': 'اجازهٔ اعلان‌ها در گوشی داده نشده است، پس اعلان نمایش داده نمی‌شود.',
-  restricted: 'اندروید به این برنامه اجازهٔ بررسی پس‌زمینه نداده است (محدودیت باتری یا تنظیمات گوشی).',
-  unsupported: 'این صفحه در مرورگر باز شده است؛ بررسی پس‌زمینه فقط در برنامهٔ گوشی کار می‌کند.',
+/** Only problems are surfaced; the normal on/off states speak for themselves through the switch. */
+const STATUS_TEXT: Partial<Record<BackgroundChatStatus, string>> = {
+  'permission-denied': 'برای دریافت اعلان، اجازهٔ اعلان‌ها را در تنظیمات گوشی فعال کنید.',
+  restricted: 'گوشی اجازهٔ اجرای پس‌زمینه به برنامه نداده است؛ از تنظیمات باتری اجازه بدهید.',
+  unsupported: 'اعلان پیام فقط در برنامهٔ گوشی در دسترس است.',
 };
 
 /**
- * Honest control for the Firebase-free chat alerts. It never promises instant
- * delivery: Android runs background work at 15-minute granularity at best.
+ * Firebase-free alert switch. Android opts into a native foreground service;
+ * Doze and device power policies can still defer network delivery.
  */
 export function ChatAlertSettingsCard() {
   const [status, setStatus] = useState<BackgroundChatStatus | 'loading'>('loading');
   const [busy, setBusy] = useState(false);
   const [permission, setPermission] = useState<'granted' | 'denied' | 'unknown'>('unknown');
-  const [testing, setTesting] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -42,28 +39,6 @@ export function ChatAlertSettingsCard() {
       .catch(() => { if (active) setStatus('disabled'); });
     return () => { active = false; };
   }, []);
-
-  const testLocalNotification = async () => {
-    if (Platform.OS !== 'android' || testing) return;
-    setTesting(true);
-    try {
-      const current = await Notifications.getPermissionsAsync();
-      const next = current.granted ? current : await Notifications.requestPermissionsAsync();
-      setPermission(next.granted ? 'granted' : 'denied');
-      if (!next.granted) return;
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: 'تست اعلان Milo',
-          body: 'اعلان‌های این گوشی فعال هستند.',
-          data: { eventId: `local-test:${Date.now()}` },
-          sound: 'default',
-        },
-        trigger: null,
-      });
-    } finally {
-      setTesting(false);
-    }
-  };
 
   const toggle = async () => {
     if (busy || status === 'loading' || status === 'unsupported') return;
@@ -90,7 +65,7 @@ export function ChatAlertSettingsCard() {
         </View>
         <View style={styles.headerText}>
           <Text style={styles.title}>اعلان پیام‌های تازه</Text>
-          <Text style={styles.subtitle}>بدون سرویس گوگل؛ بررسی دوره‌ای خودِ گوشی</Text>
+          <Text style={styles.subtitle}>وقتی پیام جدیدی برایت می‌رسد، باخبر شو</Text>
         </View>
         {status === 'loading' || busy ? (
           <ActivityIndicator color={Colors.primary[400]} />
@@ -106,27 +81,7 @@ export function ChatAlertSettingsCard() {
         )}
       </View>
 
-      {status !== 'loading' ? <Text style={styles.status}>{STATUS_TEXT[status]}</Text> : null}
-      <Text style={styles.diagnostic}>وضعیت اعلان Android: {permission === 'granted' ? 'مجاز' : permission === 'denied' ? 'غیرفعال' : 'در حال بررسی'}</Text>
-      {Platform.OS === 'android' ? (
-        <Pressable accessibilityRole="button" accessibilityLabel="آزمایش اعلان این گوشی" style={styles.testButton} onPress={() => void testLocalNotification()} disabled={testing}>
-          {testing ? <ActivityIndicator size="small" color={Colors.primary[300]} /> : <Bell size={15} color={Colors.primary[300]} />}
-          <Text style={styles.testButtonText}>{testing ? 'در حال آزمایش…' : 'آزمایش اعلان روی همین گوشی'}</Text>
-        </Pressable>
-      ) : null}
-
-      <View style={styles.factRow}>
-        <Clock3 size={15} color={Colors.neutral[500]} />
-        <Text style={styles.fact}>
-          اندروید اجازه نمی‌دهد بیشتر از هر {BACKGROUND_CHAT_INTERVAL_MINUTES} دقیقه یک بار بررسی شود؛ پس اعلان ممکن است با تأخیر برسد و در حالت ذخیرهٔ باتری دیرتر هم بشود.
-        </Text>
-      </View>
-      <View style={styles.factRow}>
-        <ShieldCheck size={15} color={Colors.neutral[500]} />
-        <Text style={styles.fact}>
-          متن پیام ذخیره یا ارسال نمی‌شود؛ فقط «پیام تازه داری» و نام فرستنده نشان داده می‌شود.
-        </Text>
-      </View>
+      {status !== 'loading' && (STATUS_TEXT[status] || permission === 'denied') ? <Text style={styles.status}>{STATUS_TEXT[status] ?? STATUS_TEXT['permission-denied']}</Text> : null}
     </View>
   );
 }

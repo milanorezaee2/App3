@@ -7,10 +7,9 @@ const base = process.env.EXPO_PUBLIC_WEB_ROOT === 'true'
   ? { ...originalBase, experiments: { ...originalBase.experiments, baseUrl: '' } }
   : originalBase;
 
-// Android push delivery (FCM v1) needs the Firebase client config inside the
-// native build. Each APK variant has its own package name, so each one needs
-// its own file. The files are optional: while they are missing the build stays
-// exactly as before and push registration simply cannot obtain a device token.
+// Optional legacy Expo remote push on Android uses FCM v1 and needs the matching
+// google-services file. The no-FCM foreground WebSocket/local-notification path
+// does not use these files. Each APK variant has its own Android package name.
 const GOOGLE_SERVICES_FILES = {
   learner: 'google-services.learner.json',
   login: 'google-services.login.json',
@@ -96,11 +95,13 @@ const build = () => {
   };
 };
 
-// EAS project id comes from the EAS_PROJECT_ID env (set in CI from a repo variable),
-// which Expo push tokens require. Without it, push registration is skipped.
 module.exports = () => {
   const config = withGoogleServices(build(), variant());
-  const projectId = process.env.EAS_PROJECT_ID || process.env.EXPO_PUBLIC_EAS_PROJECT_ID;
+  // app.json already contains the project id; environment values only override it.
+  // Android's native WebSocket service does not require an EAS or FCM project id.
+  const projectId = process.env.EAS_PROJECT_ID
+    || process.env.EXPO_PUBLIC_EAS_PROJECT_ID
+    || config.extra?.eas?.projectId;
   if (!projectId) return config;
   return {
     ...config,

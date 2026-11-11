@@ -1,5 +1,7 @@
 name: Build requested APKs
 
+# rev 31: chat alert card simplified (switch + friendly copy; technical disclaimers removed); validator updated
+# rev 30: chat list keeps newest message visible above the keyboard/composer
 # rev 29: readable chat bubbles (light green mine / white theirs, dark text)
 # rev 28: conversation hub in de/fr/es bottom nav (same as en/tr/ru); Emma AI coach disabled in all languages
 # rev 27: speech check tolerant to short-word homophones (de "Tee"), best-of-5 alternatives, biasing strings
@@ -57,6 +59,7 @@ on:
     branches:
       - arena/1d4c82b4-app3
       - arena/0525d0d2-app3
+      - arena/9b089853-app3
     paths:
       - '.github/workflows/apk-requested.yml'
 
