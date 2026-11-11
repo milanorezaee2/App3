@@ -138,10 +138,9 @@ export default function TurkishHome() {
           <View style={styles.header}>
             <View style={styles.brandLockup}>
               <View style={styles.brandMark}>
-                <MiloGlobeHeadphoneMark size={20} />
+                <MiloGlobeHeadphoneMark size={48} />
               </View>
               <View style={styles.brandCopy}>
-                <Text style={styles.brandEyebrow}>LANGUAGE JOURNEY</Text>
                 <Text style={styles.headerTitle}>مسیر یادگیری ترکی استانبولی</Text>
               </View>
             </View>
@@ -159,10 +158,9 @@ export default function TurkishHome() {
             <View style={styles.welcomeCopy}>
               <View style={styles.welcomeEyebrowRow}>
                 <Sparkles size={13} color={HomeColors.gold} />
-                <Text style={styles.welcomeEyebrow}>TURKISH JOURNEY</Text>
               </View>
-              <Text style={styles.welcomeTitle}>سلام! آماده‌ای ترکی استانبولی را ادامه بدهی؟</Text>
-              <Text style={styles.welcomeDescription}>هر درس یک گام روشن در ساختار جمله، هماهنگی واکه‌ها و مکالمهٔ روزمرهٔ استانبول است.</Text>
+              <Text style={styles.welcomeTitle}>ترکی استانبولی؛ همسایهٔ نزدیک، زبان آشنا</Text>
+              <Text style={styles.welcomeDescription}>ساختار منظم و واژه‌های مشترک با فارسی؛ زودتر از آنچه فکر می‌کنید حرف می‌زنید.</Text>
               <View style={styles.welcomeTags}>
                 <View style={styles.welcomeTag}>
                   <BookOpen size={12} color={HomeColors.gold} />
@@ -188,7 +186,6 @@ export default function TurkishHome() {
           <View style={styles.pathPanel}>
             <View style={styles.panelHeadingRow}>
               <View style={styles.panelHeadingText}>
-                <Text style={styles.panelEyebrow}>TURKISH LEARNING PATH</Text>
                 <Text style={styles.panelTitle}>سطح ترکی خودت را انتخاب کن</Text>
                 <Text style={styles.panelHint}>از هر سطحی که درس دارد شروع کن.</Text>
               </View>
@@ -356,7 +353,6 @@ export default function TurkishHome() {
 
           <View style={styles.sectionHeader}>
             <View style={styles.sectionTitleBlock}>
-              <Text style={styles.sectionEyebrow}>TODAY AT A GLANCE</Text>
               <Text style={styles.sectionTitle}>برنامهٔ امروز</Text>
             </View>
             <View style={styles.dailyGoalPill}>
@@ -389,7 +385,6 @@ export default function TurkishHome() {
           <View style={styles.quickSection}>
             <View style={styles.sectionHeading}>
               <View style={styles.sectionTitleBlock}>
-                <Text style={styles.sectionEyebrow}>KEEP GOING</Text>
                 <Text style={styles.sectionTitle}>میان‌برهای تو</Text>
               </View>
             </View>

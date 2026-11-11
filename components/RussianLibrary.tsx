@@ -90,17 +90,14 @@ export default function RussianLibrary() {
           {!selected ? <>
             <View style={styles.topBar}>
               <Pressable accessibilityRole="button" style={styles.backButton} onPress={() => router.replace('/learn/ru' as never)}><ChevronLeft size={18} color={Palette.ink} /><Text style={styles.backText}>بازگشت به آموزش روسی</Text></Pressable>
-              <Text style={styles.brandEyebrow}>RUSSIAN PATH · MAIN COURSE</Text>
               <Text style={styles.pageTitle}>مسیر یادگیری روسی</Text>
-              <Text style={styles.pageIntro}>یک سطح را انتخاب کنید؛ از شناخت خط سیریلیک و نخستین جمله‌ها شروع می‌کنیم و مرحله‌به‌مرحله به موقعیت‌های روزمره می‌رسیم.</Text>
+              <Text style={styles.pageIntro}>یک سطح را انتخاب کنید.</Text>
             </View>
 
             <LinearGradient colors={['#19204C', '#343B8A', '#5148C8']} start={{ x: .95, y: .1 }} end={{ x: .05, y: .95 }} style={styles.overviewHero}>
               <View pointerEvents="none" style={styles.heroOrb} />
-              <View style={styles.heroTopRow}><View style={styles.heroIcon}><MiloGlobeHeadphoneMark size={18} /></View><View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۶ سطح در نقشهٔ روسی</Text></View></View>
-              <Text style={styles.overviewEyebrow}>FROM THE FIRST SENTENCE ONWARD</Text>
+              <View style={styles.heroTopRow}><View style={styles.heroIcon}><MiloGlobeHeadphoneMark size={48} /></View><View style={styles.heroPill}><Sparkles size={13} color="#C8C9FF" /><Text style={styles.heroPillText}>۶ سطح در نقشهٔ روسی</Text></View></View>
               <Text style={styles.overviewTitle}>از الفبا؛{ '\n' }جمله به جمله</Text>
-              <Text style={styles.overviewText}>محتوای موجود از پایه آغاز می‌شود. آمار فقط درس‌ها و جمله‌های منتشرشده را می‌شمارد؛ سطح‌های آینده محتوای ساختگی ندارند.</Text>
               <View style={styles.overviewMetrics}>
                 <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(RUSSIAN_LESSONS.length)}</Text><Text style={styles.overviewMetricLabel}>درس موجود</Text></View><View style={styles.overviewMetricDivider} />
                 <View style={styles.overviewMetric}><Text style={styles.overviewMetricValue}>{fa(totalSentences)}</Text><Text style={styles.overviewMetricLabel}>جملهٔ اصلی</Text></View><View style={styles.overviewMetricDivider} />
@@ -136,7 +133,7 @@ export default function RussianLibrary() {
             </View>
           </> : <>
             <View style={styles.selectedTopBar}>
-              <Pressable accessibilityRole="button" style={styles.backButton} onPress={() => router.replace('/learn/ru/library' as never)}><ChevronLeft size={18} color={Palette.ink} /><Text style={styles.backText}>همهٔ سطح‌ها</Text></Pressable>
+              <View style={styles.selectedBrandRow}><MiloGlobeHeadphoneMark size={48} /><Pressable accessibilityRole="button" style={styles.backButton} onPress={() => router.replace('/learn/ru/library' as never)}><ChevronLeft size={18} color={Palette.ink} /><Text style={styles.backText}>همهٔ سطح‌ها</Text></Pressable></View>
               <Text style={styles.brandEyebrow}>LEVEL {selected.id} · RUSSIAN COURSE MAP</Text>
             </View>
 
@@ -165,13 +162,13 @@ export default function RussianLibrary() {
             </LinearGradient>
 
             <View style={styles.focusCard}>
-              <View style={styles.focusHeadingRow}><View style={styles.focusIcon}><Sparkles size={17} color={Palette.primary} /></View><View style={styles.focusHeadingCopy}><Text style={styles.focusEyebrow}>LEVEL FOCUS</Text><Text style={styles.focusTitle}>موضوعات این سطح</Text></View></View>
+              <View style={styles.focusHeadingRow}><View style={styles.focusIcon}><Sparkles size={17} color={Palette.primary} /></View><View style={styles.focusHeadingCopy}><Text style={styles.focusTitle}>موضوعات این سطح</Text></View></View>
               <Text style={styles.focusDescription}>{selected.description}</Text>
               <View style={styles.moduleGrid}>{selected.modules.map((module, index) => <View key={`${index}-${module}`} style={styles.moduleChip}><View style={[styles.moduleDot, { backgroundColor: selected.color }]} /><Text style={styles.moduleText}>{displayEnglishModuleLabel(module)}</Text></View>)}</View>
               <Text style={styles.focusFootnote}>{selected.status === 'planned' ? 'این سطح بخشی از نقشهٔ آینده است؛ تا زمان تدوین، درس یا جمله‌ای به شمار محتوای موجود اضافه نمی‌شود.' : 'محتوای منتشرشده بر پایهٔ جمله‌های روسی و راهنمای فارسی است؛ این نقشه سنجش رسمی CEFR نیست.'}</Text>
             </View>
 
-            <View style={styles.lessonSectionHeading}><View><Text style={styles.brandEyebrow}>SENTENCE-BASED LESSONS</Text><Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text></View><View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{fa(selectedLessons.length)} درس</Text></View></View>
+            <View style={styles.lessonSectionHeading}><View><Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text></View><View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{fa(selectedLessons.length)} درس</Text></View></View>
 
             {selectedLessons.length ? <View style={styles.groupList}>{lessonGroups.map((group, index) => {
               const first = group[0];
@@ -209,7 +206,7 @@ export default function RussianLibrary() {
             })}</View> : <View style={styles.emptyLevel}>
               <View style={styles.emptyIcon}><Sparkles size={24} color={Palette.primary} /></View>
               <Text style={styles.emptyTitle}>درس‌های این سطح هنوز تدوین نشده‌اند</Text>
-              <Text style={styles.emptyDescription}>موضوع‌های سطح در نقشه ثبت شده‌اند، اما جمله یا درس ساختگی نمایش داده نمی‌شود. مسیر موجود فعلاً از الفبا تا موقعیت‌های مقدماتی ادامه دارد.</Text>
+              <Text style={styles.emptyDescription}>به‌زودی اضافه می‌شود.</Text>
             </View>}
           </>}
           {!!error && <View style={styles.errorCard}><Text accessibilityRole="alert" style={styles.errorText}>{error}</Text><Pressable accessibilityRole="button" onPress={() => setRetry(value => value + 1)}><Text style={styles.retryText}>تلاش دوباره</Text></Pressable></View>}
@@ -224,6 +221,7 @@ const styles = StyleSheet.create({
   scrollContent: { flexGrow: 1 },
   page: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 20, paddingTop: 18, paddingBottom: 50, gap: 17 },
   topBar: { gap: 4 },
+  selectedBrandRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 },
   selectedTopBar: { gap: 5 },
   backButton: { alignSelf: 'flex-start', minHeight: 38, flexDirection: 'row-reverse', alignItems: 'center', gap: 5, paddingHorizontal: 10, borderRadius: 12, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, marginBottom: 7 },
   backText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 11, fontWeight: '400', writingDirection: 'rtl' },
@@ -233,7 +231,7 @@ const styles = StyleSheet.create({
   overviewHero: { position: 'relative', overflow: 'hidden', marginTop: 60, borderRadius: 25, padding: 20, gap: 10, shadowColor: '#282671', shadowOpacity: .16, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 5 },
   heroOrb: { position: 'absolute', top: -50, left: -42, width: 180, height: 180, borderRadius: 90, backgroundColor: 'rgba(255,255,255,0.09)' },
   heroTopRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' },
-  heroIcon: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
+  heroIcon: { width: 48, height: 48, alignItems: 'center', justifyContent: 'center' },
   heroPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.12)', paddingHorizontal: 10, paddingVertical: 6 },
   heroPillText: { fontFamily: Typography.fontFamily, color: '#FFFFFF', fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
   overviewEyebrow: { fontFamily: 'Times New Roman', color: '#C6C9FF', fontSize: 6, fontWeight: '800', letterSpacing: 1.4, writingDirection: 'ltr', marginTop: 4 },

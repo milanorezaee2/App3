@@ -171,8 +171,8 @@ function PersonalSyncEnabledScreen() {
             <View style={styles.hero}>
               <View style={styles.heroIcon}><Cloud size={24} color="#FFFFFF" strokeWidth={2} /></View>
               <Text accessibilityRole="header" style={styles.title}>حساب شخصی و همگام‌سازی</Text>
-              <Text style={styles.subtitle}>یک ورود ایمیلی برای همگام‌سازی پیشرفت آموزشی و خودارزیابی تلفظ انگلیسی میان دستگاه‌های شما.</Text>
-              <View style={styles.privacyPill}><ShieldCheck size={15} color="#D6F2E6" /><Text style={styles.privacyText}>خصوصی برای حساب واردشده · بدون رمز عبور</Text></View>
+              <Text style={styles.subtitle}>ورود با ایمیل برای همگام‌سازی پیشرفت میان دستگاه‌ها.</Text>
+              <View style={styles.privacyPill}><ShieldCheck size={15} color="#D6F2E6" /></View>
             </View>
 
             <View style={styles.card}>
@@ -187,7 +187,7 @@ function PersonalSyncEnabledScreen() {
                     <View style={styles.onlineDot} />
                   </View>
                   <View style={styles.rule} />
-                  <View style={styles.scopeRow}><Smartphone size={17} color="#67677A" /><Text style={styles.scopeText}>پیشرفت درس‌ها و سنجش‌های تکمیل‌شده، مرورهای زمان‌بندی‌شده، زمان مطالعه و یادداشت‌های تلفظ هر دو زبان</Text></View>
+                  <View style={styles.scopeRow}><Smartphone size={17} color="#67677A" /><Text style={styles.scopeText}>پیشرفت درس‌ها، مرورها و زمان مطالعه</Text></View>
                   <Pressable accessibilityRole="button" accessibilityState={{ disabled: syncing || busy }} disabled={syncing || busy} onPress={() => void runSync()} style={({ pressed }) => [styles.primaryButton, (syncing || busy) && styles.buttonDisabled, pressed && styles.buttonPressed]}>
                     {syncing ? <ActivityIndicator size="small" color="#FFFFFF" /> : <RefreshCw size={17} color="#FFFFFF" />}
                     <Text style={styles.primaryText}>{syncing ? 'در حال همگام‌سازی…' : 'همگام‌سازی اکنون'}</Text>
@@ -201,7 +201,6 @@ function PersonalSyncEnabledScreen() {
                 <>
                   <View style={styles.formIcon}><Mail size={19} color="#5C49B2" /></View>
                   <Text style={styles.cardTitle}>ورود با کد ایمیل</Text>
-                  <Text style={styles.cardCaption}>کد یک‌بارمصرف می‌فرستیم؛ نیازی به ساخت یا نگه‌داری رمز عبور نیست.</Text>
                   <Text style={styles.label}>نشانی ایمیل</Text>
                   <TextInput
                     accessibilityLabel="نشانی ایمیل برای ورود"
@@ -256,11 +255,9 @@ function PersonalSyncEnabledScreen() {
 
             <View style={styles.safeNote}>
               <ShieldCheck size={17} color="#52775D" />
-              <Text style={styles.safeText}>اطلاعات آموزشی ابری فقط برای حساب احراز‌شدهٔ شماست؛ RLS شناسه را با auth.uid() می‌سنجد و نقش anon دسترسی ندارد. متن پیش‌نویس‌ها و فرم کارگاه ارسال نمی‌شود؛ فقط چک‌باکس‌های خودارزیابی بدون متن همگام می‌شوند. برنامه صدای شما را ضبط یا بارگذاری نمی‌کند.</Text>
             </View>
             <View style={styles.mergeNote}>
               <Text style={styles.mergeTitle}>داده‌های قبلی محفوظ می‌مانند</Text>
-              <Text style={styles.mergeText}>هنگام ورود، شواهد و نتیجه‌های آموزشی محلی با دادهٔ حساب ادغام می‌شوند. پیش‌نویس پاسخ‌های آزاد و جلسه‌های ناتمام فقط روی همین دستگاه می‌مانند. اگر نسخه‌ای فقط در حساب ناشناسِ دستگاه دیگری باشد، همان دستگاه باید یک‌بار با این ایمیل وارد و همگام شود؛ ورود، دادهٔ محلی را پاک نمی‌کند.</Text>
             </View>
             {!configured && <Text style={styles.configHint}>اتصال Supabase هنوز در این اجرا تنظیم نشده است. پس از افزودن URL پروژه و کلید عمومی anon، برنامه را دوباره اجرا کنید؛ کلید service_role یا رمز لازم نیست.</Text>}
           </View>

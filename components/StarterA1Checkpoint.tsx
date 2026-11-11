@@ -52,15 +52,14 @@ export default function StarterA1Checkpoint({language,locale,level=1}:{language:
   return <View style={s.card}>
     <Pressable accessibilityRole="button" accessibilityState={{expanded:open}} onPress={()=>{if(open) void stopStarterSpeech();setOpen(v=>!v);}} style={s.toggle}><Text style={s.title}>تمرین جمع‌بندی {level === 4 ? 'B2' : level === 3 ? 'B1' : `A${level}`}</Text><Text style={s.icon}>{open?'−':'+'}</Text></Pressable>
     {open && <>
-      <Text style={s.description}>پیام‌های تازه را گوش کنید یا بخوانید، سپس گفتار و نوشتن را تمرین کنید. این تمرین اختیاری و مستقل از پیشرفت درس‌هاست؛ پاسخ‌ها ذخیره نمی‌شوند و آزمون رسمی نیست.</Text>
+      <Text style={s.description}>پیام‌های تازه را گوش کنید یا بخوانید، سپس گفتار و نوشتن را تمرین کنید.</Text>
       {!!speechError && <Text accessibilityRole="alert" style={s.error}>{speechError}</Text>}
       <Text style={s.section}>شنیدن و خواندن</Text>
       {data.questions.map((task,i)=><Comprehension key={`${language}-q${i}`} task={task} index={i} speak={speak}/>)}
       <Text style={s.section}>گفتار</Text>
-      <Text style={s.description}>پاسخ را بلند بگویید؛ سپس در صورت نیاز نمونه را بشنوید. گفتار ضبط یا به‌صورت خودکار ارزیابی نمی‌شود.</Text>
+      <Text style={s.description}>پاسخ را بلند بگویید؛ سپس نمونه را بشنوید. گفتار ضبط یا به‌صورت خودکار ارزیابی نمی‌شود.</Text>
       {data.speaking.map((task,i)=><Production key={`${language}-s${i}`} task={task} index={i} kind="speaking" speak={speak}/>)}
       <Text style={s.section}>نوشتن</Text>
-      <Text style={s.description}>پاسخ خودتان را بنویسید و با نمونه مقایسه کنید؛ پاسخ‌های دیگری هم می‌توانند درست باشند. این قسمت نمرهٔ خودکار ندارد.</Text>
       {data.writing.map((task,i)=><Production key={`${language}-w${i}`} task={task} index={i} kind="writing" speak={speak}/>)}
     </>}
   </View>;

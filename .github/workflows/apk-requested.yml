@@ -1,5 +1,30 @@
 name: Build requested APKs
 
+# rev 29: readable chat bubbles (light green mine / white theirs, dark text)
+# rev 28: conversation hub in de/fr/es bottom nav (same as en/tr/ru); Emma AI coach disabled in all languages
+# rev 27: speech check tolerant to short-word homophones (de "Tee"), best-of-5 alternatives, biasing strings
+# rev 26: more speaking checks (core sentences, vocabulary, dialogue, speaking test in review) + auto-read in Listening stage
+# rev 25: speaking practice (expo-speech-recognition 3.1.3 for Expo SDK 54) in the Shadowing stage of all six languages
+# rev 24: remove "شروع از صفر" label and equal-size language cards
+# rev 23: Persian digits in bold cut; mid-grey text colours forced dark (faded numbers/badges).
+# rev 22: Persian text bold + grey in every build (regular cut rendered faint).
+# rev 21: add five-language no-login flavour (MiloLearner5-NoLogin.apk).
+# rev 20: new language introductions on dashboards and language registry.
+# rev 19: third copy-trimming pass across supplement, account, backup, lock, B2/C1 practice and dialogue screens.
+# rev 18: dashboards, libraries and review screens trimmed (no Latin eyebrows, no app-mechanics copy).
+# rev 17: lesson copy trimmed — one-sentence stage hints shown once, no app-mechanics text, no Latin subtitles.
+# rev 16: redesigned "Grammar Through Usage" stage (numbered, right-aligned pattern cards) in all languages.
+# rev 15: grammar stage back to classic 86% rendering; Persian grey, translations lighter grey (login app).
+# rev 14: lesson layout 78% with text kept at previous size; Persian smoky black in login app; translation pill reverted.
+# rev 13: login app Persian in Beiruti Bold; lesson translation styled as indigo accent pill.
+# rev 12: lesson pages back to normal scrolling layout, drawn at 86% scale on phones.
+# rev 11: Android hardware back returns to the previous page instead of closing the app.
+# rev 10: native light theme with black default text; admin phone-lock toggle.
+# rev 9: lesson content scales to fit any screen; chat composer +36dp above keyboard.
+# rev 8: re-run; the previous publish job never started on GitHub.
+# rev 7: lesson auto-scroll/spacing fix + self-measuring chat composer.
+# rev 6: bigger startup logo, black reading colour, bold Latin/Times text.
+# rev 5: podcast + header/chat fixes; branch pushes build all three flavours.
 # rev 4: rebuilds after every registered language gained a pronunciation
 # workshop (German, French, Spanish). Each flavour is built in its own clean runner. Building the three
 # variants sequentially on one runner let Metro reuse the first bundle, so every
@@ -31,6 +56,7 @@ on:
   push:
     branches:
       - arena/1d4c82b4-app3
+      - arena/0525d0d2-app3
     paths:
       - '.github/workflows/apk-requested.yml'
 
@@ -166,7 +192,9 @@ jobs:
 
   # -------------------------------------------------- learner WITH login
   learner-login:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.learner_login }}
+    # Branch pushes (where workflow_dispatch is unavailable) build all three
+    # requested flavours; manual runs still opt in explicitly.
+    if: ${{ github.event_name == 'push' || inputs.learner_login }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
@@ -225,9 +253,40 @@ jobs:
       - *verify
       - *upload
 
+  # ------------------------------------ five-language learner WITHOUT login
+  learner-five-nologin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+      NODE_OPTIONS: '--max-old-space-size=8192'
+      EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      EXPO_PUBLIC_MILO_ADMIN_APP: 'false'
+      EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'false'
+      EXPO_PUBLIC_LEARNER_LOGIN: 'false'
+      EXPO_PUBLIC_LEARNER_FIVE_NOLOGIN: 'true'
+      EXPO_PUBLIC_LANGUAGE_SCOPE: 'en,de,fr,tr,es'
+      EXPECTED_PACKAGE: 'com.devicecontrol.milofive'
+      EXPECTED_SCOPE: 'en,de,fr,tr,es'
+      APK_NAME: 'MiloLearner5-NoLogin.apk'
+    steps:
+      - *checkout
+      - *node
+      - *install
+      - *settings
+      - *java
+      - *sdk
+      - *prebuild
+      - *validate
+      - *build
+      - *verify
+      - *upload
+
   # ----------------------------------------------------------- publish
   publish:
-    needs: [admin, learner-login, learner-nologin]
+    needs: [admin, learner-login, learner-nologin, learner-five-nologin]
     if: ${{ always() && needs.admin.result == 'success' && needs.learner-nologin.result == 'success' && (needs.learner-login.result == 'success' || needs.learner-login.result == 'skipped') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -253,13 +312,26 @@ jobs:
             Installable Android APKs, each built on its own clean runner.
 
             - `MiloAdmin.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
-            - `MiloLearner-NoLogin.apk` — learner app without login, package `com.devicecontrol.companion`
-            - An additional learner login APK is included only when explicitly requested.
+            - `MiloLearner-Login.apk` — MiloMultiLanguage WITH login, package `com.devicecontrol.milomultilang`, languages en, de, fr, tr, es
+            - `MiloLearner-NoLogin.apk` — MiloMultiLanguage WITHOUT login, package `com.devicecontrol.companion`, languages en, ru
+            - `MiloLearner5-NoLogin.apk` — five-language MiloMultiLanguage WITHOUT login, package `com.devicecontrol.milofive`, languages en, de, fr, tr, es
           files: |
             out/MiloAdmin.apk/MiloAdmin.apk
             out/MiloLearner-NoLogin.apk/MiloLearner-NoLogin.apk
             out/MiloAdmin.apk/MiloAdmin.apk.sha256
             out/MiloLearner-NoLogin.apk/MiloLearner-NoLogin.apk.sha256
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Add the five-language no-login APK to the release
+        if: ${{ needs.learner-five-nologin.result == 'success' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: milo-requested-${{ github.run_number }}
+          files: |
+            out/MiloLearner5-NoLogin.apk/MiloLearner5-NoLogin.apk
+            out/MiloLearner5-NoLogin.apk/MiloLearner5-NoLogin.apk.sha256
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ github.token }}

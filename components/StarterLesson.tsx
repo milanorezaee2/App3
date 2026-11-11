@@ -1,7 +1,10 @@
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
-import { LocalizedText as Text } from '@/components/LocalizedText';
+import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/LocalizedText';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { FitScrollView, lessonScrollOffset } from '@/components/FitScrollView';
+import { useFirstTimeHint } from '@/lib/useFirstTimeHint';
+import { GrammarNoteCard, GrammarPatternCard, GrammarStageHeader } from '@/components/GrammarUsage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as Speech from 'expo-speech';
@@ -13,6 +16,9 @@ import { StarterWordChoice } from '@/components/StarterWordChoice';
 import StarterExtraPractice from '@/components/StarterExtraPractice';
 import StarterWritingPractice from '@/components/StarterWritingPractice';
 import StarterA1Skill from '@/components/StarterA1Skill';
+import SpeakCheck from '@/components/SpeakCheck';
+import SpeakDrill from '@/components/SpeakDrill';
+import { autoRead } from '@/lib/autoRead';
 import StarterB1Production from '@/components/StarterB1Production';
 import {b1Production} from '@/lib/languages/b1Production';
 import { A1_SKILLS } from '@/lib/languages/a1Skills';
@@ -64,6 +70,17 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
   const courseLevel = levels.find(item => item.id === lesson.levelId) ?? levels[0];
   const [stage, setStage] = useState(0);
   const [sentenceIndex, setSentenceIndex] = useState(0);
+
+  // Keep the active stage fully visible: when the stage or sentence changes,
+  // scroll so the stage block (card + its buttons) starts near the top and is
+  // never left half-hidden behind the footer.
+  const lessonScrollRef = useRef<ScrollView>(null);
+  const showHint = useFirstTimeHint(`starter:${stage}`);
+  const stageOffsetRef = useRef(0);
+  useEffect(() => {
+    const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: stage === 1 ? Math.max(0, lessonScrollOffset(stageOffsetRef.current, Dimensions.get('window').width) - 8) : 0, animated: true }), 60);
+    return () => clearTimeout(handle);
+  }, [stage, sentenceIndex]);
   const [revealed, setRevealed] = useState(false);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [showCheckAnswers, setShowCheckAnswers] = useState(false);
@@ -194,6 +211,13 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
     speak(lesson.sentences[index].text, rate);
   };
 
+  // «شنیدن»: read the whole list aloud automatically when the stage opens; the Continue button keeps working.
+  useEffect(() => {
+    if (stage !== 2) return;
+    return autoRead(lesson.sentences.length, index => selectSentence(index, 0.72), undefined, 900);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage, lesson.id]);
+
   const goToPreviousSentence = () => {
     if (!sessionReady || saving || sessionError || stage !== 1 || sentenceIndex === 0) return;
     setSentenceIndex(previousSentenceIndex(sentenceIndex));
@@ -246,28 +270,25 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
 
   return (
     <View style={styles.root}>
-      <ScrollView style={styles.lessonScroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <FitScrollView ref={lessonScrollRef} variant={stage === 6 ? 'classic' : 'default'} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <View style={styles.brandRow}><MiloGlobeHeadphoneMark size={48} /><Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color="#4F438D" strokeWidth={2.4} /></Pressable></View>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
-          <Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color="#FFFFFF" /></Pressable>
-          <Pressable accessibilityRole="button" accessibilityLabel="شروع از ابتدای این درس" accessibilityState={{ disabled: saving }} disabled={saving} style={styles.restartLessonButton} onPress={startCurrentLessonFromBeginning}><RotateCcw size={15} color="#FFFFFF" /><Text style={styles.restartLessonButtonText}>شروع از ابتدا</Text></Pressable>
           <View style={styles.headerText}>
-            <Text style={styles.headerEyebrow}>{courseLevel.id === -1 ? 'PRE-A1' : `LEVEL ${courseLevel.id}`} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
             <Text style={styles.headerSub}>{stages[stage].labelFa} · مرحلهٔ {fa(stage + 1)} از {fa(stages.length)}</Text>
           </View>
           <View style={styles.percentBadge}><Text style={styles.percent}>{fa(progressPercent)}٪</Text><Text style={styles.percentLabel}>پیشرفت</Text></View>
         </View>
-        <View style={styles.headerBottom}><View style={styles.headerInfoChip}><MiloGlobeHeadphoneMark size={13} /><Text style={styles.headerInfoText}>{foundation ? 'آموزش از صفر' : 'مسیر اصلی جمله‌محور'}</Text></View><Text style={styles.headerInfoText}>{fa(lesson.sentences.length)} {unit} اصلی</Text></View>
+        <View style={styles.headerBottom}><View style={styles.headerInfoChip}><Text style={styles.headerInfoText}>{foundation ? 'آموزش از صفر' : 'مسیر اصلی جمله‌محور'}</Text></View><Text style={styles.headerInfoText}>{fa(lesson.sentences.length)} {unit} اصلی</Text></View>
       </LinearGradient>
 
       <View style={styles.stepperCard}>
         <View style={styles.stepperHeading}>
-          <View><Text style={styles.stepperEyebrow}>LESSON FLOW · 09 STAGES</Text><Text style={styles.stepperTitle}>جریان این درس</Text></View>
-          <View style={styles.stepperNow}><Text style={styles.stepperNowEn}>{stages[stage].labelEn}</Text><Text style={styles.stepperNowFa}>{stages[stage].labelFa}</Text></View>
+          <View><Text style={styles.stepperTitle}>جریان این درس</Text></View>
+          <View style={styles.stepperNow}><Text style={styles.stepperNowFa}>{stages[stage].labelFa}</Text></View>
         </View>
         <View style={styles.stepSegments}>{stages.map((item, index) => <View key={item.id} accessibilityLabel={`${item.labelEn} ${index + 1} از ${stages.length}`} style={[styles.stepSegment, index <= stage && styles.stepSegmentDone, index === stage && styles.stepSegmentCurrent]} />)}</View>
-        <View style={styles.stepperEnds}><Text style={styles.stepperEndText}>{stages[0].labelEn}</Text><Text style={styles.stepperEndText}>{stages[stages.length - 1].labelEn}</Text></View>
       </View>
 
       {!!(sessionError || speechError) && <Text accessibilityRole="alert" style={styles.error}>{sessionError || speechError}</Text>}
@@ -281,45 +302,46 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           {teachingNote ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ این زبان به فارسی</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : null}
         </View>}
 
-        {stage === 1 && <View style={styles.sentenceStage}>
+        {stage === 1 && <View style={styles.sentenceStage} onLayout={event => { stageOffsetRef.current = event.nativeEvent.layout.y; }}>
           <Text style={styles.counter}>{foundation ? unit : 'جملهٔ'} {fa(sentenceIndex + 1)} از {fa(lesson.sentences.length)}</Text>
           <View style={styles.sentenceCard}>
             <Pressable accessibilityRole="button" accessibilityLabel={foundation ? `شنیدن ${unit} این زبان` : "شنیدن جملهٔ این زبان"} style={styles.soundButton} onPress={() => speak(current.text)}><Volume2 size={25} color="#FFFFFF" /></Pressable>
             <Text style={styles.targetSentence}>{current.text}</Text>
             <Text style={styles.pronunciation}>{starterDisplayPronunciation(current)}</Text>
             <View style={styles.divider} />
-            <Text style={styles.persian}>{current.fa}</Text>
+            <Text keepColor style={styles.persian}>{current.fa}</Text>
             {currentPattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternText}>{currentPattern}</Text></View> : null}
           </View>
           <View style={styles.replayRow}>
             <Pressable accessibilityRole="button" accessibilityLabel={`پخش آهستهٔ ${unit}`} style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel={`پخش معمولی ${unit}`} style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable>
           </View>
-          <Text style={styles.hint}>{unit} به‌صورت خودکار پخش می‌شود. می‌توانید آهسته یا معمولی دوباره بشنوید و با صدای بلند تکرار کنید.</Text>
+          <SpeakCheck key={current.id} text={current.text} locale={course.locale} accent={Palette.success} />
         </View>}
 
         {stage === 2 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><Headphones size={34} color={Palette.primary} /></View>
           <Text style={styles.stageTitle}>شنیدن {unitPlural}</Text>
-          <Text style={styles.stageDesc}>{foundation ? `هر ${unit} را جداگانه گوش دهید و معنی آن را به یاد بیاورید.` : 'هر جمله را جداگانه گوش دهید و معنی همان جمله را به یاد بیاورید. واژه‌ها کنار جملهٔ اصلی می‌مانند.'}</Text>
+          {showHint && <Text style={styles.stageDesc}>{foundation ? `هر ${unit} را جداگانه گوش دهید و معنی آن را به یاد بیاورید.` : 'هر جمله را گوش دهید و معنی‌اش را به یاد بیاورید.'}</Text>}
           <View style={styles.listenList}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityState={{ selected: index === sentenceIndex }} style={[styles.listenRow, index === sentenceIndex && styles.listenRowActive]} onPress={() => selectSentence(index)}>
             <View style={styles.listenNumber}><Text style={styles.listenNumberText}>{fa(index + 1)}</Text></View>
             <Text style={styles.listenTarget}>{sentence.text}</Text>
             <Volume2 size={19} color={Palette.primary} />
           </Pressable>)}</View>
-          <View style={styles.shadowTip}><Headphones size={18} color={Palette.primary} /><Text style={styles.shadowText}>فعلاً فقط گوش دهید؛ مرحلهٔ بعد برای تکرار و سایه‌خوانی است.</Text></View>
+          <View style={styles.shadowTip}><Headphones size={18} color={Palette.primary} /><Text style={styles.shadowText}>{unitPlural} به‌ترتیب خودکار پخش می‌شوند؛ هر زمان خواستید «ادامه» را بزنید.</Text></View>
           {listeningTask && <StarterA1Skill key={`${lesson.id}-listening`} task={listeningTask} onSpeak={speak} />}
         </View>}
 
         {stage === 3 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><Mic2 size={34} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>سایه‌خوانی · Shadowing</Text>
-          <Text style={styles.stageDesc}>نمونه را آهسته پخش کنید، مکث کنید و با همان آهنگ تکرار کنید. ضبط صدا یا ارزیابی گفتار لازم نیست.</Text>
+          {showHint && <Text style={styles.stageDesc}>بشنوید، مکث کنید و با همان آهنگ تکرار کنید.</Text>}
           <View style={styles.speechPractice}>
             <Text style={styles.speechTitle}>{unit} انتخاب‌شده</Text>
             <Text style={styles.speechSentence}>{current.text}</Text>
             <View style={styles.replayRow}><Pressable accessibilityRole="button" accessibilityLabel={`پخش آهستهٔ ${unit}`} style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable><Pressable accessibilityRole="button" accessibilityLabel={`پخش معمولی ${unit}`} style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable></View>
-            <Text style={styles.speechHint}>پس از شنیدن، {unit} را با صدای بلند تکرار کنید؛ گفتار ضبط یا نمره‌گذاری نمی‌شود.</Text>
+            <Text style={styles.speechHint}>پس از شنیدن، {unit} را با صدای بلند تکرار کنید.</Text>
+            <SpeakCheck key={current.id} text={current.text} locale={course.locale} accent={Palette.success} />
           </View>
           {a1 ? <PracticeNavigation index={sentenceIndex} count={lesson.sentences.length} onChange={index => selectSentence(index, .68)} /> : <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`${unit} ${fa(index + 1)}`} onPress={() => selectSentence(index, .68)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>}
         </View>}
@@ -327,7 +349,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
         {stage === 4 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><RotateCcw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>{foundation ? `انتخاب ${unit}` : 'ساخت جمله'}</Text>
-          <Text style={styles.stageDesc}>{foundation ? `معنی ثبت‌شده را بخوانید و ${unit} مربوط به همان نمونهٔ درس را انتخاب کنید.` : 'معنی را بخوانید و واژه‌های همان جمله را به ترتیب بچینید؛ تمرین به جمله‌های همین درس متصل است.'}</Text>
+          {showHint && <Text style={styles.stageDesc}>{foundation ? `معنی ثبت‌شده را بخوانید و ${unit} مربوط به همان نمونهٔ درس را انتخاب کنید.` : 'معنی را بخوانید و واژه‌ها را به ترتیب بچینید.'}</Text>}
           {foundation || current.text.trim().replace(/\s+([!?.;,:])/g, '$1').split(/\s+/).length === 1 ? <StarterWordChoice key={current.id} sentence={current} sentences={lesson.sentences} /> : <LanguageSentenceBuilder key={current.id} sentence={current} placeholder="واژه‌ها را به ترتیب انتخاب کنید" />}
           <PracticeNavigation index={sentenceIndex} count={lesson.sentences.length} onChange={setSentenceIndex} />
           {a1 && <StarterWritingPractice key={current.id} sentence={current} />}
@@ -336,45 +358,38 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
         {stage === 5 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><Sparkles size={34} color={Palette.warning} /></View>
           <Text style={styles.stageTitle}>{foundation ? 'واژه‌ها و معنی‌ها' : 'واژگان از دل جمله‌ها'}</Text>
-          <Text style={styles.stageDesc}>{foundation ? `هر ${unit} را همراه معنی ببینید و دوباره بشنوید.` : 'هر واژه را همراه معنی و همان جمله‌ای ببینید که از آن آمده است.'}</Text>
+          {showHint && <Text style={styles.stageDesc}>{foundation ? `هر ${unit} را همراه معنی ببینید و دوباره بشنوید.` : 'هر واژه را با معنی و جمله‌اش مرور کنید.'}</Text>}
           <View style={styles.vocabList}>{vocabulary.map(({ word, sentence }) => <View key={`${word.word}-${sentence.id}`} style={styles.vocabCard}>
             <View style={styles.vocabTop}><Text style={styles.vocabWord}>{word.word}</Text><Text style={styles.vocabMeaning}>{word.meaning}</Text></View>
-            <Text style={styles.vocabExample}>{sentence.text}</Text><Text style={styles.vocabExampleFa}>{sentence.fa}</Text>
+            <Text style={styles.vocabExample}>{sentence.text}</Text><Text keepColor style={styles.vocabExampleFa}>{sentence.fa}</Text>
             <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن مثال: ${sentence.text}`} style={styles.bubbleSound} onPress={() => speak(sentence.text)}><Volume2 size={16} color={Palette.primary} /></Pressable>
+            <SpeakCheck compact text={word.word} locale={course.locale} accent={Palette.success} />
           </View>)}</View>
         </View>}
 
-        {stage === 6 && <View style={styles.centerStage}>
-          <View style={styles.bigIcon}><MiloGlobeHeadphoneMark size={33} /></View>
-          <Text style={styles.stageTitle}>{foundation ? 'نکتهٔ نوشتار و کاربرد' : 'دستور در کاربرد'}</Text>
-          <Text style={styles.stageDesc}>{foundation ? 'نکته را بخوانید؛ نمونه‌ها را می‌توانید در بخش شنیدن یا تمرین دوباره بشنوید.' : (lesson.levelId === 2 || lesson.levelId === 3 || lesson.levelId === 4) ? 'ساختار و توضیح هر الگو را بخوانید و مثال آن را از همین درس بشنوید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به داده‌ها اضافه نمی‌شود.'}</Text>
-          {a1 && teachingNote ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ این زبان</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : null}
-          {foundation ? <View style={styles.noteCard}><Text style={styles.noteTitle}>یادآوری</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : a2Patterns.length ? a2Patterns.map(pattern => {
+        {stage === 6 && <View style={styles.grammarStage}>
+          <GrammarStageHeader title={foundation ? 'نکتهٔ نوشتار و کاربرد' : 'دستور در کاربرد'} description={showHint ? foundation ? 'نکته را بخوانید.' : (lesson.levelId === 2 || lesson.levelId === 3 || lesson.levelId === 4) ? 'توضیح هر الگو را بخوانید و مثالش را بشنوید.' : 'الگوی هر جمله را ببینید و مثالش را بشنوید.' : undefined} />
+          {a1 && teachingNote ? <GrammarNoteCard title="نکتهٔ این زبان" text={teachingNote} /> : null}
+          {foundation ? <GrammarNoteCard title="یادآوری" text={teachingNote ?? ''} /> : a2Patterns.length ? a2Patterns.map((pattern, index) => {
             const sentence = lesson.sentences[pattern.example - 1];
-            return <View key={pattern.form} style={styles.vocabCard}>
-              <Text style={styles.a2PatternForm}>{pattern.form}</Text>
-              <Text style={styles.noteText}>{pattern.explanationFa}</Text>
-              <Text style={styles.vocabExample}>{sentence.text}</Text><Text style={styles.vocabExampleFa}>{sentence.fa}</Text>
-              <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن جمله: ${sentence.text}`} onPress={() => speak(sentence.text)} style={styles.bubbleSound}><Volume2 size={16} color={Palette.primary} /></Pressable>
-            </View>;
-          }) : grammarPatterns.length ? grammarPatterns.map(({ sentence, pattern }) => <View key={sentence.id} style={styles.vocabCard}>
-            <Text style={styles.patternText}>{pattern}</Text><Text style={styles.vocabExample}>{sentence.text}</Text><Text style={styles.vocabExampleFa}>{sentence.fa}</Text>
-            <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن جمله: ${sentence.text}`} onPress={() => speak(sentence.text)} style={styles.bubbleSound}><Volume2 size={16} color={Palette.primary} /></Pressable>
-          </View>) : <View style={styles.promiseCard}><Text style={styles.promiseTitle}>یادگیری در بافت جمله</Text><Text style={styles.promiseText}>برای این درس الگوی جداگانه‌ای ثبت نشده است؛ جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید.</Text></View>}
+            return <GrammarPatternCard key={pattern.form} index={index + 1} pattern={pattern.form} explanation={pattern.explanationFa} example={sentence.text} translation={sentence.fa} onSpeak={() => speak(sentence.text)} />;
+          }) : grammarPatterns.length ? grammarPatterns.map(({ sentence, pattern }, index) => (
+            <GrammarPatternCard key={sentence.id} index={index + 1} pattern={pattern} example={sentence.text} translation={sentence.fa} onSpeak={() => speak(sentence.text)} />
+          )) : <GrammarNoteCard title="یادگیری در بافت جمله" text="جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید." />}
         </View>}
 
         {stage === 7 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><MessageCircle size={34} color={Palette.primary} /></View>
           {foundation ? <>
             <Text style={styles.stageTitle}>تمرین یادآوری</Text>
-            <Text style={styles.stageDesc}>معنی ثبت‌شده در درس را بخوانید و گزینهٔ مربوط به آن نمونه را پیدا کنید. با دکمه‌ها نمونهٔ دیگری را انتخاب کنید.</Text>
+            {showHint && <Text style={styles.stageDesc}>معنی را بخوانید و گزینهٔ درست را انتخاب کنید.</Text>}
             <StarterWordChoice key={current.id} sentence={current} sentences={lesson.sentences} />
             <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن ${unit} انتخاب‌شده`} style={styles.bubbleSound} onPress={() => speak(current.text)}><Volume2 size={20} color={Palette.primary} /></Pressable>
             <PracticeNavigation index={sentenceIndex} count={lesson.sentences.length} onChange={setSentenceIndex} />
           </> : <>
             <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
-            <Text style={styles.stageDesc}>از دیالوگ همین درس نقش‌آفرینی کنید؛ جملهٔ خود را بگویید و سپس نمونه را بشنوید.</Text>
-            <LanguageDialoguePractice key={lesson.id} dialogue={starterDisplayDialogue(lesson)} onSpeak={speak} languageLabel={course.name} />
+            {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
+            <LanguageDialoguePractice key={lesson.id} dialogue={starterDisplayDialogue(lesson)} onSpeak={speak} languageLabel={course.name} locale={course.locale} />
             {readingTask && <StarterA1Skill key={`${lesson.id}-reading`} task={readingTask} onSpeak={speak} />}
             {lesson.levelId === 3 && b1Production(course.id,lesson.id) && <StarterB1Production key={`${lesson.id}-production`} prompt={b1Production(course.id,lesson.id)!} lesson={lesson} onSpeak={speak} />}
             {lesson.levelId === 4 && b2Production(course.id,lesson.id) && <StarterB1Production key={`${lesson.id}-production`} prompt={b2Production(course.id,lesson.id)!} lesson={lesson} onSpeak={speak} />}
@@ -384,8 +399,8 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
         {stage === 8 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><RefreshCw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
-          <Text style={styles.stageDesc}>با پایان درس، {unitPlural} وارد مرور محلی می‌شوند؛ فاصلهٔ بعدی براساس پاسخی که در مرور می‌دهید تنظیم می‌شود.</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} {unit} و {fa(vocabulary.length)} واژه/عبارت یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
+          <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale={course.locale} accent={Palette.success} onSpeak={text => speak(text)} />
           <View style={styles.evidenceCard}>
             <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
             <Text style={styles.evidenceIntro}>{a1 ? 'برای پایان درس به همهٔ پرسش‌های کاربردی پاسخ درست دهید؛ پس از پاسخ نادرست می‌توانید دوباره امتحان کنید. این سنجش، آزمون رسمی سطح نیست.' : 'پرسش‌ها به نمونه‌های همین درس وصل‌اند. پاسخ نادرست را می‌توانید دوباره امتحان کنید یا توضیح پاسخ نمونه را ببینید.'}</Text>
@@ -414,7 +429,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
         {!!(sessionError || completionError) && <Text accessibilityRole="alert" style={styles.error}>{sessionError || completionError}</Text>}
         {sessionError ? <Pressable accessibilityRole="button" style={styles.retrySaveButton} onPress={() => setSaveRetry(value => value + 1)}><Text style={styles.retrySaveText}>تلاش دوباره برای ذخیرهٔ جلسه</Text></Pressable> : null}
       </View>
-      </ScrollView>
+      </FitScrollView>
 
       <View style={styles.footer}>
         <View style={styles.footerActions}>
@@ -444,13 +459,15 @@ type LearningLessonVocabulary = StarterCourseLesson['sentences'][number]['vocabu
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },
   lessonScroll: { flex: 1, minHeight: 0 },
+  lessonScrollContent: { paddingBottom: 28 },
+  brandRow: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15, paddingTop: 10, paddingBottom: 6 },
   loadingCard: { flex: 1, minHeight: 260, alignItems: 'center', justifyContent: 'center', padding: 24, gap: 13 },
   loadingText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 13, textAlign: 'right', writingDirection: 'rtl' },
   loadingButton: { minHeight: 44, justifyContent: 'center', paddingHorizontal: 18, borderRadius: 13, backgroundColor: Palette.primary },
   loadingButtonText: { fontFamily: Typography.fontFamily, color: '#FFFFFF', fontWeight: '400', writingDirection: 'rtl' },
   header: { paddingTop: 12, paddingHorizontal: 15, paddingBottom: 10, gap: 8, borderBottomLeftRadius: 22, borderBottomRightRadius: 22 },
   headerTop: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
-  back: { width: 40, height: 40, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.14)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.20)', alignItems: 'center', justifyContent: 'center' },
+  back: { width: 44, height: 44, borderRadius: 16, alignItems: 'center', justifyContent: 'center', borderWidth: 1, backgroundColor: '#FFFFFF', borderColor: '#DDE3F1' },
   headerText: { flex: 1, alignItems: 'flex-end', gap: 2 },
   headerEyebrow: { fontFamily: 'Times New Roman', color: 'rgba(255,255,255,0.72)', fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
   headerTitle: { fontFamily: Typography.boldFontFamily, fontSize: 18, lineHeight: 27, fontWeight: '400', color: '#FFFFFF', textAlign: 'right', writingDirection: 'rtl' },
@@ -461,7 +478,7 @@ const styles = StyleSheet.create({
   headerBottom: { width: '100%', maxWidth: 820, alignSelf: 'center', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingTop: 9, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.18)' },
   headerInfoChip: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
   headerInfoText: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.78)', fontSize: 9, writingDirection: 'rtl' },
-  stepperCard: { width: '94%', maxWidth: 820, alignSelf: 'center', marginTop: 13, padding: 13, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10, shadowColor: '#211A68', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  stepperCard: { width: '94%', maxWidth: 820, alignSelf: 'center', marginTop: 8, padding: 13, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10, shadowColor: '#211A68', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepperHeading: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   stepperEyebrow: { fontFamily: 'Times New Roman', color: Palette.primary, fontSize: 6, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
   stepperTitle: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 18, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
@@ -479,6 +496,7 @@ const styles = StyleSheet.create({
   retrySaveText: { fontFamily: Typography.fontFamily, color: Palette.primary, fontSize: 11, fontWeight: '400', writingDirection: 'rtl' },
   content: { width: '100%', maxWidth: 820, alignSelf: 'center', paddingHorizontal: 15, paddingTop: 12, paddingBottom: 24, gap: 12 },
   centerStage: { alignItems: 'center', width: '100%' },
+  grammarStage: { width: '100%', alignItems: 'stretch' },
   bigIcon: { width: 72, height: 72, borderRadius: 36, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF', alignItems: 'center', justifyContent: 'center', marginVertical: 18 },
   stageEyebrow: { fontFamily: Typography.fontFamily, fontSize: 11, fontWeight: '400', color: Palette.primary, marginBottom: 4, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   stageTitle: { fontFamily: Typography.boldFontFamily, fontSize: 25, lineHeight: 36, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
@@ -490,14 +508,14 @@ const styles = StyleSheet.create({
   noteCard: { width: '100%', marginTop: 14, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 17, gap: 8 },
   noteTitle: { fontFamily: Typography.boldFontFamily, color: Palette.primaryDark, fontSize: 13, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
   noteText: { fontFamily: Typography.fontFamily, color: Palette.text, fontSize: 12, lineHeight: 25, textAlign: 'right', writingDirection: 'rtl' },
-  sentenceStage: { alignItems: 'center', paddingTop: 18, width: '100%' },
+  sentenceStage: { alignItems: 'center', paddingTop: 10, width: '100%' },
   counter: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.muted, marginBottom: 12, alignSelf: 'flex-end', textAlign: 'right', writingDirection: 'rtl' },
   sentenceCard: { width: '100%', borderRadius: 22, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: 22, alignItems: 'center', shadowColor: '#172033', shadowOpacity: .05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
-  soundButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: 18 },
+  soundButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
   targetSentence: { fontFamily: 'Times New Roman', width: '100%', fontSize: 23, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
   pronunciation: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl', marginTop: 8 },
-  divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 18 },
-  persian: { fontFamily: Typography.fontFamily, fontSize: 17, color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
+  divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 12 },
+  persian: { fontFamily: Typography.fontFamily, fontSize: 17, color: PERSIAN_TRANSLATION_COLOR, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   a2PatternForm: { fontFamily: Typography.latinFontFamily, fontSize: 14, lineHeight: 23, color: Palette.primaryDark, textAlign: 'left', writingDirection: 'ltr', alignSelf: 'stretch' },
   pattern: { maxWidth: '100%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start', gap: 8, alignSelf: 'flex-end', backgroundColor: Palette.warningSoft, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999, marginTop: 14 },
   patternLabel: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.warning, writingDirection: 'rtl' },
@@ -530,7 +548,7 @@ const styles = StyleSheet.create({
   vocabWord: { fontFamily: 'Times New Roman', fontSize: 16, fontWeight: '800', color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
   vocabMeaning: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
   vocabExample: { fontFamily: 'Times New Roman', fontSize: 13, fontWeight: '800', lineHeight: 22, color: Palette.text, textAlign: 'right', writingDirection: 'ltr' },
-  vocabExampleFa: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 19, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl' },
+  vocabExampleFa: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 19, color: PERSIAN_TRANSLATION_COLOR, textAlign: 'right', writingDirection: 'rtl' },
   bubbleSound: { alignSelf: 'flex-end', marginTop: 4, padding: 5 },
   evidenceCard: { width: '100%', marginTop: 20, borderRadius: 20, padding: 17, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 12 },
   evidenceTitle: { fontFamily: Typography.boldFontFamily, fontSize: 17, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },

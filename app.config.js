@@ -62,6 +62,15 @@ const build = () => {
       ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.milomultilang' },
     };
   }
+  if (!admin && process.env.EXPO_PUBLIC_LEARNER_FIVE_NOLOGIN === 'true') {
+    return {
+      ...base,
+      name: 'MiloMultiLanguage 5',
+      scheme: 'milofive',
+      android: { ...base.android, package: 'com.devicecontrol.milofive' },
+      ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.milofive' },
+    };
+  }
   if (!admin) return base;
   return {
     ...base,

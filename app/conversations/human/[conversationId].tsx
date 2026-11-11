@@ -2,7 +2,6 @@ import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/compon
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, BackHandler, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   RecordingPresets,
   requestRecordingPermissionsAsync,
@@ -26,8 +25,8 @@ import {
 } from '@/lib/conversations';
 import { requestHumanChatAssist, type HumanAssistMode, type HumanAssistResult } from '@/lib/humanChatAssist';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
-import { PageNavigation } from '@/components/PageNavigation';
-import { KeyboardStickyView } from '@/components/KeyboardRuntime';
+import { ChatBackButton } from '@/components/ChatBackButton';
+import { KeyboardAttachedView } from '@/components/KeyboardAttachedView';
 import { ONLINE_AUDIO_DISABLED_MESSAGE, ONLINE_AUDIO_ENABLED } from '@/lib/onlineAudioPolicy';
 
 const containsRtlScript = (value: string) => /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/.test(value);
@@ -69,7 +68,6 @@ function VoiceMessage({ message }: { message: DirectMessage }) {
 export default function HumanConversationScreen() {
   const router = useRouter();
   const { conversationId, name } = useLocalSearchParams<{ conversationId: string; name?: string }>();
-  const insets = useSafeAreaInsets();
   const scrollRef = useRef<ScrollView>(null);
   const [messages, setMessages] = useState<DirectMessage[]>([]);
   const [myId, setMyId] = useState<string | null>(null);
@@ -213,7 +211,7 @@ export default function HumanConversationScreen() {
   return (
     <View style={styles.root}>
       <View style={styles.header}>
-        <PageNavigation tone="dark" backFallback="/conversations" />
+        <ChatBackButton fallback="/conversations" />
         <View style={styles.avatar}><UserRound size={22} color={Colors.primary[300]} /></View>
         <View style={styles.headerText}><Text style={[styles.name, containsRtlScript(name || 'مخاطب واقعی') ? styles.rtlText : styles.ltrText]}>{name || 'مخاطب واقعی'}</Text><Text style={styles.status}>گفتگوی خصوصی</Text></View>
         <Pressable accessibilityRole="button" accessibilityLabel="حذف این مخاطب و گفتگو" accessibilityState={{ disabled: sending }} style={styles.deleteButton} onPress={confirmDeleteConversation} disabled={sending}><Trash2 size={18} color={Colors.error[300]} /></Pressable>
@@ -247,7 +245,7 @@ export default function HumanConversationScreen() {
         </ScrollView>
       )}
 
-      <KeyboardStickyView enabled offset={{ closed: 0, opened: Platform.OS === 'android' ? -insets.bottom : 0 }}>
+      <KeyboardAttachedView>
       {showCoach ? (
         <View style={styles.coach}>
           <View style={styles.coachTitleRow}><Sparkles size={15} color={Colors.warning[400]} /><Text style={styles.coachTitle}>دستیار خصوصی — چیزی خودکار ارسال نمی‌شود</Text></View>
@@ -289,7 +287,7 @@ export default function HumanConversationScreen() {
           </Pressable>
         )}
       </View>
-      </KeyboardStickyView>
+      </KeyboardAttachedView>
     </View>
   );
 }
@@ -313,17 +311,17 @@ const styles = StyleSheet.create({
   emptyTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg, fontWeight: Typography.weights.bold, color: Colors.neutral[200], marginTop: Spacing.md },
   emptyDesc: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, color: Colors.neutral[600], marginTop: 4 },
   bubble: { maxWidth: '84%', borderRadius: Radius.xl, padding: Spacing.md, borderWidth: 1 },
-  mine: { alignSelf: 'flex-end', backgroundColor: Colors.primary[600], borderColor: Colors.primary[500], borderBottomRightRadius: 5 },
-  theirs: { alignSelf: 'flex-start', backgroundColor: Colors.neutral[850], borderColor: Colors.neutral[700], borderBottomLeftRadius: 5 },
-  messageText: { fontSize: 16, lineHeight: 24, color: Colors.neutral[50] },
+  mine: { alignSelf: 'flex-end', backgroundColor: '#E6F4EA', borderColor: '#BFE3C9', borderBottomRightRadius: 5 },
+  theirs: { alignSelf: 'flex-start', backgroundColor: '#FFFFFF', borderColor: '#DDE3EA', borderBottomLeftRadius: 5 },
+  messageText: { fontSize: 16, lineHeight: 24, color: '#1F2937' },
   rtlText: { fontFamily: Typography.fontFamily, textAlign: 'right', writingDirection: 'rtl' },
   ltrText: { fontFamily: Typography.latinFontFamily, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
-  time: { fontFamily: Typography.fontFamily, fontSize: 9, color: Colors.neutral[400], marginTop: 5, textAlign: 'left' },
+  time: { fontFamily: Typography.fontFamily, fontSize: 9, color: '#6B7280', marginTop: 5, textAlign: 'left' },
   voiceMessage: { minWidth: 190, flexDirection: 'row', alignItems: 'center', gap: 9 },
-  voicePlay: { width: 34, height: 34, borderRadius: 17, backgroundColor: Colors.neutral[50] + '22', alignItems: 'center', justifyContent: 'center' },
+  voicePlay: { width: 34, height: 34, borderRadius: 17, backgroundColor: '#1F293722', alignItems: 'center', justifyContent: 'center' },
   wave: { flex: 1, height: 28, flexDirection: 'row', gap: 4, alignItems: 'center' },
-  waveLine: { width: 3, height: 9, borderRadius: 2, backgroundColor: Colors.neutral[200] },
-  voiceDuration: { fontFamily: Typography.fontFamily, fontSize: 9, color: Colors.neutral[300] },
+  waveLine: { width: 3, height: 9, borderRadius: 2, backgroundColor: '#475569' },
+  voiceDuration: { fontFamily: Typography.fontFamily, fontSize: 9, color: '#475569' },
   coach: { padding: Spacing.md, backgroundColor: Colors.warning[500] + '0B', borderTopWidth: 1, borderTopColor: Colors.warning[500] + '20', gap: 8 },
   coachTitleRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6 },
   coachTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, fontWeight: Typography.weights.bold, color: Colors.warning[300] },

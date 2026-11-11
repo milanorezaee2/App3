@@ -46,7 +46,7 @@ export function EnglishB2TopicPractice({ lessonId, topics, practice, heading, de
     {!!error && <Text style={s.error}>{error}</Text>}
     {!loading && !error && tasks.map(({ topic, task }) => <View key={task.id} style={{ gap: 5 }}>
       <Text style={s.heading}>{toPersianDigits(topic)}. {topics[topic - 1]}</Text>
-      {saved[task.id] && <Text style={s.success}>پاسخ درست این تمرین پیش‌تر ثبت شده است؛ می‌توانید دوباره تمرین کنید.</Text>}
+      {saved[task.id] && <Text style={s.success}>پیش‌تر درست پاسخ داده‌اید؛ می‌توانید دوباره تمرین کنید.</Text>}
       <EnglishSupplementTask task={task} onSave={save} showExplanationOnCorrect />
     </View>)}
   </View>;

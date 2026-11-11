@@ -115,7 +115,6 @@ export default function ReviewHome() {
                 <View style={styles.answerDivider} />
                 <Text style={styles.reviewEn}>{sentence.en}</Text>
                 <Text style={[styles.reviewPronunciation,sentence.pronunciation.startsWith('/ ')&&{fontFamily: 'Times New Roman',writingDirection:'ltr'}]}>{sentence.pronunciation}</Text>
-                {sentence.pronunciation.startsWith('/ ')&&<Text style={styles.reviewPronunciation}>راهنمای واجی بدون تکیه؛ واژه‌های داخل کروشه آوانویسی نشده‌اند.</Text>}
                 <Pressable style={styles.soundButton} onPress={() => Speech.speak(sentence.en, { language: speechTagFor('en-US'), rate: .78 })}>
                   <Volume2 size={18} color={Colors.primary[400]} />
                   <Text style={styles.soundText}>پخش جمله</Text>
@@ -150,7 +149,7 @@ export default function ReviewHome() {
         <View style={styles.headerTop}>
           <View style={styles.headerCopy}>
             <Text style={styles.title}>مرور هوشمند</Text>
-            <Text style={styles.subtitle}>فقط جمله‌هایی که زمان مرورشان رسیده است</Text>
+            <Text style={styles.subtitle}>جمله‌های امروز</Text>
           </View>
           <PageNavigation backFallback="/languages" />
         </View>
@@ -160,7 +159,6 @@ export default function ReviewHome() {
           <View style={styles.finishedCard}>
             <View style={styles.finishedIcon}><Check size={32} color={Colors.success[400]} /></View>
             <Text style={styles.finishedTitle}>مرور امروز تمام شد</Text>
-            <Text style={styles.finishedDesc}>زمان مرور بعدی هر جمله بر اساس پاسخ شما تنظیم شد.</Text>
           </View>
         ) : null}
 
@@ -168,7 +166,7 @@ export default function ReviewHome() {
           <View pointerEvents="none" style={styles.summaryOrb} />
           <View style={styles.summaryTop}>
             <View style={styles.brain}><Brain size={23} color="#D5D7FF" /></View>
-            <View style={styles.summaryTag}><RefreshCw size={12} color="#C8CAFF" /><Text style={styles.summaryTagText}>SPACED REVIEW</Text></View>
+            <View style={styles.summaryTag}><RefreshCw size={12} color="#C8CAFF" /></View>
           </View>
           <Text style={styles.summaryTitle}>{reviewCount ? `${toPersianDigits(reviewCount)} جمله برای مرور` : 'فعلاً مروری ندارید'}</Text>
           <Text style={styles.summaryDesc}>{reviewCount ? 'جمله‌های دشوار زودتر و جمله‌های آسان دیرتر برمی‌گردند.' : progress?.completedLessonIds.length ? 'مرور بعدی در زمان مناسب به‌طور خودکار اینجا ظاهر می‌شود.' : 'پس از پایان اولین درس، جمله‌های آن وارد برنامه مرور می‌شوند.'}</Text>
@@ -188,7 +186,7 @@ export default function ReviewHome() {
           <Method num="۳" title="میزان سختی را انتخاب کن" desc="برنامه زمان دقیق مرور بعدی را محاسبه می‌کند." />
         </View>
 
-        <View style={styles.note}><CheckCircle2 size={18} color={Colors.success[400]} /><Text style={styles.noteText}>لغات، از جمله واژه‌های ۵۰۴، همیشه همراه جمله اصلی مرور می‌شوند.</Text></View>
+        <View style={styles.note}><CheckCircle2 size={18} color={Colors.success[400]} /></View>
       </ScrollView>
       <AppBottomNav />
     </View>

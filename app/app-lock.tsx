@@ -125,7 +125,7 @@ export default function AppLockSettings() {
             <ShieldCheck size={25} color={config.patternEnabled || config.deviceEnabled ? Colors.success[300] : Colors.neutral[500]} />
             <View style={styles.summaryCopy}>
               <Text style={styles.summaryTitle}>{config.patternEnabled || config.deviceEnabled ? 'قفل برنامه فعال است' : 'قفل برنامه غیرفعال است'}</Text>
-              <Text style={styles.summaryText}>بعد از خروج از اپ یا خاموش‌شدن صفحه، برنامه دوباره قفل می‌شود.</Text>
+              <Text style={styles.summaryText}>با خروج از اپ، برنامه دوباره قفل می‌شود.</Text>
             </View>
           </View>
 
@@ -139,7 +139,7 @@ export default function AppLockSettings() {
           </View>
 
           <View style={styles.card}>
-            <View style={styles.cardHeading}><LockKeyhole size={22} color={Colors.accent[300]} /><View style={styles.cardCopy}><Text style={styles.cardTitle}>الگوی اختصاصی برنامه</Text><Text style={styles.cardDescription}>یک پترن امن با حداقل چهار نقطه؛ الگو فقط به‌صورت هش رمزنگاری‌شده ذخیره می‌شود.</Text></View></View>
+            <View style={styles.cardHeading}><LockKeyhole size={22} color={Colors.accent[300]} /><View style={styles.cardCopy}><Text style={styles.cardTitle}>الگوی اختصاصی برنامه</Text></View></View>
             {settingPattern ? (
               <View style={styles.patternSetup}>
                 <Text style={styles.stepTitle}>{firstPattern ? 'تکرار الگو برای تأیید' : 'ساخت الگوی جدید'}</Text>
@@ -161,7 +161,6 @@ export default function AppLockSettings() {
 
           {message ? <Text style={styles.success}>{message}</Text> : null}
           {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
-          <Text style={styles.note}>اگر هر دو روش را فعال کنید، هنگام ورود می‌توانید با پترن برنامه یا قفل اصلی گوشی وارد شوید.</Text>
         </ScrollView>
       )}
     </View>

@@ -1,7 +1,10 @@
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
-import { LocalizedText as Text } from '@/components/LocalizedText';
+import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/LocalizedText';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { FitScrollView, lessonScrollOffset } from '@/components/FitScrollView';
+import { useFirstTimeHint } from '@/lib/useFirstTimeHint';
+import { GrammarNoteCard, GrammarPatternCard, GrammarStageHeader } from '@/components/GrammarUsage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import {
@@ -27,6 +30,9 @@ import { EnglishB2Scenario } from '@/components/EnglishB2Scenario';
 import { EnglishC1Reading } from '@/components/EnglishC1Reading';
 import { EnglishC1ExtendedModel } from '@/components/EnglishC1ExtendedModel';
 import { ENGLISH_ENGINE_STEPS, getLessonPatterns, getLessonVocabulary } from '@/lib/englishLearningEngine';
+import SpeakCheck from '@/components/SpeakCheck';
+import SpeakDrill from '@/components/SpeakDrill';
+import { autoRead } from '@/lib/autoRead';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import { PageNavigation } from '@/components/PageNavigation';
 
@@ -59,6 +65,17 @@ export default function SentenceLessonScreen() {
   const progressPercent = Math.round(((stage + 1) / stages.length) * 100);
 
   const [sentenceIndex, setSentenceIndex] = useState(0);
+
+  // Keep the active stage fully visible: when the stage or sentence changes,
+  // scroll so the stage block (card + its buttons) starts near the top and is
+  // never left half-hidden behind the footer.
+  const lessonScrollRef = useRef<ScrollView>(null);
+  const showHint = useFirstTimeHint(`en:${stage}`);
+  const stageOffsetRef = useRef(0);
+  useEffect(() => {
+    const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: stage === 1 ? Math.max(0, lessonScrollOffset(stageOffsetRef.current, Dimensions.get('window').width) - 8) : 0, animated: true }), 60);
+    return () => clearTimeout(handle);
+  }, [stage, sentenceIndex]);
   const [revealed, setRevealed] = useState(false);
   const [sessionReady,setSessionReady]=useState(false);
   const [invalidLesson,setInvalidLesson]=useState(false);
@@ -255,6 +272,13 @@ export default function SentenceLessonScreen() {
     if (stage === 2 || index === sentenceIndex) speak(lesson.sentences[index].en);
   };
 
+  // «شنیدن»: read the whole list aloud automatically when the stage opens; the Continue button keeps working.
+  useEffect(() => {
+    if (stage !== 2) return;
+    return autoRead(lesson.sentences.length, index => selectListeningSentence(index), undefined, 900);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage, lesson.id]);
+
   const next = async () => {
     if (!sessionReady || sessionError || completing.current || resettingRef.current) return;
     if (stage === 1 && sentenceIndex < lesson.sentences.length - 1) {
@@ -297,13 +321,11 @@ export default function SentenceLessonScreen() {
   return (
     <View style={styles.root} onTouchStart={timer.interact}>
       {resetting && <Text accessibilityLiveRegion="polite" style={styles.stageDesc}>در حال ذخیرهٔ شروع مجدد…</Text>}
-      <ScrollView pointerEvents={resetting ? 'none' : 'auto'} style={styles.lessonScroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <FitScrollView ref={lessonScrollRef} variant={stage === 6 ? 'classic' : 'default'} pointerEvents={resetting ? 'none' : 'auto'} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <View style={styles.brandRow}><MiloGlobeHeadphoneMark size={48} /><PageNavigation backFallback="/lang" /></View>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
-          <PageNavigation tone="dark" backFallback="/lang" />
-          <Pressable accessibilityRole="button" accessibilityLabel="شروع از ابتدای این درس" accessibilityState={{ disabled: resetting || saving }} disabled={resetting || saving} style={styles.restartLessonButton} onPress={() => void startCurrentLessonFromBeginning()}><RotateCcw size={15} color="#FFFFFF" /><Text style={styles.restartLessonButtonText}>شروع از ابتدا</Text></Pressable>
           <View style={styles.headerText}>
-            <Text style={styles.headerEyebrow}>LEVEL {courseLevel.id} · {courseLevel.title.toUpperCase()}</Text>
             <Text style={styles.headerTitle}>{lesson.title}</Text>
             <Text style={styles.headerSub}>{stages[stage].labelFa} · مرحله {toPersianDigits(stage + 1)} از {toPersianDigits(stages.length)}</Text>
           </View>
@@ -313,25 +335,23 @@ export default function SentenceLessonScreen() {
           </View>
         </View>
         <View style={styles.headerBottom}>
-          <View style={styles.headerInfoChip}><MiloGlobeHeadphoneMark size={13} /><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View>
+          <View style={styles.headerInfoChip}><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View>
           <Text style={styles.headerInfoText}>{toPersianDigits(lesson.sentences.length)} جملهٔ اصلی</Text>
         </View>
       </LinearGradient>
       <View style={styles.stepperCard}>
         <View style={styles.stepperHeading}>
           <View>
-            <Text style={styles.stepperEyebrow}>LESSON FLOW · 09 STAGES</Text>
             <Text style={styles.stepperTitle}>جریان این درس</Text>
           </View>
           <View style={styles.stepperNow}>
-            <Text style={styles.stepperNowEn}>{stages[stage].labelEn}</Text>
+            
             <Text style={styles.stepperNowFa}>{stages[stage].labelFa}</Text>
           </View>
         </View>
         <View style={styles.stepSegments}>
           {stages.map((item, index) => <View key={item.id} accessibilityLabel={`${item.labelEn} ${index + 1} از ${stages.length}`} style={[styles.stepSegment, index <= stage && styles.stepSegmentDone, index === stage && styles.stepSegmentCurrent]} />)}
         </View>
-        <View style={styles.stepperEnds}><Text style={styles.stepperEndText}>Situation</Text><Text style={styles.stepperEndText}>Spaced Review</Text></View>
       </View>
 
       {!!(sessionError || timer.error) && <Text style={styles.speechError}>{sessionError || timer.error}</Text>}
@@ -354,7 +374,7 @@ export default function SentenceLessonScreen() {
         )}
 
         {stage === 1 && (
-          <View style={styles.sentenceStage}>
+          <View style={styles.sentenceStage} onLayout={event => { stageOffsetRef.current = event.nativeEvent.layout.y; }}>
             <Text style={styles.counter}>جمله {toPersianDigits(sentenceIndex + 1)} از {toPersianDigits(lesson.sentences.length)}</Text>
             <View style={styles.sentenceCard}>
               <Pressable accessibilityRole="button" accessibilityLabel={`پخش نمونهٔ صوتی جمله: ${current.en}`} accessibilityHint="فقط نمونهٔ گفتاری پخش می‌شود؛ میکروفن فعال نیست." style={styles.soundButton} onPress={() => speak(current.en, ENGLISH_NORMAL_SPEECH_RATE)}>
@@ -362,14 +382,13 @@ export default function SentenceLessonScreen() {
               </Pressable>
               <Text style={styles.english}>{current.en}</Text>
               <Text style={[styles.pronunciation,current.pronunciation.startsWith('/ ')&&{fontFamily: 'Times New Roman',textAlign:'left',writingDirection:'ltr'}]}>{current.pronunciation}</Text>
-              {!lesson.b2Section && !lesson.c1Section && lesson.order >= 89 + B1_INDEPENDENT_UNITS.length + A2_FOUNDATION_LESSONS.length && <Text style={styles.hint}>راهنمای واجی آمریکایی از واژه‌نامه؛ بدون تکیه و پیوند گفتار. واژه داخل کروشه آوانویسی نشده است. برای آهنگ جمله به صدا گوش دهید.</Text>}
               <View style={styles.divider} />
-              <Text style={styles.persian}>{current.fa}</Text>
+              <Text keepColor style={styles.persian}>{current.fa}</Text>
               {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternEnglish}>{current.pattern}</Text></View> : null}
             </View>
             <EnglishSpeechRateControls onPlay={rate => speak(current.en, rate)} />
-            <Text style={styles.hint}>جمله به‌صورت خودکار پخش می‌شود؛ برای شنیدن دوباره، سرعت دلخواه را انتخاب کنید.</Text>
             {!!audioNotice && <Text accessibilityLiveRegion="polite" style={styles.speechError}>{audioNotice}</Text>}
+            <SpeakCheck key={current.id} text={current.en} locale="en-US" accent={Colors.success[400]} />
           </View>
         )}
 
@@ -377,7 +396,7 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><Headphones size={34} color={Colors.primary[400]} /></View>
             <Text style={styles.stageTitle}>شنیدن جمله‌ها</Text>
-            <Text style={styles.stageDesc}>هر جمله را جداگانه گوش دهید و معنی همان جمله را به یاد بیاورید. واژه‌ها همیشه کنار جملهٔ اصلی می‌مانند.</Text>
+            {showHint && <Text style={styles.stageDesc}>هر جمله را گوش دهید و معنی‌اش را به یاد بیاورید.</Text>}
             <View style={styles.listenList}>
               {lesson.sentences.map((sentence, index) => (
                 <Pressable
@@ -395,7 +414,7 @@ export default function SentenceLessonScreen() {
             </View>
             <View style={styles.shadowTip}>
               <Headphones size={18} color={Colors.primary[400]} />
-              <Text style={styles.shadowText}>فعلاً فقط به صدا گوش دهید؛ مرحلهٔ بعد برای تکرار و سایه‌خوانی است.</Text>
+              <Text style={styles.shadowText}>جمله‌ها به‌ترتیب خودکار پخش می‌شوند؛ هر زمان خواستید «ادامه» را بزنید.</Text>
             </View>
             {lesson.c1Section && <EnglishC1Reading key={lesson.id} lessonId={lesson.id} />}
           </View>
@@ -405,32 +424,14 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><Mic2 size={34} color={Colors.success[400]} /></View>
             <Text style={styles.stageTitle}>سایه‌خوانی · Shadowing</Text>
-            <Text style={styles.stageDesc}>یک جمله را پخش کنید، مکث کنید و با همان آهنگ تکرار کنید. این تمرین بدون ضبط صدا هم کامل است.</Text>
+            {showHint && <Text style={styles.stageDesc}>بشنوید، مکث کنید و با همان آهنگ تکرار کنید.</Text>}
             <View style={styles.speechPractice}>
               <Text style={styles.speechTitle}>جملهٔ انتخاب‌شده</Text>
               <Text style={styles.speechSentence}>{current.en}</Text>
               <EnglishSpeechRateControls onPlay={rate => speak(current.en, rate)} disabled={recorderState.isRecording || evaluatingSpeech} />
               {!!audioNotice && <Text accessibilityRole="alert" accessibilityLiveRegion="polite" style={styles.speechError}>{audioNotice}</Text>}
-              <Text style={styles.speechHint}>{recorderState.isRecording ? `در حال ضبط · ${toPersianDigits(Math.max(1, Math.round(recorderState.durationMillis / 1000)))} ثانیه` : evaluatingSpeech ? 'در حال بررسی…' : PAID_AI_ENABLED ? 'در صورت فعال‌بودن سرویس، می‌توانید ضبط و بررسی آنلاین را هم انتخاب کنید.' : 'میکروفن و ارسال آنلاین در حالت بدون هزینه غیرفعال‌اند؛ جمله را با صدای بلند تکرار کنید.'}</Text>
-              <Pressable accessibilityRole="button"
-                accessibilityLabel={PAID_AI_ENABLED ? recorderState.isRecording ? 'توقف ضبط و بررسی آنلاین جمله' : 'شروع ضبط اختیاری جمله' : 'ضبط و بررسی آنلاین گفتار غیرفعال است'}
-                accessibilityHint={!PAID_AI_ENABLED ? PAID_AI_DISABLED_MESSAGE : 'در صورت فعال‌سازی و رضایت جداگانه، صدا برای بررسی فرستاده می‌شود.'}
-                accessibilityState={{ disabled: !PAID_AI_ENABLED || evaluatingSpeech }}
-                disabled={!PAID_AI_ENABLED || evaluatingSpeech}
-                style={[styles.recordButton, recorderState.isRecording && styles.recordButtonActive, (!PAID_AI_ENABLED || evaluatingSpeech) && styles.recordButtonDisabled]}
-                onPress={() => recorderState.isRecording ? void stopAndEvaluateSpeech() : void startSpeechPractice()}
-              >
-                {evaluatingSpeech ? <Text style={styles.recordButtonText}>در حال بررسی…</Text> : recorderState.isRecording ? <><Square size={17} color={Colors.onColor} fill={Colors.onColor} /><Text style={styles.recordButtonText}>توقف و بررسی</Text></> : <><Mic2 size={19} color={Colors.onColor} /><Text style={styles.recordButtonText}>{PAID_AI_ENABLED ? 'شروع ضبط اختیاری' : 'ضبط آنلاین غیرفعال'}</Text></>}
-              </Pressable>
-              {speechResult ? (
-                <View style={styles.speechResult}>
-                  <View style={styles.scoreRow}><Text style={styles.scoreLabel}>شباهت متن تشخیص‌داده‌شده</Text><Text style={styles.scoreValue}>{toPersianDigits(speechResult.score)}٪</Text></View>
-                  <Text style={styles.recognizedLabel}>آنچه شنیده شد:</Text>
-                  <Text style={styles.recognizedText}>{speechResult.recognized || 'صدای قابل‌تشخیصی دریافت نشد.'}</Text>
-                  <Text style={styles.feedbackText}>{speechResult.feedbackFa}</Text>
-                  {speechResult.missingWords.length ? <Text style={styles.missingWords}>دوباره تمرین کنید: {speechResult.missingWords.join(' · ')}</Text> : null}
-                </View>
-              ) : null}
+              <Text style={styles.speechHint}>پس از شنیدن، جمله را با صدای بلند تکرار کنید.</Text>
+              <SpeakCheck key={current.id} text={current.en} locale="en-US" accent={Colors.success[400]} />
               {speechError ? <Text style={styles.speechError}>{speechError}</Text> : null}
             </View>
             <View style={styles.dots}>
@@ -445,7 +446,7 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><RotateCcw size={33} color={Colors.success[400]} /></View>
             <Text style={styles.stageTitle}>ساخت جمله</Text>
-            <Text style={styles.stageDesc}>معنی جمله را بخوانید و واژه‌های همان جمله را به ترتیب بچینید.</Text>
+            {showHint && <Text style={styles.stageDesc}>معنی را بخوانید و واژه‌ها را به ترتیب بچینید.</Text>}
             <EnglishSentenceBuilder sentence={current} />
             <View style={styles.dots}>
               {lesson.sentences.map((sentence, index) => (
@@ -459,7 +460,7 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><Sparkles size={34} color={Colors.warning[400]} /></View>
             <Text style={styles.stageTitle}>واژگان از دل جمله‌ها</Text>
-            <Text style={styles.stageDesc}>هر واژه در کنار معنی و همان جمله‌ای دیده می‌شود که از آن آمده است.</Text>
+            {showHint && <Text style={styles.stageDesc}>هر واژه را با معنی و جمله‌اش مرور کنید.</Text>}
             <View style={styles.vocabList}>
               {vocabulary.map(item => (
                 <View key={item.word} style={styles.vocabCard}>
@@ -468,7 +469,8 @@ export default function SentenceLessonScreen() {
                     <Text style={styles.vocabMeaning}>{item.meaning}</Text>
                   </View>
                   <Text style={styles.vocabExample}>{item.exampleEn}</Text>
-                  <Text style={styles.bubbleFa}>{item.exampleFa}</Text>
+                  <Text keepColor style={styles.bubbleFa}>{item.exampleFa}</Text>
+                  <SpeakCheck compact text={item.word} locale="en-US" accent={Colors.success[400]} />
                 </View>
               ))}
             </View>
@@ -476,33 +478,13 @@ export default function SentenceLessonScreen() {
         )}
 
         {stage === 6 && (
-          <View style={styles.centerStage}>
-            <View style={styles.bigIcon}><MiloGlobeHeadphoneMark size={33} /></View>
-            <Text style={styles.stageTitle}>Grammar Through Usage · دستور در کاربرد</Text>
-            <Text style={styles.stageDesc}>{(lesson.b2Section || lesson.c1Section) ? 'نکته‌های کاربردی را بخوانید و سپس الگوها و مثال‌ها را مرور کنید.' : 'الگوها فقط از جمله‌های ثبت‌شدهٔ همین درس نمایش داده می‌شوند؛ قاعده یا مثال تازه‌ای به محتوا اضافه نشده است.'}</Text>
-            {B2_GUIDANCE[lesson.id]?.map((note, index) => (
-              <View key={`${lesson.id}-guide-${index}`} style={styles.vocabCard}>
-                <Text style={styles.promiseTitle}>{lessonTopics?.[index]}</Text>
-                <Text style={styles.promiseText}>{note}</Text>
-              </View>
-            ))}
-            {c1Unit?.topics.map((topic, index) => <View key={`${lesson.id}-c1-guide-${index}`} style={styles.vocabCard}>
-              <Text style={styles.promiseTitle}>{topic[0]}</Text>
-              <Text style={styles.promiseText}>{topic[5]}</Text>
-            </View>)}
-            {grammarPatterns.length ? grammarPatterns.map(item => (
-              <View key={item.sentenceId} style={styles.vocabCard}>
-                <Text style={styles.patternEnglish}>{item.pattern}</Text>
-                <Text style={styles.vocabExample}>{item.exampleEn}</Text>
-                <Text style={styles.bubbleFa}>{item.exampleFa}</Text>
-                <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن جمله: ${item.exampleEn}`} onPress={() => speak(item.exampleEn)} style={styles.bubbleSound}>
-                  <Volume2 size={16} color={Colors.primary[400]} />
-                </Pressable>
-              </View>
-            )) : <View style={styles.promiseCard}>
-              <Text style={styles.promiseTitle}>یادگیری در بافت جمله</Text>
-              <Text style={styles.promiseText}>برای این درس الگوی دستوری جداگانه‌ای ثبت نشده است؛ جملهٔ اصلی را بشنوید و ساختارش را در کاربرد واقعی ببینید.</Text>
-            </View>}
+          <View style={styles.grammarStage}>
+            <GrammarStageHeader title="دستور در کاربرد" description={showHint ? (lesson.b2Section || lesson.c1Section) ? 'نکته‌ها را بخوانید و الگوها را مرور کنید.' : 'الگوی هر جمله را ببینید و مثالش را بشنوید.' : undefined} />
+            {B2_GUIDANCE[lesson.id]?.map((note, index) => <GrammarNoteCard key={`${lesson.id}-guide-${index}`} title={lessonTopics?.[index] ?? ''} text={note} />)}
+            {c1Unit?.topics.map((topic, index) => <GrammarNoteCard key={`${lesson.id}-c1-guide-${index}`} title={topic[0]} text={topic[5]} />)}
+            {grammarPatterns.length ? grammarPatterns.map((item, index) => (
+              <GrammarPatternCard key={item.sentenceId} index={index + 1} pattern={item.pattern} example={item.exampleEn} translation={item.exampleFa} onSpeak={() => speak(item.exampleEn)} />
+            )) : <GrammarNoteCard title="یادگیری در بافت جمله" text="جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید." />}
             {lesson.c1Section && lessonTopics && <EnglishB2TopicPractice key={lesson.id} lessonId={lesson.id} topics={lessonTopics} practice={C1_TOPIC_PRACTICE[lesson.id]} />}
             {lesson.c1Section && <EnglishB2TopicPractice key={`${lesson.id}-application`} lessonId={lesson.id} topics={['تحلیل موقعیت']} practice={C1_APPLICATION_PRACTICE[lesson.id]} heading="کاربرد در موقعیت تازه · اختیاری" description="با توجه به موقعیت تازه بهترین پاسخ را انتخاب کنید؛ این تمرین شرط پایان درس نیست." />}
             {lesson.c1Section && <EnglishB2TopicPractice key={`${lesson.id}-application-extra`} lessonId={lesson.id} topics={['سنجش کاربرد در بافت جدید']} practice={C1_ADDITIONAL_APPLICATION[lesson.id]} heading="سنجش کاربردی تکمیلی · اختیاری" description="به موقعیت تازه پاسخ دهید. نتیجه با بازخورد ثبت می‌شود؛ برای حفظ پیشرفت قبلی شرط تازه‌ای برای پایان درس ایجاد نمی‌کند." />}
@@ -514,7 +496,7 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><MessageCircle size={34} color={Colors.accent[400]} /></View>
             <Text style={styles.stageTitle}>Conversation Practice · مکالمهٔ هدایت‌شده</Text>
-            <Text style={styles.stageDesc}>فعلاً به‌جای سرویس AI آنلاین، از گفت‌وگوی همین درس به شکل تمرین نقش‌آفرینی رایگان استفاده کنید.</Text>
+            {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
             <EnglishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} />
             {lesson.c1Section && <EnglishB2Scenario key={lesson.id} lessonId={lesson.id} speak={speak} scenario={C1_SCENARIOS[lesson.id]} />}
             {lesson.c1Section && <EnglishC1ExtendedModel key={`${lesson.id}-extended`} lessonId={lesson.id} speak={speak} />}
@@ -532,11 +514,11 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><RefreshCw size={33} color={Colors.success[400]} /></View>
             <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
-            <Text style={styles.stageDesc}>با ثبت پایان درس، جمله‌ها و واژه‌های وابسته به آن وارد برنامهٔ مرور می‌شوند؛ مرور بر اساس پاسخ شما فاصله‌گذاری می‌شود.</Text>
             <View style={styles.promiseCard}>
               <Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text>
               <Text style={styles.promiseText}>{toPersianDigits(lesson.sentences.length)} جمله و {toPersianDigits(vocabulary.length)} واژهٔ یکتا؛ محتوا همان محتوای اصلی درس است.</Text>
             </View>
+            <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} />
             {evidencePassed
               ? CORE_LESSON_EVIDENCE[lesson.id]
                 ? <Text style={styles.stageDesc}>همهٔ {toPersianDigits(CORE_LESSON_EVIDENCE[lesson.id].length)} سنجشِ این درس با پاسخ درست ثبت شد ✓</Text>
@@ -546,7 +528,7 @@ export default function SentenceLessonScreen() {
         )}
         {!!completionError && <Text style={styles.stageDesc}>{completionError}</Text>}
       </View>
-      </ScrollView>
+      </FitScrollView>
 
       <View pointerEvents={resetting ? 'none' : 'auto'} style={styles.footer}>
         <View style={styles.footerButtons}>
@@ -580,6 +562,8 @@ function EnglishSpeechRateControls({ onPlay, disabled = false }: { onPlay: (rate
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },
   lessonScroll: { flex: 1, minHeight: 0 },
+  lessonScrollContent: { paddingBottom: 28 },
+  brandRow: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15, paddingTop: 10, paddingBottom: 6 },
   // Keep the lesson canvas and vertical safe area consistent.
   header: { width: '100%', maxWidth: 900, minHeight: 64, alignSelf: 'center', paddingTop: 12, paddingHorizontal: 15, paddingBottom: 7, gap: 8, borderBottomLeftRadius: 22, borderBottomRightRadius: 22 },
   headerTop: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
@@ -593,7 +577,7 @@ const styles = StyleSheet.create({
   headerBottom: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingTop: 9, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.18)' },
   headerInfoChip: { flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
   headerInfoText: { fontFamily: Typography.fontFamily, color: 'rgba(255,255,255,0.78)', fontSize: 11, fontWeight: '400', writingDirection: 'rtl' },
-  stepperCard: { width: '100%', maxWidth: 900, alignSelf: 'center', marginTop: 12, paddingHorizontal: 20, paddingVertical: 13, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10, shadowColor: '#211A68', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  stepperCard: { width: '100%', maxWidth: 900, alignSelf: 'center', marginTop: 8, paddingHorizontal: 20, paddingVertical: 13, borderRadius: 18, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, gap: 10, shadowColor: '#211A68', shadowOpacity: .04, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepperHeading: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   stepperEyebrow: { fontFamily: 'Times New Roman', color: Palette.primary, fontSize: 8, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
   stepperTitle: { fontFamily: Typography.fontFamily, fontSize: 14, lineHeight: 18, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
@@ -608,6 +592,7 @@ const styles = StyleSheet.create({
   stepperEndText: { fontFamily: 'Times New Roman', color: Palette.muted, fontSize: 8, fontWeight: '800', writingDirection: 'ltr' },
   content: { width: '100%', maxWidth: 900, alignSelf: 'center', paddingHorizontal: 15, paddingTop: 9, paddingBottom: 22, gap: 11 },
   centerStage: { alignItems: 'center', width: '100%' },
+  grammarStage: { width: '100%', alignItems: 'stretch' },
   bigIcon: { width: 72, height: 72, borderRadius: 36, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF', alignItems: 'center', justifyContent: 'center', marginVertical: Spacing.lg },
   stageEyebrow: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.primary, marginBottom: 4, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   stageTitle: { fontFamily: Typography.fontFamily, fontSize: 27, lineHeight: 36, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
@@ -616,18 +601,18 @@ const styles = StyleSheet.create({
   promiseCard: { width: '100%', borderRadius: Radius.xl, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF', padding: Spacing.lg, marginTop: Spacing.xl },
   promiseTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
   promiseText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.text, textAlign: 'right', writingDirection: 'rtl', lineHeight: 23, marginTop: 5 },
-  sentenceStage: { alignItems: 'center', paddingTop: Spacing.lg, width: '100%' },
+  sentenceStage: { alignItems: 'center', paddingTop: 10, width: '100%' },
   counter: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.muted, marginBottom: Spacing.md, alignSelf: 'flex-end', textAlign: 'right', writingDirection: 'rtl' },
   sentenceCard: { width: '100%', borderRadius: Radius.xl, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: Spacing.xl, alignItems: 'center', shadowColor: '#172033', shadowOpacity: 0.05, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
   replayRow: { width: '100%', maxWidth: 320, flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'center', marginTop: 12 },
   replayButton: { flex: 1, minWidth: 110, minHeight: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingHorizontal: 14, borderRadius: 14, borderWidth: 1, borderColor: Palette.primary, backgroundColor: '#FFFFFF' },
   replayText: { fontFamily: Typography.fontFamily, fontSize: 14, color: Palette.primary, writingDirection: 'rtl' },
   replayDisabled: { opacity: .45 },
-  soundButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: Spacing.lg },
+  soundButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
   english: { fontFamily: 'Times New Roman', width: '100%', fontSize: 25, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
   pronunciation: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'center', writingDirection: 'rtl', marginTop: 8 },
-  divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: Spacing.lg },
-  persian: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg + 2, fontWeight: '400', color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
+  divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 12 },
+  persian: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg + 2, fontWeight: '400', color: PERSIAN_TRANSLATION_COLOR, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   pattern: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start', gap: 8, alignSelf: 'flex-end', backgroundColor: Palette.warningSoft, paddingHorizontal: 10, paddingVertical: 6, borderRadius: Radius.full, marginTop: Spacing.md },
   patternLabel: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.warning, writingDirection: 'rtl' },
   patternEnglish: { fontFamily: 'Times New Roman', fontSize: Typography.sizes.xs + 2, fontWeight: '800', color: Palette.warning, textAlign: 'left', writingDirection: 'ltr' },
@@ -672,7 +657,7 @@ const styles = StyleSheet.create({
   bubbleLearner: { alignSelf: 'flex-end', backgroundColor: Palette.primarySoft, borderColor: '#DDE2FF', borderBottomRightRadius: 5 },
   bubbleSpeaker: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: Palette.primaryDark, marginBottom: 4, textAlign: 'right', writingDirection: 'rtl' },
   bubbleEn: { fontFamily: 'Times New Roman', fontSize: 16, fontWeight: '800', color: Palette.ink, lineHeight: 23, textAlign: 'left', writingDirection: 'ltr' },
-  bubbleFa: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: Palette.muted, textAlign: 'right', writingDirection: 'rtl', marginTop: 5 },
+  bubbleFa: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs + 2, fontWeight: '400', color: PERSIAN_TRANSLATION_COLOR, textAlign: 'right', writingDirection: 'rtl', marginTop: 5 },
   bubbleSound: { alignSelf: 'flex-end', marginTop: 6 },
   vocabList: { width: '100%', gap: Spacing.sm, marginTop: Spacing.xl },
   vocabCard: { borderRadius: Radius.lg, backgroundColor: Palette.surface, borderWidth: 1, borderColor: Palette.border, padding: Spacing.md },

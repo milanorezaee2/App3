@@ -7,7 +7,6 @@ import * as Speech from 'expo-speech';
 import { speechTagFor } from '@/lib/speechLanguage';
 import { ENGLISH_A1_COURSE_UNITS, ENGLISH_FOUNDATION_UNITS, ENGLISH_SUPPLEMENT, SKILLS, type EnglishUnitLevel, type Skill } from '@/lib/englishSupplement/content';
 import {
-  a1CoursePassed,
   assessmentPassed,
   assessmentScore,
   canOpenUnit,
@@ -57,7 +56,6 @@ function Draft({ id, title, prompt, sample, rubric, initial, initialChecks }: {
     <TextInput accessibilityLabel={title} editable={!busy} multiline maxLength={4000} style={[s.input, { minHeight: 150 }]} value={value} onChangeText={v => { setValue(v); setMessage(''); }} />
     <Pressable accessibilityRole="button" accessibilityState={{ disabled: busy }} disabled={busy} style={[s.button, busy && s.disabled]} onPress={async () => { setBusy(true); try { await saveDraft(id, value); setMessage('پیش‌نویس روی همین دستگاه ذخیره شد.'); } catch { setMessage('ذخیره نشد؛ متن را نگه دارید و دوباره تلاش کنید.'); } finally { setBusy(false); } }}><Text style={s.buttonText}>{busy ? 'در حال ذخیره…' : 'ذخیره پیش‌نویس'}</Text></Pressable>
     {!!message && <Text accessibilityLiveRegion="polite" style={s.text}>{message}</Text>}
-    <Text style={s.text}>بازبینی شخصی؛ این چک‌لیست نمرهٔ مهارت محسوب نمی‌شود.</Text>
     {rubric.map((item, i) => <Pressable accessibilityRole="checkbox" accessibilityState={{ checked: !!checks[String(i)] }} key={item} onPress={() => void toggle(i)}><Text style={s.text}>{checks[String(i)] ? '☑' : '☐'} {item}</Text></Pressable>)}
     <Pressable accessibilityRole="button" style={s.button} onPress={() => setShow(!show)}><Text style={s.buttonText}>{show ? 'بستن نمونه' : 'دیدن نمونه برای مقایسه'}</Text></Pressable>
     {show && <Text style={s.english}>{sample}</Text>}
@@ -76,7 +74,6 @@ function RolePlay({ item, initial, initialChecks }: { item: typeof speakingPromp
   }
   return <View style={s.card}>
     <Text style={s.heading}>{item.title}</Text><Text style={s.text}>{item.goal}</Text>
-    <Text style={s.text}>گفت‌وگوی نقش‌آفرینی: جملهٔ طرف مقابل را گوش کنید، سپس پاسخ خود را بلند بگویید. صدای شما ضبط و تلفظتان خودکار نمره‌گذاری نمی‌شود.</Text>
     <Text style={s.english}>{item.partner}</Text>
     <Pressable accessibilityRole="button" accessibilityState={{ disabled: playing }} disabled={playing} style={[s.button, playing && s.disabled]} onPress={speak}><Text style={s.buttonText}>{playing ? 'در حال پخش…' : 'شنیدن جملهٔ طرف مقابل'}</Text></Pressable>
     <Text style={s.english}>{item.phrases}</Text>
@@ -91,7 +88,7 @@ function RolePlay({ item, initial, initialChecks }: { item: typeof speakingPromp
 function FormExercise({ initial }: { initial: Record<string, string> }) {
   const fields = [['first', 'First name', 'Mina'], ['last', 'Last name', 'Green'], ['city', 'City', 'York'], ['email', 'Email', 'mina@example.com']] as const;
   const [values, setValues] = useState<Record<string, string>>(() => Object.fromEntries(fields.map(([id]) => [id, initial[`form-${id}`] ?? '']))), [feedback, setFeedback] = useState(''), [busy, setBusy] = useState(false);
-  return <View style={s.card}><Text style={s.heading}>فرم با اطلاعات خیالی</Text><Text style={s.text}>اطلاعات متن را در فیلد مناسب وارد کنید؛ اطلاعات شخصی خودتان لازم نیست.</Text><Text style={s.english}>My name is Mina Green. I live in York. My email is mina@example.com.</Text>{fields.map(([id, label]) => <View key={id}><Text style={s.english}>{label}</Text><TextInput accessibilityLabel={label} editable={!busy} value={values[id]} autoCapitalize="none" autoCorrect={false} maxLength={100} style={s.input} onChangeText={v => { setValues({ ...values, [id]: v }); setFeedback(''); }} /></View>)}
+  return <View style={s.card}><Text style={s.heading}>فرم با اطلاعات خیالی</Text><Text style={s.text}>اطلاعات متن را در فیلد مناسب وارد کنید.</Text><Text style={s.english}>My name is Mina Green. I live in York. My email is mina@example.com.</Text>{fields.map(([id, label]) => <View key={id}><Text style={s.english}>{label}</Text><TextInput accessibilityLabel={label} editable={!busy} value={values[id]} autoCapitalize="none" autoCorrect={false} maxLength={100} style={s.input} onChangeText={v => { setValues({ ...values, [id]: v }); setFeedback(''); }} /></View>)}
     <Pressable accessibilityRole="button" accessibilityState={{ disabled: busy }} disabled={busy} style={[s.button, busy && s.disabled]} onPress={async () => { setBusy(true); try { for (const [id] of fields) await saveDraft(`form-${id}`, values[id]); const wrong = fields.filter(([id, , answer]) => values[id].trim() !== answer); setFeedback(wrong.length ? `این فیلدها را با متن تطبیق دهید: ${wrong.map(([, label]) => label).join('، ')}` : 'همه فیلدها درست‌اند؛ پیش‌نویس ذخیره شد.'); } catch { setFeedback('ذخیره نشد؛ دوباره تلاش کنید.'); } finally { setBusy(false); } }}><Text style={s.buttonText}>بررسی و ذخیره فرم</Text></Pressable>{!!feedback && <Text accessibilityLiveRegion="polite" style={s.text}>{feedback}</Text>}</View>;
 }
 
@@ -126,14 +123,13 @@ export default function EnglishSupplementScreen() {
       <View style={s.progressTrack}><View style={[s.progressFill, { width: `${(totalDone / ENGLISH_SUPPLEMENT.length) * 100}%` }]} /></View>
       <Text style={s.levelMeta}>Foundation ‏{foundationDone}/۴  ·  A1 ‏{a1Done}/۲۰</Text>
     </View>}
-    <Text style={s.text}>دورهٔ مکمل، در کنار ۱۶۱ درس اصلی قرار دارد؛ محتوای قبلی و سابقهٔ ذخیره‌شده حفظ شده است. سنجش‌های این مسیر تمرینی و محلی‌اند، نه گواهی رسمی CEFR.</Text>
     {!!error && <><Text style={s.error}>{error}</Text><Pressable accessibilityRole="button" style={s.button} onPress={() => void load()}><Text style={s.buttonText}>تلاش دوباره</Text></Pressable></>}
     {!ready && !error && <Text style={s.text}>در حال خواندن نتایج…</Text>}
     {ready && <>
       {!selected && <View style={s.tabRow}>{([['units', 'واحدهای دوره'], ['writing', 'نوشتن و مکالمه'], ['report', 'گزارش و سنجش']] as const).map(([key, label]) => <Pressable key={key} accessibilityRole="button" accessibilityState={{ selected: tab === key }} style={[s.tab, tab === key && s.tabActive]} onPress={() => { setTab(key); void load(); }}><Text style={[s.tabText, tab === key && s.tabTextActive]}>{label}</Text></Pressable>)}</View>}
 
       {!selected && tab === 'units' && <>
-        <Text style={s.text}>۲۴ واحد: Foundation چهار واحد و A1 بیست واحد. هر واحد سه بخش آموزش، چهار تمرین بازخورددار و چهار پرسش مستقل دارد. واحد بعد با پاسخ درست به همهٔ تمرین‌ها و پرسش‌های پایان واحد باز می‌شود.</Text>
+        <Text style={s.text}>۲۴ واحد: چهار واحد Foundation و بیست واحد A1.</Text>
         {!assessmentPassed('Foundation', p) && <View style={s.card}>
           <Text style={s.heading}>پیش‌نیاز مسیر A1</Text>
           <Text style={s.text}>برای بازشدن واحدهای ناآموختهٔ A1، چهار واحد Foundation را کامل کنید و سنجش ۱۲پرسشی آن را بگذرانید.</Text>
@@ -180,20 +176,17 @@ export default function EnglishSupplementScreen() {
         {testing && <Text style={s.heading}>آزمون پایان واحد · چهار سؤال مستقل</Text>}
         {(testing ? selected.checkpoint : selected.practice).map(task => <View key={task.id}>{p.evidence[task.id]?.correct && <Text style={s.success}>آخرین پاسخ ثبت‌شده: درست</Text>}<EnglishSupplementTask task={task} onResult={next => setP(next)} /></View>)}
         {!testing && <Pressable accessibilityRole="button" accessibilityState={{ disabled: !practiced }} disabled={!practiced} style={[s.button, !practiced && s.disabled]} onPress={() => { setTesting(true); void Speech.stop(); }}><Text style={s.buttonText}>{practiced ? 'شروع آزمون پایان واحد' : 'ابتدا چهار تمرین را درست انجام دهید'}</Text></Pressable>}
-        {testing && <><Pressable accessibilityRole="button" style={s.button} onPress={() => setTesting(false)}><Text style={s.buttonText}>مرور آموزش و تمرین</Text></Pressable>{unitPassed(selected.id, p) && <Text style={s.success}>واحد کامل شد. برای ورود به واحد بعد، به فهرست واحدها برگردید.</Text>}</>}
+        {testing && <><Pressable accessibilityRole="button" style={s.button} onPress={() => setTesting(false)}><Text style={s.buttonText}>مرور آموزش و تمرین</Text></Pressable>{unitPassed(selected.id, p) && <Text style={s.success}>واحد کامل شد.</Text>}</>}
       </>}
 
       {!selected && tab === 'report' && <>
-        <Text style={s.text}>گزارش زیر فقط پاسخ‌های ثبت‌شدهٔ واحدهای همین مسیر مکمل را می‌شمارد؛ سابقهٔ ۱۶۱ درس اصلی جداگانه در کتابخانهٔ خودش می‌ماند. سنجش پایانی برای مرور پیشرفت است؛ نمرهٔ ۸۰٪ صرفاً معیار داخلی همین تمرین است، نه احراز رسمی سطح زبان. نوشتن آزاد و تلفظ خودکار نمره‌گذاری نمی‌شوند.</Text>
         <View style={s.card}><Text style={s.heading}>Foundation</Text><Text style={s.text}>واحدهای کامل: {ENGLISH_FOUNDATION_UNITS.filter(item => unitPassed(item.id, p)).length} از {ENGLISH_FOUNDATION_UNITS.length}</Text><Text style={s.text}>سنجش پایانی: {foundationScore ? `${foundationScore.correct} از ${foundationScore.total} (${foundationScore.percent}٪) · ${assessmentPassed('Foundation', p) ? 'حداقل یک تلاش معیار داخلی را گذرانده' : 'هنوز تلاش موفق ثبت نشده'}` : 'هنوز انجام نشده'}</Text><Pressable accessibilityRole="button" accessibilityState={{ disabled: !canStartAssessment('Foundation', p) }} disabled={!canStartAssessment('Foundation', p)} style={[s.button, !canStartAssessment('Foundation', p) && s.disabled]} onPress={() => router.push({ pathname: '/lang/final-assessment', params: { level: 'Foundation' } } as never)}><Text style={s.buttonText}>{canStartAssessment('Foundation', p) ? 'شروع / ادامهٔ سنجش Foundation' : 'ابتدا همهٔ واحدهای Foundation را کامل کنید'}</Text></Pressable></View>
         <View style={s.card}><Text style={s.heading}>A1</Text><Text style={s.text}>واحدهای کامل: {ENGLISH_A1_COURSE_UNITS.filter(item => unitPassed(item.id, p)).length} از {ENGLISH_A1_COURSE_UNITS.length}</Text><Text style={s.text}>سنجش پایانی: {a1Score ? `${a1Score.correct} از ${a1Score.total} (${a1Score.percent}٪) · ${assessmentPassed('A1', p) ? 'حداقل یک تلاش معیار داخلی را گذرانده' : 'هنوز تلاش موفق ثبت نشده'}` : 'هنوز انجام نشده'}</Text><Pressable accessibilityRole="button" accessibilityState={{ disabled: !canStartAssessment('A1', p) }} disabled={!canStartAssessment('A1', p)} style={[s.button, !canStartAssessment('A1', p) && s.disabled]} onPress={() => router.push({ pathname: '/lang/final-assessment', params: { level: 'A1' } } as never)}><Text style={s.buttonText}>{canStartAssessment('A1', p) ? 'شروع / ادامهٔ سنجش A1' : 'ابتدا Foundation، سنجش آن و همهٔ واحدهای A1 را کامل کنید'}</Text></Pressable></View>
         {(Object.keys(SKILLS) as Skill[]).map(skill => { const report = skillReport(p, skill); return <View style={s.card} key={skill}><Text style={s.heading}>{SKILLS[skill]}</Text><Text style={s.text}>{report.answered ? `${report.correct} پاسخ درست از ${report.answered} سؤال پاسخ‌داده‌شده · ${report.attempts} تلاش` : 'هنوز سنجیده نشده'}</Text></View>; })}
-        <Text style={s.text}>واحدهای تکمیل‌شده: {ENGLISH_SUPPLEMENT.filter(item => unitPassed(item.id, p)).length} از {ENGLISH_SUPPLEMENT.length}. داده‌ها فقط روی همین دستگاه ذخیره می‌شوند. پایان پخش صدا، شنیدن واقعی یا کیفیت تلفظ را تضمین نمی‌کند.</Text>
-        {a1CoursePassed(p) && assessmentPassed('A1', p) && <Text style={s.success}>همهٔ واحدهای آموزشی و سنجش داخلی A1 ثبت شده‌اند. این نتیجه گواهی رسمی یا ارزیابی مستقل CEFR نیست.</Text>}
+        <Text style={s.text}>واحدهای تکمیل‌شده: {ENGLISH_SUPPLEMENT.filter(item => unitPassed(item.id, p)).length} از {ENGLISH_SUPPLEMENT.length}.</Text>
       </>}
 
       {!selected && tab === 'writing' && <>
-        <Text style={s.text}>تمرین نوشتن، فرم و مکالمهٔ نقش‌آفرینی. پیش‌نویس و خودارزیابی روی همین دستگاه می‌ماند؛ متن آزاد یا گفتار شما به‌صورت خودکار تصحیح یا ضبط نمی‌شود.</Text>
         <FormExercise initial={p.drafts} />
         {writingPrompts.map(item => <Draft key={item.id} {...item} initial={p.drafts[item.id] ?? ''} initialChecks={p.checklists[item.id] ?? {}} />)}
         <Text style={s.heading}>مکالمهٔ هدایت‌شده</Text>

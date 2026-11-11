@@ -106,6 +106,12 @@ function UnlockScreen({ config, onUnlock }: { config: AppLockConfig; onUnlock: (
     }
   };
 
+  // Device-lock-only setups prompt the phone's own lock immediately.
+  useEffect(() => {
+    if (config.deviceEnabled && !config.patternEnabled) void unlockWithDevice();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <View style={styles.root}>
       <View style={styles.logo}><LockKeyhole size={34} color={Colors.primary[300]} /></View>

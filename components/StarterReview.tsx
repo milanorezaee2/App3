@@ -117,12 +117,12 @@ export default function StarterReview({course}: {course: StarterCourse}) {
   }
 
   return <View style={styles.root}>
-    <View style={styles.header}><Text style={styles.title}>مرور {course.name}</Text><Text style={styles.subtitle}>فقط نمونه‌هایی که زمان مرورشان رسیده است</Text></View>
+    <View style={styles.header}><Text style={styles.title}>مرور {course.name}</Text><Text style={styles.subtitle}>نمونه‌های امروز</Text></View>
     <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-      {finished ? <View style={styles.finishedCard}><View style={styles.finishedIcon}><Check size={32} color={Palette.success} /></View><Text style={styles.finishedTitle}>مرور امروز تمام شد</Text><Text style={styles.finishedDesc}>زمان مرور بعدی هر نمونه بر اساس پاسخ شما تنظیم شد.</Text></View> : null}
+      {finished ? <View style={styles.finishedCard}><View style={styles.finishedIcon}><Check size={32} color={Palette.success} /></View><Text style={styles.finishedTitle}>مرور امروز تمام شد</Text></View> : null}
       <LinearGradient colors={['#18204B', '#303A80', '#4D48B6']} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.summaryCard}>
         <View pointerEvents="none" style={styles.summaryOrb} />
-        <View style={styles.summaryTop}><View style={styles.brain}><Brain size={23} color="#D5D7FF" /></View><View style={styles.summaryTag}><RefreshCw size={12} color="#C8CAFF" /><Text style={styles.summaryTagText}>SPACED REVIEW</Text></View></View>
+        <View style={styles.summaryTop}><View style={styles.brain}><Brain size={23} color="#D5D7FF" /></View><View style={styles.summaryTag}><RefreshCw size={12} color="#C8CAFF" /></View></View>
         <Text style={styles.summaryTitle}>{loading ? 'در حال بارگذاری مرور…' : reviewCount ? `${fa(reviewCount)} نمونه برای مرور` : 'فعلاً مروری ندارید'}</Text>
         <Text style={styles.summaryDesc}>{loading ? 'در حال بررسی موعد مرور نمونه‌های این زبان…' : reviewCount ? 'نمونه‌های دشوار زودتر و نمونه‌های آسان دیرتر برمی‌گردند.' : progress?.completedLessonIds.length ? 'مرور بعدی در زمان مناسب به‌طور خودکار اینجا ظاهر می‌شود.' : 'پس از پایان اولین درس این زبان، نمونه‌های آن وارد برنامهٔ مرور می‌شوند.'}</Text>
         {!!error && <Text accessibilityRole="alert" style={styles.summaryError}>{error}</Text>}
@@ -130,7 +130,7 @@ export default function StarterReview({course}: {course: StarterCourse}) {
       </LinearGradient>
       <Text style={styles.sectionTitle}>مرور چگونه تنظیم می‌شود؟</Text>
       <View style={styles.methodList}><Method num="۱" title="معنی را ببین و نمونه را بگو" desc="پیش از دیدن پاسخ، نمونهٔ این زبان را با صدای بلند به یاد بیاورید." /><Method num="۲" title="پاسخ را ببین و بشنو" desc="متن این زبان و آوانویسی تقریبی را با پاسخ خود مقایسه کنید." /><Method num="۳" title="میزان سختی را انتخاب کن" desc="برنامه زمان مرور بعدی را روی همین دستگاه تنظیم می‌کند." /></View>
-      <View style={styles.note}><CheckCircle2 size={18} color={Palette.success} /><Text style={styles.noteText}>مرور این زبان جدا از پیشرفت انگلیسی، فقط در حافظهٔ همین دستگاه ذخیره می‌شود.</Text></View>
+      <View style={styles.note}><CheckCircle2 size={18} color={Palette.success} /></View>
     </ScrollView>
     <StarterBottomNav course={course} />
   </View>;

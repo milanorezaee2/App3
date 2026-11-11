@@ -31,9 +31,9 @@ export default function LearningAccess() {
   return <ScrollView contentContainerStyle={s.root}><View style={s.page}>
     <PageNavigation backFallback="/lang" />
     <ShieldCheck size={38} color="#0c8b78"/><Text style={s.title}>مدیریت اشتراک آموزشی</Text>
-    <Text style={s.text}>عضویت اختیاری است. مدیر فقط خلاصه پیشرفت آموزشی شما را می‌بیند، نه پیام‌ها، اطلاعات یا صفحه گوشی شما.</Text>
+    <Text style={s.text}>مدیر فقط خلاصهٔ پیشرفت آموزشی شما را می‌بیند.</Text>
     {FEATURES.educationEnrollment && <View style={s.card}><Text style={s.heading}>پذیرفتن دعوت مدیر</Text>
-      <Text style={s.text}>کد بلند دعوت آموزشی را وارد کنید؛ این کد با کد ۶ رقمی مکالمه متفاوت است.</Text>
+      <Text style={s.text}>کد دعوت آموزشی را وارد کنید.</Text>
       <TextInput accessibilityLabel="کد دعوت آموزشی" autoCapitalize="none" autoCorrect={false} placeholder="کد دعوت آموزشی" value={code} onChangeText={v=>{setCode(v);setManager(null);setConsent(false);}} style={s.input}/>
       {button('بررسی دعوت و نام مدیر',()=>void run(async()=>{
         if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(code.trim())) {setError('کد دعوت آموزشی را کامل و بدون فاصله اضافه وارد کنید.');return;}
@@ -41,7 +41,7 @@ export default function LearningAccess() {
       }),!code.trim())}
       {manager && <><Text style={s.heading}>نام مدیر: {manager}</Text>
         <TextInput accessibilityLabel="نام نمایشی زبان‌آموز" placeholder="نام شما در پنل مدیر" maxLength={80} value={name} onChangeText={setName} style={s.input}/>
-        <Text style={s.text}>با پذیرش، نام نمایشی، درس‌های تکمیل‌شده، واژه‌های معرفی‌شده، زمان آموزشی ثبت‌شده، زنجیره فعالیت و زمان آخرین همگام‌سازی در اختیار این مدیر قرار می‌گیرد. ممکن است پیشرفت قبلی ذخیره‌شده شما نیز در گزارش ظاهر شود.</Text>
+        <Text style={s.text}>با پذیرش، خلاصهٔ پیشرفت آموزشی شما با این مدیر به اشتراک گذاشته می‌شود.</Text>
         <Pressable accessibilityRole="checkbox" accessibilityState={{checked:consent}} onPress={()=>setConsent(v=>!v)} style={s.consent}><Text style={s.text}>{consent?'☑':'☐'} با اشتراک این اطلاعات با مدیر نام‌برده موافقم.</Text></Pressable>
         {button('پذیرش دعوت و اشتراک پیشرفت',()=>void run(async()=>{await identity();const {error}=await supabase.rpc('accept_education_invite',{p_code:code.trim(),p_name:name.trim(),p_consent:consent});if(error)throw error;setManager(null);setCode('');setConsent(false);await load();setMessage('عضویت ثبت شد. گزارش از داده‌های همگام‌شده دستگاه نمایش داده می‌شود.');}),!consent||!name.trim())}
       </>}
@@ -51,12 +51,11 @@ export default function LearningAccess() {
     <View style={s.card}><Text style={s.heading}>اشتراک‌های فعلی</Text>
       {!members.length&&<Text style={s.text}>عضویتی برای این حساب نمایش داده نمی‌شود.</Text>}
       {members.map(m=><View key={m.admin_id} style={s.member}><Text style={s.text}>شناسه مدیر: {m.admin_id.slice(0,8)}… · {m.status==='active'?'اشتراک فعال':'گزارش متوقف'} </Text>
-        {confirm===m.admin_id ? <><Text style={s.text}>دسترسی این مدیر به گزارش شما حذف شود؟ برای عضویت دوباره دعوت جدید لازم است.</Text>{button('بله، اشتراک را قطع کن',()=>void run(async()=>{const {data:session}=await supabase.auth.getSession();if(!session.session)throw new Error('AUTH_REQUIRED');const {error}=await supabase.from('education_enrollments').delete().eq('admin_id',m.admin_id).eq('student_id',session.session.user.id);if(error)throw error;setConfirm(null);await load();setMessage('دسترسی مدیر به گزارش شما قطع شد. درس‌ها و پیشرفت شما پاک نشده‌اند.');}))}{button('انصراف',()=>setConfirm(null))}</> : button('لغو رضایت و قطع اشتراک',()=>setConfirm(m.admin_id))}
+        {confirm===m.admin_id ? <><Text style={s.text}>دسترسی این مدیر به گزارش شما حذف شود؟</Text>{button('بله، اشتراک را قطع کن',()=>void run(async()=>{const {data:session}=await supabase.auth.getSession();if(!session.session)throw new Error('AUTH_REQUIRED');const {error}=await supabase.from('education_enrollments').delete().eq('admin_id',m.admin_id).eq('student_id',session.session.user.id);if(error)throw error;setConfirm(null);await load();setMessage('دسترسی مدیر به گزارش شما قطع شد. درس‌ها و پیشرفت شما پاک نشده‌اند.');}))}{button('انصراف',()=>setConfirm(null))}</> : button('لغو رضایت و قطع اشتراک',()=>setConfirm(m.admin_id))}
       </View>)}
       {button('تازه‌سازی عضویت‌ها',()=>void run(load))}
     </View>
-    <Text style={s.note}>هویت فعلی ممکن است مهمان باشد؛ پاک‌کردن داده مرورگر، حذف اپ یا تعویض دستگاه می‌تواند دسترسی به آن را از بین ببرد. انتقال حساب بین دستگاه‌ها هنوز در این نسخه پیاده‌سازی نشده است.</Text>
-    <Text style={s.note}>قطع اشتراک، دسترسی بعدی مدیر را متوقف می‌کند؛ نسخه‌هایی که قبلاً دیده یا ذخیره کرده قابل پس‌گرفتن نیستند. اطلاعات دستگاه و کنترل گوشی بخشی از این عضویت نیست.</Text>
+    <Text style={s.note}>قطع اشتراک، دسترسی بعدی مدیر را متوقف می‌کند.</Text>
   </View></ScrollView>;
 }
 const s=StyleSheet.create({root:{flexGrow:1,backgroundColor:'#f3f7f9',padding:24},page:{width:'100%',maxWidth:760,alignSelf:'center',gap:20},title:{fontFamily:'Beiruti',fontSize:25,fontWeight: '400',color:'#1e3d50',textAlign:'right'},text:{fontFamily:'Beiruti',fontSize:13,color:'#496579',textAlign:'right',lineHeight:27},heading:{fontFamily:'Beiruti',fontSize:17,fontWeight: '400',color:'#203f52',textAlign:'right'},card:{backgroundColor:'#fff',borderRadius:18,padding:22,gap:18},input:{fontFamily:'Beiruti',backgroundColor:'#f5f8fa',padding:14,borderRadius:10,borderWidth:1,borderColor:'#dce6ec',textAlign:'right',color:'#253f54'},button:{backgroundColor:'#0c8b78',padding:14,borderRadius:10,alignItems:'center'},buttonText:{fontFamily:'Beiruti',fontSize:13,color:'#fff'},consent:{backgroundColor:'#edf8f3',padding:14,borderRadius:10},member:{borderTopWidth:1,borderColor:'#e4edf1',paddingTop:15,gap:12},note:{fontFamily:'Beiruti',fontSize:12,lineHeight:25,textAlign:'right',color:'#738496'},error:{fontFamily:'Beiruti',color:'#ae3333',textAlign:'right',lineHeight:25},success:{fontFamily:'Beiruti',color:'#14775d',textAlign:'right',lineHeight:25}});

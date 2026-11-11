@@ -15,9 +15,8 @@ export function EnglishB2Scenario({ lessonId, speak, scenario: supplied }: { les
     <Text style={s.heading}>موقعیت واقعی · تمرین اختیاری</Text>
     <Text style={s.text}>{scenario.situation}</Text>
     <Text style={s.text}>{scenario.task}</Text>
-    <Text style={s.text}>ابتدا پاسخ خود را با صدای بلند بگویید یا اینجا بنویسید؛ سپس با نمونه مقایسه کنید. پاسخ نمونه تنها پاسخ ممکن نیست.</Text>
+    <Text style={s.text}>پاسخ خود را بگویید یا بنویسید؛ سپس با نمونه مقایسه کنید.</Text>
     <TextInput accessibilityLabel="پاسخ آزاد به موقعیت" style={[s.input, { minHeight: 100, textAlignVertical: 'top' }]} multiline value={answer} onChangeText={setAnswer} maxLength={2000} placeholder="Write your response here…" placeholderTextColor="#7C8AA5" />
-    <Text style={s.text}>متن و علامت‌های خودارزیابی فقط تا خروج از این مرحله نگه‌داری می‌شوند؛ تصحیح خودکار یا ذخیره نمی‌شوند و شرط پایان درس نیستند.</Text>
     <Pressable accessibilityRole="button" accessibilityState={{ expanded: showSample }} aria-expanded={showSample} style={s.secondaryButton} onPress={() => setShowSample(value => !value)}>
       <Text style={s.secondaryButtonText}>{showSample ? 'پنهان‌کردن پاسخ نمونه' : 'دیدن پاسخ نمونه و توضیح'}</Text>
     </Pressable>
@@ -28,11 +27,9 @@ export function EnglishB2Scenario({ lessonId, speak, scenario: supplied }: { les
       <Text style={s.text}>{scenario.explanation}</Text>
     </View>}
     <Text style={s.heading}>خودارزیابی پاسخ</Text>
-    <Text style={s.text}>هر موردی را که در پاسخ خود رعایت کرده‌اید علامت بزنید. این علامت‌ها نمره یا تأیید تسلط نیستند.</Text>
     {scenario.checklist.map((item, index) => <Pressable key={item} accessibilityRole="checkbox" accessibilityLabel={item} accessibilityState={{ checked: checked[index] }} aria-checked={checked[index]} style={s.secondaryButton}
       onPress={() => setChecked(previous => previous.map((value, i) => i === index ? !value : value))}>
       <Text style={s.secondaryButtonText}>{checked[index] ? '☑' : '☐'} {item}</Text>
     </Pressable>)}
-    <Text style={s.text}>برای ارزیابی مستقل دقت، روانی و تناسب پاسخ، از مدرس یا هم‌صحبت بازخورد بگیرید.</Text>
   </View>;
 }

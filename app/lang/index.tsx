@@ -1,6 +1,6 @@
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
-import FoundationA1Entry from '@/components/FoundationA1Entry';
+import EnglishPodcastEntry from '@/components/EnglishPodcastEntry';
 import { useCallback, useEffect, useState } from 'react';
 import { Alert, Image, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -19,6 +19,7 @@ import {
   Flame,
   MessageCircle,
   Play,
+  Podcast,
   RefreshCw,
   RotateCcw,
   Sparkles,
@@ -120,10 +121,9 @@ export default function LearningHome() {
           <View style={styles.header}>
             <View style={styles.brandLockup}>
               <View style={styles.brandMark}>
-                <MiloGlobeHeadphoneMark size={20} />
+                <MiloGlobeHeadphoneMark size={48} />
               </View>
               <View style={styles.brandCopy}>
-                <Text style={styles.brandEyebrow}>LANGUAGE JOURNEY</Text>
                 <Text style={styles.headerTitle}>مسیر یادگیری انگلیسی</Text>
               </View>
             </View>
@@ -141,10 +141,9 @@ export default function LearningHome() {
             <View style={styles.welcomeCopy}>
               <View style={styles.welcomeEyebrowRow}>
                 <Sparkles size={13} color={HomeColors.gold} />
-                <Text style={styles.welcomeEyebrow}>YOUR NEXT STEP</Text>
               </View>
-              <Text style={styles.welcomeTitle}>سلام! آماده‌ای ادامه بدی؟</Text>
-              <Text style={styles.welcomeDescription}>یک جملهٔ کاربردی، یک قدم دیگر در مسیر یادگیری.</Text>
+              <Text style={styles.welcomeTitle}>انگلیسی؛ زبان کار، سفر و دنیای دیجیتال</Text>
+              <Text style={styles.welcomeDescription}>از جمله‌های روزمره تا گفت‌وگوی حرفه‌ای؛ هر درس یک موقعیت واقعی.</Text>
               <View style={styles.welcomeTags}>
                 <View style={styles.welcomeTag}>
                   <BookOpen size={12} color={HomeColors.gold} />
@@ -170,7 +169,6 @@ export default function LearningHome() {
           <View style={styles.pathPanel}>
             <View style={styles.panelHeadingRow}>
               <View style={styles.panelHeadingText}>
-                <Text style={styles.panelEyebrow}>YOUR LEARNING PATH</Text>
                 <Text style={styles.panelTitle}>سطح خودت را انتخاب کن</Text>
                 <Text style={styles.panelHint}>از هر سطحی که درس دارد شروع کن.</Text>
               </View>
@@ -239,7 +237,7 @@ export default function LearningHome() {
             )}
           </View>
 
-          <FoundationA1Entry language="en" />
+          <EnglishPodcastEntry />
 
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#5146E5', '#20C49A', '#5146E5']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
@@ -320,7 +318,6 @@ export default function LearningHome() {
 
           <View style={styles.sectionHeader}>
             <View style={styles.sectionTitleBlock}>
-              <Text style={styles.sectionEyebrow}>TODAY AT A GLANCE</Text>
               <Text style={styles.sectionTitle}>برنامهٔ امروز</Text>
             </View>
             <View style={styles.dailyGoalPill}>
@@ -361,7 +358,6 @@ export default function LearningHome() {
           <View style={styles.quickSection}>
             <View style={styles.sectionHeading}>
               <View style={styles.sectionTitleBlock}>
-                <Text style={styles.sectionEyebrow}>KEEP GOING</Text>
                 <Text style={styles.sectionTitle}>میان‌برهای تو</Text>
               </View>
             </View>
@@ -393,7 +389,21 @@ export default function LearningHome() {
               <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Volume2 size={18} color={HomeColors.accent} /></View>
               <View style={styles.quickCopy}>
                 <Text style={styles.quickTitle}>کارگاه تلفظ انگلیسی</Text>
-                <Text style={styles.quickDesc}>{FEATURES.learnerLogin ? 'تمرین صداها، تکیه و آهنگ جمله؛ خودارزیابی و همگام‌سازی حساب' : 'تمرین صداها، تکیه و آهنگ جمله؛ خودارزیابی'}</Text>
+                <Text style={styles.quickDesc}>{FEATURES.learnerLogin ? 'صداها، تکیه و آهنگ جمله' : 'صداها، تکیه و آهنگ جمله'}</Text>
+              </View>
+              <ChevronLeft size={17} color={HomeColors.muted} />
+            </Pressable>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="باز کردن پادکست انگلیسی"
+              accessibilityHint="هر درس یک اپیزود شنیداری با متن و ترجمهٔ هم‌زمان"
+              style={({ pressed }) => [styles.quickCard, pressed && styles.buttonPressed]}
+              onPress={() => router.push('/lang/podcast' as never)}
+            >
+              <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Podcast size={18} color={HomeColors.accent} /></View>
+              <View style={styles.quickCopy}>
+                <Text style={styles.quickTitle}>پادکست انگلیسی</Text>
+                <Text style={styles.quickDesc}>هر درس یک اپیزود</Text>
               </View>
               <ChevronLeft size={17} color={HomeColors.muted} />
             </Pressable>
@@ -401,7 +411,7 @@ export default function LearningHome() {
               <View style={[styles.quickIcon, { backgroundColor: HomeColors.sageSoft }]}><Download size={18} color={HomeColors.sage} /></View>
               <View style={styles.quickCopy}>
                 <Text style={styles.quickTitle}>پشتیبان پیشرفت</Text>
-                <Text style={styles.quickDesc}>ذخیره و بازیابی امن سابقهٔ محلی انگلیسی</Text>
+                <Text style={styles.quickDesc}>ذخیره و بازیابی پیشرفت</Text>
               </View>
               <ChevronLeft size={17} color={HomeColors.muted} />
             </Pressable>
@@ -409,7 +419,7 @@ export default function LearningHome() {
               <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Cloud size={18} color={HomeColors.accent} /></View>
               <View style={styles.quickCopy}>
                 <Text style={styles.quickTitle}>حساب و همگام‌سازی</Text>
-                <Text style={styles.quickDesc}>پیشرفت و تلفظ هر دو زبان میان دستگاه‌ها</Text>
+                <Text style={styles.quickDesc}>پیشرفت میان دستگاه‌ها</Text>
               </View>
               <ChevronLeft size={17} color={HomeColors.muted} />
             </Pressable>}

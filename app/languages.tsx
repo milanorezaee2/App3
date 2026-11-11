@@ -50,22 +50,45 @@ export default function LanguagesHome() {
   const tiny = width < 370;
 
   useEffect(() => {
-    if (welcomeVoicePlayed) return;
+    // Browsers block autoplay and expo-audio web leaves the play() promise unhandled; skip on web.
+    if (Platform.OS === 'web' || welcomeVoicePlayed) return;
     welcomeVoicePlayed = true;
+    let player: ReturnType<typeof createAudioPlayer> | null = null;
+    let cleanup: ReturnType<typeof setTimeout> | null = null;
+    const safeRemove = () => {
+      const current = player;
+      player = null;
+      if (!current) return;
+      try {
+        current.pause();
+      } catch {
+        // ignore
+      }
+      try {
+        current.remove();
+      } catch {
+        // Browsers can abort the media fetch (e.g. autoplay blocked); ignore.
+      }
+    };
     const start = setTimeout(() => {
       try {
-        const player = createAudioPlayer(require('../assets/audio/welcome-voice.wav'));
+        player = createAudioPlayer(require('../assets/audio/welcome-voice.wav'));
         player.volume = 0.9;
         const playback = player.play() as unknown;
         if (playback && typeof (playback as Promise<unknown>).catch === 'function') {
           (playback as Promise<unknown>).catch(() => undefined);
         }
-        setTimeout(() => player.remove(), 4000);
+        cleanup = setTimeout(safeRemove, 4000);
       } catch {
         // The screen remains usable when audio playback is unavailable.
+        player = null;
       }
     }, 400);
-    void start;
+    return () => {
+      clearTimeout(start);
+      if (cleanup) clearTimeout(cleanup);
+      safeRemove();
+    };
   }, []);
 
   const openSupport = () => {
@@ -142,7 +165,6 @@ export default function LanguagesHome() {
               <Text style={styles.subtitle}>
                 کوتاه، شنیدنی، ماندگار
               </Text>
-              <Text style={styles.eyebrow}>LEARN THROUGH LIFE</Text>
             </View>
           </ImageBackground>
 
@@ -171,7 +193,6 @@ export default function LanguagesHome() {
                   <View style={[styles.languageCopy, Platform.OS === 'web' && styles.languageCopyRtl]}>
                     <Text numberOfLines={1} style={[styles.languageNativeName, Platform.OS === 'web' && styles.languageNativeNameRtl]}>{displayName}</Text>
                     <Text style={styles.languageCode}>{language.id.toUpperCase()}</Text>
-                    {language.startsFromZero && <Text style={styles.sampleLabel}>شروع از صفر</Text>}
                   </View>
                   <View style={[styles.languageArrow, Platform.OS === 'web' && styles.languageArrowRtl]}>
                     {Platform.OS === 'web' ? <ArrowLeft size={18} color={palette.forest} strokeWidth={2.1} /> : <ArrowRight size={18} color={palette.forest} strokeWidth={2.1} />}
@@ -240,7 +261,7 @@ const styles = StyleSheet.create({
   eyebrow: { alignSelf: 'flex-start', marginTop: 5, fontFamily: 'Times New Roman', color: palette.forest, fontSize: 9, lineHeight: 15, letterSpacing: 1.7, writingDirection: 'ltr' },
   languageList: { flexDirection: 'row', alignItems: 'stretch', gap: 12 },
   languageListWrap: { flexWrap: 'wrap' },
-  languageCardWrap: { flexBasis: '46%', flexGrow: 1, flexShrink: 0 },
+  languageCardWrap: { flexBasis: '46%', flexGrow: 1, flexShrink: 0, maxWidth: '48%' },
   languageCard: { flex: 1, minWidth: 0, borderRadius: 19, overflow: 'hidden', borderWidth: 1, borderColor: palette.border, paddingBottom: 12, alignItems: 'center', backgroundColor: palette.paper, shadowColor: '#514433', shadowOpacity: 0.07, shadowRadius: 12, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
   languageCardRtl: { alignItems: 'flex-start' },
   languageCopyRtl: { alignItems: 'flex-start', paddingHorizontal: 12 },

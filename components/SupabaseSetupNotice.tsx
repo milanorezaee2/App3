@@ -38,7 +38,7 @@ export function SupabaseSetupNotice() {
       <View style={styles.footer}>
         <ShieldCheck size={14} color={Colors.success[400]} />
         <Text style={styles.footerText}>
-          درس‌ها، کوییز و مرور فاصله‌دار آفلاین کار می‌کنند. کد دعوت مخاطب هم به Emma یا اعتبار هوش مصنوعی پولی وابسته نیست.
+          درس‌ها، کوییز و مرور فاصله‌دار آفلاین کار می‌کنند. کد دعوت مخاطب به اعتبار هوش مصنوعی پولی وابسته نیست.
         </Text>
       </View>
     </View>

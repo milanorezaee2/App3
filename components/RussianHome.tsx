@@ -137,10 +137,9 @@ export default function RussianHome() {
           <View style={styles.header}>
             <View style={styles.brandLockup}>
               <View style={styles.brandMark}>
-                <MiloGlobeHeadphoneMark size={20} />
+                <MiloGlobeHeadphoneMark size={48} />
               </View>
               <View style={styles.brandCopy}>
-                <Text style={styles.brandEyebrow}>LANGUAGE JOURNEY</Text>
                 <Text style={styles.headerTitle}>مسیر یادگیری روسی</Text>
               </View>
             </View>
@@ -158,10 +157,9 @@ export default function RussianHome() {
             <View style={styles.welcomeCopy}>
               <View style={styles.welcomeEyebrowRow}>
                 <Sparkles size={13} color={HomeColors.gold} />
-                <Text style={styles.welcomeEyebrow}>RUSSIAN JOURNEY</Text>
               </View>
-              <Text style={styles.welcomeTitle}>سلام! آماده‌ای روسی را ادامه بدهی؟</Text>
-              <Text style={styles.welcomeDescription}>یک جملهٔ کاربردی روسی، یک قدم دیگر در مسیر یادگیری.</Text>
+              <Text style={styles.welcomeTitle}>روسی؛ از خط سیریلیک تا گفت‌وگوی روزمره</Text>
+              <Text style={styles.welcomeDescription}>زبان بیش از ۲۵۰ میلیون نفر، با جمله‌هایی که از روز اول به کار می‌آیند.</Text>
               <View style={styles.welcomeTags}>
                 <View style={styles.welcomeTag}>
                   <BookOpen size={12} color={HomeColors.gold} />
@@ -187,7 +185,6 @@ export default function RussianHome() {
           <View style={styles.pathPanel}>
             <View style={styles.panelHeadingRow}>
               <View style={styles.panelHeadingText}>
-                <Text style={styles.panelEyebrow}>RUSSIAN LEARNING PATH</Text>
                 <Text style={styles.panelTitle}>سطح روسی خودت را انتخاب کن</Text>
                 <Text style={styles.panelHint}>از هر سطحی که درس دارد شروع کن.</Text>
               </View>
@@ -353,7 +350,6 @@ export default function RussianHome() {
 
           <View style={styles.sectionHeader}>
             <View style={styles.sectionTitleBlock}>
-              <Text style={styles.sectionEyebrow}>TODAY AT A GLANCE</Text>
               <Text style={styles.sectionTitle}>برنامهٔ امروز</Text>
             </View>
             <View style={styles.dailyGoalPill}>
@@ -386,7 +382,6 @@ export default function RussianHome() {
           <View style={styles.quickSection}>
             <View style={styles.sectionHeading}>
               <View style={styles.sectionTitleBlock}>
-                <Text style={styles.sectionEyebrow}>KEEP GOING</Text>
                 <Text style={styles.sectionTitle}>میان‌برهای تو</Text>
               </View>
             </View>

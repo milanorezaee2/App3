@@ -1,3 +1,4 @@
+import SpeakCheck from '@/components/SpeakCheck';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -54,10 +55,9 @@ export function EnglishDialoguePractice({ dialogue }: { dialogue: SentenceLesson
 
   return <View style={styles.card}>
     <View style={styles.metaRow}>
-      <Text style={styles.kicker}>گفت‌وگوی هدایت‌شده · بدون نیاز به سرویس آنلاین</Text>
       <Text style={styles.counter}>{pairIndex + 1} / {pairs.length}</Text>
     </View>
-    <Text style={styles.instruction}>جملهٔ طرف مقابل را گوش کنید، پاسخ خود را بلند بگویید، سپس نمونهٔ همین درس را ببینید.</Text>
+    <Text style={styles.instruction}>جملهٔ طرف مقابل را بشنوید، پاسخ خود را بلند بگویید، سپس نمونه را ببینید.</Text>
     <View style={styles.bubble}>
       <Text style={styles.speaker}>طرف مقابل</Text>
       <Text style={styles.english}>{current.partner.text}</Text>
@@ -77,6 +77,7 @@ export function EnglishDialoguePractice({ dialogue }: { dialogue: SentenceLesson
         <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن پاسخ: ${current.learner.text}`} style={styles.soundButton} onPress={() => speak(current.learner.text)}>
           <Volume2 size={17} color={Palette.primary} /><Text style={styles.soundText}>شنیدن پاسخ</Text>
         </Pressable>
+        <SpeakCheck key={`${pairIndex}-${current.learner.text}`} text={current.learner.text} locale="en-US" accent={Palette.success} />
       </>}
     </View>
     {revealed && <Pressable accessibilityRole="button" style={styles.nextButton} onPress={() => { setPairIndex(currentIndex => (currentIndex + 1) % pairs.length); setRevealed(false); }}>
@@ -84,7 +85,6 @@ export function EnglishDialoguePractice({ dialogue }: { dialogue: SentenceLesson
       <ChevronLeft size={18} color="#FFFFFF" />
     </Pressable>}
     {!!audioNotice && <Text accessibilityLiveRegion="polite" style={styles.note}>{audioNotice}</Text>}
-    <Text style={styles.note}>این تمرین از دیالوگ موجود استفاده می‌کند؛ گفتار ضبط یا برای هوش مصنوعی ارسال نمی‌شود.</Text>
   </View>;
 }
 
