@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 29: readable chat bubbles (light green mine / white theirs, dark text)
 # rev 28: conversation hub in de/fr/es bottom nav (same as en/tr/ru); Emma AI coach disabled in all languages
 # rev 27: speech check tolerant to short-word homophones (de "Tee"), best-of-5 alternatives, biasing strings
 # rev 26: more speaking checks (core sentences, vocabulary, dialogue, speaking test in review) + auto-read in Listening stage
