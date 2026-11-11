@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 36: learner profile screen (account, level, per-language progress, sync, sign-out)
 # rev 35: chat alert switch reports the real reason when enabling fails (Android foreground service)
 # rev 34: language-specific invitation message when sharing a contact code
 # rev 33: admin flavour renamed to "Admin App" (AdminApp.apk)

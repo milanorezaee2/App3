@@ -4,7 +4,7 @@ import { Alert, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Vi
 import { createAudioPlayer } from 'expo-audio';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { ArrowLeft, ArrowRight, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
+import { ArrowLeft, ArrowRight, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle, UserRound } from 'lucide-react-native';
 import { MiloLanguageBrand } from '@/components/MiloLanguageBrand';
 import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
@@ -123,6 +123,16 @@ export default function LanguagesHome() {
         <View style={[styles.page, compact && styles.pageCompact]}>
           <View style={[styles.header, Platform.OS === 'web' && styles.headerRtl]}>
             <View style={styles.headerActions}>
+              {FEATURES.learnerLogin && (
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="پروفایل من"
+                  style={({ pressed }) => [styles.headerButton, pressed && styles.pressed]}
+                  onPress={() => router.push('/profile' as never)}
+                >
+                  <UserRound size={18} color={palette.forest} strokeWidth={1.9} />
+                </Pressable>
+              )}
               <Pressable
                 accessibilityRole="button"
                 accessibilityLabel="گفتگو با پشتیبانی"

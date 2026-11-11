@@ -415,11 +415,11 @@ export default function LearningHome() {
               </View>
               <ChevronLeft size={17} color={HomeColors.muted} />
             </Pressable>
-            {FEATURES.learnerLogin && <Pressable accessibilityRole="button" accessibilityLabel="ورود ایمیلی و همگام‌سازی شخصی" style={({ pressed }) => [styles.quickCard, pressed && styles.buttonPressed]} onPress={() => router.push('/personal-sync' as never)}>
+            {FEATURES.learnerLogin && <Pressable accessibilityRole="button" accessibilityLabel="پروفایل و حساب کاربری" style={({ pressed }) => [styles.quickCard, pressed && styles.buttonPressed]} onPress={() => router.push('/profile' as never)}>
               <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Cloud size={18} color={HomeColors.accent} /></View>
               <View style={styles.quickCopy}>
-                <Text style={styles.quickTitle}>حساب و همگام‌سازی</Text>
-                <Text style={styles.quickDesc}>پیشرفت میان دستگاه‌ها</Text>
+                <Text style={styles.quickTitle}>پروفایل من</Text>
+                <Text style={styles.quickDesc}>حساب، سطح و پیشرفت</Text>
               </View>
               <ChevronLeft size={17} color={HomeColors.muted} />
             </Pressable>}
