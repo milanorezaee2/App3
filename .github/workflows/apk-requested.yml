@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 40: chat alert opt-in persists across app exits (no JS-side service stop; crash guard via attempt marker)
 # rev 39: support chat recovers after the manager closes a conversation (no raw RLS error)
 # rev 38: bespoke profile icon; chat service no longer reports a transient "stopped" (stale backup config, keystore fallback, failure detail)
 # rev 37: detailed learner profile (tabs: overview, languages, achievements, account)

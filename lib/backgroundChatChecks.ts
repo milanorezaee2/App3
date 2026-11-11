@@ -19,6 +19,7 @@ import { getChatForegroundServiceStatus, isChatForegroundServiceConfigured } fro
 /** Retained for old installed builds and the non-Android fallback. */
 export const BACKGROUND_CHAT_TASK = 'milo-background-chat-check';
 export const BACKGROUND_CHAT_ENABLED_KEY = 'milo_background_chat_check_v1';
+const BACKGROUND_CHAT_START_ATTEMPT_KEY = 'milo_background_chat_start_attempt_v1';
 const LAST_SEEN_PREFIX = 'milo_background_chat_last_seen_v1';
 const CHAT_CHANNEL = 'milo-chat';
 export const BACKGROUND_CHAT_INTERVAL_MINUTES = 15;
@@ -263,17 +264,24 @@ async function reconcileBackgroundChatChecksOnce(): Promise<void> {
       await unregisterLegacyTask();
       const active = client();
       const permission = await Notifications.getPermissionsAsync();
+      // A missing permission or a session that is still being restored must not
+      // flip the user's opt-in off; the next launch/resume retries.
       if (!permission.granted) return;
       const userId = await resolveAndroidUserId(active);
-      // Clear the saved opt-in before recovery. If native startup crashes the
-      // process, the next app launch must not repeat the same failing start.
-      await AsyncStorage.removeItem(BACKGROUND_CHAT_ENABLED_KEY);
       if (!userId) return;
-      const started = await startAndroidChatForegroundService(active, userId, MANAGEMENT_BUILD);
-      if (started) {
-        await AsyncStorage.setItem(BACKGROUND_CHAT_ENABLED_KEY, '1');
-      } else {
-        await stopAndroidChatForegroundServiceForClient(active).catch(() => undefined);
+      // Crash guard: if the previous native start never reported back (process
+      // died mid-start), skip exactly one automatic retry instead of looping.
+      const pendingAttempt = await AsyncStorage.getItem(BACKGROUND_CHAT_START_ATTEMPT_KEY).catch(() => null);
+      if (pendingAttempt === '1') {
+        await AsyncStorage.removeItem(BACKGROUND_CHAT_START_ATTEMPT_KEY).catch(() => undefined);
+        return;
+      }
+      await AsyncStorage.setItem(BACKGROUND_CHAT_START_ATTEMPT_KEY, '1').catch(() => undefined);
+      const started = await startAndroidChatForegroundService(active, userId, MANAGEMENT_BUILD).catch(() => false);
+      await AsyncStorage.removeItem(BACKGROUND_CHAT_START_ATTEMPT_KEY).catch(() => undefined);
+      if (!started) {
+        // Keep the opt-in; the settings card shows the concrete reason.
+        return;
       }
       return;
     }

@@ -295,12 +295,15 @@ export async function startChatNotifications(
     }
   }
 
-  const teardownUserScope = async () => {
+  // The native foreground service is a user opt-in that must outlive the JS
+  // tree. Only an explicit sign-out (a user that was active is now gone) stops
+  // it; screen unmounts and transient session restores never do.
+  const teardownUserScope = async (stopNativeService = false) => {
     const current = realtimeChannels;
     realtimeChannels = [];
     await removeChannels(client, current);
     activeToken = null;
-    if (Platform.OS === 'android') await stopAndroidChatForegroundServiceForClient(client);
+    if (stopNativeService && Platform.OS === 'android') await stopAndroidChatForegroundServiceForClient(client);
   };
 
   const emitForegroundEvent = (event: ChatNotificationEvent) => {
@@ -405,9 +408,10 @@ export async function startChatNotifications(
     const userId = await resolveUserId(options.requireSession === true);
     if (stopped) return;
     if (!userId) {
+      const signedOut = activeUserId !== null;
       activeUserId = null;
       activeToken = null;
-      await teardownUserScope();
+      await teardownUserScope(signedOut);
       return;
     }
     if (userId === activeUserId) {

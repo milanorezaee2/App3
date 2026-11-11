@@ -80,7 +80,8 @@ const androidOptIn = background.slice(
   background.indexOf('export async function disableBackgroundChatChecks'),
 );
 check(androidOptIn.indexOf('startAndroidChatForegroundService') < androidOptIn.indexOf("AsyncStorage.setItem(BACKGROUND_CHAT_ENABLED_KEY, '1')"), 'Android opt-in is saved only after native service startup is confirmed');
-check(/reconcileInFlight/.test(background) && /Clear the saved opt-in before recovery/.test(background), 'boot-time recovery is single-flight and clears the opt-in before retrying a potentially failing native start');
+check(/reconcileInFlight/.test(background) && /BACKGROUND_CHAT_START_ATTEMPT_KEY/.test(background) && /Crash guard/.test(background), 'boot-time recovery is single-flight and uses a start-attempt marker (not the opt-in) as the crash guard');
+check(/teardownUserScope\(signedOut\)/.test(notifications) && /stopNativeService && Platform\.OS === 'android'/.test(notifications), 'JS unmounts and transient session restores never stop the user-enabled native service; only an explicit sign-out does');
 check(/restoreLatestAndroidChatSession/.test(notifications) && /stopAutoRefresh/.test(notifications) && /startAutoRefresh/.test(notifications), 'JS auth refresh is coordinated across foreground/background transitions');
 check(/Platform\.OS !== 'ios' \|\| !Device\.isDevice/.test(notifications), 'Android no longer attempts Expo FCM push-token registration');
 check(/getStoredChatServiceSession/.test(authStorage) && /stopChatForegroundService\(key\)/.test(authStorage), 'auth storage restores native-rotated sessions and stops service on sign-out');
