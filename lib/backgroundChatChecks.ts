@@ -21,6 +21,7 @@ export const BACKGROUND_CHAT_ENABLED_KEY = 'milo_background_chat_check_v1';
 const LAST_SEEN_PREFIX = 'milo_background_chat_last_seen_v1';
 const CHAT_CHANNEL = 'milo-chat';
 export const BACKGROUND_CHAT_INTERVAL_MINUTES = 15;
+let reconcileInFlight: Promise<void> | null = null;
 
 export type BackgroundChatStatus =
   | 'enabled'
@@ -196,14 +197,21 @@ export async function enableBackgroundChatChecks(): Promise<BackgroundChatStatus
     const active = client();
     const userId = await resolveAndroidUserId(active);
     if (!userId) return 'restricted';
-    await AsyncStorage.setItem(BACKGROUND_CHAT_ENABLED_KEY, '1');
     await unregisterLegacyTask();
-    const started = await startAndroidChatForegroundService(active, userId, MANAGEMENT_BUILD);
-    if (!started) {
-      await AsyncStorage.removeItem(BACKGROUND_CHAT_ENABLED_KEY);
+    try {
+      const started = await startAndroidChatForegroundService(active, userId, MANAGEMENT_BUILD);
+      if (!started) {
+        await AsyncStorage.removeItem(BACKGROUND_CHAT_ENABLED_KEY).catch(() => undefined);
+        await stopAndroidChatForegroundServiceForClient(active).catch(() => undefined);
+        return 'restricted';
+      }
+      await AsyncStorage.setItem(BACKGROUND_CHAT_ENABLED_KEY, '1');
+      return 'enabled';
+    } catch {
+      await AsyncStorage.removeItem(BACKGROUND_CHAT_ENABLED_KEY).catch(() => undefined);
+      await stopAndroidChatForegroundServiceForClient(active).catch(() => undefined);
       return 'restricted';
     }
-    return 'enabled';
   }
 
   const status = await BackgroundTask.getStatusAsync();
@@ -229,6 +237,17 @@ export async function disableBackgroundChatChecks(): Promise<BackgroundChatStatu
 
 /** Re-establishes an opted-in native connection when the user opens the app. */
 export async function reconcileBackgroundChatChecks(): Promise<void> {
+  if (reconcileInFlight) return reconcileInFlight;
+  const attempt = reconcileBackgroundChatChecksOnce();
+  reconcileInFlight = attempt;
+  try {
+    await attempt;
+  } finally {
+    if (reconcileInFlight === attempt) reconcileInFlight = null;
+  }
+}
+
+async function reconcileBackgroundChatChecksOnce(): Promise<void> {
   if (Platform.OS === 'web' || !await isBackgroundChatChecksEnabled()) return;
   try {
     await ensureChatChannel();
@@ -238,7 +257,16 @@ export async function reconcileBackgroundChatChecks(): Promise<void> {
       const permission = await Notifications.getPermissionsAsync();
       if (!permission.granted) return;
       const userId = await resolveAndroidUserId(active);
-      if (userId) await startAndroidChatForegroundService(active, userId, MANAGEMENT_BUILD);
+      // Clear the saved opt-in before recovery. If native startup crashes the
+      // process, the next app launch must not repeat the same failing start.
+      await AsyncStorage.removeItem(BACKGROUND_CHAT_ENABLED_KEY);
+      if (!userId) return;
+      const started = await startAndroidChatForegroundService(active, userId, MANAGEMENT_BUILD);
+      if (started) {
+        await AsyncStorage.setItem(BACKGROUND_CHAT_ENABLED_KEY, '1');
+      } else {
+        await stopAndroidChatForegroundServiceForClient(active).catch(() => undefined);
+      }
       return;
     }
 

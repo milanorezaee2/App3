@@ -2,6 +2,7 @@ import Constants from 'expo-constants';
 import { AppState, Platform } from 'react-native';
 import type { Session, SupabaseClient } from '@supabase/supabase-js';
 import {
+  getChatForegroundServiceStatus,
   getStoredChatServiceSession,
   setChatServiceAppForegrounded,
   startChatForegroundService,
@@ -60,7 +61,23 @@ export async function startAndroidChatForegroundService(
     isAdmin,
     appForeground: AppState.currentState === 'active',
   };
-  return startChatForegroundService(config);
+  try {
+    const accepted = await startChatForegroundService(config);
+    if (!accepted) return false;
+
+    const deadline = Date.now() + 5000;
+    while (Date.now() < deadline) {
+      const status = await getChatForegroundServiceStatus().catch(() => 'unavailable');
+      if (status === 'connecting' || status === 'connected' || status === 'reconnecting') return true;
+      if (status === 'stopped' || status === 'unavailable' || status === 'unsupported') return false;
+      await new Promise(resolve => setTimeout(resolve, 200));
+    }
+
+    await stopChatForegroundService(authStorageKey(client)).catch(() => false);
+    return false;
+  } catch {
+    return false;
+  }
 }
 
 /**
