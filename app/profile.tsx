@@ -4,7 +4,7 @@ import { ActivityIndicator, Alert, Platform, Pressable, ScrollView, StyleSheet, 
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Application from 'expo-application';
-import { Redirect, useFocusEffect, useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import {
   Activity, Award, BadgeCheck, BookOpenCheck, Brain, CalendarDays, ChevronLeft, Clock3, Cloud, Download, Flame, Fingerprint,
   Languages, Layers, LogOut, Mail, Pencil, RefreshCw, Repeat, ShieldCheck, Smartphone, Sparkles, Target, Trophy, X,
@@ -14,6 +14,7 @@ import { FEATURES } from '@/lib/features';
 import { supabase } from '@/lib/supabase';
 import { completeLearnerProfile, getRegisteredSession, registrationError, type RegistrationProfile } from '@/lib/userRegistration';
 import { syncPersonalLearningData } from '@/lib/personalLearningSync';
+import { beginLocalProfile, clearLocalProfile, getLocalProfile, localProfileError, normalizeLocalCode, regenerateLocalCode, touchLocalProfile, updateLocalProfileName, verifyLocalProfile, type LocalProfile } from '@/lib/localProfile';
 import { loadLearnerProfileSummary, nameInitials, type Achievement, type LanguageProfileStat, type LearnerProfileSummary } from '@/lib/learnerProfile';
 import { toPersianDigits as fa, timeAgo } from '@/lib/format';
 import { Typography } from '@/lib/theme';
@@ -44,9 +45,9 @@ const TABS: Array<{ id: Tab; label: string }> = [
 ];
 
 export default function ProfileScreen() {
-  // The profile belongs to a registered learner; open builds have no account to show.
-  if (!FEATURES.learnerLogin) return <Redirect href={'/languages' as never} />;
-  return <ProfileEnabledScreen />;
+  // Login builds use the registered Supabase account; open builds use a
+  // device-local profile activated with an app-generated access code.
+  return <ProfileEnabledScreen local={!FEATURES.learnerLogin} />;
 }
 
 function formatDate(value: string | null | undefined, withTime = false): string {
@@ -85,10 +86,11 @@ function lastActiveLabel(key: string | null): string {
   return `${fa(diff)} روز پیش`;
 }
 
-function ProfileEnabledScreen() {
+function ProfileEnabledScreen({ local }: { local: boolean }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<RegistrationProfile | null>(null);
+  const [localProfile, setLocalProfile] = useState<LocalProfile | null>(null);
   const [userId, setUserId] = useState('');
   const [lastSignIn, setLastSignIn] = useState<string | null>(null);
   const [summary, setSummary] = useState<LearnerProfileSummary | null>(null);
@@ -103,6 +105,20 @@ function ProfileEnabledScreen() {
 
   const load = useCallback(async () => {
     try {
+      if (local) {
+        const [stored, stats] = await Promise.all([getLocalProfile(), loadLearnerProfileSummary()]);
+        setLocalProfile(stored);
+        if (stored?.verifiedAt) {
+          setProfile({ user_id: 'local', full_name: stored.fullName, email: stored.email, registered_at: stored.createdAt, last_seen_at: stored.lastSeenAt });
+          setLastSignIn(stored.verifiedAt);
+          void touchLocalProfile();
+        } else {
+          setProfile(null);
+        }
+        setSummary(stats);
+        setError('');
+        return;
+      }
       const [{ session, profile: registered }, stats] = await Promise.all([getRegisteredSession(), loadLearnerProfileSummary()]);
       setProfile(registered);
       setUserId(session?.user.id ?? '');
@@ -110,17 +126,18 @@ function ProfileEnabledScreen() {
       setSummary(stats);
       setError('');
     } catch (cause) {
-      setError(registrationError(cause));
+      setError(local ? localProfileError(cause) : registrationError(cause));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [local]);
 
   useFocusEffect(useCallback(() => { void load(); }, [load]));
   useEffect(() => {
+    if (local) return;
     const { data } = supabase.auth.onAuthStateChange(() => { void load(); });
     return () => data.subscription.unsubscribe();
-  }, [load]);
+  }, [load, local]);
 
   const startEditing = () => { setNameDraft(profile?.full_name ?? ''); setEditing(true); setNotice(''); setError(''); };
 
@@ -129,12 +146,12 @@ function ProfileEnabledScreen() {
     setSaving(true);
     setError('');
     try {
-      await completeLearnerProfile(nameDraft);
+      if (local) await updateLocalProfileName(nameDraft); else await completeLearnerProfile(nameDraft);
       setEditing(false);
       setNotice('نام نمایشی به‌روزرسانی شد.');
       await load();
     } catch (cause) {
-      setError(registrationError(cause));
+      setError(local ? localProfileError(cause) : registrationError(cause));
     } finally {
       setSaving(false);
     }
@@ -163,6 +180,13 @@ function ProfileEnabledScreen() {
   const confirmSignOut = () => {
     const run = async () => {
       setError('');
+      if (local) {
+        await clearLocalProfile();
+        setProfile(null);
+        setLocalProfile(null);
+        setTab('overview');
+        return;
+      }
       const { error: authError } = await supabase.auth.signOut();
       if (authError) { setError('خروج از حساب انجام نشد. اتصال شبکه را بررسی کنید.'); return; }
       router.replace('/languages' as never);
@@ -197,6 +221,12 @@ function ProfileEnabledScreen() {
 
           {loading ? (
             <View style={styles.loading}><ActivityIndicator color={palette.forest} /><Text style={styles.loadingText}>در حال بارگذاری پروفایل…</Text></View>
+          ) : !profile && local ? (
+            <LocalProfileSetup
+              pending={localProfile}
+              onChanged={() => { setNotice(''); void load(); }}
+              onVerified={() => { setNotice('پروفایل شما روی این دستگاه فعال شد.'); void load(); }}
+            />
           ) : !profile ? (
             <View style={styles.card}>
               <View style={styles.emptyIcon}><ShieldCheck size={26} color={palette.forest} /></View>
@@ -240,7 +270,7 @@ function ProfileEnabledScreen() {
                     )}
                     <View style={styles.emailRow}><Mail size={13} color="rgba(255,255,255,0.8)" /><Text keepColor style={styles.heroEmail}>{email}</Text></View>
                     <View style={styles.pillRow}>
-                      <View style={styles.verifiedPill}><BadgeCheck size={12} color="#DDF3E4" /><Text keepColor style={styles.verifiedText}>حساب تأییدشده</Text></View>
+                      <View style={styles.verifiedPill}><BadgeCheck size={12} color="#DDF3E4" /><Text keepColor style={styles.verifiedText}>{local ? 'پروفایل فعال روی این دستگاه' : 'حساب تأییدشده'}</Text></View>
                       {memberDays !== null && <View style={styles.verifiedPill}><CalendarDays size={12} color="#DDF3E4" /><Text keepColor style={styles.verifiedText}>{fa(memberDays)} روز عضویت</Text></View>}
                     </View>
                   </View>
@@ -275,6 +305,8 @@ function ProfileEnabledScreen() {
               {summary && tab === 'achievements' && <AchievementsTab achievements={summary.achievements} />}
               {tab === 'account' && (
                 <AccountTab
+                  local={local}
+                  localCode={localProfile?.code ?? ''}
                   profile={profile}
                   userId={userId}
                   lastSignIn={lastSignIn}
@@ -486,8 +518,8 @@ function AchievementsTab({ achievements }: { achievements: Achievement[] }) {
 
 /* ───────────────────────── Account ───────────────────────── */
 
-function AccountTab({ profile, userId, lastSignIn, lastSynced, syncing, onSync, onManage, onBackup, onSignOut }: {
-  profile: RegistrationProfile; userId: string; lastSignIn: string | null; lastSynced: string; syncing: boolean;
+function AccountTab({ local, localCode, profile, userId, lastSignIn, lastSynced, syncing, onSync, onManage, onBackup, onSignOut }: {
+  local: boolean; localCode: string; profile: RegistrationProfile; userId: string; lastSignIn: string | null; lastSynced: string; syncing: boolean;
   onSync: () => void; onManage: () => void; onBackup: () => void; onSignOut: () => void;
 }) {
   const appVersion = Application.nativeApplicationVersion || '1.0.0';
@@ -495,7 +527,14 @@ function AccountTab({ profile, userId, lastSignIn, lastSynced, syncing, onSync, 
   return (
     <>
       <Section icon={<Fingerprint size={17} color={palette.forest} />} title="مشخصات حساب">
-        <KeyValueList rows={[
+        <KeyValueList rows={local ? [
+          ['نام نمایشی', profile.full_name || '—'],
+          ['ایمیل', profile.email, true],
+          ['تاریخ ساخت پروفایل', formatDate(profile.registered_at)],
+          ['فعال‌سازی', lastSignIn ? formatDate(lastSignIn, true) : '—'],
+          ['آخرین فعالیت', profile.last_seen_at ? timeAgo(profile.last_seen_at) : '—'],
+          ['کد ورود این دستگاه', localCode ? fa(localCode) : '—', true],
+        ] : [
           ['نام نمایشی', profile.full_name || '—'],
           ['ایمیل', profile.email, true],
           ['تاریخ ثبت‌نام', formatDate(profile.registered_at)],
@@ -505,6 +544,15 @@ function AccountTab({ profile, userId, lastSignIn, lastSynced, syncing, onSync, 
         ]} />
       </Section>
 
+      {local ? (
+        <Section icon={<Smartphone size={17} color={palette.forest} />} title="ذخیرهٔ محلی" subtitle="این پروفایل و پیشرفت شما فقط روی همین دستگاه نگهداری می‌شود و هیچ داده‌ای به سرور فرستاده نمی‌شود.">
+          <KeyValueList rows={[
+            ['وضعیت', 'فعال روی این دستگاه'],
+            ['کد ورود', 'توسط برنامه به‌صورت تصادفی ساخته شده؛ برای ورود دوباره روی همین دستگاه لازم است'],
+            ['پشتیبان', 'برای انتقال پیشرفت به دستگاه دیگر از پشتیبان محلی استفاده کنید'],
+          ]} />
+        </Section>
+      ) : (
       <Section icon={<Cloud size={17} color={palette.forest} />} title="همگام‌سازی ابری" subtitle="پیشرفت شما به حساب ایمیلی‌تان وصل است و روی هر دستگاهی که وارد شوید ادامه پیدا می‌کند.">
         <Pressable accessibilityRole="button" accessibilityState={{ disabled: syncing }} disabled={syncing} onPress={onSync} style={({ pressed }) => [styles.primaryButton, pressed && styles.pressed]}>
           {syncing ? <ActivityIndicator size="small" color="#FFFFFF" /> : <RefreshCw size={16} color="#FFFFFF" />}
@@ -516,6 +564,7 @@ function AccountTab({ profile, userId, lastSignIn, lastSynced, syncing, onSync, 
           ['محتوای همگام‌شده', 'پیشرفت درس‌ها، کارت‌های مرور و زمان تمرین انگلیسی'],
         ]} />
       </Section>
+      )}
 
       <Section icon={<Smartphone size={17} color={palette.forest} />} title="دستگاه و نسخه">
         <KeyValueList rows={[
@@ -526,15 +575,132 @@ function AccountTab({ profile, userId, lastSignIn, lastSynced, syncing, onSync, 
       </Section>
 
       <Section icon={<ShieldCheck size={17} color={palette.forest} />} title="مدیریت و امنیت">
-        <ActionRow icon={<Mail size={16} color={palette.forest} />} title="مدیریت ایمیل و ورود" subtitle="تغییر ایمیل، دریافت کد تازه" onPress={onManage} />
+        {!local && <ActionRow icon={<Mail size={16} color={palette.forest} />} title="مدیریت ایمیل و ورود" subtitle="تغییر ایمیل، دریافت کد تازه" onPress={onManage} />}
         <ActionRow icon={<Download size={16} color={palette.forest} />} title="پشتیبان محلی پیشرفت" subtitle="ذخیره و بازیابی فایل پشتیبان" onPress={onBackup} />
         <ActionRow icon={<Layers size={16} color={palette.forest} />} title="حریم خصوصی" subtitle="فقط نام و ایمیل ذخیره می‌شود؛ محتوای تمرین‌ها خصوصی می‌ماند" />
         <Pressable accessibilityRole="button" onPress={onSignOut} style={({ pressed }) => [styles.dangerButton, pressed && styles.pressed]}>
-          <LogOut size={16} color={palette.danger} /><Text keepColor style={styles.dangerButtonText}>خروج از حساب</Text>
+          <LogOut size={16} color={palette.danger} /><Text keepColor style={styles.dangerButtonText}>{local ? 'خروج از پروفایل' : 'خروج از حساب'}</Text>
         </Pressable>
-        <Text style={styles.cardHint}>با خروج، پیشرفت محلی روی این دستگاه پاک نمی‌شود.</Text>
+        <Text style={styles.cardHint}>{local ? 'با خروج، پروفایل این دستگاه حذف می‌شود ولی پیشرفت یادگیری می‌ماند.' : 'با خروج، پیشرفت محلی روی این دستگاه پاک نمی‌شود.'}</Text>
       </Section>
     </>
+  );
+}
+
+/* ───────────────────────── Local profile (no-login builds) ───────────────────────── */
+
+function LocalProfileSetup({ pending, onChanged, onVerified }: { pending: LocalProfile | null; onChanged: () => void; onVerified: () => void }) {
+  const [name, setName] = useState(pending?.fullName ?? '');
+  const [email, setEmail] = useState(pending?.email ?? '');
+  const [code, setCode] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const [revealed, setRevealed] = useState(false);
+  const step: 'details' | 'code' = pending && !pending.verifiedAt ? 'code' : 'details';
+
+  const createCode = async () => {
+    if (busy) return;
+    setBusy(true); setError('');
+    try {
+      await beginLocalProfile(name, email);
+      setCode('');
+      setRevealed(true);
+      onChanged();
+    } catch (cause) {
+      setError(localProfileError(cause));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const verify = async () => {
+    if (busy) return;
+    setBusy(true); setError('');
+    try {
+      await verifyLocalProfile(code);
+      onVerified();
+    } catch (cause) {
+      setError(localProfileError(cause));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const regenerate = async () => {
+    if (busy) return;
+    setBusy(true); setError('');
+    try { await regenerateLocalCode(); setCode(''); setRevealed(true); onChanged(); } finally { setBusy(false); }
+  };
+
+  const restart = async () => {
+    if (busy) return;
+    setBusy(true); setError('');
+    try { await clearLocalProfile(); setRevealed(false); onChanged(); } finally { setBusy(false); }
+  };
+
+  return (
+    <>
+      <View style={styles.card}>
+        <View style={styles.stepRow}>
+          <StepDot index={1} active={step === 'details'} done={step === 'code'} label="ایمیل" />
+          <View style={[styles.stepLine, step === 'code' && styles.stepLineDone]} />
+          <StepDot index={2} active={step === 'code'} done={false} label="کد ورود" />
+        </View>
+
+        {step === 'details' ? (
+          <>
+            <View style={styles.emptyIcon}><Fingerprint size={26} color={palette.forest} /></View>
+            <Text style={styles.cardTitle}>ساخت پروفایل روی این دستگاه</Text>
+            <Text style={styles.cardText}>نام و ایمیل خود را وارد کنید. برنامه همین‌جا یک کد ورود تصادفی برای شما می‌سازد؛ هیچ ایمیلی ارسال نمی‌شود و اطلاعات از دستگاه خارج نمی‌شود.</Text>
+            <TextInput value={name} onChangeText={setName} placeholder="نام و نام خانوادگی" placeholderTextColor="#A39C90" maxLength={80} style={styles.fieldInput} />
+            <TextInput value={email} onChangeText={setEmail} placeholder="example@email.com" placeholderTextColor="#A39C90" keyboardType="email-address" autoCapitalize="none" autoCorrect={false} style={[styles.fieldInput, styles.fieldInputLtr]} />
+            {!!error && <Text accessibilityRole="alert" style={styles.error}>{error}</Text>}
+            <Pressable accessibilityRole="button" accessibilityState={{ disabled: busy }} disabled={busy} onPress={() => void createCode()} style={({ pressed }) => [styles.primaryButton, pressed && styles.pressed]}>
+              {busy ? <ActivityIndicator size="small" color="#FFFFFF" /> : <Sparkles size={16} color="#FFFFFF" />}
+              <Text keepColor style={styles.primaryButtonText}>ساخت کد ورود</Text>
+            </Pressable>
+          </>
+        ) : (
+          <>
+            <Text style={styles.cardTitle}>کد ورود شما</Text>
+            <Text style={styles.cardText}>این کد توسط برنامه برای <Text style={styles.cardTextStrong}>{pending?.email}</Text> ساخته شد. آن را یادداشت کنید و برای فعال‌سازی پروفایل در کادر پایین وارد کنید.</Text>
+            <Pressable accessibilityRole="button" onPress={() => setRevealed(v => !v)} style={styles.codeBox}>
+              <Text keepColor style={styles.codeText}>{revealed ? fa(pending?.code ?? '') : '• • • • • •'}</Text>
+              <Text style={styles.codeHint}>{revealed ? 'برای پنهان‌کردن لمس کنید' : 'برای نمایش کد لمس کنید'}</Text>
+            </Pressable>
+            <TextInput value={code} onChangeText={value => setCode(normalizeLocalCode(value))} placeholder="کد ۶ رقمی" placeholderTextColor="#A39C90" keyboardType="number-pad" maxLength={6} style={[styles.fieldInput, styles.codeInput]} onSubmitEditing={() => void verify()} />
+            {!!error && <Text accessibilityRole="alert" style={styles.error}>{error}</Text>}
+            <Pressable accessibilityRole="button" accessibilityState={{ disabled: busy || code.length !== 6 }} disabled={busy || code.length !== 6} onPress={() => void verify()} style={({ pressed }) => [styles.primaryButton, (busy || code.length !== 6) && styles.buttonDisabled, pressed && styles.pressed]}>
+              {busy ? <ActivityIndicator size="small" color="#FFFFFF" /> : <BadgeCheck size={16} color="#FFFFFF" />}
+              <Text keepColor style={styles.primaryButtonText}>فعال‌سازی پروفایل</Text>
+            </Pressable>
+            <View style={styles.inlineActions}>
+              <Pressable accessibilityRole="button" disabled={busy} onPress={() => void regenerate()} style={({ pressed }) => [styles.secondaryButton, styles.inlineAction, pressed && styles.pressed]}>
+                <RefreshCw size={15} color={palette.forest} /><Text style={styles.secondaryButtonText}>کد تازه</Text>
+              </Pressable>
+              <Pressable accessibilityRole="button" disabled={busy} onPress={() => void restart()} style={({ pressed }) => [styles.secondaryButton, styles.inlineAction, pressed && styles.pressed]}>
+                <Pencil size={15} color={palette.forest} /><Text style={styles.secondaryButtonText}>ویرایش ایمیل</Text>
+              </Pressable>
+            </View>
+          </>
+        )}
+      </View>
+      <View style={styles.privacyRow}>
+        <ShieldCheck size={15} color={palette.muted} />
+        <Text style={styles.privacyText}>پروفایل محلی است: بدون ثبت‌نام آنلاین، بدون ارسال ایمیل. پیشرفت یادگیری شما مستقل از این پروفایل ذخیره می‌شود.</Text>
+      </View>
+    </>
+  );
+}
+
+function StepDot({ index, active, done, label }: { index: number; active: boolean; done: boolean; label: string }) {
+  return (
+    <View style={styles.stepItem}>
+      <View style={[styles.stepDot, active && styles.stepDotActive, done && styles.stepDotDone]}>
+        {done ? <BadgeCheck size={14} color="#FFFFFF" /> : <Text keepColor style={[styles.stepDotText, (active || done) && styles.stepDotTextActive]}>{fa(index)}</Text>}
+      </View>
+      <Text style={[styles.stepLabel, active && styles.stepLabelActive]}>{label}</Text>
+    </View>
   );
 }
 
@@ -793,4 +959,27 @@ const styles = StyleSheet.create({
   dangerButton: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, minHeight: 44, borderRadius: 14, borderWidth: 1, borderColor: '#EAC7C3', backgroundColor: '#FFF7F6', marginTop: 4 },
   dangerButtonText: { fontFamily: Typography.fontFamily, fontSize: 14, fontWeight: '700', color: palette.danger },
   pressed: { opacity: 0.85 },
+  buttonDisabled: { opacity: 0.5 },
+  cardTextStrong: { fontFamily: Typography.latinFontFamily, color: palette.ink, writingDirection: 'ltr' },
+  fieldInput: { minHeight: 48, borderRadius: 14, paddingHorizontal: 14, backgroundColor: '#FAF6EE', borderWidth: 1, borderColor: palette.border, color: palette.ink, fontFamily: Typography.fontFamily, fontSize: 15, textAlign: 'right', writingDirection: 'rtl' },
+  fieldInputLtr: { fontFamily: Typography.latinFontFamily, textAlign: 'left', writingDirection: 'ltr' },
+  codeBox: { borderRadius: 18, paddingVertical: 18, alignItems: 'center', gap: 6, backgroundColor: palette.forest },
+  codeText: { fontFamily: Typography.latinFontFamily, fontSize: 34, letterSpacing: 8, fontWeight: '800', color: '#FFFFFF' },
+  codeHint: { fontSize: 11, color: '#DDF3E4' },
+  codeInput: { textAlign: 'center', fontSize: 22, letterSpacing: 6 },
+  inlineActions: { flexDirection: 'row-reverse', gap: 8 },
+  inlineAction: { flex: 1 },
+  stepRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 4 },
+  stepItem: { alignItems: 'center', gap: 4 },
+  stepDot: { width: 28, height: 28, borderRadius: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.sage, borderWidth: 1, borderColor: palette.border },
+  stepDotActive: { backgroundColor: palette.terracotta, borderColor: palette.terracotta },
+  stepDotDone: { backgroundColor: palette.success, borderColor: palette.success },
+  stepDotText: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '800', color: palette.muted },
+  stepDotTextActive: { color: '#FFFFFF' },
+  stepLabel: { fontFamily: Typography.fontFamily, fontSize: 11, color: palette.muted },
+  stepLabelActive: { color: palette.ink, fontWeight: '800' },
+  stepLine: { width: 48, height: 2, backgroundColor: palette.border, marginBottom: 18 },
+  stepLineDone: { backgroundColor: palette.success },
+  privacyRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8, paddingHorizontal: 6 },
+  privacyText: { flex: 1, fontFamily: Typography.fontFamily, fontSize: 11.5, lineHeight: 19, color: palette.muted, textAlign: 'right', writingDirection: 'rtl' },
 });

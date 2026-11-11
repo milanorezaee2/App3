@@ -124,16 +124,14 @@ export default function LanguagesHome() {
         <View style={[styles.page, compact && styles.pageCompact]}>
           <View style={[styles.header, Platform.OS === 'web' && styles.headerRtl]}>
             <View style={styles.headerActions}>
-              {FEATURES.learnerLogin && (
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel="پروفایل من"
-                  style={({ pressed }) => [styles.headerButton, styles.profileButton, pressed && styles.pressed]}
-                  onPress={() => router.push('/profile' as never)}
-                >
-                  <ProfileIcon size={30} />
-                </Pressable>
-              )}
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="پروفایل من"
+                style={({ pressed }) => [styles.headerButton, styles.profileButton, pressed && styles.pressed]}
+                onPress={() => router.push('/profile' as never)}
+              >
+                <ProfileIcon size={30} />
+              </Pressable>
               <Pressable
                 accessibilityRole="button"
                 accessibilityLabel="گفتگو با پشتیبانی"
