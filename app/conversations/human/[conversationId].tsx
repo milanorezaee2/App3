@@ -41,13 +41,26 @@ function VoiceMessage({ message }: { message: DirectMessage }) {
   const [error, setError] = useState(false);
   const player = useAudioPlayer(url ? { uri: url } : null);
   const status = useAudioPlayerStatus(player);
+  const [autoplay, setAutoplay] = useState(false);
+
+  // Changing the source makes useAudioPlayer release the previous native player, so the
+  // first play must target the player created for the new URL (not a stale closure).
+  useEffect(() => {
+    if (!autoplay || !url || !status.isLoaded) return;
+    setAutoplay(false);
+    try {
+      player.play();
+    } catch {
+      setError(true);
+    }
+  }, [autoplay, url, status.isLoaded, player]);
 
   const toggle = async () => {
     try {
       if (!url && message.mediaPath) {
         const signedUrl = await getVoiceMessageUrl(message.mediaPath);
+        setAutoplay(true);
         setUrl(signedUrl);
-        setTimeout(() => player.play(), 0);
       } else if (status.playing) {
         player.pause();
       } else {
