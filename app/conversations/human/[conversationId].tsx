@@ -5,6 +5,7 @@ import { ActivityIndicator, Alert, BackHandler, Keyboard, Platform, Pressable, S
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
   RecordingPresets,
+  getRecordingPermissionsAsync,
   requestRecordingPermissionsAsync,
   setAudioModeAsync,
   useAudioPlayer,
@@ -12,7 +13,7 @@ import {
   useAudioRecorder,
   useAudioRecorderState,
 } from 'expo-audio';
-import { Check, Languages, Lightbulb, Mic, Pause, Play, Send, ShieldCheck, Sparkles, Square, Trash2, UserRound } from 'lucide-react-native';
+import { Check, Languages, Lightbulb, Mic, Smile, Pause, Play, Send, ShieldCheck, Sparkles, Square, Trash2, UserRound } from 'lucide-react-native';
 import {
   currentChatUserId,
   deleteConversationForMe,
@@ -26,6 +27,7 @@ import {
   unsubscribeFromMessages,
   type DirectMessage,
 } from '@/lib/conversations';
+import { EmojiPicker } from '@/components/EmojiPicker';
 import { requestHumanChatAssist, type HumanAssistMode, type HumanAssistResult } from '@/lib/humanChatAssist';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
 import { ChatBackButton } from '@/components/ChatBackButton';
@@ -100,6 +102,7 @@ export default function HumanConversationScreen() {
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showEmoji, setShowEmoji] = useState(false);
   const [showCoach, setShowCoach] = useState(false);
   const [assisting, setAssisting] = useState<HumanAssistMode | null>(null);
   const [assistResult, setAssistResult] = useState<HumanAssistResult | null>(null);
@@ -200,13 +203,20 @@ export default function HumanConversationScreen() {
     if (sending || recorderState.isRecording) return;
     try {
       setError(null);
-      const permission = await requestRecordingPermissionsAsync();
-      if (!permission.granted) throw new Error('برای پیام صوتی، اجازه میکروفن را فعال کنید.');
+      let permission = await getRecordingPermissionsAsync();
+      if (!permission.granted) permission = await requestRecordingPermissionsAsync();
+      if (!permission.granted) throw new Error('برای پیام صوتی، اجازه میکروفن را در تنظیمات گوشی فعال کنید.');
       await setAudioModeAsync({ allowsRecording: true, playsInSilentMode: true });
-      await recorder.prepareToRecordAsync();
+      try {
+        await recorder.prepareToRecordAsync();
+      } catch {
+        // First use right after granting permission can fail once on some devices; retry.
+        await new Promise((resolve) => setTimeout(resolve, 250));
+        await recorder.prepareToRecordAsync();
+      }
       recorder.record();
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'ضبط صدا شروع نشد.');
+      setError(cause instanceof Error && cause.message ? `ضبط صدا شروع نشد: ${cause.message}` : 'ضبط صدا شروع نشد.');
     }
   };
 
@@ -309,13 +319,16 @@ export default function HumanConversationScreen() {
       {recorderState.isRecording ? <View style={styles.recording}><View style={styles.recordDot} /><Text style={styles.recordingText}>در حال ضبط · {Math.max(1, Math.round(recorderState.durationMillis / 1000))} ثانیه · برای ارسال دوباره بزنید</Text></View> : null}
       {!ONLINE_AUDIO_ENABLED ? <View style={styles.audioNotice}><ShieldCheck size={14} color={Colors.success[300]} /><Text style={styles.audioNoticeText}>{ONLINE_AUDIO_DISABLED_MESSAGE} پخش پیام‌های دریافتی همچنان در دسترس است.</Text></View> : null}
       {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
+      {showEmoji ? <EmojiPicker onPick={(emoji) => setInput((value) => value + emoji)} /> : null}
       <View style={styles.composer}>
         <Pressable accessibilityRole="button" accessibilityLabel="باز و بسته‌کردن دستیار زبان" accessibilityState={{ expanded: showCoach }} style={styles.helper} onPress={() => setShowCoach((value) => !value)}><Sparkles size={19} color={showCoach ? Colors.warning[400] : Colors.neutral[400]} /></Pressable>
+        <Pressable accessibilityRole="button" accessibilityLabel="باز و بسته‌کردن ایموجی‌ها" accessibilityState={{ expanded: showEmoji }} style={styles.helper} onPress={() => { setShowEmoji((value) => !value); if (!showEmoji) Keyboard.dismiss(); }}><Smile size={19} color={showEmoji ? Colors.warning[400] : Colors.neutral[400]} /></Pressable>
         <TextInput
           accessibilityLabel="متن پیام فارسی یا انگلیسی"
           style={[styles.input, containsRtlScript(input || 'پیام') ? styles.rtlText : styles.ltrText]}
           value={input}
           onChangeText={setInput}
+          onFocus={() => setShowEmoji(false)}
           placeholder="پیام فارسی یا انگلیسی بنویسید…"
           placeholderTextColor={Colors.neutral[600]}
           multiline

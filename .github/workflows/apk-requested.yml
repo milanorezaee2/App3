@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 68: emoji picker in chat; resilient voice recording start
 # rev 67: high-resolution learner launcher icon
 # rev 66: splash tagline one size smaller, single line
 # rev 65: white support button with black text; registered-state profile icon
