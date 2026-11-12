@@ -14,7 +14,10 @@ import { supabase } from './supabase';
 
 const LAST_CHECK_KEY = 'milo_update_last_check_v1';
 const SKIPPED_KEY = 'milo_update_skipped_v1';
-export const UPDATE_CHECK_INTERVAL_MS = 6 * 60 * 60 * 1000;
+// Short debounce only: a release published by the admin must show up on the
+// learner's next launch/resume, not hours later.
+export const UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
+const SKIP_REMINDER_MS = 24 * 60 * 60 * 1000;
 
 export function installedVersion(): { package: string | null; code: number; name: string } {
   const code = Number.parseInt(Application.nativeBuildVersion || '0', 10);
@@ -45,11 +48,16 @@ export async function checkForUpdateOnLaunch(): Promise<AppRelease | null> {
   try {
     const last = Number(await AsyncStorage.getItem(LAST_CHECK_KEY)) || 0;
     if (Date.now() - last < UPDATE_CHECK_INTERVAL_MS) return null;
-    const release = await fetchAvailableUpdate();
     await AsyncStorage.setItem(LAST_CHECK_KEY, String(Date.now()));
+    const release = await fetchAvailableUpdate();
     if (!release) return null;
-    const skipped = await AsyncStorage.getItem(SKIPPED_KEY);
-    if (!release.mandatory && skipped === release.id) return null;
+    const skippedRaw = await AsyncStorage.getItem(SKIPPED_KEY);
+    if (!release.mandatory && skippedRaw) {
+      const [skippedId, atRaw] = skippedRaw.split('|');
+      const skippedAt = Number(atRaw) || 0;
+      // "Later" hides this release for a day, then it is offered again.
+      if (skippedId === release.id && Date.now() - skippedAt < SKIP_REMINDER_MS) return null;
+    }
     return release;
   } catch {
     return null;
@@ -57,7 +65,7 @@ export async function checkForUpdateOnLaunch(): Promise<AppRelease | null> {
 }
 
 export async function skipUpdate(release: AppRelease): Promise<void> {
-  await AsyncStorage.setItem(SKIPPED_KEY, release.id);
+  await AsyncStorage.setItem(SKIPPED_KEY, `${release.id}|${Date.now()}`);
 }
 
 export type DownloadProgress = (fraction: number) => void;

@@ -4,7 +4,7 @@ import { Alert, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Vi
 import { createAudioPlayer } from 'expo-audio';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { ArrowLeft, ArrowRight, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
+import { ArrowLeft, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
 import { MiloLanguageBrand } from '@/components/MiloLanguageBrand';
 import { ProfileIcon } from '@/components/ProfileIcon';
 import { ensureOpenLearnerRegistered } from '@/lib/openLearnerAccount';
@@ -12,7 +12,7 @@ import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
 import { FEATURES, LANGUAGE_SCOPE, RUSSIAN_ONLY_BUILD } from '@/lib/features';
-import { LtrDirection, RtlDirection } from '@/lib/theme';
+import { RtlDirection } from '@/lib/theme';
 
 const palette = {
   canvas: '#F7F2E8',
@@ -133,7 +133,7 @@ export default function LanguagesHome() {
                 style={({ pressed }) => [styles.headerButton, styles.profileButton, pressed && styles.pressed]}
                 onPress={() => router.push('/profile' as never)}
               >
-                <ProfileIcon size={30} />
+                <ProfileIcon size={26} />
               </Pressable>
               <Pressable
                 accessibilityRole="button"
@@ -143,7 +143,7 @@ export default function LanguagesHome() {
                 style={({ pressed }) => [styles.headerButton, pressed && styles.pressed]}
                 onPress={openSupport}
               >
-                <LifeBuoy size={18} color={palette.forest} strokeWidth={1.9} />
+                <LifeBuoy size={16} color={palette.forest} strokeWidth={1.9} />
               </Pressable>
               <Pressable
                 accessibilityRole="button"
@@ -151,7 +151,7 @@ export default function LanguagesHome() {
                 style={({ pressed }) => [styles.headerButton, pressed && styles.pressed]}
                 onPress={() => router.push('/app-lock' as never)}
               >
-                <LockKeyhole size={18} color={palette.forest} strokeWidth={1.9} />
+                <LockKeyhole size={16} color={palette.forest} strokeWidth={1.9} />
               </Pressable>
             </View>
             <MiloLanguageBrand />
@@ -166,11 +166,11 @@ export default function LanguagesHome() {
             <LinearGradient
               pointerEvents="none"
               colors={['rgba(247,242,232,0.98)', 'rgba(247,242,232,0.90)', 'rgba(247,242,232,0.12)']}
-              start={{ x: Platform.OS === 'web' ? 1 : 0, y: 0.5 }}
-              end={{ x: Platform.OS === 'web' ? 0 : 1, y: 0.5 }}
+              start={{ x: 1, y: 0.5 }}
+              end={{ x: 0, y: 0.5 }}
               style={StyleSheet.absoluteFillObject}
             />
-            <View style={[styles.heroCopy, Platform.OS === 'web' && RtlDirection]}>
+            <View style={[styles.heroCopy, RtlDirection]}>
               <Text accessibilityRole="header" style={[styles.title, tiny && styles.titleTiny]}>
                 زبان را از زندگی یاد بگیر
               </Text>
@@ -180,7 +180,7 @@ export default function LanguagesHome() {
             </View>
           </ImageBackground>
 
-          <View style={[styles.languageList, Platform.OS === 'web' && RtlDirection, languages.length > 3 && styles.languageListWrap]}>
+          <View style={[styles.languageList, RtlDirection, languages.length > 3 && styles.languageListWrap]}>
             {languages.map((language) => {
               const displayName = language.nativeName || language.name;
               const artwork = languageArtwork[language.id] ?? languageArtwork.en;
@@ -192,7 +192,7 @@ export default function LanguagesHome() {
                   accessibilityLabel={`ورود به زبان ${language.name}`}
                   accessibilityHint="برای بازکردن دورهٔ این زبان انتخاب کنید"
                   onPress={() => router.push(language.home as never)}
-                  style={({ pressed }) => [styles.languageCard, languages.length > 3 && styles.languageCardWrap, Platform.OS === 'web' && styles.languageCardRtl, pressed && styles.pressed]}
+                  style={({ pressed }) => [styles.languageCard, languages.length > 3 && styles.languageCardWrap, styles.languageCardRtl, pressed && styles.pressed]}
                 >
                   <ImageBackground
                     source={artwork}
@@ -202,12 +202,12 @@ export default function LanguagesHome() {
                   >
                     <View style={styles.languagePhotoTint} />
                   </ImageBackground>
-                  <View style={[styles.languageCopy, Platform.OS === 'web' && styles.languageCopyRtl]}>
-                    <Text numberOfLines={1} style={[styles.languageNativeName, Platform.OS === 'web' && styles.languageNativeNameRtl]}>{displayName}</Text>
+                  <View style={[styles.languageCopy, styles.languageCopyRtl]}>
+                    <Text numberOfLines={1} style={[styles.languageNativeName, styles.languageNativeNameRtl]}>{displayName}</Text>
                     <Text style={styles.languageCode}>{language.id.toUpperCase()}</Text>
                   </View>
-                  <View style={[styles.languageArrow, Platform.OS === 'web' && styles.languageArrowRtl]}>
-                    {Platform.OS === 'web' ? <ArrowLeft size={18} color={palette.forest} strokeWidth={2.1} /> : <ArrowRight size={18} color={palette.forest} strokeWidth={2.1} />}
+                  <View style={[styles.languageArrow, styles.languageArrowRtl]}>
+                    <ArrowLeft size={16} color={palette.forest} strokeWidth={2.1} />
                   </View>
                 </Pressable>
               );
@@ -225,18 +225,18 @@ export default function LanguagesHome() {
           </View>
 
           <View style={styles.learningPath}>
-            <View pointerEvents="none" style={[styles.pathRail, Platform.OS === 'web' && styles.pathRailRtl]} />
+            <View pointerEvents="none" style={[styles.pathRail, styles.pathRailRtl]} />
             {learningSteps.map((step, index) => {
               const Icon = step.icon;
               return (
-                <View key={step.title} style={[styles.stepRow, Platform.OS === 'web' ? RtlDirection : LtrDirection]}>
+                <View key={step.title} style={[styles.stepRow, RtlDirection]}>
                   <View style={styles.pathNodeWrap}>
                     <View style={[styles.pathNode, index === 1 && styles.pathNodeAqua]} />
                   </View>
                   <View style={[styles.stepIcon, index === 1 && styles.stepIconAqua]}>
-                    <Icon size={24} color={index === 1 ? palette.terracotta : palette.forest} strokeWidth={1.9} />
+                    <Icon size={21} color={index === 1 ? palette.terracotta : palette.forest} strokeWidth={1.9} />
                   </View>
-                  <View style={[styles.stepCopy, Platform.OS === 'web' && styles.stepCopyRtl]}>
+                  <View style={[styles.stepCopy, styles.stepCopyRtl]}>
                     <Text style={styles.stepTitle}>{step.title}</Text>
                     <Text style={styles.stepDetail}>{step.detail}</Text>
                   </View>
@@ -257,54 +257,54 @@ const styles = StyleSheet.create({
   backgroundCloudLeft: { position: 'absolute', width: 370, height: 370, borderRadius: 185, top: 260, left: -290, backgroundColor: 'rgba(90,117,82,0.045)' },
   backgroundCloudBottom: { position: 'absolute', width: 420, height: 420, borderRadius: 210, bottom: -275, right: -175, backgroundColor: 'rgba(185,111,81,0.035)' },
   backgroundArc: { position: 'absolute', width: 520, height: 520, borderRadius: 260, borderWidth: 22, borderColor: 'rgba(68,91,59,0.025)', top: 230, right: -445 },
-  page: { width: '100%', maxWidth: 880, alignSelf: 'center', paddingHorizontal: 24, paddingTop: 24, gap: 24 },
-  pageCompact: { paddingHorizontal: 18, paddingTop: 14, gap: 17 },
-  header: { minHeight: 64, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
+  page: { width: '100%', maxWidth: 880, alignSelf: 'center', paddingHorizontal: 20, paddingTop: 20, gap: 20 },
+  pageCompact: { paddingHorizontal: 16, paddingTop: 12, gap: 14 },
+  header: { minHeight: 56, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
   headerRtl: { flexDirection: 'row-reverse' },
   headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   profileButton: { borderColor: '#D7DECE', backgroundColor: '#F3F6EE' },
-  headerButton: { width: 44, height: 44, borderRadius: 16, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#554C3E', shadowOpacity: 0.06, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
-  hero: { minHeight: 230, justifyContent: 'center', padding: 24, borderRadius: 24, overflow: 'hidden', backgroundColor: '#ECE4D4', shadowColor: '#514433', shadowOpacity: 0.10, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
-  heroImage: { borderRadius: 24 },
-  heroCompact: { minHeight: 188, padding: 19 },
-  heroCopy: { width: '78%', alignItems: 'flex-start', gap: 8 },
-  title: { width: '100%', fontFamily: 'Beiruti', color: palette.ink, fontSize: 30, lineHeight: 46, textAlign: 'left', writingDirection: 'rtl' },
-  titleTiny: { fontSize: 25, lineHeight: 38 },
-  subtitle: { width: '100%', fontFamily: 'Beiruti', color: '#5B6257', fontSize: 15, lineHeight: 25, textAlign: 'left', writingDirection: 'rtl' },
+  headerButton: { width: 38, height: 38, borderRadius: 13, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#554C3E', shadowOpacity: 0.06, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  hero: { minHeight: 196, justifyContent: 'center', padding: 20, borderRadius: 20, overflow: 'hidden', backgroundColor: '#ECE4D4', shadowColor: '#514433', shadowOpacity: 0.10, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
+  heroImage: { borderRadius: 20 },
+  heroCompact: { minHeight: 158, padding: 16 },
+  heroCopy: { width: '78%', alignItems: 'flex-start', gap: 6 },
+  title: { width: '100%', fontFamily: 'Beiruti', color: palette.ink, fontSize: 26, lineHeight: 40, textAlign: 'right', writingDirection: 'rtl' },
+  titleTiny: { fontSize: 22, lineHeight: 34 },
+  subtitle: { width: '100%', fontFamily: 'Beiruti', color: '#5B6257', fontSize: 13, lineHeight: 22, textAlign: 'right', writingDirection: 'rtl' },
   eyebrow: { alignSelf: 'flex-start', marginTop: 5, fontFamily: 'Times New Roman', color: palette.forest, fontSize: 9, lineHeight: 15, letterSpacing: 1.7, writingDirection: 'ltr' },
-  languageList: { flexDirection: 'row', alignItems: 'stretch', gap: 12 },
+  languageList: { flexDirection: 'row', alignItems: 'stretch', gap: 10 },
   languageListWrap: { flexWrap: 'wrap' },
   languageCardWrap: { flexBasis: '46%', flexGrow: 1, flexShrink: 0, maxWidth: '48%' },
-  languageCard: { flex: 1, minWidth: 0, borderRadius: 19, overflow: 'hidden', borderWidth: 1, borderColor: palette.border, paddingBottom: 12, alignItems: 'center', backgroundColor: palette.paper, shadowColor: '#514433', shadowOpacity: 0.07, shadowRadius: 12, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
+  languageCard: { flex: 1, minWidth: 0, borderRadius: 16, overflow: 'hidden', borderWidth: 1, borderColor: palette.border, paddingBottom: 10, alignItems: 'center', backgroundColor: palette.paper, shadowColor: '#514433', shadowOpacity: 0.07, shadowRadius: 12, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
   languageCardRtl: { alignItems: 'flex-start' },
-  languageCopyRtl: { alignItems: 'flex-start', paddingHorizontal: 12 },
+  languageCopyRtl: { alignItems: 'flex-start', paddingHorizontal: 10 },
   languageNativeNameRtl: { alignSelf: 'flex-start' },
-  languageArt: { width: '100%', height: 156, justifyContent: 'flex-end', backgroundColor: '#EAE2D4' },
-  languageArtImage: { borderTopLeftRadius: 18, borderTopRightRadius: 18 },
-  languagePhotoTint: { height: 28, width: '100%', backgroundColor: 'rgba(247,242,232,0.18)' },
-  languageCopy: { width: '100%', alignItems: 'center', justifyContent: 'center', gap: 2, paddingHorizontal: 5, paddingTop: 9 },
-  languageNativeName: { maxWidth: '100%', fontFamily: 'Times New Roman', color: palette.ink, fontSize: 14, lineHeight: 20, fontWeight: '600', textAlign: 'center', writingDirection: 'ltr' },
+  languageArt: { width: '100%', height: 132, justifyContent: 'flex-end', backgroundColor: '#EAE2D4' },
+  languageArtImage: { borderTopLeftRadius: 15, borderTopRightRadius: 15 },
+  languagePhotoTint: { height: 24, width: '100%', backgroundColor: 'rgba(247,242,232,0.18)' },
+  languageCopy: { width: '100%', alignItems: 'center', justifyContent: 'center', gap: 2, paddingHorizontal: 5, paddingTop: 8 },
+  languageNativeName: { maxWidth: '100%', fontFamily: 'Times New Roman', color: palette.ink, fontSize: 13, lineHeight: 18, fontWeight: '600', textAlign: 'center', writingDirection: 'ltr' },
   sampleLabel: { fontFamily: 'Beiruti', color: palette.muted, fontSize: 11, textAlign: 'center' },
-  languageCode: { fontFamily: 'Times New Roman', color: palette.muted, fontSize: 10, lineHeight: 14, letterSpacing: 1.2, writingDirection: 'ltr' },
-  languageArrow: { width: 32, height: 32, marginTop: 7, borderRadius: 16, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.sage },
-  languageArrowRtl: { marginHorizontal: 12 },
+  languageCode: { fontFamily: 'Times New Roman', color: palette.muted, fontSize: 9, lineHeight: 13, letterSpacing: 1.2, writingDirection: 'ltr' },
+  languageArrow: { width: 28, height: 28, marginTop: 6, borderRadius: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.sage },
+  languageArrowRtl: { marginHorizontal: 10 },
   pathDivider: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 14, paddingVertical: 1, marginTop: 1 },
   dividerLine: { flex: 1, height: 1, backgroundColor: '#DCD5C6' },
   dividerOrnament: { width: 42, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, transform: [{ rotate: '-12deg' }] },
   dividerDot: { width: 5, height: 5, borderRadius: 3, backgroundColor: '#B5BDA7' },
   dividerDiamond: { width: 10, height: 10, borderWidth: 1.5, borderColor: palette.terracotta, transform: [{ rotate: '45deg' }] },
-  learningPath: { position: 'relative', gap: 4, padding: 17, borderRadius: 22, backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#514433', shadowOpacity: 0.045, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
-  pathRail: { position: 'absolute', left: 18, top: 35, bottom: 35, width: 2, borderRadius: 1, backgroundColor: '#D4DCCB' },
-  pathRailRtl: { left: undefined, right: 18 },
-  stepRow: { minHeight: 84, flexDirection: 'row', alignItems: 'center', gap: 14 },
-  pathNodeWrap: { width: 20, height: 20, alignItems: 'center', justifyContent: 'center' },
-  pathNode: { width: 13, height: 13, borderRadius: 7, backgroundColor: palette.forest, borderWidth: 2, borderColor: palette.paper },
+  learningPath: { position: 'relative', gap: 3, padding: 14, borderRadius: 19, backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#514433', shadowOpacity: 0.045, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
+  pathRail: { position: 'absolute', left: 15, top: 30, bottom: 30, width: 2, borderRadius: 1, backgroundColor: '#D4DCCB' },
+  pathRailRtl: { left: undefined, right: 15 },
+  stepRow: { minHeight: 72, flexDirection: 'row', alignItems: 'center', gap: 12 },
+  pathNodeWrap: { width: 18, height: 18, alignItems: 'center', justifyContent: 'center' },
+  pathNode: { width: 11, height: 11, borderRadius: 6, backgroundColor: palette.forest, borderWidth: 2, borderColor: palette.paper },
   pathNodeAqua: { backgroundColor: palette.terracotta },
-  stepIcon: { width: 60, height: 60, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F0F1E8', borderWidth: 1, borderColor: palette.sageLine, shadowColor: '#514433', shadowOpacity: 0.05, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  stepIcon: { width: 52, height: 52, borderRadius: 19, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F0F1E8', borderWidth: 1, borderColor: palette.sageLine, shadowColor: '#514433', shadowOpacity: 0.05, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepIconAqua: { backgroundColor: palette.terracottaSoft, borderColor: '#EAD0C1' },
   stepCopy: { flex: 1, minWidth: 0, alignItems: 'flex-end', gap: 3 },
   stepCopyRtl: { alignItems: 'flex-start' },
-  stepTitle: { fontFamily: 'Beiruti', color: palette.ink, fontSize: 17, lineHeight: 26, textAlign: 'right', writingDirection: 'rtl' },
-  stepDetail: { fontFamily: 'Beiruti', color: palette.muted, fontSize: 12, lineHeight: 20, textAlign: 'right', writingDirection: 'rtl' },
+  stepTitle: { fontFamily: 'Beiruti', color: palette.ink, fontSize: 15, lineHeight: 23, textAlign: 'right', writingDirection: 'rtl' },
+  stepDetail: { fontFamily: 'Beiruti', color: palette.muted, fontSize: 11, lineHeight: 18, textAlign: 'right', writingDirection: 'rtl' },
   pressed: { opacity: 0.84, transform: [{ scale: 0.985 }] },
 });

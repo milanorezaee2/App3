@@ -4,7 +4,7 @@ import { checkForUpdateOnLaunch, downloadAndInstall, formatSize, installedVersio
 import { toPersianDigits as fa } from '@/lib/format';
 import { Download, RefreshCw } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Modal, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, AppState, Modal, Platform, Pressable, StyleSheet, View } from 'react-native';
 
 /**
  * Shows the "new version available" sheet once per launch (throttled in
@@ -15,8 +15,11 @@ export function AppUpdatePrompt() {
   useEffect(() => {
     if (Platform.OS !== 'android') return;
     let mounted = true;
-    const timer = setTimeout(() => { void checkForUpdateOnLaunch().then(found => { if (mounted && found) setRelease(found); }); }, 4000);
-    return () => { mounted = false; clearTimeout(timer); };
+    const check = () => { void checkForUpdateOnLaunch().then(found => { if (mounted && found) setRelease(found); }).catch(() => undefined); };
+    const timer = setTimeout(check, 4000);
+    // Also re-check when the learner comes back to the app (debounced in lib/appUpdates).
+    const sub = AppState.addEventListener('change', state => { if (state === 'active') check(); });
+    return () => { mounted = false; clearTimeout(timer); sub.remove(); };
   }, []);
   if (!release) return null;
   return <UpdateSheet release={release} onClose={() => setRelease(null)} />;
