@@ -18,6 +18,13 @@ const ACTION_LABELS: Record<string, string> = {
   publish_release: 'انتشار نسخهٔ اپ',
   unpublish_release: 'غیرفعال‌کردن نسخهٔ اپ',
   delete_release: 'حذف نسخهٔ اپ',
+  purge_conversations: 'حذف دسته‌جمعی گفتگوها',
+  save_popup: 'ذخیرهٔ پاپ‌آپ',
+  delete_popup: 'حذف پاپ‌آپ',
+  set_setting: 'تغییر تنظیمات',
+  save_plan: 'ذخیرهٔ پلن اشتراک',
+  grant_subscription: 'اعطای اشتراک',
+  cancel_subscription: 'لغو اشتراک',
 };
 
 export function SettingsScreen() {

@@ -192,3 +192,51 @@ export async function deleteRelease(release: AdminRelease): Promise<void> {
   await rpc<void>('admin_delete_release', { p_release_id: release.id });
   if (release.storage_path) await adminClient().storage.from(RELEASES_BUCKET).remove([release.storage_path]).catch(() => undefined);
 }
+
+// ----------------------------------------------------------- app settings
+export interface SubscriptionSettings { enabled: boolean; free_lessons: number }
+export async function fetchSettings(): Promise<{ subscriptions: SubscriptionSettings }> {
+  const data = await rpc<Record<string, unknown>>('public_app_settings');
+  const subs = (data?.subscriptions || {}) as Partial<SubscriptionSettings>;
+  return { subscriptions: { enabled: Boolean(subs.enabled), free_lessons: Number(subs.free_lessons ?? 10) } };
+}
+export const saveSetting = (key: string, value: unknown) => rpc<void>('admin_set_setting', { p_key: key, p_value: value });
+
+// ---------------------------------------------------------------- pop-ups
+export type PopupKind = 'info' | 'success' | 'warning' | 'promo';
+export interface AdminPopup {
+  id: string; title: string; body: string; button_label: string | null; button_url: string | null; package_name: string | null;
+  kind: PopupKind; show_once: boolean; active: boolean; starts_at: string; ends_at: string | null; priority: number; created_at: string; updated_at: string;
+}
+export async function fetchPopups(): Promise<AdminPopup[]> {
+  const { data, error } = await adminClient().from('app_popups').select('*').order('priority', { ascending: false }).order('updated_at', { ascending: false });
+  if (error) { if (isMissingFunction(error) || error.code === '42P01' || error.code === 'PGRST205') throw new AdminSetupRequiredError(); throw new Error(readableSupabaseError(error)); }
+  return (data || []) as AdminPopup[];
+}
+export type PopupInput = Omit<AdminPopup, 'id' | 'created_at' | 'updated_at'> & { id?: string | null };
+export const savePopup = (p: PopupInput) => rpc<string>('admin_save_popup', {
+  p_id: p.id ?? null, p_title: p.title, p_body: p.body, p_button_label: p.button_label, p_button_url: p.button_url, p_package_name: p.package_name,
+  p_kind: p.kind, p_show_once: p.show_once, p_active: p.active, p_starts_at: p.starts_at, p_ends_at: p.ends_at, p_priority: p.priority,
+});
+export const deletePopup = (id: string) => rpc<void>('admin_delete_popup', { p_id: id });
+
+// --------------------------------------------------- bulk conversation ops
+export const purgeConversations = (ids: string[]) => rpc<number>('admin_purge_conversations', { p_conversation_ids: ids });
+export interface ExportedMessage { conversation_id: string; message_id: string; sender_id: string; sender_name: string; sender_email: string | null; message_type: string; body: string | null; created_at: string }
+export const exportConversations = (ids: string[]) => rpc<ExportedMessage[]>('admin_export_conversations', { p_conversation_ids: ids }).then(rows => rows || []);
+
+// ---------------------------------------------------------- subscriptions
+export interface SubscriptionPlan { id: string; code: string; title: string; description: string; price_amount: number; currency: string; duration_days: number; features: string[]; active: boolean; sort_order: number; created_at: string }
+export interface UserSubscription { id: string; user_id: string; full_name: string; email: string | null; plan_id: string; plan_title: string; plan_code: string; status: 'active' | 'expired' | 'cancelled'; starts_at: string; ends_at: string; source: string; note: string | null; created_at: string }
+export async function fetchPlans(): Promise<SubscriptionPlan[]> {
+  const { data, error } = await adminClient().from('subscription_plans').select('*').order('sort_order').order('created_at');
+  if (error) { if (isMissingFunction(error) || error.code === '42P01' || error.code === 'PGRST205') throw new AdminSetupRequiredError(); throw new Error(readableSupabaseError(error)); }
+  return (data || []).map(row => ({ ...row, features: Array.isArray(row.features) ? row.features : [] })) as SubscriptionPlan[];
+}
+export const savePlan = (p: Omit<SubscriptionPlan, 'id' | 'created_at'> & { id?: string | null }) => rpc<string>('admin_save_plan', {
+  p_id: p.id ?? null, p_code: p.code, p_title: p.title, p_description: p.description, p_price_amount: p.price_amount, p_currency: p.currency,
+  p_duration_days: p.duration_days, p_features: p.features, p_active: p.active, p_sort_order: p.sort_order,
+});
+export const fetchSubscriptions = () => rpc<UserSubscription[]>('admin_subscriptions_overview').then(rows => rows || []);
+export const grantSubscription = (userId: string, planId: string, days: number | null, note: string) => rpc<string>('admin_grant_subscription', { p_user_id: userId, p_plan_id: planId, p_days: days, p_note: note || null });
+export const cancelSubscription = (id: string) => rpc<void>('admin_cancel_subscription', { p_subscription_id: id });

@@ -1,6 +1,6 @@
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { usePathname, useRouter } from 'expo-router';
-import { BookOpen, GraduationCap, LayoutDashboard, LogOut, MessageSquare, MessagesSquare, RefreshCw, Settings, ShieldCheck, UploadCloud, Users } from 'lucide-react-native';
+import { BookOpen, CreditCard, GraduationCap, LayoutDashboard, LogOut, Megaphone, MessageSquare, MessagesSquare, MoreHorizontal, RefreshCw, Settings, ShieldCheck, UploadCloud, Users } from 'lucide-react-native';
 import { useState, type ComponentType, type ReactNode } from 'react';
 import { ActivityIndicator, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -16,9 +16,14 @@ export const ADMIN_NAV: NavItem[] = [
   { href: '/admin/chats', label: 'گفتگوها', short: 'گفتگوها', icon: MessagesSquare },
   { href: '/admin/learners', label: 'زبان‌آموزان و دعوت‌ها', short: 'زبان‌آموزان', icon: GraduationCap },
   { href: '/admin/updates', label: 'به‌روزرسانی اپ‌ها', short: 'آپدیت', icon: UploadCloud },
+  { href: '/admin/popups', label: 'پاپ‌آپ‌ها', short: 'پاپ‌آپ', icon: Megaphone },
+  { href: '/admin/subscriptions', label: 'اشتراک', short: 'اشتراک', icon: CreditCard },
   { href: '/admin/content', label: 'محتوای آموزشی', short: 'محتوا', icon: BookOpen },
   { href: '/admin/settings', label: 'تنظیمات', short: 'تنظیمات', icon: Settings },
 ];
+/** Phone bottom bar shows the first items plus a "more" entry. */
+export const PRIMARY_NAV_COUNT = 4;
+const MORE_ITEM: NavItem = { href: '/admin/more', label: 'بیشتر', short: 'بیشتر', icon: MoreHorizontal };
 
 export function AdminShell({ children }: { children: ReactNode }) {
   const { session } = useAdmin();
@@ -35,7 +40,7 @@ function Frame({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { feedback, clearFeedback, busy, invalidate, adminEmail } = useAdmin();
   const isActive = (href: string) => href === '/admin' ? pathname === '/admin' || pathname === '/admin/' : pathname.startsWith(href);
-  const current = ADMIN_NAV.find(item => isActive(item.href)) ?? ADMIN_NAV[0];
+  const current = ADMIN_NAV.find(item => isActive(item.href)) ?? (pathname.startsWith('/admin/more') ? MORE_ITEM : ADMIN_NAV[0]);
 
   return (
     <View style={[s.root, { flexDirection: wide ? 'row-reverse' : 'column' }]}>
@@ -77,8 +82,8 @@ function Frame({ children }: { children: ReactNode }) {
         </ScrollView>
         {!wide && (
           <View style={[s.bottomNav, { paddingBottom: Math.max(insets.bottom, 6) }]}>
-            {ADMIN_NAV.map(item => {
-              const active = isActive(item.href);
+            {[...ADMIN_NAV.slice(0, PRIMARY_NAV_COUNT), MORE_ITEM].map(item => {
+              const active = item.href === MORE_ITEM.href ? !ADMIN_NAV.slice(0, PRIMARY_NAV_COUNT).some(i => isActive(i.href)) : isActive(item.href);
               return (
                 <Pressable key={item.href} accessibilityRole="button" onPress={() => router.replace(item.href as never)} style={s.bottomItem}>
                   <item.icon size={20} color={active ? T.color.accent : T.color.textFaint} />

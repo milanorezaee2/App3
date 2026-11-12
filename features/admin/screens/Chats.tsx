@@ -1,9 +1,11 @@
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useRouter } from 'expo-router';
-import { Ban, Eraser, Eye, EyeOff, MessagesSquare, ShieldCheck, Trash2, X, ArrowUpLeft } from 'lucide-react-native';
+import { Ban, CheckSquare, Download, Eraser, Eye, EyeOff, MessagesSquare, ShieldCheck, Square, Trash2, X, ArrowUpLeft } from 'lucide-react-native';
+import { saveTextFile } from '@/lib/fileExport';
+import { Pressable } from 'react-native';
 import { useMemo, useState } from 'react';
 import { View } from 'react-native';
-import { blockConversationMembers, clearConversation, fetchConversationMessages, fetchConversations, purgeConversation, setConversationHidden, setSupportStatus, type AdminConversation } from '../api';
+import { blockConversationMembers, clearConversation, exportConversations, fetchConversationMessages, fetchConversations, purgeConversation, purgeConversations, setConversationHidden, setSupportStatus, type AdminConversation, type ExportedMessage } from '../api';
 import { confirmAction, useAdmin, useAdminQuery } from '../store';
 import { AdminTheme as T } from '../theme';
 import { Avatar, Banner, Button, Card, Chip, EmptyState, ListRow, Loading, Page, SearchBox, Segmented, adminStyles as a, faAgo, faDateTime, n } from '../ui';
@@ -23,6 +25,8 @@ export function ChatsScreen({ mode }: { mode: 'all' | 'support' }) {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<Filter>(mode === 'support' ? 'open' : 'all');
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectMode, setSelectMode] = useState(false);
+  const [checked, setChecked] = useState<Set<string>>(new Set());
   const messages = useAdminQuery(`messages:${selectedId}`, () => fetchConversationMessages(selectedId!), Boolean(selectedId));
 
   const rows = useMemo(() => (chats.data || []).filter(c => mode === 'all' || c.is_support), [chats.data, mode]);
@@ -75,8 +79,60 @@ export function ChatsScreen({ mode }: { mode: 'all' | 'support' }) {
 
   const anyBlocked = (c: AdminConversation) => c.members.some(m => !m.is_admin && m.blocked);
 
+  const toggleChecked = (id: string) => setChecked(current => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next; });
+  const exitSelect = () => { setSelectMode(false); setChecked(new Set()); };
+  const checkedIds = () => Array.from(checked);
+  async function bulkDelete() {
+    const ids = checkedIds(); if (!ids.length) return;
+    if (!(await confirmAction('حذف دسته‌جمعی', `${n(ids.length)} گفتگو همراه با همهٔ پیام‌هایشان برای همیشه حذف شوند؟ این کار قابل بازگشت نیست.`, `حذف ${n(ids.length)} گفتگو`))) return;
+    const ok = await run(() => purgeConversations(ids).then(() => undefined), `${n(ids.length)} گفتگو حذف شد.`);
+    if (ok) { const set = new Set(ids); chats.setData(current => (current || []).filter(x => !set.has(x.conversation_id))); if (selectedId && set.has(selectedId)) setSelectedId(null); exitSelect(); }
+  }
+  async function bulkHide(hide: boolean) {
+    const ids = checkedIds(); if (!ids.length) return;
+    const ok = await run(async () => { for (const id of ids) await setConversationHidden(id, hide); }, hide ? `${n(ids.length)} گفتگو پنهان شد.` : `${n(ids.length)} گفتگو بازیابی شد.`);
+    if (ok) { const set = new Set(ids); const stamp = new Date().toISOString(); chats.setData(current => (current || []).map(x => set.has(x.conversation_id) ? { ...x, deleted_at: hide ? stamp : null } : x)); exitSelect(); }
+  }
+  async function download(ids: string[], format: 'txt' | 'json') {
+    if (!ids.length) return;
+    await run(async () => {
+      const rowsById = new Map(rows.map(c => [c.conversation_id, c]));
+      const exported = await exportConversations(ids);
+      const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+      if (format === 'json') {
+        const grouped = ids.map(id => ({ conversation_id: id, title: rowsById.get(id) ? conversationTitle(rowsById.get(id)!) : id, members: rowsById.get(id)?.members || [], messages: exported.filter(m => m.conversation_id === id) }));
+        await saveTextFile(`milo-chats-${stamp}.json`, JSON.stringify(grouped, null, 2), 'application/json');
+        return;
+      }
+      const lines: string[] = [];
+      for (const id of ids) {
+        const c = rowsById.get(id);
+        lines.push('='.repeat(60), c ? conversationTitle(c) : id, c ? `اعضا: ${c.members.map(m => `${m.name}${m.email ? ` <${m.email}>` : ''}`).join(' | ')}` : '', '='.repeat(60));
+        const list = exported.filter((m: ExportedMessage) => m.conversation_id === id);
+        if (!list.length) lines.push('(بدون پیام)');
+        for (const m of list) lines.push(`[${new Date(m.created_at).toLocaleString('fa-IR')}] ${m.sender_name}: ${m.message_type === 'voice' ? '🎤 پیام صوتی' : m.body || ''}`);
+        lines.push('');
+      }
+      await saveTextFile(`milo-chats-${stamp}.txt`, '\uFEFF' + lines.join('\n'), 'text/plain');
+    }, 'فایل آماده شد.');
+  }
+
   return (
-    <Page title={mode === 'support' ? 'صندوق پشتیبانی' : 'گفتگوها'} subtitle={mode === 'support' ? 'درخواست‌های زبان‌آموزان به مدیر؛ از همین‌جا پاسخ دهید یا ببندید' : 'همهٔ گفتگوهای کاربران با هم و با مدیر؛ مشاهده، مسدودسازی و حذف'}>
+    <Page title={mode === 'support' ? 'صندوق پشتیبانی' : 'گفتگوها'} subtitle={mode === 'support' ? 'درخواست‌های زبان‌آموزان به مدیر؛ از همین‌جا پاسخ دهید یا ببندید' : 'همهٔ گفتگوهای کاربران با هم و با مدیر؛ مشاهده، مسدودسازی و حذف'}
+      actions={<Button variant={selectMode ? 'solid' : 'ghost'} tone={selectMode ? 'accent' : 'neutral'} icon={CheckSquare} label={selectMode ? 'پایان انتخاب' : 'انتخاب چندتایی'} onPress={() => selectMode ? exitSelect() : setSelectMode(true)} />}>
+      {selectMode && (
+        <Card>
+          <View style={a.actions}>
+            <Chip label={`${n(checked.size)} انتخاب‌شده`} tone="accent" />
+            <Button small variant="ghost" tone="neutral" label={checked.size === visible.length ? 'لغو انتخاب همه' : `انتخاب همهٔ ${n(visible.length)} مورد`} onPress={() => setChecked(checked.size === visible.length ? new Set() : new Set(visible.map(c => c.conversation_id)))} />
+            <Button small variant="soft" tone="accent" icon={Download} label="دانلود متن" disabled={busy || !checked.size} onPress={() => void download(checkedIds(), 'txt')} />
+            <Button small variant="soft" tone="info" icon={Download} label="دانلود JSON" disabled={busy || !checked.size} onPress={() => void download(checkedIds(), 'json')} />
+            <Button small variant="soft" tone="warning" icon={EyeOff} label="پنهان‌کردن" disabled={busy || !checked.size} onPress={() => void bulkHide(true)} />
+            <Button small variant="soft" tone="success" icon={Eye} label="بازیابی" disabled={busy || !checked.size} onPress={() => void bulkHide(false)} />
+            <Button small variant="solid" tone="danger" icon={Trash2} label="حذف دسته‌جمعی" disabled={busy || !checked.size} onPress={() => void bulkDelete()} />
+          </View>
+        </Card>
+      )}
       {chats.error && <Banner kind="error" text={chats.error} />}
       <View style={a.actions}>
         <SearchBox value={search} onChange={setSearch} placeholder="جست‌وجوی نام، ایمیل یا متن آخرین پیام…" />
@@ -99,6 +155,7 @@ export function ChatsScreen({ mode }: { mode: 'all' | 'support' }) {
             {selected.is_support && <Button variant="soft" tone={selected.support_status === 'open' ? 'success' : 'neutral'} label={selected.support_status === 'open' ? 'بستن درخواست' : 'بازکردن دوباره'} disabled={busy} onPress={() => void toggleSupport(selected)} />}
             <Button variant="soft" tone={selected.deleted_at ? 'success' : 'warning'} icon={selected.deleted_at ? Eye : EyeOff} label={selected.deleted_at ? 'بازیابی گفتگو' : 'پنهان‌کردن گفتگو'} disabled={busy} onPress={() => void toggleHidden(selected)} />
             <Button variant="soft" tone={anyBlocked(selected) ? 'success' : 'warning'} icon={anyBlocked(selected) ? ShieldCheck : Ban} label={anyBlocked(selected) ? 'رفع مسدودیت اعضا' : 'مسدودکردن اعضا'} disabled={busy} onPress={() => void blockMembers(selected, !anyBlocked(selected))} />
+            <Button variant="soft" tone="info" icon={Download} label="دانلود گفتگو" disabled={busy} onPress={() => void download([selected.conversation_id], 'txt')} />
             <Button variant="soft" tone="danger" icon={Eraser} label="حذف همهٔ پیام‌ها" disabled={busy || !selected.message_count} onPress={() => void clear(selected)} />
             <Button variant="solid" tone="danger" icon={Trash2} label="حذف کامل گفتگو" disabled={busy} onPress={() => void purge(selected)} />
           </View>
@@ -124,7 +181,8 @@ export function ChatsScreen({ mode }: { mode: 'all' | 'support' }) {
         {visible.map(c => {
           const learner = c.members.find(m => !m.is_admin) || c.members[0];
           return (
-            <ListRow key={c.conversation_id} onPress={() => setSelectedId(c.conversation_id === selectedId ? null : c.conversation_id)} dimmed={Boolean(c.deleted_at)}>
+            <ListRow key={c.conversation_id} onPress={() => selectMode ? toggleChecked(c.conversation_id) : setSelectedId(c.conversation_id === selectedId ? null : c.conversation_id)} dimmed={Boolean(c.deleted_at)}>
+              {selectMode && <Pressable accessibilityRole="checkbox" accessibilityState={{ checked: checked.has(c.conversation_id) }} onPress={() => toggleChecked(c.conversation_id)} hitSlop={8}>{checked.has(c.conversation_id) ? <CheckSquare size={22} color={T.color.accent} /> : <Square size={22} color={T.color.textFaint} />}</Pressable>}
               <Avatar name={learner?.name || '؟'} tone={c.deleted_at ? 'neutral' : c.is_support ? (c.support_status === 'open' ? 'warning' : 'success') : 'info'} />
               <View style={{ flex: 1, minWidth: 150 }}>
                 <Text style={a.name}>{conversationTitle(c)}</Text>

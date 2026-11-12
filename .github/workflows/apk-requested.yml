@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 47: admin — pop-ups module, bulk delete/download of chats, subscription infrastructure (off by default); learner pop-up prompt
 # rev 46: in-app updates — admin publishes APK releases (upload/link), learner apps download+install; CI versionCode = 100+run
 # rev 45: Admin panel v2 — modular architecture (features/admin), independent design, users/support/chats moderation, audit log, web build
 # rev 44: calmer chat alerts (no heads-up, one per conversation, 45s audible cooldown); brand logo/text swapped

@@ -48,5 +48,7 @@ export const FEATURES = Object.freeze({
   assignments: false,
   announcements: false,
   billing: false,
+  /** Subscription infrastructure exists; the live switch lives on the server (admin → اشتراک). */
+  subscriptions: true,
   russianCourse: true,
 });
