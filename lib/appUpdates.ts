@@ -28,17 +28,32 @@ export function isUpdateSupported(): boolean {
   return Platform.OS === 'android' && isSupabaseConfigured() && Boolean(Application.applicationId);
 }
 
-/** Returns the newest release if it is newer than the installed build. */
-export async function fetchAvailableUpdate(): Promise<AppRelease | null> {
+export class UpdateServerNotReadyError extends Error {
+  constructor() { super('سرور به‌روزرسانی هنوز راه‌اندازی نشده است (SETUP-APP-UPDATES-ONCE.sql اجرا نشده).'); this.name = 'UpdateServerNotReadyError'; }
+}
+
+/** Newest published release for this package, regardless of the installed version. */
+export async function fetchLatestRelease(): Promise<AppRelease | null> {
   if (!isUpdateSupported()) return null;
   const installed = installedVersion();
   const { data, error } = await supabase.rpc('latest_app_release', { p_package_name: installed.package, p_platform: 'android' });
   if (error) {
-    if (/Could not find the function|does not exist|schema cache/i.test(error.message)) return null;
-    throw new Error('بررسی به‌روزرسانی انجام نشد؛ اتصال اینترنت را بررسی کنید.');
+    if (/Could not find the function|does not exist|schema cache/i.test(error.message)) throw new UpdateServerNotReadyError();
+    throw new Error(`بررسی به‌روزرسانی انجام نشد: ${error.message}`);
   }
   const release = (Array.isArray(data) ? data[0] : data) as AppRelease | undefined;
-  if (!release || release.version_code <= installed.code) return null;
+  return release ?? null;
+}
+
+/** Returns the newest release if it is newer than the installed build. */
+export async function fetchAvailableUpdate(): Promise<AppRelease | null> {
+  if (!isUpdateSupported()) return null;
+  let release: AppRelease | null;
+  try { release = await fetchLatestRelease(); } catch (cause) {
+    if (cause instanceof UpdateServerNotReadyError) return null;
+    throw cause;
+  }
+  if (!release || release.version_code <= installedVersion().code) return null;
   return release;
 }
 

@@ -1,6 +1,6 @@
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import type { AppRelease } from '@/lib/appReleases';
-import { downloadAndInstall, fetchAvailableUpdate, formatSize, installedVersion, isUpdateSupported } from '@/lib/appUpdates';
+import { downloadAndInstall, fetchLatestRelease, formatSize, installedVersion, isUpdateSupported } from '@/lib/appUpdates';
 import { toPersianDigits as fa } from '@/lib/format';
 import { ArrowDownToLine, CheckCircle2, RefreshCw, Sparkles } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
@@ -18,6 +18,8 @@ export function AppUpdateCard() {
   const supported = isUpdateSupported();
   const [status, setStatus] = useState<Status>('idle');
   const [release, setRelease] = useState<AppRelease | null>(null);
+  const [latest, setLatest] = useState<AppRelease | null>(null);
+  const [checkedAt, setCheckedAt] = useState<Date | null>(null);
   const [progress, setProgress] = useState<number | null>(null);
   const [error, setError] = useState('');
 
@@ -25,7 +27,10 @@ export function AppUpdateCard() {
     if (!supported || status === 'checking') return;
     setStatus('checking'); setError('');
     try {
-      const found = await fetchAvailableUpdate();
+      const newest = await fetchLatestRelease();
+      setLatest(newest);
+      setCheckedAt(new Date());
+      const found = newest && newest.version_code > installed.code ? newest : null;
       setRelease(found);
       setStatus(found ? 'available' : 'current');
     } catch (cause) {
@@ -91,6 +96,15 @@ export function AppUpdateCard() {
       )}
 
       {!!error && <Text accessibilityRole="alert" style={s.error}>{error}</Text>}
+
+      {supported && checkedAt && status !== 'available' && (
+        <Text style={s.hint}>
+          {latest
+            ? `آخرین نسخهٔ منتشرشده روی سرور برای این اپ: ${latest.version_name} (ساخت ${fa(latest.version_code)})`
+            : 'هنوز هیچ نسخه‌ای برای این اپ روی سرور منتشر نشده است.'}
+          {` · شناسهٔ اپ: ${installed.package ?? '—'}`}
+        </Text>
+      )}
     </View>
   );
 }
