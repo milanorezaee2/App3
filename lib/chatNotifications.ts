@@ -16,7 +16,7 @@ import {
   stopAndroidChatForegroundServiceForClient,
 } from './chatForegroundService';
 
-export const CHAT_NOTIFICATION_CHANNEL = 'milo-chat';
+export const CHAT_NOTIFICATION_CHANNEL = 'milo-chat-calm';
 export const QUIET_CHAT_NOTIFICATION_CHANNEL = 'milo-chat-quiet';
 const PERMISSION_PROMPTED_KEY = 'milo_chat_notification_permission_prompted_v1';
 const FOREGROUND_PRESENCE_INTERVAL_MS = 45_000;
@@ -70,8 +70,9 @@ async function configureAndroidChannels(): Promise<void> {
   await Notifications.setNotificationChannelAsync(CHAT_NOTIFICATION_CHANNEL, {
     name: 'پیام‌ها و درخواست‌های چت',
     description: 'پیام‌های خصوصی و درخواست‌های پشتیبانی',
-    importance: Notifications.AndroidImportance.HIGH,
-    vibrationPattern: [0, 180, 100, 180],
+    // Sound + one short buzz, no heads-up pop-up.
+    importance: Notifications.AndroidImportance.DEFAULT,
+    vibrationPattern: [0, 120],
     lightColor: '#635BFF',
     sound: 'default',
     enableVibrate: true,
@@ -295,12 +296,15 @@ export async function startChatNotifications(
     }
   }
 
-  const teardownUserScope = async () => {
+  // The native foreground service is a user opt-in that must outlive the JS
+  // tree. Only an explicit sign-out (a user that was active is now gone) stops
+  // it; screen unmounts and transient session restores never do.
+  const teardownUserScope = async (stopNativeService = false) => {
     const current = realtimeChannels;
     realtimeChannels = [];
     await removeChannels(client, current);
     activeToken = null;
-    if (Platform.OS === 'android') await stopAndroidChatForegroundServiceForClient(client);
+    if (stopNativeService && Platform.OS === 'android') await stopAndroidChatForegroundServiceForClient(client);
   };
 
   const emitForegroundEvent = (event: ChatNotificationEvent) => {
@@ -405,9 +409,10 @@ export async function startChatNotifications(
     const userId = await resolveUserId(options.requireSession === true);
     if (stopped) return;
     if (!userId) {
+      const signedOut = activeUserId !== null;
       activeUserId = null;
       activeToken = null;
-      await teardownUserScope();
+      await teardownUserScope(signedOut);
       return;
     }
     if (userId === activeUserId) {

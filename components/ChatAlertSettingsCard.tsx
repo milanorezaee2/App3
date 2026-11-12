@@ -7,6 +7,7 @@ import {
   backgroundChatChecksStatus,
   disableBackgroundChatChecks,
   enableBackgroundChatChecks,
+  lastBackgroundChatFailure,
   reconcileBackgroundChatChecks,
   type BackgroundChatStatus,
 } from '@/lib/backgroundChatChecks';
@@ -27,6 +28,7 @@ export function ChatAlertSettingsCard() {
   const [status, setStatus] = useState<BackgroundChatStatus | 'loading'>('loading');
   const [busy, setBusy] = useState(false);
   const [permission, setPermission] = useState<'granted' | 'denied' | 'unknown'>('unknown');
+  const [reason, setReason] = useState('');
 
   useEffect(() => {
     let active = true;
@@ -48,6 +50,7 @@ export function ChatAlertSettingsCard() {
         ? await disableBackgroundChatChecks()
         : await enableBackgroundChatChecks();
       setStatus(next);
+      setReason(next === 'enabled' || next === 'disabled' ? '' : lastBackgroundChatFailure());
     } catch {
       setStatus(await backgroundChatChecksStatus().catch(() => 'disabled'));
     } finally {
@@ -81,7 +84,7 @@ export function ChatAlertSettingsCard() {
         )}
       </View>
 
-      {status !== 'loading' && (STATUS_TEXT[status] || permission === 'denied') ? <Text style={styles.status}>{STATUS_TEXT[status] ?? STATUS_TEXT['permission-denied']}</Text> : null}
+      {status !== 'loading' && (STATUS_TEXT[status] || permission === 'denied') ? <Text style={styles.status}>{reason || STATUS_TEXT[status] || STATUS_TEXT['permission-denied']}</Text> : null}
     </View>
   );
 }

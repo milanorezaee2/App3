@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { BackHandler, Platform } from 'react-native';
 import { useGlobalSearchParams, usePathname, useRouter } from 'expo-router';
+import { MANAGEMENT_BUILD } from '@/lib/features';
 
-const HOME = '/languages';
+const HOME = MANAGEMENT_BUILD ? '/admin' : '/languages';
 const EXIT_ROUTES = new Set(['/', HOME, '/index']);
 
 function hrefFor(pathname: string, params: Record<string, string | string[] | undefined>): string {

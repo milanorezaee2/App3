@@ -106,6 +106,26 @@ export async function ensureChatIdentity(displayName = 'زبان‌آموز'): P
   return user;
 }
 
+/** True when a send/read failed because the learner is no longer a member of the conversation. */
+export function isConversationClosedError(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error ?? '');
+  return /این گفتگو دیگر فعال نیست|row-level security policy for table "messages"/.test(message);
+}
+
+/**
+ * After the manager closes a support conversation, the server hands out a fresh
+ * one. Returns the replacement id when it differs from the current conversation.
+ */
+export async function recoverSupportConversation(currentConversationId: string): Promise<string | null> {
+  if (MANAGEMENT_BUILD) return null;
+  try {
+    const fresh = await ensureSupportConversation();
+    return fresh && fresh !== currentConversationId ? fresh : null;
+  } catch {
+    return null;
+  }
+}
+
 /** One private conversation per learner with the manager. Returns the conversation id. */
 export async function ensureSupportConversation(displayName = 'زبان‌آموز'): Promise<string> {
   await ensureChatIdentity(displayName);

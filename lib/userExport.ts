@@ -1,3 +1,4 @@
+import { withAppLockSuspended } from '@/lib/appLock';
 import { Platform } from 'react-native';
 import * as FileSystemLegacy from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
@@ -46,5 +47,5 @@ export async function downloadRegisteredUsers(users: RegisteredUser[]): Promise<
   const uri = `${directory}${fileName}`;
   await FileSystemLegacy.writeAsStringAsync(uri, csv, { encoding: FileSystemLegacy.EncodingType.UTF8 });
   if (!(await Sharing.isAvailableAsync())) throw new Error('اشتراک‌گذاری فایل روی این دستگاه ممکن نیست.');
-  await Sharing.shareAsync(uri, { mimeType: 'text/csv', UTI: 'public.comma-separated-values-text', dialogTitle: 'ذخیره فهرست کاربران' });
+  await withAppLockSuspended(() => Sharing.shareAsync(uri, { mimeType: 'text/csv', UTI: 'public.comma-separated-values-text', dialogTitle: 'ذخیره فهرست کاربران' }));
 }

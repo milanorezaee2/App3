@@ -22,11 +22,16 @@ import { Beiruti_900Black } from '@expo-google-fonts/beiruti/900Black';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AppLockGate } from '@/components/AppLockGate';
+import { AppUpdatePrompt } from '@/components/AppUpdatePrompt';
+import { AppUpdatedSheet } from '@/components/AppUpdatedSheet';
+import { AppPopupPrompt } from '@/components/AppPopupPrompt';
 import { AndroidBackHistory } from '@/components/AndroidBackHistory';
 import { WebStatusBarSpacer } from '@/components/WebStatusBarSpacer';
 import { ChatNotificationBridge } from '@/components/ChatNotificationBridge';
-import { reconcileBackgroundChatChecks } from '@/lib/backgroundChatChecks';
+import { disableBackgroundChatChecks, reconcileBackgroundChatChecks } from '@/lib/backgroundChatChecks';
+import * as Notifications from 'expo-notifications';
 import { AppResumeGuard } from '@/components/AppResumeGuard';
+import { AdminRouteGuard } from '@/components/AdminRouteGuard';
 import { RegistrationGate } from '@/components/RegistrationGate';
 import { getPairingState, isOnboardingComplete } from '@/lib/storage';
 import { isSupabaseConfigured } from '@/lib/pairing';
@@ -69,7 +74,7 @@ const IS_ADMIN_APP = Constants.expoConfig?.extra?.appRole === 'admin'
 function RuntimeGate() {
   const pathname = usePathname();
   // The multi-language learning app never mounts the legacy device runtime.
-  if (!pathname.startsWith('/agent') && !pathname.startsWith('/permissions')) return null;
+  if (!pathname.startsWith('/permissions')) return null;
   return <CompanionRuntime />;
 }
 
@@ -122,9 +127,19 @@ export default function RootLayout() {
     Lalezar: Beiruti_400Regular,
   });
 
-  // Restores the Firebase-free chat alert worker after an update or reboot.
+  // Learner builds ship without chat alerts: any worker left over from an
+  // older install is stopped and pending system notifications are cleared.
+  // The admin app keeps its opt-in alert worker.
   useEffect(() => {
-    void reconcileBackgroundChatChecks();
+    if (IS_ADMIN_APP) {
+      void reconcileBackgroundChatChecks();
+      return;
+    }
+    void disableBackgroundChatChecks().catch(() => undefined);
+    if (Platform.OS !== 'web') {
+      void Notifications.dismissAllNotificationsAsync().catch(() => undefined);
+      void Notifications.setBadgeCountAsync(0).catch(() => undefined);
+    }
   }, []);
 
   useEffect(() => {
@@ -187,8 +202,12 @@ export default function RootLayout() {
               {!IS_ADMIN_APP && <RuntimeGate />}
               <Stack screenOptions={{ headerShown: false }} />
               <AppResumeGuard />
+              {IS_ADMIN_APP && <AdminRouteGuard />}
               <AndroidBackHistory />
-              <ChatNotificationBridge />
+              {IS_ADMIN_APP && <ChatNotificationBridge />}
+              <AppUpdatePrompt />
+              <AppUpdatedSheet />
+              {!IS_ADMIN_APP && <AppPopupPrompt />}
             </RegistrationGate>
           </AppLockGate>
           <StatusBar style="dark" />

@@ -11,6 +11,7 @@ import { ensureChatIdentity } from './conversations';
 import {
   authStorageKey,
   startAndroidChatForegroundService,
+  getLastChatServiceFailure,
   stopAndroidChatForegroundServiceForClient,
 } from './chatForegroundService';
 import { getChatForegroundServiceStatus, isChatForegroundServiceConfigured } from '@/modules/milo-chat-foreground';
@@ -18,8 +19,9 @@ import { getChatForegroundServiceStatus, isChatForegroundServiceConfigured } fro
 /** Retained for old installed builds and the non-Android fallback. */
 export const BACKGROUND_CHAT_TASK = 'milo-background-chat-check';
 export const BACKGROUND_CHAT_ENABLED_KEY = 'milo_background_chat_check_v1';
+const BACKGROUND_CHAT_START_ATTEMPT_KEY = 'milo_background_chat_start_attempt_v1';
 const LAST_SEEN_PREFIX = 'milo_background_chat_last_seen_v1';
-const CHAT_CHANNEL = 'milo-chat';
+const CHAT_CHANNEL = 'milo-chat-calm';
 export const BACKGROUND_CHAT_INTERVAL_MINUTES = 15;
 let reconcileInFlight: Promise<void> | null = null;
 
@@ -47,8 +49,9 @@ async function ensureChatChannel(): Promise<void> {
   await Notifications.setNotificationChannelAsync(CHAT_CHANNEL, {
     name: 'پیام‌ها و درخواست‌های چت',
     description: 'پیام‌های خصوصی و درخواست‌های پشتیبانی',
-    importance: Notifications.AndroidImportance.HIGH,
-    vibrationPattern: [0, 180, 100, 180],
+    // Sound + one short buzz, no heads-up pop-up.
+    importance: Notifications.AndroidImportance.DEFAULT,
+    vibrationPattern: [0, 120],
     lightColor: '#635BFF',
     sound: 'default',
     enableVibrate: true,
@@ -184,8 +187,14 @@ export async function runBackgroundChatCheck(): Promise<number> {
 }
 
 /** User opt-in: native persistent WebSocket on Android, existing scheduler elsewhere. */
+let lastFailure = '';
+function setLastBackgroundChatFailure(reason: string) { lastFailure = reason; }
+/** Why the last enable attempt failed (Android), for the settings card. */
+export function lastBackgroundChatFailure(): string { return lastFailure || getLastChatServiceFailure(); }
+
 export async function enableBackgroundChatChecks(): Promise<BackgroundChatStatus> {
   if (Platform.OS === 'web') return 'unsupported';
+  lastFailure = '';
   await ensureChatChannel();
   const permission = await Notifications.getPermissionsAsync();
   if (!permission.granted) {
@@ -196,7 +205,7 @@ export async function enableBackgroundChatChecks(): Promise<BackgroundChatStatus
   if (Platform.OS === 'android') {
     const active = client();
     const userId = await resolveAndroidUserId(active);
-    if (!userId) return 'restricted';
+    if (!userId) { setLastBackgroundChatFailure('ابتدا وارد حساب شوید؛ بدون ورود، اعلان پیام فعال نمی‌شود.'); return 'restricted'; }
     await unregisterLegacyTask();
     try {
       const started = await startAndroidChatForegroundService(active, userId, MANAGEMENT_BUILD);
@@ -207,7 +216,8 @@ export async function enableBackgroundChatChecks(): Promise<BackgroundChatStatus
       }
       await AsyncStorage.setItem(BACKGROUND_CHAT_ENABLED_KEY, '1');
       return 'enabled';
-    } catch {
+    } catch (cause) {
+      setLastBackgroundChatFailure(`خطا هنگام فعال‌سازی: ${cause instanceof Error ? cause.message : String(cause)}`);
       await AsyncStorage.removeItem(BACKGROUND_CHAT_ENABLED_KEY).catch(() => undefined);
       await stopAndroidChatForegroundServiceForClient(active).catch(() => undefined);
       return 'restricted';
@@ -255,17 +265,24 @@ async function reconcileBackgroundChatChecksOnce(): Promise<void> {
       await unregisterLegacyTask();
       const active = client();
       const permission = await Notifications.getPermissionsAsync();
+      // A missing permission or a session that is still being restored must not
+      // flip the user's opt-in off; the next launch/resume retries.
       if (!permission.granted) return;
       const userId = await resolveAndroidUserId(active);
-      // Clear the saved opt-in before recovery. If native startup crashes the
-      // process, the next app launch must not repeat the same failing start.
-      await AsyncStorage.removeItem(BACKGROUND_CHAT_ENABLED_KEY);
       if (!userId) return;
-      const started = await startAndroidChatForegroundService(active, userId, MANAGEMENT_BUILD);
-      if (started) {
-        await AsyncStorage.setItem(BACKGROUND_CHAT_ENABLED_KEY, '1');
-      } else {
-        await stopAndroidChatForegroundServiceForClient(active).catch(() => undefined);
+      // Crash guard: if the previous native start never reported back (process
+      // died mid-start), skip exactly one automatic retry instead of looping.
+      const pendingAttempt = await AsyncStorage.getItem(BACKGROUND_CHAT_START_ATTEMPT_KEY).catch(() => null);
+      if (pendingAttempt === '1') {
+        await AsyncStorage.removeItem(BACKGROUND_CHAT_START_ATTEMPT_KEY).catch(() => undefined);
+        return;
+      }
+      await AsyncStorage.setItem(BACKGROUND_CHAT_START_ATTEMPT_KEY, '1').catch(() => undefined);
+      const started = await startAndroidChatForegroundService(active, userId, MANAGEMENT_BUILD).catch(() => false);
+      await AsyncStorage.removeItem(BACKGROUND_CHAT_START_ATTEMPT_KEY).catch(() => undefined);
+      if (!started) {
+        // Keep the opt-in; the settings card shows the concrete reason.
+        return;
       }
       return;
     }

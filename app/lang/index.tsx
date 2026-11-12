@@ -1,4 +1,5 @@
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
+import { lessonUnit } from '@/lib/lessonUnits';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import EnglishPodcastEntry from '@/components/EnglishPodcastEntry';
 import { useCallback, useEffect, useState } from 'react';
@@ -26,6 +27,7 @@ import {
   Volume2,
 } from 'lucide-react-native';
 import { AppBottomNav } from '@/components/AppBottomNav';
+import { ProfileIcon } from '@/components/ProfileIcon';
 import { PageNavigation } from '@/components/PageNavigation';
 import { COURSE_LEVELS, SENTENCE_LESSONS } from '@/lib/courseContent';
 import { getCourseProgress, setCurrentLesson, type CourseProgress } from '@/lib/courseProgress';
@@ -303,7 +305,7 @@ export default function LearningHome() {
               </Pressable>
               <View style={styles.lessonCountPill}>
                 <Text style={styles.lessonCountValue}>{toPersianDigits(currentLesson.sentences.length)}</Text>
-                <Text style={styles.lessonCountLabel}>جمله</Text>
+                <Text style={styles.lessonCountLabel}>{lessonUnit(currentLesson.id)}</Text>
               </View>
             </View>
             <Pressable accessibilityRole="button" accessibilityLabel="شروع از ابتدای درس انگلیسی" style={styles.startFromBeginningButton} onPress={() => router.push({ pathname: '/course/lesson', params: { id: currentLesson.id, fromStart: '1' } } as never)}>
@@ -415,14 +417,14 @@ export default function LearningHome() {
               </View>
               <ChevronLeft size={17} color={HomeColors.muted} />
             </Pressable>
-            {FEATURES.learnerLogin && <Pressable accessibilityRole="button" accessibilityLabel="ورود ایمیلی و همگام‌سازی شخصی" style={({ pressed }) => [styles.quickCard, pressed && styles.buttonPressed]} onPress={() => router.push('/personal-sync' as never)}>
-              <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Cloud size={18} color={HomeColors.accent} /></View>
+            <Pressable accessibilityRole="button" accessibilityLabel="پروفایل و حساب کاربری" style={({ pressed }) => [styles.quickCard, pressed && styles.buttonPressed]} onPress={() => router.push('/profile' as never)}>
+              <View style={[styles.quickIcon, { backgroundColor: 'transparent' }]}><ProfileIcon size={34} /></View>
               <View style={styles.quickCopy}>
-                <Text style={styles.quickTitle}>حساب و همگام‌سازی</Text>
-                <Text style={styles.quickDesc}>پیشرفت میان دستگاه‌ها</Text>
+                <Text style={styles.quickTitle}>پروفایل من</Text>
+                <Text style={styles.quickDesc}>حساب، سطح و پیشرفت</Text>
               </View>
               <ChevronLeft size={17} color={HomeColors.muted} />
-            </Pressable>}
+            </Pressable>
           </View>
 
           <View style={styles.noteCard}>

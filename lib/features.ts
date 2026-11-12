@@ -35,6 +35,12 @@ export const FEATURES = Object.freeze({
    * opts into the existing login flow; server authorization remains separate.
    */
   learnerLogin: process.env.EXPO_PUBLIC_LEARNER_LOGIN === 'true',
+  /**
+   * Open five-language app: no login wall, but a device profile (e-mail +
+   * app-generated code) is registered on the server so the manager sees the
+   * learner and cloud sync/chat use the same identity as the login app.
+   */
+  openLearnerAccount: process.env.EXPO_PUBLIC_LEARNER_LOGIN !== 'true' && process.env.EXPO_PUBLIC_LEARNER_FIVE_NOLOGIN === 'true',
   adminPanel: educationAdminEnabled,
   educationEnrollment: educationAdminEnabled,
   // Roadmap modules are not implemented yet. Enabling a boolean cannot build them.
@@ -42,5 +48,7 @@ export const FEATURES = Object.freeze({
   assignments: false,
   announcements: false,
   billing: false,
+  /** Subscription infrastructure exists; the live switch lives on the server (admin → اشتراک). */
+  subscriptions: true,
   russianCourse: true,
 });

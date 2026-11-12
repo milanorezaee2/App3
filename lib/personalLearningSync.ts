@@ -1,5 +1,7 @@
 import { supabase } from './supabase';
 import { getCourseProgress } from './courseProgress';
+import { FEATURES } from './features';
+import { getLocalProfile } from './localProfile';
 import { exportEnglishSyncExtras, mergeEnglishSyncExtras, type EnglishSyncExtras } from './englishBackup';
 import {
   mergeRemotePronunciationMarks,
@@ -70,7 +72,16 @@ async function performSync(): Promise<PersonalSyncResult> {
   const user = authData.session?.user;
   // Anonymous Supabase identities are device-specific. Cross-device personal
   // sync is enabled only for a verified email session created by the OTP flow.
-  if (!user?.id || !user.email || user.is_anonymous) return { status: 'signed-out' };
+  if (!user?.id) return { status: 'signed-out' };
+  let syncEmail = user.email ?? '';
+  if (!user.email || user.is_anonymous) {
+    // Open five-language app: a device-registered profile syncs under its
+    // anonymous device identity (same RLS row model as a verified account).
+    if (!FEATURES.openLearnerAccount) return { status: 'signed-out' };
+    const local = await getLocalProfile();
+    if (!local?.verifiedAt) return { status: 'signed-out' };
+    syncEmail = local.email;
+  }
 
   // English's existing, RLS-protected `progress` field remains compatible with
   // earlier app releases. Its loader now merges local and remote evidence.
@@ -118,7 +129,7 @@ async function performSync(): Promise<PersonalSyncResult> {
       || !sameJson(mergedLanguages, remoteLanguageProgress)
       || !sameJson(mergedPronunciation, remotePronunciationProgress);
     if (!needsWrite) {
-      return { status: 'synced', email: user.email, updatedAt: row.updated_at };
+      return { status: 'synced', email: syncEmail, updatedAt: row.updated_at };
     }
 
     const updatedAt = maxTimestamp(
@@ -155,7 +166,7 @@ async function performSync(): Promise<PersonalSyncResult> {
         throw remoteSetupError(result.error);
       }
       if (!result.data) continue; // A concurrent device won; re-read and merge, never blind overwrite.
-      return { status: 'synced', email: user.email, updatedAt: result.data.updated_at ?? updatedAt };
+      return { status: 'synced', email: syncEmail, updatedAt: result.data.updated_at ?? updatedAt };
     } catch (error) {
       if (error instanceof Error && (error.message.startsWith('جدول همگام‌سازی') || error.message.startsWith('دسترسی امن'))) throw error;
       throw new Error('ذخیرهٔ ابری انجام نشد؛ دادهٔ محلی محفوظ است. کمی بعد دوباره همگام‌سازی کنید.');

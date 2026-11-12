@@ -2,6 +2,7 @@ import Constants from 'expo-constants';
 import { AppState, Platform } from 'react-native';
 import type { Session, SupabaseClient } from '@supabase/supabase-js';
 import {
+  getChatForegroundServiceLastError,
   getChatForegroundServiceStatus,
   getStoredChatServiceSession,
   setChatServiceAppForegrounded,
@@ -41,15 +42,25 @@ function persistentSession(session: Session): Record<string, unknown> {
   };
 }
 
+/** Human-readable reason for the last failed start, shown by the settings card so a device problem is not reported as a battery restriction. */
+let lastChatServiceFailure = '';
+export function getLastChatServiceFailure(): string { return lastChatServiceFailure; }
+function fail(reason: string): false { lastChatServiceFailure = reason; return false; }
+
 export async function startAndroidChatForegroundService(
   client: SupabaseClient,
   userId: string,
   isAdmin = MANAGEMENT_BUILD,
 ): Promise<boolean> {
-  if (Platform.OS !== 'android' || !userId || !SUPABASE_PUBLIC_URL || !SUPABASE_PUBLIC_ANON_KEY) return false;
+  lastChatServiceFailure = '';
+  if (Platform.OS !== 'android') return fail('فقط روی اندروید در دسترس است.');
+  if (!userId) return fail('ابتدا وارد حساب شوید.');
+  if (!SUPABASE_PUBLIC_URL || !SUPABASE_PUBLIC_ANON_KEY) return fail('تنظیمات اتصال سرور در این نسخه موجود نیست.');
   const { data, error } = await client.auth.getSession();
   const session = data.session;
-  if (error || !session || session.user.id !== userId || !session.access_token || !session.refresh_token) return false;
+  if (error || !session) return fail('نشست ورود معتبر نیست؛ یک بار خارج و دوباره وارد شوید.');
+  if (session.user.id !== userId) return fail('حساب فعال با نشست ذخیره‌شده یکی نیست؛ دوباره وارد شوید.');
+  if (!session.access_token || !session.refresh_token) return fail('نشست ورود ناقص است؛ دوباره وارد شوید.');
 
   const config: ChatForegroundServiceConfig = {
     supabaseUrl: SUPABASE_PUBLIC_URL,
@@ -63,20 +74,34 @@ export async function startAndroidChatForegroundService(
   };
   try {
     const accepted = await startChatForegroundService(config);
-    if (!accepted) return false;
+    if (!accepted) return fail('سیستم اجازهٔ شروع سرویس اعلان را نداد (کد: start-rejected).');
 
-    const deadline = Date.now() + 5000;
+    const deadline = Date.now() + 8000;
+    let last = 'starting';
+    let stoppedStreak = 0;
     while (Date.now() < deadline) {
       const status = await getChatForegroundServiceStatus().catch(() => 'unavailable');
+      last = status;
       if (status === 'connecting' || status === 'connected' || status === 'reconnecting') return true;
-      if (status === 'stopped' || status === 'unavailable' || status === 'unsupported') return false;
+      if (status === 'stopped' || status === 'unavailable' || status === 'unsupported') {
+        // "stopped" can be a transient value while the service is still being
+        // created; only treat it as final once it persists for about a second.
+        stoppedStreak += 1;
+        if (stoppedStreak >= 5) {
+          const detail = await getChatForegroundServiceLastError();
+          return fail(`سرویس اعلان بلافاصله متوقف شد (کد: ${status}${detail ? ` · ${detail}` : ''}).`);
+        }
+      } else {
+        stoppedStreak = 0;
+      }
       await new Promise(resolve => setTimeout(resolve, 200));
     }
 
     await stopChatForegroundService(authStorageKey(client)).catch(() => false);
-    return false;
-  } catch {
-    return false;
+    const detail = await getChatForegroundServiceLastError();
+    return fail(`سرویس اعلان در زمان مقرر شروع نشد (کد: timeout/${last}${detail ? ` · ${detail}` : ''}).`);
+  } catch (cause) {
+    return fail(`خطای سرویس اعلان: ${cause instanceof Error ? cause.message : String(cause)}`);
   }
 }
 

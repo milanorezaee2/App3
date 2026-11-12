@@ -13,10 +13,23 @@ import { SupabaseSetupNotice } from '@/components/SupabaseSetupNotice';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
 import { toPersianDigits } from '@/lib/format';
 import { PageNavigation } from '@/components/PageNavigation';
+import { readResumeSnapshot, type ResumeLanguage } from '@/lib/appResume';
+
+/** Invitation text per learning language; the learner shares it from the course they are in. */
+const INVITE_MESSAGES: Record<string, (code: string) => string> = {
+  en: code => `برای تمرین خصوصی انگلیسی در Companion English، این کد دعوت را وارد کن: ${code}`,
+  ru: code => `Привет! 👋\nبیا با هم روسی تمرین کنیم!\nدر برنامهٔ Milo بخش «مکالمه» را باز کن و این کد دعوت را وارد کن تا گفتگوی خصوصی روسی ما شروع شود: ${code}`,
+  tr: code => `Merhaba! 👋\nبیا با هم ترکی استانبولی تمرین کنیم!\nدر برنامهٔ Milo بخش «مکالمه» را باز کن و این کد دعوت را وارد کن تا گفتگوی خصوصی ترکی ما شروع شود: ${code}`,
+  de: code => `Hallo! 👋\nبیا با هم آلمانی تمرین کنیم!\nدر برنامهٔ Milo بخش «مکالمه» را باز کن و این کد دعوت را وارد کن تا گفتگوی خصوصی آلمانی ما شروع شود: ${code}`,
+  fr: code => `Salut ! 👋\nبیا با هم فرانسوی تمرین کنیم!\nدر برنامهٔ Milo بخش «مکالمه» را باز کن و این کد دعوت را وارد کن تا گفتگوی خصوصی فرانسوی ما شروع شود: ${code}`,
+  es: code => `¡Hola! 👋\nبیا با هم اسپانیایی تمرین کنیم!\nدر برنامهٔ Milo بخش «مکالمه» را باز کن و این کد دعوت را وارد کن تا گفتگوی خصوصی اسپانیایی ما شروع شود: ${code}`,
+};
 
 export default function InviteContactScreen() {
   const router = useRouter();
   const [mode, setMode] = useState<'invite' | 'join'>('invite');
+  const [language, setLanguage] = useState<ResumeLanguage>(null);
+  useEffect(() => { let alive = true; void readResumeSnapshot().then(snapshot => { if (alive) setLanguage(snapshot?.language ?? null); }).catch(() => undefined); return () => { alive = false; }; }, []);
   const [inviteCode, setInviteCode] = useState<string | null>(null);
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
@@ -53,7 +66,7 @@ export default function InviteContactScreen() {
 
   const shareInvite = async () => {
     if (!inviteCode) return;
-    await Share.share({ message: `برای تمرین خصوصی انگلیسی در Companion English، این کد دعوت را وارد کن: ${inviteCode}` });
+    await Share.share({ message: (INVITE_MESSAGES[language ?? 'en'] ?? INVITE_MESSAGES.en)(inviteCode) });
   };
 
   const claimInvite = async () => {

@@ -39,7 +39,9 @@ class MiloChatForegroundService : Service() {
     const val EXTRA_APP_FOREGROUND = "app_foreground"
     const val EXTRA_STORAGE_KEY = "storage_key"
     private const val SERVICE_CHANNEL_ID = "milo-chat-service"
-    private const val MESSAGE_CHANNEL_ID = "milo-chat"
+    private const val MESSAGE_CHANNEL_ID = "milo-chat-calm"
+    private const val MESSAGE_GROUP_KEY = "milo-chat-messages"
+    private const val ALERT_COOLDOWN_MS = 45_000L
     private const val FOREGROUND_ID = 73104
     private const val CONNECTED_STATUS = "connected"
     private const val CONNECTING_STATUS = "connecting"
@@ -49,6 +51,10 @@ class MiloChatForegroundService : Service() {
     private const val HEARTBEAT_SECONDS = 25L
     private val JSON_MEDIA = "application/json; charset=utf-8".toMediaType()
     @Volatile private var liveInstance: MiloChatForegroundService? = null
+
+    fun markStopRequested() {
+      liveInstance?.stopRequested = true
+    }
 
     fun updateLiveAppState(storageKey: String, foreground: Boolean): Boolean {
       val service = liveInstance ?: return false
@@ -68,7 +74,7 @@ class MiloChatForegroundService : Service() {
   @Volatile private var config: JSONObject? = null
   @Volatile private var socket: WebSocket? = null
   @Volatile private var appForeground = false
-  @Volatile private var stopRequested = false
+  @Volatile internal var stopRequested = false
   @Volatile private var reconnectScheduled = false
   @Volatile private var joined = false
   @Volatile private var lastHeartbeatReplyAt = 0L
@@ -106,10 +112,10 @@ class MiloChatForegroundService : Service() {
         try {
           EncryptedChatSessionStore.write(this, incoming)
         } catch (error: Exception) {
+          // Keystore is unavailable on some devices/first runs. Keep the connection
+          // alive from memory for this process instead of refusing to start.
           Log.e(TAG, "Could not save the foreground-service session", error)
-          EncryptedChatSessionStore.setStatus(this, "stopped")
-          stopSelf(startId)
-          return START_NOT_STICKY
+          EncryptedChatSessionStore.setLastError(this, "keystore-write:" + error.javaClass.simpleName + ":" + (error.message ?: ""))
         }
         startHeartbeatLoop()
         executor.execute {
@@ -168,6 +174,7 @@ class MiloChatForegroundService : Service() {
   }
 
   override fun onDestroy() {
+    if (!stopRequested) EncryptedChatSessionStore.setLastError(this, "destroyed-by-system")
     stopRequested = true
     closeSocket()
     EncryptedChatSessionStore.setStatus(this, "stopped")
@@ -188,9 +195,13 @@ class MiloChatForegroundService : Service() {
       },
     )
     manager.createNotificationChannel(
-      NotificationChannel(MESSAGE_CHANNEL_ID, "پیام‌ها و درخواست‌های چت", NotificationManager.IMPORTANCE_HIGH).apply {
+      // DEFAULT importance: a sound and a short buzz, but no heads-up pop-up
+      // over whatever the user is doing. (Channel settings are fixed once
+      // created, hence the new channel id.)
+      NotificationChannel(MESSAGE_CHANNEL_ID, "پیام‌ها و درخواست‌های چت", NotificationManager.IMPORTANCE_DEFAULT).apply {
         description = "پیام‌های خصوصی و درخواست‌های پشتیبانی"
         enableVibration(true)
+        vibrationPattern = longArrayOf(0L, 120L)
         setShowBadge(true)
       },
     )
@@ -208,6 +219,7 @@ class MiloChatForegroundService : Service() {
       return true
     } catch (error: Exception) {
       Log.e(TAG, "Could not enter foreground state", error)
+      EncryptedChatSessionStore.setLastError(this, "start-foreground:" + error.javaClass.simpleName + ":" + (error.message ?: ""))
       EncryptedChatSessionStore.setStatus(this, "stopped")
       stopRequested = true
       stopSelf()
@@ -495,10 +507,17 @@ class MiloChatForegroundService : Service() {
     }
   }
 
+  @Volatile private var lastAudibleAlertAt = 0L
+
   private fun postMessageNotification(current: JSONObject, eventKey: String, conversationId: String, title: String, body: String) {
     if (appForeground || stopRequested || conversationId.isBlank()) return
     val userId = current.optString("userId")
     if (userId.isBlank() || wasDelivered(userId, eventKey)) return
+    // One notification per conversation (updated in place) and at most one
+    // audible alert per cooldown window: a burst of messages never nags.
+    val now = System.currentTimeMillis()
+    val audible = now - lastAudibleAlertAt >= ALERT_COOLDOWN_MS
+    if (audible) lastAudibleAlertAt = now
     val scheme = current.optString("appScheme").ifBlank { "companionenglish" }
     val uri = Uri.parse("$scheme:///conversations/human/$conversationId")
     val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
@@ -520,13 +539,15 @@ class MiloChatForegroundService : Service() {
       .setContentIntent(openPendingIntent)
       .setAutoCancel(true)
       .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-      .setPriority(NotificationCompat.PRIORITY_HIGH)
-      .setDefaults(NotificationCompat.DEFAULT_ALL)
+      .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+      .setOnlyAlertOnce(true)
+      .setSilent(!audible)
+      .setGroup(MESSAGE_GROUP_KEY)
       .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
       .build()
     val manager = getSystemService(NotificationManager::class.java)
     try {
-      manager.notify(stableHash("message:$userId:$eventKey").hashCode(), notification)
+      manager.notify(stableHash("conversation:$userId:$conversationId").hashCode(), notification)
       markDelivered(userId, eventKey)
     } catch (error: SecurityException) {
       Log.w(TAG, "Notification permission was revoked", error)

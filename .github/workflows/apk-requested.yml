@@ -1,5 +1,37 @@
 name: Build requested APKs
 
+# rev 63: keep only the newest 5 releases
+# rev 62: learner APK asset names → 5update.apk / login.5update.apk / 2update.apk
+# rev 61: learner launcher icon = in-app globe mark; English card solo centred
+# rev 60: post-update what-changed sheet; English base card; Pre-A1 lesson 1 counts words
+# rev 59: home hero text + language cards mirrored right on Android
+# rev 58: home learning-path block mirrored right on Android
+# rev 57: update card shows server answer for diagnosis
+# rev 56: profile → account: version + in-app update card
+# rev 55: drop legacy pairing/barcode scanner (expo-camera); profile keyboard-aware
+# rev 54: admin app can never land on learner screens
+# rev 53: APK size breakdown in release notes (analysis only, no app change)
+# rev 52: arm64-v8a only APKs
+# rev 51: ARM-only APKs (under 50 MB) so admin upload to Supabase storage works
+# rev 50: home page compact + right-aligned; learner update check on every launch/resume
+# rev 49: app lock no longer trips on file picker / share sheet; screen state kept under lock
+# rev 48: learner builds ship without chat notifications
+# rev 47: admin — pop-ups module, bulk delete/download of chats, subscription infrastructure (off by default); learner pop-up prompt
+# rev 46: in-app updates — admin publishes APK releases (upload/link), learner apps download+install; CI versionCode = 100+run
+# rev 45: Admin panel v2 — modular architecture (features/admin), independent design, users/support/chats moderation, audit log, web build
+# rev 44: calmer chat alerts (no heads-up, one per conversation, 45s audible cooldown); brand logo/text swapped
+# rev 43: APK renames (MiloMultiLanguage.5-*, MiloMultiLanguage-NoLogin); five-language open app registers the device profile on the server (Admin App list, cloud sync, full profile)
+# rev 42: German Pre-A1 lesson 1 word swap; 3-line invite texts; device-local profile with app-generated access code for no-login builds
+# rev 41: rebuild (artifact upload failed on the GitHub side in run 43)
+# rev 40: chat alert opt-in persists across app exits (no JS-side service stop; crash guard via attempt marker)
+# rev 39: support chat recovers after the manager closes a conversation (no raw RLS error)
+# rev 38: bespoke profile icon; chat service no longer reports a transient "stopped" (stale backup config, keystore fallback, failure detail)
+# rev 37: detailed learner profile (tabs: overview, languages, achievements, account)
+# rev 36: learner profile screen (account, level, per-language progress, sync, sign-out)
+# rev 35: chat alert switch reports the real reason when enabling fails (Android foreground service)
+# rev 34: language-specific invitation message when sharing a contact code
+# rev 33: admin flavour renamed to "Admin App" (AdminApp.apk)
+# rev 32: rebuild all flavours from main merge cfb2900 (admin app requested)
 # rev 31: chat alert card simplified (switch + friendly copy; technical disclaimers removed); validator updated
 # rev 30: chat list keeps newest message visible above the keyboard/composer
 # rev 29: readable chat bubbles (light green mine / white theirs, dark text)
@@ -10,7 +42,7 @@ name: Build requested APKs
 # rev 24: remove "شروع از صفر" label and equal-size language cards
 # rev 23: Persian digits in bold cut; mid-grey text colours forced dark (faded numbers/badges).
 # rev 22: Persian text bold + grey in every build (regular cut rendered faint).
-# rev 21: add five-language no-login flavour (MiloLearner5-NoLogin.apk).
+# rev 21: add five-language no-login flavour (MiloMultiLanguage.5-NoLogin.apk).
 # rev 20: new language introductions on dashboards and language registry.
 # rev 19: third copy-trimming pass across supplement, account, backup, lock, B2/C1 practice and dialogue screens.
 # rev 18: dashboards, libraries and review screens trimmed (no Latin eyebrows, no app-mechanics copy).
@@ -60,6 +92,7 @@ on:
       - arena/1d4c82b4-app3
       - arena/0525d0d2-app3
       - arena/9b089853-app3
+      - arena/a87fc501-app3
     paths:
       - '.github/workflows/apk-requested.yml'
 
@@ -80,7 +113,7 @@ jobs:
       EXPO_NO_TELEMETRY: '1'
       NODE_OPTIONS: '--max-old-space-size=8192'
       EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
-      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a' }}
       MILO_ADMIN_APP: 'true'
       EXPO_PUBLIC_MILO_ADMIN_APP: 'true'
       EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'true'
@@ -88,7 +121,7 @@ jobs:
       EXPO_PUBLIC_LANGUAGE_SCOPE: 'en,tr'
       EXPECTED_PACKAGE: 'com.devicecontrol.miloadmin'
       EXPECTED_SCOPE: 'en,tr'
-      APK_NAME: 'MiloAdmin.apk'
+      APK_NAME: 'AdminApp.apk'
     steps:
       - &checkout
         name: Check out repository
@@ -117,6 +150,7 @@ jobs:
           fs.appendFileSync(process.env.GITHUB_ENV,
             `EXPO_PUBLIC_SUPABASE_URL=${url}\nEXPO_PUBLIC_SUPABASE_ANON_KEY=${key}\n`);
           NODE
+          echo "MILO_VERSION_CODE=$((100 + GITHUB_RUN_NUMBER))" >> "$GITHUB_ENV"
       - &java
         name: Set up Java
         uses: actions/setup-java@v5
@@ -148,6 +182,10 @@ jobs:
         run: |
           rm -rf android
           npx expo prebuild --platform android --no-install --non-interactive
+          # ABIs come from MILO_ANDROID_ABIS via plugins/withAndroidAbis (64-bit ARM
+          # only, so the APK stays under the 50 MB Supabase storage limit).
+          echo "architectures: $(grep reactNativeArchitectures android/gradle.properties)"
+          grep -n abiFilters android/app/build.gradle || true
           echo "applicationId: $(grep -m1 applicationId android/app/build.gradle)"
       - &validate
         name: Verify the Firebase-free chat alert path
@@ -205,14 +243,14 @@ jobs:
       EXPO_NO_TELEMETRY: '1'
       NODE_OPTIONS: '--max-old-space-size=8192'
       EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
-      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a' }}
       EXPO_PUBLIC_MILO_ADMIN_APP: 'false'
       EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'false'
       EXPO_PUBLIC_LEARNER_LOGIN: 'true'
       EXPO_PUBLIC_LANGUAGE_SCOPE: ${{ inputs.language_scope_login || 'en,de,fr,tr,es' }}
       EXPECTED_PACKAGE: 'com.devicecontrol.milomultilang'
       EXPECTED_SCOPE: ${{ inputs.language_scope_login || 'en,de,fr,tr,es' }}
-      APK_NAME: 'MiloLearner-Login.apk'
+      APK_NAME: 'login.5update.apk'
     steps:
       - *checkout
       - *node
@@ -235,14 +273,14 @@ jobs:
       EXPO_NO_TELEMETRY: '1'
       NODE_OPTIONS: '--max-old-space-size=8192'
       EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
-      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a' }}
       EXPO_PUBLIC_MILO_ADMIN_APP: 'false'
       EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'false'
       EXPO_PUBLIC_LEARNER_LOGIN: 'false'
       EXPO_PUBLIC_LANGUAGE_SCOPE: ${{ inputs.language_scope_nologin || 'en,ru' }}
       EXPECTED_PACKAGE: 'com.devicecontrol.companion'
       EXPECTED_SCOPE: ${{ inputs.language_scope_nologin || 'en,ru' }}
-      APK_NAME: 'MiloLearner-NoLogin.apk'
+      APK_NAME: '2update.apk'
     steps:
       - *checkout
       - *node
@@ -265,7 +303,7 @@ jobs:
       EXPO_NO_TELEMETRY: '1'
       NODE_OPTIONS: '--max-old-space-size=8192'
       EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
-      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a' }}
       EXPO_PUBLIC_MILO_ADMIN_APP: 'false'
       EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'false'
       EXPO_PUBLIC_LEARNER_LOGIN: 'false'
@@ -273,7 +311,7 @@ jobs:
       EXPO_PUBLIC_LANGUAGE_SCOPE: 'en,de,fr,tr,es'
       EXPECTED_PACKAGE: 'com.devicecontrol.milofive'
       EXPECTED_SCOPE: 'en,de,fr,tr,es'
-      APK_NAME: 'MiloLearner5-NoLogin.apk'
+      APK_NAME: '5update.apk'
     steps:
       - *checkout
       - *node
@@ -287,9 +325,43 @@ jobs:
       - *verify
       - *upload
 
+  # --------------------------------------------------- admin panel (web)
+  admin-web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+      NODE_OPTIONS: '--max-old-space-size=8192'
+      EXPO_PUBLIC_MILO_ADMIN_APP: 'true'
+      EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'true'
+      EXPO_PUBLIC_LEARNER_LOGIN: 'false'
+      EXPO_PUBLIC_LANGUAGE_SCOPE: 'en,tr'
+    steps:
+      - *checkout
+      - *node
+      - *install
+      - *settings
+      - name: Export the static web build of the admin panel
+        run: |
+          npx expo export --platform web --output-dir dist-admin-web
+          test -f dist-admin-web/index.html
+          test -f dist-admin-web/admin.html || test -f dist-admin-web/admin/index.html || true
+          ( cd dist-admin-web && zip -qr ../AdminApp-web.zip . )
+          sha256sum AdminApp-web.zip | tee AdminApp-web.zip.sha256
+          ls -lh AdminApp-web.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AdminApp-web.zip
+          path: |
+            AdminApp-web.zip
+            AdminApp-web.zip.sha256
+          if-no-files-found: error
+          retention-days: 30
+
   # ----------------------------------------------------------- publish
   publish:
-    needs: [admin, learner-login, learner-nologin, learner-five-nologin]
+    needs: [admin, admin-web, learner-login, learner-nologin, learner-five-nologin]
     if: ${{ always() && needs.admin.result == 'success' && needs.learner-nologin.result == 'success' && (needs.learner-login.result == 'success' || needs.learner-login.result == 'skipped') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -303,6 +375,7 @@ jobs:
         run: |
           find out -type f | sort
           du -h out/*/*.apk
+          echo "MILO_VERSION_CODE=$((100 + GITHUB_RUN_NUMBER))" >> "$GITHUB_ENV"
 
       - name: Publish a downloadable release
         uses: softprops/action-gh-release@v2
@@ -314,15 +387,18 @@ jobs:
           body: |
             Installable Android APKs, each built on its own clean runner.
 
-            - `MiloAdmin.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
-            - `MiloLearner-Login.apk` — MiloMultiLanguage WITH login, package `com.devicecontrol.milomultilang`, languages en, de, fr, tr, es
-            - `MiloLearner-NoLogin.apk` — MiloMultiLanguage WITHOUT login, package `com.devicecontrol.companion`, languages en, ru
-            - `MiloLearner5-NoLogin.apk` — five-language MiloMultiLanguage WITHOUT login, package `com.devicecontrol.milofive`, languages en, de, fr, tr, es
+            **versionCode: ${{ env.MILO_VERSION_CODE }}** · version name `1.0.${{ env.MILO_VERSION_CODE }}` (use these in Admin App → به‌روزرسانی اپ‌ها)
+
+            - `AdminApp.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
+            - `AdminApp-web.zip` — the same management panel as a static website (unzip and serve the folder)
+            - `login.5update.apk` — MiloMultiLanguage WITH login, package `com.devicecontrol.milomultilang`, languages en, de, fr, tr, es
+            - `2update.apk` — MiloMultiLanguage WITHOUT login, package `com.devicecontrol.companion`, languages en, ru
+            - `5update.apk` — five-language MiloMultiLanguage WITHOUT login, package `com.devicecontrol.milofive`, languages en, de, fr, tr, es
           files: |
-            out/MiloAdmin.apk/MiloAdmin.apk
-            out/MiloLearner-NoLogin.apk/MiloLearner-NoLogin.apk
-            out/MiloAdmin.apk/MiloAdmin.apk.sha256
-            out/MiloLearner-NoLogin.apk/MiloLearner-NoLogin.apk.sha256
+            out/AdminApp.apk/AdminApp.apk
+            out/2update.apk/2update.apk
+            out/AdminApp.apk/AdminApp.apk.sha256
+            out/2update.apk/2update.apk.sha256
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -333,8 +409,8 @@ jobs:
         with:
           tag_name: milo-requested-${{ github.run_number }}
           files: |
-            out/MiloLearner5-NoLogin.apk/MiloLearner5-NoLogin.apk
-            out/MiloLearner5-NoLogin.apk/MiloLearner5-NoLogin.apk.sha256
+            out/5update.apk/5update.apk
+            out/5update.apk/5update.apk.sha256
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -345,8 +421,78 @@ jobs:
         with:
           tag_name: milo-requested-${{ github.run_number }}
           files: |
-            out/MiloLearner-Login.apk/MiloLearner-Login.apk
-            out/MiloLearner-Login.apk/MiloLearner-Login.apk.sha256
+            out/login.5update.apk/login.5update.apk
+            out/login.5update.apk/login.5update.apk.sha256
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Add the admin panel web build to the release
+        if: ${{ needs.admin-web.result == 'success' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: milo-requested-${{ github.run_number }}
+          files: |
+            out/AdminApp-web.zip/AdminApp-web.zip
+            out/AdminApp-web.zip/AdminApp-web.zip.sha256
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      # Read-only size breakdown of one learner APK, appended to the release
+      # notes so the composition can be inspected without downloading anything.
+      - name: Append an APK size breakdown to the release notes
+        if: ${{ needs.learner-five-nologin.result == 'success' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: milo-requested-${{ github.run_number }}
+        run: |
+          python3 - <<'PY' > breakdown.md
+          import zipfile, collections, os
+          apk = 'out/5update.apk/5update.apk'
+          groups = collections.Counter(); raw = collections.Counter(); files = []
+          with zipfile.ZipFile(apk) as z:
+              for i in z.infolist():
+                  n = i.filename
+                  if n.startswith('lib/'): g = 'lib/' + n.split('/')[1]
+                  elif n == 'assets/index.android.bundle': g = 'JS bundle'
+                  elif n.startswith('assets/'): g = 'assets (fonts/images/audio)'
+                  elif n.endswith('.dex'): g = 'classes.dex (Java/Kotlin)'
+                  elif n.startswith('res/'): g = 'res (Android resources)'
+                  elif n == 'resources.arsc': g = 'resources.arsc'
+                  else: g = 'other'
+                  groups[g] += i.compress_size; raw[g] += i.file_size
+                  files.append((i.compress_size, n))
+          total = os.path.getsize(apk)
+          print(f'### APK size breakdown — 5update.apk ({total/1048576:.1f} MB)\n')
+          print('| part | compressed in APK | uncompressed |\n|---|---:|---:|')
+          for g, c in groups.most_common():
+              print(f'| {g} | {c/1048576:.1f} MB | {raw[g]/1048576:.1f} MB |')
+          print('\n<details><summary>25 largest files</summary>\n\n| file | compressed |\n|---|---:|')
+          for c, n in sorted(files, reverse=True)[:25]:
+              print(f'| `{n}` | {c/1048576:.2f} MB |')
+          print('\n</details>')
+          PY
+          cat breakdown.md
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json body -q .body > body.md
+          printf '\n\n' >> body.md
+          cat breakdown.md >> body.md
+          gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --notes-file body.md
+
+      # Retention: keep only the newest 5 "milo-requested-*" releases (and their
+      # tags); older APKs are removed so the Releases page stays short.
+      - name: Prune old releases (keep the newest 5)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          KEEP=5
+          gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
+            -q '.[] | select(.tag_name | startswith("milo-requested-")) | "\(.tag_name | sub("milo-requested-"; "") | tonumber) \(.tag_name)"' \
+            | sort -rn | awk -v keep="$KEEP" 'NR > keep { print $2 }' > old-tags.txt
+          echo "Deleting $(wc -l < old-tags.txt) old release(s)"
+          while read -r tag; do
+            [ -n "$tag" ] || continue
+            gh release delete "$tag" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || echo "could not delete $tag"
+          done < old-tags.txt

@@ -118,3 +118,31 @@ export async function setDeviceLockEnabled(enabled: boolean): Promise<AppLockCon
   await writeRaw(JSON.stringify(next));
   return next;
 }
+
+// System pickers/share sheets (file chooser, share dialog, biometric prompt)
+// send the app to the background for a moment. They are part of an action the
+// admin just started, so the gate must not re-lock while one is open.
+let lockSuspendedUntil = 0;
+
+export function suspendAppLock(durationMs = 180_000): void {
+  lockSuspendedUntil = Date.now() + durationMs;
+}
+
+export function resumeAppLock(): void {
+  lockSuspendedUntil = 0;
+}
+
+export function isAppLockSuspended(): boolean {
+  return lockSuspendedUntil > Date.now();
+}
+
+/** Runs a system dialog (picker, share sheet) without triggering the app lock. */
+export async function withAppLockSuspended<T>(action: () => Promise<T>): Promise<T> {
+  suspendAppLock();
+  try {
+    return await action();
+  } finally {
+    // The 'active' AppState event can arrive slightly after the promise resolves.
+    setTimeout(resumeAppLock, 1500);
+  }
+}

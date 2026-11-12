@@ -9,7 +9,7 @@ export default function NotFoundScreen() {
     <>
       <Stack.Screen options={{ title: 'صفحه یافت نشد' }} />
       <View style={styles.container}>
-        <PageNavigation tone="dark" backFallback="/languages" />
+        <PageNavigation tone="dark" />
         <Text style={styles.title}>صفحه مورد نظر یافت نشد</Text>
       </View>
     </>

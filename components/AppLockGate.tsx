@@ -8,6 +8,7 @@ import {
   authenticateWithDeviceLock,
   getAppLockConfig,
   isAppLockEnabled,
+  isAppLockSuspended,
   verifyPattern,
   type AppLockConfig,
 } from '@/lib/appLock';
@@ -33,7 +34,8 @@ export function AppLockGate({ children }: { children: ReactNode }) {
   useEffect(() => {
     const subscription = AppState.addEventListener('change', state => {
       if (state === 'inactive' || state === 'background') {
-        if (enabledRef.current) setUnlocked(false);
+        // A file picker / share sheet opened by the admin is not "leaving" the app.
+        if (enabledRef.current && !isAppLockSuspended()) setUnlocked(false);
       } else if (state === 'active') {
         void getAppLockConfig().then(next => {
           setConfig(next);
@@ -47,7 +49,16 @@ export function AppLockGate({ children }: { children: ReactNode }) {
 
   if (!config) return <View style={styles.loading}><ActivityIndicator color={Colors.primary[400]} /></View>;
   if (!isAppLockEnabled(config) || unlocked) return <>{children}</>;
-  return <UnlockScreen config={config} onUnlock={() => setUnlocked(true)} />;
+  // The screen tree stays mounted under the lock, so a half-finished form
+  // (e.g. an update being published) is exactly where it was after unlocking.
+  return (
+    <>
+      {children}
+      <View style={StyleSheet.absoluteFill} pointerEvents="auto">
+        <UnlockScreen config={config} onUnlock={() => setUnlocked(true)} />
+      </View>
+    </>
+  );
 }
 
 function UnlockScreen({ config, onUnlock }: { config: AppLockConfig; onUnlock: () => void }) {

@@ -3,9 +3,15 @@ const path = require('node:path');
 
 const originalBase = require('./app.json').expo;
 // GitHub Pages keeps /App3; managed root-domain builds opt into a root URL.
-const base = process.env.EXPO_PUBLIC_WEB_ROOT === 'true'
+const rootBase = process.env.EXPO_PUBLIC_WEB_ROOT === 'true'
   ? { ...originalBase, experiments: { ...originalBase.experiments, baseUrl: '' } }
   : originalBase;
+// CI builds get a monotonically increasing Android versionCode (and a matching
+// version name) so in-app updates can tell newer APKs from installed ones.
+const ciVersionCode = Number.parseInt(process.env.MILO_VERSION_CODE || '', 10);
+const base = Number.isFinite(ciVersionCode) && ciVersionCode > 0
+  ? { ...rootBase, version: `1.0.${ciVersionCode}`, android: { ...rootBase.android, versionCode: ciVersionCode } }
+  : rootBase;
 
 // Optional legacy Expo remote push on Android uses FCM v1 and needs the matching
 // google-services file. The no-FCM foreground WebSocket/local-notification path
@@ -56,7 +62,7 @@ const build = () => {
   if (!admin && learnerLogin) {
     return {
       ...base,
-      name: 'MiloMultiLanguage Login',
+      name: 'MiloMultiLanguage.5',
       android: { ...base.android, package: 'com.devicecontrol.milomultilang' },
       ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.milomultilang' },
     };
@@ -64,7 +70,7 @@ const build = () => {
   if (!admin && process.env.EXPO_PUBLIC_LEARNER_FIVE_NOLOGIN === 'true') {
     return {
       ...base,
-      name: 'MiloMultiLanguage 5',
+      name: 'MiloMultiLanguage.5',
       scheme: 'milofive',
       android: { ...base.android, package: 'com.devicecontrol.milofive' },
       ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.milofive' },
@@ -73,16 +79,19 @@ const build = () => {
   if (!admin) return base;
   return {
     ...base,
-    name: 'MiloMultiLanguage Admin',
+    name: 'Admin App',
     // All three APK variants share one EAS project; native identifiers keep
     // the admin build isolated from the learner builds.
     slug: base.slug,
     scheme: 'miloadmin',
+    // The admin panel keeps its own launcher icon; learner apps use the
+    // globe-and-headphones mark shown inside the app.
+    icon: './assets/images/icon-admin.png',
     android: {
       ...base.android,
+      adaptiveIcon: undefined,
       package: 'com.devicecontrol.miloadmin',
-      label: 'Milo Admin',
-      versionCode: 2,
+      label: 'Admin App',
     },
     ios: {
       ...base.ios,

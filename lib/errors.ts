@@ -28,6 +28,10 @@ export function readableSupabaseError(error: unknown): string {
   if (/anonymous sign-ins|Anonymous sign-ins/i.test(message)) {
     return 'ورود ناشناس در تنظیمات Authentication پروژه Supabase فعال نشده است.';
   }
+  if (/CHAT_ACCESS_BLOCKED/.test(message)) return 'دسترسی شما به گفتگو توسط مدیر محدود شده است.';
+  if (/row-level security policy for table "messages"/i.test(message)) {
+    return 'این گفتگو دیگر فعال نیست (توسط پشتیبانی بسته شده یا دسترسی شما محدود است). از صفحهٔ اصلی دوباره «گفتگو با پشتیبانی» را باز کنید.';
+  }
   if (/invalid or expired/i.test(message)) return 'کد دعوت اشتباه است یا اعتبار آن تمام شده است.';
   if (/own invite/i.test(message)) return 'نمی‌توانید کد دعوت خودتان را وارد کنید.';
   if (/could not find the function|function .* does not exist/i.test(message)) {
