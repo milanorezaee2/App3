@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 54: admin app can never land on learner screens
 # rev 53: APK size breakdown in release notes (analysis only, no app change)
 # rev 52: arm64-v8a only APKs
 # rev 51: ARM-only APKs (under 50 MB) so admin upload to Supabase storage works

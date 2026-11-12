@@ -30,6 +30,7 @@ import { ChatNotificationBridge } from '@/components/ChatNotificationBridge';
 import { disableBackgroundChatChecks, reconcileBackgroundChatChecks } from '@/lib/backgroundChatChecks';
 import * as Notifications from 'expo-notifications';
 import { AppResumeGuard } from '@/components/AppResumeGuard';
+import { AdminRouteGuard } from '@/components/AdminRouteGuard';
 import { RegistrationGate } from '@/components/RegistrationGate';
 import { getPairingState, isOnboardingComplete } from '@/lib/storage';
 import { isSupabaseConfigured } from '@/lib/pairing';
@@ -200,6 +201,7 @@ export default function RootLayout() {
               {!IS_ADMIN_APP && <RuntimeGate />}
               <Stack screenOptions={{ headerShown: false }} />
               <AppResumeGuard />
+              {IS_ADMIN_APP && <AdminRouteGuard />}
               <AndroidBackHistory />
               {IS_ADMIN_APP && <ChatNotificationBridge />}
               <AppUpdatePrompt />

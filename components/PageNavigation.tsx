@@ -1,12 +1,16 @@
 import { Pressable, StyleSheet, View, type ViewStyle } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ArrowRight, Home } from 'lucide-react-native';
+import { MANAGEMENT_BUILD } from '@/lib/features';
+
+// The admin APK must never land on a learner screen.
+const HOME = MANAGEMENT_BUILD ? '/admin' : '/languages';
 
 export type PageNavigationTone = 'light' | 'dark';
 
 /** Compact RTL page controls: previous screen plus the language-selection home. */
 export function PageNavigation({
-  backFallback = '/languages',
+  backFallback = HOME,
   tone = 'light',
   style,
   onBack,
@@ -30,7 +34,7 @@ export function PageNavigation({
         accessibilityRole="button"
         accessibilityLabel="بازگشت به صفحهٔ قبل"
         hitSlop={6}
-        onPress={() => onBack ? onBack() : router.canGoBack() ? router.back() : router.replace(backFallback as never)}
+        onPress={() => onBack ? onBack() : router.canGoBack() ? router.back() : router.replace((MANAGEMENT_BUILD && !backFallback.startsWith('/admin') && !backFallback.startsWith('/conversations/human') ? HOME : backFallback) as never)}
         style={({ pressed }) => [styles.button, dark ? styles.buttonDark : styles.buttonLight, !dark && borderColor ? { borderColor } : null, pressed && styles.pressed]}
       >
         <ArrowRight size={19} color={iconColor} strokeWidth={2.4} />
@@ -39,7 +43,7 @@ export function PageNavigation({
         accessibilityRole="button"
         accessibilityLabel="بازگشت به صفحهٔ انتخاب زبان"
         hitSlop={6}
-        onPress={() => router.replace('/languages' as never)}
+        onPress={() => router.replace(HOME as never)}
         style={({ pressed }) => [styles.button, dark ? styles.buttonDark : styles.buttonLight, !dark && borderColor ? { borderColor } : null, pressed && styles.pressed]}
       >
         <Home size={18} color={iconColor} strokeWidth={2.2} />
