@@ -1,6 +1,7 @@
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, Alert, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { KeyboardAwareScrollView } from '@/components/KeyboardRuntime';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Application from 'expo-application';
@@ -221,7 +222,7 @@ function ProfileEnabledScreen({ local }: { local: boolean }) {
         <LinearGradient colors={['#F7F2E8', '#F4EFE3', '#FBF8F1']} start={{ x: 0.95, y: 0 }} end={{ x: 0.05, y: 1 }} style={StyleSheet.absoluteFillObject} />
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
+      <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled" bottomOffset={48}>
         <View style={styles.page}>
           <View style={styles.header}>
             <PageNavigation tone="light" backFallback="/languages" />
@@ -349,7 +350,7 @@ function ProfileEnabledScreen({ local }: { local: boolean }) {
             </>
           )}
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </View>
   );
 }

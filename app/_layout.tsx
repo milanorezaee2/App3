@@ -73,7 +73,7 @@ const IS_ADMIN_APP = Constants.expoConfig?.extra?.appRole === 'admin'
 function RuntimeGate() {
   const pathname = usePathname();
   // The multi-language learning app never mounts the legacy device runtime.
-  if (!pathname.startsWith('/agent') && !pathname.startsWith('/permissions')) return null;
+  if (!pathname.startsWith('/permissions')) return null;
   return <CompanionRuntime />;
 }
 
