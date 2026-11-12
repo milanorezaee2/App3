@@ -811,7 +811,7 @@ function KeyValueList({ rows }: { rows: Array<[string, string, boolean?]> }) {
       {rows.map(([label, value, ltr], index) => (
         <View key={label} style={[styles.kvListRow, index > 0 && styles.kvListRowBorder]}>
           <Text style={styles.kvListLabel}>{label}</Text>
-          <Text style={[styles.kvListValue, ltr && styles.kvListValueLtr]} numberOfLines={2}>{value}</Text>
+          <Text style={[styles.kvListValue, ltr && styles.kvListValueLtr]}>{value}</Text>
         </View>
       ))}
     </View>

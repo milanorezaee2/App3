@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 64: white raised chat buttons; single-line brand/version texts; launcher label MiloLang
 # rev 63: keep only the newest 5 releases
 # rev 62: learner APK asset names → 5update.apk / login.5update.apk / 2update.apk
 # rev 61: learner launcher icon = in-app globe mark; English card solo centred

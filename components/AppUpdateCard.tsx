@@ -98,12 +98,12 @@ export function AppUpdateCard() {
       {!!error && <Text accessibilityRole="alert" style={s.error}>{error}</Text>}
 
       {supported && checkedAt && status !== 'available' && (
-        <Text style={s.hint}>
-          {latest
-            ? `آخرین نسخهٔ منتشرشده روی سرور برای این اپ: ${latest.version_name} (ساخت ${fa(latest.version_code)})`
-            : 'هنوز هیچ نسخه‌ای برای این اپ روی سرور منتشر نشده است.'}
-          {` · شناسهٔ اپ: ${installed.package ?? '—'}`}
-        </Text>
+        <View style={s.serverBox}>
+          <Text style={s.hint} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75}>
+            {latest ? `آخرین نسخه روی سرور: ${latest.version_name} (ساخت ${fa(latest.version_code)})` : 'هنوز نسخه‌ای برای این اپ روی سرور منتشر نشده است.'}
+          </Text>
+          <Text keepColor style={s.packageId} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7}>{installed.package ?? '—'}</Text>
+        </View>
       )}
     </View>
   );
@@ -131,5 +131,7 @@ const s = StyleSheet.create({
   secondary: { minHeight: 42, borderRadius: 12, borderWidth: 1, borderColor: '#D7DECE', backgroundColor: '#FFFFFF', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7 },
   secondaryText: { fontSize: 13, color: '#31533B' },
   hint: { fontSize: 11, color: '#746E63', textAlign: 'right', lineHeight: 18 },
+  serverBox: { gap: 2, alignItems: 'stretch' },
+  packageId: { fontFamily: 'Times New Roman', fontWeight: '700', fontSize: 11, color: '#746E63', writingDirection: 'ltr', textAlign: 'right' },
   error: { fontSize: 12, color: '#B42318', textAlign: 'right' },
 });

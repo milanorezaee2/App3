@@ -39,8 +39,8 @@ export function MiloLanguageBrand() {
         ] }]}
       />
       <View style={styles.lockup}>
-        <Text style={styles.wordmark}>Milo</Text>
-        <Text style={styles.subtitle}>multilanguage</Text>
+        <Text style={styles.wordmark} numberOfLines={1}>Milo</Text>
+        <Text style={styles.subtitle} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7}>multilanguage</Text>
       </View>
     </View>
   );
@@ -49,7 +49,7 @@ export function MiloLanguageBrand() {
 const styles = StyleSheet.create({
   brand: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', minHeight: 48, gap: 8 },
   mark: { width: 48, height: 48 },
-  lockup: { alignItems: 'center', justifyContent: 'center' },
+  lockup: { alignItems: 'center', justifyContent: 'center', flexShrink: 1 },
   wordmark: { fontFamily: Typography.latinFontFamily, color: '#16443A', fontSize: 35, lineHeight: 38, fontWeight: '700', writingDirection: 'ltr' },
   subtitle: { fontFamily: Typography.latinFontFamily, color: '#526A5A', fontSize: 11, lineHeight: 14, letterSpacing: 0.8, writingDirection: 'ltr' },
 });

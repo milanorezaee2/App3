@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   peopleIcon: { width: 62, height: 62, borderRadius: 31, backgroundColor: Colors.primary[500] + '14', alignItems: 'center', justifyContent: 'center', marginBottom: Spacing.md },
   emptyTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg, fontWeight: Typography.weights.bold, color: Colors.neutral[200], textAlign: 'center' },
   emptyDesc: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, color: Colors.neutral[500], textAlign: 'center', lineHeight: 22, marginTop: 6 },
-  inviteButton: { minHeight: 46, marginTop: Spacing.lg, paddingHorizontal: Spacing.xl, borderRadius: Radius.lg, backgroundColor: Colors.primary[500], flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7 },
+  inviteButton: { minHeight: 46, marginTop: Spacing.lg, paddingHorizontal: Spacing.xl, borderRadius: Radius.lg, backgroundColor: Colors.primary[500], flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, borderWidth: 2, borderColor: '#FFFFFF', shadowColor: '#1E1B4B', shadowOpacity: 0.28, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 6 },
   inviteText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, fontWeight: Typography.weights.bold, color: Colors.onColor },
   inviteMethods: { flexDirection: 'row-reverse', gap: Spacing.md, marginTop: Spacing.md },
   method: { flexDirection: 'row-reverse', gap: 5, alignItems: 'center' },

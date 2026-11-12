@@ -62,7 +62,7 @@ const build = () => {
   if (!admin && learnerLogin) {
     return {
       ...base,
-      name: 'MiloMultiLanguage.5',
+      name: 'MiloLang',
       android: { ...base.android, package: 'com.devicecontrol.milomultilang' },
       ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.milomultilang' },
     };
@@ -70,13 +70,13 @@ const build = () => {
   if (!admin && process.env.EXPO_PUBLIC_LEARNER_FIVE_NOLOGIN === 'true') {
     return {
       ...base,
-      name: 'MiloMultiLanguage.5',
+      name: 'MiloLang',
       scheme: 'milofive',
       android: { ...base.android, package: 'com.devicecontrol.milofive' },
       ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.milofive' },
     };
   }
-  if (!admin) return base;
+  if (!admin) return { ...base, name: 'MiloLang' };
   return {
     ...base,
     name: 'Admin App',
