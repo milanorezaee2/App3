@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 62: learner APK asset names → 5update.apk / login.5update.apk / 2update.apk
 # rev 61: learner launcher icon = in-app globe mark; English card solo centred
 # rev 60: post-update what-changed sheet; English base card; Pre-A1 lesson 1 counts words
 # rev 59: home hero text + language cards mirrored right on Android
@@ -248,7 +249,7 @@ jobs:
       EXPO_PUBLIC_LANGUAGE_SCOPE: ${{ inputs.language_scope_login || 'en,de,fr,tr,es' }}
       EXPECTED_PACKAGE: 'com.devicecontrol.milomultilang'
       EXPECTED_SCOPE: ${{ inputs.language_scope_login || 'en,de,fr,tr,es' }}
-      APK_NAME: 'MiloMultiLanguage.5-Login.apk'
+      APK_NAME: 'login.5update.apk'
     steps:
       - *checkout
       - *node
@@ -278,7 +279,7 @@ jobs:
       EXPO_PUBLIC_LANGUAGE_SCOPE: ${{ inputs.language_scope_nologin || 'en,ru' }}
       EXPECTED_PACKAGE: 'com.devicecontrol.companion'
       EXPECTED_SCOPE: ${{ inputs.language_scope_nologin || 'en,ru' }}
-      APK_NAME: 'MiloMultiLanguage-NoLogin.apk'
+      APK_NAME: '2update.apk'
     steps:
       - *checkout
       - *node
@@ -309,7 +310,7 @@ jobs:
       EXPO_PUBLIC_LANGUAGE_SCOPE: 'en,de,fr,tr,es'
       EXPECTED_PACKAGE: 'com.devicecontrol.milofive'
       EXPECTED_SCOPE: 'en,de,fr,tr,es'
-      APK_NAME: 'MiloMultiLanguage.5-NoLogin.apk'
+      APK_NAME: '5update.apk'
     steps:
       - *checkout
       - *node
@@ -389,14 +390,14 @@ jobs:
 
             - `AdminApp.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
             - `AdminApp-web.zip` — the same management panel as a static website (unzip and serve the folder)
-            - `MiloMultiLanguage.5-Login.apk` — MiloMultiLanguage WITH login, package `com.devicecontrol.milomultilang`, languages en, de, fr, tr, es
-            - `MiloMultiLanguage-NoLogin.apk` — MiloMultiLanguage WITHOUT login, package `com.devicecontrol.companion`, languages en, ru
-            - `MiloMultiLanguage.5-NoLogin.apk` — five-language MiloMultiLanguage WITHOUT login, package `com.devicecontrol.milofive`, languages en, de, fr, tr, es
+            - `login.5update.apk` — MiloMultiLanguage WITH login, package `com.devicecontrol.milomultilang`, languages en, de, fr, tr, es
+            - `2update.apk` — MiloMultiLanguage WITHOUT login, package `com.devicecontrol.companion`, languages en, ru
+            - `5update.apk` — five-language MiloMultiLanguage WITHOUT login, package `com.devicecontrol.milofive`, languages en, de, fr, tr, es
           files: |
             out/AdminApp.apk/AdminApp.apk
-            out/MiloMultiLanguage-NoLogin.apk/MiloMultiLanguage-NoLogin.apk
+            out/2update.apk/2update.apk
             out/AdminApp.apk/AdminApp.apk.sha256
-            out/MiloMultiLanguage-NoLogin.apk/MiloMultiLanguage-NoLogin.apk.sha256
+            out/2update.apk/2update.apk.sha256
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -407,8 +408,8 @@ jobs:
         with:
           tag_name: milo-requested-${{ github.run_number }}
           files: |
-            out/MiloMultiLanguage.5-NoLogin.apk/MiloMultiLanguage.5-NoLogin.apk
-            out/MiloMultiLanguage.5-NoLogin.apk/MiloMultiLanguage.5-NoLogin.apk.sha256
+            out/5update.apk/5update.apk
+            out/5update.apk/5update.apk.sha256
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -419,8 +420,8 @@ jobs:
         with:
           tag_name: milo-requested-${{ github.run_number }}
           files: |
-            out/MiloMultiLanguage.5-Login.apk/MiloMultiLanguage.5-Login.apk
-            out/MiloMultiLanguage.5-Login.apk/MiloMultiLanguage.5-Login.apk.sha256
+            out/login.5update.apk/login.5update.apk
+            out/login.5update.apk/login.5update.apk.sha256
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -448,7 +449,7 @@ jobs:
         run: |
           python3 - <<'PY' > breakdown.md
           import zipfile, collections, os
-          apk = 'out/MiloMultiLanguage.5-NoLogin.apk/MiloMultiLanguage.5-NoLogin.apk'
+          apk = 'out/5update.apk/5update.apk'
           groups = collections.Counter(); raw = collections.Counter(); files = []
           with zipfile.ZipFile(apk) as z:
               for i in z.infolist():
@@ -463,7 +464,7 @@ jobs:
                   groups[g] += i.compress_size; raw[g] += i.file_size
                   files.append((i.compress_size, n))
           total = os.path.getsize(apk)
-          print(f'### APK size breakdown — MiloMultiLanguage.5-NoLogin.apk ({total/1048576:.1f} MB)\n')
+          print(f'### APK size breakdown — 5update.apk ({total/1048576:.1f} MB)\n')
           print('| part | compressed in APK | uncompressed |\n|---|---:|---:|')
           for g, c in groups.most_common():
               print(f'| {g} | {c/1048576:.1f} MB | {raw[g]/1048576:.1f} MB |')

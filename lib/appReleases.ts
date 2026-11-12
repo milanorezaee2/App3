@@ -1,9 +1,9 @@
 /** Catalogue of the distributed Android apps (package ids match app.config.js). */
 export interface AppTarget { package: string; title: string; apk: string; hint: string }
 export const APP_TARGETS: readonly AppTarget[] = Object.freeze([
-  { package: 'com.devicecontrol.milofive', title: 'MiloMultiLanguage.5 — بدون ورود', apk: 'MiloMultiLanguage.5-NoLogin.apk', hint: 'پنج زبان، بدون صفحهٔ ورود' },
-  { package: 'com.devicecontrol.milomultilang', title: 'MiloMultiLanguage.5 — با ورود', apk: 'MiloMultiLanguage.5-Login.apk', hint: 'پنج زبان، با ورود' },
-  { package: 'com.devicecontrol.companion', title: 'MiloMultiLanguage — انگلیسی/روسی', apk: 'MiloMultiLanguage-NoLogin.apk', hint: 'انگلیسی و روسی، بدون ورود' },
+  { package: 'com.devicecontrol.milofive', title: 'MiloMultiLanguage.5 — بدون ورود', apk: '5update.apk', hint: 'پنج زبان، بدون صفحهٔ ورود' },
+  { package: 'com.devicecontrol.milomultilang', title: 'MiloMultiLanguage.5 — با ورود', apk: 'login.5update.apk', hint: 'پنج زبان، با ورود' },
+  { package: 'com.devicecontrol.companion', title: 'MiloMultiLanguage — انگلیسی/روسی', apk: '2update.apk', hint: 'انگلیسی و روسی، بدون ورود' },
   { package: 'com.devicecontrol.miloadmin', title: 'Admin App', apk: 'AdminApp.apk', hint: 'پنل مدیریت' },
 ]);
 export const findAppTarget = (pkg: string | null | undefined) => APP_TARGETS.find(t => t.package === pkg) || null;

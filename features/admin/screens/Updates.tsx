@@ -110,7 +110,7 @@ export function UpdatesScreen() {
             </View>
           ) : (
             <View style={{ gap: 6 }}>
-              <TextInput value={link} onChangeText={setLink} autoCapitalize="none" keyboardType="url" placeholder="https://github.com/…/MiloMultiLanguage.5-NoLogin.apk" placeholderTextColor={T.color.textFaint} style={[a.input, { textAlign: 'left' }]} />
+              <TextInput value={link} onChangeText={setLink} autoCapitalize="none" keyboardType="url" placeholder="https://github.com/…/5update.apk" placeholderTextColor={T.color.textFaint} style={[a.input, { textAlign: 'left' }]} />
               <Text style={a.muted}>لینک باید مستقیم به فایل APK باشد (مثل لینک دانلود در صفحهٔ Release گیت‌هاب).</Text>
             </View>
           )}
