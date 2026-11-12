@@ -2,6 +2,7 @@ import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/compon
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Alert, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from '@/components/KeyboardRuntime';
+import { AppUpdateCard } from '@/components/AppUpdateCard';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Application from 'expo-application';
@@ -611,7 +612,8 @@ function AccountTab({ local, deviceAccount, serverRegisteredAt, onRegister, loca
       </Section>
       )}
 
-      <Section icon={<Smartphone size={17} color={palette.forest} />} title="دستگاه و نسخه">
+      <Section icon={<Smartphone size={17} color={palette.forest} />} title="دستگاه و نسخه" subtitle="نسخهٔ فعلی برنامه و به‌روزرسانی‌های منتشرشده برای همین اپ.">
+        <AppUpdateCard />
         <KeyValueList rows={[
           ['سیستم‌عامل', Platform.OS === 'android' ? 'Android' : Platform.OS === 'ios' ? 'iOS' : 'Web', true],
           ['نسخهٔ برنامه', buildVersion ? `${appVersion} (${buildVersion})` : appVersion, true],

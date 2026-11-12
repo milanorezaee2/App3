@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 56: profile → account: version + in-app update card
 # rev 55: drop legacy pairing/barcode scanner (expo-camera); profile keyboard-aware
 # rev 54: admin app can never land on learner screens
 # rev 53: APK size breakdown in release notes (analysis only, no app change)
