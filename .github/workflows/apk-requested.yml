@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 72: launcher icon 2048px source, sharpened and colour-boosted
 # rev 71: French card beside English; resume never redirects on a warm return
 # rev 70: app lock engages only after 20 s away
 # rev 69: fix voice message playback on a released AudioPlayer
