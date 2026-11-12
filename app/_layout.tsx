@@ -27,7 +27,8 @@ import { AppPopupPrompt } from '@/components/AppPopupPrompt';
 import { AndroidBackHistory } from '@/components/AndroidBackHistory';
 import { WebStatusBarSpacer } from '@/components/WebStatusBarSpacer';
 import { ChatNotificationBridge } from '@/components/ChatNotificationBridge';
-import { reconcileBackgroundChatChecks } from '@/lib/backgroundChatChecks';
+import { disableBackgroundChatChecks, reconcileBackgroundChatChecks } from '@/lib/backgroundChatChecks';
+import * as Notifications from 'expo-notifications';
 import { AppResumeGuard } from '@/components/AppResumeGuard';
 import { RegistrationGate } from '@/components/RegistrationGate';
 import { getPairingState, isOnboardingComplete } from '@/lib/storage';
@@ -124,9 +125,19 @@ export default function RootLayout() {
     Lalezar: Beiruti_400Regular,
   });
 
-  // Restores the Firebase-free chat alert worker after an update or reboot.
+  // Learner builds ship without chat alerts: any worker left over from an
+  // older install is stopped and pending system notifications are cleared.
+  // The admin app keeps its opt-in alert worker.
   useEffect(() => {
-    void reconcileBackgroundChatChecks();
+    if (IS_ADMIN_APP) {
+      void reconcileBackgroundChatChecks();
+      return;
+    }
+    void disableBackgroundChatChecks().catch(() => undefined);
+    if (Platform.OS !== 'web') {
+      void Notifications.dismissAllNotificationsAsync().catch(() => undefined);
+      void Notifications.setBadgeCountAsync(0).catch(() => undefined);
+    }
   }, []);
 
   useEffect(() => {
@@ -190,7 +201,7 @@ export default function RootLayout() {
               <Stack screenOptions={{ headerShown: false }} />
               <AppResumeGuard />
               <AndroidBackHistory />
-              <ChatNotificationBridge />
+              {IS_ADMIN_APP && <ChatNotificationBridge />}
               <AppUpdatePrompt />
               {!IS_ADMIN_APP && <AppPopupPrompt />}
             </RegistrationGate>
