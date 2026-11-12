@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 46: in-app updates — admin publishes APK releases (upload/link), learner apps download+install; CI versionCode = 100+run
 # rev 45: Admin panel v2 — modular architecture (features/admin), independent design, users/support/chats moderation, audit log, web build
 # rev 44: calmer chat alerts (no heads-up, one per conversation, 45s audible cooldown); brand logo/text swapped
 # rev 43: APK renames (MiloMultiLanguage.5-*, MiloMultiLanguage-NoLogin); five-language open app registers the device profile on the server (Admin App list, cloud sync, full profile)
@@ -104,6 +105,7 @@ jobs:
       EXPECTED_PACKAGE: 'com.devicecontrol.miloadmin'
       EXPECTED_SCOPE: 'en,tr'
       APK_NAME: 'AdminApp.apk'
+      MILO_VERSION_CODE: '${{ 100 + github.run_number }}'
     steps:
       - &checkout
         name: Check out repository
@@ -228,6 +230,7 @@ jobs:
       EXPECTED_PACKAGE: 'com.devicecontrol.milomultilang'
       EXPECTED_SCOPE: ${{ inputs.language_scope_login || 'en,de,fr,tr,es' }}
       APK_NAME: 'MiloMultiLanguage.5-Login.apk'
+      MILO_VERSION_CODE: '${{ 100 + github.run_number }}'
     steps:
       - *checkout
       - *node
@@ -258,6 +261,7 @@ jobs:
       EXPECTED_PACKAGE: 'com.devicecontrol.companion'
       EXPECTED_SCOPE: ${{ inputs.language_scope_nologin || 'en,ru' }}
       APK_NAME: 'MiloMultiLanguage-NoLogin.apk'
+      MILO_VERSION_CODE: '${{ 100 + github.run_number }}'
     steps:
       - *checkout
       - *node
@@ -289,6 +293,7 @@ jobs:
       EXPECTED_PACKAGE: 'com.devicecontrol.milofive'
       EXPECTED_SCOPE: 'en,de,fr,tr,es'
       APK_NAME: 'MiloMultiLanguage.5-NoLogin.apk'
+      MILO_VERSION_CODE: '${{ 100 + github.run_number }}'
     steps:
       - *checkout
       - *node
@@ -362,6 +367,8 @@ jobs:
           prerelease: true
           body: |
             Installable Android APKs, each built on its own clean runner.
+
+            **versionCode: ${{ 100 + github.run_number }}** · version name `1.0.${{ 100 + github.run_number }}` (use these in Admin App → به‌روزرسانی اپ‌ها)
 
             - `AdminApp.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
             - `AdminApp-web.zip` — the same management panel as a static website (unzip and serve the folder)

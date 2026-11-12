@@ -1,6 +1,6 @@
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { usePathname, useRouter } from 'expo-router';
-import { BookOpen, GraduationCap, LayoutDashboard, LogOut, MessageSquare, MessagesSquare, RefreshCw, Settings, ShieldCheck, Users } from 'lucide-react-native';
+import { BookOpen, GraduationCap, LayoutDashboard, LogOut, MessageSquare, MessagesSquare, RefreshCw, Settings, ShieldCheck, UploadCloud, Users } from 'lucide-react-native';
 import { useState, type ComponentType, type ReactNode } from 'react';
 import { ActivityIndicator, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -15,6 +15,7 @@ export const ADMIN_NAV: NavItem[] = [
   { href: '/admin/support', label: 'پشتیبانی', short: 'پشتیبانی', icon: MessageSquare },
   { href: '/admin/chats', label: 'گفتگوها', short: 'گفتگوها', icon: MessagesSquare },
   { href: '/admin/learners', label: 'زبان‌آموزان و دعوت‌ها', short: 'زبان‌آموزان', icon: GraduationCap },
+  { href: '/admin/updates', label: 'به‌روزرسانی اپ‌ها', short: 'آپدیت', icon: UploadCloud },
   { href: '/admin/content', label: 'محتوای آموزشی', short: 'محتوا', icon: BookOpen },
   { href: '/admin/settings', label: 'تنظیمات', short: 'تنظیمات', icon: Settings },
 ];

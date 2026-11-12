@@ -22,6 +22,7 @@ import { Beiruti_900Black } from '@expo-google-fonts/beiruti/900Black';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AppLockGate } from '@/components/AppLockGate';
+import { AppUpdatePrompt } from '@/components/AppUpdatePrompt';
 import { AndroidBackHistory } from '@/components/AndroidBackHistory';
 import { WebStatusBarSpacer } from '@/components/WebStatusBarSpacer';
 import { ChatNotificationBridge } from '@/components/ChatNotificationBridge';
@@ -189,6 +190,7 @@ export default function RootLayout() {
               <AppResumeGuard />
               <AndroidBackHistory />
               <ChatNotificationBridge />
+              <AppUpdatePrompt />
             </RegistrationGate>
           </AppLockGate>
           <StatusBar style="dark" />

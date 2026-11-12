@@ -131,3 +131,64 @@ export async function setEnrollmentStatus(studentId: string, status: 'active' | 
 
 // ------------------------------------------------------------------ audit
 export const fetchRecentActions = (limit = 50) => rpc<AuditEntry[]>('admin_recent_actions', { p_limit: limit }).then(rows => rows || []);
+
+// --------------------------------------------------------------- releases
+import type { AppRelease } from '@/lib/appReleases';
+import { SUPABASE_PUBLIC_ANON_KEY, SUPABASE_PUBLIC_URL } from '@/lib/supabaseConfig';
+import * as FileSystem from 'expo-file-system/legacy';
+import { Platform } from 'react-native';
+
+export interface AdminRelease extends AppRelease { package_name: string; platform: string; published: boolean; storage_path: string | null }
+export const RELEASES_BUCKET = 'app-releases';
+
+export async function fetchReleases(): Promise<AdminRelease[]> {
+  const { data, error } = await adminClient().from('app_releases').select('*').order('created_at', { ascending: false }).limit(200);
+  if (error) {
+    if (isMissingFunction(error) || error.code === '42P01' || error.code === 'PGRST205') throw new AdminSetupRequiredError();
+    throw new Error(readableSupabaseError(error));
+  }
+  return (data || []) as AdminRelease[];
+}
+
+export interface PickedApk { name: string; size: number; uri: string; file?: File }
+
+/** Uploads an APK to the public releases bucket and returns its public URL. */
+export async function uploadApk(packageName: string, versionCode: number, picked: PickedApk, onProgress?: (fraction: number) => void): Promise<{ url: string; path: string; size: number }> {
+  const path = `${packageName}/${versionCode}-${Date.now()}.apk`;
+  const client = adminClient();
+  if (Platform.OS === 'web') {
+    if (!picked.file) throw new Error('فایل انتخاب نشده است.');
+    const { error } = await client.storage.from(RELEASES_BUCKET).upload(path, picked.file, { contentType: 'application/vnd.android.package-archive', upsert: false });
+    if (error) throw new Error(/exceeded|too large|Payload/i.test(error.message) ? 'حجم فایل از سقف مجاز فضای ذخیره‌سازی پروژه بیشتر است؛ از گزینهٔ «لینک مستقیم» استفاده کنید.' : error.message);
+  } else {
+    const { data: sessionData } = await client.auth.getSession();
+    const token = sessionData.session?.access_token;
+    if (!token) throw new Error('AUTH_REQUIRED');
+    const task = FileSystem.createUploadTask(
+      `${SUPABASE_PUBLIC_URL}/storage/v1/object/${RELEASES_BUCKET}/${path}`,
+      picked.uri,
+      { httpMethod: 'POST', headers: { Authorization: `Bearer ${token}`, apikey: SUPABASE_PUBLIC_ANON_KEY, 'Content-Type': 'application/vnd.android.package-archive', 'x-upsert': 'false' }, uploadType: FileSystem.FileSystemUploadType.BINARY_CONTENT },
+      progress => { if (onProgress && progress.totalBytesExpectedToSend) onProgress(progress.totalBytesSent / progress.totalBytesExpectedToSend); },
+    );
+    const result = await task.uploadAsync();
+    if (!result || result.status >= 400) {
+      const body = result?.body || '';
+      throw new Error(/exceeded|too large|Payload/i.test(body) ? 'حجم فایل از سقف مجاز فضای ذخیره‌سازی پروژه بیشتر است؛ از گزینهٔ «لینک مستقیم» استفاده کنید.' : `آپلود ناموفق بود (${result?.status ?? '—'}).`);
+    }
+  }
+  onProgress?.(1);
+  const { data } = client.storage.from(RELEASES_BUCKET).getPublicUrl(path);
+  return { url: data.publicUrl, path, size: picked.size };
+}
+
+export async function publishRelease(input: { packageName: string; versionName: string; versionCode: number; downloadUrl: string; notes: string; mandatory: boolean; storagePath?: string | null; fileSize?: number | null }): Promise<string> {
+  return rpc<string>('admin_publish_release', {
+    p_package_name: input.packageName, p_version_name: input.versionName, p_version_code: input.versionCode, p_download_url: input.downloadUrl,
+    p_release_notes: input.notes, p_mandatory: input.mandatory, p_storage_path: input.storagePath ?? null, p_file_size: input.fileSize ?? null, p_sha256: null,
+  });
+}
+export const setReleasePublished = (id: string, published: boolean) => rpc<void>('admin_set_release_published', { p_release_id: id, p_published: published });
+export async function deleteRelease(release: AdminRelease): Promise<void> {
+  await rpc<void>('admin_delete_release', { p_release_id: release.id });
+  if (release.storage_path) await adminClient().storage.from(RELEASES_BUCKET).remove([release.storage_path]).catch(() => undefined);
+}

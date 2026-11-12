@@ -15,6 +15,9 @@ const ACTION_LABELS: Record<string, string> = {
   clear_conversation: 'حذف پیام‌های گفتگو',
   block_conversation_members: 'مسدودکردن اعضای گفتگو',
   unblock_conversation_members: 'رفع مسدودیت اعضای گفتگو',
+  publish_release: 'انتشار نسخهٔ اپ',
+  unpublish_release: 'غیرفعال‌کردن نسخهٔ اپ',
+  delete_release: 'حذف نسخهٔ اپ',
 };
 
 export function SettingsScreen() {

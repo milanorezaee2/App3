@@ -3,9 +3,15 @@ const path = require('node:path');
 
 const originalBase = require('./app.json').expo;
 // GitHub Pages keeps /App3; managed root-domain builds opt into a root URL.
-const base = process.env.EXPO_PUBLIC_WEB_ROOT === 'true'
+const rootBase = process.env.EXPO_PUBLIC_WEB_ROOT === 'true'
   ? { ...originalBase, experiments: { ...originalBase.experiments, baseUrl: '' } }
   : originalBase;
+// CI builds get a monotonically increasing Android versionCode (and a matching
+// version name) so in-app updates can tell newer APKs from installed ones.
+const ciVersionCode = Number.parseInt(process.env.MILO_VERSION_CODE || '', 10);
+const base = Number.isFinite(ciVersionCode) && ciVersionCode > 0
+  ? { ...rootBase, version: `1.0.${ciVersionCode}`, android: { ...rootBase.android, versionCode: ciVersionCode } }
+  : rootBase;
 
 // Optional legacy Expo remote push on Android uses FCM v1 and needs the matching
 // google-services file. The no-FCM foreground WebSocket/local-notification path
@@ -82,7 +88,6 @@ const build = () => {
       ...base.android,
       package: 'com.devicecontrol.miloadmin',
       label: 'Admin App',
-      versionCode: 2,
     },
     ios: {
       ...base.ios,
