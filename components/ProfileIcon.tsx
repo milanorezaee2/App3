@@ -4,13 +4,20 @@ import Svg, { Circle, Defs, LinearGradient, Path, Stop } from 'react-native-svg'
  * Bespoke profile mark: a gradient medallion with a refined bust silhouette
  * and a small spark badge, replacing the generic outlined "user" glyph.
  */
-export function ProfileIcon({ size = 26, badge = true }: { size?: number; badge?: boolean }) {
+/**
+ * `registered` switches the medallion from forest green to a warm terracotta
+ * and turns the badge into a check mark, so a signed-up learner can tell at a
+ * glance from the home header.
+ */
+export function ProfileIcon({ size = 26, badge = true, registered = false }: { size?: number; badge?: boolean; registered?: boolean }) {
+  const medallionStart = registered ? '#D08A5F' : '#4D7A57';
+  const medallionEnd = registered ? '#9A4B1E' : '#2A4733';
   return (
     <Svg width={size} height={size} viewBox="0 0 48 48" fill="none">
       <Defs>
         <LinearGradient id="profileMedallion" x1="8" y1="6" x2="40" y2="42" gradientUnits="userSpaceOnUse">
-          <Stop offset="0" stopColor="#4D7A57" />
-          <Stop offset="1" stopColor="#2A4733" />
+          <Stop offset="0" stopColor={medallionStart} />
+          <Stop offset="1" stopColor={medallionEnd} />
         </LinearGradient>
         <LinearGradient id="profileShine" x1="12" y1="8" x2="36" y2="30" gradientUnits="userSpaceOnUse">
           <Stop offset="0" stopColor="#FFFFFF" stopOpacity="0.28" />
@@ -38,8 +45,10 @@ export function ProfileIcon({ size = 26, badge = true }: { size?: number; badge?
       {badge && (
         <>
           <Circle cx="36.5" cy="35.5" r="7.2" fill="#FFFCF6" />
-          <Circle cx="36.5" cy="35.5" r="5.6" fill="url(#profileBadge)" />
-          <Path d="M36.5 31.6l1.1 2.5 2.6.3-1.9 1.8.5 2.6-2.3-1.3-2.3 1.3.5-2.6-1.9-1.8 2.6-.3z" fill="#FFFCF6" />
+          <Circle cx="36.5" cy="35.5" r="5.6" fill={registered ? "#2F6B45" : "url(#profileBadge)"} />
+          {registered
+            ? <Path d="M33.4 35.6l2.2 2.2 4.3-4.6" stroke="#FFFCF6" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            : <Path d="M36.5 31.6l1.1 2.5 2.6.3-1.9 1.8.5 2.6-2.3-1.3-2.3 1.3.5-2.6-1.9-1.8 2.6-.3z" fill="#FFFCF6" />}
         </>
       )}
     </Svg>

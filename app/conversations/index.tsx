@@ -107,9 +107,9 @@ export default function ConversationsHome() {
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         {configured && MANAGEMENT_BUILD ? <ChatAlertSettingsCard /> : null}
         {configured && (
-          <Pressable accessibilityRole="button" style={styles.inviteButton} disabled={openingSupport} onPress={openSupport}>
-            <MessageCircle size={17} color={Colors.primary[300]} />
-            <Text style={styles.addAnotherText}>{openingSupport ? 'در حال باز کردن...' : 'گفتگو با پشتیبانی Milo'}</Text>
+          <Pressable accessibilityRole="button" style={styles.supportButton} disabled={openingSupport} onPress={openSupport}>
+            <MessageCircle size={17} color="#111111" />
+            <Text keepColor style={styles.supportText}>{openingSupport ? 'در حال باز کردن...' : 'گفتگو با پشتیبانی Milo'}</Text>
           </Pressable>
         )}
         <View style={styles.sectionRow}>
@@ -224,6 +224,8 @@ const styles = StyleSheet.create({
   emptyTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg, fontWeight: Typography.weights.bold, color: Colors.neutral[200], textAlign: 'center' },
   emptyDesc: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, color: Colors.neutral[500], textAlign: 'center', lineHeight: 22, marginTop: 6 },
   inviteButton: { minHeight: 46, marginTop: Spacing.lg, paddingHorizontal: Spacing.xl, borderRadius: Radius.lg, backgroundColor: Colors.primary[500], flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, borderWidth: 2, borderColor: '#FFFFFF', shadowColor: '#1E1B4B', shadowOpacity: 0.28, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 6 },
+  supportButton: { minHeight: 48, marginTop: Spacing.lg, paddingHorizontal: Spacing.xl, borderRadius: Radius.lg, backgroundColor: '#FFFFFF', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, borderWidth: 1, borderColor: '#E4E7EE', shadowColor: '#1E1B4B', shadowOpacity: 0.22, shadowRadius: 14, shadowOffset: { width: 0, height: 7 }, elevation: 7 },
+  supportText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, fontWeight: Typography.weights.bold, color: '#111111' },
   inviteText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, fontWeight: Typography.weights.bold, color: Colors.onColor },
   inviteMethods: { flexDirection: 'row-reverse', gap: Spacing.md, marginTop: Spacing.md },
   method: { flexDirection: 'row-reverse', gap: 5, alignItems: 'center' },

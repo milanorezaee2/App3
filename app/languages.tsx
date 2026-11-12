@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react';
 import { Alert, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { createAudioPlayer } from 'expo-audio';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { ArrowLeft, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
 import { MiloLanguageBrand } from '@/components/MiloLanguageBrand';
 import { ProfileIcon } from '@/components/ProfileIcon';
 import { ensureOpenLearnerRegistered } from '@/lib/openLearnerAccount';
+import { isLearnerRegistered } from '@/lib/registrationStatus';
+import { useCallback } from 'react';
 import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
@@ -51,6 +53,12 @@ export default function LanguagesHome() {
   const tiny = width < 370;
 
   useEffect(() => { void ensureOpenLearnerRegistered(); }, []);
+  const [registered, setRegistered] = useState(false);
+  useFocusEffect(useCallback(() => {
+    let active = true;
+    void isLearnerRegistered().then(value => { if (active) setRegistered(value); });
+    return () => { active = false; };
+  }, []));
 
   useEffect(() => {
     // Browsers block autoplay and expo-audio web leaves the play() promise unhandled; skip on web.
@@ -128,11 +136,11 @@ export default function LanguagesHome() {
             <View style={styles.headerActions}>
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel="پروفایل من"
-                style={({ pressed }) => [styles.headerButton, styles.profileButton, pressed && styles.pressed]}
+                accessibilityLabel={registered ? 'پروفایل من (ثبت‌نام شده)' : 'پروفایل من'}
+                style={({ pressed }) => [styles.headerButton, styles.profileButton, registered && styles.profileButtonRegistered, pressed && styles.pressed]}
                 onPress={() => router.push('/profile' as never)}
               >
-                <ProfileIcon size={26} />
+                <ProfileIcon size={26} registered={registered} />
               </Pressable>
               <Pressable
                 accessibilityRole="button"
@@ -276,6 +284,7 @@ const styles = StyleSheet.create({
   headerRtl: { flexDirection: 'row-reverse' },
   headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   profileButton: { borderColor: '#D7DECE', backgroundColor: '#F3F6EE' },
+  profileButtonRegistered: { borderColor: '#EAD0C1', backgroundColor: '#FBEFE6' },
   headerButton: { width: 38, height: 38, borderRadius: 13, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#554C3E', shadowOpacity: 0.06, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   hero: { minHeight: 196, justifyContent: 'center', padding: 20, borderRadius: 20, overflow: 'hidden', backgroundColor: '#ECE4D4', shadowColor: '#514433', shadowOpacity: 0.10, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
   heroImage: { borderRadius: 20 },
