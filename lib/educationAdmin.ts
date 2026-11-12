@@ -55,25 +55,6 @@ export function educationError(error: unknown): string {
   if (/AUTH_REQUIRED|JWT|session/i.test(text)) return 'نشست ورود معتبر نیست؛ دوباره وارد شوید.';
   return 'عملیات انجام نشد. اتصال شبکه و تنظیمات پنل را بررسی کنید و دوباره تلاش کنید.';
 }
-export async function loadAdminData() {
-  const db = adminClient();
-  const { data: allowed, error: authError } = await db.rpc('is_education_admin');
-  if (authError) throw authError;
-  if (!allowed) throw new Error('ADMIN_REQUIRED');
-  const [roster, invites, registered] = await Promise.all([
-    db.rpc('education_roster'),
-    db.from('education_invites').select('id,label,code,expires_at,claimed_at').order('created_at', { ascending: false }),
-    db.rpc('admin_registered_users'),
-  ]);
-  if (roster.error) throw roster.error;
-  if (invites.error) throw invites.error;
-  if (registered.error) throw registered.error;
-  return {
-    students: (roster.data || []) as StudentRow[],
-    invites: (invites.data || []) as EducationInvite[],
-    registeredUsers: (registered.data || []) as RegisteredUser[],
-  };
-}
 /** Permanently deletes a learner account through the manager-only Edge Function. */
 export async function deleteRegisteredUser(userId: string): Promise<void> {
   const { data, error } = await adminClient().functions.invoke('admin-delete-user', { body: { userId } });
@@ -84,9 +65,3 @@ export async function deleteRegisteredUser(userId: string): Promise<void> {
   }
   if (data && typeof data === 'object' && 'error' in data) throw new Error(String((data as { code?: string }).code || 'DELETE_FAILED'));
 }
-
-export const demoStudents: StudentRow[] = [
-  { student_id: 'demo-1', display_name: 'سارا احمدی · نمونه', status: 'active', consent_at: '2026-10-01T10:00:00Z', synced_at: '2026-10-07T08:30:00Z', summary: { completedLessonIds: SENTENCE_LESSONS.slice(0, 24).map(l => l.id), learnedEssential504Words: canonical.slice(0, 68), totalMinutes: 260, currentStreak: 7 } },
-  { student_id: 'demo-2', display_name: 'علی رضایی · نمونه', status: 'active', consent_at: '2026-10-02T10:00:00Z', synced_at: '2026-10-06T11:20:00Z', summary: { completedLessonIds: SENTENCE_LESSONS.slice(0, 9).map(l => l.id), learnedEssential504Words: canonical.slice(0, 24), totalMinutes: 95, currentStreak: 3 } },
-  { student_id: 'demo-3', display_name: 'مریم نوری · نمونه', status: 'paused', consent_at: '2026-10-03T10:00:00Z', synced_at: null, summary: null },
-];

@@ -107,8 +107,8 @@ export function ChatNotificationBridge() {
           pathname: '/conversations/human/[conversationId]',
           params: { conversationId: targetConversationId },
         } as never);
-      } else if (data.route === '/admin') {
-        router.push('/admin' as never);
+      } else if (data.route === '/admin' || data.route === '/admin/support') {
+        router.push('/admin/support' as never);
       } else {
         router.push('/conversations' as never);
       }
@@ -176,8 +176,8 @@ export function ChatNotificationBridge() {
         pathname: '/conversations/human/[conversationId]',
         params: { conversationId: targetConversationId },
       } as never);
-    } else if (banner.route === '/admin') {
-      router.push('/admin' as never);
+    } else if (banner.route === '/admin' || banner.route === '/admin/support') {
+      router.push('/admin/support' as never);
     } else {
       router.push('/conversations' as never);
     }

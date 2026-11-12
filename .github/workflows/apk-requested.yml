@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 45: Admin panel v2 — modular architecture (features/admin), independent design, users/support/chats moderation, audit log, web build
 # rev 44: calmer chat alerts (no heads-up, one per conversation, 45s audible cooldown); brand logo/text swapped
 # rev 43: APK renames (MiloMultiLanguage.5-*, MiloMultiLanguage-NoLogin); five-language open app registers the device profile on the server (Admin App list, cloud sync, full profile)
 # rev 42: German Pre-A1 lesson 1 word swap; 3-line invite texts; device-local profile with app-generated access code for no-login builds
@@ -301,9 +302,43 @@ jobs:
       - *verify
       - *upload
 
+  # --------------------------------------------------- admin panel (web)
+  admin-web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+      NODE_OPTIONS: '--max-old-space-size=8192'
+      EXPO_PUBLIC_MILO_ADMIN_APP: 'true'
+      EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'true'
+      EXPO_PUBLIC_LEARNER_LOGIN: 'false'
+      EXPO_PUBLIC_LANGUAGE_SCOPE: 'en,tr'
+    steps:
+      - *checkout
+      - *node
+      - *install
+      - *settings
+      - name: Export the static web build of the admin panel
+        run: |
+          npx expo export --platform web --output-dir dist-admin-web
+          test -f dist-admin-web/index.html
+          test -f dist-admin-web/admin.html || test -f dist-admin-web/admin/index.html || true
+          ( cd dist-admin-web && zip -qr ../AdminApp-web.zip . )
+          sha256sum AdminApp-web.zip | tee AdminApp-web.zip.sha256
+          ls -lh AdminApp-web.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AdminApp-web.zip
+          path: |
+            AdminApp-web.zip
+            AdminApp-web.zip.sha256
+          if-no-files-found: error
+          retention-days: 30
+
   # ----------------------------------------------------------- publish
   publish:
-    needs: [admin, learner-login, learner-nologin, learner-five-nologin]
+    needs: [admin, admin-web, learner-login, learner-nologin, learner-five-nologin]
     if: ${{ always() && needs.admin.result == 'success' && needs.learner-nologin.result == 'success' && (needs.learner-login.result == 'success' || needs.learner-login.result == 'skipped') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -329,6 +364,7 @@ jobs:
             Installable Android APKs, each built on its own clean runner.
 
             - `AdminApp.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
+            - `AdminApp-web.zip` — the same management panel as a static website (unzip and serve the folder)
             - `MiloMultiLanguage.5-Login.apk` — MiloMultiLanguage WITH login, package `com.devicecontrol.milomultilang`, languages en, de, fr, tr, es
             - `MiloMultiLanguage-NoLogin.apk` — MiloMultiLanguage WITHOUT login, package `com.devicecontrol.companion`, languages en, ru
             - `MiloMultiLanguage.5-NoLogin.apk` — five-language MiloMultiLanguage WITHOUT login, package `com.devicecontrol.milofive`, languages en, de, fr, tr, es
@@ -361,6 +397,18 @@ jobs:
           files: |
             out/MiloMultiLanguage.5-Login.apk/MiloMultiLanguage.5-Login.apk
             out/MiloMultiLanguage.5-Login.apk/MiloMultiLanguage.5-Login.apk.sha256
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Add the admin panel web build to the release
+        if: ${{ needs.admin-web.result == 'success' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: milo-requested-${{ github.run_number }}
+          files: |
+            out/AdminApp-web.zip/AdminApp-web.zip
+            out/AdminApp-web.zip/AdminApp-web.zip.sha256
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
