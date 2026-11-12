@@ -14,6 +14,8 @@ import {
 } from '@/lib/appLock';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
 
+const APP_LOCK_GRACE_MS = 20_000;
+
 export function AppLockGate({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [config, setConfig] = useState<AppLockConfig | null>(null);
@@ -31,12 +33,19 @@ export function AppLockGate({ children }: { children: ReactNode }) {
     return () => { active = false; };
   }, [pathname]);
 
+  // Leaving the app only locks it after a grace period, so a quick switch to
+  // another app (or a notification shade) does not demand the code again.
+  const leftAt = useRef<number | null>(null);
+
   useEffect(() => {
     const subscription = AppState.addEventListener('change', state => {
       if (state === 'inactive' || state === 'background') {
         // A file picker / share sheet opened by the admin is not "leaving" the app.
-        if (enabledRef.current && !isAppLockSuspended()) setUnlocked(false);
+        if (enabledRef.current && !isAppLockSuspended() && leftAt.current === null) leftAt.current = Date.now();
       } else if (state === 'active') {
+        const away = leftAt.current === null ? 0 : Date.now() - leftAt.current;
+        leftAt.current = null;
+        if (enabledRef.current && away >= APP_LOCK_GRACE_MS) setUnlocked(false);
         void getAppLockConfig().then(next => {
           setConfig(next);
           enabledRef.current = isAppLockEnabled(next);
