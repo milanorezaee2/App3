@@ -229,14 +229,14 @@ export default function LanguagesHome() {
             {learningSteps.map((step, index) => {
               const Icon = step.icon;
               return (
-                <View key={step.title} style={[styles.stepRow, RtlDirection]}>
+                <View key={step.title} style={styles.stepRow}>
                   <View style={styles.pathNodeWrap}>
                     <View style={[styles.pathNode, index === 1 && styles.pathNodeAqua]} />
                   </View>
                   <View style={[styles.stepIcon, index === 1 && styles.stepIconAqua]}>
                     <Icon size={21} color={index === 1 ? palette.terracotta : palette.forest} strokeWidth={1.9} />
                   </View>
-                  <View style={[styles.stepCopy, styles.stepCopyRtl]}>
+                  <View style={styles.stepCopy}>
                     <Text style={styles.stepTitle}>{step.title}</Text>
                     <Text style={styles.stepDetail}>{step.detail}</Text>
                   </View>
@@ -296,14 +296,16 @@ const styles = StyleSheet.create({
   learningPath: { position: 'relative', gap: 3, padding: 14, borderRadius: 19, backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#514433', shadowOpacity: 0.045, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
   pathRail: { position: 'absolute', left: 15, top: 30, bottom: 30, width: 2, borderRadius: 1, backgroundColor: '#D4DCCB' },
   pathRailRtl: { left: undefined, right: 15 },
-  stepRow: { minHeight: 72, flexDirection: 'row', alignItems: 'center', gap: 12 },
+  // Explicit mirror: node and icon on the right, text right-aligned (Android
+  // ignores the `direction` style, so this cannot rely on RtlDirection).
+  // Web already runs under a global dir="rtl", so its 'row' is visually mirrored.
+  stepRow: { minHeight: 72, flexDirection: Platform.OS === 'web' ? 'row' : 'row-reverse', alignItems: 'center', gap: 12 },
   pathNodeWrap: { width: 18, height: 18, alignItems: 'center', justifyContent: 'center' },
   pathNode: { width: 11, height: 11, borderRadius: 6, backgroundColor: palette.forest, borderWidth: 2, borderColor: palette.paper },
   pathNodeAqua: { backgroundColor: palette.terracotta },
   stepIcon: { width: 52, height: 52, borderRadius: 19, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F0F1E8', borderWidth: 1, borderColor: palette.sageLine, shadowColor: '#514433', shadowOpacity: 0.05, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   stepIconAqua: { backgroundColor: palette.terracottaSoft, borderColor: '#EAD0C1' },
-  stepCopy: { flex: 1, minWidth: 0, alignItems: 'flex-end', gap: 3 },
-  stepCopyRtl: { alignItems: 'flex-start' },
+  stepCopy: { flex: 1, minWidth: 0, alignItems: Platform.OS === 'web' ? 'flex-start' : 'flex-end', gap: 3 },
   stepTitle: { fontFamily: 'Beiruti', color: palette.ink, fontSize: 15, lineHeight: 23, textAlign: 'right', writingDirection: 'rtl' },
   stepDetail: { fontFamily: 'Beiruti', color: palette.muted, fontSize: 11, lineHeight: 18, textAlign: 'right', writingDirection: 'rtl' },
   pressed: { opacity: 0.84, transform: [{ scale: 0.985 }] },
