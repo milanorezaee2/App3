@@ -179,11 +179,13 @@ export default function LanguagesHome() {
             </View>
           </ImageBackground>
 
-          <View style={[styles.languageList, languages.length > 3 && styles.languageListWrap]}>
-            {languages.map((language) => {
+          {(() => {
+            const baseLanguage = languages.find(language => language.id === 'en') ?? null;
+            const otherLanguages = languages.filter(language => language !== baseLanguage);
+            const wrap = otherLanguages.length > 2;
+            const renderCard = (language: (typeof languages)[number], solo: boolean) => {
               const displayName = language.nativeName || language.name;
               const artwork = languageArtwork[language.id] ?? languageArtwork.en;
-
               return (
                 <Pressable
                   key={language.id}
@@ -191,7 +193,7 @@ export default function LanguagesHome() {
                   accessibilityLabel={`ورود به زبان ${language.name}`}
                   accessibilityHint="برای بازکردن دورهٔ این زبان انتخاب کنید"
                   onPress={() => router.push(language.home as never)}
-                  style={({ pressed }) => [styles.languageCard, languages.length > 3 && styles.languageCardWrap, styles.languageCardRtl, language.id === 'en' ? styles.languageCardBase : styles.languageCardOther, pressed && styles.pressed]}
+                  style={({ pressed }) => [styles.languageCard, solo ? styles.languageCardSolo : wrap && styles.languageCardWrap, styles.languageCardRtl, language.id === 'en' ? styles.languageCardBase : styles.languageCardOther, pressed && styles.pressed]}
                 >
                   <ImageBackground
                     source={artwork}
@@ -210,8 +212,20 @@ export default function LanguagesHome() {
                   </View>
                 </Pressable>
               );
-            })}
-          </View>
+            };
+            return (
+              <View style={styles.languageBlock}>
+                {/* The base course sits alone, centred, at the same card size as the grid. */}
+                {baseLanguage && <View style={styles.languageSoloRow}>{renderCard(baseLanguage, true)}</View>}
+                {otherLanguages.length === 1 && <View style={styles.languageSoloRow}>{renderCard(otherLanguages[0], true)}</View>}
+                {otherLanguages.length > 1 && (
+                  <View style={[styles.languageList, wrap && styles.languageListWrap]}>
+                    {otherLanguages.map(language => renderCard(language, false))}
+                  </View>
+                )}
+              </View>
+            );
+          })()}
 
           <View style={styles.pathDivider}>
             <View style={styles.dividerLine} />
@@ -275,6 +289,9 @@ const styles = StyleSheet.create({
   eyebrow: { alignSelf: 'flex-start', marginTop: 5, fontFamily: 'Times New Roman', color: palette.forest, fontSize: 9, lineHeight: 15, letterSpacing: 1.7, writingDirection: 'ltr' },
   languageList: { flexDirection: Platform.OS === 'web' ? 'row' : 'row-reverse', alignItems: 'stretch', gap: 10 },
   languageListWrap: { flexWrap: 'wrap' },
+  languageBlock: { gap: 10 },
+  languageSoloRow: { flexDirection: 'row', justifyContent: 'center' },
+  languageCardSolo: { flex: 0, flexBasis: '48%', maxWidth: '48%' },
   languageCardWrap: { flexBasis: '46%', flexGrow: 1, flexShrink: 0, maxWidth: '48%' },
   languageCard: { flex: 1, minWidth: 0, borderRadius: 16, overflow: 'hidden', borderWidth: 1, borderColor: palette.border, paddingBottom: 10, alignItems: 'center', backgroundColor: palette.paper, shadowColor: '#514433', shadowOpacity: 0.07, shadowRadius: 12, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
   languageCardRtl: { alignItems: Platform.OS === 'web' ? 'flex-start' : 'flex-end' },

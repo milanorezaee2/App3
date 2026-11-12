@@ -84,8 +84,12 @@ const build = () => {
     // the admin build isolated from the learner builds.
     slug: base.slug,
     scheme: 'miloadmin',
+    // The admin panel keeps its own launcher icon; learner apps use the
+    // globe-and-headphones mark shown inside the app.
+    icon: './assets/images/icon-admin.png',
     android: {
       ...base.android,
+      adaptiveIcon: undefined,
       package: 'com.devicecontrol.miloadmin',
       label: 'Admin App',
     },
