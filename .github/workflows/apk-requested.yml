@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 60: post-update what-changed sheet; English base card; Pre-A1 lesson 1 counts words
 # rev 59: home hero text + language cards mirrored right on Android
 # rev 58: home learning-path block mirrored right on Android
 # rev 57: update card shows server answer for diagnosis

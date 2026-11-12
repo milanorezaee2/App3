@@ -23,6 +23,7 @@ import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AppLockGate } from '@/components/AppLockGate';
 import { AppUpdatePrompt } from '@/components/AppUpdatePrompt';
+import { AppUpdatedSheet } from '@/components/AppUpdatedSheet';
 import { AppPopupPrompt } from '@/components/AppPopupPrompt';
 import { AndroidBackHistory } from '@/components/AndroidBackHistory';
 import { WebStatusBarSpacer } from '@/components/WebStatusBarSpacer';
@@ -205,6 +206,7 @@ export default function RootLayout() {
               <AndroidBackHistory />
               {IS_ADMIN_APP && <ChatNotificationBridge />}
               <AppUpdatePrompt />
+              <AppUpdatedSheet />
               {!IS_ADMIN_APP && <AppPopupPrompt />}
             </RegistrationGate>
           </AppLockGate>

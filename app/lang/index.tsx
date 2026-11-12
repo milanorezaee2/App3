@@ -1,4 +1,5 @@
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
+import { lessonUnit } from '@/lib/lessonUnits';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import EnglishPodcastEntry from '@/components/EnglishPodcastEntry';
 import { useCallback, useEffect, useState } from 'react';
@@ -304,7 +305,7 @@ export default function LearningHome() {
               </Pressable>
               <View style={styles.lessonCountPill}>
                 <Text style={styles.lessonCountValue}>{toPersianDigits(currentLesson.sentences.length)}</Text>
-                <Text style={styles.lessonCountLabel}>جمله</Text>
+                <Text style={styles.lessonCountLabel}>{lessonUnit(currentLesson.id)}</Text>
               </View>
             </View>
             <Pressable accessibilityRole="button" accessibilityLabel="شروع از ابتدای درس انگلیسی" style={styles.startFromBeginningButton} onPress={() => router.push({ pathname: '/course/lesson', params: { id: currentLesson.id, fromStart: '1' } } as never)}>

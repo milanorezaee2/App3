@@ -191,7 +191,7 @@ export default function LanguagesHome() {
                   accessibilityLabel={`ورود به زبان ${language.name}`}
                   accessibilityHint="برای بازکردن دورهٔ این زبان انتخاب کنید"
                   onPress={() => router.push(language.home as never)}
-                  style={({ pressed }) => [styles.languageCard, languages.length > 3 && styles.languageCardWrap, styles.languageCardRtl, pressed && styles.pressed]}
+                  style={({ pressed }) => [styles.languageCard, languages.length > 3 && styles.languageCardWrap, styles.languageCardRtl, language.id === 'en' ? styles.languageCardBase : styles.languageCardOther, pressed && styles.pressed]}
                 >
                   <ImageBackground
                     source={artwork}
@@ -278,6 +278,11 @@ const styles = StyleSheet.create({
   languageCardWrap: { flexBasis: '46%', flexGrow: 1, flexShrink: 0, maxWidth: '48%' },
   languageCard: { flex: 1, minWidth: 0, borderRadius: 16, overflow: 'hidden', borderWidth: 1, borderColor: palette.border, paddingBottom: 10, alignItems: 'center', backgroundColor: palette.paper, shadowColor: '#514433', shadowOpacity: 0.07, shadowRadius: 12, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
   languageCardRtl: { alignItems: Platform.OS === 'web' ? 'flex-start' : 'flex-end' },
+  // English is the base course: same card, same inner sizes, but a forest
+  // outline, a tinted surface and a deeper shadow mark it from the outside.
+  languageCardBase: { borderColor: palette.forest, backgroundColor: '#F3F6EE', shadowColor: palette.forest, shadowOpacity: 0.22, shadowRadius: 16, shadowOffset: { width: 0, height: 7 }, elevation: 5 },
+  // Other languages keep a crisp, slightly darker outline so they stay distinct.
+  languageCardOther: { borderColor: '#D9CFBD' },
   languageCopyRtl: { alignItems: Platform.OS === 'web' ? 'flex-start' : 'flex-end', paddingHorizontal: 10 },
   languageNativeNameRtl: { alignSelf: Platform.OS === 'web' ? 'flex-start' : 'flex-end', textAlign: 'right' },
   languageArt: { width: '100%', height: 132, justifyContent: 'flex-end', backgroundColor: '#EAE2D4' },

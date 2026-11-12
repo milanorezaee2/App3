@@ -1,3 +1,4 @@
+import { lessonUnit } from '@/lib/lessonUnits';
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useMemo, useState } from 'react';
@@ -343,7 +344,7 @@ export default function EnglishLessonList() {
                                   <View style={styles.lessonFooter}>
                                     <View style={styles.lessonFooterItem}><Clock3 size={12} color={Palette.muted} /><Text style={styles.lessonFooterText}>{toPersianDigits(item.durationMinutes)} دقیقه</Text></View>
                                     <Text style={styles.lessonFooterDot}>·</Text>
-                                    <Text style={styles.lessonFooterText}>{toPersianDigits(item.sentences.length)} جملهٔ اصلی</Text>
+                                    <Text style={styles.lessonFooterText}>{toPersianDigits(item.sentences.length)} {lessonUnit(item.id)}ٔ اصلی</Text>
                                   </View>
                                 </View>
                                 <View style={styles.lessonPlayIcon}><Play size={13} color={Palette.primary} fill={Palette.primary} /></View>

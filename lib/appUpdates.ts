@@ -14,6 +14,8 @@ import { supabase } from './supabase';
 
 const LAST_CHECK_KEY = 'milo_update_last_check_v1';
 const SKIPPED_KEY = 'milo_update_skipped_v1';
+const PENDING_INSTALL_KEY = 'milo_update_pending_install_v1';
+const SEEN_VERSION_KEY = 'milo_update_seen_version_v1';
 // Short debounce only: a release published by the admin must show up on the
 // learner's next launch/resume, not hours later.
 export const UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
@@ -103,6 +105,8 @@ export async function downloadAndInstall(release: AppRelease, onProgress?: Downl
     throw new Error('فایل دانلودشده ناقص است؛ دوباره تلاش کنید.');
   }
   onProgress?.(1);
+  // Remembered so the next launch can show «what changed» for this release.
+  await AsyncStorage.setItem(PENDING_INSTALL_KEY, JSON.stringify({ version_code: release.version_code, version_name: release.version_name, release_notes: release.release_notes || '' })).catch(() => undefined);
   const contentUri = await FileSystem.getContentUriAsync(target);
   await IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
     data: contentUri,
@@ -115,4 +119,48 @@ export function formatSize(bytes: number | null | undefined): string {
   if (!bytes) return '';
   const mb = bytes / (1024 * 1024);
   return `${mb.toFixed(mb >= 10 ? 0 : 1)} MB`;
+}
+
+export interface InstalledUpdateInfo { version_code: number; version_name: string; release_notes: string }
+
+/**
+ * Called once per launch. Returns release info when the app has just been
+ * updated to a newer build than the one last seen, so a «به‌روزرسانی انجام شد»
+ * sheet can be shown. The first launch ever only records the current version.
+ */
+export async function consumeJustUpdated(): Promise<InstalledUpdateInfo | null> {
+  if (Platform.OS === 'web') return null;
+  const installed = installedVersion();
+  if (!installed.code) return null;
+  try {
+    const seenRaw = await AsyncStorage.getItem(SEEN_VERSION_KEY);
+    const seen = Number(seenRaw) || 0;
+    await AsyncStorage.setItem(SEEN_VERSION_KEY, String(installed.code));
+    if (seenRaw) {
+      if (seen >= installed.code) return null;
+    } else {
+      // Older builds never recorded a version; an earlier update check proves
+      // this is an upgrade rather than a fresh install.
+      const ranBefore = await AsyncStorage.getItem(LAST_CHECK_KEY);
+      if (!ranBefore) return null;
+    }
+
+    let info: InstalledUpdateInfo = { version_code: installed.code, version_name: installed.name, release_notes: '' };
+    const pendingRaw = await AsyncStorage.getItem(PENDING_INSTALL_KEY);
+    await AsyncStorage.removeItem(PENDING_INSTALL_KEY).catch(() => undefined);
+    if (pendingRaw) {
+      const pending = JSON.parse(pendingRaw) as Partial<InstalledUpdateInfo>;
+      if (pending.version_code === installed.code && typeof pending.release_notes === 'string') info.release_notes = pending.release_notes;
+    }
+    if (!info.release_notes) {
+      // Installed by hand (or notes not cached): the server knows this build's notes.
+      try {
+        const latest = await fetchLatestRelease();
+        if (latest && latest.version_code === installed.code) info.release_notes = latest.release_notes || '';
+      } catch { /* notes are optional */ }
+    }
+    return info;
+  } catch {
+    return null;
+  }
 }

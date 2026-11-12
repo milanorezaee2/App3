@@ -1,4 +1,5 @@
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
+import { lessonUnit } from '@/lib/lessonUnits';
 import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/LocalizedText';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -336,7 +337,7 @@ export default function SentenceLessonScreen() {
         </View>
         <View style={styles.headerBottom}>
           <View style={styles.headerInfoChip}><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View>
-          <Text style={styles.headerInfoText}>{toPersianDigits(lesson.sentences.length)} جملهٔ اصلی</Text>
+          <Text style={styles.headerInfoText}>{toPersianDigits(lesson.sentences.length)} {lessonUnit(lesson.id)}ٔ اصلی</Text>
         </View>
       </LinearGradient>
       <View style={styles.stepperCard}>
@@ -364,7 +365,7 @@ export default function SentenceLessonScreen() {
             <Text style={styles.situation}>{lesson.situation}</Text>
             <View style={styles.promiseCard}>
               <Text style={styles.promiseTitle}>{lesson.c1Section ? 'در این درس تمرین می‌کنید:' : 'در پایان این درس می‌توانید:'}</Text>
-              <Text style={styles.promiseText}>{lesson.c1Section ? `کاربرد ${toPersianDigits(lesson.sentences.length)} جمله و گفت‌وگو در این موقعیت؛ پایان درس به‌تنهایی تسلط را تأیید نمی‌کند.` : `با ${toPersianDigits(lesson.sentences.length)} جمله کوتاه، این موقعیت را مدیریت کنید.`}</Text>
+              <Text style={styles.promiseText}>{lesson.c1Section ? `کاربرد ${toPersianDigits(lesson.sentences.length)} جمله و گفت‌وگو در این موقعیت؛ پایان درس به‌تنهایی تسلط را تأیید نمی‌کند.` : `با ${toPersianDigits(lesson.sentences.length)} ${lessonUnit(lesson.id)} کوتاه، این موقعیت را مدیریت کنید.`}</Text>
             </View>
             {lessonTopics && <View style={styles.promiseCard}>
               <Text style={styles.promiseTitle}>موضوع‌های این درس</Text>
@@ -375,7 +376,7 @@ export default function SentenceLessonScreen() {
 
         {stage === 1 && (
           <View style={styles.sentenceStage} onLayout={event => { stageOffsetRef.current = event.nativeEvent.layout.y; }}>
-            <Text style={styles.counter}>جمله {toPersianDigits(sentenceIndex + 1)} از {toPersianDigits(lesson.sentences.length)}</Text>
+            <Text style={styles.counter}>{lessonUnit(lesson.id)} {toPersianDigits(sentenceIndex + 1)} از {toPersianDigits(lesson.sentences.length)}</Text>
             <View style={styles.sentenceCard}>
               <Pressable accessibilityRole="button" accessibilityLabel={`پخش نمونهٔ صوتی جمله: ${current.en}`} accessibilityHint="فقط نمونهٔ گفتاری پخش می‌شود؛ میکروفن فعال نیست." style={styles.soundButton} onPress={() => speak(current.en, ENGLISH_NORMAL_SPEECH_RATE)}>
                 <Volume2 size={25} color={Colors.onColor} />
