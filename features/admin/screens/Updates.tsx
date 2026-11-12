@@ -3,6 +3,7 @@ import { APP_TARGETS, findAppTarget } from '@/lib/appReleases';
 import { formatSize, installedVersion } from '@/lib/appUpdates';
 import { toPersianDigits as fa } from '@/lib/format';
 import * as DocumentPicker from 'expo-document-picker';
+import { withAppLockSuspended } from '@/lib/appLock';
 import { Eye, EyeOff, FileUp, PackageOpen, Trash2, UploadCloud } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 import { Platform, Pressable, Switch, View } from 'react-native';
@@ -40,7 +41,7 @@ export function UpdatesScreen() {
 
   async function pickFile() {
     try {
-      const result = await DocumentPicker.getDocumentAsync({ type: ['application/vnd.android.package-archive', 'application/octet-stream', '*/*'], copyToCacheDirectory: true, multiple: false });
+      const result = await withAppLockSuspended(() => DocumentPicker.getDocumentAsync({ type: ['application/vnd.android.package-archive', 'application/octet-stream', '*/*'], copyToCacheDirectory: true, multiple: false }));
       if (result.canceled || !result.assets?.length) return;
       const asset = result.assets[0];
       if (!/\.apk$/i.test(asset.name)) { fail(new Error('فقط فایل APK قابل انتشار است.')); return; }

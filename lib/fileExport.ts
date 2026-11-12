@@ -1,3 +1,4 @@
+import { withAppLockSuspended } from '@/lib/appLock';
 import { Platform } from 'react-native';
 import * as FileSystemLegacy from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
@@ -18,5 +19,5 @@ export async function saveTextFile(fileName: string, content: string, mimeType: 
   const uri = `${directory}${fileName}`;
   await FileSystemLegacy.writeAsStringAsync(uri, content, { encoding: FileSystemLegacy.EncodingType.UTF8 });
   if (!(await Sharing.isAvailableAsync())) throw new Error('اشتراک‌گذاری فایل روی این دستگاه ممکن نیست.');
-  await Sharing.shareAsync(uri, { mimeType, dialogTitle: 'ذخیرهٔ فایل' });
+  await withAppLockSuspended(() => Sharing.shareAsync(uri, { mimeType, dialogTitle: 'ذخیرهٔ فایل' }));
 }

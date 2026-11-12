@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 49: app lock no longer trips on file picker / share sheet; screen state kept under lock
 # rev 48: learner builds ship without chat notifications
 # rev 47: admin — pop-ups module, bulk delete/download of chats, subscription infrastructure (off by default); learner pop-up prompt
 # rev 46: in-app updates — admin publishes APK releases (upload/link), learner apps download+install; CI versionCode = 100+run
