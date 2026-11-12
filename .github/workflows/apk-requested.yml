@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 52: arm64-v8a only APKs
 # rev 51: ARM-only APKs (under 50 MB) so admin upload to Supabase storage works
 # rev 50: home page compact + right-aligned; learner update check on every launch/resume
 # rev 49: app lock no longer trips on file picker / share sheet; screen state kept under lock
@@ -101,7 +102,7 @@ jobs:
       EXPO_NO_TELEMETRY: '1'
       NODE_OPTIONS: '--max-old-space-size=8192'
       EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
-      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a' }}
       MILO_ADMIN_APP: 'true'
       EXPO_PUBLIC_MILO_ADMIN_APP: 'true'
       EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'true'
@@ -170,11 +171,10 @@ jobs:
         run: |
           rm -rf android
           npx expo prebuild --platform android --no-install --non-interactive
-          # Phones are ARM only; dropping the x86/x86_64 emulator ABIs keeps the
-          # APK under the 50 MB per-file limit of the Supabase storage plan.
-          sed -i 's/^reactNativeArchitectures=.*/reactNativeArchitectures=armeabi-v7a,arm64-v8a/' android/gradle.properties
-          grep -q '^reactNativeArchitectures=' android/gradle.properties || echo 'reactNativeArchitectures=armeabi-v7a,arm64-v8a' >> android/gradle.properties
+          # ABIs come from MILO_ANDROID_ABIS via plugins/withAndroidAbis (64-bit ARM
+          # only, so the APK stays under the 50 MB Supabase storage limit).
           echo "architectures: $(grep reactNativeArchitectures android/gradle.properties)"
+          grep -n abiFilters android/app/build.gradle || true
           echo "applicationId: $(grep -m1 applicationId android/app/build.gradle)"
       - &validate
         name: Verify the Firebase-free chat alert path
@@ -232,7 +232,7 @@ jobs:
       EXPO_NO_TELEMETRY: '1'
       NODE_OPTIONS: '--max-old-space-size=8192'
       EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
-      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a' }}
       EXPO_PUBLIC_MILO_ADMIN_APP: 'false'
       EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'false'
       EXPO_PUBLIC_LEARNER_LOGIN: 'true'
@@ -262,7 +262,7 @@ jobs:
       EXPO_NO_TELEMETRY: '1'
       NODE_OPTIONS: '--max-old-space-size=8192'
       EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
-      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a' }}
       EXPO_PUBLIC_MILO_ADMIN_APP: 'false'
       EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'false'
       EXPO_PUBLIC_LEARNER_LOGIN: 'false'
@@ -292,7 +292,7 @@ jobs:
       EXPO_NO_TELEMETRY: '1'
       NODE_OPTIONS: '--max-old-space-size=8192'
       EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
-      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a,armeabi-v7a' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a' }}
       EXPO_PUBLIC_MILO_ADMIN_APP: 'false'
       EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'false'
       EXPO_PUBLIC_LEARNER_LOGIN: 'false'
