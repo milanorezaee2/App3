@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 53: APK size breakdown in release notes (analysis only, no app change)
 # rev 52: arm64-v8a only APKs
 # rev 51: ARM-only APKs (under 50 MB) so admin upload to Supabase storage works
 # rev 50: home page compact + right-aligned; learner update check on every launch/resume
@@ -427,3 +428,44 @@ jobs:
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
+
+      # Read-only size breakdown of one learner APK, appended to the release
+      # notes so the composition can be inspected without downloading anything.
+      - name: Append an APK size breakdown to the release notes
+        if: ${{ needs.learner-five-nologin.result == 'success' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: milo-requested-${{ github.run_number }}
+        run: |
+          python3 - <<'PY' > breakdown.md
+          import zipfile, collections, os
+          apk = 'out/MiloMultiLanguage.5-NoLogin.apk/MiloMultiLanguage.5-NoLogin.apk'
+          groups = collections.Counter(); raw = collections.Counter(); files = []
+          with zipfile.ZipFile(apk) as z:
+              for i in z.infolist():
+                  n = i.filename
+                  if n.startswith('lib/'): g = 'lib/' + n.split('/')[1]
+                  elif n == 'assets/index.android.bundle': g = 'JS bundle'
+                  elif n.startswith('assets/'): g = 'assets (fonts/images/audio)'
+                  elif n.endswith('.dex'): g = 'classes.dex (Java/Kotlin)'
+                  elif n.startswith('res/'): g = 'res (Android resources)'
+                  elif n == 'resources.arsc': g = 'resources.arsc'
+                  else: g = 'other'
+                  groups[g] += i.compress_size; raw[g] += i.file_size
+                  files.append((i.compress_size, n))
+          total = os.path.getsize(apk)
+          print(f'### APK size breakdown — MiloMultiLanguage.5-NoLogin.apk ({total/1048576:.1f} MB)\n')
+          print('| part | compressed in APK | uncompressed |\n|---|---:|---:|')
+          for g, c in groups.most_common():
+              print(f'| {g} | {c/1048576:.1f} MB | {raw[g]/1048576:.1f} MB |')
+          print('\n<details><summary>25 largest files</summary>\n\n| file | compressed |\n|---|---:|')
+          for c, n in sorted(files, reverse=True)[:25]:
+              print(f'| `{n}` | {c/1048576:.2f} MB |')
+          print('\n</details>')
+          PY
+          cat breakdown.md
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json body -q .body > body.md
+          printf '\n\n' >> body.md
+          cat breakdown.md >> body.md
+          gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --notes-file body.md
