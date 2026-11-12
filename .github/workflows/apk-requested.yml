@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 63: keep only the newest 5 releases
 # rev 62: learner APK asset names → 5update.apk / login.5update.apk / 2update.apk
 # rev 61: learner launcher icon = in-app globe mark; English card solo centred
 # rev 60: post-update what-changed sheet; English base card; Pre-A1 lesson 1 counts words
@@ -478,3 +479,20 @@ jobs:
           printf '\n\n' >> body.md
           cat breakdown.md >> body.md
           gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --notes-file body.md
+
+      # Retention: keep only the newest 5 "milo-requested-*" releases (and their
+      # tags); older APKs are removed so the Releases page stays short.
+      - name: Prune old releases (keep the newest 5)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          KEEP=5
+          gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
+            -q '.[] | select(.tag_name | startswith("milo-requested-")) | "\(.tag_name | sub("milo-requested-"; "") | tonumber) \(.tag_name)"' \
+            | sort -rn | awk -v keep="$KEEP" 'NR > keep { print $2 }' > old-tags.txt
+          echo "Deleting $(wc -l < old-tags.txt) old release(s)"
+          while read -r tag; do
+            [ -n "$tag" ] || continue
+            gh release delete "$tag" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || echo "could not delete $tag"
+          done < old-tags.txt
