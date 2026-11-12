@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 44: calmer chat alerts (no heads-up, one per conversation, 45s audible cooldown); brand logo/text swapped
 # rev 43: APK renames (MiloMultiLanguage.5-*, MiloMultiLanguage-NoLogin); five-language open app registers the device profile on the server (Admin App list, cloud sync, full profile)
 # rev 42: German Pre-A1 lesson 1 word swap; 3-line invite texts; device-local profile with app-generated access code for no-login builds
 # rev 41: rebuild (artifact upload failed on the GitHub side in run 43)

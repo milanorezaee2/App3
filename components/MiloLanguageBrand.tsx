@@ -47,7 +47,7 @@ export function MiloLanguageBrand() {
 }
 
 const styles = StyleSheet.create({
-  brand: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 48, gap: 8 },
+  brand: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', minHeight: 48, gap: 8 },
   mark: { width: 48, height: 48 },
   lockup: { alignItems: 'center', justifyContent: 'center' },
   wordmark: { fontFamily: Typography.latinFontFamily, color: '#16443A', fontSize: 35, lineHeight: 38, fontWeight: '700', writingDirection: 'ltr' },

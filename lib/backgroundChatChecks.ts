@@ -21,7 +21,7 @@ export const BACKGROUND_CHAT_TASK = 'milo-background-chat-check';
 export const BACKGROUND_CHAT_ENABLED_KEY = 'milo_background_chat_check_v1';
 const BACKGROUND_CHAT_START_ATTEMPT_KEY = 'milo_background_chat_start_attempt_v1';
 const LAST_SEEN_PREFIX = 'milo_background_chat_last_seen_v1';
-const CHAT_CHANNEL = 'milo-chat';
+const CHAT_CHANNEL = 'milo-chat-calm';
 export const BACKGROUND_CHAT_INTERVAL_MINUTES = 15;
 let reconcileInFlight: Promise<void> | null = null;
 
@@ -49,8 +49,9 @@ async function ensureChatChannel(): Promise<void> {
   await Notifications.setNotificationChannelAsync(CHAT_CHANNEL, {
     name: 'پیام‌ها و درخواست‌های چت',
     description: 'پیام‌های خصوصی و درخواست‌های پشتیبانی',
-    importance: Notifications.AndroidImportance.HIGH,
-    vibrationPattern: [0, 180, 100, 180],
+    // Sound + one short buzz, no heads-up pop-up.
+    importance: Notifications.AndroidImportance.DEFAULT,
+    vibrationPattern: [0, 120],
     lightColor: '#635BFF',
     sound: 'default',
     enableVibrate: true,

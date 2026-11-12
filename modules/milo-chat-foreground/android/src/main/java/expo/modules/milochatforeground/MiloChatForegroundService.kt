@@ -39,7 +39,9 @@ class MiloChatForegroundService : Service() {
     const val EXTRA_APP_FOREGROUND = "app_foreground"
     const val EXTRA_STORAGE_KEY = "storage_key"
     private const val SERVICE_CHANNEL_ID = "milo-chat-service"
-    private const val MESSAGE_CHANNEL_ID = "milo-chat"
+    private const val MESSAGE_CHANNEL_ID = "milo-chat-calm"
+    private const val MESSAGE_GROUP_KEY = "milo-chat-messages"
+    private const val ALERT_COOLDOWN_MS = 45_000L
     private const val FOREGROUND_ID = 73104
     private const val CONNECTED_STATUS = "connected"
     private const val CONNECTING_STATUS = "connecting"
@@ -193,9 +195,13 @@ class MiloChatForegroundService : Service() {
       },
     )
     manager.createNotificationChannel(
-      NotificationChannel(MESSAGE_CHANNEL_ID, "پیام‌ها و درخواست‌های چت", NotificationManager.IMPORTANCE_HIGH).apply {
+      // DEFAULT importance: a sound and a short buzz, but no heads-up pop-up
+      // over whatever the user is doing. (Channel settings are fixed once
+      // created, hence the new channel id.)
+      NotificationChannel(MESSAGE_CHANNEL_ID, "پیام‌ها و درخواست‌های چت", NotificationManager.IMPORTANCE_DEFAULT).apply {
         description = "پیام‌های خصوصی و درخواست‌های پشتیبانی"
         enableVibration(true)
+        vibrationPattern = longArrayOf(0L, 120L)
         setShowBadge(true)
       },
     )
@@ -501,10 +507,17 @@ class MiloChatForegroundService : Service() {
     }
   }
 
+  @Volatile private var lastAudibleAlertAt = 0L
+
   private fun postMessageNotification(current: JSONObject, eventKey: String, conversationId: String, title: String, body: String) {
     if (appForeground || stopRequested || conversationId.isBlank()) return
     val userId = current.optString("userId")
     if (userId.isBlank() || wasDelivered(userId, eventKey)) return
+    // One notification per conversation (updated in place) and at most one
+    // audible alert per cooldown window: a burst of messages never nags.
+    val now = System.currentTimeMillis()
+    val audible = now - lastAudibleAlertAt >= ALERT_COOLDOWN_MS
+    if (audible) lastAudibleAlertAt = now
     val scheme = current.optString("appScheme").ifBlank { "companionenglish" }
     val uri = Uri.parse("$scheme:///conversations/human/$conversationId")
     val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
@@ -526,13 +539,15 @@ class MiloChatForegroundService : Service() {
       .setContentIntent(openPendingIntent)
       .setAutoCancel(true)
       .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-      .setPriority(NotificationCompat.PRIORITY_HIGH)
-      .setDefaults(NotificationCompat.DEFAULT_ALL)
+      .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+      .setOnlyAlertOnce(true)
+      .setSilent(!audible)
+      .setGroup(MESSAGE_GROUP_KEY)
       .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
       .build()
     val manager = getSystemService(NotificationManager::class.java)
     try {
-      manager.notify(stableHash("message:$userId:$eventKey").hashCode(), notification)
+      manager.notify(stableHash("conversation:$userId:$conversationId").hashCode(), notification)
       markDelivered(userId, eventKey)
     } catch (error: SecurityException) {
       Log.w(TAG, "Notification permission was revoked", error)
