@@ -94,6 +94,7 @@ on:
       - arena/0525d0d2-app3
       - arena/9b089853-app3
       - arena/a87fc501-app3
+      - arena/800d07a6-app3
     paths:
       - '.github/workflows/apk-requested.yml'
 
