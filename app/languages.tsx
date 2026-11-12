@@ -188,9 +188,13 @@ export default function LanguagesHome() {
           </ImageBackground>
 
           {(() => {
-            const baseLanguage = languages.find(language => language.id === 'en') ?? null;
-            const otherLanguages = languages.filter(language => language !== baseLanguage);
-            const wrap = otherLanguages.length > 2;
+            // Grid order: English first (rightmost on Android), French beside it, then the rest.
+            const pinned = ['en', 'fr'];
+            const ordered = [
+              ...pinned.map(id => languages.find(language => language.id === id)).filter((language): language is (typeof languages)[number] => !!language),
+              ...languages.filter(language => !pinned.includes(language.id)),
+            ];
+            const wrap = ordered.length > 2;
             const renderCard = (language: (typeof languages)[number], solo: boolean) => {
               const displayName = language.nativeName || language.name;
               const artwork = languageArtwork[language.id] ?? languageArtwork.en;
@@ -223,12 +227,10 @@ export default function LanguagesHome() {
             };
             return (
               <View style={styles.languageBlock}>
-                {/* The base course sits alone, centred, at the same card size as the grid. */}
-                {baseLanguage && <View style={styles.languageSoloRow}>{renderCard(baseLanguage, true)}</View>}
-                {otherLanguages.length === 1 && <View style={styles.languageSoloRow}>{renderCard(otherLanguages[0], true)}</View>}
-                {otherLanguages.length > 1 && (
+                {ordered.length === 1 && <View style={styles.languageSoloRow}>{renderCard(ordered[0], true)}</View>}
+                {ordered.length > 1 && (
                   <View style={[styles.languageList, wrap && styles.languageListWrap]}>
-                    {otherLanguages.map(language => renderCard(language, false))}
+                    {ordered.map(language => renderCard(language, false))}
                   </View>
                 )}
               </View>
