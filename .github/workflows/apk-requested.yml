@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 59: home hero text + language cards mirrored right on Android
 # rev 58: home learning-path block mirrored right on Android
 # rev 57: update card shows server answer for diagnosis
 # rev 56: profile → account: version + in-app update card

@@ -12,7 +12,6 @@ import { LANGUAGES } from '@/lib/languages/catalog';
 import { ensureSupportConversation } from '@/lib/conversations';
 import { readableSupabaseError } from '@/lib/errors';
 import { FEATURES, LANGUAGE_SCOPE, RUSSIAN_ONLY_BUILD } from '@/lib/features';
-import { RtlDirection } from '@/lib/theme';
 
 const palette = {
   canvas: '#F7F2E8',
@@ -170,7 +169,7 @@ export default function LanguagesHome() {
               end={{ x: 0, y: 0.5 }}
               style={StyleSheet.absoluteFillObject}
             />
-            <View style={[styles.heroCopy, RtlDirection]}>
+            <View style={styles.heroCopy}>
               <Text accessibilityRole="header" style={[styles.title, tiny && styles.titleTiny]}>
                 زبان را از زندگی یاد بگیر
               </Text>
@@ -180,7 +179,7 @@ export default function LanguagesHome() {
             </View>
           </ImageBackground>
 
-          <View style={[styles.languageList, RtlDirection, languages.length > 3 && styles.languageListWrap]}>
+          <View style={[styles.languageList, languages.length > 3 && styles.languageListWrap]}>
             {languages.map((language) => {
               const displayName = language.nativeName || language.name;
               const artwork = languageArtwork[language.id] ?? languageArtwork.en;
@@ -267,18 +266,20 @@ const styles = StyleSheet.create({
   hero: { minHeight: 196, justifyContent: 'center', padding: 20, borderRadius: 20, overflow: 'hidden', backgroundColor: '#ECE4D4', shadowColor: '#514433', shadowOpacity: 0.10, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
   heroImage: { borderRadius: 20 },
   heroCompact: { minHeight: 158, padding: 16 },
-  heroCopy: { width: '78%', alignItems: 'flex-start', gap: 6 },
+  // Android ignores the `direction` style; web runs under a global dir="rtl"
+  // where 'flex-start' already means the right edge. Mirror explicitly here.
+  heroCopy: { width: '78%', alignSelf: Platform.OS === 'web' ? 'flex-start' : 'flex-end', alignItems: Platform.OS === 'web' ? 'flex-start' : 'flex-end', gap: 6 },
   title: { width: '100%', fontFamily: 'Beiruti', color: palette.ink, fontSize: 26, lineHeight: 40, textAlign: 'right', writingDirection: 'rtl' },
   titleTiny: { fontSize: 22, lineHeight: 34 },
   subtitle: { width: '100%', fontFamily: 'Beiruti', color: '#5B6257', fontSize: 13, lineHeight: 22, textAlign: 'right', writingDirection: 'rtl' },
   eyebrow: { alignSelf: 'flex-start', marginTop: 5, fontFamily: 'Times New Roman', color: palette.forest, fontSize: 9, lineHeight: 15, letterSpacing: 1.7, writingDirection: 'ltr' },
-  languageList: { flexDirection: 'row', alignItems: 'stretch', gap: 10 },
+  languageList: { flexDirection: Platform.OS === 'web' ? 'row' : 'row-reverse', alignItems: 'stretch', gap: 10 },
   languageListWrap: { flexWrap: 'wrap' },
   languageCardWrap: { flexBasis: '46%', flexGrow: 1, flexShrink: 0, maxWidth: '48%' },
   languageCard: { flex: 1, minWidth: 0, borderRadius: 16, overflow: 'hidden', borderWidth: 1, borderColor: palette.border, paddingBottom: 10, alignItems: 'center', backgroundColor: palette.paper, shadowColor: '#514433', shadowOpacity: 0.07, shadowRadius: 12, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
-  languageCardRtl: { alignItems: 'flex-start' },
-  languageCopyRtl: { alignItems: 'flex-start', paddingHorizontal: 10 },
-  languageNativeNameRtl: { alignSelf: 'flex-start' },
+  languageCardRtl: { alignItems: Platform.OS === 'web' ? 'flex-start' : 'flex-end' },
+  languageCopyRtl: { alignItems: Platform.OS === 'web' ? 'flex-start' : 'flex-end', paddingHorizontal: 10 },
+  languageNativeNameRtl: { alignSelf: Platform.OS === 'web' ? 'flex-start' : 'flex-end', textAlign: 'right' },
   languageArt: { width: '100%', height: 132, justifyContent: 'flex-end', backgroundColor: '#EAE2D4' },
   languageArtImage: { borderTopLeftRadius: 15, borderTopRightRadius: 15 },
   languagePhotoTint: { height: 24, width: '100%', backgroundColor: 'rgba(247,242,232,0.18)' },
