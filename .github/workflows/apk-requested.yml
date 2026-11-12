@@ -105,7 +105,6 @@ jobs:
       EXPECTED_PACKAGE: 'com.devicecontrol.miloadmin'
       EXPECTED_SCOPE: 'en,tr'
       APK_NAME: 'AdminApp.apk'
-      MILO_VERSION_CODE: '${{ 100 + github.run_number }}'
     steps:
       - &checkout
         name: Check out repository
@@ -134,6 +133,7 @@ jobs:
           fs.appendFileSync(process.env.GITHUB_ENV,
             `EXPO_PUBLIC_SUPABASE_URL=${url}\nEXPO_PUBLIC_SUPABASE_ANON_KEY=${key}\n`);
           NODE
+          echo "MILO_VERSION_CODE=$((100 + GITHUB_RUN_NUMBER))" >> "$GITHUB_ENV"
       - &java
         name: Set up Java
         uses: actions/setup-java@v5
@@ -230,7 +230,6 @@ jobs:
       EXPECTED_PACKAGE: 'com.devicecontrol.milomultilang'
       EXPECTED_SCOPE: ${{ inputs.language_scope_login || 'en,de,fr,tr,es' }}
       APK_NAME: 'MiloMultiLanguage.5-Login.apk'
-      MILO_VERSION_CODE: '${{ 100 + github.run_number }}'
     steps:
       - *checkout
       - *node
@@ -261,7 +260,6 @@ jobs:
       EXPECTED_PACKAGE: 'com.devicecontrol.companion'
       EXPECTED_SCOPE: ${{ inputs.language_scope_nologin || 'en,ru' }}
       APK_NAME: 'MiloMultiLanguage-NoLogin.apk'
-      MILO_VERSION_CODE: '${{ 100 + github.run_number }}'
     steps:
       - *checkout
       - *node
@@ -293,7 +291,6 @@ jobs:
       EXPECTED_PACKAGE: 'com.devicecontrol.milofive'
       EXPECTED_SCOPE: 'en,de,fr,tr,es'
       APK_NAME: 'MiloMultiLanguage.5-NoLogin.apk'
-      MILO_VERSION_CODE: '${{ 100 + github.run_number }}'
     steps:
       - *checkout
       - *node
@@ -357,6 +354,7 @@ jobs:
         run: |
           find out -type f | sort
           du -h out/*/*.apk
+          echo "MILO_VERSION_CODE=$((100 + GITHUB_RUN_NUMBER))" >> "$GITHUB_ENV"
 
       - name: Publish a downloadable release
         uses: softprops/action-gh-release@v2
@@ -368,7 +366,7 @@ jobs:
           body: |
             Installable Android APKs, each built on its own clean runner.
 
-            **versionCode: ${{ 100 + github.run_number }}** · version name `1.0.${{ 100 + github.run_number }}` (use these in Admin App → به‌روزرسانی اپ‌ها)
+            **versionCode: ${{ env.MILO_VERSION_CODE }}** · version name `1.0.${{ env.MILO_VERSION_CODE }}` (use these in Admin App → به‌روزرسانی اپ‌ها)
 
             - `AdminApp.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
             - `AdminApp-web.zip` — the same management panel as a static website (unzip and serve the folder)
