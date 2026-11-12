@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 66: splash tagline one size smaller, single line
 # rev 65: white support button with black text; registered-state profile icon
 # rev 64: white raised chat buttons; single-line brand/version texts; launcher label MiloLang
 # rev 63: keep only the newest 5 releases
