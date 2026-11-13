@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 77: pop-up setup reminder only while the migration is missing
 # rev 76: page-targeted pop-ups (any number per page) with a redesigned card
 # rev 75: learner pop-ups checked on every launch and return (1-min quiet period)
 # rev 74: new English-only no-login APK (english.apk)

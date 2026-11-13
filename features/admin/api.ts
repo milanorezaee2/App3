@@ -210,6 +210,11 @@ export interface AdminPopup {
   /** Learner pages this pop-up is pinned to; null/empty = every page. */
   target_routes: string[] | null;
 }
+/** True when supabase/SETUP-POPUP-PAGES-ONCE.sql has been applied (the target_routes column exists). */
+export async function popupPagesMigrated(): Promise<boolean> {
+  const { error } = await adminClient().from('app_popups').select('target_routes').limit(1);
+  return !error;
+}
 export async function fetchPopups(): Promise<AdminPopup[]> {
   const { data, error } = await adminClient().from('app_popups').select('*').order('priority', { ascending: false }).order('updated_at', { ascending: false });
   if (error) { if (isMissingFunction(error) || error.code === '42P01' || error.code === 'PGRST205') throw new AdminSetupRequiredError(); throw new Error(readableSupabaseError(error)); }

@@ -2,9 +2,9 @@ import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/compon
 import { APP_TARGETS, findAppTarget } from '@/lib/appReleases';
 import { POPUP_PAGES, popupPageTitle } from '@/lib/popupPages';
 import { Megaphone, Pencil, Plus, Trash2, X } from 'lucide-react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable, Switch, View } from 'react-native';
-import { deletePopup, fetchPopups, savePopup, type AdminPopup, type PopupInput, type PopupKind } from '../api';
+import { deletePopup, fetchPopups, popupPagesMigrated, savePopup, type AdminPopup, type PopupInput, type PopupKind } from '../api';
 import { confirmAction, useAdmin, useAdminQuery } from '../store';
 import { AdminTheme as T } from '../theme';
 import { Avatar, Banner, Button, Card, Chip, EmptyState, ListRow, Loading, Page, Segmented, adminStyles as a, faDateTime, n } from '../ui';
@@ -33,6 +33,9 @@ export function PopupsScreen() {
     const next: PopupInput = p ? { ...p } : empty();
     setDraft(next); setStartsText(toDateInput(next.starts_at)); setEndsText(toDateInput(next.ends_at));
   };
+  // The setup reminder is shown only while the database still lacks the page column.
+  const [migrated, setMigrated] = useState<boolean | null>(null);
+  useEffect(() => { let active = true; void popupPagesMigrated().then(ok => { if (active) setMigrated(ok); }); return () => { active = false; }; }, [popups.data]);
   const canSave = Boolean(draft && draft.title.trim() && draft.body.trim() && (!draft.button_url || /^https?:\/\//.test(draft.button_url)));
 
   async function save() {
@@ -55,7 +58,7 @@ export function PopupsScreen() {
     <Page title="پاپ‌آپ‌ها" subtitle="پیام‌هایی که هنگام باز شدن اپ یا ورود به صفحه‌های انتخابی به زبان‌آموز نشان داده می‌شود (اطلاع‌رسانی، خبر، هشدار یا پیشنهاد)"
       actions={<Button icon={Plus} label="پاپ‌آپ جدید" onPress={() => edit()} disabled={busy} />}>
       {popups.error && <Banner kind="error" text={popups.error} />}
-      <Banner kind="notice" text="انتخاب صفحه برای پاپ‌آپ به فایل supabase/SETUP-POPUP-PAGES-ONCE.sql نیاز دارد (یک بار در Supabase اجرا شود). تا پیش از آن، ذخیرهٔ پاپ‌آپ با خطا روبه‌رو می‌شود." />
+      {migrated === false && <Banner kind="warning" text="انتخاب صفحه برای پاپ‌آپ به فایل supabase/SETUP-POPUP-PAGES-ONCE.sql نیاز دارد (یک بار در Supabase اجرا شود). تا پیش از آن، ذخیرهٔ پاپ‌آپ با خطا روبه‌رو می‌شود." />}
 
       {draft && (
         <Card title={draft.id ? 'ویرایش پاپ‌آپ' : 'پاپ‌آپ جدید'} aside={<Button small variant="ghost" tone="neutral" icon={X} label="بستن" onPress={() => setDraft(null)} />}>
