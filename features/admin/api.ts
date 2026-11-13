@@ -207,6 +207,8 @@ export type PopupKind = 'info' | 'success' | 'warning' | 'promo';
 export interface AdminPopup {
   id: string; title: string; body: string; button_label: string | null; button_url: string | null; package_name: string | null;
   kind: PopupKind; show_once: boolean; active: boolean; starts_at: string; ends_at: string | null; priority: number; created_at: string; updated_at: string;
+  /** Learner pages this pop-up is pinned to; null/empty = every page. */
+  target_routes: string[] | null;
 }
 export async function fetchPopups(): Promise<AdminPopup[]> {
   const { data, error } = await adminClient().from('app_popups').select('*').order('priority', { ascending: false }).order('updated_at', { ascending: false });
@@ -217,6 +219,7 @@ export type PopupInput = Omit<AdminPopup, 'id' | 'created_at' | 'updated_at'> & 
 export const savePopup = (p: PopupInput) => rpc<string>('admin_save_popup', {
   p_id: p.id ?? null, p_title: p.title, p_body: p.body, p_button_label: p.button_label, p_button_url: p.button_url, p_package_name: p.package_name,
   p_kind: p.kind, p_show_once: p.show_once, p_active: p.active, p_starts_at: p.starts_at, p_ends_at: p.ends_at, p_priority: p.priority,
+  p_target_routes: p.target_routes && p.target_routes.length ? p.target_routes : null,
 });
 export const deletePopup = (id: string) => rpc<void>('admin_delete_popup', { p_id: id });
 
