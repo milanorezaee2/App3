@@ -105,7 +105,12 @@ const build = () => {
 };
 
 module.exports = () => {
-  const config = withGoogleServices(build(), variant());
+  const built = withGoogleServices(build(), variant());
+  // Learner apps always resume on the page they left; admin only drops stale task intents.
+  const config = {
+    ...built,
+    plugins: [...(built.plugins || []), ['./plugins/withStaleDeepLinkGuard', { ignoreChatLinks: built.extra?.appRole !== 'admin' }]],
+  };
   // app.json already contains the project id; environment values only override it.
   // Android's native WebSocket service does not require an EAS or FCM project id.
   const projectId = process.env.EAS_PROJECT_ID

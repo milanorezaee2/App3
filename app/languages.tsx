@@ -188,8 +188,8 @@ export default function LanguagesHome() {
           </ImageBackground>
 
           {(() => {
-            // Grid order: English first (rightmost on Android), French beside it, then the rest.
-            const pinned = ['en', 'fr'];
+            // Grid order: French first (rightmost on Android), English beside it, then the rest.
+            const pinned = ['fr', 'en'];
             const ordered = [
               ...pinned.map(id => languages.find(language => language.id === id)).filter((language): language is (typeof languages)[number] => !!language),
               ...languages.filter(language => !pinned.includes(language.id)),
