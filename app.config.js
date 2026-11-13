@@ -67,6 +67,15 @@ const build = () => {
       ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.milomultilang' },
     };
   }
+  if (!admin && process.env.EXPO_PUBLIC_LEARNER_ENGLISH_NOLOGIN === 'true') {
+    return {
+      ...base,
+      name: 'MiloLang',
+      scheme: 'miloenglish',
+      android: { ...base.android, package: 'com.devicecontrol.miloenglish' },
+      ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.miloenglish' },
+    };
+  }
   if (!admin && process.env.EXPO_PUBLIC_LEARNER_FIVE_NOLOGIN === 'true') {
     return {
       ...base,

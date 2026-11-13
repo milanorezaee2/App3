@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 74: new English-only no-login APK (english.apk)
 # rev 73: drop stale chat deep links on relaunch; French card first
 # rev 72: launcher icon 2048px source, sharpened and colour-boosted
 # rev 71: French card beside English; resume never redirects on a warm return
@@ -336,6 +337,36 @@ jobs:
       - *verify
       - *upload
 
+  learner-english-nologin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+      NODE_OPTIONS: '--max-old-space-size=8192'
+      EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID || 'be0e368c-0d94-4e95-b4f4-d757fa7beb42' }}
+      MILO_ANDROID_ABIS: ${{ inputs.abis || 'arm64-v8a' }}
+      EXPO_PUBLIC_MILO_ADMIN_APP: 'false'
+      EXPO_PUBLIC_ENABLE_EDUCATION_ADMIN: 'false'
+      EXPO_PUBLIC_LEARNER_LOGIN: 'false'
+      EXPO_PUBLIC_LEARNER_ENGLISH_NOLOGIN: 'true'
+      EXPO_PUBLIC_LANGUAGE_SCOPE: 'en'
+      EXPECTED_PACKAGE: 'com.devicecontrol.miloenglish'
+      EXPECTED_SCOPE: 'en'
+      APK_NAME: 'english.apk'
+    steps:
+      - *checkout
+      - *node
+      - *install
+      - *settings
+      - *java
+      - *sdk
+      - *prebuild
+      - *validate
+      - *build
+      - *verify
+      - *upload
+
   # --------------------------------------------------- admin panel (web)
   admin-web:
     runs-on: ubuntu-latest
@@ -372,7 +403,7 @@ jobs:
 
   # ----------------------------------------------------------- publish
   publish:
-    needs: [admin, admin-web, learner-login, learner-nologin, learner-five-nologin]
+    needs: [admin, admin-web, learner-login, learner-nologin, learner-five-nologin, learner-english-nologin]
     if: ${{ always() && needs.admin.result == 'success' && needs.learner-nologin.result == 'success' && (needs.learner-login.result == 'success' || needs.learner-login.result == 'skipped') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -405,6 +436,7 @@ jobs:
             - `login.5update.apk` — MiloMultiLanguage WITH login, package `com.devicecontrol.milomultilang`, languages en, de, fr, tr, es
             - `2update.apk` — MiloMultiLanguage WITHOUT login, package `com.devicecontrol.companion`, languages en, ru
             - `5update.apk` — five-language MiloMultiLanguage WITHOUT login, package `com.devicecontrol.milofive`, languages en, de, fr, tr, es
+            - `english.apk` — English-only MiloLang WITHOUT login, package `com.devicecontrol.miloenglish`, language en
           files: |
             out/AdminApp.apk/AdminApp.apk
             out/2update.apk/2update.apk
@@ -422,6 +454,18 @@ jobs:
           files: |
             out/5update.apk/5update.apk
             out/5update.apk/5update.apk.sha256
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Add the English-only no-login APK to the release
+        if: ${{ needs.learner-english-nologin.result == 'success' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: milo-requested-${{ github.run_number }}
+          files: |
+            out/english.apk/english.apk
+            out/english.apk/english.apk.sha256
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
