@@ -1,8 +1,8 @@
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { markPopupSeen, nextPopupToShow, type LearnerPopup } from '@/lib/appPopups';
 import { AlertTriangle, Info, PartyPopper, Sparkles } from 'lucide-react-native';
-import { useEffect, useState } from 'react';
-import { Linking, Modal, Pressable, StyleSheet, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { AppState, Linking, Modal, Pressable, StyleSheet, View } from 'react-native';
 
 const KIND = {
   info: { icon: Info, fg: '#1D4ED8', bg: '#DBEAFE' },
@@ -11,13 +11,28 @@ const KIND = {
   promo: { icon: Sparkles, fg: '#155E75', bg: '#E0F2F7' },
 } as const;
 
-/** Shows the next admin pop-up a few seconds after launch (after the update prompt). */
+/**
+ * Shows the next admin pop-up a few seconds after launch (after the update prompt)
+ * and again whenever the learner returns to the app, so a pop-up published while
+ * the app was open or in the background is not missed.
+ */
 export function AppPopupPrompt() {
   const [popup, setPopup] = useState<LearnerPopup | null>(null);
+  const popupRef = useRef<LearnerPopup | null>(null);
+  popupRef.current = popup;
   useEffect(() => {
     let mounted = true;
-    const timer = setTimeout(() => { void nextPopupToShow().then(found => { if (mounted && found) setPopup(found); }); }, 7000);
-    return () => { mounted = false; clearTimeout(timer); };
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const check = (delayMs: number) => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        if (!mounted || popupRef.current) return;
+        void nextPopupToShow().then(found => { if (mounted && found && !popupRef.current) setPopup(found); });
+      }, delayMs);
+    };
+    check(7000);
+    const subscription = AppState.addEventListener('change', state => { if (state === 'active') check(2500); });
+    return () => { mounted = false; if (timer) clearTimeout(timer); subscription.remove(); };
   }, []);
   if (!popup) return null;
   const kind = KIND[popup.kind] || KIND.info;
