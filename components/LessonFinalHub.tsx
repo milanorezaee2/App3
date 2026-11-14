@@ -24,10 +24,32 @@ const COLORS: Record<FinalSectionId, string> = { blitz: '#4F46E5', speak: '#0478
  * the blitz round, the speaking check and the short assessment. Nothing here is forced —
  * the hero explains why the speaking and assessment pages matter, and the learner picks.
  */
-export default function LessonFinalHub({ sections, initial = 'blitz' }: { sections: FinalSection[]; initial?: FinalSectionId }) {
+const HERO_TEXT: Record<FinalSectionId, string> = {
+  blitz: '«دور سریع» حافظه را قفل می‌کند: هر جملهٔ درس یک بار، هر بار به شکلی دیگر. کوتاه است؛ اگر عجله داری، رد کن.',
+  speak: '«آزمون گفتاری» تنها جایی است که دهان و گوشِ تو واقعاً زبان را تمرین می‌کنند — بدون آن، جمله‌ها فقط خوانده می‌شوند، نه گفته. اجباری نیست؛ ولی کسانی که این صفحه را رد نمی‌کنند، چند برابر سریع‌تر به حرف می‌آیند.',
+  checks: '«سنجش کوتاه» نشان می‌دهد از این درس چه چیزی واقعاً مانده است؛ بدون نمره، با توضیح هر پاسخ. اجباری نیست؛ دو دقیقه وقت می‌گیرد و جلوی فراموشیِ بی‌صدا را می‌گیرد.',
+};
+
+export default function LessonFinalHub({ sections, initial = 'blitz', only }: { sections: FinalSection[]; initial?: FinalSectionId; only?: FinalSectionId }) {
   const [active, setActive] = useState<FinalSectionId>(initial);
-  const current = sections.find(section => section.id === active) ?? sections[0];
+  const current = sections.find(section => section.id === (only ?? active)) ?? sections[0];
   const color = COLORS[current.id];
+  if (only) {
+    const Icon = ICONS[current.id];
+    return (
+      <View style={styles.wrap}>
+        <LinearGradient colors={['#1E1B4B', '#312E81', color]} start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} style={styles.hero}>
+          <View style={styles.heroRow}><Icon size={22} color="#FFFFFF" strokeWidth={2.4} /><Text style={styles.heroTitle}>{current.title}</Text>{current.done ? <CheckCircle2 size={18} color="#FFFFFF" /> : null}</View>
+          <Text style={styles.heroText}>{HERO_TEXT[current.id]}</Text>
+        </LinearGradient>
+        <View style={[styles.panel, { borderColor: color }]}>
+          <View style={[styles.panelStripe, { backgroundColor: color }]} />
+          <Text style={styles.panelSubtitle}>{current.subtitle}</Text>
+          {current.render()}
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={styles.wrap}>
       <LinearGradient colors={['#1E1B4B', '#312E81', '#4338CA']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} style={styles.hero}>
@@ -70,6 +92,7 @@ const styles = StyleSheet.create({
   wrap: { width: '100%', gap: 14 },
   hero: { borderRadius: 22, padding: 18, gap: 8 },
   heroKicker: { fontFamily: Typography.fontFamily, fontSize: 12, color: 'rgba(255,255,255,0.75)', textAlign: 'right', writingDirection: 'rtl' },
+  heroRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 10 },
   heroTitle: { fontFamily: Typography.fontFamily, fontSize: 21, color: '#FFFFFF', textAlign: 'right', writingDirection: 'rtl' },
   heroText: { fontFamily: Typography.fontFamily, fontSize: 13, lineHeight: 23, color: 'rgba(255,255,255,0.92)', textAlign: 'right', writingDirection: 'rtl' },
   tabs: { flexDirection: 'row-reverse', gap: 8 },

@@ -1,8 +1,8 @@
 import SpeakCheck, { type SpeakCheckResult } from '@/components/SpeakCheck';
 import { LocalizedText as Text } from '@/components/LocalizedText';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { CheckCircle2, ChevronLeft, Volume2, XCircle } from 'lucide-react-native';
+import { CheckCircle2, ChevronLeft, GitBranch, Volume2, XCircle } from 'lucide-react-native';
 import type { LearningLesson } from '@/lib/languages/types';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { Typography } from '@/lib/theme';
@@ -45,7 +45,51 @@ function judge(mode: DialogueMode, result: SpeakCheckResult, keywords: string[])
   return result.score >= 70;
 }
 
-export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLabel, locale, productive = false, defaultMode = 'guide' }: {
+type DialogueLine = LearningLesson['dialogue'][number] & { branch?: 'partner' | 'reply' };
+type PoolSentence = { text: string; fa: string };
+
+const contentWords = (text: string) => new Set(text.split(/\s+/).map(clean).filter(w => w.length >= 4).map(w => w.toLowerCase()));
+const overlap = (a: string, b: string) => { const A = contentWords(a); let n = 0; for (const w of contentWords(b)) if (A.has(w)) n++; return n; };
+
+/**
+ * Branching: at up to two partner lines, insert an unexpected follow-up question drawn from the
+ * lesson's own sentences (topic-matched by shared content words) plus the lesson sentence that best
+ * answers it as the learner's expected reaction. No new content is written; when nothing matches,
+ * the dialogue stays linear. `variant` alternates the path on every restart.
+ */
+function branchDialogue(base: readonly DialogueLine[], pool: readonly PoolSentence[], myRole: string, variant: number): DialogueLine[] {
+  if (variant % 2 === 0 || pool.length < 4) return [...base];
+  const inDialogue = new Set(base.map(line => plain(line.text)));
+  const questions = pool.filter(item => /\?\s*$/.test(item.text) && !inDialogue.has(plain(item.text)));
+  const answers = pool.filter(item => !/\?\s*$/.test(item.text) && !inDialogue.has(plain(item.text)));
+  if (!questions.length || !answers.length) return [...base];
+  const out: DialogueLine[] = [];
+  const used = new Set<string>();
+  let inserted = 0;
+  base.forEach((line, index) => {
+    out.push(line);
+    const isPartner = line.speaker !== myRole;
+    const nextIsMine = base[index + 1]?.speaker === myRole;
+    if (!isPartner || !nextIsMine || inserted >= 2) return;
+    const topic = `${line.text} ${base[index + 1]?.text ?? ''} ${base[index - 1]?.text ?? ''}`;
+    // Every pool sentence is on the lesson's topic; shared words only decide the order.
+    const ranked = questions.filter(q => !used.has(q.text)).map(q => ({ q, score: overlap(topic, q.text) })).sort((a, b) => b.score - a.score);
+    const pick = ranked[(variant >> 1) % Math.max(1, ranked.length)]?.q;
+    if (!pick) return;
+    const byOverlap = answers.filter(a => !used.has(a.text)).map(a => ({ a, score: overlap(pick.text, a.text) })).sort((x, y) => y.score - x.score)[0];
+    // Lessons usually list the answer right after its question; use that when words do not overlap.
+    const following = pool[pool.findIndex(item => item.text === pick.text) + 1];
+    const reply = byOverlap && byOverlap.score > 0 ? byOverlap.a : following && !/\?\s*$/.test(following.text) && !used.has(following.text) ? following : undefined;
+    if (!reply) return;
+    used.add(pick.text); used.add(reply.text);
+    out.push({ speaker: line.speaker, text: pick.text, fa: pick.fa, branch: 'partner' });
+    out.push({ speaker: myRole, text: reply.text, fa: reply.fa, branch: 'reply' });
+    inserted++;
+  });
+  return out;
+}
+
+export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLabel, locale, productive = false, defaultMode = 'guide', branchPool }: {
   dialogue: LearningLesson['dialogue'];
   onSpeak: (text: string) => void;
   /** Course name in Persian, e.g. "روسی" or "ترکی". Used in the recall hint. */
@@ -55,21 +99,29 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
   /** Enables the productive modes (cloze / free) on top of the guided one. Needs `locale`. */
   productive?: boolean;
   defaultMode?: DialogueMode;
+  /** Lesson sentences used to build unexpected branches; omit for a strictly linear dialogue. */
+  branchPool?: readonly PoolSentence[];
 }) {
+  const [variant, setVariant] = useState(0);
   const [mode, setMode] = useState<DialogueMode>(productive && locale ? defaultMode : 'guide');
   const [verdict, setVerdict] = useState<null | boolean>(null);
   const [attempted, setAttempted] = useState(false);
   const speakers = [...new Set(dialogue.map(line => line.speaker))];
   const [myRole, setMyRole] = useState(speakers[0]);
+  const baseDialogue = dialogue;
+  const lines = useMemo(() => branchPool ? branchDialogue(baseDialogue as DialogueLine[], branchPool, myRole, variant) : [...(baseDialogue as DialogueLine[])], [baseDialogue, branchPool, myRole, variant]);
+  const hasBranch = lines.some(line => line.branch);
+  const canBranch = !!branchPool && branchDialogue(baseDialogue as DialogueLine[], branchPool, myRole, 1).some(line => line.branch);
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
-  const current = dialogue[index];
+  const current = lines[index];
   const isMyLine = current?.speaker === myRole;
 
   const keywords = current ? keywordsOf(current.text) : [];
   const resetLine = () => { setRevealed(false); setVerdict(null); setAttempted(false); };
   const restart = () => { setIndex(0); resetLine(); };
-  const advance = () => { resetLine(); setIndex(value => Math.min(value + 1, dialogue.length - 1)); };
+  const restartOtherPath = () => { setVariant(value => value + 1); setIndex(0); resetLine(); };
+  const advance = () => { resetLine(); setIndex(value => Math.min(value + 1, lines.length - 1)); };
   const changeMode = (next: DialogueMode) => { setMode(next); resetLine(); };
   const onResult = (result: SpeakCheckResult) => { setAttempted(true); setVerdict(judge(mode, result, keywords)); setRevealed(true); };
   const productiveMode = productive && !!locale && mode !== 'guide';
@@ -77,12 +129,14 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
 
   return (
     <View style={styles.card}>
-      <View style={styles.metaRow}><Text style={styles.counter}>{fa(index + 1)} / {fa(dialogue.length)}</Text></View>
+      <View style={styles.metaRow}><Text style={styles.counter}>{fa(index + 1)} / {fa(lines.length)}</Text>{hasBranch ? <View style={styles.branchPill}><GitBranch size={12} color="#7C3AED" /><Text style={styles.branchPillText}>مسیر شاخه‌دار</Text></View> : null}</View>
       {productive && locale ? <View style={styles.modeRow}>{(['guide', 'cloze', 'free'] as DialogueMode[]).map(item => <Pressable key={item} accessibilityRole="button" accessibilityState={{ selected: mode === item }} onPress={() => changeMode(item)} style={[styles.modeButton, mode === item && styles.modeButtonActive]}><Text style={[styles.modeText, mode === item && styles.modeTextActive]}>{MODE_META[item].label}</Text></Pressable>)}</View> : null}
       <Text style={styles.instruction}>{productive && locale ? MODE_META[mode].hint : 'نقش خود را انتخاب کنید و پاسخ را بلند بگویید.'}</Text>
       <View style={styles.roleRow}>{speakers.map(speaker => <Pressable key={speaker} accessibilityRole="button" accessibilityState={{ selected: myRole === speaker }} onPress={() => changeRole(speaker)} style={[styles.roleButton, myRole === speaker && styles.roleButtonActive]}><Text style={[styles.roleText, myRole === speaker && styles.roleTextActive]}>{speaker}</Text></Pressable>)}</View>
       {current && <View style={[styles.bubble, isMyLine ? styles.bubbleLearner : styles.bubblePartner]}>
         <Text style={styles.speaker}>{isMyLine ? 'نوبت شما' : current.speaker}</Text>
+        {current.branch === 'partner' ? <View style={styles.branchNote}><GitBranch size={13} color="#7C3AED" /><Text style={styles.branchNoteText}>واکنش غیرمنتظره! طرف مقابل چیزی پرسید که در متن نبود.</Text></View> : null}
+        {current.branch === 'reply' ? <View style={styles.branchNote}><GitBranch size={13} color="#7C3AED" /><Text style={styles.branchNoteText}>حالا جواب بده — از جمله‌های همین درس کمک بگیر.</Text></View> : null}
         {isMyLine
           ? <>
               <Text style={styles.persian}>{mode === 'free' && productiveMode ? `بگو: ${current.fa}` : current.fa}</Text>
@@ -103,9 +157,12 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
           : (!isMyLine || revealed) ? <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن: ${current.text}`} style={styles.soundButton} onPress={() => onSpeak(current.text)}><Volume2 size={17} color={Palette.primary} /><Text style={styles.soundText}>{isMyLine ? 'شنیدن پاسخ' : 'شنیدن طرف مقابل'}</Text></Pressable> : null}
         {isMyLine && revealed && locale && !productiveMode ? <SpeakCheck key={`${index}-${current.text}`} text={current.text} locale={locale} accent={Palette.success} /> : null}
       </View>}
-      {isMyLine && !revealed && !(productiveMode && attempted) ? null : index < dialogue.length - 1
+      {isMyLine && !revealed && !(productiveMode && attempted) ? null : index < lines.length - 1
         ? <Pressable accessibilityRole="button" style={styles.nextButton} onPress={advance}><Text style={styles.nextText}>{isMyLine ? 'گفتم؛ ادامه' : 'ادامهٔ گفت‌وگو'}</Text><ChevronLeft size={18} color="#FFFFFF" /></Pressable>
-        : <><Pressable accessibilityRole="button" style={styles.restartButton} onPress={restart}><Text style={styles.restartText}>تمرین دوباره از آغاز</Text></Pressable></>}
+        : <>
+            {canBranch ? <Pressable accessibilityRole="button" style={styles.branchButton} onPress={restartOtherPath}><GitBranch size={16} color="#FFFFFF" /><Text style={styles.branchButtonText}>{hasBranch ? 'دوباره، مسیر اصلی' : 'دوباره، با واکنش غیرمنتظره'}</Text></Pressable> : null}
+            <Pressable accessibilityRole="button" style={styles.restartButton} onPress={restart}><Text style={styles.restartText}>تمرین دوباره از آغاز</Text></Pressable>
+          </>}
     </View>
   );
 }
@@ -145,5 +202,11 @@ const styles = StyleSheet.create({
   verdictOk: { backgroundColor: '#ECFDF5' },
   verdictMiss: { backgroundColor: '#FEF2F2' },
   verdictText: { flex: 1, fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 19, textAlign: 'right', writingDirection: 'rtl' },
+  branchPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 4, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999, backgroundColor: '#F5F3FF', borderWidth: 1, borderColor: '#DDD6FE' },
+  branchPillText: { fontFamily: Typography.fontFamily, fontSize: 10, color: '#6D28D9' },
+  branchNote: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, borderRadius: 8, backgroundColor: '#F5F3FF', paddingHorizontal: 8, paddingVertical: 5 },
+  branchNoteText: { flex: 1, fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 17, color: '#5B21B6', textAlign: 'right', writingDirection: 'rtl' },
+  branchButton: { minHeight: 46, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, borderRadius: 12, backgroundColor: '#7C3AED' },
+  branchButtonText: { fontFamily: Typography.fontFamily, fontSize: 14, color: '#FFFFFF', writingDirection: 'rtl' },
   note: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 18, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl' },
 });

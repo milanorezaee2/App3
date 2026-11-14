@@ -24,7 +24,7 @@ import { Typography } from '@/lib/theme';
 import { shuffleChecks } from '@/lib/shuffleChecks';
 import { buildLessonPractice, buildWarmUp, WARM_UP_KINDS, type PracticeStats } from '@/lib/lessonPractice';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
-import LessonFinalHub from '@/components/LessonFinalHub';
+import LessonFinalHub, { type FinalSection } from '@/components/LessonFinalHub';
 import BlindListeningList from '@/components/BlindListeningList';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
 import { recordStudyDay } from '@/lib/studyStreak';
@@ -214,6 +214,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
       return;
     }
     if (stage === 0 && warmUpBlocks) return;
+    if (stage === 8 && practiceBlocks) return;
     if (stage < stages.length - 1) {
       const nextStage = stage + 1;
       setStage(nextStage);
@@ -223,7 +224,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
       else if (nextStage !== 1) void stopTurkishSpeech();
       return;
     }
-    if (practiceBlocks) return;
+
     void stopTurkishSpeech();
     completing.current = true;
     setSaving(true);
@@ -377,15 +378,17 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
             <View style={styles.bigIcon}><MessageCircle size={34} color={Palette.primary} /></View>
             <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
             {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
-            <TurkishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} locale="tr-TR" />
+            <TurkishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} locale="tr-TR" branchPool={lesson.sentences} />
           </>}
         </View>}
 
-        {stage === 8 && <View style={styles.centerStage}>
+        {stage >= 8 && <View style={styles.centerStage}>
+          {stage === 8 ? <>
           <View style={styles.bigIcon}><RefreshCw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} {unitLabel} و {fa(vocabulary.length)} واژهٔ یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
-          <LessonFinalHub sections={[
+          </> : null}
+          {(() => { const finalSections: FinalSection[] = [
             { id: 'blitz', title: 'دور سریع', subtitle: `${fa(practiceItems.length)} ضربه از همین درس، هر بار به شکلی دیگر`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="چالش برق‌آسا" intro={`${fa(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} /></> },
             { id: 'speak', title: 'آزمون گفتاری', subtitle: 'هر جمله را بلند بگو؛ واژه‌به‌واژه بازخورد می‌گیری', render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale="tr-TR" accent={Palette.success} onSpeak={text => speak(text)} /></> },
             { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش کوتاه از همین درس؛ بدون نمره، با توضیح', render: () => <>
@@ -412,7 +415,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
             {showCheckAnswers ? <Text style={styles.evidenceNote}>پاسخ‌های نمونه نمایش داده شدند؛ می‌توانید درس را پایان دهید.</Text> : null}
           </View>}
             </> },
-          ]} />
+          ]; return <>{stage === 8 ? <LessonFinalHub only="blitz" sections={finalSections} /> : null}{stage === 9 ? <LessonFinalHub only="speak" sections={finalSections} /> : null}{stage === 10 ? <LessonFinalHub only="checks" sections={finalSections} /> : null}</>; })()}
         </View>}
 
         {!!(sessionError || completionError) && <Text accessibilityRole="alert" style={styles.error}>{sessionError || completionError}</Text>}
@@ -425,7 +428,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel={`${unitLabel} قبلی` } accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && styles.nextButtonDisabled]}>
             <Text style={styles.previousButtonText}>{unitLabel} قبلی</Text>
           </Pressable>}
-          <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && practiceBlocks)} style={[styles.nextButton, (saving || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && practiceBlocks)) && styles.nextButtonDisabled]} onPress={() => void next()}>
+          <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === 8 && practiceBlocks)} style={[styles.nextButton, (saving || (stage === 0 && warmUpBlocks) || (stage === 8 && practiceBlocks)) && styles.nextButtonDisabled]} onPress={() => void next()}>
             <Text style={styles.nextText}>{saving ? 'در حال ذخیره…' : stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? `${unitLabel} بعدی` : 'ادامه'}</Text>
             {stage === stages.length - 1 ? <Check size={20} color="#FFFFFF" /> : <ChevronLeft size={20} color="#FFFFFF" />}
           </Pressable>

@@ -38,6 +38,8 @@ export const RUSSIAN_LESSON_STAGES = [
   { id: 'grammar-through-usage', labelFa: 'دستور در کاربرد', labelEn: 'Grammar Through Usage' },
   { id: 'conversation', labelFa: 'مکالمه', labelEn: 'Conversation Practice' },
   { id: 'review', labelFa: 'مرور هوشمند', labelEn: 'Spaced Review' },
+  { id: 'speaking-check', labelFa: 'آزمون گفتاری', labelEn: 'Speaking Check' },
+  { id: 'short-assessment', labelFa: 'سنجش کوتاه', labelEn: 'Short Assessment' },
 ] as const;
 
 const sentence = (
