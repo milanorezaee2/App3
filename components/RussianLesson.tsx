@@ -26,6 +26,8 @@ import { shuffleChecks } from '@/lib/shuffleChecks';
 import { buildLessonPractice, buildWarmUp, WARM_UP_KINDS, type PracticeStats } from '@/lib/lessonPractice';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
+import { PersianBridgeCard, RuleCard } from '@/components/PersianBridgeCard';
+import { bridgeRulesForLesson } from '@/lib/languages/russianPersianBridge';
 import { recordStudyDay } from '@/lib/studyStreak';
 import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
 
@@ -79,7 +81,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
   useEffect(() => { setPracticeDone(false); setWarmUpDone(false); }, [lesson.id]);
   const practiceStats = useRef<PracticeStats>({ total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 });
   const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
-  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void) } | null>(null);
+  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void } | null>(null);
   const markWarmUpDone = useCallback(() => setWarmUpDone(true), []);
   const skipPractice = useCallback(() => { practiceStats.current = { total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 }; setPracticeDone(true); }, []);
   const speakPractice = useCallback((text: string) => { void playRussianSpeech(text, NORMAL_SPEECH_RATE, () => setSpeechError('صدای روسی دستگاه در دسترس نیست؛ متن و راهنمای خوانش همچنان دیده می‌شوند.')); }, []);
@@ -95,6 +97,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
     return [...byWord.values()];
   }, [lesson]);
   const grammarPatterns = lesson.sentences.flatMap(sentence => sentence.pattern ? [{ sentence, pattern: sentence.pattern }] : []);
+  const bridgeRules = bridgeRulesForLesson(lesson.sentences);
 
   // Warm up the device speech engine so the first Russian sentence is not delayed.
   useEffect(() => {
@@ -237,9 +240,12 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
       await russianProgress.completeSentenceLesson(lesson.id, progressTarget);
       if (!preserveExistingSession.current) await clearRussianLessonSession(lesson.id);
       const streak = await recordStudyDay();
+      const dueReviews = await russianProgress.getDueReviewCards().then(cards => cards.length).catch(() => 0);
       setCelebration({
         stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceFirstTry: practiceStats.current.firstTryCorrect, practiceSeconds: practiceStats.current.seconds, streak: streak.count, streakExtendedToday: streak.extendedToday },
         next: () => { if (nextLesson) router.replace({ pathname: '/learn/ru/lesson', params: { id: nextLesson.id } } as never); else router.replace('/learn/ru' as never); },
+        dueReviews,
+        review: () => router.replace('/learn/ru/review' as never),
       });
     } catch {
       completing.current = false;
@@ -296,6 +302,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
             <Text keepColor style={styles.persian}>{current.fa}</Text>
             {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternText}>{current.pattern}</Text></View> : null}
           </View>
+          <PersianBridgeCard sentence={current} />
           <View style={styles.replayRow}>
             <Pressable accessibilityRole="button" accessibilityLabel="پخش آهستهٔ جمله" style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="پخش معمولی جمله" style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable>
@@ -354,6 +361,11 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           {grammarPatterns.length ? grammarPatterns.map(({ sentence, pattern }, index) => (
             <GrammarPatternCard key={sentence.id} index={index + 1} pattern={pattern} example={sentence.text} translation={sentence.fa} onSpeak={() => speak(sentence.text)} />
           )) : <GrammarNoteCard title="یادگیری در بافت جمله" text="جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید." />}
+          {bridgeRules.length ? <View style={styles.bridgeSummary}>
+            <Text style={styles.bridgeSummaryTitle}>پل فارسی این درس</Text>
+            <Text style={styles.bridgeSummaryText}>جاهایی که ذهن فارسی‌زبان در این درس باید حواسش باشد، و جاهایی که روسی عین فارسی است.</Text>
+            {bridgeRules.map(rule => <RuleCard key={rule.id} rule={rule} />)}
+          </View> : null}
         </View>}
 
         {stage === 7 && <View style={styles.centerStage}>
@@ -409,7 +421,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           </Pressable>
         </View>
       </View>
-      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(RUSSIAN_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} />
+      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(RUSSIAN_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} dueReviews={celebration?.dueReviews ?? 0} onReview={() => { const go = celebration?.review; setCelebration(null); go?.(); }} />
     </View>
   );
 }
@@ -418,6 +430,9 @@ type LearningLessonVocabulary = RussianCourseLesson['sentences'][number]['vocabu
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },
+  bridgeSummary: { gap: 10, marginTop: 6 },
+  bridgeSummaryTitle: { fontFamily: Typography.fontFamily, fontSize: 17, color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
+  bridgeSummaryText: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: Palette.text, textAlign: 'right', writingDirection: 'rtl' },
   lessonScroll: { flex: 1, minHeight: 0 },
   lessonScrollContent: { paddingBottom: 28 },
   brandRow: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15, paddingTop: 10, paddingBottom: 6 },

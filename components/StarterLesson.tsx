@@ -113,7 +113,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
   useEffect(() => { setPracticeDone(false); setWarmUpDone(false); }, [lesson.id]);
   const practiceStats = useRef<PracticeStats>({ total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 });
   const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
-  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void) } | null>(null);
+  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void } | null>(null);
   const markWarmUpDone = useCallback(() => setWarmUpDone(true), []);
   const skipPractice = useCallback(() => { practiceStats.current = { total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 }; setPracticeDone(true); }, []);
   const warmUpBlocks = warmUpItems.length > 0 && !warmUpDone;
@@ -277,9 +277,12 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
       await courseProgress.completeSentenceLesson(lesson.id, progressTarget);
       if (!preserveExistingSession.current) await clearStarterLessonSession(lesson.id);
       const streak = await recordStudyDay();
+      const dueReviews = await courseProgress.getDueReviewCards().then(cards => cards.length).catch(() => 0);
       setCelebration({
         stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceFirstTry: practiceStats.current.firstTryCorrect, practiceSeconds: practiceStats.current.seconds, streak: streak.count, streakExtendedToday: streak.extendedToday },
         next: () => { if (nextLesson) router.replace({ pathname: `${course.home}/lesson`, params: { id: nextLesson.id } } as never); else router.replace(course.home as never); },
+        dueReviews,
+        review: () => router.replace(`${course.home}/review` as never),
       });
     } catch {
       completing.current = false;
@@ -467,7 +470,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           </Pressable>
         </View>
       </View>
-      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(lessons, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} />
+      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(lessons, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} dueReviews={celebration?.dueReviews ?? 0} onReview={() => { const go = celebration?.review; setCelebration(null); go?.(); }} />
     </View>
   );
 }
