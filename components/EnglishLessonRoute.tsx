@@ -95,10 +95,11 @@ export default function SentenceLessonScreen() {
   const lessonScrollRef = useRef<ScrollView>(null);
   const showHint = useFirstTimeHint(`en:${stage}`);
   const stageOffsetRef = useRef(0);
+  const scrollKey = stage === 1 ? sentenceIndex : -1;
   useEffect(() => {
     const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: stage === 1 ? Math.max(0, lessonScrollOffset(stageOffsetRef.current, Dimensions.get('window').width) - 8) : 0, animated: true }), 60);
     return () => clearTimeout(handle);
-  }, [stage, sentenceIndex]);
+  }, [stage, scrollKey]);
   const [revealed, setRevealed] = useState(false);
   const [sessionReady,setSessionReady]=useState(false);
   const [invalidLesson,setInvalidLesson]=useState(false);
