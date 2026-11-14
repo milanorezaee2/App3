@@ -5,6 +5,7 @@ import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { Typography } from '@/lib/theme';
 import { toPersianDigits as fa } from '@/lib/format';
 import type { PracticeItem } from '@/lib/lessonPractice';
+import { hapticCorrect, hapticWrong } from '@/lib/haptics';
 
 /**
  * Soft-mandatory retrieval practice: every item must be answered, but there is
@@ -17,8 +18,8 @@ interface Props {
   items: PracticeItem[];
   /** Plays target-language audio. */
   onSpeak: (text: string) => void;
-  /** Fires once when the queue is empty. */
-  onComplete: () => void;
+  /** Fires once when the queue is empty, with how many items needed a second try. */
+  onComplete: (stats: { total: number; retries: number }) => void;
   /** When true, the block renders in its finished state. */
   completed?: boolean;
   /** Foreign-text font style (Times New Roman bold in this app). */
@@ -42,7 +43,7 @@ export default function LessonPracticeBlock({ title, intro, items, onSpeak, onCo
   const finished = completed || (total > 0 && !current);
 
   useEffect(() => { setQueue(items); setSelected(null); setDone(0); setRetries(0); }, [items]);
-  useEffect(() => { if (!completed && total > 0 && !current) onComplete(); }, [completed, total, current, onComplete]);
+  useEffect(() => { if (!completed && total > 0 && !current) onComplete({ total, retries }); }, [completed, total, current, onComplete, retries]);
   useEffect(() => { if (current?.kind === 'listen' && selected === null) onSpeak(current.speakText); }, [current, selected, onSpeak]);
 
   const correct = current ? selected === current.correctIndex : false;
@@ -88,7 +89,7 @@ export default function LessonPracticeBlock({ title, intro, items, onSpeak, onCo
             const showCorrect = selected !== null && index === current.correctIndex;
             const showWrong = isSelected && !showCorrect;
             return (
-              <Pressable key={`${current.id}-${index}`} accessibilityRole="radio" accessibilityState={{ checked: isSelected, disabled: selected !== null }} disabled={selected !== null} onPress={() => setSelected(index)}
+              <Pressable key={`${current.id}-${index}`} accessibilityRole="radio" accessibilityState={{ checked: isSelected, disabled: selected !== null }} disabled={selected !== null} onPress={() => { setSelected(index); if (index === current.correctIndex) hapticCorrect(); else hapticWrong(); }}
                 style={[styles.choice, showCorrect && styles.choiceCorrect, showWrong && styles.choiceWrong]}>
                 <Text style={current.foreignChoices ? [styles.choiceForeign, foreignStyle] : styles.choicePersian}>{choice}</Text>
               </Pressable>

@@ -41,6 +41,8 @@ import { Typography } from '@/lib/theme';
 import { shuffleChecks } from '@/lib/shuffleChecks';
 import { buildLessonPractice, buildWarmUp } from '@/lib/lessonPractice';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
+import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
+import { recordStudyDay } from '@/lib/studyStreak';
 import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
 
 const foundationStageNames: Record<number, { labelFa: string; labelEn: string }> = {
@@ -109,7 +111,9 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
   const [practiceDone, setPracticeDone] = useState(false);
   const [warmUpDone, setWarmUpDone] = useState(false);
   useEffect(() => { setPracticeDone(false); setWarmUpDone(false); }, [lesson.id]);
-  const markPracticeDone = useCallback(() => setPracticeDone(true), []);
+  const practiceStats = useRef({ total: 0, retries: 0 });
+  const markPracticeDone = useCallback((stats: { total: number; retries: number }) => { practiceStats.current = stats; setPracticeDone(true); }, []);
+  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void) } | null>(null);
   const markWarmUpDone = useCallback(() => setWarmUpDone(true), []);
   const warmUpBlocks = warmUpItems.length > 0 && !warmUpDone;
   const practiceBlocks = practiceItems.length > 0 && !practiceDone;
@@ -271,8 +275,11 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
       const progressTarget = currentProgressIndex > nextIndex ? progress.currentLessonId : nextLesson?.id;
       await courseProgress.completeSentenceLesson(lesson.id, progressTarget);
       if (!preserveExistingSession.current) await clearStarterLessonSession(lesson.id);
-      if (nextLesson) router.replace({ pathname: `${course.home}/lesson`, params: { id: nextLesson.id } } as never);
-      else router.replace(course.home as never);
+      const streak = await recordStudyDay();
+      setCelebration({
+        stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceRetries: practiceStats.current.retries, streak: streak.count, streakExtendedToday: streak.extendedToday },
+        next: () => { if (nextLesson) router.replace({ pathname: `${course.home}/lesson`, params: { id: nextLesson.id } } as never); else router.replace(course.home as never); },
+      });
     } catch {
       completing.current = false;
       setCompletionError('پایان درس ذخیره نشد؛ دوباره تلاش کنید.');
@@ -459,6 +466,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           </Pressable>
         </View>
       </View>
+      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceRetries: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(lessons, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} />
     </View>
   );
 }

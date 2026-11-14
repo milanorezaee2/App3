@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Alert, Image, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
+import { getStudyStreak } from '@/lib/studyStreak';
 import {
   ArrowLeft,
   BookOpen,
@@ -48,6 +49,8 @@ export default function LearningHome() {
   const [showRoadmap, setShowRoadmap] = useState(false);
   const [measuredMinutes, setMeasuredMinutes] = useState(0);
   const [timeError, setTimeError] = useState(false);
+  const [streak, setStreak] = useState(0);
+  useFocusEffect(useCallback(() => { let alive = true; void getStudyStreak().then(value => { if (alive) setStreak(value); }).catch(() => undefined); return () => { alive = false; }; }, []));
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [hasStartedCourse, setHasStartedCourse] = useState(false);
 
@@ -348,10 +351,10 @@ export default function LearningHome() {
             <View style={styles.todayFootnote}>
               <BookOpen size={14} color={HomeColors.gold} />
               <Text style={styles.todayFootnoteText}>{toPersianDigits(completed)} از {toPersianDigits(SENTENCE_LESSONS.length)} درس اصلی تکمیل‌شده</Text>
-              {progress?.currentStreak ? (
+              {streak > 0 ? (
                 <View style={styles.streakPill}>
                   <Flame size={12} color="#C4E8D8" />
-                  <Text style={styles.streakText}>{toPersianDigits(progress.currentStreak)} روز پیاپی</Text>
+                  <Text style={styles.streakText}>{toPersianDigits(streak)} روز پیاپی</Text>
                 </View>
               ) : null}
             </View>

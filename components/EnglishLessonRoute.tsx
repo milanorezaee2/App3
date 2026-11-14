@@ -1,7 +1,11 @@
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { lessonUnit } from '@/lib/lessonUnits';
 import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/LocalizedText';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { buildLessonPractice, buildWarmUp } from '@/lib/lessonPractice';
+import LessonPracticeBlock from '@/components/LessonPracticeBlock';
+import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
+import { recordStudyDay } from '@/lib/studyStreak';
 import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { FitScrollView, lessonScrollOffset } from '@/components/FitScrollView';
 import { useFirstTimeHint } from '@/lib/useFirstTimeHint';
@@ -60,6 +64,20 @@ export default function SentenceLessonScreen() {
   const lesson = getSentenceLesson(id || '') ?? SENTENCE_LESSONS[0];
   const courseLevel = COURSE_LEVELS.find(item => item.id === lesson.levelId) ?? COURSE_LEVELS[0];
   const [evidencePassed, setEvidencePassed] = useState(false);
+  const practiceLesson = useMemo(() => ({ id: lesson.id, sentences: lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa, pronunciation: sentence.pronunciation, vocabulary: sentence.vocabulary })) }), [lesson]);
+  const practiceItems = useMemo(() => buildLessonPractice(practiceLesson), [practiceLesson]);
+  const previousLesson = useMemo(() => { const index = SENTENCE_LESSONS.findIndex(item => item.id === lesson.id); const previous = index > 0 ? SENTENCE_LESSONS[index - 1] : null; return previous ? { id: previous.id, title: previous.title, sentences: previous.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa, pronunciation: sentence.pronunciation, vocabulary: sentence.vocabulary })) } : null; }, [lesson.id]);
+  const warmUpItems = useMemo(() => buildWarmUp(previousLesson), [previousLesson]);
+  const [practiceDone, setPracticeDone] = useState(false);
+  const [warmUpDone, setWarmUpDone] = useState(false);
+  useEffect(() => { setPracticeDone(false); setWarmUpDone(false); }, [lesson.id]);
+  const practiceStats = useRef({ total: 0, retries: 0 });
+  const markPracticeDone = useCallback((stats: { total: number; retries: number }) => { practiceStats.current = stats; setPracticeDone(true); }, []);
+  const markWarmUpDone = useCallback(() => setWarmUpDone(true), []);
+  const speakPractice = useCallback((text: string) => { playResponsiveSpeech({ text, locale: 'en-US', rate: ENGLISH_NORMAL_SPEECH_RATE, onError: () => undefined }); }, []);
+  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void) } | null>(null);
+  const warmUpBlocks = warmUpItems.length > 0 && !warmUpDone;
+  const practiceBlocks = practiceItems.length > 0 && !practiceDone;
   const [completionError, setCompletionError] = useState('');
   const [saving, setSaving] = useState(false);
   const [stage, setStage] = useState(0);
@@ -287,13 +305,14 @@ export default function SentenceLessonScreen() {
       setRevealed(false);
       return;
     }
+    if (stage === 0 && warmUpBlocks) return;
     if (stage < stages.length - 1) {
       setStage((value) => value + 1);
       setSentenceIndex(0);
       setRevealed(false);
       return;
     }
-    if (!evidencePassed || saving) return;
+    if (practiceBlocks || !evidencePassed || saving) return;
     completing.current=true;
     setSaving(true);
     setCompletionError('');
@@ -303,8 +322,11 @@ export default function SentenceLessonScreen() {
     await completeSentenceLesson(lesson.id, nextLesson?.id);
     await saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed, attempt: attempt.current, attemptEvidence });
     void stopResponsiveSpeech();
-    if (nextLesson) router.replace({ pathname: '/course/lesson', params: { id: nextLesson.id } } as never);
-    else router.replace('/lang' as never);
+    const streak = await recordStudyDay();
+    setCelebration({
+      stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceRetries: practiceStats.current.retries, streak: streak.count, streakExtendedToday: streak.extendedToday },
+      next: () => { if (nextLesson) router.replace({ pathname: '/course/lesson', params: { id: nextLesson.id } } as never); else router.replace('/lang' as never); },
+    });
     } catch { setCompletionError('پایان درس ذخیره نشد؛ دوباره تلاش کنید.'); }
     finally { completing.current=false; setSaving(false); }
   };
@@ -371,6 +393,7 @@ export default function SentenceLessonScreen() {
               <Text style={styles.promiseTitle}>موضوع‌های این درس</Text>
               {lessonTopics.map(topic => <Text key={topic} style={styles.promiseText}>• {topic}</Text>)}
             </View>}
+            {warmUpItems.length > 0 ? <LessonPracticeBlock title="گرم‌کردن با درس قبل" intro={`${toPersianDigits(warmUpItems.length)} تمرین کوتاه از درس «${previousLesson?.title ?? ''}». پاسخ غلط نمره ندارد؛ فقط دوباره پرسیده می‌شود.`} items={warmUpItems} onSpeak={speakPractice} onComplete={markWarmUpDone} completed={warmUpDone} foreignStyle={styles.practiceForeign} accent={Colors.accent[400]} /> : null}
           </View>
         )}
 
@@ -520,7 +543,8 @@ export default function SentenceLessonScreen() {
               <Text style={styles.promiseText}>{toPersianDigits(lesson.sentences.length)} جمله و {toPersianDigits(vocabulary.length)} واژهٔ یکتا؛ محتوا همان محتوای اصلی درس است.</Text>
             </View>
             <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} />
-            {evidencePassed
+            <LessonPracticeBlock title="تمرین" intro={`${toPersianDigits(practiceItems.length)} تمرین از جمله‌های همین درس: جای خالی، معنی و شنیدن. بدون نمره؛ هر پاسخ غلط کمی بعد دوباره می‌آید.`} items={practiceItems} onSpeak={speakPractice} onComplete={markPracticeDone} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Colors.success[400]} />
+            {practiceBlocks ? null : evidencePassed
               ? CORE_LESSON_EVIDENCE[lesson.id]
                 ? <Text style={styles.stageDesc}>همهٔ {toPersianDigits(CORE_LESSON_EVIDENCE[lesson.id].length)} سنجشِ این درس با پاسخ درست ثبت شد ✓</Text>
                 : <View><Text style={styles.stageDesc}>شنیداری: ثبت شد ✓</Text><Text style={styles.stageDesc}>نوشتاری: ثبت شد ✓</Text></View>
@@ -536,12 +560,13 @@ export default function SentenceLessonScreen() {
           {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && { opacity: .45 }]}>
             <Text style={styles.secondaryControlText}>جمله قبلی</Text>
           </Pressable>}
-          <Pressable accessibilityRole="button" accessibilityState={{ disabled: saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed) }} disabled={saving || !!sessionError || (stage === stages.length - 1 && !evidencePassed)} style={[styles.nextButton, (saving || (stage === stages.length - 1 && !evidencePassed)) && { opacity: .45 }]} onPress={() => void next()}>
+          <Pressable accessibilityRole="button" accessibilityState={{ disabled: saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && (practiceBlocks || !evidencePassed)) }} disabled={saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && (practiceBlocks || !evidencePassed))} style={[styles.nextButton, (saving || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && (practiceBlocks || !evidencePassed))) && { opacity: .45 }]} onPress={() => void next()}>
             <Text style={styles.nextText}>{stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جمله بعدی' : 'ادامه'}</Text>
             {stage === stages.length - 1 ? <Check size={20} color={Colors.onColor} /> : <ChevronLeft size={20} color={Colors.onColor} />}
           </Pressable>
         </View>
       </View>
+      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceRetries: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(SENTENCE_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} />
     </View>
   );
 }
@@ -569,6 +594,7 @@ const styles = StyleSheet.create({
   header: { width: '100%', maxWidth: 900, minHeight: 64, alignSelf: 'center', paddingTop: 12, paddingHorizontal: 15, paddingBottom: 7, gap: 8, borderBottomLeftRadius: 22, borderBottomRightRadius: 22 },
   headerTop: { width: '100%', maxWidth: 900, alignSelf: 'center', flexDirection: 'row-reverse', alignItems: 'center', gap: 12 },
   headerText: { flex: 1, alignItems: 'flex-end', gap: 2 },
+  practiceForeign: { fontFamily: 'Times New Roman', fontWeight: '800' },
   headerEyebrow: { fontFamily: 'Times New Roman', color: 'rgba(255,255,255,0.72)', fontSize: 8, fontWeight: '800', letterSpacing: 1, writingDirection: 'ltr' },
   headerTitle: { fontFamily: Typography.fontFamily, fontSize: 20, lineHeight: 27, fontWeight: '400', color: '#FFFFFF', textAlign: 'right', writingDirection: 'rtl' },
   headerSub: { fontFamily: Typography.fontFamily, fontSize: 12, fontWeight: '400', color: 'rgba(255,255,255,0.78)', textAlign: 'right', writingDirection: 'rtl' },

@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
+import { getStudyStreak } from '@/lib/studyStreak';
 import {
   BookOpen,
   Check,
@@ -87,6 +88,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
   const compact = width < 640;
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [dueCount, setDueCount] = useState(0);
+  const [streak, setStreak] = useState(0);
   const [showRoadmap, setShowRoadmap] = useState(false);
   const [error, setError] = useState('');
   const [retry, setRetry] = useState(0);
@@ -94,6 +96,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
 
   useFocusEffect(useCallback(() => {
     let alive = true;
+    void getStudyStreak().then(value => { if (alive) setStreak(value); }).catch(() => undefined);
     void Promise.all([courseProgress.getCourseProgress(), courseProgress.getDueReviewCards()])
       .then(async ([nextProgress, cards]) => {
         if (!alive) return;
@@ -394,6 +397,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
               <Flame size={14} color={HomeColors.amber} />
               <Text style={styles.dailyGoalText}>{fa(dueCount)} نمونه برای مرور</Text>
             </View>
+            {streak > 0 ? <View style={[styles.dailyGoalPill, { marginTop: 6 }]}><Flame size={14} color="#D97706" /><Text style={styles.dailyGoalText}>{fa(streak)} روز پیاپی</Text></View> : null}
           </View>
 
           <LinearGradient colors={['#FFFFFF', '#FAF9F5', '#F4F1EA']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
