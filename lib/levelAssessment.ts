@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { buildLessonPractice, type PracticeItem } from './lessonPractice';
+import { buildLessonPractice, WARM_UP_KINDS, type PracticeItem } from './lessonPractice';
 import type { LearningLesson } from './languages/types';
 
 type LevelId = number;
@@ -44,4 +44,14 @@ export function buildLevelExam(pool: ReturnType<typeof levelPool>, attempt: numb
 /** Supplement: a fresh short round every day. */
 export function buildLevelSupplement(pool: ReturnType<typeof levelPool>): PracticeItem[] {
   return buildLessonPractice(pool, { count: SUPPLEMENT_QUESTIONS, seedSalt: `daily-${dayKey()}` });
+}
+
+/**
+ * «گرم‌کردن کامل سطح» — one warm-up item from EVERY lesson of the level (not a random sample),
+ * so the round walks through the whole level in order; a fresh paper each day.
+ */
+export function buildLevelWarmUp(allLessons: readonly LevelLesson[], levelId: LevelId): PracticeItem[] {
+  const lessons = allLessons.filter(lesson => lesson.levelId === levelId);
+  const salt = `level-warmup-${dayKey()}`;
+  return lessons.flatMap((lesson, index) => buildLessonPractice(lesson, { count: 1, kinds: index % 4 === 3 ? ['match'] : WARM_UP_KINDS, seedSalt: salt }));
 }

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
-import { Check, CheckCircle2, Flame, Volume2, X } from 'lucide-react-native';
+import { Check, CheckCircle2, Flame, Volume2, X, SkipForward } from 'lucide-react-native';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { Typography } from '@/lib/theme';
 import { toPersianDigits as fa } from '@/lib/format';
@@ -125,7 +125,7 @@ export default function LessonPracticeBlock({ title, intro, items, source, retry
         <Text style={styles.title}>{title}</Text>
         <View style={styles.headRight}>
           <Text style={styles.counter}>{fa(done + 1)} / {fa(total)}</Text>
-          {onSkip ? <Pressable accessibilityRole="button" onPress={onSkip} hitSlop={8} style={styles.skipButton}><Text style={styles.skipText}>رد کردن</Text></Pressable> : null}
+          {onSkip ? <Pressable accessibilityRole="button" accessibilityLabel="رد کردن این تمرین" onPress={onSkip} hitSlop={8} style={({ pressed }) => [styles.skipButton, pressed && { opacity: 0.75 }]}><SkipForward size={15} color="#B45309" /><Text style={styles.skipText}>رد کردن</Text></Pressable> : null}
         </View>
       </View>
       {done === 0 && resolved === null ? <Text style={styles.intro}>{intro}</Text> : null}
@@ -195,8 +195,8 @@ const styles = StyleSheet.create({
   doneRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
   title: { fontFamily: Typography.fontFamily, fontSize: 17, color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
   headRight: { flexDirection: 'row-reverse', alignItems: 'center', gap: 10 },
-  skipButton: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surfaceMuted },
-  skipText: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.text },
+  skipButton: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, minHeight: 36, paddingHorizontal: 14, borderRadius: 999, backgroundColor: '#FFFBEB', borderWidth: 1.5, borderColor: '#F59E0B' },
+  skipText: { fontFamily: Typography.fontFamily, fontSize: 13, color: '#B45309', fontWeight: '700' },
   counter: { fontFamily: Typography.fontFamily, fontSize: 13, color: Palette.primaryDark },
   intro: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: Palette.text, textAlign: 'right', writingDirection: 'rtl' },
   timerRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 10 },

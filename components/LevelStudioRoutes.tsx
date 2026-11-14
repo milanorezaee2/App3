@@ -9,6 +9,10 @@ import type { StarterCourse } from '@/lib/languages/newCourses';
 import { playRussianSpeech, stopRussianSpeech } from '@/lib/russianSpeech';
 import { playTurkishSpeech, stopTurkishSpeech } from '@/lib/turkishSpeech';
 import { playStarterSpeech, stopStarterSpeech } from '@/lib/starterSpeech';
+import { AppBottomNav } from '@/components/AppBottomNav';
+import { COURSE_LEVELS, SENTENCE_LESSONS } from '@/lib/courseContent';
+import { getCourseProgress } from '@/lib/courseProgress';
+import { playResponsiveSpeech, stopResponsiveSpeech } from '@/lib/responsiveSpeech';
 
 /** Per-course wiring for the shared end-of-level exam + daily supplement screen. */
 const RUSSIAN: LevelStudioConfig = {
@@ -20,6 +24,14 @@ const TURKISH: LevelStudioConfig = {
   speak: text => { void playTurkishSpeech(text, 0.85, () => undefined); }, stopSpeech: () => { void stopTurkishSpeech(); }, BottomNav: TurkishBottomNav,
 };
 
+/** English sentences use `en` instead of `text`; adapt once so the shared studio can read them. */
+const ENGLISH_LESSONS = SENTENCE_LESSONS.map(lesson => ({ id: lesson.id, title: lesson.title, levelId: lesson.levelId, sentences: lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa, pronunciation: sentence.pronunciation, vocabulary: sentence.vocabulary })) }));
+const ENGLISH: LevelStudioConfig = {
+  courseId: 'en', nameFa: 'انگلیسی', levels: COURSE_LEVELS, lessons: ENGLISH_LESSONS, progress: { getCourseProgress },
+  speak: text => { playResponsiveSpeech({ text, locale: 'en-US', onError: () => undefined }); }, stopSpeech: () => { stopResponsiveSpeech(); }, BottomNav: AppBottomNav,
+};
+
+export function EnglishLevelStudio() { return <LanguageLevelStudio config={ENGLISH} />; }
 export function RussianLevelStudio() { return <LanguageLevelStudio config={RUSSIAN} />; }
 export function TurkishLevelStudio() { return <LanguageLevelStudio config={TURKISH} />; }
 export function StarterLevelStudio({ course }: { course: StarterCourse }) {

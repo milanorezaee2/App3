@@ -2,7 +2,8 @@ import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from 'expo-speech-recognition';
-import { Mic2, RefreshCw, Square } from 'lucide-react-native';
+import { Mic2, RefreshCw, Square, Volume2 } from 'lucide-react-native';
+import * as Speech from 'expo-speech';
 import { toPersianDigits as fa } from '@/lib/format';
 
 /** Normalise a token for comparison: lower-case, strip punctuation and diacritics that recognisers often drop. */
@@ -40,7 +41,8 @@ function similarity(a: string, b: string) {
   return 1 - d[m][n] / Math.max(m, n);
 }
 
-export type SpeakCheckResult = { score: number; words: { word: string; ok: boolean }[]; heard: string };
+export type SpeakWordState = 'ok' | 'near' | 'miss';
+export type SpeakCheckResult = { score: number; words: { word: string; ok: boolean; state: SpeakWordState; heard?: string }[]; heard: string };
 
 /** Compare the recognised transcript with the target sentence; marks each expected word as matched or missed. */
 export function scoreSpeech(target: string, heard: string): SpeakCheckResult {
@@ -50,7 +52,7 @@ export function scoreSpeech(target: string, heard: string): SpeakCheckResult {
   const joined = pool.join('');
   const words = expected.map(raw => {
     const want = tokens(raw)[0] ?? '';
-    if (!want) return { word: raw, ok: true };
+    if (!want) return { word: raw, ok: true, state: 'ok' as SpeakWordState };
     const wantKey = phonetic(want);
     let best = -1, bestScore = 0;
     pool.forEach((got, index) => {
@@ -69,16 +71,18 @@ export function scoreSpeech(target: string, heard: string): SpeakCheckResult {
       ok = joinedScore >= 0.75 || (joinedScore >= 0.6 && phonetic(joined)[0] === wantKey[0]);
     }
     if (ok && best >= 0) used.add(best);
-    return { word: raw, ok };
+    // «near»: something was said in that slot and it resembles the target (same first sound or ≥ 45% similar) — pronunciation off, not skipped.
+    const near = !ok && best >= 0 && (bestScore >= 0.45 || (gotKey[0] === wantKey[0] && bestScore >= 0.3));
+    return { word: raw, ok, state: (ok ? 'ok' : near ? 'near' : 'miss') as SpeakWordState, heard: best >= 0 ? pool[best] : undefined };
   });
   const scored = words.filter(w => tokens(w.word).length);
   const score = scored.length ? Math.round((scored.filter(w => w.ok).length / scored.length) * 100) : 0;
   return { score, words, heard: heard.trim() };
 }
 
-function feedbackFor(score: number) {
+function feedbackFor(score: number, nearCount = 0) {
   if (score >= 90) return 'عالی! همهٔ واژه‌ها واضح شنیده شد.';
-  if (score >= 70) return 'خوب بود؛ واژه‌های قرمز را یک‌بار دیگر بگویید.';
+  if (score >= 70) return nearCount ? 'خوب بود؛ واژه‌های زرد نزدیک بود، قرمزها را دوباره بگویید. روی هر واژه بزنید تا آهسته بشنوید.' : 'خوب بود؛ واژه‌های قرمز را یک‌بار دیگر بگویید. روی هر واژه بزنید تا آهسته بشنوید.';
   if (score >= 40) return 'بخشی شنیده شد؛ آهسته‌تر و نزدیک‌تر به میکروفن تکرار کنید.';
   return 'واضح شنیده نشد؛ ابتدا نمونه را گوش دهید و دوباره بگویید.';
 }
@@ -156,19 +160,26 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
   }, [locale, text]);
 
   const stop = useCallback(() => { ExpoSpeechRecognitionModule.stop(); }, []);
+  const sayWord = useCallback((word: string) => { try { Speech.stop(); Speech.speak(word, { language: locale, rate: 0.6 }); } catch { /* no tts */ } }, [locale]);
+  const missed = result ? result.words.filter(w => w.state !== 'ok' && tokens(w.word).length) : [];
+  const sayMissed = useCallback(() => { if (!missed.length) return; try { Speech.stop(); Speech.speak(missed.map(w => w.word).join(', '), { language: locale, rate: 0.6 }); } catch { /* no tts */ } }, [missed, locale]);
 
   return (
     <View style={[styles.wrap, compact && styles.wrapCompact]}>
       {!compact && <Text style={styles.title}>{title ?? 'بگو · Speak'}</Text>}
-      {(!compact || listening || result) && <Text style={styles.hint}>{listening ? 'در حال شنیدن… با صدای واضح بگویید.' : result ? feedbackFor(result.score) : 'میکروفن را بزنید و همین جمله را با صدای بلند بگویید.'}</Text>}
+      {(!compact || listening || result) && <Text style={styles.hint}>{listening ? 'در حال شنیدن… با صدای واضح بگویید.' : result ? feedbackFor(result.score, result.words.filter(w => w.state === 'near').length) : 'میکروفن را بزنید و همین جمله را با صدای بلند بگویید.'}</Text>}
       {result ? (
         <View style={styles.wordsRow}>
-          {result.words.map((item, index) => <Text key={`${item.word}-${index}`} keepColor style={[styles.word, item.ok ? styles.wordOk : styles.wordMiss]}>{item.word}</Text>)}
+          {result.words.map((item, index) => <Pressable key={`${item.word}-${index}`} accessibilityRole="button" accessibilityLabel={`شنیدن آهستهٔ ${item.word}`} onPress={() => sayWord(item.word)}><Text keepColor style={[styles.word, item.state === 'ok' ? styles.wordOk : item.state === 'near' ? styles.wordNear : styles.wordMiss]}>{item.word}</Text></Pressable>)}
         </View>
       ) : null}
       {listening && partial ? <Text keepColor style={styles.partial}>{partial}</Text> : null}
       {result ? <View style={styles.scoreRow}><Text style={styles.scoreLabel}>امتیاز</Text><Text keepColor style={[styles.scoreValue, { color: result.score >= 70 ? '#15803D' : result.score >= 40 ? '#B45309' : '#B91C1C' }]}>{fa(result.score)}٪</Text></View> : null}
       {result && result.heard ? <Text style={styles.heard}>شنیده شد: <Text keepColor style={styles.heardText}>{result.heard}</Text></Text> : null}
+      {result && missed.length ? <View style={styles.legendRow}>
+        <Pressable accessibilityRole="button" onPress={sayMissed} style={styles.missedButton}><Volume2 size={14} color="#B91C1C" /><Text keepColor style={styles.missedText}>{missed.length === 1 ? 'بشنو و فقط همین یکی را دوباره بگو' : `بشنو و فقط این ${fa(missed.length)} واژه را دوباره بگو`}</Text></Pressable>
+        <Text style={styles.legend}>سبز = درست · زرد = نزدیک · قرمز = شنیده نشد</Text>
+      </View> : null}
       {!!error && <Text accessibilityRole="alert" keepColor style={styles.error}>{error}</Text>}
       <Pressable
         accessibilityRole="button"
@@ -194,6 +205,11 @@ const styles = StyleSheet.create({
   word: { fontSize: 17, fontWeight: '700', paddingHorizontal: 7, paddingVertical: 3, borderRadius: 8, overflow: 'hidden', writingDirection: 'ltr' },
   wordOk: { color: '#15803D', backgroundColor: '#DCFCE7' },
   wordMiss: { color: '#B91C1C', backgroundColor: '#FEE2E2' },
+  wordNear: { color: '#B45309', backgroundColor: '#FEF3C7' },
+  legendRow: { alignItems: 'center', gap: 4 },
+  legend: { fontSize: 11, color: '#94A3B8', textAlign: 'center' },
+  missedButton: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999, backgroundColor: '#FEF2F2', borderWidth: 1, borderColor: '#FECACA' },
+  missedText: { fontSize: 12, color: '#B91C1C', fontWeight: '700' },
   partial: { fontSize: 14, color: '#64748B', fontStyle: 'italic', textAlign: 'center' },
   scoreRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   scoreLabel: { fontSize: 13, color: '#475569' },

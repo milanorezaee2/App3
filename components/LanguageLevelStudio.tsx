@@ -3,19 +3,19 @@ import { useCallback, useEffect, useMemo, useState, type ComponentType, type Rea
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
-import { ArrowRight, Award, CheckCircle2, ClipboardCheck, Dumbbell, Lock, RotateCcw } from 'lucide-react-native';
+import { ArrowRight, Award, CheckCircle2, ClipboardCheck, Dumbbell, Flame, Lock, RotateCcw } from 'lucide-react-native';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
-import { ASSESSMENT_PASS_PERCENT, ASSESSMENT_QUESTIONS, SUPPLEMENT_QUESTIONS, buildLevelExam, buildLevelSupplement, levelPool, loadLevelAssessments, saveLevelAssessment, type LevelAssessmentState } from '@/lib/levelAssessment';
+import { ASSESSMENT_PASS_PERCENT, ASSESSMENT_QUESTIONS, SUPPLEMENT_QUESTIONS, buildLevelExam, buildLevelSupplement, buildLevelWarmUp, levelPool, loadLevelAssessments, saveLevelAssessment, type LevelAssessmentState } from '@/lib/levelAssessment';
 import type { LearningLesson } from '@/lib/languages/types';
 import type { CourseProgress } from '@/lib/courseProgress';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 import type { PracticeStats } from '@/lib/lessonPractice';
 
-type Mode = 'exam' | 'practice';
+type Mode = 'exam' | 'practice' | 'warmup';
 type LevelId = keyof typeof ENGLISH_LEVEL_GRADIENTS;
 type StudioLevel = { id: LevelId; title: string; cefr: string };
 type StudioLesson = Pick<LearningLesson, 'id' | 'title' | 'sentences'> & { levelId: LevelId };
@@ -67,7 +67,7 @@ export default function LanguageLevelStudio({ config }: { config: LevelStudioCon
   }, [level, mode]);
 
   const pool = useMemo(() => running ? levelPool(courseId, allLessons, running.levelId) : null, [running, courseId, allLessons]);
-  const items = useMemo(() => running && pool ? (running.mode === 'exam' ? buildLevelExam(pool, running.attempt) : buildLevelSupplement(pool)) : [], [running, pool]);
+  const items = useMemo(() => running && pool ? (running.mode === 'exam' ? buildLevelExam(pool, running.attempt) : running.mode === 'warmup' ? buildLevelWarmUp(allLessons, running.levelId) : buildLevelSupplement(pool)) : [], [running, pool, allLessons]);
   const speak = useCallback((text: string) => speakText(text), [speakText]);
 
   const finish = useCallback(async (stats: PracticeStats) => {
@@ -92,12 +92,12 @@ export default function LanguageLevelStudio({ config }: { config: LevelStudioCon
       <View style={styles.root}>
         <View style={styles.brandRow}><MiloGlobeHeadphoneMark size={48} /><Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => { setRunning(null); }}><ArrowRight size={19} color={Palette.ink} /></Pressable></View>
         <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[running.levelId]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
-          <Text style={styles.headerTitle}>{running.mode === 'exam' ? 'آزمون پایان سطح' : 'تمرین تکمیلی امروز'}</Text>
+          <Text style={styles.headerTitle}>{running.mode === 'exam' ? 'آزمون پایان سطح' : running.mode === 'warmup' ? 'گرم‌کردن کامل سطح' : 'تمرین تکمیلی امروز'}</Text>
           <Text style={styles.headerSub}>{levelMeta.title} · {levelMeta.cefr}</Text>
         </LinearGradient>
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           {running.mode === 'exam' ? <View style={styles.rulesCard}><Text style={styles.rulesTitle}>قانون آزمون</Text><Text style={styles.rulesText}>{fa(ASSESSMENT_QUESTIONS)} سؤال از همهٔ درس‌های این سطح، در قالب‌های مختلف. هر سؤال یک بار پرسیده می‌شود و فرصت دوباره ندارد. حد قبولی {fa(ASSESSMENT_PASS_PERCENT)}٪ است؛ هر بار آزمون، سؤال‌های تازه دارد.</Text></View> : null}
-          <LessonPracticeBlock title={running.mode === 'exam' ? `آزمون سطح` : 'تمرین تکمیلی'} intro={running.mode === 'exam' ? `${fa(items.length)} سؤال؛ بدون فرصت دوباره.` : `${fa(SUPPLEMENT_QUESTIONS)} ضربه از جمله‌های این سطح؛ هر روز تازه می‌شود.`} items={items} source={pool} exam={running.mode === 'exam'} onSpeak={speak} onComplete={finish} foreignStyle={[styles.foreign, config.foreignFontFamily ? { fontFamily: config.foreignFontFamily } : null]} accent={running.mode === 'exam' ? Palette.primary : Palette.success} />
+          <LessonPracticeBlock title={running.mode === 'exam' ? `آزمون سطح` : running.mode === 'warmup' ? 'گرم‌کردن سطح' : 'تمرین تکمیلی'} intro={running.mode === 'exam' ? `${fa(items.length)} سؤال؛ بدون فرصت دوباره.` : running.mode === 'warmup' ? `${fa(items.length)} ضربه، از هر درسِ این سطح یکی، به ترتیب درس‌ها؛ اگر جایی اشتباه شد، همان‌جا به شکل دیگری برمی‌گردد.` : `${fa(SUPPLEMENT_QUESTIONS)} ضربه از جمله‌های این سطح؛ هر روز تازه می‌شود.`} items={items} source={pool} exam={running.mode === 'exam'} onSkip={() => setRunning(null)} onSpeak={speak} onComplete={finish} foreignStyle={[styles.foreign, config.foreignFontFamily ? { fontFamily: config.foreignFontFamily } : null]} accent={running.mode === 'exam' ? Palette.primary : running.mode === 'warmup' ? '#D97706' : Palette.success} />
         </ScrollView>
         <BottomNav />
       </View>
@@ -110,7 +110,7 @@ export default function LanguageLevelStudio({ config }: { config: LevelStudioCon
       <View style={styles.pageHead}><Text style={styles.pageTitle}>مسیر تکمیلی {nameFa}</Text><Text style={styles.pageSub}>آزمون پایان هر سطح + تمرین تکمیلی روزانه از جمله‌های همان سطح</Text></View>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         {result ? <View style={[styles.resultCard, result.mode === 'exam' && result.percent >= ASSESSMENT_PASS_PERCENT && styles.resultPass]}>
-          <View style={styles.resultRow}>{result.mode === 'exam' && result.percent >= ASSESSMENT_PASS_PERCENT ? <Award size={26} color={Palette.success} /> : <CheckCircle2 size={26} color={Palette.primaryDark} />}<Text style={styles.resultTitle}>{result.mode === 'exam' ? (result.percent >= ASSESSMENT_PASS_PERCENT ? 'قبول شدید!' : 'این بار قبول نشدید') : 'تمرین امروز تمام شد'}</Text></View>
+          <View style={styles.resultRow}>{result.mode === 'exam' && result.percent >= ASSESSMENT_PASS_PERCENT ? <Award size={26} color={Palette.success} /> : <CheckCircle2 size={26} color={Palette.primaryDark} />}<Text style={styles.resultTitle}>{result.mode === 'exam' ? (result.percent >= ASSESSMENT_PASS_PERCENT ? 'قبول شدید!' : 'این بار قبول نشدید') : result.mode === 'warmup' ? 'گرم‌کردن سطح تمام شد' : 'تمرین امروز تمام شد'}</Text></View>
           <Text style={styles.resultText}>{fa(result.stats.firstTryCorrect)} از {fa(result.stats.total)} درست · {fa(result.percent)}٪{result.stats.seconds ? ` · ${fa(result.stats.seconds)} ثانیه` : ''}</Text>
           {result.mode === 'exam' && result.percent < ASSESSMENT_PASS_PERCENT ? <Text style={styles.resultHint}>درس‌های این سطح را مرور کنید و دوباره امتحان دهید؛ سؤال‌ها هر بار تازه‌اند.</Text> : null}
         </View> : null}
@@ -127,6 +127,10 @@ export default function LanguageLevelStudio({ config }: { config: LevelStudioCon
                 <View style={styles.levelCopy}><Text style={styles.levelTitle}>{levelMeta.title}</Text><Text style={styles.levelMeta}>{levelMeta.cefr} · {fa(done)} از {fa(lessons.length)} درس</Text></View>
                 {passed ? <View style={styles.badge}><Award size={14} color="#92400E" /><Text style={styles.badgeText}>قبول · {fa(record!.bestPercent)}٪</Text></View> : record ? <View style={[styles.badge, styles.badgeMuted]}><Text style={styles.badgeMutedText}>آخرین: {fa(record.lastPercent)}٪</Text></View> : null}
               </View>
+              <Pressable accessibilityRole="button" disabled={done === 0} onPress={() => start(levelMeta.id, 'warmup')} style={[styles.action, styles.actionWarmup, done === 0 && styles.actionDisabled]}>
+                <Flame size={16} color="#B45309" />
+                <Text style={[styles.actionText, { color: '#B45309' }]}>{done === lessons.length ? 'گرم‌کردن کامل سطح' : `گرم‌کردن کامل سطح (${fa(lessons.length)} درس)`}</Text>
+              </Pressable>
               <View style={styles.actions}>
                 <Pressable accessibilityRole="button" disabled={!ready} onPress={() => start(levelMeta.id, 'exam')} style={[styles.action, styles.actionExam, !ready && styles.actionDisabled]}>
                   {ready ? (passed ? <RotateCcw size={16} color="#FFFFFF" /> : <ClipboardCheck size={16} color="#FFFFFF" />) : <Lock size={16} color="#FFFFFF" />}
@@ -181,6 +185,7 @@ const styles = StyleSheet.create({
   actions: { flexDirection: 'row-reverse', gap: 10 },
   action: { flex: 1, minHeight: 46, borderRadius: 14, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, paddingHorizontal: 10 },
   actionExam: { backgroundColor: Palette.primary },
+  actionWarmup: { backgroundColor: '#FFFBEB', borderWidth: 1.5, borderColor: '#F59E0B' },
   actionPractice: { backgroundColor: Palette.successSoft, borderWidth: 1, borderColor: '#BBF7D0' },
   actionDisabled: { opacity: 0.45 },
   actionText: { fontFamily: Typography.fontFamily, fontSize: 13, color: '#FFFFFF' },

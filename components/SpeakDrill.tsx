@@ -56,7 +56,7 @@ export default function SpeakDrill({ items, locale, accent = '#2563EB', onSpeak 
       {onSpeak ? <Pressable accessibilityRole="button" accessibilityLabel="شنیدن نمونه" style={styles.listen} onPress={() => onSpeak(current.text)}><Volume2 size={16} color={accent} /><Text keepColor style={[styles.listenText, { color: accent }]}>شنیدن نمونه</Text></Pressable> : null}
       <SpeakCheck key={current.id} text={current.text} locale={locale} accent={accent} title="بگو" onResult={onResult} />
       <View style={styles.actions}>
-        <Pressable accessibilityRole="button" style={[styles.button, { backgroundColor: answered ? accent : '#94A3B8' }]} onPress={next}><Text keepColor style={styles.buttonText}>{index < items.length - 1 ? (answered ? 'جملهٔ بعدی' : 'رد کردن') : 'پایان آزمون'}</Text><ChevronLeft size={17} color="#FFFFFF" /></Pressable>
+        <Pressable accessibilityRole="button" style={[styles.button, { backgroundColor: answered ? accent : '#D97706' }]} onPress={next}><Text keepColor style={styles.buttonText}>{index < items.length - 1 ? (answered ? 'جملهٔ بعدی' : 'رد کردن') : 'پایان آزمون'}</Text><ChevronLeft size={17} color="#FFFFFF" /></Pressable>
       </View>
     </View>
   );

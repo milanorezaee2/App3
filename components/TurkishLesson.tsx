@@ -13,6 +13,8 @@ import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import TurkishSentenceBuilder from '@/components/TurkishSentenceBuilder';
 import TurkishDialoguePractice from '@/components/TurkishDialoguePractice';
+import SpeakCheck from '@/components/SpeakCheck';
+import SpeakDrill from '@/components/SpeakDrill';
 import { clearTurkishLessonSession, loadTurkishLessonSessionWithPresence, saveTurkishLessonSession, resetTurkishLessonSession } from '@/lib/languages/turkishStudyState';
 import { TURKISH_LESSONS, TURKISH_LEVELS, TURKISH_LESSON_STAGES, turkishProgress, type TurkishCourseLesson } from '@/lib/languages/turkish';
 import type { TurkishLessonSession } from '@/lib/languages/turkishStudyState';
@@ -81,7 +83,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
   useEffect(() => { setPracticeDone(false); setWarmUpDone(false); }, [lesson.id]);
   const practiceStats = useRef<PracticeStats>({ total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 });
   const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
-  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void } | null>(null);
+  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void; levelFinished?: { title: string; lessons: number; onStart: () => void } } | null>(null);
   const markWarmUpDone = useCallback(() => setWarmUpDone(true), []);
   const skipPractice = useCallback(() => { practiceStats.current = { total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 }; setPracticeDone(true); }, []);
   const warmUpBlocks = warmUpItems.length > 0 && !warmUpDone;
@@ -237,6 +239,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
         next: () => { if (nextLesson) router.replace({ pathname: '/learn/tr/lesson', params: { id: nextLesson.id } } as never); else router.replace('/learn/tr' as never); },
         dueReviews,
         review: () => router.replace('/learn/tr/review' as never),
+        levelFinished: (!nextLesson || nextLesson.levelId !== lesson.levelId) ? { title: TURKISH_LEVELS.find(item => item.id === lesson.levelId)?.title ?? '', lessons: TURKISH_LESSONS.filter(item => item.levelId === lesson.levelId).length, onStart: () => router.replace({ pathname: '/learn/tr/studio', params: { level: String(lesson.levelId), mode: 'warmup' } } as never) } : undefined,
       });
     } catch {
       completing.current = false;
@@ -297,6 +300,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
             <Pressable accessibilityRole="button" accessibilityLabel={`پخش آهستهٔ ${unitLabel}`} style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel={`پخش معمولی ${unitLabel}`} style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable>
           </View>
+          <SpeakCheck key={current.id} text={current.text} locale="tr-TR" accent={Palette.success} />
         </View>}
 
         {stage === 2 && <View style={styles.centerStage}>
@@ -319,7 +323,8 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
             <Text style={styles.speechTitle}>{unitLabel} انتخاب‌شده</Text>
             <Text style={styles.speechSentence}>{current.text}</Text>
             <Pressable accessibilityRole="button" style={styles.playSlowButton} onPress={() => speak(current.text, .68)}><Volume2 size={18} color="#FFFFFF" /><Text style={styles.recordButtonText}>پخش آهستهٔ نمونه</Text></Pressable>
-            <Text style={styles.speechHint}>پس از شنیدن، {unitLabel} را با صدای بلند تکرار کنید؛ گفتار ضبط یا نمره‌گذاری نمی‌شود.</Text>
+            <Text style={styles.speechHint}>پس از شنیدن، {unitLabel} را با صدای بلند تکرار کنید.</Text>
+            <SpeakCheck key={current.id} text={current.text} locale="tr-TR" accent={Palette.success} />
           </View>
           <View style={styles.dots}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`${unitLabel} ${fa(index + 1)}`} onPress={() => selectSentence(index, .68)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />)}</View>
         </View>}
@@ -346,6 +351,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
             <View style={styles.vocabTop}><Text style={styles.vocabWord}>{word.word}</Text><Text style={styles.vocabMeaning}>{word.meaning}</Text></View>
             <Text style={styles.vocabExample}>{sentence.text}</Text><Text keepColor style={styles.vocabExampleFa}>{sentence.fa}</Text>
             <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن مثال: ${sentence.text}`} style={styles.bubbleSound} onPress={() => speak(sentence.text)}><Volume2 size={16} color={Palette.primary} /></Pressable>
+            <SpeakCheck compact text={word.word} locale="tr-TR" accent={Palette.success} />
           </View>)}</View>
         </View>}
 
@@ -371,7 +377,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
             <View style={styles.bigIcon}><MessageCircle size={34} color={Palette.primary} /></View>
             <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
             {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
-            <TurkishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} />
+            <TurkishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} locale="tr-TR" />
           </>}
         </View>}
 
@@ -379,6 +385,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           <View style={styles.bigIcon}><RefreshCw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} {unitLabel} و {fa(vocabulary.length)} واژهٔ یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
+          <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale="tr-TR" accent={Palette.success} onSpeak={text => speak(text)} />
           <LessonPracticeBlock title="چالش برق‌آسا" intro={`${fa(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} />
           {practiceBlocks ? null : <View style={styles.evidenceCard}>
             <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
@@ -420,7 +427,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           </Pressable>
         </View>
       </View>
-      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(TURKISH_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} dueReviews={celebration?.dueReviews ?? 0} onReview={() => { const go = celebration?.review; setCelebration(null); go?.(); }} />
+      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(TURKISH_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} dueReviews={celebration?.dueReviews ?? 0} onReview={() => { const go = celebration?.review; setCelebration(null); go?.(); }} levelFinished={celebration?.levelFinished ? { ...celebration.levelFinished, onStart: () => { const go = celebration.levelFinished!.onStart; setCelebration(null); go(); } } : undefined} />
     </View>
   );
 }

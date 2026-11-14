@@ -367,6 +367,14 @@ export default function LearningHome() {
               </View>
             </View>
             <View style={[styles.quickRow, compact && styles.quickRowCompact]}>
+              <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push('/learn/en/studio' as never)}>
+                <View style={[styles.quickIcon, { backgroundColor: '#FEF3C7' }]}><Flame size={18} color="#D97706" /></View>
+                <View style={styles.quickCopy}>
+                  <Text style={styles.quickTitle}>گرم‌کردن و آزمون سطح</Text>
+                  <Text style={styles.quickDesc}>گرم‌کردن کامل هر سطح، آزمون و تمرین روزانه</Text>
+                </View>
+                <ChevronLeft size={17} color={HomeColors.muted} />
+              </Pressable>
               <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push('/review' as never)}>
                 <View style={[styles.quickIcon, { backgroundColor: HomeColors.sageSoft }]}><RefreshCw size={18} color={HomeColors.sage} /></View>
                 <View style={styles.quickCopy}>
