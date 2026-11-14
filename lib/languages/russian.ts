@@ -7,6 +7,10 @@ import { EVERYDAY_LESSONS_B } from './russianEverydayPartB';
 import { RUSSIAN_B1_LESSONS } from './russianB1';
 import { RUSSIAN_B2_LESSONS } from './russianB2';
 import { RUSSIAN_C1_LESSONS } from './russianC1';
+import { RUSSIAN_A2_EXPANSION_LESSONS } from './russianA2Expansion';
+import { RUSSIAN_B1_EXPANSION_LESSONS } from './russianB1Expansion';
+import { RUSSIAN_B2_EXPANSION_LESSONS } from './russianB2Expansion';
+import { RUSSIAN_C1_EXPANSION_LESSONS } from './russianC1Expansion';
 
 /**
  * دورهٔ روسی برای فارسی‌زبان‌ها — طراحی‌شده بر پایهٔ بهترین روش‌های آموزش زبان انگلیسی
@@ -556,6 +560,7 @@ const SURVIVAL_LESSONS: readonly LearningLesson[] = [
 const EVERYDAY_LESSONS: readonly LearningLesson[] = [
   ...EVERYDAY_LESSONS_A,
   ...EVERYDAY_LESSONS_B,
+  ...RUSSIAN_A2_EXPANSION_LESSONS,
 ];
 
 const RUSSIAN_STARTER_LESSONS: readonly LearningLesson[] = [
@@ -563,8 +568,11 @@ const RUSSIAN_STARTER_LESSONS: readonly LearningLesson[] = [
   ...SURVIVAL_LESSONS,
   ...EVERYDAY_LESSONS,
   ...RUSSIAN_B1_LESSONS,
+  ...RUSSIAN_B1_EXPANSION_LESSONS,
   ...RUSSIAN_B2_LESSONS,
+  ...RUSSIAN_B2_EXPANSION_LESSONS,
   ...RUSSIAN_C1_LESSONS,
+  ...RUSSIAN_C1_EXPANSION_LESSONS,
 ];
 
 export type RussianLevelId = 0 | 1 | 2 | 3 | 4 | 5;
@@ -798,6 +806,10 @@ const RUSSIAN_LESSON_LEVELS: Record<string, { levelId: RussianLevelId; subtitle:
     levelId: 5 as const,
     subtitle: `${index < 10 ? 'Foundation' : 'Survival'} · ${lesson.situation}`,
   }])),
+  ...Object.fromEntries(RUSSIAN_A2_EXPANSION_LESSONS.map(lesson => [lesson.id, { levelId: 2 as const, subtitle: `تکمیلی · ${lesson.situation}` }])),
+  ...Object.fromEntries(RUSSIAN_B1_EXPANSION_LESSONS.map(lesson => [lesson.id, { levelId: 3 as const, subtitle: `تکمیلی · ${lesson.situation}` }])),
+  ...Object.fromEntries(RUSSIAN_B2_EXPANSION_LESSONS.map(lesson => [lesson.id, { levelId: 4 as const, subtitle: `تکمیلی · ${lesson.situation}` }])),
+  ...Object.fromEntries(RUSSIAN_C1_EXPANSION_LESSONS.map(lesson => [lesson.id, { levelId: 5 as const, subtitle: `تکمیلی · ${lesson.situation}` }])),
 };
 
 export const RUSSIAN_LESSONS: readonly RussianCourseLesson[] = RUSSIAN_STARTER_LESSONS.map((item, index) => {
