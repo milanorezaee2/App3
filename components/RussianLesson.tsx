@@ -379,18 +379,11 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
         </View>}
 
         {stage >= 8 && <View style={styles.centerStage}>
-          {stage === 8 ? <>
-          <View style={styles.bigIcon}><RefreshCw size={33} color={Palette.success} /></View>
-          <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
-          <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} جمله و {fa(vocabulary.length)} واژه/عبارت یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
-          </> : null}
-          {(() => { const finalSections: FinalSection[] = [
-            { id: 'blitz', title: 'دور سریع', subtitle: `${fa(practiceItems.length)} ضربه از همین درس، هر بار به شکلی دیگر`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="چالش برق‌آسا" intro={`${fa(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} /></> },
-            { id: 'speak', title: 'آزمون گفتاری', subtitle: 'هر جمله را بلند بگو؛ واژه‌به‌واژه بازخورد می‌گیری', render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale="ru-RU" accent={Palette.success} onSpeak={text => speak(text)} /></> },
-            { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش کوتاه از همین درس؛ بدون نمره، با توضیح', render: () => <>
+                    {(() => { const finalSections: FinalSection[] = [
+            { id: 'blitz', title: 'دور سریع', subtitle: `${fa(practiceItems.length)} ضربه؛ هر جملهٔ درس یک بار، هر بار به شکلی دیگر.`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="" intro="بدون نمره. اشتباه؟ همان جمله به شکل دیگری برمی‌گردد." items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.primary} /></> },
+            { id: 'speak', title: 'آزمون گفتاری', subtitle: `${fa(lesson.sentences.length)} جمله؛ هر کدام را بلند بگو و امتیاز بگیر.`, render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale="ru-RU" accent={Palette.success} onSpeak={text => speak(text)} /></> },
+            { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش از همین درس؛ بدون نمره، با توضیح.', render: () => <>
           {false ? null : <View style={styles.evidenceCard}>
-            <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
-            <Text style={styles.evidenceIntro}>پرسش‌ها به جمله‌های همین درس وصل‌اند. پاسخ نادرست را می‌توانید دوباره امتحان کنید یا توضیح پاسخ نمونه را ببینید.</Text>
             {checks.map((question, index) => <View key={index} style={styles.question}>
               <Text style={styles.questionPrompt}>{fa(index + 1)}. {question.promptFa}</Text>
               {question.choices.map((choice, choiceIndex) => {

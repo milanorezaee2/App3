@@ -108,7 +108,7 @@ export default function LessonPracticeBlock({ title, intro, items, source, retry
   if (finished) {
     return (
       <View style={[styles.card, { borderColor: accent }]}>
-        <View style={styles.doneRow}><CheckCircle2 size={22} color={Palette.success} /><Text style={styles.title}>{title}</Text></View>
+        <View style={styles.doneRow}><CheckCircle2 size={22} color={Palette.success} /><Text style={styles.title}>{title || 'تمام شد'}</Text></View>
         <Text style={styles.intro}>{fa(firstTry)} از {fa(total)} بار اول درست{finishedSeconds.current > 0 ? ` · ${fa(finishedSeconds.current)} ثانیه` : ''}{retries > 0 ? ` · ${fa(retries)} مورد با قالب دیگر جبران شد` : ''}.</Text>
       </View>
     );
@@ -122,7 +122,7 @@ export default function LessonPracticeBlock({ title, intro, items, source, retry
   return (
     <View style={styles.card}>
       <View style={styles.headRow}>
-        <Text style={styles.title}>{title}</Text>
+        {title ? <Text style={styles.title}>{title}</Text> : <View />}
         <View style={styles.headRight}>
           <Text style={styles.counter}>{fa(done + 1)} / {fa(total)}</Text>
           {onSkip ? <Pressable accessibilityRole="button" accessibilityLabel="رد کردن این تمرین" onPress={onSkip} hitSlop={8} style={({ pressed }) => [styles.skipButton, pressed && { opacity: 0.75 }]}><SkipForward size={15} color="#B45309" /><Text style={styles.skipText}>رد کردن</Text></Pressable> : null}

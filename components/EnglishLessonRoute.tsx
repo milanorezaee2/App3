@@ -530,18 +530,10 @@ export default function SentenceLessonScreen() {
 
         {stage >= 8 && (
           <View style={styles.centerStage}>
-            {stage === 8 ? <>
-            <View style={styles.bigIcon}><RefreshCw size={33} color={Colors.success[400]} /></View>
-            <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
-            <View style={styles.promiseCard}>
-              <Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text>
-              <Text style={styles.promiseText}>{toPersianDigits(lesson.sentences.length)} جمله و {toPersianDigits(vocabulary.length)} واژهٔ یکتا؛ محتوا همان محتوای اصلی درس است.</Text>
-            </View>
-            </> : null}
-            {(() => { const finalSections: FinalSection[] = [
-              { id: 'blitz', title: 'دور سریع', subtitle: `${toPersianDigits(practiceItems.length)} ضربه از همین درس، هر بار به شکلی دیگر`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="چالش برق‌آسا" intro={`${toPersianDigits(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={practiceLesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Colors.success[400]} /></> },
-              { id: 'speak', title: 'آزمون گفتاری', subtitle: 'هر جمله را بلند بگو؛ واژه‌به‌واژه بازخورد می‌گیری', render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} /></> },
-              { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش کوتاه از همین درس؛ بدون نمره، با توضیح', render: () => <>
+                        {(() => { const finalSections: FinalSection[] = [
+              { id: 'blitz', title: 'دور سریع', subtitle: `${toPersianDigits(practiceItems.length)} ضربه؛ هر جملهٔ درس یک بار، هر بار به شکلی دیگر.`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="" intro="بدون نمره. اشتباه؟ همان جمله به شکل دیگری برمی‌گردد." items={practiceItems} source={practiceLesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Colors.primary[500]} /></> },
+              { id: 'speak', title: 'آزمون گفتاری', subtitle: `${toPersianDigits(lesson.sentences.length)} جمله؛ هر کدام را بلند بگو و امتیاز بگیر.`, render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} /></> },
+              { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش از همین درس؛ بدون نمره، با توضیح.', render: () => <>
             {false ? null : evidencePassed
               ? CORE_LESSON_EVIDENCE[lesson.id]
                 ? <Text style={styles.stageDesc}>همهٔ {toPersianDigits(CORE_LESSON_EVIDENCE[lesson.id].length)} سنجشِ این درس با پاسخ درست ثبت شد ✓</Text>
