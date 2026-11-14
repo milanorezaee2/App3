@@ -38,6 +38,7 @@ import type { StarterLessonSession } from '@/lib/languages/starterSessions';
 import { toPersianDigits as fa } from '@/lib/format';
 import { playStarterSpeech, stopStarterSpeech } from '@/lib/starterSpeech';
 import { Typography } from '@/lib/theme';
+import { shuffleChecks } from '@/lib/shuffleChecks';
 import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
 
 const foundationStageNames: Record<number, { labelFa: string; labelEn: string }> = {
@@ -99,7 +100,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
   const restartPromise = useRef<Promise<StarterLessonSession> | null>(null);
   const saveGeneration = useRef(0);
   const current = lesson.sentences[sentenceIndex];
-  const checks = starterDisplayChecks(lesson);
+  const checks = useMemo(() => shuffleChecks(lesson.id, starterDisplayChecks(lesson)), [lesson]);
   const teachingNote = starterTeachingNote(lesson);
   const allChecksPassed = checks.every((question, index) => answers[String(index)] === question.correctIndex);
   const progressPercent = Math.round(((stage + 1) / stages.length) * 100);

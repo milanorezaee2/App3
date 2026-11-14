@@ -22,6 +22,7 @@ import type { RussianLessonSession } from '@/lib/languages/russianStudyState';
 import { toPersianDigits as fa } from '@/lib/format';
 import { playRussianSpeech, stopRussianSpeech } from '@/lib/russianSpeech';
 import { Typography } from '@/lib/theme';
+import { shuffleChecks } from '@/lib/shuffleChecks';
 import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
 
 const stages = RUSSIAN_LESSON_STAGES;
@@ -65,7 +66,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
   const restartPromise = useRef<Promise<RussianLessonSession> | null>(null);
   const saveGeneration = useRef(0);
   const current = lesson.sentences[sentenceIndex];
-  const checks = lesson.checks ?? [];
+  const checks = useMemo(() => shuffleChecks(lesson.id, lesson.checks), [lesson]);
   const allChecksPassed = checks.every((question, index) => answers[String(index)] === question.correctIndex);
   const progressPercent = Math.round(((stage + 1) / stages.length) * 100);
   const vocabulary = useMemo(() => {

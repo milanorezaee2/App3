@@ -19,6 +19,7 @@ import type { TurkishLessonSession } from '@/lib/languages/turkishStudyState';
 import { toPersianDigits as fa } from '@/lib/format';
 import { playTurkishSpeech, stopTurkishSpeech } from '@/lib/turkishSpeech';
 import { Typography } from '@/lib/theme';
+import { shuffleChecks } from '@/lib/shuffleChecks';
 import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
 
 const stages = TURKISH_LESSON_STAGES;
@@ -67,7 +68,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
   const coreStageLabel = lesson.learningMode === 'words' ? 'واژه‌های اصلی' : lesson.learningMode === 'chunks' ? 'ترکیب‌های اصلی' : 'جمله‌های اصلی';
   const stageLabelFa = stage === 1 ? coreStageLabel : stage === 4 && lesson.learningMode === 'words' ? 'یادآوری واژه' : stage === 4 && lesson.learningMode === 'chunks' ? 'ساخت ترکیب کوتاه' : stage === 5 && lesson.learningMode === 'words' ? 'مرور واژگان' : stage === 7 && lesson.learningMode === 'words' ? 'مرور فعال واژه‌ها' : stages[stage].labelFa;
   const stageLabelEn = stage === 1 && lesson.learningMode === 'words' ? 'Core Words' : stage === 1 && lesson.learningMode === 'chunks' ? 'Core Chunks' : stage === 4 && lesson.learningMode === 'words' ? 'Word Recall' : stage === 4 && lesson.learningMode === 'chunks' ? 'Chunk Building' : stage === 5 && lesson.learningMode === 'words' ? 'Vocabulary Review' : stage === 7 && lesson.learningMode === 'words' ? 'Active Word Review' : stages[stage].labelEn;
-  const checks = lesson.checks ?? [];
+  const checks = useMemo(() => shuffleChecks(lesson.id, lesson.checks), [lesson]);
   const allChecksPassed = checks.every((question, index) => answers[String(index)] === question.correctIndex);
   const progressPercent = Math.round(((stage + 1) / stages.length) * 100);
   const vocabulary = useMemo(() => {
