@@ -4,6 +4,7 @@ import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/L
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { buildLessonPractice, buildWarmUp, WARM_UP_KINDS, type PracticeStats } from '@/lib/lessonPractice';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
+import BlindListeningList from '@/components/BlindListeningList';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
 import { recordStudyDay } from '@/lib/studyStreak';
 import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -46,7 +47,7 @@ import { loadSupplement } from '@/lib/englishSupplement/progress';
 import { CORE_LESSON_EVIDENCE, isCoreLessonEvidenceComplete } from '@/lib/englishFoundationEvidence';
 import { useEnglishStudyTimer } from '@/components/useEnglishStudyTimer';
 import { PAID_AI_ENABLED, PAID_AI_DISABLED_MESSAGE } from '@/lib/paidAI';
-import { ENGLISH_NORMAL_SPEECH_RATE, ENGLISH_SLOW_SPEECH_RATE, playResponsiveSpeech, stopResponsiveSpeech, warmSpeech } from '@/lib/responsiveSpeech';
+import { ENGLISH_NATURAL_SPEECH_RATE, ENGLISH_NORMAL_SPEECH_RATE, ENGLISH_SLOW_SPEECH_RATE, playResponsiveSpeech, stopResponsiveSpeech, warmSpeech } from '@/lib/responsiveSpeech';
 import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
 import { B1_INDEPENDENT_UNITS } from '@/lib/courseContentB1Independent';
 import { B2_UPPER_INTERMEDIATE_UNITS } from '@/lib/courseContentB2UpperIntermediate';
@@ -426,21 +427,7 @@ export default function SentenceLessonScreen() {
             <View style={styles.bigIcon}><Headphones size={34} color={Colors.primary[400]} /></View>
             <Text style={styles.stageTitle}>شنیدن جمله‌ها</Text>
             {showHint && <Text style={styles.stageDesc}>هر جمله را گوش دهید و معنی‌اش را به یاد بیاورید.</Text>}
-            <View style={styles.listenList}>
-              {lesson.sentences.map((sentence, index) => (
-                <Pressable
-                  key={sentence.id}
-                  accessibilityRole="button"
-                  accessibilityLabel={`پخش جملهٔ ${toPersianDigits(index + 1)} از ${toPersianDigits(lesson.sentences.length)}: ${sentence.en}`}
-                  style={[styles.listenRow, index === sentenceIndex && styles.listenRowActive]}
-                  onPress={() => selectListeningSentence(index)}
-                >
-                  <View style={styles.listenNumber}><Text style={styles.listenNumberText}>{toPersianDigits(index + 1)}</Text></View>
-                  <Text style={styles.listenEnglish}>{sentence.en}</Text>
-                  <Volume2 size={19} color={Colors.primary[400]} />
-                </Pressable>
-              ))}
-            </View>
+            <BlindListeningList items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} activeIndex={sentenceIndex} onSelect={selectListeningSentence} accent={Palette.primary} foreignStyle={styles.listenEnglish} />
             <View style={styles.shadowTip}>
               <Headphones size={18} color={Colors.primary[400]} />
               <Text style={styles.shadowText}>جمله‌ها به‌ترتیب خودکار پخش می‌شوند؛ هر زمان خواستید «ادامه» را بزنید.</Text>
@@ -585,6 +572,9 @@ function EnglishSpeechRateControls({ onPlay, disabled = false }: { onPlay: (rate
       </Pressable>
       <Pressable accessibilityRole="button" accessibilityLabel="پخش معمولی جملهٔ انگلیسی" accessibilityHint="جملهٔ فعلی را با سرعت معمولی پخش می‌کند." accessibilityState={{ disabled }} disabled={disabled} style={[styles.replayButton, disabled && styles.replayDisabled]} onPress={() => onPlay(ENGLISH_NORMAL_SPEECH_RATE)}>
         <Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text>
+      </Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel="پخش با سرعت طبیعی" accessibilityHint="جملهٔ فعلی را با سرعت گفتار طبیعی پخش می‌کند." accessibilityState={{ disabled }} disabled={disabled} style={styles.replayButton} onPress={() => onPlay(ENGLISH_NATURAL_SPEECH_RATE)}>
+        <Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>طبیعی</Text>
       </Pressable>
     </View>
   );

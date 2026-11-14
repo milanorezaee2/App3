@@ -25,6 +25,7 @@ import { Typography } from '@/lib/theme';
 import { shuffleChecks } from '@/lib/shuffleChecks';
 import { buildLessonPractice, buildWarmUp, WARM_UP_KINDS, type PracticeStats } from '@/lib/lessonPractice';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
+import BlindListeningList from '@/components/BlindListeningList';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
 import { PersianBridgeCard, RuleCard } from '@/components/PersianBridgeCard';
 import { bridgeRulesForLesson } from '@/lib/languages/russianPersianBridge';
@@ -36,6 +37,8 @@ const stages = RUSSIAN_LESSON_STAGES;
 /** سرعت پخش: معمولی برای شنیدن خودکار و آهسته برای تکرار دقیق‌تر. */
 const NORMAL_SPEECH_RATE = 0.85;
 const SLOW_SPEECH_RATE = 0.5;
+/** سرعت طبیعی گفتار روزمره — برای گوشِ آماده. */
+const NATURAL_SPEECH_RATE = 1.0;
 
 export default function RussianLesson({ lesson, fromStart = false }: { lesson: RussianCourseLesson; fromStart?: boolean }) {
   const router = useRouter();
@@ -307,6 +310,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           <View style={styles.replayRow}>
             <Pressable accessibilityRole="button" accessibilityLabel="پخش آهستهٔ جمله" style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="پخش معمولی جمله" style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel="پخش با سرعت طبیعی" style={styles.replayButton} onPress={() => speak(current.text, NATURAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>طبیعی</Text></Pressable>
           </View>
           <SpeakCheck key={current.id} text={current.text} locale="ru-RU" accent={Palette.success} />
         </View>}
@@ -315,11 +319,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           <View style={styles.bigIcon}><Headphones size={34} color={Palette.primary} /></View>
           <Text style={styles.stageTitle}>شنیدن جمله‌ها</Text>
           {showHint && <Text style={styles.stageDesc}>هر جمله را گوش دهید و معنی‌اش را به یاد بیاورید.</Text>}
-          <View style={styles.listenList}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityState={{ selected: index === sentenceIndex }} style={[styles.listenRow, index === sentenceIndex && styles.listenRowActive]} onPress={() => selectSentence(index)}>
-            <View style={styles.listenNumber}><Text style={styles.listenNumberText}>{fa(index + 1)}</Text></View>
-            <Text style={styles.listenRussian}>{sentence.text}</Text>
-            <Volume2 size={19} color={Palette.primary} />
-          </Pressable>)}</View>
+          <BlindListeningList items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} activeIndex={sentenceIndex} onSelect={selectSentence} accent={Palette.primary} foreignStyle={styles.listenRussian} />
           <View style={styles.shadowTip}><Headphones size={18} color={Palette.primary} /><Text style={styles.shadowText}>جمله‌ها به‌ترتیب خودکار پخش می‌شوند؛ هر زمان خواستید «ادامه» را بزنید.</Text></View>
         </View>}
 

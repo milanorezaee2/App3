@@ -24,6 +24,7 @@ import { Typography } from '@/lib/theme';
 import { shuffleChecks } from '@/lib/shuffleChecks';
 import { buildLessonPractice, buildWarmUp, WARM_UP_KINDS, type PracticeStats } from '@/lib/lessonPractice';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
+import BlindListeningList from '@/components/BlindListeningList';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
 import { recordStudyDay } from '@/lib/studyStreak';
 import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
@@ -33,6 +34,7 @@ const stages = TURKISH_LESSON_STAGES;
 /** سرعت پخش: معمولی برای شنیدن خودکار و آهسته برای تکرار دقیق‌تر. */
 const NORMAL_SPEECH_RATE = 0.85;
 const SLOW_SPEECH_RATE = 0.5;
+const NATURAL_SPEECH_RATE = 1.0;
 
 export default function TurkishLesson({ lesson, fromStart = false }: { lesson: TurkishCourseLesson; fromStart?: boolean }) {
   const router = useRouter();
@@ -299,6 +301,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           <View style={styles.replayRow}>
             <Pressable accessibilityRole="button" accessibilityLabel={`پخش آهستهٔ ${unitLabel}`} style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel={`پخش معمولی ${unitLabel}`} style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel="پخش با سرعت طبیعی" style={styles.replayButton} onPress={() => speak(current.text, NATURAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>طبیعی</Text></Pressable>
           </View>
           <SpeakCheck key={current.id} text={current.text} locale="tr-TR" accent={Palette.success} />
         </View>}
@@ -307,11 +310,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           <View style={styles.bigIcon}><Headphones size={34} color={Palette.primary} /></View>
           <Text style={styles.stageTitle}>شنیدن {unitLabelPlural}</Text>
           {showHint && <Text style={styles.stageDesc}>{lesson.learningMode === 'words' ? 'هر واژه را گوش دهید و معنی‌اش را به یاد بیاورید.' : lesson.learningMode === 'chunks' ? 'هر ترکیب را گوش دهید و معنی‌اش را به یاد بیاورید.' : 'هر جمله را گوش دهید و معنی‌اش را به یاد بیاورید.'}</Text>}
-          <View style={styles.listenList}>{lesson.sentences.map((sentence, index) => <Pressable key={sentence.id} accessibilityRole="button" accessibilityState={{ selected: index === sentenceIndex }} style={[styles.listenRow, index === sentenceIndex && styles.listenRowActive]} onPress={() => selectSentence(index)}>
-            <View style={styles.listenNumber}><Text style={styles.listenNumberText}>{fa(index + 1)}</Text></View>
-            <Text style={styles.listenTurkish}>{sentence.text}</Text>
-            <Volume2 size={19} color={Palette.primary} />
-          </Pressable>)}</View>
+          <BlindListeningList items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} activeIndex={sentenceIndex} onSelect={selectSentence} accent={Palette.primary} foreignStyle={styles.listenTurkish} />
           <View style={styles.shadowTip}><Headphones size={18} color={Palette.primary} /><Text style={styles.shadowText}>فعلاً فقط گوش دهید؛ مرحلهٔ بعد برای تکرار و سایه‌خوانی است.</Text></View>
         </View>}
 

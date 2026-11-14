@@ -1,4 +1,5 @@
 import * as Speech from 'expo-speech';
+import { voiceFor } from './voiceRotation';
 import { speechTagFor } from './speechLanguage';
 
 type SpeechLocale = 'en-US';
@@ -6,6 +7,8 @@ type SpeechLocale = 'en-US';
 // Explicit speeds for English lesson playback. They do not alternate between taps.
 export const ENGLISH_NORMAL_SPEECH_RATE = 1;
 export const ENGLISH_SLOW_SPEECH_RATE = 0.5;
+/** Natural conversational pace — slightly faster than the default engine rate. */
+export const ENGLISH_NATURAL_SPEECH_RATE = 1.15;
 
 const warmedLocales = new Set<SpeechLocale>();
 const playCounts = new Map<string, number>();
@@ -45,12 +48,13 @@ export function playResponsiveSpeech({
 }) {
   const currentRequest = ++requestId;
   const selectedRate = rate ?? alternatingRate(locale, text);
-  const start = () => {
+  const start = (voice?: string) => {
     if (currentRequest !== requestId) return;
     active = true;
     try {
       Speech.speak(text, {
         language: speechTagFor(locale),
+        ...(voice ? { voice } : {}),
         rate: selectedRate,
         onDone: () => {
           if (currentRequest === requestId) { active = false; onDone?.(); }
@@ -59,18 +63,23 @@ export function playResponsiveSpeech({
           if (currentRequest === requestId) active = false;
         },
         onError: () => {
-          if (currentRequest === requestId) { active = false; onError?.(); }
+          if (currentRequest !== requestId) return;
+          active = false;
+          if (voice) start(); else onError?.();
         },
       });
     } catch {
-      if (currentRequest === requestId) { active = false; onError?.(); }
+      if (currentRequest !== requestId) return;
+      active = false;
+      if (voice) start(); else onError?.();
     }
   };
 
+  const begin = () => { void voiceFor(locale, text).catch(() => undefined).then(voice => start(voice)); };
   if (active) {
-    void Speech.stop().catch(() => undefined).finally(start);
+    void Speech.stop().catch(() => undefined).finally(begin);
   } else {
-    start();
+    begin();
   }
 
   return selectedRate;

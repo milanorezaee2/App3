@@ -1,5 +1,6 @@
 import * as Speech from 'expo-speech';
 import { speechTagFor } from './speechLanguage';
+import { voiceFor } from './voiceRotation';
 
 // Serialize stop/start requests: an asynchronous stop must not cancel the next
 // sentence after it has started. Only the most recent request may speak.
@@ -17,15 +18,23 @@ export function playTurkishSpeech(text: string, rate: number, onError?: () => vo
     if (request !== requestId) return;
     await Speech.stop().catch(() => undefined);
     if (request !== requestId) return;
-    try {
-      Speech.speak(text, {
-        language: speechTagFor('tr-TR'),
-        rate,
-        onError: () => { if (request === requestId) onError?.(); },
-      });
-    } catch {
-      if (request === requestId) onError?.();
-    }
+    const voice = await voiceFor('tr-TR', text).catch(() => undefined);
+    if (request !== requestId) return;
+    const say = (withVoice: boolean) => {
+      try {
+        Speech.speak(text, {
+          language: speechTagFor('tr-TR'),
+          ...(withVoice && voice ? { voice } : {}),
+          rate,
+          // A rotated voice that fails to start falls back to the device default once.
+          onError: () => { if (request !== requestId) return; if (withVoice && voice) say(false); else onError?.(); },
+        });
+      } catch {
+        if (request !== requestId) return;
+        if (withVoice && voice) say(false); else onError?.();
+      }
+    };
+    say(true);
   });
 }
 
