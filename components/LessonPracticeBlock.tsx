@@ -23,6 +23,8 @@ interface Props {
   onSpeak: (text: string) => void;
   onComplete: (stats: PracticeStats) => void;
   completed?: boolean;
+  /** Lets the learner skip the rest of the round; reported as completed with zero progress. */
+  onSkip?: () => void;
   foreignStyle: object;
   accent?: string;
 }
@@ -35,7 +37,7 @@ const KIND_LABEL: Record<PracticeKind, string> = {
   match: 'هر جمله را به معنی‌اش وصل کن',
 };
 
-export default function LessonPracticeBlock({ title, intro, items, source, retryKinds, onSpeak, onComplete, completed, foreignStyle, accent = Palette.primary }: Props) {
+export default function LessonPracticeBlock({ title, intro, items, source, retryKinds, onSpeak, onComplete, completed, onSkip, foreignStyle, accent = Palette.primary }: Props) {
   const [queue, setQueue] = useState<PracticeItem[]>(items);
   const [resolved, setResolved] = useState<null | boolean>(null); // null = unanswered, true/false = outcome
   const [done, setDone] = useState(0);
@@ -119,7 +121,10 @@ export default function LessonPracticeBlock({ title, intro, items, source, retry
     <View style={styles.card}>
       <View style={styles.headRow}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.counter}>{fa(done + 1)} / {fa(total)}</Text>
+        <View style={styles.headRight}>
+          <Text style={styles.counter}>{fa(done + 1)} / {fa(total)}</Text>
+          {onSkip ? <Pressable accessibilityRole="button" onPress={onSkip} hitSlop={8} style={styles.skipButton}><Text style={styles.skipText}>رد کردن</Text></Pressable> : null}
+        </View>
       </View>
       {done === 0 && resolved === null ? <Text style={styles.intro}>{intro}</Text> : null}
       <View style={styles.timerRow}>
@@ -187,6 +192,9 @@ const styles = StyleSheet.create({
   headRow: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' },
   doneRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
   title: { fontFamily: Typography.fontFamily, fontSize: 17, color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
+  headRight: { flexDirection: 'row-reverse', alignItems: 'center', gap: 10 },
+  skipButton: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surfaceMuted },
+  skipText: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.text },
   counter: { fontFamily: Typography.fontFamily, fontSize: 13, color: Palette.primaryDark },
   intro: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: Palette.text, textAlign: 'right', writingDirection: 'rtl' },
   timerRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 10 },

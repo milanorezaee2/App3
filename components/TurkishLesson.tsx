@@ -83,6 +83,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
   const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
   const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void) } | null>(null);
   const markWarmUpDone = useCallback(() => setWarmUpDone(true), []);
+  const skipPractice = useCallback(() => { practiceStats.current = { total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 }; setPracticeDone(true); }, []);
   const warmUpBlocks = warmUpItems.length > 0 && !warmUpDone;
   const practiceBlocks = practiceItems.length > 0 && !practiceDone;
   const allChecksPassed = checks.every((question, index) => answers[String(index)] === question.correctIndex);
@@ -276,7 +277,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           <Text style={styles.situation}>{lesson.situation}</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>در پایان این درس می‌توانید:</Text><Text style={styles.promiseText}>با {fa(lesson.sentences.length)} {unitLabel}، این موضوع را یاد می‌گیرید.</Text></View>
           {lesson.teachingFa ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ ترکی استانبولی به فارسی</Text><Text style={styles.noteText}>{lesson.teachingFa}</Text></View> : null}
-          {warmUpItems.length > 0 ? <LessonPracticeBlock title="گرم‌کردن" intro={`${fa(warmUpItems.length)} ضربهٔ سریع از درس «${previousLesson?.title ?? ''}». بدون نمره.`} items={warmUpItems} source={previousLesson!} retryKinds={WARM_UP_KINDS} onSpeak={speakPractice} onComplete={markWarmUpDone} completed={warmUpDone} foreignStyle={styles.practiceForeign} accent={Palette.warning} /> : null}
+          {warmUpItems.length > 0 ? <LessonPracticeBlock title="گرم‌کردن" intro={`${fa(warmUpItems.length)} ضربهٔ سریع از درس «${previousLesson?.title ?? ''}». بدون نمره.`} items={warmUpItems} source={previousLesson!} retryKinds={WARM_UP_KINDS} onSpeak={speakPractice} onComplete={markWarmUpDone} onSkip={markWarmUpDone} completed={warmUpDone} foreignStyle={styles.practiceForeign} accent={Palette.warning} /> : null}
         </View>}
 
         {stage === 1 && <View style={styles.sentenceStage} onLayout={event => { stageOffsetRef.current = event.nativeEvent.layout.y; }}>
@@ -375,7 +376,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           <View style={styles.bigIcon}><RefreshCw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} {unitLabel} و {fa(vocabulary.length)} واژهٔ یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
-          <LessonPracticeBlock title="چالش برق‌آسا" intro={`${fa(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} />
+          <LessonPracticeBlock title="چالش برق‌آسا" intro={`${fa(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} />
           {practiceBlocks ? null : <View style={styles.evidenceCard}>
             <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
             <Text style={styles.evidenceIntro}>پرسش‌ها به جمله‌های همین درس وصل‌اند. پاسخ نادرست را می‌توانید دوباره امتحان کنید یا توضیح پاسخ نمونه را ببینید.</Text>

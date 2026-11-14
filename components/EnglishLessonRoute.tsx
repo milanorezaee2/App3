@@ -74,6 +74,7 @@ export default function SentenceLessonScreen() {
   const practiceStats = useRef<PracticeStats>({ total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 });
   const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
   const markWarmUpDone = useCallback(() => setWarmUpDone(true), []);
+  const skipPractice = useCallback(() => { practiceStats.current = { total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 }; setPracticeDone(true); }, []);
   const speakPractice = useCallback((text: string) => { playResponsiveSpeech({ text, locale: 'en-US', rate: ENGLISH_NORMAL_SPEECH_RATE, onError: () => undefined }); }, []);
   const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void) } | null>(null);
   const warmUpBlocks = warmUpItems.length > 0 && !warmUpDone;
@@ -393,7 +394,7 @@ export default function SentenceLessonScreen() {
               <Text style={styles.promiseTitle}>موضوع‌های این درس</Text>
               {lessonTopics.map(topic => <Text key={topic} style={styles.promiseText}>• {topic}</Text>)}
             </View>}
-            {warmUpItems.length > 0 ? <LessonPracticeBlock title="گرم‌کردن" intro={`${toPersianDigits(warmUpItems.length)} ضربهٔ سریع از درس «${previousLesson?.title ?? ''}». بدون نمره.`} items={warmUpItems} source={previousLesson!} retryKinds={WARM_UP_KINDS} onSpeak={speakPractice} onComplete={markWarmUpDone} completed={warmUpDone} foreignStyle={styles.practiceForeign} accent={Colors.accent[400]} /> : null}
+            {warmUpItems.length > 0 ? <LessonPracticeBlock title="گرم‌کردن" intro={`${toPersianDigits(warmUpItems.length)} ضربهٔ سریع از درس «${previousLesson?.title ?? ''}». بدون نمره.`} items={warmUpItems} source={previousLesson!} retryKinds={WARM_UP_KINDS} onSpeak={speakPractice} onComplete={markWarmUpDone} onSkip={markWarmUpDone} completed={warmUpDone} foreignStyle={styles.practiceForeign} accent={Colors.accent[400]} /> : null}
           </View>
         )}
 
@@ -543,7 +544,7 @@ export default function SentenceLessonScreen() {
               <Text style={styles.promiseText}>{toPersianDigits(lesson.sentences.length)} جمله و {toPersianDigits(vocabulary.length)} واژهٔ یکتا؛ محتوا همان محتوای اصلی درس است.</Text>
             </View>
             <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} />
-            <LessonPracticeBlock title="چالش برق‌آسا" intro={`${toPersianDigits(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={practiceLesson} onSpeak={speakPractice} onComplete={markPracticeDone} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Colors.success[400]} />
+            <LessonPracticeBlock title="چالش برق‌آسا" intro={`${toPersianDigits(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={practiceLesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Colors.success[400]} />
             {practiceBlocks ? null : evidencePassed
               ? CORE_LESSON_EVIDENCE[lesson.id]
                 ? <Text style={styles.stageDesc}>همهٔ {toPersianDigits(CORE_LESSON_EVIDENCE[lesson.id].length)} سنجشِ این درس با پاسخ درست ثبت شد ✓</Text>

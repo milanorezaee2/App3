@@ -115,6 +115,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
   const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
   const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void) } | null>(null);
   const markWarmUpDone = useCallback(() => setWarmUpDone(true), []);
+  const skipPractice = useCallback(() => { practiceStats.current = { total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 }; setPracticeDone(true); }, []);
   const warmUpBlocks = warmUpItems.length > 0 && !warmUpDone;
   const practiceBlocks = practiceItems.length > 0 && !practiceDone;
   const teachingNote = starterTeachingNote(lesson);
@@ -322,7 +323,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           <Text style={styles.situation}>{lesson.situation}</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>در پایان این درس می‌توانید:</Text><Text style={styles.promiseText}>{foundation ? `با ${fa(lesson.sentences.length)} ${unit} آشنا شوید، آن‌ها را بشنوید و معنی‌شان را تمرین کنید.` : `با ${fa(lesson.sentences.length)} جملهٔ کوتاه، این موقعیت را مدیریت کنید.`}</Text></View>
           {teachingNote ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ این زبان به فارسی</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : null}
-          {warmUpItems.length > 0 ? <LessonPracticeBlock title="گرم‌کردن" intro={`${fa(warmUpItems.length)} ضربهٔ سریع از درس «${previousLesson?.title ?? ''}». بدون نمره.`} items={warmUpItems} source={previousLesson!} retryKinds={WARM_UP_KINDS} onSpeak={speakPractice} onComplete={markWarmUpDone} completed={warmUpDone} foreignStyle={styles.practiceForeign} accent={Palette.warning} /> : null}
+          {warmUpItems.length > 0 ? <LessonPracticeBlock title="گرم‌کردن" intro={`${fa(warmUpItems.length)} ضربهٔ سریع از درس «${previousLesson?.title ?? ''}». بدون نمره.`} items={warmUpItems} source={previousLesson!} retryKinds={WARM_UP_KINDS} onSpeak={speakPractice} onComplete={markWarmUpDone} onSkip={markWarmUpDone} completed={warmUpDone} foreignStyle={styles.practiceForeign} accent={Palette.warning} /> : null}
         </View>}
 
         {stage === 1 && <View style={styles.sentenceStage} onLayout={event => { stageOffsetRef.current = event.nativeEvent.layout.y; }}>
@@ -424,7 +425,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} {unit} و {fa(vocabulary.length)} واژه/عبارت یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
           <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale={course.locale} accent={Palette.success} onSpeak={text => speak(text)} />
-          <LessonPracticeBlock title="چالش برق‌آسا" intro={`${fa(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} />
+          <LessonPracticeBlock title="چالش برق‌آسا" intro={`${fa(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} />
           {practiceBlocks ? null : <View style={styles.evidenceCard}>
             <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
             <Text style={styles.evidenceIntro}>{a1 ? 'برای پایان درس به همهٔ پرسش‌های کاربردی پاسخ درست دهید؛ پس از پاسخ نادرست می‌توانید دوباره امتحان کنید. این سنجش، آزمون رسمی سطح نیست.' : 'پرسش‌ها به نمونه‌های همین درس وصل‌اند. پاسخ نادرست را می‌توانید دوباره امتحان کنید یا توضیح پاسخ نمونه را ببینید.'}</Text>
