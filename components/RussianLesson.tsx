@@ -23,6 +23,8 @@ import { toPersianDigits as fa } from '@/lib/format';
 import { playRussianSpeech, stopRussianSpeech } from '@/lib/russianSpeech';
 import { Typography } from '@/lib/theme';
 import { shuffleChecks } from '@/lib/shuffleChecks';
+import { buildLessonPractice, buildWarmUp } from '@/lib/lessonPractice';
+import LessonPracticeBlock from '@/components/LessonPracticeBlock';
 import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
 
 const stages = RUSSIAN_LESSON_STAGES;
@@ -67,6 +69,17 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
   const saveGeneration = useRef(0);
   const current = lesson.sentences[sentenceIndex];
   const checks = useMemo(() => shuffleChecks(lesson.id, lesson.checks), [lesson]);
+  const practiceItems = useMemo(() => buildLessonPractice(lesson), [lesson]);
+  const previousLesson = useMemo(() => { const index = RUSSIAN_LESSONS.findIndex(item => item.id === lesson.id); return index > 0 ? RUSSIAN_LESSONS[index - 1] : null; }, [lesson.id]);
+  const warmUpItems = useMemo(() => buildWarmUp(previousLesson), [previousLesson]);
+  const [practiceDone, setPracticeDone] = useState(false);
+  const [warmUpDone, setWarmUpDone] = useState(false);
+  useEffect(() => { setPracticeDone(false); setWarmUpDone(false); }, [lesson.id]);
+  const markPracticeDone = useCallback(() => setPracticeDone(true), []);
+  const markWarmUpDone = useCallback(() => setWarmUpDone(true), []);
+  const speakPractice = useCallback((text: string) => { void playRussianSpeech(text, NORMAL_SPEECH_RATE, () => setSpeechError('صدای روسی دستگاه در دسترس نیست؛ متن و راهنمای خوانش همچنان دیده می‌شوند.')); }, []);
+  const warmUpBlocks = warmUpItems.length > 0 && !warmUpDone;
+  const practiceBlocks = practiceItems.length > 0 && !practiceDone;
   const allChecksPassed = checks.every((question, index) => answers[String(index)] === question.correctIndex);
   const progressPercent = Math.round(((stage + 1) / stages.length) * 100);
   const vocabulary = useMemo(() => {
@@ -195,6 +208,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
       setRevealed(false);
       return;
     }
+    if (stage === 0 && warmUpBlocks) return;
     if (stage < stages.length - 1) {
       const nextStage = stage + 1;
       setStage(nextStage);
@@ -205,7 +219,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
       else if (nextStage !== 1) void stopRussianSpeech();
       return;
     }
-    if (!allChecksPassed && !showCheckAnswers) return;
+    if (practiceBlocks || (!allChecksPassed && !showCheckAnswers)) return;
     void stopRussianSpeech();
     completing.current = true;
     setSaving(true);
@@ -261,6 +275,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           <Text style={styles.situation}>{lesson.situation}</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>در پایان این درس می‌توانید:</Text><Text style={styles.promiseText}>با {fa(lesson.sentences.length)} جملهٔ کوتاه، این موقعیت را مدیریت کنید.</Text></View>
           {lesson.teachingFa ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ روسی به فارسی</Text><Text style={styles.noteText}>{lesson.teachingFa}</Text></View> : null}
+          {warmUpItems.length > 0 ? <LessonPracticeBlock title="گرم‌کردن با درس قبل" intro={`${fa(warmUpItems.length)} تمرین کوتاه از درس «${previousLesson?.title ?? ''}». پاسخ غلط نمره ندارد؛ فقط دوباره پرسیده می‌شود.`} items={warmUpItems} onSpeak={speakPractice} onComplete={markWarmUpDone} completed={warmUpDone} foreignStyle={styles.practiceForeign} accent={Palette.warning} /> : null}
         </View>}
 
         {stage === 1 && <View style={styles.sentenceStage} onLayout={event => { stageOffsetRef.current = event.nativeEvent.layout.y; }}>
@@ -345,7 +360,8 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} جمله و {fa(vocabulary.length)} واژه/عبارت یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
           <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale="ru-RU" accent={Palette.success} onSpeak={text => speak(text)} />
-          <View style={styles.evidenceCard}>
+          <LessonPracticeBlock title="تمرین" intro={`${fa(practiceItems.length)} تمرین از جمله‌های همین درس: جای خالی، معنی و شنیدن. بدون نمره؛ هر پاسخ غلط کمی بعد دوباره می‌آید.`} items={practiceItems} onSpeak={speakPractice} onComplete={markPracticeDone} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} />
+          {practiceBlocks ? null : <View style={styles.evidenceCard}>
             <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
             <Text style={styles.evidenceIntro}>پرسش‌ها به جمله‌های همین درس وصل‌اند. پاسخ نادرست را می‌توانید دوباره امتحان کنید یا توضیح پاسخ نمونه را ببینید.</Text>
             {checks.map((question, index) => <View key={index} style={styles.question}>
@@ -366,7 +382,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
             </View>)}
             {!showCheckAnswers && <Pressable accessibilityRole="button" style={styles.showAnswersButton} onPress={() => setShowCheckAnswers(true)}><Text style={styles.showAnswersText}>نمایش توضیح همهٔ پاسخ‌ها</Text></Pressable>}
             {showCheckAnswers ? <Text style={styles.evidenceNote}>پاسخ‌های نمونه نمایش داده شدند؛ می‌توانید درس را پایان دهید.</Text> : null}
-          </View>
+          </View>}
         </View>}
 
         {!!(sessionError || completionError) && <Text accessibilityRole="alert" style={styles.error}>{sessionError || completionError}</Text>}
@@ -379,7 +395,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && styles.nextButtonDisabled]}>
             <Text style={styles.previousButtonText}>جمله قبلی</Text>
           </Pressable>}
-          <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === stages.length - 1 && !allChecksPassed && !showCheckAnswers)} style={[styles.nextButton, (saving || (stage === stages.length - 1 && !allChecksPassed && !showCheckAnswers)) && styles.nextButtonDisabled]} onPress={() => void next()}>
+          <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && (practiceBlocks || (!allChecksPassed && !showCheckAnswers)))} style={[styles.nextButton, (saving || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && (practiceBlocks || (!allChecksPassed && !showCheckAnswers)))) && styles.nextButtonDisabled]} onPress={() => void next()}>
             <Text style={styles.nextText}>{saving ? 'در حال ذخیره…' : stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جملهٔ بعدی' : 'ادامه'}</Text>
             {stage === stages.length - 1 ? <Check size={20} color="#FFFFFF" /> : <ChevronLeft size={20} color="#FFFFFF" />}
           </Pressable>
@@ -489,6 +505,7 @@ const styles = StyleSheet.create({
   choiceSelected: { borderColor: Palette.primary, backgroundColor: Palette.primarySoft },
   choiceCorrect: { borderColor: Palette.success, backgroundColor: Palette.successSoft },
   choiceRussian: { fontFamily: 'Times New Roman', fontSize: 12, fontWeight: '800', lineHeight: 21, color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
+  practiceForeign: { fontFamily: 'Times New Roman', fontWeight: '800' },
   choicePersian: { fontFamily: Typography.fontFamily, fontSize: 13, lineHeight: 21, color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
   feedbackBox: { borderRadius: 12, padding: 12, backgroundColor: Palette.surfaceMuted, gap: 5 },
   feedbackTitle: { fontFamily: Typography.fontFamily, color: Palette.success, fontSize: 12, fontWeight: '400', textAlign: 'right', writingDirection: 'rtl' },
