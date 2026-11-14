@@ -6,6 +6,12 @@ import * as Speech from 'expo-speech';
  * The choice is deterministic per sentence (same text → same voice), and callers must fall back
  * to the default voice if the chosen one fails to start.
  */
+/**
+ * Rotation is OFF: learners found alternating speakers confusing. Every sentence now plays with
+ * the device's default voice for the language (the previous behaviour). Flip to true to re-enable.
+ */
+const VOICE_ROTATION_ENABLED = false;
+
 let cache: Promise<Speech.Voice[]> | null = null;
 const perLanguage = new Map<string, string[]>();
 
@@ -21,6 +27,7 @@ function hash(text: string): number { let h = 0; for (let i = 0; i < text.length
 
 /** Return a voice identifier for this locale and text, or undefined when rotation is not possible. */
 export async function voiceFor(locale: string, text: string): Promise<string | undefined> {
+  if (!VOICE_ROTATION_ENABLED) return undefined;
   const lang = locale.slice(0, 2).toLowerCase();
   let ids = perLanguage.get(lang);
   if (!ids) {

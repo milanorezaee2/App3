@@ -13,6 +13,7 @@ import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import TurkishSentenceBuilder from '@/components/TurkishSentenceBuilder';
 import TurkishDialoguePractice from '@/components/TurkishDialoguePractice';
+import { modeForLevel } from '@/components/LanguageDialoguePractice';
 import SpeakCheck from '@/components/SpeakCheck';
 import SpeakDrill from '@/components/SpeakDrill';
 import { clearTurkishLessonSession, loadTurkishLessonSessionWithPresence, saveTurkishLessonSession, resetTurkishLessonSession } from '@/lib/languages/turkishStudyState';
@@ -378,7 +379,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
             <View style={styles.bigIcon}><MessageCircle size={34} color={Palette.primary} /></View>
             <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
             {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
-            <TurkishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} locale="tr-TR" branchPool={lesson.sentences} />
+            <TurkishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} locale="tr-TR" branchPool={lesson.sentences} defaultMode={modeForLevel(lesson.levelId)} />
           </>}
         </View>}
 

@@ -30,7 +30,7 @@ import { b2UnitSkills, b2GrammarPatterns } from '@/lib/languages/b2Units';
 import {b2Production} from '@/lib/languages/b2Production';
 import { a2GrammarPatterns } from '@/lib/languages/a2Grammar';
 import { starterDisplayChecks, starterDisplayDialogue, starterDisplayPronunciation, starterTeachingNote } from '@/lib/languages/starterEditorial';
-import LanguageDialoguePractice from '@/components/LanguageDialoguePractice';
+import LanguageDialoguePractice, { modeForLevel } from '@/components/LanguageDialoguePractice';
 import type { StarterCourse, StarterLesson } from '@/lib/languages/newCourses';
 import { ENGLISH_ENGINE_STEPS } from '@/lib/englishLearningEngine';
 type StarterCourseLesson = StarterLesson;
@@ -418,7 +418,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           </> : <>
             <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
             {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
-            <LanguageDialoguePractice key={lesson.id} dialogue={starterDisplayDialogue(lesson)} onSpeak={speak} languageLabel={course.name} locale={course.locale} branchPool={lesson.sentences} />
+            <LanguageDialoguePractice key={lesson.id} dialogue={starterDisplayDialogue(lesson)} onSpeak={speak} languageLabel={course.name} locale={course.locale} branchPool={lesson.sentences} productive defaultMode={modeForLevel(lesson.levelId)} />
             {readingTask && <StarterA1Skill key={`${lesson.id}-reading`} task={readingTask} onSpeak={speak} />}
             {lesson.levelId === 3 && b1Production(course.id,lesson.id) && <StarterB1Production key={`${lesson.id}-production`} prompt={b1Production(course.id,lesson.id)!} lesson={lesson} onSpeak={speak} />}
             {lesson.levelId === 4 && b2Production(course.id,lesson.id) && <StarterB1Production key={`${lesson.id}-production`} prompt={b2Production(course.id,lesson.id)!} lesson={lesson} onSpeak={speak} />}

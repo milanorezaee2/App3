@@ -1,6 +1,6 @@
 import SpeakCheck, { type SpeakCheckResult } from '@/components/SpeakCheck';
 import { LocalizedText as Text } from '@/components/LocalizedText';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { CheckCircle2, ChevronLeft, GitBranch, Volume2, XCircle } from 'lucide-react-native';
 import type { LearningLesson } from '@/lib/languages/types';
@@ -17,6 +17,8 @@ import { toPersianDigits as fa } from '@/lib/format';
  */
 
 export type DialogueMode = 'guide' | 'cloze' | 'free';
+/** Default productive mode by course level: beginners see the guided mode, A2–B1 cloze, higher free. */
+export const modeForLevel = (levelId: number): DialogueMode => levelId <= 0 ? 'guide' : levelId <= 2 ? 'cloze' : 'free';
 const MODE_META: Record<DialogueMode, { label: string; hint: string }> = {
   guide: { label: 'راهنما', hint: 'خط تو پنهان است؛ از روی فارسی بگو، بعد نمونه را ببین.' },
   cloze: { label: 'جای‌خالی', hint: 'واژه‌های کلیدیِ خط تو حذف شده‌اند؛ کل جمله را بگو — فقط کلیدی‌ها باید شنیده شوند.' },
@@ -89,7 +91,7 @@ function branchDialogue(base: readonly DialogueLine[], pool: readonly PoolSenten
   return out;
 }
 
-export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLabel, locale, productive = false, defaultMode = 'guide', branchPool }: {
+export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLabel, locale, productive = false, defaultMode = 'guide', branchPool, fixedRole, autoPlayPartner = false }: {
   dialogue: LearningLesson['dialogue'];
   onSpeak: (text: string) => void;
   /** Course name in Persian, e.g. "روسی" or "ترکی". Used in the recall hint. */
@@ -101,13 +103,17 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
   defaultMode?: DialogueMode;
   /** Lesson sentences used to build unexpected branches; omit for a strictly linear dialogue. */
   branchPool?: readonly PoolSentence[];
+  /** When set, the learner always plays this speaker and the role switcher is hidden (English). */
+  fixedRole?: string;
+  /** Speak the partner's line automatically when it appears (English behaviour). */
+  autoPlayPartner?: boolean;
 }) {
   const [variant, setVariant] = useState(0);
   const [mode, setMode] = useState<DialogueMode>(productive && locale ? defaultMode : 'guide');
   const [verdict, setVerdict] = useState<null | boolean>(null);
   const [attempted, setAttempted] = useState(false);
   const speakers = [...new Set(dialogue.map(line => line.speaker))];
-  const [myRole, setMyRole] = useState(speakers[0]);
+  const [myRole, setMyRole] = useState(fixedRole ?? speakers[0]);
   const baseDialogue = dialogue;
   const lines = useMemo(() => branchPool ? branchDialogue(baseDialogue as DialogueLine[], branchPool, myRole, variant) : [...(baseDialogue as DialogueLine[])], [baseDialogue, branchPool, myRole, variant]);
   const hasBranch = lines.some(line => line.branch);
@@ -126,17 +132,25 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
   const onResult = (result: SpeakCheckResult) => { setAttempted(true); setVerdict(judge(mode, result, keywords)); setRevealed(true); };
   const productiveMode = productive && !!locale && mode !== 'guide';
   const changeRole = (role: string) => { setMyRole(role); restart(); };
+  useEffect(() => { if (autoPlayPartner && current && !isMyLine) onSpeak(current.text); }, [autoPlayPartner, current, isMyLine]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <View style={styles.card}>
-      <View style={styles.metaRow}><Text style={styles.counter}>{fa(index + 1)} / {fa(lines.length)}</Text>{hasBranch ? <View style={styles.branchPill}><GitBranch size={12} color="#7C3AED" /><Text style={styles.branchPillText}>مسیر شاخه‌دار</Text></View> : null}</View>
+      <View style={styles.metaRow}>
+        <Text style={styles.counter}>{fa(index + 1)} / {fa(lines.length)}</Text>
+        {canBranch ? <View style={styles.pathRow}>
+          <Pressable accessibilityRole="button" accessibilityState={{ selected: !hasBranch }} onPress={() => { if (hasBranch) restartOtherPath(); }} style={[styles.pathButton, !hasBranch && styles.pathButtonActive]}><Text style={[styles.pathText, !hasBranch && styles.pathTextActive]}>مسیر اصلی</Text></Pressable>
+          <Pressable accessibilityRole="button" accessibilityState={{ selected: hasBranch }} onPress={() => { if (!hasBranch) restartOtherPath(); }} style={[styles.pathButton, hasBranch && styles.pathButtonBranch]}><GitBranch size={12} color={hasBranch ? '#FFFFFF' : '#7C3AED'} /><Text style={[styles.pathText, { color: hasBranch ? '#FFFFFF' : '#7C3AED' }]}>با سؤال غیرمنتظره</Text></Pressable>
+        </View> : null}
+      </View>
+      {canBranch && hasBranch ? <Text style={styles.branchIntro}>در این مسیر، طرف مقابل وسط گفت‌وگو سؤالی می‌پرسد که در متن اصلی نیست؛ با جمله‌ای از همین درس جواب بده. خط‌های تازه با رنگ بنفش مشخص‌اند.</Text> : null}
       {productive && locale ? <View style={styles.modeRow}>{(['guide', 'cloze', 'free'] as DialogueMode[]).map(item => <Pressable key={item} accessibilityRole="button" accessibilityState={{ selected: mode === item }} onPress={() => changeMode(item)} style={[styles.modeButton, mode === item && styles.modeButtonActive]}><Text style={[styles.modeText, mode === item && styles.modeTextActive]}>{MODE_META[item].label}</Text></Pressable>)}</View> : null}
       <Text style={styles.instruction}>{productive && locale ? MODE_META[mode].hint : 'نقش خود را انتخاب کنید و پاسخ را بلند بگویید.'}</Text>
-      <View style={styles.roleRow}>{speakers.map(speaker => <Pressable key={speaker} accessibilityRole="button" accessibilityState={{ selected: myRole === speaker }} onPress={() => changeRole(speaker)} style={[styles.roleButton, myRole === speaker && styles.roleButtonActive]}><Text style={[styles.roleText, myRole === speaker && styles.roleTextActive]}>{speaker}</Text></Pressable>)}</View>
-      {current && <View style={[styles.bubble, isMyLine ? styles.bubbleLearner : styles.bubblePartner]}>
+      {fixedRole ? null : <View style={styles.roleRow}>{speakers.map(speaker => <Pressable key={speaker} accessibilityRole="button" accessibilityState={{ selected: myRole === speaker }} onPress={() => changeRole(speaker)} style={[styles.roleButton, myRole === speaker && styles.roleButtonActive]}><Text style={[styles.roleText, myRole === speaker && styles.roleTextActive]}>{speaker}</Text></Pressable>)}</View>}
+      {current && <View style={[styles.bubble, isMyLine ? styles.bubbleLearner : styles.bubblePartner, current.branch ? styles.bubbleBranch : null]}>
         <Text style={styles.speaker}>{isMyLine ? 'نوبت شما' : current.speaker}</Text>
-        {current.branch === 'partner' ? <View style={styles.branchNote}><GitBranch size={13} color="#7C3AED" /><Text style={styles.branchNoteText}>واکنش غیرمنتظره! طرف مقابل چیزی پرسید که در متن نبود.</Text></View> : null}
-        {current.branch === 'reply' ? <View style={styles.branchNote}><GitBranch size={13} color="#7C3AED" /><Text style={styles.branchNoteText}>حالا جواب بده — از جمله‌های همین درس کمک بگیر.</Text></View> : null}
+        {current.branch === 'partner' ? <View style={styles.branchNote}><GitBranch size={13} color="#7C3AED" /><Text style={styles.branchNoteText}>سؤال غیرمنتظره — این خط در متن اصلی نبود.</Text></View> : null}
+        {current.branch === 'reply' ? <View style={styles.branchNote}><GitBranch size={13} color="#7C3AED" /><Text style={styles.branchNoteText}>جوابِ پیشنهادی از جمله‌های همین درس است.</Text></View> : null}
         {isMyLine
           ? <>
               <Text style={styles.persian}>{mode === 'free' && productiveMode ? `بگو: ${current.fa}` : current.fa}</Text>
@@ -160,7 +174,7 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
       {isMyLine && !revealed && !(productiveMode && attempted) ? null : index < lines.length - 1
         ? <Pressable accessibilityRole="button" style={styles.nextButton} onPress={advance}><Text style={styles.nextText}>{isMyLine ? 'گفتم؛ ادامه' : 'ادامهٔ گفت‌وگو'}</Text><ChevronLeft size={18} color="#FFFFFF" /></Pressable>
         : <>
-            {canBranch ? <Pressable accessibilityRole="button" style={styles.branchButton} onPress={restartOtherPath}><GitBranch size={16} color="#FFFFFF" /><Text style={styles.branchButtonText}>{hasBranch ? 'دوباره، مسیر اصلی' : 'دوباره، با واکنش غیرمنتظره'}</Text></Pressable> : null}
+            {canBranch ? <Pressable accessibilityRole="button" style={styles.branchButton} onPress={restartOtherPath}><GitBranch size={16} color="#FFFFFF" /><Text style={styles.branchButtonText}>{hasBranch ? 'دوباره، مسیر اصلی' : 'دوباره، با سؤال غیرمنتظره'}</Text></Pressable> : null}
             <Pressable accessibilityRole="button" style={styles.restartButton} onPress={restart}><Text style={styles.restartText}>تمرین دوباره از آغاز</Text></Pressable>
           </>}
     </View>
@@ -202,6 +216,14 @@ const styles = StyleSheet.create({
   verdictOk: { backgroundColor: '#ECFDF5' },
   verdictMiss: { backgroundColor: '#FEF2F2' },
   verdictText: { flex: 1, fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 19, textAlign: 'right', writingDirection: 'rtl' },
+  pathRow: { flexDirection: 'row-reverse', gap: 6 },
+  pathButton: { minHeight: 30, flexDirection: 'row-reverse', alignItems: 'center', gap: 4, paddingHorizontal: 10, borderRadius: 999, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surface },
+  pathButtonActive: { backgroundColor: Palette.primary, borderColor: Palette.primary },
+  pathButtonBranch: { backgroundColor: '#7C3AED', borderColor: '#7C3AED' },
+  pathText: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.text, writingDirection: 'rtl' },
+  pathTextActive: { color: '#FFFFFF' },
+  branchIntro: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: '#5B21B6', textAlign: 'right', writingDirection: 'rtl', backgroundColor: '#F5F3FF', borderRadius: 10, padding: 10 },
+  bubbleBranch: { borderColor: '#7C3AED', borderWidth: 2 },
   branchPill: { flexDirection: 'row-reverse', alignItems: 'center', gap: 4, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999, backgroundColor: '#F5F3FF', borderWidth: 1, borderColor: '#DDD6FE' },
   branchPillText: { fontFamily: Typography.fontFamily, fontSize: 10, color: '#6D28D9' },
   branchNote: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, borderRadius: 8, backgroundColor: '#F5F3FF', paddingHorizontal: 8, paddingVertical: 5 },

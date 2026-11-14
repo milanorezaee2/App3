@@ -32,6 +32,7 @@ import { toPersianDigits } from '@/lib/format';
 import { EnglishLessonEvidence } from '@/components/EnglishLessonEvidence';
 import { EnglishSentenceBuilder } from '@/components/EnglishSentenceBuilder';
 import { EnglishDialoguePractice } from '@/components/EnglishDialoguePractice';
+import { modeForLevel } from '@/components/LanguageDialoguePractice';
 import { EnglishB2TopicPractice } from '@/components/EnglishB2TopicPractice';
 import { EnglishB2Scenario } from '@/components/EnglishB2Scenario';
 import { EnglishC1Reading } from '@/components/EnglishC1Reading';
@@ -515,7 +516,7 @@ export default function SentenceLessonScreen() {
             <View style={styles.bigIcon}><MessageCircle size={34} color={Colors.accent[400]} /></View>
             <Text style={styles.stageTitle}>Conversation Practice · مکالمهٔ هدایت‌شده</Text>
             {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
-            <EnglishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} />
+            <EnglishDialoguePractice key={lesson.id} dialogue={lesson.dialogue} sentences={lesson.sentences} defaultMode={modeForLevel(lesson.levelId)} />
             {lesson.c1Section && <EnglishB2Scenario key={lesson.id} lessonId={lesson.id} speak={speak} scenario={C1_SCENARIOS[lesson.id]} />}
             {lesson.c1Section && <EnglishC1ExtendedModel key={`${lesson.id}-extended`} lessonId={lesson.id} speak={speak} />}
             {lesson.b2Section && <EnglishB2Scenario key={lesson.id} lessonId={lesson.id} speak={speak} />}

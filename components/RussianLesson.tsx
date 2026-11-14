@@ -16,6 +16,7 @@ import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import RussianSentenceBuilder from '@/components/RussianSentenceBuilder';
 import RussianDialoguePractice from '@/components/RussianDialoguePractice';
+import { modeForLevel } from '@/components/LanguageDialoguePractice';
 import { clearRussianLessonSession, loadRussianLessonSessionWithPresence, saveRussianLessonSession, resetRussianLessonSession } from '@/lib/languages/russianStudyState';
 import { RUSSIAN_LESSONS, RUSSIAN_LEVELS, RUSSIAN_LESSON_STAGES, russianProgress, type RussianCourseLesson } from '@/lib/languages/russian';
 import type { RussianLessonSession } from '@/lib/languages/russianStudyState';
@@ -375,7 +376,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           <View style={styles.bigIcon}><MessageCircle size={34} color={Palette.primary} /></View>
           <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
           {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
-          <RussianDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} locale="ru-RU" branchPool={lesson.sentences} defaultMode={lesson.levelId <= 0 ? 'guide' : lesson.levelId <= 2 ? 'cloze' : 'free'} />
+          <RussianDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} locale="ru-RU" branchPool={lesson.sentences} defaultMode={modeForLevel(lesson.levelId)} />
         </View>}
 
         {stage >= 8 && <View style={styles.centerStage}>
