@@ -20,6 +20,7 @@ import {
   Sparkles,
   RotateCcw,
   Volume2,
+  Award,
 } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
 import { StarterBottomNav } from '@/components/StarterBottomNav';
@@ -433,6 +434,14 @@ export default function StarterHome({course}: {course: StarterCourse}) {
                 <View style={styles.quickCopy}>
                   <Text style={styles.quickTitle}>مرور آموخته‌های این زبان</Text>
                   <Text style={styles.quickDesc}>کارت‌های زمان‌بندی‌شدهٔ این زبان</Text>
+                </View>
+                <ChevronLeft size={17} color={HomeColors.muted} />
+              </Pressable>
+              <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push(`${course.home}/studio` as never)}>
+                <View style={[styles.quickIcon, { backgroundColor: '#FEF3C7' }]}><Award size={18} color="#D97706" /></View>
+                <View style={styles.quickCopy}>
+                  <Text style={styles.quickTitle}>آزمون و مسیر تکمیلی</Text>
+                  <Text style={styles.quickDesc}>آزمون پایان سطح و تمرین روزانهٔ هر سطح</Text>
                 </View>
                 <ChevronLeft size={17} color={HomeColors.muted} />
               </Pressable>

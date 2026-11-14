@@ -21,6 +21,7 @@ import {
   Sparkles,
   RotateCcw,
   Volume2,
+  Award,
 } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
 import { TurkishBottomNav } from '@/components/TurkishBottomNav';
@@ -398,6 +399,14 @@ export default function TurkishHome() {
                 <View style={styles.quickCopy}>
                   <Text style={styles.quickTitle}>مرور جمله‌های ترکی</Text>
                   <Text style={styles.quickDesc}>کارت‌های زمان‌بندی‌شدهٔ ترکی استانبولی</Text>
+                </View>
+                <ChevronLeft size={17} color={HomeColors.muted} />
+              </Pressable>
+              <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push('/learn/tr/studio' as never)}>
+                <View style={[styles.quickIcon, { backgroundColor: '#FEF3C7' }]}><Award size={18} color="#D97706" /></View>
+                <View style={styles.quickCopy}>
+                  <Text style={styles.quickTitle}>آزمون و مسیر تکمیلی</Text>
+                  <Text style={styles.quickDesc}>آزمون پایان سطح و تمرین روزانهٔ هر سطح</Text>
                 </View>
                 <ChevronLeft size={17} color={HomeColors.muted} />
               </Pressable>
