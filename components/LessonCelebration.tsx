@@ -74,7 +74,7 @@ export default function LessonCelebration({ visible, lessonTitle, stats, hasNext
 
 const styles = StyleSheet.create({
   backdrop: { flex: 1, backgroundColor: 'rgba(15,23,42,0.55)', alignItems: 'center', justifyContent: 'center', padding: 24 },
-  card: { width: '100%', maxWidth: 380, borderRadius: 24, backgroundColor: '#FFFFFF', padding: 24, alignItems: 'center', gap: 10 },
+  card: { width: '100%', maxWidth: 380, maxHeight: '90%', borderRadius: 24, backgroundColor: '#FFFFFF', padding: 24, alignItems: 'center', gap: 10 },
   icon: { width: 76, height: 76, borderRadius: 38, backgroundColor: Palette.successSoft, alignItems: 'center', justifyContent: 'center', marginBottom: 4 },
   title: { fontFamily: Typography.fontFamily, fontSize: 26, color: Palette.ink, textAlign: 'center' },
   subtitle: { fontFamily: Typography.fontFamily, fontSize: 13, lineHeight: 22, color: Palette.text, textAlign: 'center', writingDirection: 'rtl' },
