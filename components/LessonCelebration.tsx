@@ -9,7 +9,8 @@ import { hapticTap } from '@/lib/haptics';
 export interface CelebrationStats {
   sentences: number;
   practiceTotal: number;
-  practiceRetries: number;
+  practiceFirstTry: number;
+  practiceSeconds: number;
   streak: number;
   /** True when this lesson is the one that extended the streak today. */
   streakExtendedToday: boolean;
@@ -36,7 +37,6 @@ export default function LessonCelebration({ visible, lessonTitle, stats, hasNext
     ]).start();
   }, [visible, scale, opacity]);
 
-  const accuracy = stats.practiceTotal > 0 ? Math.round((stats.practiceTotal / (stats.practiceTotal + stats.practiceRetries)) * 100) : null;
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onContinue}>
@@ -47,8 +47,8 @@ export default function LessonCelebration({ visible, lessonTitle, stats, hasNext
           <Text style={styles.subtitle}>درس «{lessonTitle}» تمام شد.</Text>
           <View style={styles.statsRow}>
             <View style={styles.stat}><Text style={styles.statValue}>{fa(stats.sentences)}</Text><Text style={styles.statLabel}>جمله</Text></View>
-            {stats.practiceTotal > 0 ? <View style={styles.stat}><Text style={styles.statValue}>{fa(stats.practiceTotal)}</Text><Text style={styles.statLabel}>تمرین</Text></View> : null}
-            {accuracy !== null ? <View style={styles.stat}><Text style={styles.statValue}>{fa(accuracy)}٪</Text><Text style={styles.statLabel}>دقت</Text></View> : null}
+            {stats.practiceTotal > 0 ? <View style={styles.stat}><Text style={styles.statValue}>{fa(stats.practiceFirstTry)}/{fa(stats.practiceTotal)}</Text><Text style={styles.statLabel}>چالش</Text></View> : null}
+            {stats.practiceSeconds > 0 ? <View style={styles.stat}><Text style={styles.statValue}>{fa(stats.practiceSeconds)}</Text><Text style={styles.statLabel}>ثانیه</Text></View> : null}
           </View>
           <View style={styles.streakPill}>
             <Flame size={16} color="#D97706" />

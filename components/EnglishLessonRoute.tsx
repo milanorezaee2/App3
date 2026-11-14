@@ -2,7 +2,7 @@ import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { lessonUnit } from '@/lib/lessonUnits';
 import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/LocalizedText';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { buildLessonPractice, buildWarmUp } from '@/lib/lessonPractice';
+import { buildLessonPractice, buildWarmUp, WARM_UP_KINDS, type PracticeStats } from '@/lib/lessonPractice';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
 import { recordStudyDay } from '@/lib/studyStreak';
@@ -71,8 +71,8 @@ export default function SentenceLessonScreen() {
   const [practiceDone, setPracticeDone] = useState(false);
   const [warmUpDone, setWarmUpDone] = useState(false);
   useEffect(() => { setPracticeDone(false); setWarmUpDone(false); }, [lesson.id]);
-  const practiceStats = useRef({ total: 0, retries: 0 });
-  const markPracticeDone = useCallback((stats: { total: number; retries: number }) => { practiceStats.current = stats; setPracticeDone(true); }, []);
+  const practiceStats = useRef<PracticeStats>({ total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 });
+  const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
   const markWarmUpDone = useCallback(() => setWarmUpDone(true), []);
   const speakPractice = useCallback((text: string) => { playResponsiveSpeech({ text, locale: 'en-US', rate: ENGLISH_NORMAL_SPEECH_RATE, onError: () => undefined }); }, []);
   const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void) } | null>(null);
@@ -324,7 +324,7 @@ export default function SentenceLessonScreen() {
     void stopResponsiveSpeech();
     const streak = await recordStudyDay();
     setCelebration({
-      stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceRetries: practiceStats.current.retries, streak: streak.count, streakExtendedToday: streak.extendedToday },
+      stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceFirstTry: practiceStats.current.firstTryCorrect, practiceSeconds: practiceStats.current.seconds, streak: streak.count, streakExtendedToday: streak.extendedToday },
       next: () => { if (nextLesson) router.replace({ pathname: '/course/lesson', params: { id: nextLesson.id } } as never); else router.replace('/lang' as never); },
     });
     } catch { setCompletionError('پایان درس ذخیره نشد؛ دوباره تلاش کنید.'); }
@@ -393,7 +393,7 @@ export default function SentenceLessonScreen() {
               <Text style={styles.promiseTitle}>موضوع‌های این درس</Text>
               {lessonTopics.map(topic => <Text key={topic} style={styles.promiseText}>• {topic}</Text>)}
             </View>}
-            {warmUpItems.length > 0 ? <LessonPracticeBlock title="گرم‌کردن با درس قبل" intro={`${toPersianDigits(warmUpItems.length)} تمرین کوتاه از درس «${previousLesson?.title ?? ''}». پاسخ غلط نمره ندارد؛ فقط دوباره پرسیده می‌شود.`} items={warmUpItems} onSpeak={speakPractice} onComplete={markWarmUpDone} completed={warmUpDone} foreignStyle={styles.practiceForeign} accent={Colors.accent[400]} /> : null}
+            {warmUpItems.length > 0 ? <LessonPracticeBlock title="گرم‌کردن" intro={`${toPersianDigits(warmUpItems.length)} ضربهٔ سریع از درس «${previousLesson?.title ?? ''}». بدون نمره.`} items={warmUpItems} source={previousLesson!} retryKinds={WARM_UP_KINDS} onSpeak={speakPractice} onComplete={markWarmUpDone} completed={warmUpDone} foreignStyle={styles.practiceForeign} accent={Colors.accent[400]} /> : null}
           </View>
         )}
 
@@ -543,7 +543,7 @@ export default function SentenceLessonScreen() {
               <Text style={styles.promiseText}>{toPersianDigits(lesson.sentences.length)} جمله و {toPersianDigits(vocabulary.length)} واژهٔ یکتا؛ محتوا همان محتوای اصلی درس است.</Text>
             </View>
             <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} />
-            <LessonPracticeBlock title="تمرین" intro={`${toPersianDigits(practiceItems.length)} تمرین از جمله‌های همین درس: جای خالی، معنی و شنیدن. بدون نمره؛ هر پاسخ غلط کمی بعد دوباره می‌آید.`} items={practiceItems} onSpeak={speakPractice} onComplete={markPracticeDone} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Colors.success[400]} />
+            <LessonPracticeBlock title="چالش برق‌آسا" intro={`${toPersianDigits(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={practiceLesson} onSpeak={speakPractice} onComplete={markPracticeDone} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Colors.success[400]} />
             {practiceBlocks ? null : evidencePassed
               ? CORE_LESSON_EVIDENCE[lesson.id]
                 ? <Text style={styles.stageDesc}>همهٔ {toPersianDigits(CORE_LESSON_EVIDENCE[lesson.id].length)} سنجشِ این درس با پاسخ درست ثبت شد ✓</Text>
@@ -566,7 +566,7 @@ export default function SentenceLessonScreen() {
           </Pressable>
         </View>
       </View>
-      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceRetries: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(SENTENCE_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} />
+      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(SENTENCE_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} />
     </View>
   );
 }

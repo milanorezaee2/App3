@@ -20,7 +20,7 @@ import { toPersianDigits as fa } from '@/lib/format';
 import { playTurkishSpeech, stopTurkishSpeech } from '@/lib/turkishSpeech';
 import { Typography } from '@/lib/theme';
 import { shuffleChecks } from '@/lib/shuffleChecks';
-import { buildLessonPractice, buildWarmUp } from '@/lib/lessonPractice';
+import { buildLessonPractice, buildWarmUp, WARM_UP_KINDS, type PracticeStats } from '@/lib/lessonPractice';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
 import { recordStudyDay } from '@/lib/studyStreak';
@@ -79,8 +79,8 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
   const [practiceDone, setPracticeDone] = useState(false);
   const [warmUpDone, setWarmUpDone] = useState(false);
   useEffect(() => { setPracticeDone(false); setWarmUpDone(false); }, [lesson.id]);
-  const practiceStats = useRef({ total: 0, retries: 0 });
-  const markPracticeDone = useCallback((stats: { total: number; retries: number }) => { practiceStats.current = stats; setPracticeDone(true); }, []);
+  const practiceStats = useRef<PracticeStats>({ total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 });
+  const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
   const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void) } | null>(null);
   const markWarmUpDone = useCallback(() => setWarmUpDone(true), []);
   const warmUpBlocks = warmUpItems.length > 0 && !warmUpDone;
@@ -231,7 +231,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
       if (!preserveExistingSession.current) await clearTurkishLessonSession(lesson.id);
       const streak = await recordStudyDay();
       setCelebration({
-        stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceRetries: practiceStats.current.retries, streak: streak.count, streakExtendedToday: streak.extendedToday },
+        stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceFirstTry: practiceStats.current.firstTryCorrect, practiceSeconds: practiceStats.current.seconds, streak: streak.count, streakExtendedToday: streak.extendedToday },
         next: () => { if (nextLesson) router.replace({ pathname: '/learn/tr/lesson', params: { id: nextLesson.id } } as never); else router.replace('/learn/tr' as never); },
       });
     } catch {
@@ -276,7 +276,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           <Text style={styles.situation}>{lesson.situation}</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>در پایان این درس می‌توانید:</Text><Text style={styles.promiseText}>با {fa(lesson.sentences.length)} {unitLabel}، این موضوع را یاد می‌گیرید.</Text></View>
           {lesson.teachingFa ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ ترکی استانبولی به فارسی</Text><Text style={styles.noteText}>{lesson.teachingFa}</Text></View> : null}
-          {warmUpItems.length > 0 ? <LessonPracticeBlock title="گرم‌کردن با درس قبل" intro={`${fa(warmUpItems.length)} تمرین کوتاه از درس «${previousLesson?.title ?? ''}». پاسخ غلط نمره ندارد؛ فقط دوباره پرسیده می‌شود.`} items={warmUpItems} onSpeak={speakPractice} onComplete={markWarmUpDone} completed={warmUpDone} foreignStyle={styles.practiceForeign} accent={Palette.warning} /> : null}
+          {warmUpItems.length > 0 ? <LessonPracticeBlock title="گرم‌کردن" intro={`${fa(warmUpItems.length)} ضربهٔ سریع از درس «${previousLesson?.title ?? ''}». بدون نمره.`} items={warmUpItems} source={previousLesson!} retryKinds={WARM_UP_KINDS} onSpeak={speakPractice} onComplete={markWarmUpDone} completed={warmUpDone} foreignStyle={styles.practiceForeign} accent={Palette.warning} /> : null}
         </View>}
 
         {stage === 1 && <View style={styles.sentenceStage} onLayout={event => { stageOffsetRef.current = event.nativeEvent.layout.y; }}>
@@ -375,7 +375,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           <View style={styles.bigIcon}><RefreshCw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} {unitLabel} و {fa(vocabulary.length)} واژهٔ یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
-          <LessonPracticeBlock title="تمرین" intro={`${fa(practiceItems.length)} تمرین از جمله‌های همین درس: جای خالی، معنی و شنیدن. بدون نمره؛ هر پاسخ غلط کمی بعد دوباره می‌آید.`} items={practiceItems} onSpeak={speakPractice} onComplete={markPracticeDone} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} />
+          <LessonPracticeBlock title="چالش برق‌آسا" intro={`${fa(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} />
           {practiceBlocks ? null : <View style={styles.evidenceCard}>
             <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
             <Text style={styles.evidenceIntro}>پرسش‌ها به جمله‌های همین درس وصل‌اند. پاسخ نادرست را می‌توانید دوباره امتحان کنید یا توضیح پاسخ نمونه را ببینید.</Text>
@@ -416,7 +416,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           </Pressable>
         </View>
       </View>
-      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceRetries: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(TURKISH_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} />
+      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(TURKISH_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} />
     </View>
   );
 }
