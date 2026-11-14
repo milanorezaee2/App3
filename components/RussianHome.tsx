@@ -19,7 +19,7 @@ import {
   RefreshCw,
   Sparkles,
   RotateCcw,
-  Volume2,
+  Volume2, Award,
 } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
 import { RussianBottomNav } from '@/components/RussianBottomNav';
@@ -395,6 +395,14 @@ export default function RussianHome() {
                 <View style={styles.quickCopy}>
                   <Text style={styles.quickTitle}>مرور جمله‌های روسی</Text>
                   <Text style={styles.quickDesc}>کارت‌های زمان‌بندی‌شدهٔ روسی</Text>
+                </View>
+                <ChevronLeft size={17} color={HomeColors.muted} />
+              </Pressable>
+              <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push('/learn/ru/studio' as never)}>
+                <View style={[styles.quickIcon, { backgroundColor: '#FEF3C7' }]}><Award size={18} color="#D97706" /></View>
+                <View style={styles.quickCopy}>
+                  <Text style={styles.quickTitle}>آزمون و مسیر تکمیلی</Text>
+                  <Text style={styles.quickDesc}>آزمون پایان سطح و تمرین روزانهٔ هر سطح</Text>
                 </View>
                 <ChevronLeft size={17} color={HomeColors.muted} />
               </Pressable>

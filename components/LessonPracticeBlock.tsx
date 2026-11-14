@@ -25,6 +25,8 @@ interface Props {
   completed?: boolean;
   /** Lets the learner skip the rest of the round; reported as completed with zero progress. */
   onSkip?: () => void;
+  /** Exam mode: no second chances; every item counts once. */
+  exam?: boolean;
   foreignStyle: object;
   accent?: string;
 }
@@ -37,7 +39,7 @@ const KIND_LABEL: Record<PracticeKind, string> = {
   match: 'هر جمله را به معنی‌اش وصل کن',
 };
 
-export default function LessonPracticeBlock({ title, intro, items, source, retryKinds, onSpeak, onComplete, completed, onSkip, foreignStyle, accent = Palette.primary }: Props) {
+export default function LessonPracticeBlock({ title, intro, items, source, retryKinds, onSpeak, onComplete, completed, onSkip, exam, foreignStyle, accent = Palette.primary }: Props) {
   const [queue, setQueue] = useState<PracticeItem[]>(items);
   const [resolved, setResolved] = useState<null | boolean>(null); // null = unanswered, true/false = outcome
   const [done, setDone] = useState(0);
@@ -92,15 +94,15 @@ export default function LessonPracticeBlock({ title, intro, items, source, retry
     const ok = resolved;
     setQueue(value => {
       const [head, ...rest] = value;
-      if (ok || head.retry) return rest;
+      if (ok || head.retry || exam) return rest;
       const retry = buildRetryItem(source.id, head, source, retryKinds);
       return retry ? [...rest, retry] : rest;
     });
-    if (ok) setDone(v => v + 1); else if (!current.retry) setRetries(v => v + 1); else setDone(v => v + 1);
+    if (ok) setDone(v => v + 1); else if (!current.retry && !exam) setRetries(v => v + 1); else setDone(v => v + 1);
     setResolved(null);
     resetTransient();
     hapticTap();
-  }, [current, resolved, source, retryKinds]);
+  }, [current, resolved, source, retryKinds, exam]);
 
   if (total === 0) return null;
   if (finished) {
@@ -176,11 +178,11 @@ export default function LessonPracticeBlock({ title, intro, items, source, retry
       </View> : null}
 
       {resolved !== null ? <View style={styles.feedback}>
-        <Text style={resolved ? styles.feedbackOk : styles.feedbackNo}>{resolved ? (combo >= 3 ? 'عالی! ادامه بده.' : 'درست است.') : current.retry ? 'پاسخ درست این بود:' : 'این بار نه؛ کمی بعد به شکل دیگری می‌پرسم.'}</Text>
+        <Text style={resolved ? styles.feedbackOk : styles.feedbackNo}>{resolved ? (combo >= 3 ? 'عالی! ادامه بده.' : 'درست است.') : current.retry || exam ? 'پاسخ درست این بود:' : 'این بار نه؛ کمی بعد به شکل دیگری می‌پرسم.'}</Text>
         {current.kind !== 'match' ? <><Text style={[styles.answerForeign, foreignStyle]}>{current.answerText}</Text><Text style={styles.answerFa}>{current.answerFa}</Text></> : null}
         <View style={styles.feedbackActions}>
           <Pressable accessibilityRole="button" onPress={() => onSpeak(current.speakText)} style={styles.listenAgain}><Volume2 size={16} color={Palette.primaryDark} /><Text style={styles.listenAgainText}>بشنو</Text></Pressable>
-          <Pressable accessibilityRole="button" onPress={advance} style={[styles.nextButton, { backgroundColor: accent }]}><Text style={styles.nextText}>{queue.length === 1 && (resolved || current.retry) ? 'پایان' : 'بعدی'}</Text></Pressable>
+          <Pressable accessibilityRole="button" onPress={advance} style={[styles.nextButton, { backgroundColor: accent }]}><Text style={styles.nextText}>{queue.length === 1 && (resolved || current.retry || exam) ? 'پایان' : 'بعدی'}</Text></Pressable>
         </View>
       </View> : null}
     </View>
