@@ -13,6 +13,8 @@ import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { ENGLISH_LEVEL_GRADIENTS } from '@/components/EnglishUI';
 import TurkishSentenceBuilder from '@/components/TurkishSentenceBuilder';
 import TurkishDialoguePractice from '@/components/TurkishDialoguePractice';
+import { PersianBridgeCard, RuleCard } from '@/components/PersianBridgeCard';
+import { turkishBridgeRulesForLesson } from '@/lib/languages/turkishPersianBridge';
 import { modeForLevel } from '@/components/LanguageDialoguePractice';
 import SpeakCheck from '@/components/SpeakCheck';
 import SpeakDrill from '@/components/SpeakDrill';
@@ -94,6 +96,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
   const practiceBlocks = practiceItems.length > 0 && !practiceDone;
   const allChecksPassed = checks.every((question, index) => answers[String(index)] === question.correctIndex);
   const progressPercent = Math.round(((stage + 1) / stages.length) * 100);
+  const bridgeRules = useMemo(() => turkishBridgeRulesForLesson(lesson.sentences), [lesson.sentences]);
   const vocabulary = useMemo(() => {
     const byWord = new Map<string, { word: LearningLessonVocabulary; sentence: TurkishCourseLesson['sentences'][number] }>();
     lesson.sentences.forEach(sentence => sentence.vocabulary.forEach(word => {
@@ -301,6 +304,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
             <Text keepColor style={styles.persian}>{current.fa}</Text>
             {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternText}>{current.pattern}</Text></View> : null}
           </View>
+          <PersianBridgeCard sentence={current} language="tr" />
           <View style={styles.replayRow}>
             <Pressable accessibilityRole="button" accessibilityLabel={`پخش آهستهٔ ${unitLabel}`} style={styles.replayButton} onPress={() => speak(current.text, SLOW_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>آهسته</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel={`پخش معمولی ${unitLabel}`} style={styles.replayButton} onPress={() => speak(current.text, NORMAL_SPEECH_RATE)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.replayText}>معمولی</Text></Pressable>
@@ -362,6 +366,11 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
           {grammarPatterns.length ? grammarPatterns.map(({ sentence, pattern }, index) => (
             <GrammarPatternCard key={sentence.id} index={index + 1} pattern={pattern} example={sentence.text} translation={sentence.fa} onSpeak={() => speak(sentence.text)} />
           )) : <GrammarNoteCard title="یادگیری در بافت جمله" text="جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید." />}
+          {bridgeRules.length ? <View style={styles.bridgeSummary}>
+            <Text style={styles.bridgeSummaryTitle}>پل فارسی این درس</Text>
+            <Text style={styles.bridgeSummaryText}>جاهایی که ذهن فارسی‌زبان در این درس باید حواسش باشد، و جاهایی که ترکی عین فارسی است.</Text>
+            {bridgeRules.map(rule => <RuleCard key={rule.id} rule={rule} />)}
+          </View> : null}
         </View>}
 
         {stage === 7 && <View style={styles.centerStage}>
@@ -476,6 +485,9 @@ const styles = StyleSheet.create({
   content: { width: '100%', maxWidth: 820, alignSelf: 'center', paddingHorizontal: 15, paddingTop: 12, paddingBottom: 24, gap: 12 },
   centerStage: { alignItems: 'center', width: '100%' },
   grammarStage: { width: '100%', alignItems: 'stretch' },
+  bridgeSummary: { gap: 10, marginTop: 6 },
+  bridgeSummaryTitle: { fontFamily: Typography.fontFamily, fontSize: 17, color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
+  bridgeSummaryText: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: Palette.text, textAlign: 'right', writingDirection: 'rtl' },
   bigIcon: { width: 72, height: 72, borderRadius: 36, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF', alignItems: 'center', justifyContent: 'center', marginVertical: 18 },
   stageEyebrow: { fontFamily: Typography.fontFamily, fontSize: 11, fontWeight: '400', color: Palette.primary, marginBottom: 4, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   stageTitle: { fontFamily: Typography.fontFamily, fontSize: 25, lineHeight: 36, fontWeight: '400', color: Palette.ink, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },

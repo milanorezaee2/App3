@@ -1,6 +1,6 @@
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { usePathname, useRouter } from 'expo-router';
-import { BookOpen, CreditCard, GraduationCap, LayoutDashboard, LogOut, Megaphone, MessageSquare, MessagesSquare, MoreHorizontal, RefreshCw, Settings, ShieldCheck, UploadCloud, Users } from 'lucide-react-native';
+import { BookOpen, CreditCard, GraduationCap, LayoutDashboard, LogOut, Megaphone, MessageSquare, MessagesSquare, MoreHorizontal, RefreshCw, Settings, ShieldCheck, UploadCloud, Users, History } from 'lucide-react-native';
 import { useState, type ComponentType, type ReactNode } from 'react';
 import { ActivityIndicator, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -19,6 +19,7 @@ export const ADMIN_NAV: NavItem[] = [
   { href: '/admin/popups', label: 'پاپ‌آپ‌ها', short: 'پاپ‌آپ', icon: Megaphone },
   { href: '/admin/subscriptions', label: 'اشتراک', short: 'اشتراک', icon: CreditCard },
   { href: '/admin/content', label: 'محتوای آموزشی', short: 'محتوا', icon: BookOpen },
+  { href: '/admin/audit', label: 'ممیزی', short: 'ممیزی', icon: History },
   { href: '/admin/settings', label: 'تنظیمات', short: 'تنظیمات', icon: Settings },
 ];
 /** Phone bottom bar shows the first items plus a "more" entry. */

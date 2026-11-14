@@ -1,7 +1,8 @@
+import { MANAGEMENT_BUILD } from '@/lib/features';
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, Share, StyleSheet, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, Redirect } from 'expo-router';
 import { Copy, Link2, QrCode, RefreshCw, Send, ShieldCheck, UserPlus } from 'lucide-react-native';
 import {
   claimRealContactInvite,
@@ -25,7 +26,7 @@ const INVITE_MESSAGES: Record<string, (code: string) => string> = {
   es: code => `¡Hola! 👋\nبیا با هم اسپانیایی تمرین کنیم!\nدر برنامهٔ Milo بخش «مکالمه» را باز کن و این کد دعوت را وارد کن تا گفتگوی خصوصی اسپانیایی ما شروع شود: ${code}`,
 };
 
-export default function InviteContactScreen() {
+function InviteContactScreen() {
   const router = useRouter();
   const [mode, setMode] = useState<'invite' | 'join'>('invite');
   const [language, setLanguage] = useState<ResumeLanguage>(null);
@@ -161,3 +162,8 @@ const styles = StyleSheet.create({
   security: { marginTop: Spacing.lg, borderRadius: Radius.lg, padding: Spacing.md, backgroundColor: Colors.success[500] + '0D', flexDirection: 'row-reverse', alignItems: 'flex-start', gap: 8 },
   securityText: { flex: 1, fontFamily: Typography.fontFamily, fontSize: Typography.sizes.xs, color: Colors.neutral[500], textAlign: 'right', lineHeight: 19 },
 });
+
+/** Chat is a manager-only tool; learners use «انتقادات و پیشنهادات» instead. */
+export default function InviteContactScreenGate() {
+  return MANAGEMENT_BUILD ? <InviteContactScreen /> : <Redirect href={'/feedback' as never} />;
+}

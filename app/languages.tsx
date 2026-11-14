@@ -1,6 +1,6 @@
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useState } from 'react';
-import { Alert, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { createAudioPlayer } from 'expo-audio';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
@@ -11,8 +11,6 @@ import { ensureOpenLearnerRegistered } from '@/lib/openLearnerAccount';
 import { isLearnerRegistered } from '@/lib/registrationStatus';
 import { useCallback } from 'react';
 import { LANGUAGES } from '@/lib/languages/catalog';
-import { ensureSupportConversation } from '@/lib/conversations';
-import { readableSupabaseError } from '@/lib/errors';
 import { FEATURES, LANGUAGE_SCOPE, RUSSIAN_ONLY_BUILD } from '@/lib/features';
 
 const palette = {
@@ -105,10 +103,8 @@ export default function LanguagesHome() {
   const openSupport = () => {
     if (openingSupport) return;
     setOpeningSupport(true);
-    ensureSupportConversation()
-      .then((conversationId) => router.push({ pathname: '/conversations/human/[conversationId]', params: { conversationId, name: 'پشتیبانی Milo' } } as never))
-      .catch((cause) => Alert.alert('پشتیبانی', readableSupabaseError(cause)))
-      .finally(() => setOpeningSupport(false));
+    router.push('/feedback' as never);
+    setOpeningSupport(false);
   };
 
   const languages = LANGUAGES.filter(language => LANGUAGE_SCOPE.includes(language.id)
@@ -144,7 +140,7 @@ export default function LanguagesHome() {
               </Pressable>
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel="گفتگو با پشتیبانی"
+                accessibilityLabel="انتقادات و پیشنهادات"
                 accessibilityState={{ disabled: openingSupport }}
                 disabled={openingSupport}
                 style={({ pressed }) => [styles.headerButton, pressed && styles.pressed]}

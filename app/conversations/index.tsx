@@ -1,7 +1,7 @@
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { useFocusEffect, useRouter } from 'expo-router';
+import { useFocusEffect, useRouter, Redirect } from 'expo-router';
 import { ChevronLeft, MessageCircle, Mic2, Plus, QrCode, ShieldCheck, Sparkles, Trash2, UserRound } from 'lucide-react-native';
 import { AppBottomNav } from '@/components/AppBottomNav';
 import { RussianBottomNav } from '@/components/RussianBottomNav';
@@ -18,7 +18,7 @@ import { ChatAlertSettingsCard } from '@/components/ChatAlertSettingsCard';
 import { MANAGEMENT_BUILD } from '@/lib/features';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
 
-export default function ConversationsHome() {
+function ConversationsHome() {
   const router = useRouter();
   const [contacts, setContacts] = useState<RealContact[]>([]);
   const [loadingContacts, setLoadingContacts] = useState(true);
@@ -239,3 +239,8 @@ const styles = StyleSheet.create({
   modeTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm, fontWeight: Typography.weights.bold, color: Colors.neutral[200] },
   modeDesc: { fontFamily: Typography.fontFamily, fontSize: 10, color: Colors.neutral[600] },
 });
+
+/** Chat is a manager-only tool; learners use «انتقادات و پیشنهادات» instead. */
+export default function ConversationsHomeGate() {
+  return MANAGEMENT_BUILD ? <ConversationsHome /> : <Redirect href={'/feedback' as never} />;
+}

@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { ArrowLeftRight, Link2, ShieldAlert } from 'lucide-react-native';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { bridgeFor, type BridgeKind, type BridgeRule } from '@/lib/languages/russianPersianBridge';
+import { turkishBridgeFor } from '@/lib/languages/turkishPersianBridge';
 import type { LearningSentence } from '@/lib/languages/types';
 import { Typography } from '@/lib/theme';
 
@@ -13,15 +14,16 @@ const KIND_META: Record<BridgeKind, { label: string; color: string; soft: string
 };
 
 /** «پل فارسی» — the contrastive note + shared words for one Russian sentence. */
-export function PersianBridgeCard({ sentence }: { sentence: Pick<LearningSentence, 'text' | 'fa'> }) {
-  const bridge = bridgeFor(sentence);
+export function PersianBridgeCard({ sentence, language = 'ru' }: { sentence: Pick<LearningSentence, 'text' | 'fa'>; language?: 'ru' | 'tr' }) {
+  const bridge = language === 'tr' ? turkishBridgeFor(sentence) : bridgeFor(sentence);
+  const foreignFont = language === 'tr' ? styles.loanLatin : styles.loanRu;
   if (!bridge.rule && bridge.loanwords.length === 0) return null;
   return (
     <View style={styles.wrap}>
       {bridge.rule ? <RuleCard rule={bridge.rule} /> : null}
       {bridge.loanwords.length ? <View style={styles.loanRow}>
         <Text style={styles.loanLabel}>فارسی این را می‌شناسد:</Text>
-        {bridge.loanwords.map(item => <View key={item.stem} style={styles.loanChip}><Text style={styles.loanRu}>{item.ru}</Text><Text style={styles.loanFa}>{item.fa}</Text></View>)}
+        {bridge.loanwords.map(item => <View key={item.stem} style={styles.loanChip}><Text style={foreignFont}>{item.ru}</Text><Text style={styles.loanFa}>{item.fa}</Text></View>)}
       </View> : null}
     </View>
   );
@@ -60,5 +62,6 @@ const styles = StyleSheet.create({
   loanLabel: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.text },
   loanChip: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: Palette.border },
   loanRu: { fontFamily: 'Times New Roman', fontWeight: '800', fontSize: 12, color: Palette.primaryDark },
+  loanLatin: { fontFamily: Typography.latinFontFamily, fontWeight: '800', fontSize: 12, color: Palette.primaryDark },
   loanFa: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.text },
 });

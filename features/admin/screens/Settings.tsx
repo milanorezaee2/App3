@@ -7,31 +7,18 @@ import { useEffect, useState } from 'react';
 import { Platform, View } from 'react-native';
 import { ADMIN_SETUP_FILE, fetchRecentActions } from '../api';
 import { SignOutButton } from '../Shell';
+import { ACTION_LABELS } from './Audit';
+import { useRouter } from 'expo-router';
 import { useAdmin, useAdminQuery } from '../store';
 import { Banner, Button, Card, Chip, EmptyState, Field, ListRow, Loading, Page, adminStyles as a, faDateTime } from '../ui';
 
-const ACTION_LABELS: Record<string, string> = {
-  purge_conversation: 'حذف کامل گفتگو',
-  clear_conversation: 'حذف پیام‌های گفتگو',
-  block_conversation_members: 'مسدودکردن اعضای گفتگو',
-  unblock_conversation_members: 'رفع مسدودیت اعضای گفتگو',
-  publish_release: 'انتشار نسخهٔ اپ',
-  unpublish_release: 'غیرفعال‌کردن نسخهٔ اپ',
-  delete_release: 'حذف نسخهٔ اپ',
-  purge_conversations: 'حذف دسته‌جمعی گفتگوها',
-  save_popup: 'ذخیرهٔ پاپ‌آپ',
-  delete_popup: 'حذف پاپ‌آپ',
-  set_setting: 'تغییر تنظیمات',
-  save_plan: 'ذخیرهٔ پلن اشتراک',
-  grant_subscription: 'اعطای اشتراک',
-  cancel_subscription: 'لغو اشتراک',
-};
 
 export function SettingsScreen() {
   const { run, busy, adminEmail } = useAdmin();
   const [deviceLock, setDeviceLock] = useState(false);
   useEffect(() => { void getAppLockConfig().then(config => setDeviceLock(config.deviceEnabled)); }, []);
-  const actions = useAdminQuery('audit', () => fetchRecentActions(50));
+  const router = useRouter();
+  const actions = useAdminQuery('audit', () => fetchRecentActions(20));
 
   const toggleDeviceLock = () => run(async () => {
     if (!(await authenticateWithDeviceLock())) throw new Error('قفل گوشی تأیید نشد؛ تغییری انجام نشد.');
@@ -58,7 +45,7 @@ export function SettingsScreen() {
         </Card>
       )}
       {Platform.OS !== 'web' && <ChatAlertSettingsCard />}
-      <Card title="سوابق اقدامات" padded={false} aside={<History size={16} color="#475569" />}>
+      <Card title="آخرین اقدامات" padded={false} aside={<Button small variant="ghost" tone="neutral" icon={History} label="ممیزی کامل" onPress={() => router.replace('/admin/audit' as never)} />}>
         {actions.loading && !actions.data && <Loading />}
         {actions.error && <View style={{ padding: 12 }}><Banner kind="error" text={actions.error} /></View>}
         {actions.data && !actions.data.length && <EmptyState icon={History} title="هنوز اقدامی ثبت نشده است" />}

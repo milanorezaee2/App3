@@ -2,7 +2,7 @@ import { MANAGEMENT_BUILD } from '@/lib/features';
 import { LocalizedText as Text, LocalizedTextInput as TextInput } from '@/components/LocalizedText';
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, BackHandler, Keyboard, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter, Redirect } from 'expo-router';
 import {
   RecordingPresets,
   getRecordingPermissionsAsync,
@@ -83,7 +83,7 @@ function VoiceMessage({ message }: { message: DirectMessage }) {
   );
 }
 
-export default function HumanConversationScreen() {
+function HumanConversationScreen() {
   const router = useRouter();
   const { conversationId, name } = useLocalSearchParams<{ conversationId: string; name?: string }>();
   const scrollRef = useRef<ScrollView>(null);
@@ -414,3 +414,8 @@ const styles = StyleSheet.create({
   recordStop: { backgroundColor: Colors.error[500] },
   disabled: { opacity: .4 },
 });
+
+/** Chat is a manager-only tool; learners use «انتقادات و پیشنهادات» instead. */
+export default function HumanConversationScreenGate() {
+  return MANAGEMENT_BUILD ? <HumanConversationScreen /> : <Redirect href={'/feedback' as never} />;
+}
