@@ -4,6 +4,7 @@ import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/L
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { buildLessonPractice, buildWarmUp, WARM_UP_KINDS, type PracticeStats } from '@/lib/lessonPractice';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
+import LessonFinalHub from '@/components/LessonFinalHub';
 import BlindListeningList from '@/components/BlindListeningList';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
 import { recordStudyDay } from '@/lib/studyStreak';
@@ -314,7 +315,7 @@ export default function SentenceLessonScreen() {
       setRevealed(false);
       return;
     }
-    if (practiceBlocks || !evidencePassed || saving) return;
+    if (practiceBlocks || saving) return;
     completing.current=true;
     setSaving(true);
     setCompletionError('');
@@ -534,13 +535,17 @@ export default function SentenceLessonScreen() {
               <Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text>
               <Text style={styles.promiseText}>{toPersianDigits(lesson.sentences.length)} جمله و {toPersianDigits(vocabulary.length)} واژهٔ یکتا؛ محتوا همان محتوای اصلی درس است.</Text>
             </View>
-            <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} />
-            <LessonPracticeBlock title="چالش برق‌آسا" intro={`${toPersianDigits(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={practiceLesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Colors.success[400]} />
-            {practiceBlocks ? null : evidencePassed
+            <LessonFinalHub sections={[
+              { id: 'blitz', title: 'دور سریع', subtitle: `${toPersianDigits(practiceItems.length)} ضربه از همین درس، هر بار به شکلی دیگر`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="چالش برق‌آسا" intro={`${toPersianDigits(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={practiceLesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Colors.success[400]} /></> },
+              { id: 'speak', title: 'آزمون گفتاری', subtitle: 'هر جمله را بلند بگو؛ واژه‌به‌واژه بازخورد می‌گیری', render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} /></> },
+              { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش کوتاه از همین درس؛ بدون نمره، با توضیح', render: () => <>
+            {false ? null : evidencePassed
               ? CORE_LESSON_EVIDENCE[lesson.id]
                 ? <Text style={styles.stageDesc}>همهٔ {toPersianDigits(CORE_LESSON_EVIDENCE[lesson.id].length)} سنجشِ این درس با پاسخ درست ثبت شد ✓</Text>
                 : <View><Text style={styles.stageDesc}>شنیداری: ثبت شد ✓</Text><Text style={styles.stageDesc}>نوشتاری: ثبت شد ✓</Text></View>
               : <EnglishLessonEvidence key={`${lesson.id}-${attempt.current?.id ?? 'legacy'}`} lesson={lesson} attemptEvidence={attemptEvidence} onAttemptResult={(taskId, correct) => { if (!resettingRef.current) setAttemptEvidence(previous => previous ? { ...previous, [taskId]: correct } : previous); }} onPassed={() => { if (!resettingRef.current) setEvidencePassed(true); }} />}
+              </> },
+            ]} />
           </View>
         )}
         {!!completionError && <Text style={styles.stageDesc}>{completionError}</Text>}
@@ -552,7 +557,7 @@ export default function SentenceLessonScreen() {
           {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && { opacity: .45 }]}>
             <Text style={styles.secondaryControlText}>جمله قبلی</Text>
           </Pressable>}
-          <Pressable accessibilityRole="button" accessibilityState={{ disabled: saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && (practiceBlocks || !evidencePassed)) }} disabled={saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && (practiceBlocks || !evidencePassed))} style={[styles.nextButton, (saving || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && (practiceBlocks || !evidencePassed))) && { opacity: .45 }]} onPress={() => void next()}>
+          <Pressable accessibilityRole="button" accessibilityState={{ disabled: saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && practiceBlocks) }} disabled={saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && practiceBlocks)} style={[styles.nextButton, (saving || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && practiceBlocks)) && { opacity: .45 }]} onPress={() => void next()}>
             <Text style={styles.nextText}>{stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جمله بعدی' : 'ادامه'}</Text>
             {stage === stages.length - 1 ? <Check size={20} color={Colors.onColor} /> : <ChevronLeft size={20} color={Colors.onColor} />}
           </Pressable>

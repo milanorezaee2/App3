@@ -41,6 +41,7 @@ import { Typography } from '@/lib/theme';
 import { shuffleChecks } from '@/lib/shuffleChecks';
 import { buildLessonPractice, buildWarmUp, WARM_UP_KINDS, type PracticeStats } from '@/lib/lessonPractice';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
+import LessonFinalHub from '@/components/LessonFinalHub';
 import BlindListeningList from '@/components/BlindListeningList';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
 import { recordStudyDay } from '@/lib/studyStreak';
@@ -266,7 +267,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
       else if (nextStage !== 1) void stopStarterSpeech();
       return;
     }
-    if (practiceBlocks || (!allChecksPassed && (a1 || !showCheckAnswers))) return;
+    if (practiceBlocks) return;
     void stopStarterSpeech();
     completing.current = true;
     setSaving(true);
@@ -427,9 +428,11 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           <View style={styles.bigIcon}><RefreshCw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} {unit} و {fa(vocabulary.length)} واژه/عبارت یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
-          <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale={course.locale} accent={Palette.success} onSpeak={text => speak(text)} />
-          <LessonPracticeBlock title="چالش برق‌آسا" intro={`${fa(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} />
-          {practiceBlocks ? null : <View style={styles.evidenceCard}>
+          <LessonFinalHub sections={[
+            { id: 'blitz', title: 'دور سریع', subtitle: `${fa(practiceItems.length)} ضربه از همین درس، هر بار به شکلی دیگر`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="چالش برق‌آسا" intro={`${fa(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} /></> },
+            { id: 'speak', title: 'آزمون گفتاری', subtitle: 'هر جمله را بلند بگو؛ واژه‌به‌واژه بازخورد می‌گیری', render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale={course.locale} accent={Palette.success} onSpeak={text => speak(text)} /></> },
+            { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش کوتاه از همین درس؛ بدون نمره، با توضیح', render: () => <>
+          {false ? null : <View style={styles.evidenceCard}>
             <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
             <Text style={styles.evidenceIntro}>{a1 ? 'برای پایان درس به همهٔ پرسش‌های کاربردی پاسخ درست دهید؛ پس از پاسخ نادرست می‌توانید دوباره امتحان کنید. این سنجش، آزمون رسمی سطح نیست.' : 'پرسش‌ها به نمونه‌های همین درس وصل‌اند. پاسخ نادرست را می‌توانید دوباره امتحان کنید یا توضیح پاسخ نمونه را ببینید.'}</Text>
             {checks.map((question, index) => <View key={index} style={styles.question}>
@@ -452,6 +455,8 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
             {!a1 && showCheckAnswers ? <Text style={styles.evidenceNote}>پاسخ‌های نمونه نمایش داده شدند؛ می‌توانید درس را پایان دهید.</Text> : null}
           </View>}
           <StarterExtraPractice key={lesson.id} lesson={lesson} />
+            </> },
+          ]} />
         </View>}
 
         {!!(sessionError || completionError) && <Text accessibilityRole="alert" style={styles.error}>{sessionError || completionError}</Text>}
@@ -464,7 +469,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel={foundation ? `${unit} قبلی` : "جملهٔ قبلی"} accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && styles.nextButtonDisabled]}>
             <Text style={styles.previousButtonText}>{unit} قبلی</Text>
           </Pressable>}
-          <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && (practiceBlocks || (!allChecksPassed && (a1 || !showCheckAnswers))))} style={[styles.nextButton, (saving || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && (practiceBlocks || (!allChecksPassed && (a1 || !showCheckAnswers))))) && styles.nextButtonDisabled]} onPress={() => void next()}>
+          <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && practiceBlocks)} style={[styles.nextButton, (saving || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && practiceBlocks)) && styles.nextButtonDisabled]} onPress={() => void next()}>
             <Text style={styles.nextText}>{saving ? 'در حال ذخیره…' : stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? `${unit}${foundation ? '' : 'ٔ'} بعدی` : 'ادامه'}</Text>
             {stage === stages.length - 1 ? <Check size={20} color="#FFFFFF" /> : <ChevronLeft size={20} color="#FFFFFF" />}
           </Pressable>

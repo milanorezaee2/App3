@@ -25,6 +25,7 @@ import { Typography } from '@/lib/theme';
 import { shuffleChecks } from '@/lib/shuffleChecks';
 import { buildLessonPractice, buildWarmUp, WARM_UP_KINDS, type PracticeStats } from '@/lib/lessonPractice';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
+import LessonFinalHub from '@/components/LessonFinalHub';
 import BlindListeningList from '@/components/BlindListeningList';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
 import { PersianBridgeCard, RuleCard } from '@/components/PersianBridgeCard';
@@ -230,7 +231,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
       else if (nextStage !== 1) void stopRussianSpeech();
       return;
     }
-    if (practiceBlocks || (!allChecksPassed && !showCheckAnswers)) return;
+    if (practiceBlocks) return;
     void stopRussianSpeech();
     completing.current = true;
     setSaving(true);
@@ -373,16 +374,18 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           <View style={styles.bigIcon}><MessageCircle size={34} color={Palette.primary} /></View>
           <Text style={styles.stageTitle}>مکالمهٔ هدایت‌شده</Text>
           {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
-          <RussianDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} locale="ru-RU" />
+          <RussianDialoguePractice key={lesson.id} dialogue={lesson.dialogue} onSpeak={speak} locale="ru-RU" defaultMode={lesson.levelId <= 0 ? 'guide' : lesson.levelId <= 2 ? 'cloze' : 'free'} />
         </View>}
 
         {stage === 8 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><RefreshCw size={33} color={Palette.success} /></View>
           <Text style={styles.stageTitle}>مرور فاصله‌دار</Text>
           <View style={styles.promiseCard}><Text style={styles.promiseTitle}>خلاصهٔ همین درس</Text><Text style={styles.promiseText}>{fa(lesson.sentences.length)} جمله و {fa(vocabulary.length)} واژه/عبارت یکتا؛ پاسخ‌ها خودآموزند و گواهی سطح ایجاد نمی‌کنند.</Text></View>
-          <SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale="ru-RU" accent={Palette.success} onSpeak={text => speak(text)} />
-          <LessonPracticeBlock title="چالش برق‌آسا" intro={`${fa(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} />
-          {practiceBlocks ? null : <View style={styles.evidenceCard}>
+          <LessonFinalHub sections={[
+            { id: 'blitz', title: 'دور سریع', subtitle: `${fa(practiceItems.length)} ضربه از همین درس، هر بار به شکلی دیگر`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="چالش برق‌آسا" intro={`${fa(practiceItems.length)} ضربه، هر جمله یک بار و هر بار به شکلی دیگر. بدون نمره؛ اگر جایی اشتباه شد، همان جمله یک بار دیگر به شکل دیگری می‌آید.`} items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.success} /></> },
+            { id: 'speak', title: 'آزمون گفتاری', subtitle: 'هر جمله را بلند بگو؛ واژه‌به‌واژه بازخورد می‌گیری', render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale="ru-RU" accent={Palette.success} onSpeak={text => speak(text)} /></> },
+            { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش کوتاه از همین درس؛ بدون نمره، با توضیح', render: () => <>
+          {false ? null : <View style={styles.evidenceCard}>
             <Text style={styles.evidenceTitle}>حالا خودت امتحان کن</Text>
             <Text style={styles.evidenceIntro}>پرسش‌ها به جمله‌های همین درس وصل‌اند. پاسخ نادرست را می‌توانید دوباره امتحان کنید یا توضیح پاسخ نمونه را ببینید.</Text>
             {checks.map((question, index) => <View key={index} style={styles.question}>
@@ -404,6 +407,8 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
             {!showCheckAnswers && <Pressable accessibilityRole="button" style={styles.showAnswersButton} onPress={() => setShowCheckAnswers(true)}><Text style={styles.showAnswersText}>نمایش توضیح همهٔ پاسخ‌ها</Text></Pressable>}
             {showCheckAnswers ? <Text style={styles.evidenceNote}>پاسخ‌های نمونه نمایش داده شدند؛ می‌توانید درس را پایان دهید.</Text> : null}
           </View>}
+            </> },
+          ]} />
         </View>}
 
         {!!(sessionError || completionError) && <Text accessibilityRole="alert" style={styles.error}>{sessionError || completionError}</Text>}
@@ -416,7 +421,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           {stage === 1 && <Pressable accessibilityRole="button" accessibilityLabel="جملهٔ قبلی" accessibilityState={{ disabled: saving || !!sessionError || sentenceIndex === 0 }} disabled={saving || !!sessionError || sentenceIndex === 0} onPress={goToPreviousSentence} style={[styles.previousButton, (saving || !!sessionError || sentenceIndex === 0) && styles.nextButtonDisabled]}>
             <Text style={styles.previousButtonText}>جمله قبلی</Text>
           </Pressable>}
-          <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && (practiceBlocks || (!allChecksPassed && !showCheckAnswers)))} style={[styles.nextButton, (saving || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && (practiceBlocks || (!allChecksPassed && !showCheckAnswers)))) && styles.nextButtonDisabled]} onPress={() => void next()}>
+          <Pressable accessibilityRole="button" disabled={saving || !!sessionError || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && practiceBlocks)} style={[styles.nextButton, (saving || (stage === 0 && warmUpBlocks) || (stage === stages.length - 1 && practiceBlocks)) && styles.nextButtonDisabled]} onPress={() => void next()}>
             <Text style={styles.nextText}>{saving ? 'در حال ذخیره…' : stage === stages.length - 1 ? 'پایان درس' : stage === 1 && sentenceIndex < lesson.sentences.length - 1 ? 'جملهٔ بعدی' : 'ادامه'}</Text>
             {stage === stages.length - 1 ? <Check size={20} color="#FFFFFF" /> : <ChevronLeft size={20} color="#FFFFFF" />}
           </Pressable>
