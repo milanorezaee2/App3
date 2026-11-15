@@ -1,7 +1,8 @@
 import * as Speech from 'expo-speech';
 import { voiceFor } from './voiceRotation';
 import { speechTagFor } from './speechLanguage';
-import { tryPlayRecorded, stopRecorded } from '@/lib/content/packAudio';
+import { stopRecorded } from '@/lib/content/packAudio';
+import { playPreferredRecording, playFallbackRecording, noteSpeechSuccess, noteSpeechFailure } from '@/lib/content/speechFallback';
 
 type SpeechLocale = 'en-US';
 
@@ -52,33 +53,40 @@ export function playResponsiveSpeech({
   const start = (voice?: string) => {
     if (currentRequest !== requestId) return;
     active = true;
+    const startedAt = Date.now();
+    let finished = false;
+    const failed = () => {
+      if (currentRequest !== requestId) return;
+      active = false;
+      if (voice) { start(); return; }
+      void playFallbackRecording(text, selectedRate).then(ok => {
+        if (currentRequest === requestId && !ok) onError?.();
+      });
+    };
     try {
       Speech.speak(text, {
         language: speechTagFor(locale),
         ...(voice ? { voice } : {}),
         rate: selectedRate,
         onDone: () => {
-          if (currentRequest === requestId) { active = false; onDone?.(); }
+          if (currentRequest !== requestId) return;
+          finished = true; active = false; noteSpeechSuccess(); onDone?.();
         },
         onStopped: () => {
-          if (currentRequest === requestId) active = false;
-        },
-        onError: () => {
           if (currentRequest !== requestId) return;
           active = false;
-          if (voice) start(); else onError?.();
+          // A playback cut off almost immediately is the closest JS signal we have
+          // for a choppy / interrupted engine. Three such events switch the device.
+          if (!finished && Date.now() - startedAt < 600) void noteSpeechFailure();
         },
+        onError: failed,
       });
-    } catch {
-      if (currentRequest !== requestId) return;
-      active = false;
-      if (voice) start(); else onError?.();
-    }
+    } catch { failed(); }
   };
 
   const begin = () => {
-    // A published recording wins over the device voice (same voice on every phone, offline after sync).
-    void tryPlayRecorded(text, selectedRate).catch(() => false).then(played => {
+    // Device TTS stays primary; recordings are used only on devices that opted in.
+    void playPreferredRecording(text, selectedRate).catch(() => false).then(played => {
       if (currentRequest !== requestId || played) return;
       void voiceFor(locale, text).catch(() => undefined).then(voice => start(voice));
     });

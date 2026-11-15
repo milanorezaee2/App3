@@ -21,13 +21,13 @@ npx tsx scripts/content/reviewPacks.ts --write                            # 3b. 
 npx tsx scripts/content/buildManifest.ts               # 4. content-packs/manifest.json from the pack files
 npx tsx scripts/content/genPackCoverage.ts --write                       # 4b. bundle the packs' vocabulary index for the UI
 npx tsx scripts/content/reportReadiness.ts --write --target 90            # 4c. acceptance report (min readiness)
-# 5. pre-rendered recordings — OFFLINE, no API key (see docs/prerendered-audio.md)
+# 5. pre-rendered recordings — OFFLINE, no API key, used ONLY as a per-device fallback
+#    (see docs/prerendered-audio.md and lib/content/speechFallback.ts)
 npm i --no-save espeak-ng@1.0.2 lamejs@1.2.1
-node scripts/content/renderAudio.mjs content-packs/de/A2.v6.json \
-  --provider "node scripts/content/offlineTts.mjs {lang} {text} {out}" \
-  --base https://doagwkssxtxseuavrxnr.supabase.co/storage/v1/object/public/content-packs/audio
+node scripts/content/renderOfflineAudio.mjs --scope all --workers 8
 node scripts/content/finalizeAudioPacks.mjs   # bump versions so the app re-downloads
-# or: gh workflow run tts-offline.yml -f scope=pilot -f engine=espeak
+# Single sentence: node scripts/content/offlineTts.mjs de "Hallo" out.mp3
+# Generic provider path: scripts/content/renderAudio.mjs
 # Optional API-based engine (needs a key): scripts/content/ttsProvider.mjs
 ```
 
