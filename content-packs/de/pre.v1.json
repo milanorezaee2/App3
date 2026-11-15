@@ -1,0 +1,505 @@
+{
+ "schema": 1,
+ "language": "de",
+ "band": "pre",
+ "version": 1,
+ "generatedAt": "2026-11-15",
+ "source": "factory v2 · curated frequency + hybrid word-study generator · automatic gates · native review pending",
+ "sentences": [
+  {
+   "id": "de-pre-001",
+   "text": "Ich habe «den», «von» und «mit» geschrieben.",
+   "fa": "من «den»، «von» و «mit» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "den",
+    "von",
+    "mit"
+   ]
+  },
+  {
+   "id": "de-pre-002",
+   "text": "Ich kann «im», «eine» und «sich» jetzt besser verstehen.",
+   "fa": "اکنون «im»، «eine» و «sich» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "im",
+    "eine",
+    "sich"
+   ]
+  },
+  {
+   "id": "de-pre-003",
+   "text": "Das sind «auch» und «des».",
+   "fa": "اینها «auch» و «des» هستند.",
+   "pattern": "Das sind <W1> und <W2>.",
+   "targetWords": [
+    "auch",
+    "des"
+   ]
+  },
+  {
+   "id": "de-pre-004",
+   "text": "Wir haben «als» und «er» hier.",
+   "fa": "ما «als» و «er» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "als",
+    "er"
+   ]
+  },
+  {
+   "id": "de-pre-005",
+   "text": "Das ist «an».",
+   "fa": "این «an» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "an"
+   ]
+  },
+  {
+   "id": "de-pre-006",
+   "text": "Ich habe «dass» hier.",
+   "fa": "من «dass» را اینجا دارم.",
+   "pattern": "Ich habe <W1> hier.",
+   "targetWords": [
+    "dass"
+   ]
+  },
+  {
+   "id": "de-pre-007",
+   "text": "Heute sehe ich «so».",
+   "fa": "امروز «so» را میبینم.",
+   "pattern": "Heute sehe ich <W1>.",
+   "targetWords": [
+    "so"
+   ]
+  },
+  {
+   "id": "de-pre-008",
+   "text": "Ich verstehe «bei» jetzt besser.",
+   "fa": "اکنون «bei» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "bei"
+   ]
+  },
+  {
+   "id": "de-pre-009",
+   "text": "Ich habe «aber», «hat» und «sind» geschrieben.",
+   "fa": "من «aber»، «hat» و «sind» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "aber",
+    "hat",
+    "sind"
+   ]
+  },
+  {
+   "id": "de-pre-010",
+   "text": "Ich kann «nach», «war» und «nur» jetzt besser verstehen.",
+   "fa": "اکنون «nach»، «war» و «nur» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "nach",
+    "war",
+    "nur"
+   ]
+  },
+  {
+   "id": "de-pre-011",
+   "text": "Das sind «wenn» und «oder».",
+   "fa": "اینها «wenn» و «oder» هستند.",
+   "pattern": "Das sind <W1> und <W2>.",
+   "targetWords": [
+    "wenn",
+    "oder"
+   ]
+  },
+  {
+   "id": "de-pre-012",
+   "text": "Wir haben «wird» und «werden» hier.",
+   "fa": "ما «wird» و «werden» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "wird",
+    "werden"
+   ]
+  },
+  {
+   "id": "de-pre-013",
+   "text": "Das ist «am».",
+   "fa": "این «am» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "am"
+   ]
+  },
+  {
+   "id": "de-pre-014",
+   "text": "Ich habe «haben» hier.",
+   "fa": "من «haben» را اینجا دارم.",
+   "pattern": "Ich habe <W1> hier.",
+   "targetWords": [
+    "haben"
+   ]
+  },
+  {
+   "id": "de-pre-015",
+   "text": "Heute sehe ich «einer».",
+   "fa": "امروز «einer» را میبینم.",
+   "pattern": "Heute sehe ich <W1>.",
+   "targetWords": [
+    "einer"
+   ]
+  },
+  {
+   "id": "de-pre-016",
+   "text": "Ich verstehe «zum» jetzt besser.",
+   "fa": "اکنون «zum» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "zum"
+   ]
+  },
+  {
+   "id": "de-pre-017",
+   "text": "Ich habe «kann», «über» und «da» geschrieben.",
+   "fa": "من «kann»، «über» و «da» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "kann",
+    "über",
+    "da"
+   ]
+  },
+  {
+   "id": "de-pre-018",
+   "text": "Ich kann «dann», «einem» und «schon» jetzt besser verstehen.",
+   "fa": "اکنون «dann»، «einem» و «schon» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "dann",
+    "einem",
+    "schon"
+   ]
+  },
+  {
+   "id": "de-pre-019",
+   "text": "Das sind «mehr» und «sein».",
+   "fa": "اینها «mehr» و «sein» هستند.",
+   "pattern": "Das sind <W1> und <W2>.",
+   "targetWords": [
+    "mehr",
+    "sein"
+   ]
+  },
+  {
+   "id": "de-pre-020",
+   "text": "Wir haben «vor» und «mal» hier.",
+   "fa": "ما «vor» و «mal» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "vor",
+    "mal"
+   ]
+  },
+  {
+   "id": "de-pre-021",
+   "text": "Das ist «zur».",
+   "fa": "این «zur» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "zur"
+   ]
+  },
+  {
+   "id": "de-pre-022",
+   "text": "Ich habe «durch» hier.",
+   "fa": "من «durch» را اینجا دارم.",
+   "pattern": "Ich habe <W1> hier.",
+   "targetWords": [
+    "durch"
+   ]
+  },
+  {
+   "id": "de-pre-023",
+   "text": "Heute sehe ich «mich».",
+   "fa": "امروز «mich» را میبینم.",
+   "pattern": "Heute sehe ich <W1>.",
+   "targetWords": [
+    "mich"
+   ]
+  },
+  {
+   "id": "de-pre-024",
+   "text": "Ich verstehe «doch» jetzt besser.",
+   "fa": "اکنون «doch» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "doch"
+   ]
+  },
+  {
+   "id": "de-pre-025",
+   "text": "Ich habe «ihr», «immer» und «diese» geschrieben.",
+   "fa": "من «ihr»، «immer» و «diese» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "ihr",
+    "immer",
+    "diese",
+    "dieser",
+    "diesem",
+    "dieses"
+   ]
+  },
+  {
+   "id": "de-pre-026",
+   "text": "Ich kann «wurde», «wieder» und «keine» jetzt besser verstehen.",
+   "fa": "اکنون «wurde»، «wieder» و «keine» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "wurde",
+    "wurden",
+    "wieder",
+    "keine"
+   ]
+  },
+  {
+   "id": "de-pre-027",
+   "text": "Das sind «alle» und «können».",
+   "fa": "اینها «alle» و «können» هستند.",
+   "pattern": "Das sind <W1> und <W2>.",
+   "targetWords": [
+    "alle",
+    "können"
+   ]
+  },
+  {
+   "id": "de-pre-028",
+   "text": "Wir haben «muss» und «uns» hier.",
+   "fa": "ما «muss» و «uns» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "muss",
+    "uns"
+   ]
+  },
+  {
+   "id": "de-pre-029",
+   "text": "Das ist «unter».",
+   "fa": "این «unter» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "unter"
+   ]
+  },
+  {
+   "id": "de-pre-030",
+   "text": "Ich habe «vom» hier.",
+   "fa": "من «vom» را اینجا دارم.",
+   "pattern": "Ich habe <W1> hier.",
+   "targetWords": [
+    "vom"
+   ]
+  },
+  {
+   "id": "de-pre-031",
+   "text": "Heute sehe ich «gibt».",
+   "fa": "امروز «gibt» را میبینم.",
+   "pattern": "Heute sehe ich <W1>.",
+   "targetWords": [
+    "gibt"
+   ]
+  },
+  {
+   "id": "de-pre-032",
+   "text": "Ich verstehe «hatte» jetzt besser.",
+   "fa": "اکنون «hatte» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "hatte"
+   ]
+  },
+  {
+   "id": "de-pre-033",
+   "text": "Ich habe «ihre», «gegen» und «seine» geschrieben.",
+   "fa": "من «ihre»، «gegen» و «seine» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "ihre",
+    "gegen",
+    "seine",
+    "seiner"
+   ]
+  },
+  {
+   "id": "de-pre-034",
+   "text": "Ich kann «alles», «also» und «viel» jetzt besser verstehen.",
+   "fa": "اکنون «alles»، «also» و «viel» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "alles",
+    "also",
+    "viel"
+   ]
+  },
+  {
+   "id": "de-pre-035",
+   "text": "Das sind «zeit» und «ab».",
+   "fa": "اینها «zeit» و «ab» هستند.",
+   "pattern": "Das sind <W1> und <W2>.",
+   "targetWords": [
+    "zeit",
+    "ab"
+   ]
+  },
+  {
+   "id": "de-pre-036",
+   "text": "Wir haben «ganz» und «machen» hier.",
+   "fa": "ما «ganz» و «machen» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "ganz",
+    "machen"
+   ]
+  },
+  {
+   "id": "de-pre-037",
+   "text": "Das ist «denn».",
+   "fa": "این «denn» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "denn"
+   ]
+  },
+  {
+   "id": "de-pre-038",
+   "text": "Ich habe «damit» hier.",
+   "fa": "من «damit» را اینجا دارم.",
+   "pattern": "Ich habe <W1> hier.",
+   "targetWords": [
+    "damit"
+   ]
+  },
+  {
+   "id": "de-pre-039",
+   "text": "Heute sehe ich «will».",
+   "fa": "امروز «will» را میبینم.",
+   "pattern": "Heute sehe ich <W1>.",
+   "targetWords": [
+    "will"
+   ]
+  },
+  {
+   "id": "de-pre-040",
+   "text": "Ich verstehe «einfach» jetzt besser.",
+   "fa": "اکنون «einfach» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "einfach"
+   ]
+  },
+  {
+   "id": "de-pre-041",
+   "text": "Ich habe «ohne», «weil» und «beim» geschrieben.",
+   "fa": "من «ohne»، «weil» و «beim» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "ohne",
+    "weil",
+    "beim"
+   ]
+  },
+  {
+   "id": "de-pre-042",
+   "text": "Ich kann «waren», «eines» und «kein» jetzt besser verstehen.",
+   "fa": "اکنون «waren»، «eines» و «kein» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "waren",
+    "eines",
+    "kein"
+   ]
+  },
+  {
+   "id": "de-pre-043",
+   "text": "Das sind «seit» und «soll».",
+   "fa": "اینها «seit» و «soll» هستند.",
+   "pattern": "Das sind <W1> und <W2>.",
+   "targetWords": [
+    "seit",
+    "soll"
+   ]
+  },
+  {
+   "id": "de-pre-044",
+   "text": "Wir haben «selbst» und «dich» hier.",
+   "fa": "ما «selbst» و «dich» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "selbst",
+    "dich"
+   ]
+  },
+  {
+   "id": "de-pre-045",
+   "text": "Das ist «menschen».",
+   "fa": "این «menschen» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "menschen"
+   ]
+  },
+  {
+   "id": "de-pre-046",
+   "text": "Ich habe «hab» hier.",
+   "fa": "من «hab» را اینجا دارم.",
+   "pattern": "Ich habe <W1> hier.",
+   "targetWords": [
+    "hab"
+   ]
+  },
+  {
+   "id": "de-pre-047",
+   "text": "Heute sehe ich «kommt».",
+   "fa": "امروز «kommt» را میبینم.",
+   "pattern": "Heute sehe ich <W1>.",
+   "targetWords": [
+    "kommt"
+   ]
+  },
+  {
+   "id": "de-pre-048",
+   "text": "Ich verstehe «nun» jetzt besser.",
+   "fa": "اکنون «nun» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "nun"
+   ]
+  },
+  {
+   "id": "de-pre-049",
+   "text": "Ich habe «würde», «leben» und «macht» geschrieben.",
+   "fa": "من «würde»، «leben» و «macht» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "würde",
+    "leben",
+    "macht"
+   ]
+  },
+  {
+   "id": "de-pre-050",
+   "text": "Ich kann «anderen», «ihm» und «jahr» jetzt besser verstehen.",
+   "fa": "اکنون «anderen»، «ihm» و «jahr» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "anderen",
+    "ihm",
+    "jahr"
+   ]
+  }
+ ]
+}

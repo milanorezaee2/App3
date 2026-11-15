@@ -8,7 +8,7 @@ import es from '@/lib/content/frequency/es.json';
 import ru from '@/lib/content/frequency/ru.json';
 import tr from '@/lib/content/frequency/tr.json';
 
-/** Top-8000 frequency words per language (wordfreq); bundled so readiness works offline. */
+/** Top-8000 frequency words per language (wordfreq, sanitised by `curateFrequency.ts`); bundled so readiness works offline. */
 export const FREQUENCY: Record<CourseLanguage, readonly string[]> = { en, de, fr, es, ru, tr };
 
 /** Adapter for Russian / Turkish / German / French / Spanish lesson records. */

@@ -1,0 +1,688 @@
+{
+ "schema": 1,
+ "language": "en",
+ "band": "pre",
+ "version": 1,
+ "generatedAt": "2026-11-15",
+ "source": "factory v2 · curated frequency + hybrid word-study generator · automatic gates · native review pending",
+ "sentences": [
+  {
+   "id": "en-pre-001",
+   "text": "My friend asks about «the», «of» and «in».",
+   "fa": "دوستم دربارهٔ «the»، «of» و «in» میپرسد.",
+   "pattern": "My friend asks about <W1>, <W2> and <W3>.",
+   "targetWords": [
+    "the",
+    "of",
+    "in"
+   ]
+  },
+  {
+   "id": "en-pre-002",
+   "text": "These are «for» and «that».",
+   "fa": "اینها «for» و «that» هستند.",
+   "pattern": "These are <W1> and <W2>.",
+   "targetWords": [
+    "for",
+    "that"
+   ]
+  },
+  {
+   "id": "en-pre-003",
+   "text": "We have «it» and «on» here.",
+   "fa": "ما «it» و «on» را اینجا داریم.",
+   "pattern": "We have <W1> and <W2> here.",
+   "targetWords": [
+    "it",
+    "on"
+   ]
+  },
+  {
+   "id": "en-pre-004",
+   "text": "This is «with».",
+   "fa": "این «with» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "with"
+   ]
+  },
+  {
+   "id": "en-pre-005",
+   "text": "I have «was» here.",
+   "fa": "من «was» را اینجا دارم.",
+   "pattern": "I have <W1> here.",
+   "targetWords": [
+    "was"
+   ]
+  },
+  {
+   "id": "en-pre-006",
+   "text": "We need «be» today.",
+   "fa": "امروز به «be» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "be"
+   ]
+  },
+  {
+   "id": "en-pre-007",
+   "text": "My friend asks about «as», «at» and «he».",
+   "fa": "دوستم دربارهٔ «as»، «at» و «he» میپرسد.",
+   "pattern": "My friend asks about <W1>, <W2> and <W3>.",
+   "targetWords": [
+    "as",
+    "at",
+    "he"
+   ]
+  },
+  {
+   "id": "en-pre-008",
+   "text": "These are «not» and «by».",
+   "fa": "اینها «not» و «by» هستند.",
+   "pattern": "These are <W1> and <W2>.",
+   "targetWords": [
+    "not",
+    "by"
+   ]
+  },
+  {
+   "id": "en-pre-009",
+   "text": "We have «but» and «we» here.",
+   "fa": "ما «but» و «we» را اینجا داریم.",
+   "pattern": "We have <W1> and <W2> here.",
+   "targetWords": [
+    "but",
+    "we"
+   ]
+  },
+  {
+   "id": "en-pre-010",
+   "text": "This is «an».",
+   "fa": "این «an» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "an"
+   ]
+  },
+  {
+   "id": "en-pre-011",
+   "text": "I have «your» here.",
+   "fa": "من «your» را اینجا دارم.",
+   "pattern": "I have <W1> here.",
+   "targetWords": [
+    "your"
+   ]
+  },
+  {
+   "id": "en-pre-012",
+   "text": "We need «all» today.",
+   "fa": "امروز به «all» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "all"
+   ]
+  },
+  {
+   "id": "en-pre-013",
+   "text": "My friend asks about «so», «his» and «they».",
+   "fa": "دوستم دربارهٔ «so»، «his» و «they» میپرسد.",
+   "pattern": "My friend asks about <W1>, <W2> and <W3>.",
+   "targetWords": [
+    "so",
+    "his",
+    "they"
+   ]
+  },
+  {
+   "id": "en-pre-014",
+   "text": "These are «me» and «if».",
+   "fa": "اینها «me» و «if» هستند.",
+   "pattern": "These are <W1> and <W2>.",
+   "targetWords": [
+    "me",
+    "if"
+   ]
+  },
+  {
+   "id": "en-pre-015",
+   "text": "We have «can» and «will» here.",
+   "fa": "ما «can» و «will» را اینجا داریم.",
+   "pattern": "We have <W1> and <W2> here.",
+   "targetWords": [
+    "can",
+    "will"
+   ]
+  },
+  {
+   "id": "en-pre-016",
+   "text": "This is «just».",
+   "fa": "این «just» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "just"
+   ]
+  },
+  {
+   "id": "en-pre-017",
+   "text": "I have «like» here.",
+   "fa": "من «like» را اینجا دارم.",
+   "pattern": "I have <W1> here.",
+   "targetWords": [
+    "like"
+   ]
+  },
+  {
+   "id": "en-pre-018",
+   "text": "We need «about» today.",
+   "fa": "امروز به «about» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "about"
+   ]
+  },
+  {
+   "id": "en-pre-019",
+   "text": "My friend asks about «up», «out» and «has».",
+   "fa": "دوستم دربارهٔ «up»، «out» و «has» میپرسد.",
+   "pattern": "My friend asks about <W1>, <W2> and <W3>.",
+   "targetWords": [
+    "up",
+    "out",
+    "has"
+   ]
+  },
+  {
+   "id": "en-pre-020",
+   "text": "These are «when» and «more».",
+   "fa": "اینها «when» و «more» هستند.",
+   "pattern": "These are <W1> and <W2>.",
+   "targetWords": [
+    "when",
+    "more"
+   ]
+  },
+  {
+   "id": "en-pre-021",
+   "text": "We have «were» and «who» here.",
+   "fa": "ما «were» و «who» را اینجا داریم.",
+   "pattern": "We have <W1> and <W2> here.",
+   "targetWords": [
+    "were",
+    "who"
+   ]
+  },
+  {
+   "id": "en-pre-022",
+   "text": "This is «had».",
+   "fa": "این «had» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "had"
+   ]
+  },
+  {
+   "id": "en-pre-023",
+   "text": "I have «their» here.",
+   "fa": "من «their» را اینجا دارم.",
+   "pattern": "I have <W1> here.",
+   "targetWords": [
+    "their"
+   ]
+  },
+  {
+   "id": "en-pre-024",
+   "text": "We need «her» today.",
+   "fa": "امروز به «her» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "her"
+   ]
+  },
+  {
+   "id": "en-pre-025",
+   "text": "My friend asks about «which», «time» and «get».",
+   "fa": "دوستم دربارهٔ «which»، «time» و «get» میپرسد.",
+   "pattern": "My friend asks about <W1>, <W2> and <W3>.",
+   "targetWords": [
+    "which",
+    "time",
+    "get"
+   ]
+  },
+  {
+   "id": "en-pre-026",
+   "text": "These are «been» and «would».",
+   "fa": "اینها «been» و «would» هستند.",
+   "pattern": "These are <W1> and <W2>.",
+   "targetWords": [
+    "been",
+    "would"
+   ]
+  },
+  {
+   "id": "en-pre-027",
+   "text": "We have «she» and «new» here.",
+   "fa": "ما «she» و «new» را اینجا داریم.",
+   "pattern": "We have <W1> and <W2> here.",
+   "targetWords": [
+    "she",
+    "new"
+   ]
+  },
+  {
+   "id": "en-pre-028",
+   "text": "This is «people».",
+   "fa": "این «people» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "people"
+   ]
+  },
+  {
+   "id": "en-pre-029",
+   "text": "I have «some» here.",
+   "fa": "من «some» را اینجا دارم.",
+   "pattern": "I have <W1> here.",
+   "targetWords": [
+    "some"
+   ]
+  },
+  {
+   "id": "en-pre-030",
+   "text": "We need «also» today.",
+   "fa": "امروز به «also» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "also"
+   ]
+  },
+  {
+   "id": "en-pre-031",
+   "text": "My friend asks about «them», «now» and «other».",
+   "fa": "دوستم دربارهٔ «them»، «now» و «other» میپرسد.",
+   "pattern": "My friend asks about <W1>, <W2> and <W3>.",
+   "targetWords": [
+    "them",
+    "now",
+    "other"
+   ]
+  },
+  {
+   "id": "en-pre-032",
+   "text": "These are «its» and «our».",
+   "fa": "اینها «its» و «our» هستند.",
+   "pattern": "These are <W1> and <W2>.",
+   "targetWords": [
+    "its",
+    "our"
+   ]
+  },
+  {
+   "id": "en-pre-033",
+   "text": "We have «than» and «only» here.",
+   "fa": "ما «than» و «only» را اینجا داریم.",
+   "pattern": "We have <W1> and <W2> here.",
+   "targetWords": [
+    "than",
+    "only"
+   ]
+  },
+  {
+   "id": "en-pre-034",
+   "text": "This is «after».",
+   "fa": "این «after» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "after"
+   ]
+  },
+  {
+   "id": "en-pre-035",
+   "text": "I have «first» here.",
+   "fa": "من «first» را اینجا دارم.",
+   "pattern": "I have <W1> here.",
+   "targetWords": [
+    "first"
+   ]
+  },
+  {
+   "id": "en-pre-036",
+   "text": "We need «him» today.",
+   "fa": "امروز به «him» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "him"
+   ]
+  },
+  {
+   "id": "en-pre-037",
+   "text": "My friend asks about «into», «know» and «make».",
+   "fa": "دوستم دربارهٔ «into»، «know» و «make» میپرسد.",
+   "pattern": "My friend asks about <W1>, <W2> and <W3>.",
+   "targetWords": [
+    "into",
+    "know",
+    "make"
+   ]
+  },
+  {
+   "id": "en-pre-038",
+   "text": "These are «over» and «think».",
+   "fa": "اینها «over» و «think» هستند.",
+   "pattern": "These are <W1> and <W2>.",
+   "targetWords": [
+    "over",
+    "think"
+   ]
+  },
+  {
+   "id": "en-pre-039",
+   "text": "We have «any» and «then» here.",
+   "fa": "ما «any» و «then» را اینجا داریم.",
+   "pattern": "We have <W1> and <W2> here.",
+   "targetWords": [
+    "any",
+    "then"
+   ]
+  },
+  {
+   "id": "en-pre-040",
+   "text": "This is «could».",
+   "fa": "این «could» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "could"
+   ]
+  },
+  {
+   "id": "en-pre-041",
+   "text": "I have «back» here.",
+   "fa": "من «back» را اینجا دارم.",
+   "pattern": "I have <W1> here.",
+   "targetWords": [
+    "back"
+   ]
+  },
+  {
+   "id": "en-pre-042",
+   "text": "We need «these» today.",
+   "fa": "امروز به «these» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "these"
+   ]
+  },
+  {
+   "id": "en-pre-043",
+   "text": "My friend asks about «us», «want» and «because».",
+   "fa": "دوستم دربارهٔ «us»، «want» و «because» میپرسد.",
+   "pattern": "My friend asks about <W1>, <W2> and <W3>.",
+   "targetWords": [
+    "us",
+    "want",
+    "because"
+   ]
+  },
+  {
+   "id": "en-pre-044",
+   "text": "These are «go» and «well».",
+   "fa": "اینها «go» و «well» هستند.",
+   "pattern": "These are <W1> and <W2>.",
+   "targetWords": [
+    "go",
+    "well"
+   ]
+  },
+  {
+   "id": "en-pre-045",
+   "text": "We have «said» and «way» here.",
+   "fa": "ما «said» و «way» را اینجا داریم.",
+   "pattern": "We have <W1> and <W2> here.",
+   "targetWords": [
+    "said",
+    "way"
+   ]
+  },
+  {
+   "id": "en-pre-046",
+   "text": "This is «most».",
+   "fa": "این «most» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "most"
+   ]
+  },
+  {
+   "id": "en-pre-047",
+   "text": "I have «where» here.",
+   "fa": "من «where» را اینجا دارم.",
+   "pattern": "I have <W1> here.",
+   "targetWords": [
+    "where"
+   ]
+  },
+  {
+   "id": "en-pre-048",
+   "text": "We need «even» today.",
+   "fa": "امروز به «even» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "even"
+   ]
+  },
+  {
+   "id": "en-pre-049",
+   "text": "My friend asks about «should», «may» and «here».",
+   "fa": "دوستم دربارهٔ «should»، «may» و «here» میپرسد.",
+   "pattern": "My friend asks about <W1>, <W2> and <W3>.",
+   "targetWords": [
+    "should",
+    "may",
+    "here"
+   ]
+  },
+  {
+   "id": "en-pre-050",
+   "text": "These are «need» and «really».",
+   "fa": "اینها «need» و «really» هستند.",
+   "pattern": "These are <W1> and <W2>.",
+   "targetWords": [
+    "need",
+    "really"
+   ]
+  },
+  {
+   "id": "en-pre-051",
+   "text": "We have «did» and «right» here.",
+   "fa": "ما «did» و «right» را اینجا داریم.",
+   "pattern": "We have <W1> and <W2> here.",
+   "targetWords": [
+    "did",
+    "right"
+   ]
+  },
+  {
+   "id": "en-pre-052",
+   "text": "This is «work».",
+   "fa": "این «work» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "work"
+   ]
+  },
+  {
+   "id": "en-pre-053",
+   "text": "I have «year» here.",
+   "fa": "من «year» را اینجا دارم.",
+   "pattern": "I have <W1> here.",
+   "targetWords": [
+    "year"
+   ]
+  },
+  {
+   "id": "en-pre-054",
+   "text": "We need «years» today.",
+   "fa": "امروز به «years» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "years"
+   ]
+  },
+  {
+   "id": "en-pre-055",
+   "text": "My friend asks about «being», «day» and «too».",
+   "fa": "دوستم دربارهٔ «being»، «day» و «too» میپرسد.",
+   "pattern": "My friend asks about <W1>, <W2> and <W3>.",
+   "targetWords": [
+    "being",
+    "day",
+    "too"
+   ]
+  },
+  {
+   "id": "en-pre-056",
+   "text": "These are «going» and «before».",
+   "fa": "اینها «going» و «before» هستند.",
+   "pattern": "These are <W1> and <W2>.",
+   "targetWords": [
+    "going",
+    "before"
+   ]
+  },
+  {
+   "id": "en-pre-057",
+   "text": "We have «off» and «why» here.",
+   "fa": "ما «off» و «why» را اینجا داریم.",
+   "pattern": "We have <W1> and <W2> here.",
+   "targetWords": [
+    "off",
+    "why"
+   ]
+  },
+  {
+   "id": "en-pre-058",
+   "text": "This is «made».",
+   "fa": "این «made» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "made"
+   ]
+  },
+  {
+   "id": "en-pre-059",
+   "text": "I have «still» here.",
+   "fa": "من «still» را اینجا دارم.",
+   "pattern": "I have <W1> here.",
+   "targetWords": [
+    "still"
+   ]
+  },
+  {
+   "id": "en-pre-060",
+   "text": "We need «take» today.",
+   "fa": "امروز به «take» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "take"
+   ]
+  },
+  {
+   "id": "en-pre-061",
+   "text": "My friend asks about «got», «many» and «never».",
+   "fa": "دوستم دربارهٔ «got»، «many» و «never» میپرسد.",
+   "pattern": "My friend asks about <W1>, <W2> and <W3>.",
+   "targetWords": [
+    "got",
+    "many",
+    "never"
+   ]
+  },
+  {
+   "id": "en-pre-062",
+   "text": "These are «those» and «life».",
+   "fa": "اینها «those» و «life» هستند.",
+   "pattern": "These are <W1> and <W2>.",
+   "targetWords": [
+    "those",
+    "life"
+   ]
+  },
+  {
+   "id": "en-pre-063",
+   "text": "We have «say» and «world» here.",
+   "fa": "ما «say» و «world» را اینجا داریم.",
+   "pattern": "We have <W1> and <W2> here.",
+   "targetWords": [
+    "say",
+    "world"
+   ]
+  },
+  {
+   "id": "en-pre-064",
+   "text": "This is «down».",
+   "fa": "این «down» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "down"
+   ]
+  },
+  {
+   "id": "en-pre-065",
+   "text": "I have «great» here.",
+   "fa": "من «great» را اینجا دارم.",
+   "pattern": "I have <W1> here.",
+   "targetWords": [
+    "great"
+   ]
+  },
+  {
+   "id": "en-pre-066",
+   "text": "We need «through» today.",
+   "fa": "امروز به «through» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "through"
+   ]
+  },
+  {
+   "id": "en-pre-067",
+   "text": "My friend asks about «last», «while» and «best».",
+   "fa": "دوستم دربارهٔ «last»، «while» و «best» میپرسد.",
+   "pattern": "My friend asks about <W1>, <W2> and <W3>.",
+   "targetWords": [
+    "last",
+    "while",
+    "best"
+   ]
+  },
+  {
+   "id": "en-pre-068",
+   "text": "These are «such» and «love».",
+   "fa": "اینها «such» و «love» هستند.",
+   "pattern": "These are <W1> and <W2>.",
+   "targetWords": [
+    "such",
+    "love"
+   ]
+  },
+  {
+   "id": "en-pre-069",
+   "text": "We have «man» and «home» here.",
+   "fa": "ما «man» و «home» را اینجا داریم.",
+   "pattern": "We have <W1> and <W2> here.",
+   "targetWords": [
+    "man",
+    "home"
+   ]
+  },
+  {
+   "id": "en-pre-070",
+   "text": "This is «long».",
+   "fa": "این «long» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "long"
+   ]
+  }
+ ]
+}

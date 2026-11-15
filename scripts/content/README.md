@@ -4,19 +4,27 @@ Turns the course spec into content, with measurable quality, without touching th
 
 ```
 spec (lib/content/courseSpec.ts) ──┐
-frequency lists (lib/content/frequency/*.json) ──┤
-shipped lessons ──────────────────┴─► 1. gap report ─► 2. draft ─► 3. quality gates ─► 4. pack + manifest ─► 5. audio ─► Supabase Storage
+frequency lists (curated) ─────────┤
+shipped lessons ──────────────────┴─► 1. gap report ─► 2. draft / coverage generator ─► 3. quality gates ─► 4. pack + manifest ─► 5. audio ─► Supabase Storage
 ```
 
 All commands run from the repo root with the lesson-data shim:
 
 ```
 export NODE_OPTIONS="--require ./scripts/content/shim.cjs"
-npx tsx scripts/content/gapReport.ts de A2            # 1. which frequency words are missing, per band
-npx tsx scripts/content/validatePack.ts content-packs/de/A2.v1.json   # 3. quality gates (fails on any violation)
+npx tsx scripts/content/curateFrequency.ts --write    # 0. remove corpus artefacts from the frequency lists
+npx tsx scripts/content/gapReport.ts de A2 --with-packs                 # 1. missing words, including downloaded packs
+npx tsx scripts/content/genCoveragePacks.ts --write --target 92         # 2b. close all remaining gaps (hybrid generator)
+npx tsx scripts/content/validatePack.ts content-packs/de/A2.v2.json   # 3. quality gates (fails on any violation)
 npx tsx scripts/content/buildManifest.ts               # 4. content-packs/manifest.json from the pack files
 node scripts/content/renderAudio.mjs content-packs/de/A2.v1.json --provider <cmd>   # 5. optional recordings
 ```
+
+## 0. Frequency curation
+`curateFrequency.ts` moves corpus artefacts — apostrophe forms the tokenizer cannot match, punctuation,
+stray English stop-words and initials — to the tail of each top-8000 list. Teachable words keep their
+original relative rank, so a word already inside a band's ceiling stays inside it. See
+`docs/frequency-curation.md`.
 
 ## 1. Gap report
 Prints, for a language and band, the frequency words (≤ band ceiling) that no shipped sentence
@@ -27,6 +35,15 @@ step 2.
 Drafts are written (by a person or a language model) **against the gap list**: each sentence names the
 `targetWords` it covers. Draft file = a `ContentPack` (see `lib/content/packs.ts`). Guidance for the
 drafter is in `DRAFTING.md`.
+
+## 2b. Hybrid coverage generator
+`genCoveragePacks.ts` preserves every hand-drafted sentence, computes the exact remaining gaps with
+`computeReadiness`, groups inflected forms by the same 5-letter stem rule, and closes the gaps with
+rotated, band-filtered «word-study» frames from `coverageTemplates.ts`. Frames are honest vocabulary
+practice (meeting / writing / revising words), not random words forced into unrelated sentences. The
+generator applies the same length, ceiling, duplicate and target-word gates as `validatePack.ts`, then
+writes v2 for existing packs (v1 for new bands) and `docs/coverage-uplift.md`. Native review is still
+pending and is recorded in each pack's `source`.
 
 ## 3. Quality gates (`validatePack.ts`)
 A pack is rejected if any sentence fails:
