@@ -3,7 +3,6 @@ import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/L
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { FitScrollView, lessonScrollOffset } from '@/components/FitScrollView';
-import LessonCompactHeader, { COMPACT_HEADER_HEIGHT } from '@/components/LessonCompactHeader';
 import { useFirstTimeHint } from '@/lib/useFirstTimeHint';
 import { GrammarNoteCard, GrammarPatternCard, GrammarStageHeader } from '@/components/GrammarUsage';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -93,17 +92,15 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
   const contentOffsetRef = useRef(0);
   /** Header height (brand row, hero, stepper); it is also the room kept below the content so a short stage can still scroll to the top edge. */
   const [headerSpacer, setHeaderSpacer] = useState(0);
-  /** True once the full header has scrolled out; the compact bar then takes over. */
-  const [compactHeader, setCompactHeader] = useState(false);
   const [viewportHeight, setViewportHeight] = useState(0);
   const [stageHeight, setStageHeight] = useState(0);
   /** Room below the stage so even a short stage can scroll until its top sits right under the compact bar. */
   const scrollScale = lessonScrollOffset(1, Dimensions.get('window').width, stage === 6 ? 'classic' : 'default');
-  const bottomSpacer = Math.max(0, Math.ceil((viewportHeight - COMPACT_HEADER_HEIGHT) / scrollScale) - stageHeight + 8);
+  const bottomSpacer = Math.max(headerSpacer, Math.ceil(viewportHeight / scrollScale) - stageHeight + 8);
   useEffect(() => {
     // After «ادامه» the page jumps past the lesson header so the stage content starts at the top of the screen
     // (same for every stage; the sentence stage additionally targets the current sentence block).
-    const target = () => Math.max(0, lessonScrollOffset(contentOffsetRef.current + (stage === 1 ? stageOffsetRef.current : 0), Dimensions.get('window').width) - COMPACT_HEADER_HEIGHT);
+    const target = () => Math.max(0, lessonScrollOffset(contentOffsetRef.current + (stage === 1 ? stageOffsetRef.current : 0), Dimensions.get('window').width));
     const first = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: target(), animated: true }), 10);
     const second = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: target(), animated: true }), 260);
     return () => { clearTimeout(first); clearTimeout(second); };
@@ -113,7 +110,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
   useEffect(() => { stageChangedAt.current = Date.now(); }, [stage, scrollKey]);
   useEffect(() => {
     if (Date.now() - stageChangedAt.current > 3000) return;
-    const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: Math.max(0, lessonScrollOffset(contentOffsetRef.current + (stage === 1 ? stageOffsetRef.current : 0), Dimensions.get('window').width) - COMPACT_HEADER_HEIGHT), animated: true }), 10);
+    const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: Math.max(0, lessonScrollOffset(contentOffsetRef.current + (stage === 1 ? stageOffsetRef.current : 0), Dimensions.get('window').width)), animated: true }), 10);
     return () => clearTimeout(handle);
   }, [headerSpacer, stage]);
   const [revealed, setRevealed] = useState(false);
@@ -330,7 +327,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
 
   return (
     <View style={styles.root}>
-      <FitScrollView ref={lessonScrollRef} variant={stage === 6 ? 'classic' : 'default'} onLayout={event => setViewportHeight(event.nativeEvent.layout.height)} scrollEventThrottle={32} onScroll={event => setCompactHeader(event.nativeEvent.contentOffset.y >= lessonScrollOffset(contentOffsetRef.current, Dimensions.get('window').width, stage === 6 ? 'classic' : 'default') - COMPACT_HEADER_HEIGHT - 2)} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <FitScrollView ref={lessonScrollRef} variant={stage === 6 ? 'classic' : 'default'} onLayout={event => setViewportHeight(event.nativeEvent.layout.height)} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
       <View onLayout={event => { const h = event.nativeEvent.layout.height; contentOffsetRef.current = h; setHeaderSpacer(Math.round(h)); }}>
       <View style={styles.brandRow}><MiloGlobeHeadphoneMark size={48} /><Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color="#4F438D" strokeWidth={2.4} /></Pressable></View>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
@@ -503,7 +500,6 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           </Pressable>
         </View>
       </View>
-      <LessonCompactHeader visible={compactHeader} title={lesson.title} stageLabel={stages[stage].labelFa} stageIndex={stage} stageCount={stages.length} onBack={() => router.back()} />
       <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(lessons, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} dueReviews={celebration?.dueReviews ?? 0} onReview={() => { const go = celebration?.review; setCelebration(null); go?.(); }} levelFinished={celebration?.levelFinished ? { ...celebration.levelFinished, onStart: () => { const go = celebration.levelFinished!.onStart; setCelebration(null); go(); } } : undefined} />
     </View>
   );
