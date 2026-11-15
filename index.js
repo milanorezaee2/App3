@@ -125,6 +125,24 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
           background: #F8F6FB !important;
           min-height: 100% !important;
         }
+        /* Portals (react-native-web <Modal>, sheets) are appended to <body>, outside #root, so they would cover the
+           whole browser window instead of the phone. Pin them onto the frame and make them the containing block for
+           their position:fixed children (transform does that). */
+        html:not(.arena-frame-disabled):not(.arena-embed-host) body > div:not(#root) {
+          position: fixed !important;
+          top: 28px !important;
+          left: calc(50% - 180px) !important;
+          right: auto !important;
+          bottom: auto !important;
+          width: 360px !important;
+          height: 800px !important;
+          overflow: hidden !important;
+          border-radius: 48px !important;
+          transform: translateZ(0) !important;
+          z-index: 9000 !important;
+          pointer-events: none;
+        }
+        html:not(.arena-frame-disabled):not(.arena-embed-host) body > div:not(#root) > * { pointer-events: auto; }
         /* Subtle label below frame */
         html:not(.arena-frame-disabled) body::after {
           content: 'پیش‌نمایش موبایل • 360 × 800 · xhdpi 720×1600';
