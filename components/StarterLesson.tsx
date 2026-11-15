@@ -22,7 +22,9 @@ import { isStarterBridgeLanguage, starterBridgeRulesForLesson } from '@/lib/lang
 import SpeakDrill, { type SpeakDrillResult } from '@/components/SpeakDrill';
 import { saveLessonOutcome, weakSpokenSentences } from '@/lib/lessonOutcomes';
 import { autoRead } from '@/lib/autoRead';
-import StarterB1Production from '@/components/StarterB1Production';
+import ReadingFirstBlock from '@/components/ReadingFirstBlock';
+import ProductionTask from '@/components/ProductionTask';
+import RevealText from '@/components/RevealText';
 import {b1Production} from '@/lib/languages/b1Production';
 import { A1_SKILLS } from '@/lib/languages/a1Skills';
 import { A2_FIRST_SKILLS } from '@/lib/languages/a2FirstLessons';
@@ -361,6 +363,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
           <View style={styles.bigIcon}><Sparkles size={34} color={Palette.warning} /></View>
           <Text style={styles.stageTitle}>{lesson.title}</Text>
           <Text style={styles.situation}>{lesson.situation}</Text>
+          {lesson.levelId >= 3 ? <ReadingFirstBlock lessonId={lesson.id} lines={starterDisplayDialogue(lesson)} onSpeak={text => speak(text)} foreignStyle={styles.practiceForeign} accent={Palette.primary} /> : null}
           {teachingNote ? <View style={styles.noteCard}><Text style={styles.noteTitle}>نکتهٔ این زبان به فارسی</Text><Text style={styles.noteText}>{teachingNote}</Text></View> : null}
         </View>}
 
@@ -371,7 +374,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
             <Text style={styles.targetSentence}>{current.text}</Text>
             <Text style={styles.pronunciation}>{starterDisplayPronunciation(current)}</Text>
             <View style={styles.divider} />
-            <Text keepColor style={styles.persian}>{current.fa}</Text>
+            {lesson.levelId >= 3 ? <RevealText text={current.fa} style={styles.persian} resetKey={current.id} /> : <Text keepColor style={styles.persian}>{current.fa}</Text>}
             {currentPattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternText}>{currentPattern}</Text></View> : null}
           </View>
           {bridgeLanguage ? <PersianBridgeCard sentence={current} language={bridgeLanguage} /> : null}
@@ -456,8 +459,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
             {showHint && <Text style={styles.stageDesc}>نقش خود را بگویید، سپس نمونه را بشنوید.</Text>}
             <LanguageDialoguePractice key={lesson.id} dialogue={starterDisplayDialogue(lesson)} onSpeak={speak} languageLabel={course.name} locale={course.locale} branchPool={lesson.sentences} productive defaultMode={modeForLevel(lesson.levelId)} />
             {readingTask && <StarterA1Skill key={`${lesson.id}-reading`} task={readingTask} onSpeak={speak} />}
-            {lesson.levelId === 3 && b1Production(course.id,lesson.id) && <StarterB1Production key={`${lesson.id}-production`} prompt={b1Production(course.id,lesson.id)!} lesson={lesson} onSpeak={speak} />}
-            {lesson.levelId === 4 && b2Production(course.id,lesson.id) && <StarterB1Production key={`${lesson.id}-production`} prompt={b2Production(course.id,lesson.id)!} lesson={lesson} onSpeak={speak} />}
+            {lesson.levelId >= 3 ? <ProductionTask key={`${lesson.id}-production`} source={lesson} explicit={lesson.levelId === 3 ? b1Production(course.id, lesson.id) : lesson.levelId === 4 ? b2Production(course.id, lesson.id) : undefined} examples={lesson.sentences} onSpeak={text => speak(text)} foreignStyle={styles.practiceForeign} accent={Palette.primary} /> : null}
           </>}
         </View>}
 

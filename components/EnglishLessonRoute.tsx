@@ -22,6 +22,9 @@ import {
   useAudioRecorderState,
 } from 'expo-audio';
 import { Check, ChevronLeft, Headphones, MessageCircle, Mic2, RefreshCw, RotateCcw, Sparkles, Square, Volume2 } from 'lucide-react-native';
+import ReadingFirstBlock from '@/components/ReadingFirstBlock';
+import ProductionTask from '@/components/ProductionTask';
+import RevealText from '@/components/RevealText';
 import { COURSE_LEVELS, getSentenceLesson, SENTENCE_LESSONS } from '@/lib/courseContent';
 import { auditLessonsFromEnglish, auditLessonsFromLearning, courseReadiness, } from '@/lib/content/courseAudit';
 import { bandReadinessForLevel } from '@/lib/content/readiness';
@@ -62,7 +65,7 @@ import { B2_UPPER_INTERMEDIATE_UNITS } from '@/lib/courseContentB2UpperIntermedi
 import { C1_ADVANCED_UNITS } from '@/lib/courseContentC1Advanced';
 import { C1_TOPIC_PRACTICE, C1_SCENARIOS, C1_APPLICATION_PRACTICE } from '@/lib/englishC1Practice';
 import { C1_ADDITIONAL_APPLICATION } from '@/lib/englishC1AppliedAssessment';
-import { B2_GUIDANCE, B2_PRODUCTION, B2_PRODUCTION_CHECKLIST } from '@/lib/englishB2Practice';
+import { B2_GUIDANCE, B2_PRODUCTION } from '@/lib/englishB2Practice';
 import { A2_FOUNDATION_LESSONS } from '@/lib/courseContentA2Foundation';
 
 const stages = ENGLISH_ENGINE_STEPS;
@@ -417,6 +420,7 @@ export default function SentenceLessonScreen() {
             <View style={styles.bigIcon}><Sparkles size={34} color={Colors.accent[400]} /></View>
             <Text style={styles.stageTitle}>{lesson.title}</Text>
             <Text style={styles.situation}>{lesson.situation}</Text>
+            {lesson.levelId >= 3 ? <ReadingFirstBlock lessonId={lesson.id} lines={lesson.dialogue.map(line => ({ speaker: line.speaker === 'learner' ? 'You' : 'Partner', text: line.text, fa: line.fa }))} onSpeak={text => speak(text)} foreignStyle={styles.practiceForeign} accent={Colors.primary[500]} /> : null}
             {lessonTopics && <View style={styles.promiseCard}>
               <Text style={styles.promiseTitle}>موضوع‌های این درس</Text>
               {lessonTopics.map(topic => <Text key={topic} style={styles.promiseText}>• {topic}</Text>)}
@@ -434,7 +438,7 @@ export default function SentenceLessonScreen() {
               <Text style={styles.english}>{current.en}</Text>
               <Text style={[styles.pronunciation,current.pronunciation.startsWith('/ ')&&{fontFamily: 'Times New Roman',textAlign:'left',writingDirection:'ltr'}]}>{current.pronunciation}</Text>
               <View style={styles.divider} />
-              <Text keepColor style={styles.persian}>{current.fa}</Text>
+              {lesson.levelId >= 3 ? <RevealText text={current.fa} style={styles.persian} resetKey={current.id} /> : <Text keepColor style={styles.persian}>{current.fa}</Text>}
               {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternEnglish}>{current.pattern}</Text></View> : null}
             </View>
             <EnglishSpeechRateControls onPlay={rate => speak(current.en, rate)} />
@@ -538,12 +542,7 @@ export default function SentenceLessonScreen() {
             {lesson.c1Section && <EnglishB2Scenario key={lesson.id} lessonId={lesson.id} speak={speak} scenario={C1_SCENARIOS[lesson.id]} />}
             {lesson.c1Section && <EnglishC1ExtendedModel key={`${lesson.id}-extended`} lessonId={lesson.id} speak={speak} />}
             {lesson.b2Section && <EnglishB2Scenario key={lesson.id} lessonId={lesson.id} speak={speak} />}
-            {!!B2_PRODUCTION[lesson.id] && <View style={styles.promiseCard}>
-              <Text style={styles.promiseTitle}>تمرین تولید آزاد · اختیاری</Text>
-              <Text style={styles.promiseText}>{B2_PRODUCTION[lesson.id]}</Text>
-              <Text style={styles.promiseText}>{B2_PRODUCTION_CHECKLIST}</Text>
-              <Text style={styles.promiseText}>این فعالیت خودکار تصحیح یا ذخیره نمی‌شود و شرط پایان درس نیست.</Text>
-            </View>}
+            {lesson.levelId >= 3 ? <ProductionTask key={`${lesson.id}-production`} source={lesson} explicit={B2_PRODUCTION[lesson.id]} examples={lesson.sentences.map(sentence => ({ text: sentence.en, fa: sentence.fa }))} onSpeak={text => speak(text)} foreignStyle={styles.practiceForeign} accent={Colors.primary[500]} /> : null}
           </View>
         )}
 
