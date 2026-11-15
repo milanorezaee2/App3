@@ -1,0 +1,2827 @@
+{
+ "schema": 1,
+ "language": "fr",
+ "band": "A2",
+ "version": 6,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "fr-a2-001",
+   "text": "J'ai le même sac que toi.",
+   "fa": "من همان کیف تو را دارم.",
+   "pattern": "J'ai le même <nom> que <pers.>.",
+   "targetWords": [
+    "même"
+   ]
+  },
+  {
+   "id": "fr-a2-002",
+   "text": "Il travaille même le dimanche.",
+   "fa": "او حتی یکشنبه‌ها هم کار می‌کند.",
+   "pattern": "<pers.> <verbe> même <temps>.",
+   "targetWords": [
+    "même"
+   ]
+  },
+  {
+   "id": "fr-a2-003",
+   "text": "On y va quand même.",
+   "fa": "با این حال می‌رویم.",
+   "pattern": "<phrase> quand même.",
+   "targetWords": [
+    "même"
+   ]
+  },
+  {
+   "id": "fr-a2-004",
+   "text": "Ils ont deux enfants.",
+   "fa": "آن‌ها دو بچه دارند.",
+   "pattern": "Ils ont <nom>.",
+   "targetWords": [
+    "ont"
+   ]
+  },
+  {
+   "id": "fr-a2-005",
+   "text": "Mes parents ont acheté une maison.",
+   "fa": "پدر و مادرم خانه‌ای خریدند.",
+   "pattern": "<pers.> ont <participe> <nom>.",
+   "targetWords": [
+    "ont"
+   ]
+  },
+  {
+   "id": "fr-a2-006",
+   "text": "Elle cherche ses clés.",
+   "fa": "او دنبال کلیدهایش می‌گردد.",
+   "pattern": "Elle cherche ses <pl.>.",
+   "targetWords": [
+    "ses"
+   ]
+  },
+  {
+   "id": "fr-a2-007",
+   "text": "Il parle souvent de ses voyages.",
+   "fa": "او زیاد از سفرهایش حرف می‌زند.",
+   "pattern": "Il parle de ses <pl.>.",
+   "targetWords": [
+    "ses"
+   ]
+  },
+  {
+   "id": "fr-a2-008",
+   "text": "Je leur ai téléphoné hier.",
+   "fa": "دیروز به آن‌ها زنگ زدم.",
+   "pattern": "Je leur ai <participe> <temps>.",
+   "targetWords": [
+    "leur"
+   ]
+  },
+  {
+   "id": "fr-a2-009",
+   "text": "Leur maison est près de la gare.",
+   "fa": "خانه‌شان نزدیک ایستگاه است.",
+   "pattern": "Leur <nom> est <lieu>.",
+   "targetWords": [
+    "leur"
+   ]
+  },
+  {
+   "id": "fr-a2-010",
+   "text": "Il y avait beaucoup de monde.",
+   "fa": "جمعیت زیادی بود.",
+   "pattern": "Il y avait <quantité>.",
+   "targetWords": [
+    "avait"
+   ]
+  },
+  {
+   "id": "fr-a2-011",
+   "text": "Elle avait dix ans en 2010.",
+   "fa": "او در سال ۲۰۱۰ ده ساله بود.",
+   "pattern": "<pers.> avait <âge> en <année>.",
+   "targetWords": [
+    "avait"
+   ]
+  },
+  {
+   "id": "fr-a2-012",
+   "text": "Je n'ai rien compris.",
+   "fa": "هیچ چیز نفهمیدم.",
+   "pattern": "Je n'ai rien <participe>.",
+   "targetWords": [
+    "rien"
+   ]
+  },
+  {
+   "id": "fr-a2-013",
+   "text": "Ce n'est rien, ne t'inquiète pas.",
+   "fa": "چیزی نیست، نگران نباش.",
+   "pattern": "Ce n'est rien, <phrase>.",
+   "targetWords": [
+    "rien"
+   ]
+  },
+  {
+   "id": "fr-a2-014",
+   "text": "Tout le monde est là ?",
+   "fa": "همه هستند؟",
+   "pattern": "Tout le monde <verbe> ?",
+   "targetWords": [
+    "monde"
+   ]
+  },
+  {
+   "id": "fr-a2-015",
+   "text": "Je voudrais voir le monde.",
+   "fa": "دوست دارم دنیا را ببینم.",
+   "pattern": "Je voudrais <verbe> le monde.",
+   "targetWords": [
+    "monde"
+   ]
+  },
+  {
+   "id": "fr-a2-016",
+   "text": "Il est toujours en retard.",
+   "fa": "او همیشه دیر می‌کند.",
+   "pattern": "<pers.> est toujours <adj.>.",
+   "targetWords": [
+    "toujours"
+   ]
+  },
+  {
+   "id": "fr-a2-017",
+   "text": "Tu habites toujours à Lyon ?",
+   "fa": "هنوز در لیون زندگی می‌کنی؟",
+   "pattern": "Tu <verbe> toujours <lieu> ?",
+   "targetWords": [
+    "toujours"
+   ]
+  },
+  {
+   "id": "fr-a2-018",
+   "text": "Je suis contre cette idée.",
+   "fa": "من با این ایده مخالفم.",
+   "pattern": "Je suis contre <nom>.",
+   "targetWords": [
+    "contre"
+   ]
+  },
+  {
+   "id": "fr-a2-019",
+   "text": "Mets la table contre le mur.",
+   "fa": "میز را بچسبان به دیوار.",
+   "pattern": "Mets <nom> contre <nom>.",
+   "targetWords": [
+    "contre"
+   ]
+  },
+  {
+   "id": "fr-a2-020",
+   "text": "Je ne suis jamais allé à Paris.",
+   "fa": "هیچ‌وقت پاریس نرفته‌ام.",
+   "pattern": "Je ne suis jamais allé <lieu>.",
+   "targetWords": [
+    "jamais"
+   ]
+  },
+  {
+   "id": "fr-a2-021",
+   "text": "Il ne dit jamais merci.",
+   "fa": "او هیچ‌وقت تشکر نمی‌کند.",
+   "pattern": "<pers.> ne <verbe> jamais <nom>.",
+   "targetWords": [
+    "jamais"
+   ]
+  },
+  {
+   "id": "fr-a2-022",
+   "text": "La vie est chère à Paris.",
+   "fa": "زندگی در پاریس گران است.",
+   "pattern": "La vie est <adj.> <lieu>.",
+   "targetWords": [
+    "vie"
+   ]
+  },
+  {
+   "id": "fr-a2-023",
+   "text": "C'est la vie !",
+   "fa": "زندگی همین است!",
+   "pattern": "C'est la vie !",
+   "targetWords": [
+    "vie"
+   ]
+  },
+  {
+   "id": "fr-a2-024",
+   "text": "C'est le film dont je t'ai parlé.",
+   "fa": "این همان فیلمی است که برایت گفتم.",
+   "pattern": "C'est <nom> dont <phrase>.",
+   "targetWords": [
+    "dont"
+   ]
+  },
+  {
+   "id": "fr-a2-025",
+   "text": "Soit tu viens, soit tu restes.",
+   "fa": "یا می‌آیی، یا می‌مانی.",
+   "pattern": "Soit <A>, soit <B>.",
+   "targetWords": [
+    "soit"
+   ]
+  },
+  {
+   "id": "fr-a2-026",
+   "text": "J'ai travaillé toute la journée.",
+   "fa": "تمام روز کار کردم.",
+   "pattern": "J'ai <participe> toute la <temps>.",
+   "targetWords": [
+    "toute"
+   ]
+  },
+  {
+   "id": "fr-a2-027",
+   "text": "Toute la famille vient dimanche.",
+   "fa": "کل خانواده یکشنبه می‌آیند.",
+   "pattern": "Toute la <groupe> <verbe>.",
+   "targetWords": [
+    "toute"
+   ]
+  },
+  {
+   "id": "fr-a2-028",
+   "text": "Je rentre chez moi.",
+   "fa": "به خانه‌ام برمی‌گردم.",
+   "pattern": "Je rentre chez <pers.>.",
+   "targetWords": [
+    "chez"
+   ]
+  },
+  {
+   "id": "fr-a2-029",
+   "text": "On dîne chez mes parents ce soir.",
+   "fa": "امشب پیش پدر و مادرم شام می‌خوریم.",
+   "pattern": "On <verbe> chez <pers.> <temps>.",
+   "targetWords": [
+    "chez"
+   ]
+  },
+  {
+   "id": "fr-a2-030",
+   "text": "J'ai rendez-vous chez le médecin.",
+   "fa": "پیش دکتر وقت دارم.",
+   "pattern": "J'ai rendez-vous chez <pers.>.",
+   "targetWords": [
+    "chez"
+   ]
+  },
+  {
+   "id": "fr-a2-031",
+   "text": "Les gens ici sont très gentils.",
+   "fa": "مردم اینجا خیلی مهربان‌اند.",
+   "pattern": "Les gens <lieu> sont <adj.>.",
+   "targetWords": [
+    "gens"
+   ]
+  },
+  {
+   "id": "fr-a2-032",
+   "text": "Il y a trop de gens dans le bus.",
+   "fa": "آدم زیادی توی اتوبوس است.",
+   "pattern": "Il y a trop de gens <lieu>.",
+   "targetWords": [
+    "gens"
+   ]
+  },
+  {
+   "id": "fr-a2-033",
+   "text": "C'est juste à côté de la banque.",
+   "fa": "درست کنار بانک است.",
+   "pattern": "C'est juste <lieu>.",
+   "targetWords": [
+    "juste"
+   ]
+  },
+  {
+   "id": "fr-a2-034",
+   "text": "Attends juste une minute.",
+   "fa": "فقط یک دقیقه صبر کن.",
+   "pattern": "<impératif> juste <temps>.",
+   "targetWords": [
+    "juste"
+   ]
+  },
+  {
+   "id": "fr-a2-035",
+   "text": "C'était vraiment délicieux.",
+   "fa": "واقعاً خوشمزه بود.",
+   "pattern": "C'était vraiment <adj.>.",
+   "targetWords": [
+    "vraiment"
+   ]
+  },
+  {
+   "id": "fr-a2-036",
+   "text": "Tu veux vraiment partir ?",
+   "fa": "واقعاً می‌خواهی بروی؟",
+   "pattern": "Tu veux vraiment <verbe> ?",
+   "targetWords": [
+    "vraiment"
+   ]
+  },
+  {
+   "id": "fr-a2-037",
+   "text": "Ainsi, nous partons demain matin.",
+   "fa": "پس فردا صبح راه می‌افتیم.",
+   "pattern": "Ainsi, <phrase>.",
+   "targetWords": [
+    "ainsi"
+   ]
+  },
+  {
+   "id": "fr-a2-038",
+   "text": "J'ai quelques questions.",
+   "fa": "چند سؤال دارم.",
+   "pattern": "J'ai quelques <pl.>.",
+   "targetWords": [
+    "quelques"
+   ]
+  },
+  {
+   "id": "fr-a2-039",
+   "text": "On reste quelques jours à Nice.",
+   "fa": "چند روز در نیس می‌مانیم.",
+   "pattern": "On reste quelques <temps> <lieu>.",
+   "targetWords": [
+    "quelques"
+   ]
+  },
+  {
+   "id": "fr-a2-040",
+   "text": "Cela ne me plaît pas.",
+   "fa": "این خوشایندم نیست.",
+   "pattern": "Cela ne <pers.> <verbe> pas.",
+   "targetWords": [
+    "cela"
+   ]
+  },
+  {
+   "id": "fr-a2-041",
+   "text": "Après cela, on ira au café.",
+   "fa": "بعد از آن به کافه می‌رویم.",
+   "pattern": "Après cela, <phrase>.",
+   "targetWords": [
+    "cela"
+   ]
+  },
+  {
+   "id": "fr-a2-042",
+   "text": "Cet homme est mon voisin.",
+   "fa": "این مرد همسایهٔ من است.",
+   "pattern": "Cet homme est <nom>.",
+   "targetWords": [
+    "homme"
+   ]
+  },
+  {
+   "id": "fr-a2-043",
+   "text": "Un homme attend devant la porte.",
+   "fa": "مردی جلوی در منتظر است.",
+   "pattern": "Un homme <verbe> <lieu>.",
+   "targetWords": [
+    "homme"
+   ]
+  },
+  {
+   "id": "fr-a2-044",
+   "text": "Toutes les places sont prises.",
+   "fa": "همهٔ جاها پر است.",
+   "pattern": "Toutes les <pl.> sont <adj.>.",
+   "targetWords": [
+    "toutes"
+   ]
+  },
+  {
+   "id": "fr-a2-045",
+   "text": "Je connais toutes les rues du quartier.",
+   "fa": "همهٔ خیابان‌های محله را می‌شناسم.",
+   "pattern": "Je connais toutes les <pl.>.",
+   "targetWords": [
+    "toutes"
+   ]
+  },
+  {
+   "id": "fr-a2-046",
+   "text": "Tu as vu mes lunettes ?",
+   "fa": "عینکم را دیده‌ای؟",
+   "pattern": "Tu as vu <nom> ?",
+   "targetWords": [
+    "vu"
+   ]
+  },
+  {
+   "id": "fr-a2-047",
+   "text": "Je l'ai vu hier au marché.",
+   "fa": "دیروز او را در بازار دیدم.",
+   "pattern": "Je l'ai vu <temps> <lieu>.",
+   "targetWords": [
+    "vu"
+   ]
+  },
+  {
+   "id": "fr-a2-048",
+   "text": "En tout cas, je viendrai.",
+   "fa": "در هر صورت می‌آیم.",
+   "pattern": "En tout cas, <phrase>.",
+   "targetWords": [
+    "cas"
+   ]
+  },
+  {
+   "id": "fr-a2-049",
+   "text": "Dans ce cas, prenons un taxi.",
+   "fa": "در این صورت تاکسی بگیریم.",
+   "pattern": "Dans ce cas, <phrase>.",
+   "targetWords": [
+    "cas"
+   ]
+  },
+  {
+   "id": "fr-a2-050",
+   "text": "On doit partir à huit heures.",
+   "fa": "باید ساعت هشت راه بیفتیم.",
+   "pattern": "On doit <verbe> <temps>.",
+   "targetWords": [
+    "doit"
+   ]
+  },
+  {
+   "id": "fr-a2-051",
+   "text": "Il doit être chez lui.",
+   "fa": "او باید خانه باشد.",
+   "pattern": "<pers.> doit être <lieu>.",
+   "targetWords": [
+    "doit"
+   ]
+  },
+  {
+   "id": "fr-a2-052",
+   "text": "Je reste ici car il pleut.",
+   "fa": "اینجا می‌مانم چون باران می‌بارد.",
+   "pattern": "<phrase> car <raison>.",
+   "targetWords": [
+    "car"
+   ]
+  },
+  {
+   "id": "fr-a2-053",
+   "text": "À la fin du film, tout le monde pleure.",
+   "fa": "آخر فیلم همه گریه می‌کنند.",
+   "pattern": "À la fin de <nom>, <phrase>.",
+   "targetWords": [
+    "fin"
+   ]
+  },
+  {
+   "id": "fr-a2-054",
+   "text": "Fin mai, on part en vacances.",
+   "fa": "اواخر مه به تعطیلات می‌رویم.",
+   "pattern": "Fin <mois>, <phrase>.",
+   "targetWords": [
+    "fin"
+   ]
+  },
+  {
+   "id": "fr-a2-055",
+   "text": "J'ai dormi pendant deux heures.",
+   "fa": "دو ساعت خوابیدم.",
+   "pattern": "J'ai <participe> pendant <durée>.",
+   "targetWords": [
+    "pendant"
+   ]
+  },
+  {
+   "id": "fr-a2-056",
+   "text": "Pendant les vacances, je lis beaucoup.",
+   "fa": "در تعطیلات زیاد کتاب می‌خوانم.",
+   "pattern": "Pendant <temps>, <phrase>.",
+   "targetWords": [
+    "pendant"
+   ]
+  },
+  {
+   "id": "fr-a2-057",
+   "text": "Ceux qui veulent venir, levez la main.",
+   "fa": "کسانی که می‌خواهند بیایند دست بلند کنند.",
+   "pattern": "Ceux qui <verbe>, <impératif>.",
+   "targetWords": [
+    "ceux"
+   ]
+  },
+  {
+   "id": "fr-a2-058",
+   "text": "J'ai appelé plusieurs fois.",
+   "fa": "چند بار زنگ زدم.",
+   "pattern": "J'ai <participe> plusieurs fois.",
+   "targetWords": [
+    "plusieurs"
+   ]
+  },
+  {
+   "id": "fr-a2-059",
+   "text": "Il parle plusieurs langues.",
+   "fa": "او چند زبان بلد است.",
+   "pattern": "<pers.> parle plusieurs langues.",
+   "targetWords": [
+    "plusieurs"
+   ]
+  },
+  {
+   "id": "fr-a2-060",
+   "text": "Je rentre vers sept heures.",
+   "fa": "حدود ساعت هفت برمی‌گردم.",
+   "pattern": "Je rentre vers <heure>.",
+   "targetWords": [
+    "vers"
+   ]
+  },
+  {
+   "id": "fr-a2-061",
+   "text": "Il marche vers la gare.",
+   "fa": "او به سمت ایستگاه می‌رود.",
+   "pattern": "<pers.> marche vers <lieu>.",
+   "targetWords": [
+    "vers"
+   ]
+  },
+  {
+   "id": "fr-a2-062",
+   "text": "Raconte-moi une histoire.",
+   "fa": "برایم یک قصه بگو.",
+   "pattern": "Raconte-moi <nom>.",
+   "targetWords": [
+    "histoire"
+   ]
+  },
+  {
+   "id": "fr-a2-063",
+   "text": "C'est une longue histoire.",
+   "fa": "داستانش طولانی است.",
+   "pattern": "C'est une <adj.> histoire.",
+   "targetWords": [
+    "histoire"
+   ]
+  },
+  {
+   "id": "fr-a2-064",
+   "text": "Aujourd'hui, il fait très chaud.",
+   "fa": "امروز هوا خیلی گرم است.",
+   "pattern": "Aujourd'hui, <phrase>.",
+   "targetWords": [
+    "aujourd'hui"
+   ]
+  },
+  {
+   "id": "fr-a2-065",
+   "text": "Je ne travaille pas aujourd'hui.",
+   "fa": "امروز کار نمی‌کنم.",
+   "pattern": "Je ne <verbe> pas aujourd'hui.",
+   "targetWords": [
+    "aujourd'hui"
+   ]
+  },
+  {
+   "id": "fr-a2-066",
+   "text": "Je paie et tu fais le compte.",
+   "fa": "من حساب می‌کنم، تو جمع بزن.",
+   "pattern": "<phrase> et <pers.> fais le compte.",
+   "targetWords": [
+    "compte"
+   ]
+  },
+  {
+   "id": "fr-a2-067",
+   "text": "J'ai ouvert un compte à la banque.",
+   "fa": "در بانک حساب باز کردم.",
+   "pattern": "J'ai ouvert un compte <lieu>.",
+   "targetWords": [
+    "compte"
+   ]
+  },
+  {
+   "id": "fr-a2-068",
+   "text": "Sa femme est médecin.",
+   "fa": "همسرش پزشک است.",
+   "pattern": "Sa femme est <métier>.",
+   "targetWords": [
+    "femme"
+   ]
+  },
+  {
+   "id": "fr-a2-069",
+   "text": "Une femme m'a demandé le chemin.",
+   "fa": "زنی از من آدرس پرسید.",
+   "pattern": "Une femme m'a <participe> <nom>.",
+   "targetWords": [
+    "femme"
+   ]
+  },
+  {
+   "id": "fr-a2-070",
+   "text": "Je prends également un café.",
+   "fa": "یک قهوه هم می‌گیرم.",
+   "pattern": "Je prends également <nom>.",
+   "targetWords": [
+    "également"
+   ]
+  },
+  {
+   "id": "fr-a2-071",
+   "text": "Je ne suis pas d'accord sur ce point.",
+   "fa": "در این مورد موافق نیستم.",
+   "pattern": "Je ne suis pas d'accord sur ce point.",
+   "targetWords": [
+    "point"
+   ]
+  },
+  {
+   "id": "fr-a2-072",
+   "text": "On se retrouve au point de rendez-vous.",
+   "fa": "در محل قرار همدیگر را می‌بینیم.",
+   "pattern": "On se retrouve au point de <nom>.",
+   "targetWords": [
+    "point"
+   ]
+  },
+  {
+   "id": "fr-a2-073",
+   "text": "Je vis seul.",
+   "fa": "تنها زندگی می‌کنم.",
+   "pattern": "Je vis seul.",
+   "targetWords": [
+    "seul"
+   ]
+  },
+  {
+   "id": "fr-a2-074",
+   "text": "Il est venu tout seul.",
+   "fa": "او کاملاً تنها آمد.",
+   "pattern": "<pers.> est venu tout seul.",
+   "targetWords": [
+    "seul"
+   ]
+  },
+  {
+   "id": "fr-a2-075",
+   "text": "Je pars avec eux.",
+   "fa": "با آن‌ها می‌روم.",
+   "pattern": "Je pars avec eux.",
+   "targetWords": [
+    "eux"
+   ]
+  },
+  {
+   "id": "fr-a2-076",
+   "text": "C'est chez eux que l'on mange.",
+   "fa": "پیش آن‌ها غذا می‌خوریم.",
+   "pattern": "C'est chez eux que <phrase>.",
+   "targetWords": [
+    "eux"
+   ]
+  },
+  {
+   "id": "fr-a2-077",
+   "text": "La fête a lieu samedi.",
+   "fa": "جشن شنبه برگزار می‌شود.",
+   "pattern": "<événement> a lieu <temps>.",
+   "targetWords": [
+    "lieu"
+   ]
+  },
+  {
+   "id": "fr-a2-078",
+   "text": "Au lieu de sortir, je lis.",
+   "fa": "به جای بیرون رفتن کتاب می‌خوانم.",
+   "pattern": "Au lieu de <verbe>, <phrase>.",
+   "targetWords": [
+    "lieu"
+   ]
+  },
+  {
+   "id": "fr-a2-079",
+   "text": "C'est vrai ?",
+   "fa": "راست است؟",
+   "pattern": "C'est vrai ?",
+   "targetWords": [
+    "vrai"
+   ]
+  },
+  {
+   "id": "fr-a2-080",
+   "text": "Ce n'est pas vrai !",
+   "fa": "راست نیست!",
+   "pattern": "Ce n'est pas vrai !",
+   "targetWords": [
+    "vrai"
+   ]
+  },
+  {
+   "id": "fr-a2-081",
+   "text": "Selon lui, c'est trop cher.",
+   "fa": "به نظر او خیلی گران است.",
+   "pattern": "Selon <pers.>, <phrase>.",
+   "targetWords": [
+    "selon"
+   ]
+  },
+  {
+   "id": "fr-a2-082",
+   "text": "Tout à coup, il a commencé à pleuvoir.",
+   "fa": "ناگهان باران شروع شد.",
+   "pattern": "Tout à coup, <phrase>.",
+   "targetWords": [
+    "coup"
+   ]
+  },
+  {
+   "id": "fr-a2-083",
+   "text": "Donne-moi un coup de main.",
+   "fa": "یک کمکی به من بکن.",
+   "pattern": "Donne-moi un coup de main.",
+   "targetWords": [
+    "coup"
+   ]
+  },
+  {
+   "id": "fr-a2-084",
+   "text": "Je vais mettre une veste.",
+   "fa": "ژاکت می‌پوشم.",
+   "pattern": "Je vais mettre <vêtement>.",
+   "targetWords": [
+    "mettre"
+   ]
+  },
+  {
+   "id": "fr-a2-085",
+   "text": "Où est-ce que je peux mettre mon sac ?",
+   "fa": "کیفم را کجا بگذارم؟",
+   "pattern": "Où est-ce que je peux mettre <nom> ?",
+   "targetWords": [
+    "mettre"
+   ]
+  },
+  {
+   "id": "fr-a2-086",
+   "text": "Ce serait super !",
+   "fa": "عالی می‌شد!",
+   "pattern": "Ce serait <adj.> !",
+   "targetWords": [
+    "serait"
+   ]
+  },
+  {
+   "id": "fr-a2-087",
+   "text": "Il serait là vers midi.",
+   "fa": "او حدود ظهر می‌رسد.",
+   "pattern": "<pers.> serait <lieu> vers <heure>.",
+   "targetWords": [
+    "serait"
+   ]
+  },
+  {
+   "id": "fr-a2-088",
+   "text": "Il y a quelque chose à manger ?",
+   "fa": "چیزی برای خوردن هست؟",
+   "pattern": "Il y a quelque chose à <verbe> ?",
+   "targetWords": [
+    "quelque"
+   ]
+  },
+  {
+   "id": "fr-a2-089",
+   "text": "On y va quelque part ce week-end ?",
+   "fa": "آخر هفته جایی برویم؟",
+   "pattern": "On va quelque part <temps> ?",
+   "targetWords": [
+    "quelque"
+   ]
+  },
+  {
+   "id": "fr-a2-090",
+   "text": "Il y a tant de choses à voir.",
+   "fa": "این‌قدر چیز برای دیدن هست.",
+   "pattern": "Il y a tant de <pl.> à <verbe>.",
+   "targetWords": [
+    "tant"
+   ]
+  },
+  {
+   "id": "fr-a2-091",
+   "text": "Tant mieux pour toi !",
+   "fa": "چه بهتر برای تو!",
+   "pattern": "Tant mieux pour <pers.> !",
+   "targetWords": [
+    "tant"
+   ]
+  },
+  {
+   "id": "fr-a2-092",
+   "text": "J'avais faim ce matin.",
+   "fa": "امروز صبح گرسنه بودم.",
+   "pattern": "J'avais <sensation> <temps>.",
+   "targetWords": [
+    "avais"
+   ]
+  },
+  {
+   "id": "fr-a2-093",
+   "text": "Tu avais raison.",
+   "fa": "حق با تو بود.",
+   "pattern": "Tu avais raison.",
+   "targetWords": [
+    "avais"
+   ]
+  },
+  {
+   "id": "fr-a2-094",
+   "text": "On voyage en groupe.",
+   "fa": "گروهی سفر می‌کنیم.",
+   "pattern": "On <verbe> en groupe.",
+   "targetWords": [
+    "groupe"
+   ]
+  },
+  {
+   "id": "fr-a2-095",
+   "text": "Ils étaient très contents.",
+   "fa": "آن‌ها خیلی خوشحال بودند.",
+   "pattern": "Ils étaient <adj.>.",
+   "targetWords": [
+    "étaient"
+   ]
+  },
+  {
+   "id": "fr-a2-096",
+   "text": "Il aurait dû appeler.",
+   "fa": "باید زنگ می‌زد.",
+   "pattern": "<pers.> aurait dû <verbe>.",
+   "targetWords": [
+    "aurait"
+   ]
+  },
+  {
+   "id": "fr-a2-097",
+   "text": "Tout de suite, monsieur.",
+   "fa": "همین الان، آقا.",
+   "pattern": "Tout de suite, <pers.>.",
+   "targetWords": [
+    "suite"
+   ]
+  },
+  {
+   "id": "fr-a2-098",
+   "text": "Il est parti et par la suite, il a écrit.",
+   "fa": "او رفت و بعدش نامه نوشت.",
+   "pattern": "<phrase> et par la suite, <phrase>.",
+   "targetWords": [
+    "suite"
+   ]
+  },
+  {
+   "id": "fr-a2-099",
+   "text": "Quel genre de musique tu aimes ?",
+   "fa": "چه نوع موسیقی‌ای دوست داری؟",
+   "pattern": "Quel genre de <nom> tu aimes ?",
+   "targetWords": [
+    "genre"
+   ]
+  },
+  {
+   "id": "fr-a2-100",
+   "text": "Je veux savoir la vérité.",
+   "fa": "می‌خواهم حقیقت را بدانم.",
+   "pattern": "Je veux savoir <nom>.",
+   "targetWords": [
+    "savoir"
+   ]
+  },
+  {
+   "id": "fr-a2-101",
+   "text": "Tu peux me faire savoir ?",
+   "fa": "می‌توانی به من خبر بدهی؟",
+   "pattern": "Tu peux me faire savoir ?",
+   "targetWords": [
+    "savoir"
+   ]
+  },
+  {
+   "id": "fr-a2-102",
+   "text": "Elle travaille dans une grande société.",
+   "fa": "او در یک شرکت بزرگ کار می‌کند.",
+   "pattern": "<pers.> travaille dans une <adj.> société.",
+   "targetWords": [
+    "société"
+   ]
+  },
+  {
+   "id": "fr-a2-103",
+   "text": "Qu'est-ce qui se passe ?",
+   "fa": "چه خبر شده؟",
+   "pattern": "Qu'est-ce qui se passe ?",
+   "targetWords": [
+    "passe"
+   ]
+  },
+  {
+   "id": "fr-a2-104",
+   "text": "Je passe te voir ce soir.",
+   "fa": "امشب می‌آیم ببینمت.",
+   "pattern": "Je passe <verbe> <temps>.",
+   "targetWords": [
+    "passe"
+   ]
+  },
+  {
+   "id": "fr-a2-105",
+   "text": "Tu as raison.",
+   "fa": "حق با توست.",
+   "pattern": "Tu as raison.",
+   "targetWords": [
+    "raison"
+   ]
+  },
+  {
+   "id": "fr-a2-106",
+   "text": "Pour quelle raison il est absent ?",
+   "fa": "به چه دلیلی غایب است؟",
+   "pattern": "Pour quelle raison <phrase> ?",
+   "targetWords": [
+    "raison"
+   ]
+  },
+  {
+   "id": "fr-a2-107",
+   "text": "D'ailleurs, il est déjà parti.",
+   "fa": "راستی، او دیگر رفته.",
+   "pattern": "D'ailleurs, <phrase>.",
+   "targetWords": [
+    "ailleurs"
+   ]
+  },
+  {
+   "id": "fr-a2-108",
+   "text": "On peut manger ailleurs.",
+   "fa": "می‌توانیم جای دیگری غذا بخوریم.",
+   "pattern": "On peut <verbe> ailleurs.",
+   "targetWords": [
+    "ailleurs"
+   ]
+  },
+  {
+   "id": "fr-a2-109",
+   "text": "Certains magasins ferment à midi.",
+   "fa": "بعضی مغازه‌ها ظهر تعطیل می‌کنند.",
+   "pattern": "Certains <pl.> <verbe>.",
+   "targetWords": [
+    "certains"
+   ]
+  },
+  {
+   "id": "fr-a2-110",
+   "text": "Dis-moi la vérité.",
+   "fa": "راستش را به من بگو.",
+   "pattern": "Dis-moi <nom>.",
+   "targetWords": [
+    "dis"
+   ]
+  },
+  {
+   "id": "fr-a2-111",
+   "text": "Je te dis que c'est fermé.",
+   "fa": "به تو می‌گویم بسته است.",
+   "pattern": "Je te dis que <phrase>.",
+   "targetWords": [
+    "dis"
+   ]
+  },
+  {
+   "id": "fr-a2-112",
+   "text": "On fait un jeu ?",
+   "fa": "بازی کنیم؟",
+   "pattern": "On fait un jeu ?",
+   "targetWords": [
+    "jeu"
+   ]
+  },
+  {
+   "id": "fr-a2-113",
+   "text": "Les enfants aiment ce jeu.",
+   "fa": "بچه‌ها این بازی را دوست دارند.",
+   "pattern": "<pers.> aiment ce jeu.",
+   "targetWords": [
+    "jeu"
+   ]
+  },
+  {
+   "id": "fr-a2-114",
+   "text": "En effet, il fait froid.",
+   "fa": "در واقع، هوا سرد است.",
+   "pattern": "En effet, <phrase>.",
+   "targetWords": [
+    "effet"
+   ]
+  },
+  {
+   "id": "fr-a2-115",
+   "text": "En général, je me lève à sept heures.",
+   "fa": "معمولاً ساعت هفت بیدار می‌شوم.",
+   "pattern": "En général, <phrase>.",
+   "targetWords": [
+    "général"
+   ]
+  },
+  {
+   "id": "fr-a2-116",
+   "text": "Le café est ouvert jusqu'à vingt heures.",
+   "fa": "کافه تا ساعت بیست باز است.",
+   "pattern": "<lieu> est ouvert jusqu'à <heure>.",
+   "targetWords": [
+    "jusqu'à"
+   ]
+  },
+  {
+   "id": "fr-a2-117",
+   "text": "On marche jusqu'à la gare.",
+   "fa": "تا ایستگاه پیاده می‌رویم.",
+   "pattern": "On marche jusqu'à <lieu>.",
+   "targetWords": [
+    "jusqu'à"
+   ]
+  },
+  {
+   "id": "fr-a2-118",
+   "text": "Je n'ai ni le temps ni l'argent.",
+   "fa": "نه وقت دارم نه پول.",
+   "pattern": "Je n'ai ni <A> ni <B>.",
+   "targetWords": [
+    "ni"
+   ]
+  },
+  {
+   "id": "fr-a2-119",
+   "text": "J'aime surtout les fruits.",
+   "fa": "به‌خصوص میوه دوست دارم.",
+   "pattern": "J'aime surtout <nom>.",
+   "targetWords": [
+    "surtout"
+   ]
+  },
+  {
+   "id": "fr-a2-120",
+   "text": "Surtout, prends ton passeport.",
+   "fa": "مهم‌تر از همه پاسپورتت را بردار.",
+   "pattern": "Surtout, <impératif>.",
+   "targetWords": [
+    "surtout"
+   ]
+  },
+  {
+   "id": "fr-a2-121",
+   "text": "Notre équipe a gagné.",
+   "fa": "تیم ما برد.",
+   "pattern": "Notre équipe a <participe>.",
+   "targetWords": [
+    "équipe"
+   ]
+  },
+  {
+   "id": "fr-a2-122",
+   "text": "Les enfants font leurs devoirs.",
+   "fa": "بچه‌ها تکالیفشان را انجام می‌دهند.",
+   "pattern": "<pers.> font <nom>.",
+   "targetWords": [
+    "font"
+   ]
+  },
+  {
+   "id": "fr-a2-123",
+   "text": "Qu'est-ce qu'ils font ce week-end ?",
+   "fa": "آخر هفته چه کار می‌کنند؟",
+   "pattern": "Qu'est-ce qu'ils font <temps> ?",
+   "targetWords": [
+    "font"
+   ]
+  },
+  {
+   "id": "fr-a2-124",
+   "text": "Quel est le nombre de places ?",
+   "fa": "تعداد صندلی‌ها چند تاست؟",
+   "pattern": "Quel est le nombre de <pl.> ?",
+   "targetWords": [
+    "nombre"
+   ]
+  },
+  {
+   "id": "fr-a2-125",
+   "text": "Il reste seulement deux billets.",
+   "fa": "فقط دو بلیت مانده.",
+   "pattern": "Il reste seulement <quantité>.",
+   "targetWords": [
+    "seulement"
+   ]
+  },
+  {
+   "id": "fr-a2-126",
+   "text": "Je parle seulement un peu français.",
+   "fa": "فقط کمی فرانسه حرف می‌زنم.",
+   "pattern": "Je parle seulement un peu <langue>.",
+   "targetWords": [
+    "seulement"
+   ]
+  },
+  {
+   "id": "fr-a2-127",
+   "text": "J'ai réservé sur le site de l'hôtel.",
+   "fa": "از سایت هتل رزرو کردم.",
+   "pattern": "J'ai réservé sur le site de <nom>.",
+   "targetWords": [
+    "site"
+   ]
+  },
+  {
+   "id": "fr-a2-128",
+   "text": "Deux hommes travaillent dans la rue.",
+   "fa": "دو مرد در خیابان کار می‌کنند.",
+   "pattern": "<nombre> hommes <verbe> <lieu>.",
+   "targetWords": [
+    "hommes"
+   ]
+  },
+  {
+   "id": "fr-a2-129",
+   "text": "Les femmes parlent dans la cuisine.",
+   "fa": "خانم‌ها در آشپزخانه صحبت می‌کنند.",
+   "pattern": "Les femmes <verbe> <lieu>.",
+   "targetWords": [
+    "femmes"
+   ]
+  },
+  {
+   "id": "fr-a2-130",
+   "text": "Je vais passer à la poste.",
+   "fa": "سری به اداره پست می‌زنم.",
+   "pattern": "Je vais passer <lieu>.",
+   "targetWords": [
+    "passer"
+   ]
+  },
+  {
+   "id": "fr-a2-131",
+   "text": "Tu peux me passer le sel ?",
+   "fa": "می‌شود نمک را بدهی؟",
+   "pattern": "Tu peux me passer <nom> ?",
+   "targetWords": [
+    "passer"
+   ]
+  },
+  {
+   "id": "fr-a2-132",
+   "text": "Quelqu'un a appelé pour toi.",
+   "fa": "کسی برایت زنگ زد.",
+   "pattern": "Quelqu'un a <participe> <complément>.",
+   "targetWords": [
+    "quelqu'un"
+   ]
+  },
+  {
+   "id": "fr-a2-133",
+   "text": "Il y a quelqu'un ?",
+   "fa": "کسی هست؟",
+   "pattern": "Il y a quelqu'un ?",
+   "targetWords": [
+    "quelqu'un"
+   ]
+  },
+  {
+   "id": "fr-a2-134",
+   "text": "Je n'ai aucun problème.",
+   "fa": "هیچ مشکلی ندارم.",
+   "pattern": "Je n'ai aucun <nom>.",
+   "targetWords": [
+    "aucun"
+   ]
+  },
+  {
+   "id": "fr-a2-135",
+   "text": "Je n'ai aucune idée.",
+   "fa": "هیچ ایده‌ای ندارم.",
+   "pattern": "Je n'ai aucune <nom>.",
+   "targetWords": [
+    "aucune"
+   ]
+  },
+  {
+   "id": "fr-a2-136",
+   "text": "C'est la loi.",
+   "fa": "قانون است.",
+   "pattern": "C'est la loi.",
+   "targetWords": [
+    "loi"
+   ]
+  },
+  {
+   "id": "fr-a2-137",
+   "text": "J'ai pris le train de huit heures.",
+   "fa": "قطار ساعت هشت را گرفتم.",
+   "pattern": "J'ai pris <transport> de <heure>.",
+   "targetWords": [
+    "pris"
+   ]
+  },
+  {
+   "id": "fr-a2-138",
+   "text": "Qui a pris mon stylo ?",
+   "fa": "چه کسی خودکارم را برداشت؟",
+   "pattern": "Qui a pris <nom> ?",
+   "targetWords": [
+    "pris"
+   ]
+  },
+  {
+   "id": "fr-a2-139",
+   "text": "Par rapport à hier, il fait meilleur.",
+   "fa": "نسبت به دیروز هوا بهتر است.",
+   "pattern": "Par rapport à <nom>, <phrase>.",
+   "targetWords": [
+    "rapport"
+   ]
+  },
+  {
+   "id": "fr-a2-140",
+   "text": "Appelle-moi dès que tu arrives.",
+   "fa": "به‌محض اینکه رسیدی زنگ بزن.",
+   "pattern": "<impératif> dès que <phrase>.",
+   "targetWords": [
+    "dès"
+   ]
+  },
+  {
+   "id": "fr-a2-141",
+   "text": "Dès demain, je commence le sport.",
+   "fa": "از همین فردا ورزش را شروع می‌کنم.",
+   "pattern": "Dès <temps>, <phrase>.",
+   "targetWords": [
+    "dès"
+   ]
+  },
+  {
+   "id": "fr-a2-142",
+   "text": "Ils peuvent venir avec nous.",
+   "fa": "می‌توانند با ما بیایند.",
+   "pattern": "Ils peuvent <verbe>.",
+   "targetWords": [
+    "peuvent"
+   ]
+  },
+  {
+   "id": "fr-a2-143",
+   "text": "Je n'ai pas pu venir hier.",
+   "fa": "دیروز نتوانستم بیایم.",
+   "pattern": "Je n'ai pas pu <verbe>.",
+   "targetWords": [
+    "pu"
+   ]
+  },
+  {
+   "id": "fr-a2-144",
+   "text": "Il mange autant que moi.",
+   "fa": "او به‌اندازهٔ من غذا می‌خورد.",
+   "pattern": "<pers.> <verbe> autant que <pers.>.",
+   "targetWords": [
+    "autant"
+   ]
+  },
+  {
+   "id": "fr-a2-145",
+   "text": "Ma fille a six ans.",
+   "fa": "دخترم شش ساله است.",
+   "pattern": "Ma fille a <âge>.",
+   "targetWords": [
+    "fille"
+   ]
+  },
+  {
+   "id": "fr-a2-146",
+   "text": "Une jeune fille attend le bus.",
+   "fa": "دختر جوانی منتظر اتوبوس است.",
+   "pattern": "Une jeune fille <verbe> <nom>.",
+   "targetWords": [
+    "fille"
+   ]
+  },
+  {
+   "id": "fr-a2-147",
+   "text": "J'ai un gros problème.",
+   "fa": "یک مشکل بزرگ دارم.",
+   "pattern": "J'ai un gros <nom>.",
+   "targetWords": [
+    "gros"
+   ]
+  },
+  {
+   "id": "fr-a2-148",
+   "text": "Mon niveau de français est moyen.",
+   "fa": "سطح فرانسهٔ من متوسط است.",
+   "pattern": "Mon niveau de <langue> est <adj.>.",
+   "targetWords": [
+    "niveau"
+   ]
+  },
+  {
+   "id": "fr-a2-149",
+   "text": "Qu'est-ce que tu as fait le week-end passé ?",
+   "fa": "آخر هفتهٔ گذشته چه کار کردی؟",
+   "pattern": "Qu'est-ce que tu as fait <temps> passé ?",
+   "targetWords": [
+    "passé"
+   ]
+  },
+  {
+   "id": "fr-a2-150",
+   "text": "L'été passé, on était en Italie.",
+   "fa": "تابستان گذشته ایتالیا بودیم.",
+   "pattern": "<temps> passé, <phrase>.",
+   "targetWords": [
+    "passé"
+   ]
+  },
+  {
+   "id": "fr-a2-151",
+   "text": "Le service est compris ?",
+   "fa": "سرویس حساب شده؟",
+   "pattern": "<nom> est compris ?",
+   "targetWords": [
+    "service"
+   ]
+  },
+  {
+   "id": "fr-a2-152",
+   "text": "Tu peux me rendre un service ?",
+   "fa": "می‌توانی یک لطفی به من بکنی؟",
+   "pattern": "Tu peux me rendre un service ?",
+   "targetWords": [
+    "service"
+   ]
+  },
+  {
+   "id": "fr-a2-153",
+   "text": "Elle habite seule.",
+   "fa": "او تنها زندگی می‌کند.",
+   "pattern": "Elle habite seule.",
+   "targetWords": [
+    "seule"
+   ]
+  },
+  {
+   "id": "fr-a2-154",
+   "text": "Donne-moi ton numéro.",
+   "fa": "شماره‌ات را به من بده.",
+   "pattern": "Donne-moi <nom>.",
+   "targetWords": [
+    "donne"
+   ]
+  },
+  {
+   "id": "fr-a2-155",
+   "text": "Je peux te donner un conseil ?",
+   "fa": "می‌توانم یک توصیه بکنم؟",
+   "pattern": "Je peux te donner <nom> ?",
+   "targetWords": [
+    "donner"
+   ]
+  },
+  {
+   "id": "fr-a2-156",
+   "text": "La ligne deux est fermée aujourd'hui.",
+   "fa": "خط دو امروز بسته است.",
+   "pattern": "La ligne <numéro> est <adj.>.",
+   "targetWords": [
+    "ligne"
+   ]
+  },
+  {
+   "id": "fr-a2-157",
+   "text": "Restez en ligne, s'il vous plaît.",
+   "fa": "لطفاً پشت خط بمانید.",
+   "pattern": "Restez en ligne.",
+   "targetWords": [
+    "ligne"
+   ]
+  },
+  {
+   "id": "fr-a2-158",
+   "text": "À cause de la pluie, le match est annulé.",
+   "fa": "به خاطر باران مسابقه لغو شد.",
+   "pattern": "À cause de <nom>, <phrase>.",
+   "targetWords": [
+    "cause"
+   ]
+  },
+  {
+   "id": "fr-a2-159",
+   "text": "Je crois qu'il va pleuvoir.",
+   "fa": "فکر می‌کنم باران بیاید.",
+   "pattern": "Je crois que <phrase>.",
+   "targetWords": [
+    "crois"
+   ]
+  },
+  {
+   "id": "fr-a2-160",
+   "text": "Tu crois que c'est ouvert ?",
+   "fa": "فکر می‌کنی باز باشد؟",
+   "pattern": "Tu crois que <phrase> ?",
+   "targetWords": [
+    "crois"
+   ]
+  },
+  {
+   "id": "fr-a2-161",
+   "text": "Au début, c'était difficile.",
+   "fa": "اولش سخت بود.",
+   "pattern": "Au début, <phrase>.",
+   "targetWords": [
+    "début"
+   ]
+  },
+  {
+   "id": "fr-a2-162",
+   "text": "Début juin, on déménage.",
+   "fa": "اوایل ژوئن اسباب‌کشی می‌کنیم.",
+   "pattern": "Début <mois>, <phrase>.",
+   "targetWords": [
+    "début"
+   ]
+  },
+  {
+   "id": "fr-a2-163",
+   "text": "Par exemple, lundi ou mardi.",
+   "fa": "مثلاً دوشنبه یا سه‌شنبه.",
+   "pattern": "Par exemple, <proposition>.",
+   "targetWords": [
+    "exemple"
+   ]
+  },
+  {
+   "id": "fr-a2-164",
+   "text": "Donne-moi un exemple.",
+   "fa": "یک مثال بزن.",
+   "pattern": "Donne-moi un exemple.",
+   "targetWords": [
+    "exemple"
+   ]
+  },
+  {
+   "id": "fr-a2-165",
+   "text": "Mon fils apprend l'anglais.",
+   "fa": "پسرم انگلیسی یاد می‌گیرد.",
+   "pattern": "Mon fils <verbe> <nom>.",
+   "targetWords": [
+    "fils"
+   ]
+  },
+  {
+   "id": "fr-a2-166",
+   "text": "Un jeune homme m'a aidé.",
+   "fa": "مرد جوانی کمکم کرد.",
+   "pattern": "Un jeune <pers.> m'a <participe>.",
+   "targetWords": [
+    "jeune"
+   ]
+  },
+  {
+   "id": "fr-a2-167",
+   "text": "Elle est plus jeune que moi.",
+   "fa": "او از من جوان‌تر است.",
+   "pattern": "<pers.> est plus jeune que <pers.>.",
+   "targetWords": [
+    "jeune"
+   ]
+  },
+  {
+   "id": "fr-a2-168",
+   "text": "J'ai mis les clés sur la table.",
+   "fa": "کلیدها را روی میز گذاشتم.",
+   "pattern": "J'ai mis <nom> <lieu>.",
+   "targetWords": [
+    "mis"
+   ]
+  },
+  {
+   "id": "fr-a2-169",
+   "text": "Il a mis une heure pour venir.",
+   "fa": "یک ساعت طول کشید تا بیاید.",
+   "pattern": "<pers.> a mis <durée> pour <verbe>.",
+   "targetWords": [
+    "mis"
+   ]
+  },
+  {
+   "id": "fr-a2-170",
+   "text": "J'ai besoin d'air frais.",
+   "fa": "به هوای تازه نیاز دارم.",
+   "pattern": "J'ai besoin d'air <adj.>.",
+   "targetWords": [
+    "air"
+   ]
+  },
+  {
+   "id": "fr-a2-171",
+   "text": "Tu as l'air fatigué.",
+   "fa": "خسته به نظر می‌رسی.",
+   "pattern": "Tu as l'air <adj.>.",
+   "targetWords": [
+    "air"
+   ]
+  },
+  {
+   "id": "fr-a2-172",
+   "text": "De toute façon, je viens.",
+   "fa": "به هر حال می‌آیم.",
+   "pattern": "De toute façon, <phrase>.",
+   "targetWords": [
+    "façon"
+   ]
+  },
+  {
+   "id": "fr-a2-173",
+   "text": "Quels sont tes projets pour l'été ?",
+   "fa": "برنامه‌هایت برای تابستان چیست؟",
+   "pattern": "Quels sont tes projets pour <temps> ?",
+   "targetWords": [
+    "projet"
+   ]
+  },
+  {
+   "id": "fr-a2-174",
+   "text": "Bonne nuit, dors bien.",
+   "fa": "شب بخیر، خوب بخوابی.",
+   "pattern": "Bonne nuit, <phrase>.",
+   "targetWords": [
+    "nuit"
+   ]
+  },
+  {
+   "id": "fr-a2-175",
+   "text": "Il a plu toute la nuit.",
+   "fa": "تمام شب باران بارید.",
+   "pattern": "<phrase> toute la nuit.",
+   "targetWords": [
+    "nuit"
+   ]
+  },
+  {
+   "id": "fr-a2-176",
+   "text": "J'étais malade la semaine dernière.",
+   "fa": "هفتهٔ پیش مریض بودم.",
+   "pattern": "J'étais <adj.> <temps>.",
+   "targetWords": [
+    "étais"
+   ]
+  },
+  {
+   "id": "fr-a2-177",
+   "text": "Tu étais où hier soir ?",
+   "fa": "دیشب کجا بودی؟",
+   "pattern": "Tu étais où <temps> ?",
+   "targetWords": [
+    "étais"
+   ]
+  },
+  {
+   "id": "fr-a2-178",
+   "text": "C'est ton tour.",
+   "fa": "نوبت توست.",
+   "pattern": "C'est ton tour.",
+   "targetWords": [
+    "tour"
+   ]
+  },
+  {
+   "id": "fr-a2-179",
+   "text": "On fait un tour en ville ?",
+   "fa": "یک دوری در شهر بزنیم؟",
+   "pattern": "On fait un tour <lieu> ?",
+   "targetWords": [
+    "tour"
+   ]
+  },
+  {
+   "id": "fr-a2-180",
+   "text": "La vue est magnifique d'ici.",
+   "fa": "منظره از اینجا فوق‌العاده است.",
+   "pattern": "La vue est <adj.> d'ici.",
+   "targetWords": [
+    "vue"
+   ]
+  },
+  {
+   "id": "fr-a2-181",
+   "text": "Je l'ai perdu de vue.",
+   "fa": "دیگر از او خبری ندارم.",
+   "pattern": "Je l'ai perdu de vue.",
+   "targetWords": [
+    "vue"
+   ]
+  },
+  {
+   "id": "fr-a2-182",
+   "text": "J'habite ici depuis un an.",
+   "fa": "یک سال است اینجا زندگی می‌کنم.",
+   "pattern": "J'habite ici depuis <durée>.",
+   "targetWords": [
+    "an"
+   ]
+  },
+  {
+   "id": "fr-a2-183",
+   "text": "Il y aura du soleil demain.",
+   "fa": "فردا آفتابی است.",
+   "pattern": "Il y aura <météo> <temps>.",
+   "targetWords": [
+    "aura"
+   ]
+  },
+  {
+   "id": "fr-a2-184",
+   "text": "Le livre est là-dessus.",
+   "fa": "کتاب روی آن است.",
+   "pattern": "<nom> est là-dessus.",
+   "targetWords": [
+    "dessus"
+   ]
+  },
+  {
+   "id": "fr-a2-185",
+   "text": "C'est le meilleur restaurant du quartier.",
+   "fa": "این بهترین رستوران محله است.",
+   "pattern": "C'est le meilleur <nom> de <lieu>.",
+   "targetWords": [
+    "meilleur"
+   ]
+  },
+  {
+   "id": "fr-a2-186",
+   "text": "Tu es mon meilleur ami.",
+   "fa": "تو بهترین دوست منی.",
+   "pattern": "Tu es mon meilleur <nom>.",
+   "targetWords": [
+    "meilleur"
+   ]
+  },
+  {
+   "id": "fr-a2-187",
+   "text": "J'ai mal partout dans le corps.",
+   "fa": "تمام بدنم درد می‌کند.",
+   "pattern": "J'ai mal <lieu du corps>.",
+   "targetWords": [
+    "corps"
+   ]
+  },
+  {
+   "id": "fr-a2-188",
+   "text": "Je suis en forme aujourd'hui.",
+   "fa": "امروز سرحالم.",
+   "pattern": "Je suis en forme <temps>.",
+   "targetWords": [
+    "forme"
+   ]
+  },
+  {
+   "id": "fr-a2-189",
+   "text": "J'ai vu «peine», «presque» et «tellement» dans le texte.",
+   "fa": "«peine»، «presque» و «tellement» را در متن دیدم.",
+   "pattern": "J'ai vu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "peine",
+    "presque",
+    "tellement"
+   ]
+  },
+  {
+   "id": "fr-a2-190",
+   "text": "Le professeur explique encore une fois «époque», «doute» et «force».",
+   "fa": "معلم یک بار دیگر «époque»، «doute» و «force» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore une fois <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "époque",
+    "doute",
+    "force",
+    "forces"
+   ]
+  },
+  {
+   "id": "fr-a2-191",
+   "text": "Je peux maintenant mieux comprendre «mot», «recherche» et «santé».",
+   "fa": "اکنون میتوانم «mot»، «recherche» و «santé» را بهتر بفهمم.",
+   "pattern": "Je peux maintenant mieux comprendre <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "mot",
+    "recherche",
+    "santé"
+   ]
+  },
+  {
+   "id": "fr-a2-192",
+   "text": "Nous avons lu «seront», «voix» et «affaires» dans le texte.",
+   "fa": "ما «seront»، «voix» و «affaires» را در متن خواندیم.",
+   "pattern": "Nous avons lu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "seront",
+    "voix",
+    "affaires",
+    "affaire"
+   ]
+  },
+  {
+   "id": "fr-a2-193",
+   "text": "Ce sont «autour» et «cependant».",
+   "fa": "اینها «autour» و «cependant» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "autour",
+    "cependant"
+   ]
+  },
+  {
+   "id": "fr-a2-194",
+   "text": "Le professeur explique encore «développement» et «faites».",
+   "fa": "معلم باز هم «développement» و «faites» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore <W1> et <W2>.",
+   "targetWords": [
+    "développement",
+    "faites",
+    "faite"
+   ]
+  },
+  {
+   "id": "fr-a2-195",
+   "text": "Dans le texte, on voit «juillet» et «millions».",
+   "fa": "در متن «juillet» و «millions» دیده میشود.",
+   "pattern": "Dans le texte, on voit <W1> et <W2>.",
+   "targetWords": [
+    "juillet",
+    "millions"
+   ]
+  },
+  {
+   "id": "fr-a2-196",
+   "text": "Nous avons «nationale» et «propre» ici.",
+   "fa": "ما «nationale» و «propre» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "nationale",
+    "national",
+    "propre"
+   ]
+  },
+  {
+   "id": "fr-a2-197",
+   "text": "C'est «vivre».",
+   "fa": "این «vivre» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "vivre"
+   ]
+  },
+  {
+   "id": "fr-a2-198",
+   "text": "J'ai «environ» ici.",
+   "fa": "«environ» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "environ"
+   ]
+  },
+  {
+   "id": "fr-a2-199",
+   "text": "Je vois le mot «fond».",
+   "fa": "واژهٔ «fond» را میبینم.",
+   "pattern": "Je vois le mot <W1>.",
+   "targetWords": [
+    "fond"
+   ]
+  },
+  {
+   "id": "fr-a2-200",
+   "text": "Je peux mieux comprendre «mec».",
+   "fa": "میتوانم «mec» را بهتر بفهمم.",
+   "pattern": "Je peux mieux comprendre <W1>.",
+   "targetWords": [
+    "mec"
+   ]
+  },
+  {
+   "id": "fr-a2-201",
+   "text": "J'ai vu «mesure», «ouais» et «pourtant» dans le texte.",
+   "fa": "«mesure»، «ouais» و «pourtant» را در متن دیدم.",
+   "pattern": "J'ai vu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "mesure",
+    "ouais",
+    "pourtant"
+   ]
+  },
+  {
+   "id": "fr-a2-202",
+   "text": "Le professeur explique encore une fois «envie», «gars» et «laquelle».",
+   "fa": "معلم یک بار دیگر «envie»، «gars» و «laquelle» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore une fois <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "envie",
+    "gars",
+    "laquelle"
+   ]
+  },
+  {
+   "id": "fr-a2-203",
+   "text": "Je peux maintenant mieux comprendre «octobre», «siècle» et «terme».",
+   "fa": "اکنون میتوانم «octobre»، «siècle» و «terme» را بهتر بفهمم.",
+   "pattern": "Je peux maintenant mieux comprendre <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "octobre",
+    "siècle",
+    "terme"
+   ]
+  },
+  {
+   "id": "fr-a2-204",
+   "text": "Nous avons lu «voiture», «ait» et «avril» dans le texte.",
+   "fa": "ما «voiture»، «ait» و «avril» را در متن خواندیم.",
+   "pattern": "Nous avons lu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "voiture",
+    "ait",
+    "avril"
+   ]
+  },
+  {
+   "id": "fr-a2-205",
+   "text": "Ce sont «janvier» et «jeux».",
+   "fa": "اینها «janvier» و «jeux» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "janvier",
+    "jeux"
+   ]
+  },
+  {
+   "id": "fr-a2-206",
+   "text": "Le professeur explique encore «population» et «roi».",
+   "fa": "معلم باز هم «population» و «roi» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore <W1> et <W2>.",
+   "targetWords": [
+    "population",
+    "roi"
+   ]
+  },
+  {
+   "id": "fr-a2-207",
+   "text": "Dans le texte, on voit «action» et «club».",
+   "fa": "در متن «action» و «club» دیده میشود.",
+   "pattern": "Dans le texte, on voit <W1> et <W2>.",
+   "targetWords": [
+    "action",
+    "club"
+   ]
+  },
+  {
+   "id": "fr-a2-208",
+   "text": "Nous avons «culture» et «cœur» ici.",
+   "fa": "ما «culture» و «cœur» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "culture",
+    "cœur"
+   ]
+  },
+  {
+   "id": "fr-a2-209",
+   "text": "C'est «existe».",
+   "fa": "این «existe» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "existe"
+   ]
+  },
+  {
+   "id": "fr-a2-210",
+   "text": "J'ai «malgré» ici.",
+   "fa": "«malgré» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "malgré"
+   ]
+  },
+  {
+   "id": "fr-a2-211",
+   "text": "Je vois le mot «milieu».",
+   "fa": "واژهٔ «milieu» را میبینم.",
+   "pattern": "Je vois le mot <W1>.",
+   "targetWords": [
+    "milieu"
+   ]
+  },
+  {
+   "id": "fr-a2-212",
+   "text": "Je peux mieux comprendre «produit».",
+   "fa": "میتوانم «produit» را بهتر بفهمم.",
+   "pattern": "Je peux mieux comprendre <W1>.",
+   "targetWords": [
+    "produit",
+    "produits",
+    "production"
+   ]
+  },
+  {
+   "id": "fr-a2-213",
+   "text": "J'ai vu «programme», «propos» et «route» dans le texte.",
+   "fa": "«programme»، «propos» و «route» را در متن دیدم.",
+   "pattern": "J'ai vu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "programme",
+    "propos",
+    "propose",
+    "route"
+   ]
+  },
+  {
+   "id": "fr-a2-214",
+   "text": "Le professeur explique encore une fois «états», «doivent» et «emploi».",
+   "fa": "معلم یک بار دیگر «états»، «doivent» و «emploi» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore une fois <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "états",
+    "doivent",
+    "emploi"
+   ]
+  },
+  {
+   "id": "fr-a2-215",
+   "text": "Je peux maintenant mieux comprendre «feu», «mots» et «mêmes».",
+   "fa": "اکنون میتوانم «feu»، «mots» و «mêmes» را بهتر بفهمم.",
+   "pattern": "Je peux maintenant mieux comprendre <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "feu",
+    "mots",
+    "mêmes"
+   ]
+  },
+  {
+   "id": "fr-a2-216",
+   "text": "Nous avons lu «période», «tel» et «armée» dans le texte.",
+   "fa": "ما «période»، «tel» و «armée» را در متن خواندیم.",
+   "pattern": "Nous avons lu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "période",
+    "tel",
+    "armée"
+   ]
+  },
+  {
+   "id": "fr-a2-217",
+   "text": "Ce sont «chance» et «confiance».",
+   "fa": "اینها «chance» و «confiance» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "chance",
+    "confiance"
+   ]
+  },
+  {
+   "id": "fr-a2-218",
+   "text": "Le professeur explique encore «croire» et «décembre».",
+   "fa": "معلم باز هم «croire» و «décembre» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore <W1> et <W2>.",
+   "targetWords": [
+    "croire",
+    "décembre"
+   ]
+  },
+  {
+   "id": "fr-a2-219",
+   "text": "Dans le texte, on voit «manque» et «mode».",
+   "fa": "در متن «manque» و «mode» دیده میشود.",
+   "pattern": "Dans le texte, on voit <W1> et <W2>.",
+   "targetWords": [
+    "manque",
+    "mode"
+   ]
+  },
+  {
+   "id": "fr-a2-220",
+   "text": "Nous avons «novembre» et «résultats» ici.",
+   "fa": "ما «novembre» و «résultats» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "novembre",
+    "résultats",
+    "résultat"
+   ]
+  },
+  {
+   "id": "fr-a2-221",
+   "text": "C'est «août».",
+   "fa": "این «août» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "août"
+   ]
+  },
+  {
+   "id": "fr-a2-222",
+   "text": "J'ai «canada» ici.",
+   "fa": "«canada» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "canada"
+   ]
+  },
+  {
+   "id": "fr-a2-223",
+   "text": "Je vois le mot «formation».",
+   "fa": "واژهٔ «formation» را میبینم.",
+   "pattern": "Je vois le mot <W1>.",
+   "targetWords": [
+    "formation"
+   ]
+  },
+  {
+   "id": "fr-a2-224",
+   "text": "Je peux mieux comprendre «liste».",
+   "fa": "میتوانم «liste» را بهتر بفهمم.",
+   "pattern": "Je peux mieux comprendre <W1>.",
+   "targetWords": [
+    "liste"
+   ]
+  },
+  {
+   "id": "fr-a2-225",
+   "text": "J'ai vu «rôle», «bout» et «conditions» dans le texte.",
+   "fa": "«rôle»، «bout» و «conditions» را در متن دیدم.",
+   "pattern": "J'ai vu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "rôle",
+    "bout",
+    "conditions"
+   ]
+  },
+  {
+   "id": "fr-a2-226",
+   "text": "Le professeur explique encore une fois «esprit», «garde» et «intérêt».",
+   "fa": "معلم یک بار دیگر «esprit»، «garde» و «intérêt» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore une fois <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "esprit",
+    "garde",
+    "intérêt"
+   ]
+  },
+  {
+   "id": "fr-a2-227",
+   "text": "Je peux maintenant mieux comprendre «mouvement», «origine» et «présente».",
+   "fa": "اکنون میتوانم «mouvement»، «origine» و «présente» را بهتر بفهمم.",
+   "pattern": "Je peux maintenant mieux comprendre <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "mouvement",
+    "origine",
+    "présente",
+    "présent",
+    "présence"
+   ]
+  },
+  {
+   "id": "fr-a2-228",
+   "text": "Nous avons lu «auteur», «février» et «justice» dans le texte.",
+   "fa": "ما «auteur»، «février» و «justice» را در متن خواندیم.",
+   "pattern": "Nous avons lu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "auteur",
+    "février",
+    "justice"
+   ]
+  },
+  {
+   "id": "fr-a2-229",
+   "text": "Ce sont «met» et «occasion».",
+   "fa": "اینها «met» و «occasion» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "met",
+    "occasion"
+   ]
+  },
+  {
+   "id": "fr-a2-230",
+   "text": "Le professeur explique encore «offre» et «qualité».",
+   "fa": "معلم باز هم «offre» و «qualité» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore <W1> et <W2>.",
+   "targetWords": [
+    "offre",
+    "qualité"
+   ]
+  },
+  {
+   "id": "fr-a2-231",
+   "text": "Dans le texte, on voit «risque» et «scène».",
+   "fa": "در متن «risque» و «scène» دیده میشود.",
+   "pattern": "Dans le texte, on voit <W1> et <W2>.",
+   "targetWords": [
+    "risque",
+    "scène"
+   ]
+  },
+  {
+   "id": "fr-a2-232",
+   "text": "Nous avons «sinon» et «cadre» ici.",
+   "fa": "ما «sinon» و «cadre» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "sinon",
+    "cadre"
+   ]
+  },
+  {
+   "id": "fr-a2-233",
+   "text": "C'est «vieux».",
+   "fa": "این «vieux» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "vieux"
+   ]
+  },
+  {
+   "id": "fr-a2-234",
+   "text": "J'ai «facile» ici.",
+   "fa": "«facile» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "facile"
+   ]
+  },
+  {
+   "id": "fr-a2-235",
+   "text": "Je vois le mot «image».",
+   "fa": "واژهٔ «image» را میبینم.",
+   "pattern": "Je vois le mot <W1>.",
+   "targetWords": [
+    "image"
+   ]
+  },
+  {
+   "id": "fr-a2-236",
+   "text": "Je peux mieux comprendre «lien».",
+   "fa": "میتوانم «lien» را بهتر بفهمم.",
+   "pattern": "Je peux mieux comprendre <W1>.",
+   "targetWords": [
+    "lien"
+   ]
+  },
+  {
+   "id": "fr-a2-237",
+   "text": "J'ai vu «mer», «pire» et «sauf» dans le texte.",
+   "fa": "«mer»، «pire» و «sauf» را در متن دیدم.",
+   "pattern": "J'ai vu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "mer",
+    "pire",
+    "sauf"
+   ]
+  },
+  {
+   "id": "fr-a2-238",
+   "text": "Le professeur explique encore une fois «source», «campagne» et «coupe».",
+   "fa": "معلم یک بار دیگر «source»، «campagne» و «coupe» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore une fois <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "source",
+    "campagne",
+    "coupe"
+   ]
+  },
+  {
+   "id": "fr-a2-239",
+   "text": "Je peux maintenant mieux comprendre «cour», «durant» et «faisait».",
+   "fa": "اکنون میتوانم «cour»، «durant» و «faisait» را بهتر بفهمم.",
+   "pattern": "Je peux maintenant mieux comprendre <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "cour",
+    "durant",
+    "faisait",
+    "faisant"
+   ]
+  },
+  {
+   "id": "fr-a2-240",
+   "text": "Nous avons lu «objet», «plupart» et «seconde» dans le texte.",
+   "fa": "ما «objet»، «plupart» و «seconde» را در متن خواندیم.",
+   "pattern": "Nous avons lu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "objet",
+    "plupart",
+    "seconde",
+    "second"
+   ]
+  },
+  {
+   "id": "fr-a2-241",
+   "text": "Ce sont «valeur» et «étude».",
+   "fa": "اینها «valeur» و «étude» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "valeur",
+    "étude",
+    "études"
+   ]
+  },
+  {
+   "id": "fr-a2-242",
+   "text": "Le professeur explique encore «chacun» et «devient».",
+   "fa": "معلم باز هم «chacun» و «devient» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore <W1> et <W2>.",
+   "targetWords": [
+    "chacun",
+    "devient"
+   ]
+  },
+  {
+   "id": "fr-a2-243",
+   "text": "Dans le texte, on voit «etat» et «hein».",
+   "fa": "در متن «etat» و «hein» دیده میشود.",
+   "pattern": "Dans le texte, on voit <W1> et <W2>.",
+   "targetWords": [
+    "etat",
+    "hein"
+   ]
+  },
+  {
+   "id": "fr-a2-244",
+   "text": "Nous avons «hors» et «lequel» ici.",
+   "fa": "ما «hors» و «lequel» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "hors",
+    "lequel"
+   ]
+  },
+  {
+   "id": "fr-a2-245",
+   "text": "C'est «montre».",
+   "fa": "این «montre» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "montre",
+    "montrer"
+   ]
+  },
+  {
+   "id": "fr-a2-246",
+   "text": "J'ai «particulier» ici.",
+   "fa": "«particulier» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "particulier"
+   ]
+  },
+  {
+   "id": "fr-a2-247",
+   "text": "Je vois le mot «réseau».",
+   "fa": "واژهٔ «réseau» را میبینم.",
+   "pattern": "Je vois le mot <W1>.",
+   "targetWords": [
+    "réseau"
+   ]
+  },
+  {
+   "id": "fr-a2-248",
+   "text": "Je peux mieux comprendre «position».",
+   "fa": "میتوانم «position» را بهتر بفهمم.",
+   "pattern": "Je peux mieux comprendre <W1>.",
+   "targetWords": [
+    "position"
+   ]
+  },
+  {
+   "id": "fr-a2-249",
+   "text": "J'ai vu «république», «succès» et «économique» dans le texte.",
+   "fa": "«république»، «succès» و «économique» را در متن دیدم.",
+   "pattern": "J'ai vu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "république",
+    "succès",
+    "économique",
+    "économie"
+   ]
+  },
+  {
+   "id": "fr-a2-250",
+   "text": "Le professeur explique encore une fois «activité», «américain» et «association».",
+   "fa": "معلم یک بار دیگر «activité»، «américain» و «association» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore une fois <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "activité",
+    "activités",
+    "américain",
+    "association"
+   ]
+  },
+  {
+   "id": "fr-a2-251",
+   "text": "Je peux maintenant mieux comprendre «connu», «création» et «devenir».",
+   "fa": "اکنون میتوانم «connu»، «création» و «devenir» را بهتر بفهمم.",
+   "pattern": "Je peux maintenant mieux comprendre <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "connu",
+    "création",
+    "devenir",
+    "devenu"
+   ]
+  },
+  {
+   "id": "fr-a2-252",
+   "text": "Nous avons lu «expérience», «fonction» et «impression» dans le texte.",
+   "fa": "ما «expérience»، «fonction» و «impression» را در متن خواندیم.",
+   "pattern": "Nous avons lu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "expérience",
+    "fonction",
+    "impression"
+   ]
+  },
+  {
+   "id": "fr-a2-253",
+   "text": "Ce sont «louis» et «nature».",
+   "fa": "اینها «louis» و «nature» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "louis",
+    "nature"
+   ]
+  },
+  {
+   "id": "fr-a2-254",
+   "text": "Le professeur explique encore «putain» et «simplement».",
+   "fa": "معلم باز هم «putain» و «simplement» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore <W1> et <W2>.",
+   "targetWords": [
+    "putain",
+    "simplement"
+   ]
+  },
+  {
+   "id": "fr-a2-255",
+   "text": "Dans le texte, on voit «travers» et «annonce».",
+   "fa": "در متن «travers» و «annonce» دیده میشود.",
+   "pattern": "Dans le texte, on voit <W1> et <W2>.",
+   "targetWords": [
+    "travers",
+    "annonce"
+   ]
+  },
+  {
+   "id": "fr-a2-256",
+   "text": "Nous avons «demi» et «différents» ici.",
+   "fa": "ما «demi» و «différents» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "demi",
+    "différents",
+    "différentes"
+   ]
+  },
+  {
+   "id": "fr-a2-257",
+   "text": "C'est «espace».",
+   "fa": "این «espace» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "espace"
+   ]
+  },
+  {
+   "id": "fr-a2-258",
+   "text": "J'ai «liberté» ici.",
+   "fa": "«liberté» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "liberté"
+   ]
+  },
+  {
+   "id": "fr-a2-259",
+   "text": "Je vois le mot «mariage».",
+   "fa": "واژهٔ «mariage» را میبینم.",
+   "pattern": "Je vois le mot <W1>.",
+   "targetWords": [
+    "mariage"
+   ]
+  },
+  {
+   "id": "fr-a2-260",
+   "text": "Je peux mieux comprendre «organisation».",
+   "fa": "میتوانم «organisation» را بهتر بفهمم.",
+   "pattern": "Je peux mieux comprendre <W1>.",
+   "targetWords": [
+    "organisation"
+   ]
+  },
+  {
+   "id": "fr-a2-261",
+   "text": "J'ai vu «passage», «sein» et «sort» dans le texte.",
+   "fa": "«passage»، «sein» و «sort» را در متن دیدم.",
+   "pattern": "J'ai vu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "passage",
+    "sein",
+    "sort"
+   ]
+  },
+  {
+   "id": "fr-a2-262",
+   "text": "Le professeur explique encore une fois «zone», «compagnie» et «entrée».",
+   "fa": "معلم یک بار دیگر «zone»، «compagnie» و «entrée» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore une fois <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "zone",
+    "compagnie",
+    "entrée"
+   ]
+  },
+  {
+   "id": "fr-a2-263",
+   "text": "Je peux maintenant mieux comprendre «mains», «presse» et «réalité».",
+   "fa": "اکنون میتوانم «mains»، «presse» و «réalité» را بهتر بفهمم.",
+   "pattern": "Je peux maintenant mieux comprendre <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "mains",
+    "presse",
+    "réalité"
+   ]
+  },
+  {
+   "id": "fr-a2-264",
+   "text": "Nous avons lu «social», «sorte» et «université» dans le texte.",
+   "fa": "ما «social»، «sorte» و «université» را در متن خواندیم.",
+   "pattern": "Nous avons lu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "social",
+    "sociale",
+    "sorte",
+    "université"
+   ]
+  },
+  {
+   "id": "fr-a2-265",
+   "text": "Ce sont «œuvre» et «accès».",
+   "fa": "اینها «œuvre» و «accès» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "œuvre",
+    "accès"
+   ]
+  },
+  {
+   "id": "fr-a2-266",
+   "text": "Le professeur explique encore «commission» et «départ».",
+   "fa": "معلم باز هم «commission» و «départ» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore <W1> et <W2>.",
+   "targetWords": [
+    "commission",
+    "départ"
+   ]
+  },
+  {
+   "id": "fr-a2-267",
+   "text": "Dans le texte, on voit «marie» et «mauvais».",
+   "fa": "در متن «marie» و «mauvais» دیده میشود.",
+   "pattern": "Dans le texte, on voit <W1> et <W2>.",
+   "targetWords": [
+    "marie",
+    "mauvais"
+   ]
+  },
+  {
+   "id": "fr-a2-268",
+   "text": "Nous avons «puisque» et «soient» ici.",
+   "fa": "ما «puisque» و «soient» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "puisque",
+    "soient"
+   ]
+  },
+  {
+   "id": "fr-a2-269",
+   "text": "C'est «taux».",
+   "fa": "این «taux» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "taux"
+   ]
+  },
+  {
+   "id": "fr-a2-270",
+   "text": "J'ai «voie» ici.",
+   "fa": "«voie» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "voie"
+   ]
+  },
+  {
+   "id": "fr-a2-271",
+   "text": "Je vois le mot «afrique».",
+   "fa": "واژهٔ «afrique» را میبینم.",
+   "pattern": "Je vois le mot <W1>.",
+   "targetWords": [
+    "afrique"
+   ]
+  },
+  {
+   "id": "fr-a2-272",
+   "text": "Je peux mieux comprendre «bras».",
+   "fa": "میتوانم «bras» را بهتر بفهمم.",
+   "pattern": "Je peux mieux comprendre <W1>.",
+   "targetWords": [
+    "bras"
+   ]
+  },
+  {
+   "id": "fr-a2-273",
+   "text": "J'ai vu «charge», «ex» et «finalement» dans le texte.",
+   "fa": "«charge»، «ex» و «finalement» را در متن دیدم.",
+   "pattern": "J'ai vu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "charge",
+    "ex",
+    "finalement"
+   ]
+  },
+  {
+   "id": "fr-a2-274",
+   "text": "Le professeur explique encore une fois «fini», «haute» et «marque».",
+   "fa": "معلم یک بار دیگر «fini»، «haute» و «marque» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore une fois <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "fini",
+    "haute",
+    "marque"
+   ]
+  },
+  {
+   "id": "fr-a2-275",
+   "text": "Je peux maintenant mieux comprendre «perdre», «victoire» et «ben».",
+   "fa": "اکنون میتوانم «perdre»، «victoire» و «ben» را بهتر بفهمم.",
+   "pattern": "Je peux maintenant mieux comprendre <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "perdre",
+    "victoire",
+    "ben"
+   ]
+  },
+  {
+   "id": "fr-a2-276",
+   "text": "Nous avons lu «commune», «domaine» et «idées» dans le texte.",
+   "fa": "ما «commune»، «domaine» و «idées» را در متن خواندیم.",
+   "pattern": "Nous avons lu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "communauté",
+    "commune",
+    "commun",
+    "domaine",
+    "idées"
+   ]
+  },
+  {
+   "id": "fr-a2-277",
+   "text": "Ce sont «nombreuses» et «peuple».",
+   "fa": "اینها «nombreuses» و «peuple» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "nombreuses",
+    "peuple"
+   ]
+  },
+  {
+   "id": "fr-a2-278",
+   "text": "Le professeur explique encore «quant» et «suivre».",
+   "fa": "معلم باز هم «quant» و «suivre» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore <W1> et <W2>.",
+   "targetWords": [
+    "quant",
+    "suivre"
+   ]
+  },
+  {
+   "id": "fr-a2-279",
+   "text": "Dans le texte, on voit «administration» et «auprès».",
+   "fa": "در متن «administration» و «auprès» دیده میشود.",
+   "pattern": "Dans le texte, on voit <W1> et <W2>.",
+   "targetWords": [
+    "administration",
+    "auprès"
+   ]
+  },
+  {
+   "id": "fr-a2-280",
+   "text": "Nous avons «code» et «gagner» ici.",
+   "fa": "ما «code» و «gagner» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "code",
+    "gagner"
+   ]
+  },
+  {
+   "id": "fr-a2-281",
+   "text": "C'est «honneur».",
+   "fa": "این «honneur» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "honneur"
+   ]
+  },
+  {
+   "id": "fr-a2-282",
+   "text": "J'ai «matière» ici.",
+   "fa": "«matière» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "matière"
+   ]
+  },
+  {
+   "id": "fr-a2-283",
+   "text": "Je vois le mot «ouest».",
+   "fa": "واژهٔ «ouest» را میبینم.",
+   "pattern": "Je vois le mot <W1>.",
+   "targetWords": [
+    "ouest"
+   ]
+  },
+  {
+   "id": "fr-a2-284",
+   "text": "Je peux mieux comprendre «permis».",
+   "fa": "میتوانم «permis» را بهتر بفهمم.",
+   "pattern": "Je peux mieux comprendre <W1>.",
+   "targetWords": [
+    "permis"
+   ]
+  },
+  {
+   "id": "fr-a2-285",
+   "text": "J'ai vu «rapidement», «sol» et «version» dans le texte.",
+   "fa": "«rapidement»، «sol» و «version» را در متن دیدم.",
+   "pattern": "J'ai vu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "rapidement",
+    "sol",
+    "version"
+   ]
+  },
+  {
+   "id": "fr-a2-286",
+   "text": "Le professeur explique encore une fois «armes», «coeur» et «construction».",
+   "fa": "معلم یک بار دیگر «armes»، «coeur» و «construction» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore une fois <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "armes",
+    "coeur",
+    "construction"
+   ]
+  },
+  {
+   "id": "fr-a2-287",
+   "text": "Je peux maintenant mieux comprendre «double», «information» et «mission».",
+   "fa": "اکنون میتوانم «double»، «information» و «mission» را بهتر بفهمم.",
+   "pattern": "Je peux maintenant mieux comprendre <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "double",
+    "information",
+    "informations",
+    "mission"
+   ]
+  },
+  {
+   "id": "fr-a2-288",
+   "text": "Nous avons lu «moitié», «particulièrement» et «rend» dans le texte.",
+   "fa": "ما «moitié»، «particulièrement» و «rend» را در متن خواندیم.",
+   "pattern": "Nous avons lu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "moitié",
+    "particulièrement",
+    "rend"
+   ]
+  },
+  {
+   "id": "fr-a2-289",
+   "text": "Ce sont «technique» et «union».",
+   "fa": "اینها «technique» و «union» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "technique",
+    "union"
+   ]
+  },
+  {
+   "id": "fr-a2-290",
+   "text": "Le professeur explique encore «énergie» et «éviter».",
+   "fa": "معلم باز هم «énergie» و «éviter» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore <W1> et <W2>.",
+   "targetWords": [
+    "énergie",
+    "éviter"
+   ]
+  },
+  {
+   "id": "fr-a2-291",
+   "text": "Dans le texte, on voit «bord» et «courant».",
+   "fa": "در متن «bord» و «courant» دیده میشود.",
+   "pattern": "Dans le texte, on voit <W1> et <W2>.",
+   "targetWords": [
+    "bord",
+    "courant"
+   ]
+  },
+  {
+   "id": "fr-a2-292",
+   "text": "Nous avons «devait» et «faits» ici.",
+   "fa": "ما «devait» و «faits» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "devait",
+    "faits"
+   ]
+  },
+  {
+   "id": "fr-a2-293",
+   "text": "C'est «faute».",
+   "fa": "این «faute» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "faute"
+   ]
+  },
+  {
+   "id": "fr-a2-294",
+   "text": "J'ai «finale» ici.",
+   "fa": "«finale» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "finale"
+   ]
+  },
+  {
+   "id": "fr-a2-295",
+   "text": "Je vois le mot «impossible».",
+   "fa": "واژهٔ «impossible» را میبینم.",
+   "pattern": "Je vois le mot <W1>.",
+   "targetWords": [
+    "impossible"
+   ]
+  },
+  {
+   "id": "fr-a2-296",
+   "text": "Je peux mieux comprendre «joueur».",
+   "fa": "میتوانم «joueur» را بهتر بفهمم.",
+   "pattern": "Je peux mieux comprendre <W1>.",
+   "targetWords": [
+    "joueur",
+    "joueurs"
+   ]
+  },
+  {
+   "id": "fr-a2-297",
+   "text": "J'ai vu «nécessaire», «pouvait» et «sang» dans le texte.",
+   "fa": "«nécessaire»، «pouvait» و «sang» را در متن دیدم.",
+   "pattern": "J'ai vu <W1>, <W2> et <W3> dans le texte.",
+   "targetWords": [
+    "nécessaire",
+    "pouvait",
+    "sang"
+   ]
+  },
+  {
+   "id": "fr-a2-298",
+   "text": "Le professeur explique encore une fois «style», «terrain» et «église».",
+   "fa": "معلم یک بار دیگر «style»، «terrain» و «église» را توضیح میدهد.",
+   "pattern": "Le professeur explique encore une fois <W1>, <W2> et <W3>.",
+   "targetWords": [
+    "style",
+    "terrain",
+    "église"
+   ]
+  }
+ ]
+}

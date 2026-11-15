@@ -1,0 +1,580 @@
+{
+ "schema": 1,
+ "language": "es",
+ "band": "pre",
+ "version": 5,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "es-pre-001",
+   "text": "Aquí están «que» y «los».",
+   "fa": "«que» و «los» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "que",
+    "los"
+   ]
+  },
+  {
+   "id": "es-pre-002",
+   "text": "Hoy vemos «del» y «con».",
+   "fa": "امروز «del» و «con» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "del",
+    "con"
+   ]
+  },
+  {
+   "id": "es-pre-003",
+   "text": "Esto es «para».",
+   "fa": "این «para» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "para"
+   ]
+  },
+  {
+   "id": "es-pre-004",
+   "text": "Aquí está «su».",
+   "fa": "«su» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "su"
+   ]
+  },
+  {
+   "id": "es-pre-005",
+   "text": "Aquí están «al» y «como».",
+   "fa": "«al» و «como» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "al",
+    "como"
+   ]
+  },
+  {
+   "id": "es-pre-006",
+   "text": "Hoy vemos «si» y «pero».",
+   "fa": "امروز «si» و «pero» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "si",
+    "pero"
+   ]
+  },
+  {
+   "id": "es-pre-007",
+   "text": "Esto es «le».",
+   "fa": "این «le» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "le"
+   ]
+  },
+  {
+   "id": "es-pre-008",
+   "text": "Aquí está «este».",
+   "fa": "«este» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "este"
+   ]
+  },
+  {
+   "id": "es-pre-009",
+   "text": "Aquí están «sus» y «esta».",
+   "fa": "«sus» و «esta» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "sus",
+    "esta"
+   ]
+  },
+  {
+   "id": "es-pre-010",
+   "text": "Hoy vemos «todo» y «ya».",
+   "fa": "امروز «todo» و «ya» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "todo",
+    "ya"
+   ]
+  },
+  {
+   "id": "es-pre-011",
+   "text": "Esto es «ha».",
+   "fa": "این «ha» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "ha"
+   ]
+  },
+  {
+   "id": "es-pre-012",
+   "text": "Aquí está «cuando».",
+   "fa": "«cuando» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "cuando"
+   ]
+  },
+  {
+   "id": "es-pre-013",
+   "text": "Aquí están «ser» y «sin».",
+   "fa": "«ser» و «sin» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "ser",
+    "sin"
+   ]
+  },
+  {
+   "id": "es-pre-014",
+   "text": "Hoy vemos «hay» y «fue».",
+   "fa": "امروز «hay» و «fue» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "hay",
+    "fue"
+   ]
+  },
+  {
+   "id": "es-pre-015",
+   "text": "Esto es «tu».",
+   "fa": "این «tu» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "tu"
+   ]
+  },
+  {
+   "id": "es-pre-016",
+   "text": "Aquí está «sobre».",
+   "fa": "«sobre» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "sobre"
+   ]
+  },
+  {
+   "id": "es-pre-017",
+   "text": "Aquí están «también» y «todos».",
+   "fa": "«también» و «todos» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "también",
+    "todos"
+   ]
+  },
+  {
+   "id": "es-pre-018",
+   "text": "Hoy vemos «eso» y «nos».",
+   "fa": "امروز «eso» و «nos» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "eso",
+    "nos"
+   ]
+  },
+  {
+   "id": "es-pre-019",
+   "text": "Esto es «porque».",
+   "fa": "این «porque» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "porque"
+   ]
+  },
+  {
+   "id": "es-pre-020",
+   "text": "Aquí está «así».",
+   "fa": "«así» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "así"
+   ]
+  },
+  {
+   "id": "es-pre-021",
+   "text": "Aquí están «años» y «entre».",
+   "fa": "«años» و «entre» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "años",
+    "entre"
+   ]
+  },
+  {
+   "id": "es-pre-022",
+   "text": "Hoy vemos «puede» y «desde».",
+   "fa": "امروز «puede» و «desde» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "puede",
+    "desde"
+   ]
+  },
+  {
+   "id": "es-pre-023",
+   "text": "Esto es «hacer».",
+   "fa": "این «hacer» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "hacer"
+   ]
+  },
+  {
+   "id": "es-pre-024",
+   "text": "Aquí está «era».",
+   "fa": "«era» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "era"
+   ]
+  },
+  {
+   "id": "es-pre-025",
+   "text": "Aquí están «hace» y «ni».",
+   "fa": "«hace» و «ni» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "hace",
+    "ni"
+   ]
+  },
+  {
+   "id": "es-pre-026",
+   "text": "Hoy vemos «donde» y «parte».",
+   "fa": "امروز «donde» و «parte» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "donde",
+    "parte"
+   ]
+  },
+  {
+   "id": "es-pre-027",
+   "text": "Esto es «solo».",
+   "fa": "این «solo» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "solo"
+   ]
+  },
+  {
+   "id": "es-pre-028",
+   "text": "Aquí está «tiempo».",
+   "fa": "«tiempo» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "tiempo"
+   ]
+  },
+  {
+   "id": "es-pre-029",
+   "text": "Aquí están «mejor» y «mucho».",
+   "fa": "«mejor» و «mucho» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "mejor",
+    "mucho"
+   ]
+  },
+  {
+   "id": "es-pre-030",
+   "text": "Hoy vemos «tan» y «ver».",
+   "fa": "امروز «tan» و «ver» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "tan",
+    "ver"
+   ]
+  },
+  {
+   "id": "es-pre-031",
+   "text": "Esto es «vida».",
+   "fa": "این «vida» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "vida"
+   ]
+  },
+  {
+   "id": "es-pre-032",
+   "text": "Aquí está «ese».",
+   "fa": "«ese» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "ese"
+   ]
+  },
+  {
+   "id": "es-pre-033",
+   "text": "Aquí están «han» y «mismo».",
+   "fa": "«han» و «mismo» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "han",
+    "mismo"
+   ]
+  },
+  {
+   "id": "es-pre-034",
+   "text": "Hoy vemos «siempre» y «cada».",
+   "fa": "امروز «siempre» و «cada» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "siempre",
+    "cada"
+   ]
+  },
+  {
+   "id": "es-pre-035",
+   "text": "Esto es «están».",
+   "fa": "این «están» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "están"
+   ]
+  },
+  {
+   "id": "es-pre-036",
+   "text": "Aquí está «gente».",
+   "fa": "«gente» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "gente"
+   ]
+  },
+  {
+   "id": "es-pre-037",
+   "text": "Aquí están «esa» y «estado».",
+   "fa": "«esa» و «estado» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "esa",
+    "estado"
+   ]
+  },
+  {
+   "id": "es-pre-038",
+   "text": "Hoy vemos «mundo» y «va».",
+   "fa": "امروز «mundo» و «va» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "mundo",
+    "va"
+   ]
+  },
+  {
+   "id": "es-pre-039",
+   "text": "Esto es «año».",
+   "fa": "این «año» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "año"
+   ]
+  },
+  {
+   "id": "es-pre-040",
+   "text": "Aquí está «les».",
+   "fa": "«les» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "les"
+   ]
+  },
+  {
+   "id": "es-pre-041",
+   "text": "Aquí están «mas» y «otro».",
+   "fa": "«mas» و «otro» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "mas",
+    "otro"
+   ]
+  },
+  {
+   "id": "es-pre-042",
+   "text": "Hoy vemos «otros» y «cosas».",
+   "fa": "امروز «otros» و «cosas» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "otros",
+    "cosas"
+   ]
+  },
+  {
+   "id": "es-pre-043",
+   "text": "Esto es «gran».",
+   "fa": "این «gran» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "gran"
+   ]
+  },
+  {
+   "id": "es-pre-044",
+   "text": "Aquí está «menos».",
+   "fa": "«menos» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "menos"
+   ]
+  },
+  {
+   "id": "es-pre-045",
+   "text": "Aquí están «nunca» y «personas».",
+   "fa": "«nunca» و «personas» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "nunca",
+    "personas"
+   ]
+  },
+  {
+   "id": "es-pre-046",
+   "text": "Hoy vemos «tanto» y «antes».",
+   "fa": "امروز «tanto» و «antes» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "tanto",
+    "antes"
+   ]
+  },
+  {
+   "id": "es-pre-047",
+   "text": "Esto es «poco».",
+   "fa": "این «poco» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "poco"
+   ]
+  },
+  {
+   "id": "es-pre-048",
+   "text": "Aquí está «sea».",
+   "fa": "«sea» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "sea"
+   ]
+  },
+  {
+   "id": "es-pre-049",
+   "text": "Aquí están «había» y «tener».",
+   "fa": "«había» و «tener» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "había",
+    "tener"
+   ]
+  },
+  {
+   "id": "es-pre-050",
+   "text": "Hoy vemos «durante» y «ellos».",
+   "fa": "امروز «durante» و «ellos» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "durante",
+    "ellos"
+   ]
+  },
+  {
+   "id": "es-pre-051",
+   "text": "Esto es «lugar».",
+   "fa": "این «lugar» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "lugar"
+   ]
+  },
+  {
+   "id": "es-pre-052",
+   "text": "Aquí está «creo».",
+   "fa": "«creo» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "creo"
+   ]
+  },
+  {
+   "id": "es-pre-053",
+   "text": "Aquí están «hecho» y «quiero».",
+   "fa": "«hecho» و «quiero» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "hecho",
+    "quiero"
+   ]
+  },
+  {
+   "id": "es-pre-054",
+   "text": "Hoy vemos «sólo» y «aunque».",
+   "fa": "امروز «sólo» و «aunque» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "sólo",
+    "aunque"
+   ]
+  },
+  {
+   "id": "es-pre-055",
+   "text": "Esto es «contra».",
+   "fa": "این «contra» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "contra"
+   ]
+  },
+  {
+   "id": "es-pre-056",
+   "text": "Aquí está «decir».",
+   "fa": "«decir» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "decir"
+   ]
+  },
+  {
+   "id": "es-pre-057",
+   "text": "Aquí están «gobierno» y «país».",
+   "fa": "«gobierno» و «país» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "gobierno",
+    "país"
+   ]
+  },
+  {
+   "id": "es-pre-058",
+   "text": "Hoy vemos «todas» y «estos».",
+   "fa": "امروز «todas» و «estos» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "todas",
+    "estos"
+   ]
+  },
+  {
+   "id": "es-pre-059",
+   "text": "Esto es «forma».",
+   "fa": "این «forma» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "forma"
+   ]
+  },
+  {
+   "id": "es-pre-060",
+   "text": "Aquí está «he».",
+   "fa": "«he» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "he"
+   ]
+  }
+ ]
+}

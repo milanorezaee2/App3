@@ -23,6 +23,8 @@ import { A2_FOUNDATION_LESSONS } from './courseContentA2Foundation';
 import { B2_UPPER_INTERMEDIATE_LESSONS } from './courseContentB2UpperIntermediate';
 import { C1_ADVANCED_LESSONS } from './courseContentC1Advanced';
 import { PRE_A1_LESSONS } from './courseContentPreA1';
+import { labLessonsOf, insertLabLessons } from './content/labLessons';
+import type { LabLesson } from './content/labLessonTypes';
 import {
   COMMUNICATION_LESSON_UNIT,
   COMMUNICATION_MODULES,
@@ -680,13 +682,38 @@ const arrangedBeforeB1 = [
 ];
 const advancedStart = arrangedBeforeB1.findIndex(lesson => lesson.levelId === 4);
 if (advancedStart < 0) throw new Error('Advanced lesson boundary is missing.');
-export const SENTENCE_LESSONS: SentenceLesson[] = [
+function englishLabLesson(lab: LabLesson): SentenceLesson {
+  return {
+    id: lab.id, levelId: lab.levelId, order: 0,
+    contentKind: 'vocabulary-practice',
+    title: lab.title, subtitle: lab.subtitle, situation: lab.situation,
+    durationMinutes: lab.durationMinutes, teachingFa: lab.teachingFa,
+    sentences: lab.sentences.map((sentence, index) => ({
+      id: `${lab.id}-s${index + 1}`, en: sentence.text, fa: sentence.fa,
+      pronunciation: sentence.pronunciation,
+      ...(sentence.pattern ? { pattern: sentence.pattern } : {}),
+      vocabulary: sentence.vocabulary,
+    })),
+    dialogue: lab.dialogue.map((line, index) => ({
+      speaker: index % 2 === 0 ? 'learner' as const : 'partner' as const,
+      text: line.text, fa: line.fa,
+    })),
+    checks: lab.checks,
+  } as unknown as SentenceLesson;
+}
+
+const baseSentenceLessons: SentenceLesson[] = [
   ...PRE_A1_LESSONS,
   ...arrangedBeforeB1.slice(0, advancedStart),
   ...B1_INDEPENDENT_LESSONS,
   ...B2_UPPER_INTERMEDIATE_LESSONS,
   ...arrangedBeforeB1.slice(advancedStart),
   ...C1_ADVANCED_LESSONS,
-].map((lesson, index) => ({ ...lesson, order: index + 1 }));
+];
+
+export const SENTENCE_LESSONS: SentenceLesson[] = insertLabLessons(
+  baseSentenceLessons,
+  labLessonsOf('en').map(englishLabLesson),
+).map((lesson, index) => ({ ...lesson, order: index + 1 }));
 
 export const getSentenceLesson = (id: string) => SENTENCE_LESSONS.find((lesson) => lesson.id === id);

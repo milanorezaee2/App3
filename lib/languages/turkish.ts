@@ -22,6 +22,8 @@ import { TURKISH_C1_SURVIVAL_PART_A } from './turkishC1SurvivalPartA';
 import { TURKISH_C1_SURVIVAL_PART_B } from './turkishC1SurvivalPartB';
 import { TURKISH_PRE_A1_LESSONS } from './turkishPreA1';
 import type { TurkishLearningMode } from './turkishSeed';
+import { labLessonsOf, insertLabLessons } from '../content/labLessons';
+import type { LabLesson } from '../content/labLessonTypes';
 export { TURKISH_PRE_A1_LESSONS };
 
 /** الفبای ۲۹حرفی ترکی استانبولی (İstanbul Türkçesi). */
@@ -165,7 +167,7 @@ export const TURKISH_LEVELS: readonly TurkishCourseLevel[] = [
   },
 ];
 
-export const TURKISH_LESSONS: readonly TurkishCourseLesson[] = [
+const TURKISH_BASE_LESSONS: readonly TurkishCourseLesson[] = [
   ...TURKISH_PRE_A1_LESSONS.map((lesson, idx): TurkishCourseLesson => ({
     ...lesson,
     levelId: -1,
@@ -202,6 +204,26 @@ export const TURKISH_LESSONS: readonly TurkishCourseLesson[] = [
     order: TURKISH_PRE_A1_LESSONS.length + FOUNDATION_RAW.length + SURVIVAL_RAW.length + EVERYDAY_A2_RAW.length + COMMUNICATION_B1_RAW.length + UPPER_INTERMEDIATE_B2_RAW.length + idx + 1,
   })),
 ];
+
+function turkishLabLesson(lab: LabLesson): TurkishCourseLesson {
+  return {
+    id: lab.id, levelId: lab.levelId, order: 0, learningMode: 'sentences',
+    title: lab.title, subtitle: lab.subtitle, situation: lab.situation,
+    teachingFa: lab.teachingFa, durationMinutes: lab.durationMinutes,
+    sentences: lab.sentences.map((sentence, index) => ({
+      id: `${lab.id}-s${index + 1}`, text: sentence.text, fa: sentence.fa,
+      pronunciation: sentence.pronunciation,
+      ...(sentence.pattern ? { pattern: sentence.pattern } : {}),
+      vocabulary: sentence.vocabulary,
+    })),
+    dialogue: lab.dialogue, checks: lab.checks,
+  };
+}
+
+export const TURKISH_LESSONS: readonly TurkishCourseLesson[] = insertLabLessons(
+  TURKISH_BASE_LESSONS,
+  labLessonsOf('tr').map(turkishLabLesson),
+).map((lesson, index) => ({ ...lesson, order: index + 1 }));
 
 export function findTurkishLesson(id: string | undefined): TurkishCourseLesson | undefined {
   return TURKISH_LESSONS.find(item => item.id === id);

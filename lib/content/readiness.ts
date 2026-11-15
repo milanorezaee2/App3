@@ -81,7 +81,14 @@ function stemMatch(word: string, stems: Map<string, number[]>): boolean {
 
 const pct = (n: number, d: number) => d <= 0 ? 100 : Math.max(0, Math.min(100, Math.round((n / d) * 100)));
 
-export function computeReadiness(language: CourseLanguage, lessons: readonly AuditLesson[], frequency: readonly string[], gapLimit = 60): CourseReadiness {
+export function computeReadiness(
+  language: CourseLanguage,
+  lessons: readonly AuditLesson[],
+  frequency: readonly string[],
+  gapLimit = 60,
+  /** Frequency words a published pack adds at each band (bundled index, so readiness reflects the full course). */
+  extraWordsByBand?: Partial<Record<CefrBand, readonly string[]>>,
+): CourseReadiness {
   const rank = new Map<string, number>();
   frequency.forEach((word, index) => { if (!rank.has(word)) rank.set(word, index + 1); });
   const seen = new Set<string>();
@@ -96,6 +103,9 @@ export function computeReadiness(language: CourseLanguage, lessons: readonly Aud
       if (sentence.pattern) patterns++;
       for (const token of tokenize(sentence.text)) { all.add(token); if (rank.has(token)) seen.add(token); }
     }
+    // Published packs are part of the course even though their sentences are downloaded, not bundled.
+    // Their vocabulary index ships with the APK so readiness is the same number the learner sees.
+    for (const word of extraWordsByBand?.[band] ?? []) { seen.add(word); all.add(word); }
     let covered = 0;
     const gaps: string[] = [];
     const stems = stemIndex(seen);

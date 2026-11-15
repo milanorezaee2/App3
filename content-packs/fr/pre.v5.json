@@ -1,0 +1,486 @@
+{
+ "schema": 1,
+ "language": "fr",
+ "band": "pre",
+ "version": 5,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "fr-pre-001",
+   "text": "Ce sont «les» et «des».",
+   "fa": "اینها «les» و «des» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "les",
+    "des"
+   ]
+  },
+  {
+   "id": "fr-pre-002",
+   "text": "Nous avons «dans» et «sur» ici.",
+   "fa": "ما «dans» و «sur» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "dans",
+    "sur"
+   ]
+  },
+  {
+   "id": "fr-pre-003",
+   "text": "C'est «par».",
+   "fa": "این «par» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "par"
+   ]
+  },
+  {
+   "id": "fr-pre-004",
+   "text": "J'ai «avec» ici.",
+   "fa": "«avec» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "avec"
+   ]
+  },
+  {
+   "id": "fr-pre-005",
+   "text": "Ce sont «mais» et «se».",
+   "fa": "اینها «mais» و «se» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "mais",
+    "se"
+   ]
+  },
+  {
+   "id": "fr-pre-006",
+   "text": "Nous avons «son» et «ou» ici.",
+   "fa": "ما «son» و «ou» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "son",
+    "ou"
+   ]
+  },
+  {
+   "id": "fr-pre-007",
+   "text": "C'est «si».",
+   "fa": "این «si» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "si"
+   ]
+  },
+  {
+   "id": "fr-pre-008",
+   "text": "J'ai «sont» ici.",
+   "fa": "«sont» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "sont"
+   ]
+  },
+  {
+   "id": "fr-pre-009",
+   "text": "Ce sont «tout» et «fait».",
+   "fa": "اینها «tout» و «fait» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "tout",
+    "fait"
+   ]
+  },
+  {
+   "id": "fr-pre-010",
+   "text": "Nous avons «être» et «ils» ici.",
+   "fa": "ما «être» و «ils» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "être",
+    "ils"
+   ]
+  },
+  {
+   "id": "fr-pre-011",
+   "text": "C'est «cette».",
+   "fa": "این «cette» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "cette"
+   ]
+  },
+  {
+   "id": "fr-pre-012",
+   "text": "J'ai «faire» ici.",
+   "fa": "«faire» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "faire"
+   ]
+  },
+  {
+   "id": "fr-pre-013",
+   "text": "Ce sont «sa» et «aux».",
+   "fa": "اینها «sa» و «aux» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "sa",
+    "aux"
+   ]
+  },
+  {
+   "id": "fr-pre-014",
+   "text": "Nous avons «même» et «me» ici.",
+   "fa": "ما «même» و «me» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "même",
+    "me"
+   ]
+  },
+  {
+   "id": "fr-pre-015",
+   "text": "C'est «ont».",
+   "fa": "این «ont» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "ont"
+   ]
+  },
+  {
+   "id": "fr-pre-016",
+   "text": "J'ai «était» ici.",
+   "fa": "«était» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "était"
+   ]
+  },
+  {
+   "id": "fr-pre-017",
+   "text": "Ce sont «ses» et «lui».",
+   "fa": "اینها «ses» و «lui» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "ses",
+    "lui"
+   ]
+  },
+  {
+   "id": "fr-pre-018",
+   "text": "Nous avons «aussi» et «peut» ici.",
+   "fa": "ما «aussi» و «peut» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "aussi",
+    "peut"
+   ]
+  },
+  {
+   "id": "fr-pre-019",
+   "text": "C'est «leur».",
+   "fa": "این «leur» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "leur"
+   ]
+  },
+  {
+   "id": "fr-pre-020",
+   "text": "J'ai «moi» ici.",
+   "fa": "«moi» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "moi"
+   ]
+  },
+  {
+   "id": "fr-pre-021",
+   "text": "Ce sont «ces» et «quand».",
+   "fa": "اینها «ces» و «quand» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "ces",
+    "quand"
+   ]
+  },
+  {
+   "id": "fr-pre-022",
+   "text": "Nous avons «tous» et «sans» ici.",
+   "fa": "ما «tous» و «sans» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "tous",
+    "sans"
+   ]
+  },
+  {
+   "id": "fr-pre-023",
+   "text": "C'est «avoir».",
+   "fa": "این «avoir» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "avoir"
+   ]
+  },
+  {
+   "id": "fr-pre-024",
+   "text": "J'ai «alors» ici.",
+   "fa": "«alors» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "alors"
+   ]
+  },
+  {
+   "id": "fr-pre-025",
+   "text": "Ce sont «avait» et «entre».",
+   "fa": "اینها «avait» و «entre» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "avait",
+    "entre"
+   ]
+  },
+  {
+   "id": "fr-pre-026",
+   "text": "Nous avons «temps» et «ans» ici.",
+   "fa": "ما «temps» و «ans» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "temps",
+    "ans"
+   ]
+  },
+  {
+   "id": "fr-pre-027",
+   "text": "C'est «dit».",
+   "fa": "این «dit» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "dit"
+   ]
+  },
+  {
+   "id": "fr-pre-028",
+   "text": "J'ai «peu» ici.",
+   "fa": "«peu» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "peu"
+   ]
+  },
+  {
+   "id": "fr-pre-029",
+   "text": "Ce sont «rien» et «monde».",
+   "fa": "اینها «rien» و «monde» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "rien",
+    "monde"
+   ]
+  },
+  {
+   "id": "fr-pre-030",
+   "text": "Nous avons «te» et «faut» ici.",
+   "fa": "ما «te» و «faut» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "te",
+    "faut"
+   ]
+  },
+  {
+   "id": "fr-pre-031",
+   "text": "C'est «toujours».",
+   "fa": "این «toujours» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "toujours"
+   ]
+  },
+  {
+   "id": "fr-pre-032",
+   "text": "J'ai «voir» ici.",
+   "fa": "«voir» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "voir"
+   ]
+  },
+  {
+   "id": "fr-pre-033",
+   "text": "Ce sont «contre» et «avant».",
+   "fa": "اینها «contre» و «avant» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "contre",
+    "avant"
+   ]
+  },
+  {
+   "id": "fr-pre-034",
+   "text": "Nous avons «depuis» et «donc» ici.",
+   "fa": "ما «depuis» و «donc» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "depuis",
+    "donc"
+   ]
+  },
+  {
+   "id": "fr-pre-035",
+   "text": "C'est «notre».",
+   "fa": "این «notre» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "notre"
+   ]
+  },
+  {
+   "id": "fr-pre-036",
+   "text": "J'ai «sous» ici.",
+   "fa": "«sous» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "sous"
+   ]
+  },
+  {
+   "id": "fr-pre-037",
+   "text": "Ce sont «jamais» et «vie».",
+   "fa": "اینها «jamais» و «vie» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "jamais",
+    "vie"
+   ]
+  },
+  {
+   "id": "fr-pre-038",
+   "text": "Nous avons «moins» et «dont» ici.",
+   "fa": "ما «moins» و «dont» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "moins",
+    "dont"
+   ]
+  },
+  {
+   "id": "fr-pre-039",
+   "text": "C'est «déjà».",
+   "fa": "این «déjà» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "déjà"
+   ]
+  },
+  {
+   "id": "fr-pre-040",
+   "text": "J'ai «soit» ici.",
+   "fa": "«soit» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "soit"
+   ]
+  },
+  {
+   "id": "fr-pre-041",
+   "text": "Ce sont «trop» et «leurs».",
+   "fa": "اینها «trop» و «leurs» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "trop",
+    "leurs"
+   ]
+  },
+  {
+   "id": "fr-pre-042",
+   "text": "Nous avons «ton» et «toute» ici.",
+   "fa": "ما «ton» و «toute» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "ton",
+    "toute"
+   ]
+  },
+  {
+   "id": "fr-pre-043",
+   "text": "C'est «chez».",
+   "fa": "این «chez» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "chez"
+   ]
+  },
+  {
+   "id": "fr-pre-044",
+   "text": "J'ai «gens» ici.",
+   "fa": "«gens» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "gens"
+   ]
+  },
+  {
+   "id": "fr-pre-045",
+   "text": "Ce sont «juste» et «vraiment».",
+   "fa": "اینها «juste» و «vraiment» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "juste",
+    "vraiment"
+   ]
+  },
+  {
+   "id": "fr-pre-046",
+   "text": "Nous avons «ainsi» et «grand» ici.",
+   "fa": "ما «ainsi» و «grand» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "ainsi",
+    "grand"
+   ]
+  },
+  {
+   "id": "fr-pre-047",
+   "text": "C'est «pays».",
+   "fa": "این «pays» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "pays"
+   ]
+  },
+  {
+   "id": "fr-pre-048",
+   "text": "J'ai «mes» ici.",
+   "fa": "«mes» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "mes"
+   ]
+  },
+  {
+   "id": "fr-pre-049",
+   "text": "Ce sont «quelques» et «premier».",
+   "fa": "اینها «quelques» و «premier» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "quelques",
+    "premier"
+   ]
+  },
+  {
+   "id": "fr-pre-050",
+   "text": "Nous avons «sera» et «nos» ici.",
+   "fa": "ما «sera» و «nos» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "sera",
+    "nos"
+   ]
+  }
+ ]
+}

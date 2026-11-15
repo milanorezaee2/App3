@@ -12,6 +12,8 @@ import { RUSSIAN_PRE_A1_LESSONS, RUSSIAN_PRE_A1_MODULES, RUSSIAN_PRE_A1_SUBTITLE
 import { RUSSIAN_B1_EXPANSION_LESSONS } from './russianB1Expansion';
 import { RUSSIAN_B2_EXPANSION_LESSONS } from './russianB2Expansion';
 import { RUSSIAN_C1_EXPANSION_LESSONS } from './russianC1Expansion';
+import { labLessonsOf, insertLabLessons } from '../content/labLessons';
+import type { LabLesson } from '../content/labLessonTypes';
 
 /**
  * دورهٔ روسی برای فارسی‌زبان‌ها — طراحی‌شده بر پایهٔ بهترین روش‌های آموزش زبان انگلیسی
@@ -826,11 +828,31 @@ const RUSSIAN_LESSON_LEVELS: Record<string, { levelId: RussianLevelId; subtitle:
   ...Object.fromEntries(RUSSIAN_C1_EXPANSION_LESSONS.map(lesson => [lesson.id, { levelId: 5 as const, subtitle: `تکمیلی · ${lesson.situation}` }])),
 };
 
-export const RUSSIAN_LESSONS: readonly RussianCourseLesson[] = RUSSIAN_STARTER_LESSONS.map((item, index) => {
+function russianLabLesson(lab: LabLesson): RussianCourseLesson {
+  return {
+    id: lab.id, levelId: lab.levelId, order: 0,
+    title: lab.title, subtitle: lab.subtitle, situation: lab.situation,
+    teachingFa: lab.teachingFa, durationMinutes: lab.durationMinutes,
+    sentences: lab.sentences.map((sentence, index) => ({
+      id: `${lab.id}-s${index + 1}`, text: sentence.text, fa: sentence.fa,
+      pronunciation: sentence.pronunciation,
+      ...(sentence.pattern ? { pattern: sentence.pattern } : {}),
+      vocabulary: sentence.vocabulary,
+    })),
+    dialogue: lab.dialogue, checks: lab.checks,
+  };
+}
+
+const russianBaseLessons: readonly RussianCourseLesson[] = RUSSIAN_STARTER_LESSONS.map((item, index) => {
   const level = RUSSIAN_LESSON_LEVELS[item.id];
   if (!level) throw new Error(`Russian lesson ${item.id} has no level assignment.`);
   return { ...item, ...level, order: index + 1 };
 });
+
+export const RUSSIAN_LESSONS: readonly RussianCourseLesson[] = insertLabLessons(
+  russianBaseLessons,
+  labLessonsOf('ru').map(russianLabLesson),
+).map((lesson, index) => ({ ...lesson, order: index + 1 }));
 
 export function findRussianLesson(id: string | undefined): RussianCourseLesson | undefined {
   return RUSSIAN_LESSONS.find(item => item.id === id);

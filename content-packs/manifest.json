@@ -4,169 +4,253 @@
     {
       "language": "de",
       "band": "A1",
-      "version": 2,
-      "path": "de/A1.v2.json",
+      "version": 6,
+      "path": "de/A1.v6.json",
       "sentences": 266
     },
     {
       "language": "de",
       "band": "A2",
-      "version": 2,
-      "path": "de/A2.v2.json",
+      "version": 6,
+      "path": "de/A2.v6.json",
       "sentences": 496
     },
     {
       "language": "de",
       "band": "B1",
-      "version": 2,
-      "path": "de/B1.v2.json",
-      "sentences": 474
+      "version": 6,
+      "path": "de/B1.v6.json",
+      "sentences": 424
+    },
+    {
+      "language": "de",
+      "band": "B2",
+      "version": 4,
+      "path": "de/B2.v4.json",
+      "sentences": 680
+    },
+    {
+      "language": "de",
+      "band": "C1",
+      "version": 4,
+      "path": "de/C1.v4.json",
+      "sentences": 1270
     },
     {
       "language": "de",
       "band": "pre",
-      "version": 1,
-      "path": "de/pre.v1.json",
+      "version": 5,
+      "path": "de/pre.v5.json",
       "sentences": 50
     },
     {
       "language": "en",
       "band": "A1",
-      "version": 1,
-      "path": "en/A1.v1.json",
-      "sentences": 60
+      "version": 5,
+      "path": "en/A1.v5.json",
+      "sentences": 0
     },
     {
       "language": "en",
       "band": "A2",
-      "version": 1,
-      "path": "en/A2.v1.json",
-      "sentences": 80
+      "version": 5,
+      "path": "en/A2.v5.json",
+      "sentences": 0
     },
     {
       "language": "en",
       "band": "B1",
-      "version": 1,
-      "path": "en/B1.v1.json",
-      "sentences": 200
+      "version": 5,
+      "path": "en/B1.v5.json",
+      "sentences": 80
+    },
+    {
+      "language": "en",
+      "band": "B2",
+      "version": 4,
+      "path": "en/B2.v4.json",
+      "sentences": 330
+    },
+    {
+      "language": "en",
+      "band": "C1",
+      "version": 4,
+      "path": "en/C1.v4.json",
+      "sentences": 980
     },
     {
       "language": "en",
       "band": "pre",
-      "version": 1,
-      "path": "en/pre.v1.json",
-      "sentences": 70
+      "version": 5,
+      "path": "en/pre.v5.json",
+      "sentences": 40
     },
     {
       "language": "es",
       "band": "A1",
-      "version": 2,
-      "path": "es/A1.v2.json",
+      "version": 6,
+      "path": "es/A1.v6.json",
       "sentences": 253
     },
     {
       "language": "es",
       "band": "A2",
-      "version": 2,
-      "path": "es/A2.v2.json",
-      "sentences": 354
+      "version": 6,
+      "path": "es/A2.v6.json",
+      "sentences": 314
     },
     {
       "language": "es",
       "band": "B1",
-      "version": 2,
-      "path": "es/B1.v2.json",
-      "sentences": 452
+      "version": 6,
+      "path": "es/B1.v6.json",
+      "sentences": 422
+    },
+    {
+      "language": "es",
+      "band": "B2",
+      "version": 4,
+      "path": "es/B2.v4.json",
+      "sentences": 590
+    },
+    {
+      "language": "es",
+      "band": "C1",
+      "version": 4,
+      "path": "es/C1.v4.json",
+      "sentences": 1060
     },
     {
       "language": "es",
       "band": "pre",
-      "version": 1,
-      "path": "es/pre.v1.json",
-      "sentences": 70
+      "version": 5,
+      "path": "es/pre.v5.json",
+      "sentences": 60
     },
     {
       "language": "fr",
       "band": "A1",
-      "version": 2,
-      "path": "fr/A1.v2.json",
+      "version": 6,
+      "path": "fr/A1.v6.json",
       "sentences": 258
     },
     {
       "language": "fr",
       "band": "A2",
-      "version": 2,
-      "path": "fr/A2.v2.json",
-      "sentences": 338
+      "version": 6,
+      "path": "fr/A2.v6.json",
+      "sentences": 298
     },
     {
       "language": "fr",
       "band": "B1",
-      "version": 2,
-      "path": "fr/B1.v2.json",
-      "sentences": 450
+      "version": 6,
+      "path": "fr/B1.v6.json",
+      "sentences": 420
+    },
+    {
+      "language": "fr",
+      "band": "B2",
+      "version": 4,
+      "path": "fr/B2.v4.json",
+      "sentences": 610
+    },
+    {
+      "language": "fr",
+      "band": "C1",
+      "version": 4,
+      "path": "fr/C1.v4.json",
+      "sentences": 1120
     },
     {
       "language": "fr",
       "band": "pre",
-      "version": 1,
-      "path": "fr/pre.v1.json",
+      "version": 5,
+      "path": "fr/pre.v5.json",
       "sentences": 50
     },
     {
       "language": "ru",
       "band": "A1",
-      "version": 2,
-      "path": "ru/A1.v2.json",
+      "version": 6,
+      "path": "ru/A1.v6.json",
       "sentences": 263
     },
     {
       "language": "ru",
       "band": "A2",
-      "version": 2,
-      "path": "ru/A2.v2.json",
-      "sentences": 312
+      "version": 6,
+      "path": "ru/A2.v6.json",
+      "sentences": 292
     },
     {
       "language": "ru",
       "band": "B1",
-      "version": 1,
-      "path": "ru/B1.v1.json",
-      "sentences": 400
+      "version": 5,
+      "path": "ru/B1.v5.json",
+      "sentences": 320
+    },
+    {
+      "language": "ru",
+      "band": "B2",
+      "version": 4,
+      "path": "ru/B2.v4.json",
+      "sentences": 620
+    },
+    {
+      "language": "ru",
+      "band": "C1",
+      "version": 4,
+      "path": "ru/C1.v4.json",
+      "sentences": 1170
     },
     {
       "language": "ru",
       "band": "pre",
-      "version": 2,
-      "path": "ru/pre.v2.json",
+      "version": 6,
+      "path": "ru/pre.v6.json",
       "sentences": 190
     },
     {
       "language": "tr",
       "band": "A1",
-      "version": 2,
-      "path": "tr/A1.v2.json",
+      "version": 6,
+      "path": "tr/A1.v6.json",
       "sentences": 218
     },
     {
       "language": "tr",
       "band": "A2",
-      "version": 1,
-      "path": "tr/A2.v1.json",
+      "version": 5,
+      "path": "tr/A2.v5.json",
       "sentences": 130
     },
     {
       "language": "tr",
       "band": "B1",
-      "version": 1,
-      "path": "tr/B1.v1.json",
+      "version": 5,
+      "path": "tr/B1.v5.json",
       "sentences": 240
     },
     {
       "language": "tr",
+      "band": "B2",
+      "version": 4,
+      "path": "tr/B2.v4.json",
+      "sentences": 520
+    },
+    {
+      "language": "tr",
+      "band": "C1",
+      "version": 4,
+      "path": "tr/C1.v4.json",
+      "sentences": 1150
+    },
+    {
+      "language": "tr",
       "band": "pre",
-      "version": 1,
-      "path": "tr/pre.v1.json",
+      "version": 5,
+      "path": "tr/pre.v5.json",
       "sentences": 59
     }
   ]

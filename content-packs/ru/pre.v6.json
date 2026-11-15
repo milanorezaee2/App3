@@ -1,0 +1,1912 @@
+{
+ "schema": 1,
+ "language": "ru",
+ "band": "pre",
+ "version": 6,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "ru-pre-001",
+   "text": "Я в Москве.",
+   "fa": "من در مسکو هستم.",
+   "pronunciation": "ya v mask-VYÉ",
+   "pattern": "Я в <предл.>.",
+   "targetWords": [
+    "в"
+   ]
+  },
+  {
+   "id": "ru-pre-002",
+   "text": "Книга в столе.",
+   "fa": "کتاب داخل میز است.",
+   "pronunciation": "KNÍ-ga f sta-LYÉ",
+   "pattern": "<что> в <предл.>.",
+   "targetWords": [
+    "в"
+   ]
+  },
+  {
+   "id": "ru-pre-003",
+   "text": "Анна сейчас в школе.",
+   "fa": "آنا الان در مدرسه است.",
+   "pronunciation": "ÁN-na si-CHÁS f SHKÓ-lye",
+   "pattern": "<кто> сейчас в <предл.>.",
+   "targetWords": [
+    "в"
+   ]
+  },
+  {
+   "id": "ru-pre-004",
+   "text": "Чай и кофе, пожалуйста.",
+   "fa": "چای و قهوه، لطفاً.",
+   "pronunciation": "chay i KÓ-fye",
+   "pattern": "<А> и <Б>, пожалуйста.",
+   "targetWords": [
+    "и"
+   ]
+  },
+  {
+   "id": "ru-pre-005",
+   "text": "Я и ты — студенты.",
+   "fa": "من و تو دانشجو هستیم.",
+   "pronunciation": "ya i ty stu-DYÉN-ty",
+   "pattern": "<А> и <Б> — <кто>.",
+   "targetWords": [
+    "и"
+   ]
+  },
+  {
+   "id": "ru-pre-006",
+   "text": "Ручка и телефон на столе.",
+   "fa": "خودکار و تلفن روی میز است.",
+   "pronunciation": "RÚCH-ka i ti-li-FÓN na sta-LYÉ",
+   "pattern": "<А> и <Б> на <предл.>.",
+   "targetWords": [
+    "и"
+   ]
+  },
+  {
+   "id": "ru-pre-007",
+   "text": "Книга на столе.",
+   "fa": "کتاب روی میز است.",
+   "pronunciation": "KNÍ-ga na sta-LYÉ",
+   "pattern": "<что> на <предл.>.",
+   "targetWords": [
+    "на"
+   ]
+  },
+  {
+   "id": "ru-pre-008",
+   "text": "Телефон на столе?",
+   "fa": "تلفن روی میز است؟",
+   "pronunciation": "ti-li-FÓN na sta-LYÉ",
+   "pattern": "<что> на <предл.>?",
+   "targetWords": [
+    "на"
+   ]
+  },
+  {
+   "id": "ru-pre-009",
+   "text": "Телефон не на столе.",
+   "fa": "تلفن روی میز نیست.",
+   "pronunciation": "ti-li-FÓN ni na sta-LYÉ",
+   "pattern": "<что> не на <предл.>.",
+   "targetWords": [
+    "на"
+   ]
+  },
+  {
+   "id": "ru-pre-010",
+   "text": "Кофе с молоком, пожалуйста.",
+   "fa": "قهوه با شیر، لطفاً.",
+   "pronunciation": "KÓ-fye s ma-la-KÓM",
+   "pattern": "<что> с <твор.>.",
+   "targetWords": [
+    "с"
+   ]
+  },
+  {
+   "id": "ru-pre-011",
+   "text": "Я здесь с Анной.",
+   "fa": "من اینجا با آنا هستم.",
+   "pronunciation": "ya zdyes' s ÁN-nay",
+   "pattern": "Я здесь с <твор.>.",
+   "targetWords": [
+    "с"
+   ]
+  },
+  {
+   "id": "ru-pre-012",
+   "text": "Чай с сахаром?",
+   "fa": "چای با شکر؟",
+   "pronunciation": "chay s SÁ-kha-ram",
+   "pattern": "<что> с <твор.>?",
+   "targetWords": [
+    "с"
+   ]
+  },
+  {
+   "id": "ru-pre-013",
+   "text": "Я понимаю по-русски.",
+   "fa": "من روسی می‌فهمم.",
+   "pronunciation": "ya pa-ni-MÁ-yu pa-RÚS-ki",
+   "pattern": "Я понимаю по-<язык>.",
+   "targetWords": [
+    "по"
+   ]
+  },
+  {
+   "id": "ru-pre-014",
+   "text": "Вы понимаете по-английски?",
+   "fa": "انگلیسی می‌فهمید؟",
+   "pronunciation": "vy pa-ni-MÁ-yi-tye pa-an-GLÍY-ski",
+   "pattern": "Вы понимаете по-<язык>?",
+   "targetWords": [
+    "по"
+   ]
+  },
+  {
+   "id": "ru-pre-015",
+   "text": "Спасибо за кофе.",
+   "fa": "ممنون بابت قهوه.",
+   "pronunciation": "spa-SÍ-ba za KÓ-fye",
+   "pattern": "Спасибо за <вин.>.",
+   "targetWords": [
+    "за"
+   ]
+  },
+  {
+   "id": "ru-pre-016",
+   "text": "Спасибо за всё!",
+   "fa": "ممنون بابت همه چیز!",
+   "pronunciation": "spa-SÍ-ba za fsyo",
+   "pattern": "Спасибо за всё!",
+   "targetWords": [
+    "за"
+   ]
+  },
+  {
+   "id": "ru-pre-017",
+   "text": "Сколько за чай?",
+   "fa": "چای چند است؟",
+   "pronunciation": "SKÓL'-ka za chay",
+   "pattern": "Сколько за <вин.>?",
+   "targetWords": [
+    "за"
+   ]
+  },
+  {
+   "id": "ru-pre-018",
+   "text": "Это для тебя.",
+   "fa": "این برای توست.",
+   "pronunciation": "É-ta dlya ti-BYÁ",
+   "pattern": "Это для <род.>.",
+   "targetWords": [
+    "для"
+   ]
+  },
+  {
+   "id": "ru-pre-019",
+   "text": "Чай для вас, кофе для меня.",
+   "fa": "چای برای شما، قهوه برای من.",
+   "pronunciation": "chay dlya vas, KÓ-fye dlya mi-NYÁ",
+   "pattern": "<что> для <род.>.",
+   "targetWords": [
+    "для"
+   ]
+  },
+  {
+   "id": "ru-pre-020",
+   "text": "Это место для вас.",
+   "fa": "این جا برای شماست.",
+   "pronunciation": "É-ta MYÉS-ta dlya vas",
+   "pattern": "Это место для <род.>.",
+   "targetWords": [
+    "для"
+   ]
+  },
+  {
+   "id": "ru-pre-021",
+   "text": "Это книга о Москве.",
+   "fa": "این کتابی دربارهٔ مسکو است.",
+   "pronunciation": "É-ta KNÍ-ga a mask-VYÉ",
+   "pattern": "Это книга о <предл.>.",
+   "targetWords": [
+    "о"
+   ]
+  },
+  {
+   "id": "ru-pre-022",
+   "text": "У меня вопрос о времени.",
+   "fa": "سؤالی دربارهٔ زمان دارم.",
+   "pronunciation": "u mi-NYÁ va-PRÓS a VRYÉ-mi-ni",
+   "pattern": "У меня вопрос о <предл.>.",
+   "targetWords": [
+    "о"
+   ]
+  },
+  {
+   "id": "ru-pre-023",
+   "text": "Я иду к Анне.",
+   "fa": "پیش آنا می‌روم.",
+   "pronunciation": "ya i-DÚ k ÁN-nye",
+   "pattern": "Я иду к <дат.>.",
+   "targetWords": [
+    "к"
+   ]
+  },
+  {
+   "id": "ru-pre-024",
+   "text": "Это к чаю.",
+   "fa": "این برای کنار چای است.",
+   "pronunciation": "É-ta k CHÁ-yu",
+   "pattern": "Это к <дат.>.",
+   "targetWords": [
+    "к"
+   ]
+  },
+  {
+   "id": "ru-pre-025",
+   "text": "Я знаю, но не понимаю.",
+   "fa": "می‌دانم، ولی نمی‌فهمم.",
+   "pronunciation": "ya ZNÁ-yu, no ni pa-ni-MÁ-yu",
+   "pattern": "<фраза>, но <фраза>.",
+   "targetWords": [
+    "но"
+   ]
+  },
+  {
+   "id": "ru-pre-026",
+   "text": "Хорошо, но не сегодня.",
+   "fa": "خوب، ولی نه امروز.",
+   "pronunciation": "kha-ra-SHÓ, no ni si-VÓD-nya",
+   "pattern": "<нареч.>, но не <когда>.",
+   "targetWords": [
+    "но"
+   ]
+  },
+  {
+   "id": "ru-pre-027",
+   "text": "Я студент, но не из Москвы.",
+   "fa": "من دانشجو هستم، ولی اهل مسکو نیستم.",
+   "pronunciation": "ya stu-DYÉNT, no ni iz mask-VY",
+   "pattern": "Я <кто>, но не из <род.>.",
+   "targetWords": [
+    "но"
+   ]
+  },
+  {
+   "id": "ru-pre-028",
+   "text": "Это то место?",
+   "fa": "این همان جاست؟",
+   "pronunciation": "É-ta to MYÉS-ta",
+   "pattern": "Это то <что>?",
+   "targetWords": [
+    "то"
+   ]
+  },
+  {
+   "id": "ru-pre-029",
+   "text": "Если не чай, то кофе.",
+   "fa": "اگر چای نه، پس قهوه.",
+   "pronunciation": "YÉS-li ni chay, to KÓ-fye",
+   "pattern": "Если не <А>, то <Б>.",
+   "targetWords": [
+    "то"
+   ]
+  },
+  {
+   "id": "ru-pre-030",
+   "text": "Это его телефон.",
+   "fa": "این تلفن اوست.",
+   "pronunciation": "É-ta yi-VÓ ti-li-FÓN",
+   "pattern": "Это его <что>.",
+   "targetWords": [
+    "его"
+   ]
+  },
+  {
+   "id": "ru-pre-031",
+   "text": "Я его знаю.",
+   "fa": "او را می‌شناسم.",
+   "pronunciation": "ya yi-VÓ ZNÁ-yu",
+   "pattern": "Я его знаю.",
+   "targetWords": [
+    "его"
+   ]
+  },
+  {
+   "id": "ru-pre-032",
+   "text": "Я его не понимаю.",
+   "fa": "حرفش را نمی‌فهمم.",
+   "pronunciation": "ya yi-VÓ ni pa-ni-MÁ-yu",
+   "pattern": "Я его не понимаю.",
+   "targetWords": [
+    "его"
+   ]
+  },
+  {
+   "id": "ru-pre-033",
+   "text": "Он мой друг.",
+   "fa": "او دوست من است.",
+   "pronunciation": "on moy druk",
+   "pattern": "Он мой <кто>.",
+   "targetWords": [
+    "он"
+   ]
+  },
+  {
+   "id": "ru-pre-034",
+   "text": "Он студент из Ирана.",
+   "fa": "او دانشجویی از ایران است.",
+   "pronunciation": "on stu-DYÉNT iz i-RÁ-na",
+   "pattern": "Он <кто> из <род.>.",
+   "targetWords": [
+    "он"
+   ]
+  },
+  {
+   "id": "ru-pre-035",
+   "text": "Он здесь сейчас?",
+   "fa": "او الان اینجاست؟",
+   "pronunciation": "on zdyes' si-CHÁS",
+   "pattern": "Он <где> сейчас?",
+   "targetWords": [
+    "он"
+   ]
+  },
+  {
+   "id": "ru-pre-036",
+   "text": "Это от Анны.",
+   "fa": "این از طرف آناست.",
+   "pronunciation": "É-ta at ÁN-ny",
+   "pattern": "Это от <род.>.",
+   "targetWords": [
+    "от"
+   ]
+  },
+  {
+   "id": "ru-pre-037",
+   "text": "Спасибо от меня.",
+   "fa": "از طرف من ممنون.",
+   "pronunciation": "spa-SÍ-ba at mi-NYÁ",
+   "pattern": "Спасибо от <род.>.",
+   "targetWords": [
+    "от"
+   ]
+  },
+  {
+   "id": "ru-pre-038",
+   "text": "Все уже здесь.",
+   "fa": "همه دیگر اینجا هستند.",
+   "pronunciation": "fsye u-ZHÉ zdyes'",
+   "pattern": "Все уже <где>.",
+   "targetWords": [
+    "все"
+   ]
+  },
+  {
+   "id": "ru-pre-039",
+   "text": "Все знают Анну.",
+   "fa": "همه آنا را می‌شناسند.",
+   "pronunciation": "fsye ZNÁ-yut ÁN-nu",
+   "pattern": "Все знают <вин.>.",
+   "targetWords": [
+    "все"
+   ]
+  },
+  {
+   "id": "ru-pre-040",
+   "text": "Это так просто!",
+   "fa": "این خیلی ساده است!",
+   "pronunciation": "É-ta tak PRÓS-ta",
+   "pattern": "Это так <нареч.>!",
+   "targetWords": [
+    "так"
+   ]
+  },
+  {
+   "id": "ru-pre-041",
+   "text": "Так хорошо здесь.",
+   "fa": "اینجا خیلی خوب است.",
+   "pronunciation": "tak kha-ra-SHÓ zdyes'",
+   "pattern": "Так <нареч.> <где>.",
+   "targetWords": [
+    "так"
+   ]
+  },
+  {
+   "id": "ru-pre-042",
+   "text": "Это же мой стол.",
+   "fa": "این که میز من است.",
+   "pronunciation": "É-ta zhe moy stol",
+   "pattern": "Это же мой <что>.",
+   "targetWords": [
+    "же"
+   ]
+  },
+  {
+   "id": "ru-pre-043",
+   "text": "Мы сейчас здесь.",
+   "fa": "ما الان اینجاییم.",
+   "pronunciation": "my si-CHÁS zdyes'",
+   "pattern": "Мы сейчас <где>.",
+   "targetWords": [
+    "мы"
+   ]
+  },
+  {
+   "id": "ru-pre-044",
+   "text": "Мы студенты из Ирана.",
+   "fa": "ما دانشجویانی از ایران هستیم.",
+   "pronunciation": "my stu-DYÉN-ty iz i-RÁ-na",
+   "pattern": "Мы <кто> из <род.>.",
+   "targetWords": [
+    "мы"
+   ]
+  },
+  {
+   "id": "ru-pre-045",
+   "text": "Мы не понимаем.",
+   "fa": "ما نمی‌فهمیم.",
+   "pronunciation": "my ni pa-ni-MÁ-yem",
+   "pattern": "Мы не <глагол>.",
+   "targetWords": [
+    "мы"
+   ]
+  },
+  {
+   "id": "ru-pre-046",
+   "text": "Только воду, пожалуйста.",
+   "fa": "فقط آب، لطفاً.",
+   "pronunciation": "TÓL'-ka VÓ-du",
+   "pattern": "Только <вин.>, пожалуйста.",
+   "targetWords": [
+    "только"
+   ]
+  },
+  {
+   "id": "ru-pre-047",
+   "text": "У меня только один вопрос.",
+   "fa": "من فقط یک سؤال دارم.",
+   "pronunciation": "u mi-NYÁ TÓL'-ka a-DÍN va-PRÓS",
+   "pattern": "У меня только <число> <что>.",
+   "targetWords": [
+    "только"
+   ]
+  },
+  {
+   "id": "ru-pre-048",
+   "text": "Это только чай.",
+   "fa": "این فقط چای است.",
+   "pronunciation": "É-ta TÓL'-ka chay",
+   "pattern": "Это только <что>.",
+   "targetWords": [
+    "только"
+   ]
+  },
+  {
+   "id": "ru-pre-049",
+   "text": "Я был здесь.",
+   "fa": "من اینجا بودم.",
+   "pronunciation": "ya byl zdyes'",
+   "pattern": "Я был <где>.",
+   "targetWords": [
+    "был"
+   ]
+  },
+  {
+   "id": "ru-pre-050",
+   "text": "Он был студент.",
+   "fa": "او دانشجو بود.",
+   "pronunciation": "on byl stu-DYÉNT",
+   "pattern": "Он был <кто>.",
+   "targetWords": [
+    "был"
+   ]
+  },
+  {
+   "id": "ru-pre-051",
+   "text": "Если да, то хорошо.",
+   "fa": "اگر بله، پس خوب است.",
+   "pronunciation": "YÉS-li da, to kha-ra-SHÓ",
+   "pattern": "Если <А>, то <Б>.",
+   "targetWords": [
+    "если"
+   ]
+  },
+  {
+   "id": "ru-pre-052",
+   "text": "Если нет, то завтра.",
+   "fa": "اگر نه، پس فردا.",
+   "pronunciation": "YÉS-li nyet, to ZÁF-tra",
+   "pattern": "Если нет, то <когда>.",
+   "targetWords": [
+    "если"
+   ]
+  },
+  {
+   "id": "ru-pre-053",
+   "text": "Когда ты здесь?",
+   "fa": "کی اینجایی؟",
+   "pronunciation": "kag-DÁ ty zdyes'",
+   "pattern": "Когда ты <где>?",
+   "targetWords": [
+    "когда"
+   ]
+  },
+  {
+   "id": "ru-pre-054",
+   "text": "Когда у вас время?",
+   "fa": "کی وقت دارید؟",
+   "pronunciation": "kag-DÁ u vas VRYÉ-mya",
+   "pattern": "Когда у вас время?",
+   "targetWords": [
+    "когда"
+   ]
+  },
+  {
+   "id": "ru-pre-055",
+   "text": "Это было хорошо.",
+   "fa": "این خوب بود.",
+   "pronunciation": "É-ta BY-la kha-ra-SHÓ",
+   "pattern": "Это было <нареч.>.",
+   "targetWords": [
+    "было"
+   ]
+  },
+  {
+   "id": "ru-pre-056",
+   "text": "Было плохо, теперь хорошо.",
+   "fa": "بد بود، حالا خوب است.",
+   "pronunciation": "BY-la PLÓ-kha, ti-PYÉR' kha-ra-SHÓ",
+   "pattern": "Было <нареч.>, теперь <нареч.>.",
+   "targetWords": [
+    "было"
+   ]
+  },
+  {
+   "id": "ru-pre-057",
+   "text": "Я уже здесь.",
+   "fa": "من دیگر اینجا هستم.",
+   "pronunciation": "ya u-ZHÉ zdyes'",
+   "pattern": "Я уже <где>.",
+   "targetWords": [
+    "уже"
+   ]
+  },
+  {
+   "id": "ru-pre-058",
+   "text": "Уже вечер, пока!",
+   "fa": "دیگر عصر شده، فعلاً!",
+   "pronunciation": "u-ZHÉ VYÉ-cher, pa-KÁ",
+   "pattern": "Уже <время>, пока!",
+   "targetWords": [
+    "уже"
+   ]
+  },
+  {
+   "id": "ru-pre-059",
+   "text": "Я уже знаю.",
+   "fa": "دیگر می‌دانم.",
+   "pronunciation": "ya u-ZHÉ ZNÁ-yu",
+   "pattern": "Я уже знаю.",
+   "targetWords": [
+    "уже"
+   ]
+  },
+  {
+   "id": "ru-pre-060",
+   "text": "Ещё чай, пожалуйста.",
+   "fa": "باز هم چای، لطفاً.",
+   "pronunciation": "yi-SHCHÓ chay",
+   "pattern": "Ещё <что>, пожалуйста.",
+   "targetWords": [
+    "еще"
+   ]
+  },
+  {
+   "id": "ru-pre-061",
+   "text": "Я ещё не знаю.",
+   "fa": "هنوز نمی‌دانم.",
+   "pronunciation": "ya yi-SHCHÓ ni ZNÁ-yu",
+   "pattern": "Я ещё не <глагол>.",
+   "targetWords": [
+    "еще"
+   ]
+  },
+  {
+   "id": "ru-pre-062",
+   "text": "Чай или кофе?",
+   "fa": "چای یا قهوه؟",
+   "pronunciation": "chay Í-li KÓ-fye",
+   "pattern": "<А> или <Б>?",
+   "targetWords": [
+    "или"
+   ]
+  },
+  {
+   "id": "ru-pre-063",
+   "text": "Сегодня или завтра?",
+   "fa": "امروز یا فردا؟",
+   "pronunciation": "si-VÓD-nya Í-li ZÁF-tra",
+   "pattern": "<А> или <Б>?",
+   "targetWords": [
+    "или"
+   ]
+  },
+  {
+   "id": "ru-pre-064",
+   "text": "Да или нет?",
+   "fa": "بله یا نه؟",
+   "pronunciation": "da Í-li nyet",
+   "pattern": "Да или нет?",
+   "targetWords": [
+    "или"
+   ]
+  },
+  {
+   "id": "ru-pre-065",
+   "text": "Это их стол.",
+   "fa": "این میز آن‌هاست.",
+   "pronunciation": "É-ta ikh stol",
+   "pattern": "Это их <что>.",
+   "targetWords": [
+    "их"
+   ]
+  },
+  {
+   "id": "ru-pre-066",
+   "text": "Я их знаю.",
+   "fa": "آن‌ها را می‌شناسم.",
+   "pronunciation": "ya ikh ZNÁ-yu",
+   "pattern": "Я их знаю.",
+   "targetWords": [
+    "их"
+   ]
+  },
+  {
+   "id": "ru-pre-067",
+   "text": "Они тоже здесь.",
+   "fa": "آن‌ها هم اینجا هستند.",
+   "pronunciation": "a-NÍ TÓ-zhe zdyes'",
+   "pattern": "Они тоже <где>.",
+   "targetWords": [
+    "они"
+   ]
+  },
+  {
+   "id": "ru-pre-068",
+   "text": "Они студенты из Москвы.",
+   "fa": "آن‌ها دانشجویانی از مسکو هستند.",
+   "pronunciation": "a-NÍ stu-DYÉN-ty iz mask-VY",
+   "pattern": "Они <кто> из <род.>.",
+   "targetWords": [
+    "они"
+   ]
+  },
+  {
+   "id": "ru-pre-069",
+   "text": "Завтра будет хорошо.",
+   "fa": "فردا خوب می‌شود.",
+   "pronunciation": "ZÁF-tra BÚ-dyet kha-ra-SHÓ",
+   "pattern": "<когда> будет <нареч.>.",
+   "targetWords": [
+    "будет"
+   ]
+  },
+  {
+   "id": "ru-pre-070",
+   "text": "Всё будет хорошо.",
+   "fa": "همه چیز خوب می‌شود.",
+   "pronunciation": "fsyo BÚ-dyet kha-ra-SHÓ",
+   "pattern": "Всё будет <нареч.>.",
+   "targetWords": [
+    "будет"
+   ]
+  },
+  {
+   "id": "ru-pre-071",
+   "text": "Это будет завтра.",
+   "fa": "این فردا خواهد بود.",
+   "pronunciation": "É-ta BÚ-dyet ZÁF-tra",
+   "pattern": "Это будет <когда>.",
+   "targetWords": [
+    "будет"
+   ]
+  },
+  {
+   "id": "ru-pre-072",
+   "text": "Она тоже студентка.",
+   "fa": "او هم دانشجوست.",
+   "pronunciation": "a-NÁ TÓ-zhe stu-DYÉNT-ka",
+   "pattern": "Она тоже <кто>.",
+   "targetWords": [
+    "она"
+   ]
+  },
+  {
+   "id": "ru-pre-073",
+   "text": "Она сейчас здесь?",
+   "fa": "او الان اینجاست؟",
+   "pronunciation": "a-NÁ si-CHÁS zdyes'",
+   "pattern": "Она сейчас <где>?",
+   "targetWords": [
+    "она"
+   ]
+  },
+  {
+   "id": "ru-pre-074",
+   "text": "Она из Москвы.",
+   "fa": "او اهل مسکو است.",
+   "pronunciation": "a-NÁ iz mask-VY",
+   "pattern": "Она из <род.>.",
+   "targetWords": [
+    "она"
+   ]
+  },
+  {
+   "id": "ru-pre-075",
+   "text": "Во сколько завтра?",
+   "fa": "فردا ساعت چند؟",
+   "pronunciation": "va SKÓL'-ka ZÁF-tra",
+   "pattern": "Во сколько <когда>?",
+   "targetWords": [
+    "во"
+   ]
+  },
+  {
+   "id": "ru-pre-076",
+   "text": "Может быть, завтра.",
+   "fa": "شاید فردا.",
+   "pronunciation": "MÓ-zhet byt', ZÁF-tra",
+   "pattern": "Может быть, <когда>.",
+   "targetWords": [
+    "может"
+   ]
+  },
+  {
+   "id": "ru-pre-077",
+   "text": "Может быть, да.",
+   "fa": "شاید بله.",
+   "pronunciation": "MÓ-zhet byt', da",
+   "pattern": "Может быть, <ответ>.",
+   "targetWords": [
+    "может"
+   ]
+  },
+  {
+   "id": "ru-pre-078",
+   "text": "После семи я здесь.",
+   "fa": "بعد از ساعت هفت اینجا هستم.",
+   "pronunciation": "PÓS-lye si-MÍ ya zdyes'",
+   "pattern": "После <время> я <где>.",
+   "targetWords": [
+    "после"
+   ]
+  },
+  {
+   "id": "ru-pre-079",
+   "text": "Кофе после чая?",
+   "fa": "قهوه بعد از چای؟",
+   "pronunciation": "KÓ-fye PÓS-lye CHÁ-ya",
+   "pattern": "<А> после <Б>?",
+   "targetWords": [
+    "после"
+   ]
+  },
+  {
+   "id": "ru-pre-080",
+   "text": "Очень хорошо, спасибо.",
+   "fa": "خیلی خوب، ممنون.",
+   "pronunciation": "Ó-chen' kha-ra-SHÓ",
+   "pattern": "Очень <нареч.>, спасибо.",
+   "targetWords": [
+    "очень"
+   ]
+  },
+  {
+   "id": "ru-pre-081",
+   "text": "Это очень просто.",
+   "fa": "این خیلی ساده است.",
+   "pronunciation": "É-ta Ó-chen' PRÓS-ta",
+   "pattern": "Это очень <нареч.>.",
+   "targetWords": [
+    "очень"
+   ]
+  },
+  {
+   "id": "ru-pre-082",
+   "text": "Мы были здесь.",
+   "fa": "ما اینجا بودیم.",
+   "pronunciation": "my BY-li zdyes'",
+   "pattern": "Мы были <где>.",
+   "targetWords": [
+    "были"
+   ]
+  },
+  {
+   "id": "ru-pre-083",
+   "text": "Они были студенты.",
+   "fa": "آن‌ها دانشجو بودند.",
+   "pronunciation": "a-NÍ BY-li stu-DYÉN-ty",
+   "pattern": "Они были <кто>.",
+   "targetWords": [
+    "были"
+   ]
+  },
+  {
+   "id": "ru-pre-084",
+   "text": "Чай со льдом, пожалуйста.",
+   "fa": "چای با یخ، لطفاً.",
+   "pronunciation": "chay sa L'DOM",
+   "pattern": "<что> со <твор.>.",
+   "targetWords": [
+    "со"
+   ]
+  },
+  {
+   "id": "ru-pre-085",
+   "text": "Она была здесь.",
+   "fa": "او اینجا بود.",
+   "pronunciation": "a-NÁ by-LÁ zdyes'",
+   "pattern": "Она была <где>.",
+   "targetWords": [
+    "была"
+   ]
+  },
+  {
+   "id": "ru-pre-086",
+   "text": "Это была Анна.",
+   "fa": "آن آنا بود.",
+   "pronunciation": "É-ta by-LÁ ÁN-na",
+   "pattern": "Это была <кто>.",
+   "targetWords": [
+    "была"
+   ]
+  },
+  {
+   "id": "ru-pre-087",
+   "text": "Я также студент.",
+   "fa": "من هم دانشجو هستم.",
+   "pronunciation": "ya TÁK-zhe stu-DYÉNT",
+   "pattern": "Я также <кто>.",
+   "targetWords": [
+    "также"
+   ]
+  },
+  {
+   "id": "ru-pre-088",
+   "text": "Вот мой телефон.",
+   "fa": "این تلفن من است.",
+   "pronunciation": "vot moy ti-li-FÓN",
+   "pattern": "Вот мой <что>.",
+   "targetWords": [
+    "вот"
+   ]
+  },
+  {
+   "id": "ru-pre-089",
+   "text": "Вот, пожалуйста, чай.",
+   "fa": "بفرمایید، چای.",
+   "pronunciation": "vot, pa-ZHÁ-lus-ta, chay",
+   "pattern": "Вот, пожалуйста, <что>.",
+   "targetWords": [
+    "вот"
+   ]
+  },
+  {
+   "id": "ru-pre-090",
+   "text": "Это её ручка.",
+   "fa": "این خودکار اوست.",
+   "pronunciation": "É-ta yi-YÓ RÚCH-ka",
+   "pattern": "Это её <что>.",
+   "targetWords": [
+    "ее"
+   ]
+  },
+  {
+   "id": "ru-pre-091",
+   "text": "Чай с чем, с молоком?",
+   "fa": "چای با چی، با شیر؟",
+   "pronunciation": "chay s chem, s ma-la-KÓM",
+   "pattern": "<что> с чем?",
+   "targetWords": [
+    "чем"
+   ]
+  },
+  {
+   "id": "ru-pre-092",
+   "text": "Я хочу быть здесь.",
+   "fa": "می‌خواهم اینجا باشم.",
+   "pronunciation": "ya kha-CHÚ byt' zdyes'",
+   "pattern": "Я хочу быть <где>.",
+   "targetWords": [
+    "быть"
+   ]
+  },
+  {
+   "id": "ru-pre-093",
+   "text": "Где мой телефон?",
+   "fa": "تلفن من کجاست؟",
+   "pronunciation": "gdye moy ti-li-FÓN",
+   "pattern": "Где мой <что>?",
+   "targetWords": [
+    "где"
+   ]
+  },
+  {
+   "id": "ru-pre-094",
+   "text": "Где ты сейчас?",
+   "fa": "الان کجایی؟",
+   "pronunciation": "gdye ty si-CHÁS",
+   "pattern": "Где ты сейчас?",
+   "targetWords": [
+    "где"
+   ]
+  },
+  {
+   "id": "ru-pre-095",
+   "text": "Где здесь вода?",
+   "fa": "اینجا آب کجاست؟",
+   "pronunciation": "gdye zdyes' va-DÁ",
+   "pattern": "Где здесь <что>?",
+   "targetWords": [
+    "где"
+   ]
+  },
+  {
+   "id": "ru-pre-096",
+   "text": "Ручка под столом.",
+   "fa": "خودکار زیر میز است.",
+   "pronunciation": "RÚCH-ka pat sta-LÓM",
+   "pattern": "<что> под <твор.>.",
+   "targetWords": [
+    "под"
+   ]
+  },
+  {
+   "id": "ru-pre-097",
+   "text": "Даже я знаю.",
+   "fa": "حتی من می‌دانم.",
+   "pronunciation": "DÁ-zhe ya ZNÁ-yu",
+   "pattern": "Даже <кто> знаю.",
+   "targetWords": [
+    "даже"
+   ]
+  },
+  {
+   "id": "ru-pre-098",
+   "text": "Можно воду, пожалуйста?",
+   "fa": "می‌شود آب بدهید، لطفاً؟",
+   "pronunciation": "MÓZH-na VÓ-du",
+   "pattern": "Можно <вин.>, пожалуйста?",
+   "targetWords": [
+    "можно"
+   ]
+  },
+  {
+   "id": "ru-pre-099",
+   "text": "Можно один вопрос?",
+   "fa": "می‌توانم یک سؤال بپرسم؟",
+   "pronunciation": "MÓZH-na a-DÍN va-PRÓS",
+   "pattern": "Можно <число> <что>?",
+   "targetWords": [
+    "можно"
+   ]
+  },
+  {
+   "id": "ru-pre-100",
+   "text": "Можно чай, пожалуйста?",
+   "fa": "می‌شود چای بدهید، لطفاً؟",
+   "pronunciation": "MÓZH-na chay",
+   "pattern": "Можно <вин.>, пожалуйста?",
+   "targetWords": [
+    "можно"
+   ]
+  },
+  {
+   "id": "ru-pre-101",
+   "text": "Это просто чай.",
+   "fa": "این فقط چای است.",
+   "pronunciation": "É-ta PRÓS-ta chay",
+   "pattern": "Это просто <что>.",
+   "targetWords": [
+    "просто"
+   ]
+  },
+  {
+   "id": "ru-pre-102",
+   "text": "Просто да или нет.",
+   "fa": "فقط بله یا نه.",
+   "pronunciation": "PRÓS-ta da Í-li nyet",
+   "pattern": "Просто <А> или <Б>.",
+   "targetWords": [
+    "просто"
+   ]
+  },
+  {
+   "id": "ru-pre-103",
+   "text": "Сейчас не время.",
+   "fa": "الان وقتش نیست.",
+   "pronunciation": "si-CHÁS ni VRYÉ-mya",
+   "pattern": "Сейчас не <что>.",
+   "targetWords": [
+    "сейчас"
+   ]
+  },
+  {
+   "id": "ru-pre-104",
+   "text": "Я сейчас здесь.",
+   "fa": "من الان اینجا هستم.",
+   "pronunciation": "ya si-CHÁS zdyes'",
+   "pattern": "Я сейчас <где>.",
+   "targetWords": [
+    "сейчас"
+   ]
+  },
+  {
+   "id": "ru-pre-105",
+   "text": "Это более просто.",
+   "fa": "این ساده‌تر است.",
+   "pronunciation": "É-ta BÓ-lye-ye PRÓS-ta",
+   "pattern": "Это более <нареч.>.",
+   "targetWords": [
+    "более"
+   ]
+  },
+  {
+   "id": "ru-pre-106",
+   "text": "Ну, пока, Анна!",
+   "fa": "خب، فعلاً، آنا!",
+   "pronunciation": "nu, pa-KÁ, ÁN-na",
+   "pattern": "Ну, пока, <имя>!",
+   "targetWords": [
+    "ну"
+   ]
+  },
+  {
+   "id": "ru-pre-107",
+   "text": "Ну, как дела?",
+   "fa": "خب، چطوری؟",
+   "pronunciation": "nu, kak di-LÁ",
+   "pattern": "Ну, <вопрос>?",
+   "targetWords": [
+    "ну"
+   ]
+  },
+  {
+   "id": "ru-pre-108",
+   "text": "Кофе без сахара.",
+   "fa": "قهوه بدون شکر.",
+   "pronunciation": "KÓ-fye byes SÁ-kha-ra",
+   "pattern": "<что> без <род.>.",
+   "targetWords": [
+    "без"
+   ]
+  },
+  {
+   "id": "ru-pre-109",
+   "text": "Чай без молока, пожалуйста.",
+   "fa": "چای بدون شیر، لطفاً.",
+   "pronunciation": "chay byez ma-la-KÁ",
+   "pattern": "<что> без <род.>, пожалуйста.",
+   "targetWords": [
+    "без"
+   ]
+  },
+  {
+   "id": "ru-pre-110",
+   "text": "Мне двадцать лет.",
+   "fa": "من بیست سال دارم.",
+   "pronunciation": "mnye DVÁ-tsat' lyet",
+   "pattern": "Мне <число> лет.",
+   "targetWords": [
+    "лет"
+   ]
+  },
+  {
+   "id": "ru-pre-111",
+   "text": "Сколько вам лет?",
+   "fa": "چند سالتان است؟",
+   "pronunciation": "SKÓL'-ka vam lyet",
+   "pattern": "Сколько вам лет?",
+   "targetWords": [
+    "лет"
+   ]
+  },
+  {
+   "id": "ru-pre-112",
+   "text": "У нас есть время.",
+   "fa": "ما وقت داریم.",
+   "pronunciation": "u nas yest' VRYÉ-mya",
+   "pattern": "У нас есть <что>.",
+   "targetWords": [
+    "нас"
+   ]
+  },
+  {
+   "id": "ru-pre-113",
+   "text": "Это для нас.",
+   "fa": "این برای ماست.",
+   "pronunciation": "É-ta dlya nas",
+   "pattern": "Это для нас.",
+   "targetWords": [
+    "нас"
+   ]
+  },
+  {
+   "id": "ru-pre-114",
+   "text": "У нас нет воды.",
+   "fa": "ما آب نداریم.",
+   "pronunciation": "u nas nyet va-DY",
+   "pattern": "У нас нет <род.>.",
+   "targetWords": [
+    "нас"
+   ]
+  },
+  {
+   "id": "ru-pre-115",
+   "text": "Ни чай, ни кофе.",
+   "fa": "نه چای، نه قهوه.",
+   "pronunciation": "ni chay, ni KÓ-fye",
+   "pattern": "Ни <А>, ни <Б>.",
+   "targetWords": [
+    "ни"
+   ]
+  },
+  {
+   "id": "ru-pre-116",
+   "text": "Там мой стол.",
+   "fa": "میز من آنجاست.",
+   "pronunciation": "tam moy stol",
+   "pattern": "Там мой <что>.",
+   "targetWords": [
+    "там"
+   ]
+  },
+  {
+   "id": "ru-pre-117",
+   "text": "Кто там, Анна?",
+   "fa": "کی آنجاست، آنا؟",
+   "pronunciation": "kto tam, ÁN-na",
+   "pattern": "Кто там, <имя>?",
+   "targetWords": [
+    "там"
+   ]
+  },
+  {
+   "id": "ru-pre-118",
+   "text": "Анна там, а я здесь.",
+   "fa": "آنا آنجاست و من اینجا.",
+   "pronunciation": "ÁN-na tam, a ya zdyes'",
+   "pattern": "<кто> там, а <кто> здесь.",
+   "targetWords": [
+    "там"
+   ]
+  },
+  {
+   "id": "ru-pre-119",
+   "text": "Он хороший человек.",
+   "fa": "او آدم خوبی است.",
+   "pronunciation": "on kha-RÓ-shiy chi-la-VYÉK",
+   "pattern": "Он <прил.> человек.",
+   "targetWords": [
+    "человек"
+   ]
+  },
+  {
+   "id": "ru-pre-120",
+   "text": "Кто этот человек?",
+   "fa": "این آدم کیست؟",
+   "pronunciation": "kto É-tat chi-la-VYÉK",
+   "pattern": "Кто этот человек?",
+   "targetWords": [
+    "человек"
+   ]
+  },
+  {
+   "id": "ru-pre-121",
+   "text": "Как ты себя чувствуешь?",
+   "fa": "حالت چطور است؟",
+   "pronunciation": "kak ty si-BYÁ CHÚST-vu-yesh",
+   "pattern": "Как ты себя чувствуешь?",
+   "targetWords": [
+    "себя"
+   ]
+  },
+  {
+   "id": "ru-pre-122",
+   "text": "Этот чай хороший.",
+   "fa": "این چای خوب است.",
+   "pronunciation": "É-tat chay kha-RÓ-shiy",
+   "pattern": "Этот <что> <прил.>.",
+   "targetWords": [
+    "этот"
+   ]
+  },
+  {
+   "id": "ru-pre-123",
+   "text": "Этот стол мой.",
+   "fa": "این میز مال من است.",
+   "pronunciation": "É-tat stol moy",
+   "pattern": "Этот <что> мой.",
+   "targetWords": [
+    "этот"
+   ]
+  },
+  {
+   "id": "ru-pre-124",
+   "text": "Который час сейчас?",
+   "fa": "الان ساعت چند است؟",
+   "pronunciation": "ka-TÓ-riy chas si-CHÁS",
+   "pattern": "Который час <когда>?",
+   "targetWords": [
+    "который"
+   ]
+  },
+  {
+   "id": "ru-pre-125",
+   "text": "Ещё раз, пожалуйста.",
+   "fa": "یک بار دیگر، لطفاً.",
+   "pronunciation": "yi-SHCHÓ ras",
+   "pattern": "Ещё раз, пожалуйста.",
+   "targetWords": [
+    "раз"
+   ]
+  },
+  {
+   "id": "ru-pre-126",
+   "text": "Один раз в день.",
+   "fa": "روزی یک بار.",
+   "pronunciation": "a-DÍN ras v dyen'",
+   "pattern": "<число> раз в <время>.",
+   "targetWords": [
+    "раз"
+   ]
+  },
+  {
+   "id": "ru-pre-127",
+   "text": "Спасибо от всех нас.",
+   "fa": "از طرف همهٔ ما ممنون.",
+   "pronunciation": "spa-SÍ-ba at fsyekh nas",
+   "pattern": "Спасибо от всех нас.",
+   "targetWords": [
+    "всех"
+   ]
+  },
+  {
+   "id": "ru-pre-128",
+   "text": "Теперь я понимаю.",
+   "fa": "حالا می‌فهمم.",
+   "pronunciation": "ti-PYÉR' ya pa-ni-MÁ-yu",
+   "pattern": "Теперь я <глагол>.",
+   "targetWords": [
+    "теперь"
+   ]
+  },
+  {
+   "id": "ru-pre-129",
+   "text": "Теперь всё хорошо.",
+   "fa": "حالا همه چیز خوب است.",
+   "pronunciation": "ti-PYÉR' fsyo kha-ra-SHÓ",
+   "pattern": "Теперь всё <нареч.>.",
+   "targetWords": [
+    "теперь"
+   ]
+  },
+  {
+   "id": "ru-pre-130",
+   "text": "Всего хорошего, Анна!",
+   "fa": "روز خوبی داشته باشی، آنا!",
+   "pronunciation": "fsi-VÓ kha-RÓ-shi-va",
+   "pattern": "Всего хорошего, <имя>!",
+   "targetWords": [
+    "всего"
+   ]
+  },
+  {
+   "id": "ru-pre-131",
+   "text": "Всего один вопрос.",
+   "fa": "فقط یک سؤال.",
+   "pronunciation": "fsi-VÓ a-DÍN va-PRÓS",
+   "pattern": "Всего <число> <что>.",
+   "targetWords": [
+    "всего"
+   ]
+  },
+  {
+   "id": "ru-pre-132",
+   "text": "Сегодня я здесь.",
+   "fa": "امروز اینجا هستم.",
+   "pronunciation": "si-VÓD-nya ya zdyes'",
+   "pattern": "Сегодня я <где>.",
+   "targetWords": [
+    "сегодня"
+   ]
+  },
+  {
+   "id": "ru-pre-133",
+   "text": "Сегодня хороший день.",
+   "fa": "امروز روز خوبی است.",
+   "pronunciation": "si-VÓD-nya kha-RÓ-shiy dyen'",
+   "pattern": "Сегодня <прил.> день.",
+   "targetWords": [
+    "сегодня"
+   ]
+  },
+  {
+   "id": "ru-pre-134",
+   "text": "Мне надо идти.",
+   "fa": "باید بروم.",
+   "pronunciation": "mnye NÁ-da it-TÍ",
+   "pattern": "Мне надо <глагол>.",
+   "targetWords": [
+    "надо"
+   ]
+  },
+  {
+   "id": "ru-pre-135",
+   "text": "Надо спросить Анну.",
+   "fa": "باید از آنا بپرسیم.",
+   "pronunciation": "NÁ-da spra-SÍT' ÁN-nu",
+   "pattern": "Надо <глагол> <вин.>.",
+   "targetWords": [
+    "надо"
+   ]
+  },
+  {
+   "id": "ru-pre-136",
+   "text": "Через час я здесь.",
+   "fa": "تا یک ساعت دیگر اینجا هستم.",
+   "pronunciation": "CHÉ-res chas ya zdyes'",
+   "pattern": "Через <время> я <где>.",
+   "targetWords": [
+    "через"
+   ]
+  },
+  {
+   "id": "ru-pre-137",
+   "text": "Через день или два.",
+   "fa": "یکی دو روز دیگر.",
+   "pronunciation": "CHÉ-rez dyen' Í-li dva",
+   "pattern": "Через <время> или <время>.",
+   "targetWords": [
+    "через"
+   ]
+  },
+  {
+   "id": "ru-pre-138",
+   "text": "Ему двадцать лет.",
+   "fa": "او بیست سال دارد.",
+   "pronunciation": "yi-MÚ DVÁ-tsat' lyet",
+   "pattern": "Ему <число> лет.",
+   "targetWords": [
+    "ему"
+   ]
+  },
+  {
+   "id": "ru-pre-139",
+   "text": "Это ему, не мне.",
+   "fa": "این برای اوست، نه برای من.",
+   "pronunciation": "É-ta yi-MÚ, ni mnye",
+   "pattern": "Это ему, не мне.",
+   "targetWords": [
+    "ему"
+   ]
+  },
+  {
+   "id": "ru-pre-140",
+   "text": "Я тоже студент.",
+   "fa": "من هم دانشجو هستم.",
+   "pronunciation": "ya TÓ-zhe stu-DYÉNT",
+   "pattern": "Я тоже <кто>.",
+   "targetWords": [
+    "тоже"
+   ]
+  },
+  {
+   "id": "ru-pre-141",
+   "text": "Мне тоже чай, пожалуйста.",
+   "fa": "برای من هم چای، لطفاً.",
+   "pronunciation": "mnye TÓ-zhe chay",
+   "pattern": "Мне тоже <что>, пожалуйста.",
+   "targetWords": [
+    "тоже"
+   ]
+  },
+  {
+   "id": "ru-pre-142",
+   "text": "Ты тоже из Ирана?",
+   "fa": "تو هم اهل ایرانی؟",
+   "pronunciation": "ty TÓ-zhe iz i-RÁ-na",
+   "pattern": "Ты тоже из <род.>?",
+   "targetWords": [
+    "тоже"
+   ]
+  },
+  {
+   "id": "ru-pre-143",
+   "text": "Почему ты здесь?",
+   "fa": "چرا اینجایی؟",
+   "pronunciation": "pa-chi-MÚ ty zdyes'",
+   "pattern": "Почему ты <где>?",
+   "targetWords": [
+    "почему"
+   ]
+  },
+  {
+   "id": "ru-pre-144",
+   "text": "Почему нет чая?",
+   "fa": "چرا چای نیست؟",
+   "pronunciation": "pa-chi-MÚ nyet CHÁ-ya",
+   "pattern": "Почему нет <род.>?",
+   "targetWords": [
+    "почему"
+   ]
+  },
+  {
+   "id": "ru-pre-145",
+   "text": "Эти люди из Ирана.",
+   "fa": "این آدم‌ها اهل ایران‌اند.",
+   "pronunciation": "É-ti LYÚ-di iz i-RÁ-na",
+   "pattern": "Эти люди из <род.>.",
+   "targetWords": [
+    "эти"
+   ]
+  },
+  {
+   "id": "ru-pre-146",
+   "text": "Я всегда здесь.",
+   "fa": "من همیشه اینجا هستم.",
+   "pronunciation": "ya fsig-DÁ zdyes'",
+   "pattern": "Я всегда <где>.",
+   "targetWords": [
+    "всегда"
+   ]
+  },
+  {
+   "id": "ru-pre-147",
+   "text": "Анна всегда знает.",
+   "fa": "آنا همیشه می‌داند.",
+   "pronunciation": "ÁN-na fsig-DÁ ZNÁ-yet",
+   "pattern": "<кто> всегда знает.",
+   "targetWords": [
+    "всегда"
+   ]
+  },
+  {
+   "id": "ru-pre-148",
+   "text": "Я здесь, Анна.",
+   "fa": "من اینجا هستم، آنا.",
+   "pronunciation": "ya zdyes', ÁN-na",
+   "pattern": "Я здесь, <имя>.",
+   "targetWords": [
+    "здесь"
+   ]
+  },
+  {
+   "id": "ru-pre-149",
+   "text": "Здесь очень хорошо.",
+   "fa": "اینجا خیلی خوب است.",
+   "pronunciation": "zdyes' Ó-chen' kha-ra-SHÓ",
+   "pattern": "Здесь очень <нареч.>.",
+   "targetWords": [
+    "здесь"
+   ]
+  },
+  {
+   "id": "ru-pre-150",
+   "text": "Я здесь, потому что ты здесь.",
+   "fa": "من اینجایم چون تو اینجایی.",
+   "pronunciation": "ya zdyes', pa-ta-MÚ shto ty zdyes'",
+   "pattern": "<фраза>, потому что <фраза>.",
+   "targetWords": [
+    "потому"
+   ]
+  },
+  {
+   "id": "ru-pre-151",
+   "text": "Мне нужно время.",
+   "fa": "وقت لازم دارم.",
+   "pronunciation": "mnye NÚZH-na VRYÉ-mya",
+   "pattern": "Мне нужно <что>.",
+   "targetWords": [
+    "нужно"
+   ]
+  },
+  {
+   "id": "ru-pre-152",
+   "text": "Нужно ещё время.",
+   "fa": "زمان بیشتری لازم است.",
+   "pronunciation": "NÚZH-na yi-SHCHÓ VRYÉ-mya",
+   "pattern": "Нужно ещё <что>.",
+   "targetWords": [
+    "нужно"
+   ]
+  },
+  {
+   "id": "ru-pre-153",
+   "text": "Это тебе, Анна.",
+   "fa": "این برای توست، آنا.",
+   "pronunciation": "É-ta ti-BYÉ, ÁN-na",
+   "pattern": "Это тебе, <имя>.",
+   "targetWords": [
+    "тебе"
+   ]
+  },
+  {
+   "id": "ru-pre-154",
+   "text": "Тебе чай или кофе?",
+   "fa": "برای تو چای یا قهوه؟",
+   "pronunciation": "ti-BYÉ chay Í-li KÓ-fye",
+   "pattern": "Тебе <А> или <Б>?",
+   "targetWords": [
+    "тебе"
+   ]
+  },
+  {
+   "id": "ru-pre-155",
+   "text": "Один год здесь.",
+   "fa": "یک سال اینجا.",
+   "pronunciation": "a-DÍN got zdyes'",
+   "pattern": "<число> год <где>.",
+   "targetWords": [
+    "год"
+   ]
+  },
+  {
+   "id": "ru-pre-156",
+   "text": "Это мой год!",
+   "fa": "این سال من است!",
+   "pronunciation": "É-ta moy got",
+   "pattern": "Это мой год!",
+   "targetWords": [
+    "год"
+   ]
+  },
+  {
+   "id": "ru-pre-157",
+   "text": "Люди здесь хорошие.",
+   "fa": "مردم اینجا خوب‌اند.",
+   "pronunciation": "LYÚ-di zdyes' kha-RÓ-shi-ye",
+   "pattern": "Люди <где> <прил.>.",
+   "targetWords": [
+    "люди"
+   ]
+  },
+  {
+   "id": "ru-pre-158",
+   "text": "Кто эти люди?",
+   "fa": "این‌ها کی هستند؟",
+   "pronunciation": "kto É-ti LYÚ-di",
+   "pattern": "Кто эти люди?",
+   "targetWords": [
+    "люди"
+   ]
+  },
+  {
+   "id": "ru-pre-159",
+   "text": "Здесь много людей.",
+   "fa": "اینجا آدم زیاد است.",
+   "pronunciation": "zdyes' MNÓ-ga lyu-DYÉY",
+   "pattern": "Здесь много <род.>.",
+   "targetWords": [
+    "много"
+   ]
+  },
+  {
+   "id": "ru-pre-160",
+   "text": "У меня много времени.",
+   "fa": "وقت زیادی دارم.",
+   "pronunciation": "u mi-NYÁ MNÓ-ga VRYÉ-mi-ni",
+   "pattern": "У меня много <род.>.",
+   "targetWords": [
+    "много"
+   ]
+  },
+  {
+   "id": "ru-pre-161",
+   "text": "Ничего, всё хорошо.",
+   "fa": "چیزی نیست، همه چیز خوب است.",
+   "pronunciation": "ni-chi-VÓ, fsyo kha-ra-SHÓ",
+   "pattern": "Ничего, <фраза>.",
+   "targetWords": [
+    "ничего"
+   ]
+  },
+  {
+   "id": "ru-pre-162",
+   "text": "Я ничего не знаю.",
+   "fa": "من هیچی نمی‌دانم.",
+   "pronunciation": "ya ni-chi-VÓ ni ZNÁ-yu",
+   "pattern": "Я ничего не <глагол>.",
+   "targetWords": [
+    "ничего"
+   ]
+  },
+  {
+   "id": "ru-pre-163",
+   "text": "Я тут, ты там.",
+   "fa": "من اینجا، تو آنجا.",
+   "pronunciation": "ya tut, ty tam",
+   "pattern": "Я тут, ты там.",
+   "targetWords": [
+    "тут"
+   ]
+  },
+  {
+   "id": "ru-pre-164",
+   "text": "Всё хорошо, Анна?",
+   "fa": "همه چیز خوب است، آنا؟",
+   "pronunciation": "fsyo kha-ra-SHÓ, ÁN-na",
+   "pattern": "Всё <нареч.>, <имя>?",
+   "targetWords": [
+    "всё"
+   ]
+  },
+  {
+   "id": "ru-pre-165",
+   "text": "Это всё, спасибо.",
+   "fa": "همین، ممنون.",
+   "pronunciation": "É-ta fsyo, spa-SÍ-ba",
+   "pattern": "Это всё, спасибо.",
+   "targetWords": [
+    "всё"
+   ]
+  },
+  {
+   "id": "ru-pre-166",
+   "text": "Её зовут Анна.",
+   "fa": "اسم او آنا است.",
+   "pronunciation": "yi-YÓ za-VÚT ÁN-na",
+   "pattern": "Её зовут <имя>.",
+   "targetWords": [
+    "её"
+   ]
+  },
+  {
+   "id": "ru-pre-167",
+   "text": "Жизнь — это хорошо.",
+   "fa": "زندگی خوب است.",
+   "pronunciation": "zhizn' É-ta kha-ra-SHÓ",
+   "pattern": "Жизнь — это <нареч.>.",
+   "targetWords": [
+    "жизнь"
+   ]
+  },
+  {
+   "id": "ru-pre-168",
+   "text": "Нам два чая, пожалуйста.",
+   "fa": "برای ما دو تا چای، لطفاً.",
+   "pronunciation": "nam dva CHÁ-ya",
+   "pattern": "Нам <число> <что>, пожалуйста.",
+   "targetWords": [
+    "нам"
+   ]
+  },
+  {
+   "id": "ru-pre-169",
+   "text": "Это нам, да?",
+   "fa": "این برای ماست، نه؟",
+   "pronunciation": "É-ta nam, da",
+   "pattern": "Это нам, да?",
+   "targetWords": [
+    "нам"
+   ]
+  },
+  {
+   "id": "ru-pre-170",
+   "text": "Несколько минут, пожалуйста.",
+   "fa": "چند دقیقه، لطفاً.",
+   "pronunciation": "NYÉS-kal'-ka mi-NÚT",
+   "pattern": "Несколько <род.>, пожалуйста.",
+   "targetWords": [
+    "несколько"
+   ]
+  },
+  {
+   "id": "ru-pre-171",
+   "text": "Он сказал да.",
+   "fa": "او گفت بله.",
+   "pronunciation": "on ska-ZÁL da",
+   "pattern": "Он сказал <ответ>.",
+   "targetWords": [
+    "сказал"
+   ]
+  },
+  {
+   "id": "ru-pre-172",
+   "text": "Кто это сказал?",
+   "fa": "کی این را گفت؟",
+   "pronunciation": "kto É-ta ska-ZÁL",
+   "pattern": "Кто это сказал?",
+   "targetWords": [
+    "сказал"
+   ]
+  },
+  {
+   "id": "ru-pre-173",
+   "text": "Тогда до завтра!",
+   "fa": "پس تا فردا!",
+   "pronunciation": "tag-DÁ da ZÁF-tra",
+   "pattern": "Тогда до <когда>!",
+   "targetWords": [
+    "тогда"
+   ]
+  },
+  {
+   "id": "ru-pre-174",
+   "text": "Тогда кофе, пожалуйста.",
+   "fa": "پس قهوه، لطفاً.",
+   "pronunciation": "tag-DÁ KÓ-fye",
+   "pattern": "Тогда <что>, пожалуйста.",
+   "targetWords": [
+    "тогда"
+   ]
+  },
+  {
+   "id": "ru-pre-175",
+   "text": "Я хочу только воду.",
+   "fa": "فقط آب می‌خواهم.",
+   "pronunciation": "ya kha-CHÚ TÓL'-ka VÓ-du",
+   "pattern": "Я хочу только <вин.>.",
+   "targetWords": [
+    "хочу"
+   ]
+  },
+  {
+   "id": "ru-pre-176",
+   "text": "Я не хочу кофе.",
+   "fa": "قهوه نمی‌خواهم.",
+   "pronunciation": "ya ni kha-CHÚ KÓ-fye",
+   "pattern": "Я не хочу <вин.>.",
+   "targetWords": [
+    "хочу"
+   ]
+  },
+  {
+   "id": "ru-pre-177",
+   "text": "Вам чай или кофе?",
+   "fa": "برای شما چای یا قهوه؟",
+   "pronunciation": "vam chay Í-li KÓ-fye",
+   "pattern": "Вам <А> или <Б>?",
+   "targetWords": [
+    "вам"
+   ]
+  },
+  {
+   "id": "ru-pre-178",
+   "text": "Спасибо вам, Анна.",
+   "fa": "از شما ممنونم، آنا.",
+   "pronunciation": "spa-SÍ-ba vam, ÁN-na",
+   "pattern": "Спасибо вам, <имя>.",
+   "targetWords": [
+    "вам"
+   ]
+  },
+  {
+   "id": "ru-pre-179",
+   "text": "Это моё место.",
+   "fa": "این جای من است.",
+   "pronunciation": "É-ta ma-YÓ MYÉS-ta",
+   "pattern": "Это моё место.",
+   "targetWords": [
+    "место"
+   ]
+  },
+  {
+   "id": "ru-pre-180",
+   "text": "Сейчас чай, потом кофе.",
+   "fa": "الان چای، بعد قهوه.",
+   "pronunciation": "si-CHÁS chay, pa-TÓM KÓ-fye",
+   "pattern": "Сейчас <А>, потом <Б>.",
+   "targetWords": [
+    "потом"
+   ]
+  },
+  {
+   "id": "ru-pre-181",
+   "text": "Сегодня я вижу «этом», «россии» и «того».",
+   "fa": "امروز «этом»، «россии» و «того» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "этом",
+    "россии",
+    "того"
+   ]
+  },
+  {
+   "id": "ru-pre-182",
+   "text": "Теперь я знаю «этого», «том» и «г».",
+   "fa": "اکنون «этого»، «том» و «г» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "этого",
+    "том",
+    "г"
+   ]
+  },
+  {
+   "id": "ru-pre-183",
+   "text": "Он говорит «году», «об» и «ли» ещё раз.",
+   "fa": "او دوباره «году»، «об» و «ли» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "году",
+    "об",
+    "ли"
+   ]
+  },
+  {
+   "id": "ru-pre-184",
+   "text": "Мы уже знаем «м», «них» и «сша».",
+   "fa": "ما از پیش «м»، «них» و «сша» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "м",
+    "них",
+    "сша"
+   ]
+  },
+  {
+   "id": "ru-pre-185",
+   "text": "Тут есть «области» и «тем».",
+   "fa": "اینجا «области» و «тем» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "области",
+    "тем"
+   ]
+  },
+  {
+   "id": "ru-pre-186",
+   "text": "Это слова «жизни» и «им».",
+   "fa": "این واژهها «жизни» و «им» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "жизни",
+    "им"
+   ]
+  },
+  {
+   "id": "ru-pre-187",
+   "text": "Можно «между» и «этой»?",
+   "fa": "آیا «между» و «этой» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "между",
+    "этой"
+   ]
+  },
+  {
+   "id": "ru-pre-188",
+   "text": "Нужно «себе» и «такой».",
+   "fa": "به «себе» و «такой» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "себе",
+    "такой"
+   ]
+  },
+  {
+   "id": "ru-pre-189",
+   "text": "Вот и «него».",
+   "fa": "این هم «него».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "него"
+   ]
+  },
+  {
+   "id": "ru-pre-190",
+   "text": "У меня есть «однако».",
+   "fa": "من «однако» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "однако"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,826 @@
+{
+ "schema": 1,
+ "language": "en",
+ "band": "B1",
+ "version": 5,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "en-b1-001",
+   "text": "I can understand «lady», «leaders» and «nobody» better now.",
+   "fa": "اکنون «lady»، «leaders» و «nobody» را بهتر میفهمم.",
+   "pattern": "I can understand <W1>, <W2> and <W3> better now.",
+   "targetWords": [
+    "lady",
+    "leader",
+    "leaders",
+    "leadership",
+    "nobody"
+   ]
+  },
+  {
+   "id": "en-b1-002",
+   "text": "We saw «pre», «secretary» and «anymore» in the text today.",
+   "fa": "امروز «pre»، «secretary» و «anymore» را در متن دیدیم.",
+   "pattern": "We saw <W1>, <W2> and <W3> in the text today.",
+   "targetWords": [
+    "pre",
+    "secretary",
+    "secret",
+    "anymore"
+   ]
+  },
+  {
+   "id": "en-b1-003",
+   "text": "The teacher explains «bar», «battle» and «brain» once again.",
+   "fa": "معلم یک بار دیگر «bar»، «battle» و «brain» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1>, <W2> and <W3> once again.",
+   "targetWords": [
+    "bar",
+    "battle",
+    "brain"
+   ]
+  },
+  {
+   "id": "en-b1-004",
+   "text": "I wrote «france», «growing» and «insurance» in my review.",
+   "fa": "«france»، «growing» و «insurance» را در مرورم نوشتم.",
+   "pattern": "I wrote <W1>, <W2> and <W3> in my review.",
+   "targetWords": [
+    "france",
+    "growing",
+    "insurance"
+   ]
+  },
+  {
+   "id": "en-b1-005",
+   "text": "The words «physical» and «pro» are here.",
+   "fa": "واژههای «physical» و «pro» اینجا هستند.",
+   "pattern": "The words <W1> and <W2> are here.",
+   "targetWords": [
+    "physical",
+    "pro"
+   ]
+  },
+  {
+   "id": "en-b1-006",
+   "text": "I saw «rule» and «stupid» in the text.",
+   "fa": "«rule» و «stupid» را در متن دیدم.",
+   "pattern": "I saw <W1> and <W2> in the text.",
+   "targetWords": [
+    "rule",
+    "stupid"
+   ]
+  },
+  {
+   "id": "en-b1-007",
+   "text": "My friend asks about «administration» and «civil».",
+   "fa": "دوستم دربارهٔ «administration» و «civil» میپرسد.",
+   "pattern": "My friend asks about <W1> and <W2>.",
+   "targetWords": [
+    "administration",
+    "civil"
+   ]
+  },
+  {
+   "id": "en-b1-008",
+   "text": "The teacher explains «master» and «none» again.",
+   "fa": "معلم دوباره «master» و «none» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1> and <W2> again.",
+   "targetWords": [
+    "master",
+    "none"
+   ]
+  },
+  {
+   "id": "en-b1-009",
+   "text": "This is «ship».",
+   "fa": "این «ship» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "ship"
+   ]
+  },
+  {
+   "id": "en-b1-010",
+   "text": "The word «trump» is here.",
+   "fa": "واژهٔ «trump» اینجاست.",
+   "pattern": "The word <W1> is here.",
+   "targetWords": [
+    "trump"
+   ]
+  },
+  {
+   "id": "en-b1-011",
+   "text": "I can read «worst» now.",
+   "fa": "حالا میتوانم «worst» را بخوانم.",
+   "pattern": "I can read <W1> now.",
+   "targetWords": [
+    "worst"
+   ]
+  },
+  {
+   "id": "en-b1-012",
+   "text": "We need «africa» today.",
+   "fa": "امروز به «africa» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "africa",
+    "african"
+   ]
+  },
+  {
+   "id": "en-b1-013",
+   "text": "I can understand «awesome», «band» and «ended» better now.",
+   "fa": "اکنون «awesome»، «band» و «ended» را بهتر میفهمم.",
+   "pattern": "I can understand <W1>, <W2> and <W3> better now.",
+   "targetWords": [
+    "awesome",
+    "band",
+    "ended"
+   ]
+  },
+  {
+   "id": "en-b1-014",
+   "text": "We saw «fan», «imagine» and «lack» in the text today.",
+   "fa": "امروز «fan»، «imagine» و «lack» را در متن دیدیم.",
+   "pattern": "We saw <W1>, <W2> and <W3> in the text today.",
+   "targetWords": [
+    "fan",
+    "imagine",
+    "lack"
+   ]
+  },
+  {
+   "id": "en-b1-015",
+   "text": "The teacher explains «multiple», «senior» and «telling» once again.",
+   "fa": "معلم یک بار دیگر «multiple»، «senior» و «telling» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1>, <W2> and <W3> once again.",
+   "targetWords": [
+    "multiple",
+    "senior",
+    "telling"
+   ]
+  },
+  {
+   "id": "en-b1-016",
+   "text": "I wrote «anyway», «christ» and «competition» in my review.",
+   "fa": "«anyway»، «christ» و «competition» را در مرورم نوشتم.",
+   "pattern": "I wrote <W1>, <W2> and <W3> in my review.",
+   "targetWords": [
+    "anyway",
+    "christmas",
+    "christian",
+    "chris",
+    "christ",
+    "competition"
+   ]
+  },
+  {
+   "id": "en-b1-017",
+   "text": "The words «dream» and «easily» are here.",
+   "fa": "واژههای «dream» و «easily» اینجا هستند.",
+   "pattern": "The words <W1> and <W2> are here.",
+   "targetWords": [
+    "dream",
+    "easily"
+   ]
+  },
+  {
+   "id": "en-b1-018",
+   "text": "I saw «grand» and «literally» in the text.",
+   "fa": "«grand» و «literally» را در متن دیدم.",
+   "pattern": "I saw <W1> and <W2> in the text.",
+   "targetWords": [
+    "grand",
+    "literally"
+   ]
+  },
+  {
+   "id": "en-b1-019",
+   "text": "My friend asks about «luck» and «necessary».",
+   "fa": "دوستم دربارهٔ «luck» و «necessary» میپرسد.",
+   "pattern": "My friend asks about <W1> and <W2>.",
+   "targetWords": [
+    "luck",
+    "necessary"
+   ]
+  },
+  {
+   "id": "en-b1-020",
+   "text": "The teacher explains «rich» and «sweet» again.",
+   "fa": "معلم دوباره «rich» و «sweet» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1> and <W2> again.",
+   "targetWords": [
+    "rich",
+    "sweet"
+   ]
+  },
+  {
+   "id": "en-b1-021",
+   "text": "This is «thus».",
+   "fa": "این «thus» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "thus"
+   ]
+  },
+  {
+   "id": "en-b1-022",
+   "text": "The word «caught» is here.",
+   "fa": "واژهٔ «caught» اینجاست.",
+   "pattern": "The word <W1> is here.",
+   "targetWords": [
+    "caught"
+   ]
+  },
+  {
+   "id": "en-b1-023",
+   "text": "I can read «congress» now.",
+   "fa": "حالا میتوانم «congress» را بخوانم.",
+   "pattern": "I can read <W1> now.",
+   "targetWords": [
+    "congress"
+   ]
+  },
+  {
+   "id": "en-b1-024",
+   "text": "We need «disease» today.",
+   "fa": "امروز به «disease» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "disease"
+   ]
+  },
+  {
+   "id": "en-b1-025",
+   "text": "I can understand «driving», «established» and «facebook» better now.",
+   "fa": "اکنون «driving»، «established» و «facebook» را بهتر میفهمم.",
+   "pattern": "I can understand <W1>, <W2> and <W3> better now.",
+   "targetWords": [
+    "driving",
+    "established",
+    "facebook"
+   ]
+  },
+  {
+   "id": "en-b1-026",
+   "text": "We saw «gay», «overall» and «shown» in the text today.",
+   "fa": "امروز «gay»، «overall» و «shown» را در متن دیدیم.",
+   "pattern": "We saw <W1>, <W2> and <W3> in the text today.",
+   "targetWords": [
+    "gay",
+    "overall",
+    "shown"
+   ]
+  },
+  {
+   "id": "en-b1-027",
+   "text": "The teacher explains «captain», «cars» and «crime» once again.",
+   "fa": "معلم یک بار دیگر «captain»، «cars» و «crime» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1>, <W2> and <W3> once again.",
+   "targetWords": [
+    "captain",
+    "cars",
+    "crime"
+   ]
+  },
+  {
+   "id": "en-b1-028",
+   "text": "I wrote «highly», «holding» and «japan» in my review.",
+   "fa": "«highly»، «holding» و «japan» را در مرورم نوشتم.",
+   "pattern": "I wrote <W1>, <W2> and <W3> in my review.",
+   "targetWords": [
+    "highly",
+    "holding",
+    "japan",
+    "japanese"
+   ]
+  },
+  {
+   "id": "en-b1-029",
+   "text": "The words «laws» and «male» are here.",
+   "fa": "واژههای «laws» و «male» اینجا هستند.",
+   "pattern": "The words <W1> and <W2> are here.",
+   "targetWords": [
+    "laws",
+    "male"
+   ]
+  },
+  {
+   "id": "en-b1-030",
+   "text": "I saw «mrs» and «smith» in the text.",
+   "fa": "«mrs» و «smith» را در متن دیدم.",
+   "pattern": "I saw <W1> and <W2> in the text.",
+   "targetWords": [
+    "mrs",
+    "smith"
+   ]
+  },
+  {
+   "id": "en-b1-031",
+   "text": "My friend asks about «spot» and «texas».",
+   "fa": "دوستم دربارهٔ «spot» و «texas» میپرسد.",
+   "pattern": "My friend asks about <W1> and <W2>.",
+   "targetWords": [
+    "spot",
+    "texas"
+   ]
+  },
+  {
+   "id": "en-b1-032",
+   "text": "The teacher explains «award» and «eventually» again.",
+   "fa": "معلم دوباره «award» و «eventually» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1> and <W2> again.",
+   "targetWords": [
+    "award",
+    "awards",
+    "eventually"
+   ]
+  },
+  {
+   "id": "en-b1-033",
+   "text": "This is «holy».",
+   "fa": "این «holy» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "holy"
+   ]
+  },
+  {
+   "id": "en-b1-034",
+   "text": "The word «killing» is here.",
+   "fa": "واژهٔ «killing» اینجاست.",
+   "pattern": "The word <W1> is here.",
+   "targetWords": [
+    "killing"
+   ]
+  },
+  {
+   "id": "en-b1-035",
+   "text": "I can read «peter» now.",
+   "fa": "حالا میتوانم «peter» را بخوانم.",
+   "pattern": "I can read <W1> now.",
+   "targetWords": [
+    "peter"
+   ]
+  },
+  {
+   "id": "en-b1-036",
+   "text": "We need «primary» today.",
+   "fa": "امروز به «primary» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "primary"
+   ]
+  },
+  {
+   "id": "en-b1-037",
+   "text": "I can understand «showing», «sick» and «theory» better now.",
+   "fa": "اکنون «showing»، «sick» و «theory» را بهتر میفهمم.",
+   "pattern": "I can understand <W1>, <W2> and <W3> better now.",
+   "targetWords": [
+    "showing",
+    "sick",
+    "theory"
+   ]
+  },
+  {
+   "id": "en-b1-038",
+   "text": "We saw «agency», «cell» and «drug» in the text today.",
+   "fa": "امروز «agency»، «cell» و «drug» را در متن دیدیم.",
+   "pattern": "We saw <W1>, <W2> and <W3> in the text today.",
+   "targetWords": [
+    "agency",
+    "cell",
+    "drug"
+   ]
+  },
+  {
+   "id": "en-b1-039",
+   "text": "The teacher explains «environment», «executive» and «foot» once again.",
+   "fa": "معلم یک بار دیگر «environment»، «executive» و «foot» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1>, <W2> and <W3> once again.",
+   "targetWords": [
+    "environment",
+    "environmental",
+    "executive",
+    "foot"
+   ]
+  },
+  {
+   "id": "en-b1-040",
+   "text": "I wrote «mass», «pop» and «ran» in my review.",
+   "fa": "«mass»، «pop» و «ran» را در مرورم نوشتم.",
+   "pattern": "I wrote <W1>, <W2> and <W3> in my review.",
+   "targetWords": [
+    "mass",
+    "pop",
+    "ran"
+   ]
+  },
+  {
+   "id": "en-b1-041",
+   "text": "The words «status» and «therefore» are here.",
+   "fa": "واژههای «status» و «therefore» اینجا هستند.",
+   "pattern": "The words <W1> and <W2> are here.",
+   "targetWords": [
+    "status",
+    "therefore"
+   ]
+  },
+  {
+   "id": "en-b1-042",
+   "text": "I saw «truly» and «application» in the text.",
+   "fa": "«truly» و «application» را در متن دیدم.",
+   "pattern": "I saw <W1> and <W2> in the text.",
+   "targetWords": [
+    "truly",
+    "application"
+   ]
+  },
+  {
+   "id": "en-b1-043",
+   "text": "My friend asks about «division» and «freedom».",
+   "fa": "دوستم دربارهٔ «division» و «freedom» میپرسد.",
+   "pattern": "My friend asks about <W1> and <W2>.",
+   "targetWords": [
+    "division",
+    "freedom"
+   ]
+  },
+  {
+   "id": "en-b1-044",
+   "text": "The teacher explains «google» and «murder» again.",
+   "fa": "معلم دوباره «google» و «murder» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1> and <W2> again.",
+   "targetWords": [
+    "google",
+    "murder"
+   ]
+  },
+  {
+   "id": "en-b1-045",
+   "text": "This is «obama».",
+   "fa": "این «obama» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "obama"
+   ]
+  },
+  {
+   "id": "en-b1-046",
+   "text": "The word «queen» is here.",
+   "fa": "واژهٔ «queen» اینجاست.",
+   "pattern": "The word <W1> is here.",
+   "targetWords": [
+    "queen"
+   ]
+  },
+  {
+   "id": "en-b1-047",
+   "text": "I can read «attempt» now.",
+   "fa": "حالا میتوانم «attempt» را بخوانم.",
+   "pattern": "I can read <W1> now.",
+   "targetWords": [
+    "attempt"
+   ]
+  },
+  {
+   "id": "en-b1-048",
+   "text": "We need «eating» today.",
+   "fa": "امروز به «eating» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "eating"
+   ]
+  },
+  {
+   "id": "en-b1-049",
+   "text": "I can understand «fat», «losing» and «religious» better now.",
+   "fa": "اکنون «fat»، «losing» و «religious» را بهتر میفهمم.",
+   "pattern": "I can understand <W1>, <W2> and <W3> better now.",
+   "targetWords": [
+    "fat",
+    "losing",
+    "religious",
+    "religion"
+   ]
+  },
+  {
+   "id": "en-b1-050",
+   "text": "We saw «robert», «royal» and «speech» in the text today.",
+   "fa": "امروز «robert»، «royal» و «speech» را در متن دیدیم.",
+   "pattern": "We saw <W1>, <W2> and <W3> in the text today.",
+   "targetWords": [
+    "robert",
+    "royal",
+    "speech"
+   ]
+  },
+  {
+   "id": "en-b1-051",
+   "text": "The teacher explains «types», «vs» and «wearing» once again.",
+   "fa": "معلم یک بار دیگر «types»، «vs» و «wearing» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1>, <W2> and <W3> once again.",
+   "targetWords": [
+    "types",
+    "vs",
+    "wearing"
+   ]
+  },
+  {
+   "id": "en-b1-052",
+   "text": "I wrote «whom», «demand» and «engine» in my review.",
+   "fa": "«whom»، «demand» و «engine» را در مرورم نوشتم.",
+   "pattern": "I wrote <W1>, <W2> and <W3> in my review.",
+   "targetWords": [
+    "whom",
+    "demand",
+    "engine"
+   ]
+  },
+  {
+   "id": "en-b1-053",
+   "text": "The words «famous» and «lie» are here.",
+   "fa": "واژههای «famous» و «lie» اینجا هستند.",
+   "pattern": "The words <W1> and <W2> are here.",
+   "targetWords": [
+    "famous",
+    "lie"
+   ]
+  },
+  {
+   "id": "en-b1-054",
+   "text": "I saw «runs» and «songs» in the text.",
+   "fa": "«runs» و «songs» را در متن دیدم.",
+   "pattern": "I saw <W1> and <W2> in the text.",
+   "targetWords": [
+    "runs",
+    "songs"
+   ]
+  },
+  {
+   "id": "en-b1-055",
+   "text": "My friend asks about «structure» and «thomas».",
+   "fa": "دوستم دربارهٔ «structure» و «thomas» میپرسد.",
+   "pattern": "My friend asks about <W1> and <W2>.",
+   "targetWords": [
+    "structure",
+    "thomas"
+   ]
+  },
+  {
+   "id": "en-b1-056",
+   "text": "The teacher explains «cent» and «critical» again.",
+   "fa": "معلم دوباره «cent» و «critical» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1> and <W2> again.",
+   "targetWords": [
+    "cent",
+    "critical"
+   ]
+  },
+  {
+   "id": "en-b1-057",
+   "text": "This is «fourth».",
+   "fa": "این «fourth» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "fourth"
+   ]
+  },
+  {
+   "id": "en-b1-058",
+   "text": "The word «mental» is here.",
+   "fa": "واژهٔ «mental» اینجاست.",
+   "pattern": "The word <W1> is here.",
+   "targetWords": [
+    "mental"
+   ]
+  },
+  {
+   "id": "en-b1-059",
+   "text": "I can read «mostly» now.",
+   "fa": "حالا میتوانم «mostly» را بخوانم.",
+   "pattern": "I can read <W1> now.",
+   "targetWords": [
+    "mostly"
+   ]
+  },
+  {
+   "id": "en-b1-060",
+   "text": "We need «mouth» today.",
+   "fa": "امروز به «mouth» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "mouth"
+   ]
+  },
+  {
+   "id": "en-b1-061",
+   "text": "I can understand «scale», «score» and «smart» better now.",
+   "fa": "اکنون «scale»، «score» و «smart» را بهتر میفهمم.",
+   "pattern": "I can understand <W1>, <W2> and <W3> better now.",
+   "targetWords": [
+    "scale",
+    "score",
+    "smart"
+   ]
+  },
+  {
+   "id": "en-b1-062",
+   "text": "We saw «surface», «throw» and «tom» in the text today.",
+   "fa": "امروز «surface»، «throw» و «tom» را در متن دیدیم.",
+   "pattern": "We saw <W1>, <W2> and <W3> in the text today.",
+   "targetWords": [
+    "surface",
+    "throw",
+    "tom"
+   ]
+  },
+  {
+   "id": "en-b1-063",
+   "text": "The teacher explains «twitter», «wedding» and «acting» once again.",
+   "fa": "معلم یک بار دیگر «twitter»، «wedding» و «acting» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1>, <W2> and <W3> once again.",
+   "targetWords": [
+    "twitter",
+    "wedding",
+    "acting"
+   ]
+  },
+  {
+   "id": "en-b1-064",
+   "text": "I wrote «arms», «click» and «estate» in my review.",
+   "fa": "«arms»، «click» و «estate» را در مرورم نوشتم.",
+   "pattern": "I wrote <W1>, <W2> and <W3> in my review.",
+   "targetWords": [
+    "arms",
+    "click",
+    "estate"
+   ]
+  },
+  {
+   "id": "en-b1-065",
+   "text": "The words «faith» and «fashion» are here.",
+   "fa": "واژههای «faith» و «fashion» اینجا هستند.",
+   "pattern": "The words <W1> and <W2> are here.",
+   "targetWords": [
+    "faith",
+    "fashion"
+   ]
+  },
+  {
+   "id": "en-b1-066",
+   "text": "I saw «hill» and «jack» in the text.",
+   "fa": "«hill» و «jack» را در متن دیدم.",
+   "pattern": "I saw <W1> and <W2> in the text.",
+   "targetWords": [
+    "hill",
+    "jack"
+   ]
+  },
+  {
+   "id": "en-b1-067",
+   "text": "My friend asks about «louis» and «metal».",
+   "fa": "دوستم دربارهٔ «louis» و «metal» میپرسد.",
+   "pattern": "My friend asks about <W1> and <W2>.",
+   "targetWords": [
+    "louis",
+    "metal"
+   ]
+  },
+  {
+   "id": "en-b1-068",
+   "text": "The teacher explains «mid» and «profile» again.",
+   "fa": "معلم دوباره «mid» و «profile» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1> and <W2> again.",
+   "targetWords": [
+    "mid",
+    "profile",
+    "profit"
+   ]
+  },
+  {
+   "id": "en-b1-069",
+   "text": "This is «pull».",
+   "fa": "این «pull» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "pull"
+   ]
+  },
+  {
+   "id": "en-b1-070",
+   "text": "The word «push» is here.",
+   "fa": "واژهٔ «push» اینجاست.",
+   "pattern": "The word <W1> is here.",
+   "targetWords": [
+    "push"
+   ]
+  },
+  {
+   "id": "en-b1-071",
+   "text": "I can read «sexual» now.",
+   "fa": "حالا میتوانم «sexual» را بخوانم.",
+   "pattern": "I can read <W1> now.",
+   "targetWords": [
+    "sexual"
+   ]
+  },
+  {
+   "id": "en-b1-072",
+   "text": "We need «village» today.",
+   "fa": "امروز به «village» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "village"
+   ]
+  },
+  {
+   "id": "en-b1-073",
+   "text": "I can understand «basis», «dude» and «ex» better now.",
+   "fa": "اکنون «basis»، «dude» و «ex» را بهتر میفهمم.",
+   "pattern": "I can understand <W1>, <W2> and <W3> better now.",
+   "targetWords": [
+    "basis",
+    "dude",
+    "ex"
+   ]
+  },
+  {
+   "id": "en-b1-074",
+   "text": "We saw «foundation», «gain» and «http» in the text today.",
+   "fa": "امروز «foundation»، «gain» و «http» را در متن دیدیم.",
+   "pattern": "We saw <W1>, <W2> and <W3> in the text today.",
+   "targetWords": [
+    "foundation",
+    "gain",
+    "http"
+   ]
+  },
+  {
+   "id": "en-b1-075",
+   "text": "The teacher explains «memory», «prime» and «rise» once again.",
+   "fa": "معلم یک بار دیگر «memory»، «prime» و «rise» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1>, <W2> and <W3> once again.",
+   "targetWords": [
+    "memory",
+    "prime",
+    "rise"
+   ]
+  },
+  {
+   "id": "en-b1-076",
+   "text": "I wrote «selling», «silver» and «soul» in my review.",
+   "fa": "«selling»، «silver» و «soul» را در مرورم نوشتم.",
+   "pattern": "I wrote <W1>, <W2> and <W3> in my review.",
+   "targetWords": [
+    "selling",
+    "silver",
+    "soul"
+   ]
+  },
+  {
+   "id": "en-b1-077",
+   "text": "The words «spread» and «waste» are here.",
+   "fa": "واژههای «spread» و «waste» اینجا هستند.",
+   "pattern": "The words <W1> and <W2> are here.",
+   "targetWords": [
+    "spread",
+    "waste"
+   ]
+  },
+  {
+   "id": "en-b1-078",
+   "text": "I saw «weird» and «adult» in the text.",
+   "fa": "«weird» و «adult» را در متن دیدم.",
+   "pattern": "I saw <W1> and <W2> in the text.",
+   "targetWords": [
+    "weird",
+    "adult"
+   ]
+  },
+  {
+   "id": "en-b1-079",
+   "text": "My friend asks about «apparently» and «artist».",
+   "fa": "دوستم دربارهٔ «apparently» و «artist» میپرسد.",
+   "pattern": "My friend asks about <W1> and <W2>.",
+   "targetWords": [
+    "apparently",
+    "artist"
+   ]
+  },
+  {
+   "id": "en-b1-080",
+   "text": "The teacher explains «edition» and «engineering» again.",
+   "fa": "معلم دوباره «edition» و «engineering» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1> and <W2> again.",
+   "targetWords": [
+    "edition",
+    "engineering"
+   ]
+  }
+ ]
+}
