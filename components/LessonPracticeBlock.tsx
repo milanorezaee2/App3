@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Animated, Pressable, StyleSheet, View } from 'react-native';
+import { Animated, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { Check, CheckCircle2, Flame, Volume2, X, SkipForward } from 'lucide-react-native';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
@@ -7,6 +7,7 @@ import { Typography } from '@/lib/theme';
 import { toPersianDigits as fa } from '@/lib/format';
 import { buildRetryItem, practiceBudgetSeconds, type PracticeItem, type PracticeKind, type PracticeStats } from '@/lib/lessonPractice';
 import { hapticCorrect, hapticTap, hapticWrong } from '@/lib/haptics';
+import { scoreWritten, type WrittenCheck } from '@/lib/writtenScore';
 import type { LearningLesson } from '@/lib/languages/types';
 
 /**
@@ -40,6 +41,7 @@ const KIND_LABEL: Record<PracticeKind, string> = {
   listen: 'گوش کن؛ معنی کدام است؟',
   truefalse: 'این معنی درست است؟',
   match: 'هر جمله را به معنی‌اش وصل کن',
+  write: 'بنویس: این جمله به زبان درس چه می‌شود؟',
 };
 
 export default function LessonPracticeBlock({ title, intro, items, source, retryKinds, onSpeak, onComplete, completed, onSkip, exam, foreignStyle, accent = Palette.primary, summary }: Props) {
@@ -58,6 +60,8 @@ export default function LessonPracticeBlock({ title, intro, items, source, retry
   const [matchLeft, setMatchLeft] = useState<number | null>(null);
   const [matchDone, setMatchDone] = useState<Record<number, number>>({});
   const [matchMiss, setMatchMiss] = useState(false);
+  const [typed, setTyped] = useState('');
+  const [written, setWritten] = useState<WrittenCheck | null>(null);
   const comboPulse = useRef(new Animated.Value(0)).current;
 
   const total = items.length;
@@ -80,7 +84,7 @@ export default function LessonPracticeBlock({ title, intro, items, source, retry
   }, [completed, total, current, onComplete, retries, firstTry]);
   useEffect(() => { if (current?.kind === 'listen' && resolved === null) onSpeak(current.speakText); }, [current, resolved, onSpeak]);
 
-  function resetTransient() { setPicked(null); setOrderPicked([]); setMatchLeft(null); setMatchDone({}); setMatchMiss(false); }
+  function resetTransient() { setPicked(null); setOrderPicked([]); setMatchLeft(null); setMatchDone({}); setMatchMiss(false); setTyped(''); setWritten(null); }
 
   const settle = useCallback((ok: boolean) => {
     if (!current || resolved !== null) return;
@@ -188,8 +192,36 @@ export default function LessonPracticeBlock({ title, intro, items, source, retry
         {matchMiss && resolved === null ? <Text style={styles.feedbackNo}>جفت اشتباه بود؛ دوباره انتخاب کن.</Text> : null}
       </View> : null}
 
+      {current.kind === 'write' ? <>
+        <Text style={styles.writePrompt}>{current.promptFa}</Text>
+        <TextInput
+          value={typed}
+          onChangeText={setTyped}
+          editable={resolved === null}
+          autoCapitalize="none"
+          autoCorrect={false}
+          spellCheck={false}
+          multiline
+          blurOnSubmit
+          returnKeyType="done"
+          onSubmitEditing={() => { if (typed.trim()) { const check = scoreWritten(current.answerText, typed); setWritten(check); settle(check.ok); } }}
+          placeholder={`${fa(current.wordCount)} کلمه…`}
+          placeholderTextColor={Palette.muted}
+          style={[styles.writeInput, foreignStyle, resolved === true && styles.choiceCorrect, resolved === false && styles.choiceWrong]}
+          accessibilityLabel="جمله را بنویس"
+        />
+        {resolved === null ? <View style={styles.writeActions}>
+          <Pressable accessibilityRole="button" disabled={!typed.trim()} onPress={() => { const check = scoreWritten(current.answerText, typed); setWritten(check); settle(check.ok); }} style={[styles.writeCheck, { backgroundColor: accent }, !typed.trim() && { opacity: 0.45 }]}><Check size={16} color="#FFFFFF" /><Text style={styles.writeCheckText}>بررسی</Text></Pressable>
+          <Pressable accessibilityRole="button" onPress={() => { setWritten(scoreWritten(current.answerText, typed)); settle(false); }} style={styles.writeGiveUp}><Text style={styles.writeGiveUpText}>نشان بده</Text></Pressable>
+        </View> : null}
+        {written && resolved !== null ? <View style={styles.writeResult}>
+          <Text style={[styles.writeLine, foreignStyle]}>{written.words.map((w, index) => <Text key={index} style={[styles.writeWord, w.state === 'ok' && styles.writeWordOk, w.state === 'typo' && styles.writeWordTypo, w.state === 'miss' && styles.writeWordMiss]}>{w.word}{index < written.words.length - 1 ? ' ' : ''}</Text>)}</Text>
+          {written.extra.length ? <Text style={styles.writeExtra}>اضافه: {written.extra.join(' ')}</Text> : null}
+        </View> : null}
+      </> : null}
+
       {resolved !== null ? <View style={styles.feedback}>
-        <Text style={resolved ? styles.feedbackOk : styles.feedbackNo}>{resolved ? (combo >= 3 ? 'عالی! ادامه بده.' : 'درست است.') : current.retry || exam ? 'پاسخ درست این بود:' : 'این بار نه؛ کمی بعد به شکل دیگری می‌پرسم.'}</Text>
+        <Text style={resolved ? styles.feedbackOk : styles.feedbackNo}>{resolved ? (current.kind === 'write' && written && !written.exact ? 'درست، با یک غلط املایی کوچک — به کلمه‌های زرد نگاه کن.' : combo >= 3 ? 'عالی! ادامه بده.' : 'درست است.') : current.retry || exam ? 'پاسخ درست این بود:' : 'این بار نه؛ کمی بعد به شکل دیگری می‌پرسم.'}</Text>
         {current.kind !== 'match' ? <><Text style={[styles.answerForeign, foreignStyle]}>{current.answerText}</Text><Text style={styles.answerFa}>{current.answerFa}</Text></> : null}
         <View style={styles.feedbackActions}>
           <Pressable accessibilityRole="button" onPress={() => onSpeak(current.speakText)} style={styles.listenAgain}><Volume2 size={16} color={Palette.primaryDark} /><Text style={styles.listenAgainText}>بشنو</Text></Pressable>
@@ -244,6 +276,20 @@ const styles = StyleSheet.create({
   matchCol: { flex: 1, gap: 8, minWidth: 130 },
   matchCell: { minHeight: 56, borderRadius: 12, borderWidth: 1, borderColor: Palette.border, backgroundColor: Palette.surfaceMuted, paddingHorizontal: 10, paddingVertical: 8, justifyContent: 'center' },
   matchActive: { borderColor: Palette.primary, backgroundColor: Palette.primarySoft },
+  writePrompt: { fontFamily: Typography.fontFamily, fontSize: 16, lineHeight: 26, color: Palette.ink, textAlign: 'right', writingDirection: 'rtl' },
+  writeInput: { minHeight: 52, borderRadius: 14, borderWidth: 1.5, borderColor: Palette.border, backgroundColor: Palette.surface, paddingHorizontal: 14, paddingVertical: 12, fontSize: 17, color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
+  writeActions: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' },
+  writeCheck: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6, paddingHorizontal: 18, paddingVertical: 10, borderRadius: 999 },
+  writeCheckText: { fontFamily: Typography.fontFamily, fontSize: 13, color: '#FFFFFF' },
+  writeGiveUp: { paddingHorizontal: 10, paddingVertical: 10 },
+  writeGiveUpText: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.text },
+  writeResult: { gap: 4 },
+  writeLine: { fontSize: 17, lineHeight: 30, textAlign: 'left', writingDirection: 'ltr', color: Palette.ink },
+  writeWord: { color: Palette.ink },
+  writeWordOk: { backgroundColor: Palette.successSoft, color: Palette.success },
+  writeWordTypo: { backgroundColor: '#FEF3C7', color: '#92400E' },
+  writeWordMiss: { backgroundColor: '#FEE2E2', color: Palette.danger, textDecorationLine: 'underline' },
+  writeExtra: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.danger, width: '100%', textAlign: 'right', writingDirection: 'rtl' },
   feedback: { borderRadius: 12, padding: 12, backgroundColor: Palette.surfaceMuted, gap: 5 },
   feedbackOk: { fontFamily: Typography.fontFamily, color: Palette.success, fontSize: 12, textAlign: 'right', writingDirection: 'rtl' },
   feedbackNo: { fontFamily: Typography.fontFamily, color: Palette.danger, fontSize: 12, textAlign: 'right', writingDirection: 'rtl', width: '100%' },

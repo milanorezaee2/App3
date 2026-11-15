@@ -67,7 +67,7 @@ export default function LanguageLevelStudio({ config }: { config: LevelStudioCon
   }, [level, mode]);
 
   const pool = useMemo(() => running ? levelPool(courseId, allLessons, running.levelId) : null, [running, courseId, allLessons]);
-  const items = useMemo(() => running && pool ? (running.mode === 'exam' ? buildLevelExam(pool, running.attempt) : running.mode === 'warmup' ? buildLevelWarmUp(allLessons, running.levelId) : buildLevelSupplement(pool)) : [], [running, pool, allLessons]);
+  const items = useMemo(() => running && pool ? (running.mode === 'exam' ? buildLevelExam(pool, running.attempt) : running.mode === 'warmup' ? buildLevelWarmUp(allLessons, running.levelId) : buildLevelSupplement(pool, running.levelId)) : [], [running, pool, allLessons]);
   const speak = useCallback((text: string) => speakText(text), [speakText]);
 
   const finish = useCallback(async (stats: PracticeStats) => {

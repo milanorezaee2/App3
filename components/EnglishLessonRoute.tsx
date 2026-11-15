@@ -76,7 +76,7 @@ export default function SentenceLessonScreen() {
   const practiceLesson = useMemo(() => ({ id: lesson.id, sentences: lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa, pronunciation: sentence.pronunciation, vocabulary: sentence.vocabulary })) }), [lesson]);
   const packVariations = usePackVariations('en', useMemo(() => ({ id: lesson.id, levelId: lesson.levelId, sentences: practiceLesson.sentences }), [lesson, practiceLesson]));
   // Content-pack sentences join the blitz pool (up to two extra strikes) so the learner meets the pattern with new words.
-  const practiceItems = useMemo(() => buildLessonPractice(packVariations.length ? { id: practiceLesson.id, sentences: [...practiceLesson.sentences, ...asLessonSentences(packVariations)] } : practiceLesson, { count: 6 + Math.min(2, packVariations.length) }), [practiceLesson, packVariations]);
+  const practiceItems = useMemo(() => buildLessonPractice(packVariations.length ? { id: practiceLesson.id, sentences: [...practiceLesson.sentences, ...asLessonSentences(packVariations)] } : practiceLesson, { count: 6 + Math.min(2, packVariations.length), write: lesson.levelId >= 2 }), [practiceLesson, packVariations]);
   const [practiceDone, setPracticeDone] = useState(false);
   const speakResult = useRef<SpeakDrillResult | null>(null);
   useEffect(() => { setPracticeDone(false); }, [lesson.id]);

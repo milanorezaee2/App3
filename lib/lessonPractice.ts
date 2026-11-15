@@ -10,9 +10,10 @@ import type { LearningLesson } from './languages/types';
  *  - listen:    the sentence is played; pick the Persian meaning
  *  - truefalse: a sentence with a meaning that is sometimes swapped; ✓ or ✗
  *  - match:     pair three sentences with their three meanings
+ *  - write:     the Persian is shown; type the sentence (production — opt-in from A2 up)
  * Everything is deterministic per lesson (seeded), with no new teaching content.
  */
-export type PracticeKind = 'order' | 'fill' | 'listen' | 'truefalse' | 'match';
+export type PracticeKind = 'order' | 'fill' | 'listen' | 'truefalse' | 'match' | 'write';
 type Sentence = { id: string; text: string; fa: string; pronunciation?: string; vocabulary?: ReadonlyArray<{ word: string; meaning: string }> };
 
 interface Base { id: string; kind: PracticeKind; sentenceId: string; answerText: string; answerFa: string; speakText: string; retry?: boolean }
@@ -21,7 +22,8 @@ export type PracticeItem =
   | (Base & { kind: 'listen'; choices: string[]; correctIndex: number })
   | (Base & { kind: 'order'; tokens: string[]; answerTokens: string[] })
   | (Base & { kind: 'truefalse'; shownFa: string; isTrue: boolean })
-  | (Base & { kind: 'match'; pairs: Array<{ text: string; fa: string }>; leftOrder: number[]; rightOrder: number[] });
+  | (Base & { kind: 'match'; pairs: Array<{ text: string; fa: string }>; leftOrder: number[]; rightOrder: number[] })
+  | (Base & { kind: 'write'; promptFa: string; wordCount: number });
 
 export interface PracticeStats { total: number; retries: number; seconds: number; firstTryCorrect: number }
 
@@ -68,6 +70,7 @@ function withChoices(correct: string, distractors: string[], random: () => numbe
   return { choices, correctIndex: choices.indexOf(correct) };
 }
 
+/** Recognition formats; «write» is added explicitly by callers (lesson blitz from A2 up). */
 const ALL_KINDS: PracticeKind[] = ['order', 'fill', 'listen', 'truefalse', 'match'];
 
 function makeItem(kind: PracticeKind, sentence: Sentence, all: Sentence[], random: () => number, retry = false): PracticeItem | null {
@@ -99,13 +102,18 @@ function makeItem(kind: PracticeKind, sentence: Sentence, all: Sentence[], rando
     if (!isTrue && !other) return null;
     return { ...base, kind, shownFa: isTrue ? sentence.fa : other.fa, isTrue };
   }
+  if (kind === 'write') {
+    const count = words(sentence.text).length;
+    if (count < 2 || count > 10) return null;
+    return { ...base, kind, promptFa: sentence.fa, wordCount: count };
+  }
   const others = distinct(all, sentence, 2, random, s => s.text);
   if (others.length < 2) return null;
   const pairs = [sentence, ...others].map(s => ({ text: s.text, fa: s.fa }));
   return { ...base, kind, pairs, leftOrder: shuffle([0, 1, 2], random), rightOrder: shuffle([0, 1, 2], random) };
 }
 
-export function buildLessonPractice(lesson: Pick<LearningLesson, 'id' | 'sentences'>, options?: { count?: number; kinds?: PracticeKind[]; seedSalt?: string }): PracticeItem[] {
+export function buildLessonPractice(lesson: Pick<LearningLesson, 'id' | 'sentences'>, options?: { count?: number; kinds?: PracticeKind[]; seedSalt?: string; /** Make one item of the round a «write» (typed production) item. */ write?: boolean }): PracticeItem[] {
   const all = (lesson.sentences as readonly Sentence[]).filter(s => s.text && s.fa);
   if (all.length < 3) return [];
   const random = rng(hash(`${lesson.id}#blitz#${options?.seedSalt ?? ''}`));
@@ -125,6 +133,15 @@ export function buildLessonPractice(lesson: Pick<LearningLesson, 'id' | 'sentenc
     }
     if (item) { items.push(item); lastKind = item.kind; }
   }
+  if (options?.write && items.length >= 3) {
+    // One production item per round, placed late so the learner has met the sentence first; the shortest sentence is the fairest to type.
+    const candidates = items.map((item, index) => ({ index, sentence: picked.find(s => s.id === item.sentenceId)! })).filter(x => x.sentence && words(x.sentence.text).length <= 8);
+    const choice = candidates.sort((a, b) => words(a.sentence.text).length - words(b.sentence.text).length)[0];
+    if (choice) {
+      const written = makeItem('write', choice.sentence, all, random);
+      if (written) { items.splice(choice.index, 1); items.splice(Math.max(2, items.length - 1), 0, written); }
+    }
+  }
   return items;
 }
 
@@ -134,7 +151,7 @@ export function buildRetryItem(lessonId: string, item: PracticeItem, lesson: Pic
   const sentence = all.find(s => s.id === item.sentenceId);
   if (!sentence) return null;
   const random = rng(hash(`${lessonId}#retry#${item.id}`));
-  const order = shuffle((kinds ?? ALL_KINDS).filter(kind => kind !== item.kind && kind !== 'match'), random);
+  const order = shuffle((kinds ?? ALL_KINDS).filter(kind => kind !== item.kind && kind !== 'match' && kind !== 'write'), random);
   for (const kind of order) { const next = makeItem(kind, sentence, all, random, true); if (next) return next; }
   return makeItem(item.kind, sentence, all, random, true);
 }

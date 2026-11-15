@@ -107,7 +107,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
   const checks = useMemo(() => shuffleChecks(lesson.id, lesson.checks), [lesson]);
   const packVariations = usePackVariations('ru', lesson);
   // Content-pack sentences join the blitz pool (up to two extra strikes) so the learner meets the pattern with new words.
-  const practiceItems = useMemo(() => buildLessonPractice(packVariations.length ? { id: lesson.id, sentences: [...lesson.sentences, ...asLessonSentences(packVariations)] } : lesson, { count: 6 + Math.min(2, packVariations.length) }), [lesson, packVariations]);
+  const practiceItems = useMemo(() => buildLessonPractice(packVariations.length ? { id: lesson.id, sentences: [...lesson.sentences, ...asLessonSentences(packVariations)] } : lesson, { count: 6 + Math.min(2, packVariations.length), write: lesson.levelId >= 2 }), [lesson, packVariations]);
   const [practiceDone, setPracticeDone] = useState(false);
   const speakResult = useRef<SpeakDrillResult | null>(null);
   useEffect(() => { setPracticeDone(false); }, [lesson.id]);
