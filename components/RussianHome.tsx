@@ -26,6 +26,9 @@ import { RussianBottomNav } from '@/components/RussianBottomNav';
 import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '@/components/LearningHomeStyles';
 import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } from '@/components/EnglishUI';
 import { RUSSIAN_LEVELS, RUSSIAN_LESSONS, russianProgress, type RussianLevelId } from '@/lib/languages/russian';
+const READINESS = courseReadiness('ru', auditLessonsFromLearning(RUSSIAN_LESSONS as ReadonlyArray<import('@/lib/languages/types').LearningLesson & { levelId: number }>));
+import LevelReadinessLine from '@/components/LevelReadinessLine';
+import { auditLessonsFromLearning, courseReadiness } from '@/lib/content/courseAudit';
 import { loadRussianLessonSessionWithPresence } from '@/lib/languages/russianStudyState';
 import type { CourseProgress } from '@/lib/courseProgress';
 import { toPersianDigits as fa } from '@/lib/format';
@@ -247,6 +250,7 @@ export default function RussianHome() {
                         </View>
                         <Text style={styles.levelDesc} numberOfLines={1}>{level.description}</Text>
                         <Text style={styles.levelStats}>{fa(count.completed)} از {fa(count.total)} درس · {level.status === 'planned' ? 'در نقشهٔ آینده' : 'محتوای موجود'}</Text>
+                        <LevelReadinessLine course={READINESS} levelId={level.id} color={level.color} />
                       </View>
                       <ChevronLeft size={18} color={HomeColors.muted} />
                     </Pressable>

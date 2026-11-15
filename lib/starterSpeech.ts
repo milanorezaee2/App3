@@ -1,4 +1,5 @@
 import * as Speech from 'expo-speech';
+import { tryPlayRecorded } from '@/lib/content/packAudio';
 import { speechTagFor } from './speechLanguage';
 
 let requestId = 0;
@@ -52,6 +53,9 @@ export function playStarterSpeech(locale: string, text: string, rate: number, on
   queue = queue.catch(() => undefined).then(async () => {
     if (request !== requestId) return;
     await Speech.stop().catch(() => undefined);
+    if (request !== requestId) return;
+    // Content-pack recordings win over the device voice.
+    if (await tryPlayRecorded(text, rate)) return;
     if (request !== requestId) return;
     const candidates = await findVoices(locale);
     if (request !== requestId) return;

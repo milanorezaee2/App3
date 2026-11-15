@@ -31,6 +31,9 @@ import { AppBottomNav } from '@/components/AppBottomNav';
 import { ProfileIcon } from '@/components/ProfileIcon';
 import { PageNavigation } from '@/components/PageNavigation';
 import { COURSE_LEVELS, SENTENCE_LESSONS } from '@/lib/courseContent';
+import LevelReadinessLine from '@/components/LevelReadinessLine';
+import { auditLessonsFromEnglish, courseReadiness } from '@/lib/content/courseAudit';
+const READINESS = courseReadiness('en', auditLessonsFromEnglish(SENTENCE_LESSONS));
 import { getCourseProgress, setCurrentLesson, type CourseProgress } from '@/lib/courseProgress';
 import { syncPersonalLearningData } from '@/lib/personalLearningSync';
 import { FEATURES } from '@/lib/features';
@@ -233,6 +236,7 @@ export default function LearningHome() {
                         </View>
                         <Text style={styles.levelDesc} numberOfLines={1}>{level.description}</Text>
                         <Text style={styles.levelStats}>{toPersianDigits(metrics.completedLessonCount)} از {toPersianDigits(metrics.lessonCount)} درس · {toPersianDigits(metrics.sentenceCount)} جمله · {toPersianDigits(metrics.vocabularyCount)} واژهٔ یکتا</Text>
+                        <LevelReadinessLine course={READINESS} levelId={level.id} color={level.color} />
                       </View>
                       <ChevronLeft size={18} color={HomeColors.muted} />
                     </Pressable>

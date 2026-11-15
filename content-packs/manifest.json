@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "packs": [
+    {
+      "language": "de",
+      "band": "A2",
+      "version": 1,
+      "path": "de/A2.v1.json",
+      "sentences": 386
+    }
+  ]
+}

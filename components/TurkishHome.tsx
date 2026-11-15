@@ -28,6 +28,9 @@ import { TurkishBottomNav } from '@/components/TurkishBottomNav';
 import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '@/components/LearningHomeStyles';
 import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } from '@/components/EnglishUI';
 import { TURKISH_LEVELS, TURKISH_LESSONS, turkishProgress, type TurkishLevelId } from '@/lib/languages/turkish';
+const READINESS = courseReadiness('tr', auditLessonsFromLearning(TURKISH_LESSONS as ReadonlyArray<import('@/lib/languages/types').LearningLesson & { levelId: number }>));
+import LevelReadinessLine from '@/components/LevelReadinessLine';
+import { auditLessonsFromLearning, courseReadiness } from '@/lib/content/courseAudit';
 import { loadTurkishLessonSessionWithPresence } from '@/lib/languages/turkishStudyState';
 import type { CourseProgress } from '@/lib/courseProgress';
 import { toPersianDigits as fa } from '@/lib/format';
@@ -249,6 +252,7 @@ export default function TurkishHome() {
                         </View>
                         <Text style={styles.levelDesc} numberOfLines={1}>{level.description || 'در نقشهٔ آیندهٔ دوره'}</Text>
                         <Text style={styles.levelStats}>{fa(count.completed)} از {fa(count.total)} درس · {level.status === 'planned' ? 'در نقشهٔ آینده' : 'محتوای موجود'}</Text>
+                        <LevelReadinessLine course={READINESS} levelId={level.id} color={level.color} />
                       </View>
                       <ChevronLeft size={18} color={HomeColors.muted} />
                     </Pressable>

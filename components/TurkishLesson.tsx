@@ -21,6 +21,11 @@ import SpeakDrill, { type SpeakDrillResult } from '@/components/SpeakDrill';
 import { saveLessonOutcome, weakSpokenSentences } from '@/lib/lessonOutcomes';
 import { clearTurkishLessonSession, loadTurkishLessonSessionWithPresence, saveTurkishLessonSession, resetTurkishLessonSession } from '@/lib/languages/turkishStudyState';
 import { TURKISH_LESSONS, TURKISH_LEVELS, TURKISH_LESSON_STAGES, turkishProgress, type TurkishCourseLesson } from '@/lib/languages/turkish';
+import { auditLessonsFromEnglish, auditLessonsFromLearning, courseReadiness, } from '@/lib/content/courseAudit';
+import { bandReadinessForLevel } from '@/lib/content/readiness';
+import { usePackVariations } from '@/lib/content/usePackVariations';
+import { asLessonSentences } from '@/lib/content/packs';
+
 import type { TurkishLessonSession } from '@/lib/languages/turkishStudyState';
 import { toPersianDigits as fa } from '@/lib/format';
 import { playTurkishSpeech, stopTurkishSpeech } from '@/lib/turkishSpeech';
@@ -103,13 +108,15 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
   const stageLabelFa = stage === 1 ? coreStageLabel : stage === 4 && lesson.learningMode === 'words' ? 'یادآوری واژه' : stage === 4 && lesson.learningMode === 'chunks' ? 'ساخت ترکیب کوتاه' : stage === 5 && lesson.learningMode === 'words' ? 'مرور واژگان' : stage === 7 && lesson.learningMode === 'words' ? 'مرور فعال واژه‌ها' : stages[stage].labelFa;
   const stageLabelEn = stage === 1 && lesson.learningMode === 'words' ? 'Core Words' : stage === 1 && lesson.learningMode === 'chunks' ? 'Core Chunks' : stage === 4 && lesson.learningMode === 'words' ? 'Word Recall' : stage === 4 && lesson.learningMode === 'chunks' ? 'Chunk Building' : stage === 5 && lesson.learningMode === 'words' ? 'Vocabulary Review' : stage === 7 && lesson.learningMode === 'words' ? 'Active Word Review' : stages[stage].labelEn;
   const checks = useMemo(() => shuffleChecks(lesson.id, lesson.checks), [lesson]);
-  const practiceItems = useMemo(() => buildLessonPractice(lesson), [lesson]);
+  const packVariations = usePackVariations('tr', lesson);
+  // Content-pack sentences join the blitz pool (up to two extra strikes) so the learner meets the pattern with new words.
+  const practiceItems = useMemo(() => buildLessonPractice(packVariations.length ? { id: lesson.id, sentences: [...lesson.sentences, ...asLessonSentences(packVariations)] } : lesson, { count: 6 + Math.min(2, packVariations.length) }), [lesson, packVariations]);
   const [practiceDone, setPracticeDone] = useState(false);
   const speakResult = useRef<SpeakDrillResult | null>(null);
   useEffect(() => { setPracticeDone(false); }, [lesson.id]);
   const practiceStats = useRef<PracticeStats>({ total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 });
   const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
-  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void; levelFinished?: { title: string; lessons: number; onStart: () => void } } | null>(null);
+  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void; levelFinished?: { title: string; lessons: number; onStart: () => void; readiness?: number } } | null>(null);
   const skipPractice = useCallback(() => { practiceStats.current = { total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 }; setPracticeDone(true); }, []);
   const practiceBlocks = practiceItems.length > 0 && !practiceDone;
   const allChecksPassed = checks.every((question, index) => answers[String(index)] === question.correctIndex);
@@ -269,7 +276,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
         next: () => { if (nextLesson) router.replace({ pathname: '/learn/tr/lesson', params: { id: nextLesson.id } } as never); else router.replace('/learn/tr' as never); },
         dueReviews,
         review: () => router.replace('/learn/tr/review' as never),
-        levelFinished: (!nextLesson || nextLesson.levelId !== lesson.levelId) ? { title: TURKISH_LEVELS.find(item => item.id === lesson.levelId)?.title ?? '', lessons: TURKISH_LESSONS.filter(item => item.levelId === lesson.levelId).length, onStart: () => router.replace({ pathname: '/learn/tr/studio', params: { level: String(lesson.levelId), mode: 'warmup' } } as never) } : undefined,
+        levelFinished: (!nextLesson || nextLesson.levelId !== lesson.levelId) ? { readiness: bandReadinessForLevel(courseReadiness('tr', auditLessonsFromLearning(TURKISH_LESSONS as ReadonlyArray<import('@/lib/languages/types').LearningLesson & { levelId: number }>)), lesson.levelId)?.readiness, title: TURKISH_LEVELS.find(item => item.id === lesson.levelId)?.title ?? '', lessons: TURKISH_LESSONS.filter(item => item.levelId === lesson.levelId).length, onStart: () => router.replace({ pathname: '/learn/tr/studio', params: { level: String(lesson.levelId), mode: 'warmup' } } as never) } : undefined,
       });
     } catch {
       completing.current = false;

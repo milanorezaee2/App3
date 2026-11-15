@@ -1,0 +1,3485 @@
+{
+ "schema": 1,
+ "language": "de",
+ "band": "A2",
+ "version": 1,
+ "generatedAt": "2026-11-15",
+ "source": "factory v1 · automatic gates · 10% sample review",
+ "sentences": [
+  {
+   "id": "de-a2-001",
+   "text": "Das ist so einfach.",
+   "fa": "این خیلی ساده است.",
+   "pattern": "Das ist so <Adj.>.",
+   "targetWords": [
+    "so"
+   ]
+  },
+  {
+   "id": "de-a2-002",
+   "text": "Warum bist du so müde?",
+   "fa": "چرا این‌قدر خسته‌ای؟",
+   "pattern": "Warum bist du so <Adj.>?",
+   "targetWords": [
+    "so"
+   ]
+  },
+  {
+   "id": "de-a2-003",
+   "text": "So machen wir das immer.",
+   "fa": "ما همیشه این‌طوری انجامش می‌دهیم.",
+   "pattern": "So machen wir das <Zeit>.",
+   "targetWords": [
+    "so"
+   ]
+  },
+  {
+   "id": "de-a2-004",
+   "text": "Ich habe das noch nie so gesehen.",
+   "fa": "تا حالا این را این‌طور ندیده بودم.",
+   "pattern": "Ich habe das noch nie so <Partizip>.",
+   "targetWords": [
+    "so"
+   ]
+  },
+  {
+   "id": "de-a2-005",
+   "text": "Ich habe nur zehn Euro.",
+   "fa": "من فقط ده یورو دارم.",
+   "pattern": "Ich habe nur <Menge>.",
+   "targetWords": [
+    "nur"
+   ]
+  },
+  {
+   "id": "de-a2-006",
+   "text": "Wir bleiben nur eine Nacht.",
+   "fa": "ما فقط یک شب می‌مانیم.",
+   "pattern": "Wir bleiben nur <Zeit>.",
+   "targetWords": [
+    "nur"
+   ]
+  },
+  {
+   "id": "de-a2-007",
+   "text": "Nur bei Regen nehmen wir den Bus.",
+   "fa": "فقط وقتی باران می‌بارد اتوبوس می‌گیریم.",
+   "pattern": "Nur bei <Wetter> nehmen wir <Verkehrsmittel>.",
+   "targetWords": [
+    "nur",
+    "bei"
+   ]
+  },
+  {
+   "id": "de-a2-008",
+   "text": "Ich wohne noch bei meinen Eltern.",
+   "fa": "من هنوز پیش پدر و مادرم زندگی می‌کنم.",
+   "pattern": "Ich wohne bei <Dat.>.",
+   "targetWords": [
+    "bei"
+   ]
+  },
+  {
+   "id": "de-a2-009",
+   "text": "Bei uns gibt es heute Suppe.",
+   "fa": "امروز پیش ما سوپ داریم.",
+   "pattern": "Bei uns gibt es <Essen>.",
+   "targetWords": [
+    "bei"
+   ]
+  },
+  {
+   "id": "de-a2-010",
+   "text": "Sie arbeitet bei einer kleinen Firma.",
+   "fa": "او در یک شرکت کوچک کار می‌کند.",
+   "pattern": "Sie arbeitet bei <Firma>.",
+   "targetWords": [
+    "bei"
+   ]
+  },
+  {
+   "id": "de-a2-011",
+   "text": "Einer von uns muss fahren.",
+   "fa": "یکی از ما باید رانندگی کند.",
+   "pattern": "Einer von uns muss <Verb>.",
+   "targetWords": [
+    "einer"
+   ]
+  },
+  {
+   "id": "de-a2-012",
+   "text": "Ich habe mit einer Freundin telefoniert.",
+   "fa": "با یک دوست تلفنی صحبت کردم.",
+   "pattern": "Ich habe mit einer <Person> telefoniert.",
+   "targetWords": [
+    "einer"
+   ]
+  },
+  {
+   "id": "de-a2-013",
+   "text": "Nach einer Stunde war ich fertig.",
+   "fa": "بعد از یک ساعت کارم تمام شد.",
+   "pattern": "Nach einer <Zeit> war ich fertig.",
+   "targetWords": [
+    "einer"
+   ]
+  },
+  {
+   "id": "de-a2-014",
+   "text": "Wir sprechen über das Wetter.",
+   "fa": "ما دربارهٔ هوا حرف می‌زنیم.",
+   "pattern": "Wir sprechen über <Akk.>.",
+   "targetWords": [
+    "über"
+   ]
+  },
+  {
+   "id": "de-a2-015",
+   "text": "Der Bus fährt über die Brücke.",
+   "fa": "اتوبوس از روی پل می‌گذرد.",
+   "pattern": "<Subjekt> fährt über <Akk.>.",
+   "targetWords": [
+    "über"
+   ]
+  },
+  {
+   "id": "de-a2-016",
+   "text": "Ich habe über zwei Stunden gewartet.",
+   "fa": "بیش از دو ساعت منتظر ماندم.",
+   "pattern": "Ich habe über <Zeit> gewartet.",
+   "targetWords": [
+    "über"
+   ]
+  },
+  {
+   "id": "de-a2-017",
+   "text": "Was denkst du über den Film?",
+   "fa": "نظرت دربارهٔ فیلم چیست؟",
+   "pattern": "Was denkst du über <Akk.>?",
+   "targetWords": [
+    "über"
+   ]
+  },
+  {
+   "id": "de-a2-018",
+   "text": "Ich möchte nicht mehr essen.",
+   "fa": "دیگر نمی‌خواهم بخورم.",
+   "pattern": "Ich möchte nicht mehr <Verb>.",
+   "targetWords": [
+    "mehr"
+   ]
+  },
+  {
+   "id": "de-a2-019",
+   "text": "Heute habe ich mehr Zeit als gestern.",
+   "fa": "امروز بیشتر از دیروز وقت دارم.",
+   "pattern": "Ich habe mehr <Nomen> als <Vergleich>.",
+   "targetWords": [
+    "mehr"
+   ]
+  },
+  {
+   "id": "de-a2-020",
+   "text": "Es gibt keine Karten mehr.",
+   "fa": "دیگر بلیتی نمانده.",
+   "pattern": "Es gibt keine <Nomen> mehr.",
+   "targetWords": [
+    "mehr"
+   ]
+  },
+  {
+   "id": "de-a2-021",
+   "text": "Wir gehen durch den Park.",
+   "fa": "ما از میان پارک رد می‌شویم.",
+   "pattern": "Wir gehen durch <Akk.>.",
+   "targetWords": [
+    "durch"
+   ]
+  },
+  {
+   "id": "de-a2-022",
+   "text": "Ich habe ihn durch meine Schwester kennengelernt.",
+   "fa": "او را از طریق خواهرم شناختم.",
+   "pattern": "Ich habe <Person> durch <Person> kennengelernt.",
+   "targetWords": [
+    "durch"
+   ]
+  },
+  {
+   "id": "de-a2-023",
+   "text": "Durch den Regen kamen wir zu spät.",
+   "fa": "به خاطر باران دیر رسیدیم.",
+   "pattern": "Durch <Akk.> kamen wir zu spät.",
+   "targetWords": [
+    "durch"
+   ]
+  },
+  {
+   "id": "de-a2-024",
+   "text": "Komm doch mit!",
+   "fa": "خب تو هم بیا!",
+   "pattern": "<Imperativ> doch <Ergänzung>!",
+   "targetWords": [
+    "doch"
+   ]
+  },
+  {
+   "id": "de-a2-025",
+   "text": "Das ist doch nicht so schwer.",
+   "fa": "این که آن‌قدر سخت نیست.",
+   "pattern": "Das ist doch nicht so <Adj.>.",
+   "targetWords": [
+    "doch"
+   ]
+  },
+  {
+   "id": "de-a2-026",
+   "text": "Hast du keine Zeit? Doch, ich habe Zeit.",
+   "fa": "وقت نداری؟ چرا، وقت دارم.",
+   "pattern": "<Negative Frage>? Doch, <Antwort>.",
+   "targetWords": [
+    "doch"
+   ]
+  },
+  {
+   "id": "de-a2-027",
+   "text": "Er kommt immer zu spät.",
+   "fa": "او همیشه دیر می‌آید.",
+   "pattern": "<Subjekt> kommt immer <Zeit>.",
+   "targetWords": [
+    "immer"
+   ]
+  },
+  {
+   "id": "de-a2-028",
+   "text": "Es wird immer teurer.",
+   "fa": "دارد همین‌طور گران‌تر می‌شود.",
+   "pattern": "Es wird immer <Komparativ>.",
+   "targetWords": [
+    "immer"
+   ]
+  },
+  {
+   "id": "de-a2-029",
+   "text": "Ich habe immer noch Hunger.",
+   "fa": "من هنوز هم گرسنه‌ام.",
+   "pattern": "Ich habe immer noch <Nomen>.",
+   "targetWords": [
+    "immer"
+   ]
+  },
+  {
+   "id": "de-a2-030",
+   "text": "Das Haus wurde 1990 gebaut.",
+   "fa": "این خانه در سال ۱۹۹۰ ساخته شد.",
+   "pattern": "<Subjekt> wurde <Jahr> gebaut.",
+   "targetWords": [
+    "wurde"
+   ]
+  },
+  {
+   "id": "de-a2-031",
+   "text": "Gestern wurde ich krank.",
+   "fa": "دیروز مریض شدم.",
+   "pattern": "<Zeit> wurde ich <Adj.>.",
+   "targetWords": [
+    "wurde"
+   ]
+  },
+  {
+   "id": "de-a2-032",
+   "text": "Mein Bruder wurde letzte Woche dreissig.",
+   "fa": "برادرم هفتهٔ پیش سی‌ساله شد.",
+   "pattern": "<Person> wurde <Zeit> <Alter>.",
+   "targetWords": [
+    "wurde"
+   ]
+  },
+  {
+   "id": "de-a2-033",
+   "text": "Alle warten auf den Zug.",
+   "fa": "همه منتظر قطار هستند.",
+   "pattern": "Alle warten auf <Akk.>.",
+   "targetWords": [
+    "alle"
+   ]
+  },
+  {
+   "id": "de-a2-034",
+   "text": "Ich kenne alle in meiner Klasse.",
+   "fa": "همهٔ بچه‌های کلاسم را می‌شناسم.",
+   "pattern": "Ich kenne alle in <Dat.>.",
+   "targetWords": [
+    "alle"
+   ]
+  },
+  {
+   "id": "de-a2-035",
+   "text": "Alle zwei Wochen besuche ich meine Oma.",
+   "fa": "هر دو هفته یک بار به مادربزرگم سر می‌زنم.",
+   "pattern": "Alle <Zeit> <Verb> ich <Akk.>.",
+   "targetWords": [
+    "alle"
+   ]
+  },
+  {
+   "id": "de-a2-036",
+   "text": "Ich bin gegen diese Idee.",
+   "fa": "من با این ایده مخالفم.",
+   "pattern": "Ich bin gegen <Akk.>.",
+   "targetWords": [
+    "gegen"
+   ]
+  },
+  {
+   "id": "de-a2-037",
+   "text": "Wir treffen uns gegen acht Uhr.",
+   "fa": "حدود ساعت هشت همدیگر را می‌بینیم.",
+   "pattern": "Wir treffen uns gegen <Uhrzeit>.",
+   "targetWords": [
+    "gegen"
+   ]
+  },
+  {
+   "id": "de-a2-038",
+   "text": "Hast du etwas gegen Kopfschmerzen?",
+   "fa": "چیزی برای سردرد داری؟",
+   "pattern": "Hast du etwas gegen <Krankheit>?",
+   "targetWords": [
+    "gegen"
+   ]
+  },
+  {
+   "id": "de-a2-039",
+   "text": "Er sucht seine Schlüssel.",
+   "fa": "او دنبال کلیدهایش می‌گردد.",
+   "pattern": "Er sucht seine <Pl.>.",
+   "targetWords": [
+    "seine"
+   ]
+  },
+  {
+   "id": "de-a2-040",
+   "text": "Seine Frau kommt aus Spanien.",
+   "fa": "همسرش اهل اسپانیاست.",
+   "pattern": "Seine <Person> kommt aus <Land>.",
+   "targetWords": [
+    "seine"
+   ]
+  },
+  {
+   "id": "de-a2-041",
+   "text": "Er hat seine Tasche im Zug vergessen.",
+   "fa": "او کیفش را در قطار جا گذاشت.",
+   "pattern": "Er hat seine <Nomen> <Ort> vergessen.",
+   "targetWords": [
+    "seine"
+   ]
+  },
+  {
+   "id": "de-a2-042",
+   "text": "Ich bleibe zu Hause, denn ich bin krank.",
+   "fa": "خانه می‌مانم، چون مریضم.",
+   "pattern": "<Satz>, denn <Grund>.",
+   "targetWords": [
+    "denn"
+   ]
+  },
+  {
+   "id": "de-a2-043",
+   "text": "Was ist denn los?",
+   "fa": "چی شده آخه؟",
+   "pattern": "Was ist denn <Ergänzung>?",
+   "targetWords": [
+    "denn"
+   ]
+  },
+  {
+   "id": "de-a2-044",
+   "text": "Wo wohnst du denn jetzt?",
+   "fa": "حالا کجا زندگی می‌کنی؟",
+   "pattern": "<W-Frage> denn <Ergänzung>?",
+   "targetWords": [
+    "denn"
+   ]
+  },
+  {
+   "id": "de-a2-045",
+   "text": "Ich lerne viel, damit ich die Prüfung bestehe.",
+   "fa": "زیاد درس می‌خوانم تا در امتحان قبول شوم.",
+   "pattern": "<Satz>, damit <Ziel>.",
+   "targetWords": [
+    "damit"
+   ]
+  },
+  {
+   "id": "de-a2-046",
+   "text": "Sprich lauter, damit alle dich hören.",
+   "fa": "بلندتر حرف بزن تا همه صدایت را بشنوند.",
+   "pattern": "<Imperativ>, damit <Ziel>.",
+   "targetWords": [
+    "damit"
+   ]
+  },
+  {
+   "id": "de-a2-047",
+   "text": "Was machst du damit?",
+   "fa": "با آن چه کار می‌کنی؟",
+   "pattern": "Was machst du damit?",
+   "targetWords": [
+    "damit"
+   ]
+  },
+  {
+   "id": "de-a2-048",
+   "text": "Ich will heute früh ins Bett.",
+   "fa": "می‌خواهم امشب زود بخوابم.",
+   "pattern": "Ich will <Zeit> <Ziel>.",
+   "targetWords": [
+    "will"
+   ]
+  },
+  {
+   "id": "de-a2-049",
+   "text": "Sie will Ärztin werden.",
+   "fa": "او می‌خواهد پزشک شود.",
+   "pattern": "<Person> will <Beruf> werden.",
+   "targetWords": [
+    "will"
+   ]
+  },
+  {
+   "id": "de-a2-050",
+   "text": "Er will nicht mit uns kommen.",
+   "fa": "او نمی‌خواهد با ما بیاید.",
+   "pattern": "<Person> will nicht <Verb>.",
+   "targetWords": [
+    "will"
+   ]
+  },
+  {
+   "id": "de-a2-051",
+   "text": "Ich bin gerade beim Arzt.",
+   "fa": "الان پیش دکترم.",
+   "pattern": "Ich bin gerade beim <Dat.>.",
+   "targetWords": [
+    "beim"
+   ]
+  },
+  {
+   "id": "de-a2-052",
+   "text": "Beim Essen reden wir nicht.",
+   "fa": "موقع غذا خوردن حرف نمی‌زنیم.",
+   "pattern": "Beim <Nomen> <Satz>.",
+   "targetWords": [
+    "beim"
+   ]
+  },
+  {
+   "id": "de-a2-053",
+   "text": "Er hat sich beim Sport verletzt.",
+   "fa": "او موقع ورزش آسیب دید.",
+   "pattern": "<Person> hat sich beim <Nomen> verletzt.",
+   "targetWords": [
+    "beim"
+   ]
+  },
+  {
+   "id": "de-a2-054",
+   "text": "Wir waren gestern im Kino.",
+   "fa": "دیروز سینما بودیم.",
+   "pattern": "Wir waren <Zeit> <Ort>.",
+   "targetWords": [
+    "waren"
+   ]
+  },
+  {
+   "id": "de-a2-055",
+   "text": "Wo waren Sie am Wochenende?",
+   "fa": "آخر هفته کجا بودید؟",
+   "pattern": "Wo waren Sie <Zeit>?",
+   "targetWords": [
+    "waren"
+   ]
+  },
+  {
+   "id": "de-a2-056",
+   "text": "Die Kinder waren sehr laut.",
+   "fa": "بچه‌ها خیلی سر و صدا می‌کردند.",
+   "pattern": "<Pl.> waren sehr <Adj.>.",
+   "targetWords": [
+    "waren"
+   ]
+  },
+  {
+   "id": "de-a2-057",
+   "text": "Eines Tages fahre ich nach Berlin.",
+   "fa": "یک روز به برلین می‌روم.",
+   "pattern": "Eines Tages <Satz>.",
+   "targetWords": [
+    "eines"
+   ]
+  },
+  {
+   "id": "de-a2-058",
+   "text": "Das ist das Auto eines Freundes.",
+   "fa": "این ماشین یکی از دوستانم است.",
+   "pattern": "Das ist <Nomen> eines <Gen.>.",
+   "targetWords": [
+    "eines"
+   ]
+  },
+  {
+   "id": "de-a2-059",
+   "text": "Soll ich das Fenster öffnen?",
+   "fa": "پنجره را باز کنم؟",
+   "pattern": "Soll ich <Akk.> <Verb>?",
+   "targetWords": [
+    "soll"
+   ]
+  },
+  {
+   "id": "de-a2-060",
+   "text": "Der Arzt sagt, ich soll mehr schlafen.",
+   "fa": "دکتر می‌گوید باید بیشتر بخوابم.",
+   "pattern": "<Person> sagt, ich soll <Verb>.",
+   "targetWords": [
+    "soll"
+   ]
+  },
+  {
+   "id": "de-a2-061",
+   "text": "Was soll das bedeuten?",
+   "fa": "این یعنی چه؟",
+   "pattern": "Was soll das <Verb>?",
+   "targetWords": [
+    "soll"
+   ]
+  },
+  {
+   "id": "de-a2-062",
+   "text": "Ich habe das Essen selbst gekocht.",
+   "fa": "غذا را خودم پختم.",
+   "pattern": "Ich habe <Akk.> selbst <Partizip>.",
+   "targetWords": [
+    "selbst"
+   ]
+  },
+  {
+   "id": "de-a2-063",
+   "text": "Das musst du selbst entscheiden.",
+   "fa": "این را باید خودت تصمیم بگیری.",
+   "pattern": "Das musst du selbst <Verb>.",
+   "targetWords": [
+    "selbst"
+   ]
+  },
+  {
+   "id": "de-a2-064",
+   "text": "Viele Menschen warten vor dem Laden.",
+   "fa": "آدم‌های زیادی جلوی مغازه منتظرند.",
+   "pattern": "Viele Menschen <Verb> <Ort>.",
+   "targetWords": [
+    "menschen"
+   ]
+  },
+  {
+   "id": "de-a2-065",
+   "text": "In der Stadt leben zwei Millionen Menschen.",
+   "fa": "در این شهر دو میلیون نفر زندگی می‌کنند.",
+   "pattern": "In <Ort> leben <Zahl> Menschen.",
+   "targetWords": [
+    "menschen"
+   ]
+  },
+  {
+   "id": "de-a2-066",
+   "text": "Ich hab keine Lust.",
+   "fa": "حوصله ندارم.",
+   "pattern": "Ich hab keine <Nomen>.",
+   "targetWords": [
+    "hab"
+   ]
+  },
+  {
+   "id": "de-a2-067",
+   "text": "Hab keine Angst!",
+   "fa": "نترس!",
+   "pattern": "Hab keine Angst!",
+   "targetWords": [
+    "hab"
+   ]
+  },
+  {
+   "id": "de-a2-068",
+   "text": "Nun bist du dran.",
+   "fa": "حالا نوبت توست.",
+   "pattern": "Nun bist du dran.",
+   "targetWords": [
+    "nun"
+   ]
+  },
+  {
+   "id": "de-a2-069",
+   "text": "Was machen wir nun?",
+   "fa": "حالا چه کار کنیم؟",
+   "pattern": "Was machen wir nun?",
+   "targetWords": [
+    "nun"
+   ]
+  },
+  {
+   "id": "de-a2-070",
+   "text": "Ich würde gern ein Eis essen.",
+   "fa": "دوست دارم یک بستنی بخورم.",
+   "pattern": "Ich würde gern <Akk.> <Verb>.",
+   "targetWords": [
+    "würde"
+   ]
+  },
+  {
+   "id": "de-a2-071",
+   "text": "Würdest du mir bitte helfen?",
+   "fa": "لطفاً کمکم می‌کنی؟",
+   "pattern": "Würdest du mir bitte <Verb>?",
+   "targetWords": [
+    "würde"
+   ]
+  },
+  {
+   "id": "de-a2-072",
+   "text": "An deiner Stelle würde ich warten.",
+   "fa": "اگر جای تو بودم صبر می‌کردم.",
+   "pattern": "An deiner Stelle würde ich <Verb>.",
+   "targetWords": [
+    "würde"
+   ]
+  },
+  {
+   "id": "de-a2-073",
+   "text": "Meine Grosseltern leben auf dem Land.",
+   "fa": "پدربزرگ و مادربزرگم در روستا زندگی می‌کنند.",
+   "pattern": "<Personen> leben <Ort>.",
+   "targetWords": [
+    "leben"
+   ]
+  },
+  {
+   "id": "de-a2-074",
+   "text": "Das Leben in Berlin ist teuer.",
+   "fa": "زندگی در برلین گران است.",
+   "pattern": "Das Leben in <Ort> ist <Adj.>.",
+   "targetWords": [
+    "leben"
+   ]
+  },
+  {
+   "id": "de-a2-075",
+   "text": "Das macht nichts.",
+   "fa": "اشکالی ندارد.",
+   "pattern": "Das macht nichts.",
+   "targetWords": [
+    "macht"
+   ]
+  },
+  {
+   "id": "de-a2-076",
+   "text": "Was macht deine Schwester beruflich?",
+   "fa": "خواهرت چه کاره است؟",
+   "pattern": "Was macht <Person> beruflich?",
+   "targetWords": [
+    "macht"
+   ]
+  },
+  {
+   "id": "de-a2-077",
+   "text": "Das macht zusammen zwölf Euro.",
+   "fa": "جمعاً می‌شود دوازده یورو.",
+   "pattern": "Das macht zusammen <Preis>.",
+   "targetWords": [
+    "macht"
+   ]
+  },
+  {
+   "id": "de-a2-078",
+   "text": "Ich weiss nicht, ob er kommt.",
+   "fa": "نمی‌دانم می‌آید یا نه.",
+   "pattern": "Ich weiss nicht, ob <Satz>.",
+   "targetWords": [
+    "ob"
+   ]
+  },
+  {
+   "id": "de-a2-079",
+   "text": "Kannst du fragen, ob der Laden offen ist?",
+   "fa": "می‌توانی بپرسی مغازه باز است یا نه؟",
+   "pattern": "Kannst du fragen, ob <Satz>?",
+   "targetWords": [
+    "ob"
+   ]
+  },
+  {
+   "id": "de-a2-080",
+   "text": "Ich habe ihn lange nicht gesehen.",
+   "fa": "خیلی وقت است او را ندیده‌ام.",
+   "pattern": "Ich habe ihn <Zeit> nicht gesehen.",
+   "targetWords": [
+    "ihn"
+   ]
+  },
+  {
+   "id": "de-a2-081",
+   "text": "Ruf ihn bitte heute Abend an.",
+   "fa": "لطفاً امشب به او زنگ بزن.",
+   "pattern": "Ruf ihn <Zeit> an.",
+   "targetWords": [
+    "ihn"
+   ]
+  },
+  {
+   "id": "de-a2-082",
+   "text": "Kennst du ihn gut?",
+   "fa": "او را خوب می‌شناسی؟",
+   "pattern": "Kennst du ihn <Adv.>?",
+   "targetWords": [
+    "ihn"
+   ]
+  },
+  {
+   "id": "de-a2-083",
+   "text": "Er wohnt bei seiner Tante.",
+   "fa": "او پیش عمه‌اش زندگی می‌کند.",
+   "pattern": "Er wohnt bei seiner <Person>.",
+   "targetWords": [
+    "seiner"
+   ]
+  },
+  {
+   "id": "de-a2-084",
+   "text": "Er spricht oft von seiner Arbeit.",
+   "fa": "او زیاد از کارش حرف می‌زند.",
+   "pattern": "Er spricht von seiner <Nomen>.",
+   "targetWords": [
+    "seiner"
+   ]
+  },
+  {
+   "id": "de-a2-085",
+   "text": "Das Café ist zwischen der Schule und dem Park.",
+   "fa": "کافه بین مدرسه و پارک است.",
+   "pattern": "<Ort> ist zwischen <Dat.> und <Dat.>.",
+   "targetWords": [
+    "zwischen"
+   ]
+  },
+  {
+   "id": "de-a2-086",
+   "text": "Zwischen zwei und drei Uhr habe ich Pause.",
+   "fa": "بین ساعت دو و سه استراحت دارم.",
+   "pattern": "Zwischen <Zeit> und <Zeit> <Satz>.",
+   "targetWords": [
+    "zwischen"
+   ]
+  },
+  {
+   "id": "de-a2-087",
+   "text": "Die Fenster wurden gestern geputzt.",
+   "fa": "پنجره‌ها دیروز تمیز شدند.",
+   "pattern": "<Pl.> wurden <Zeit> <Partizip>.",
+   "targetWords": [
+    "wurden"
+   ]
+  },
+  {
+   "id": "de-a2-088",
+   "text": "Wir wurden zum Essen eingeladen.",
+   "fa": "ما را به شام دعوت کردند.",
+   "pattern": "Wir wurden zu <Dat.> eingeladen.",
+   "targetWords": [
+    "wurden"
+   ]
+  },
+  {
+   "id": "de-a2-089",
+   "text": "Hast du deinen Pass dabei?",
+   "fa": "پاسپورتت همراهت هست؟",
+   "pattern": "Hast du <Akk.> dabei?",
+   "targetWords": [
+    "dabei"
+   ]
+  },
+  {
+   "id": "de-a2-090",
+   "text": "Ich helfe dir dabei.",
+   "fa": "در این کار کمکت می‌کنم.",
+   "pattern": "Ich helfe dir dabei.",
+   "targetWords": [
+    "dabei"
+   ]
+  },
+  {
+   "id": "de-a2-091",
+   "text": "Ich komme nicht morgen, sondern am Freitag.",
+   "fa": "فردا نمی‌آیم، بلکه جمعه می‌آیم.",
+   "pattern": "nicht <A>, sondern <B>.",
+   "targetWords": [
+    "sondern"
+   ]
+  },
+  {
+   "id": "de-a2-092",
+   "text": "Das ist nicht mein Auto, sondern das von Paul.",
+   "fa": "این ماشین من نیست، مال پل است.",
+   "pattern": "Das ist nicht <A>, sondern <B>.",
+   "targetWords": [
+    "sondern"
+   ]
+  },
+  {
+   "id": "de-a2-093",
+   "text": "Der Film beginnt erst um neun.",
+   "fa": "فیلم تازه ساعت نه شروع می‌شود.",
+   "pattern": "<Ereignis> beginnt erst um <Uhrzeit>.",
+   "targetWords": [
+    "erst"
+   ]
+  },
+  {
+   "id": "de-a2-094",
+   "text": "Ich bin erst seit einem Monat hier.",
+   "fa": "من تازه یک ماه است که اینجا هستم.",
+   "pattern": "Ich bin erst seit <Zeit> hier.",
+   "targetWords": [
+    "erst"
+   ]
+  },
+  {
+   "id": "de-a2-095",
+   "text": "Erst die Arbeit, dann das Vergnügen.",
+   "fa": "اول کار، بعد تفریح.",
+   "pattern": "Erst <A>, dann <B>.",
+   "targetWords": [
+    "erst"
+   ]
+  },
+  {
+   "id": "de-a2-096",
+   "text": "Sie wohnt noch bei ihrer Mutter.",
+   "fa": "او هنوز پیش مادرش زندگی می‌کند.",
+   "pattern": "Sie wohnt bei ihrer <Person>.",
+   "targetWords": [
+    "ihrer"
+   ]
+  },
+  {
+   "id": "de-a2-097",
+   "text": "Sie ist mit ihrer Arbeit zufrieden.",
+   "fa": "او از کارش راضی است.",
+   "pattern": "Sie ist mit ihrer <Nomen> zufrieden.",
+   "targetWords": [
+    "ihrer"
+   ]
+  },
+  {
+   "id": "de-a2-098",
+   "text": "Lass mich bitte in Ruhe.",
+   "fa": "لطفاً راحتم بگذار.",
+   "pattern": "Lass mich <Ergänzung>.",
+   "targetWords": [
+    "lass"
+   ]
+  },
+  {
+   "id": "de-a2-099",
+   "text": "Ich lasse mein Auto zu Hause.",
+   "fa": "ماشینم را خانه می‌گذارم.",
+   "pattern": "Ich lasse <Akk.> <Ort>.",
+   "targetWords": [
+    "lasse"
+   ]
+  },
+  {
+   "id": "de-a2-100",
+   "text": "Wir lassen die Kinder draussen spielen.",
+   "fa": "می‌گذاریم بچه‌ها بیرون بازی کنند.",
+   "pattern": "Wir lassen <Akk.> <Infinitiv>.",
+   "targetWords": [
+    "lassen"
+   ]
+  },
+  {
+   "id": "de-a2-101",
+   "text": "Ich weiss es leider nicht.",
+   "fa": "متأسفانه نمی‌دانم.",
+   "pattern": "Ich weiss es nicht.",
+   "targetWords": [
+    "weiss"
+   ]
+  },
+  {
+   "id": "de-a2-102",
+   "text": "Weisst du, wo der Bahnhof ist?",
+   "fa": "می‌دانی ایستگاه قطار کجاست؟",
+   "pattern": "Weisst du, wo <Satz>?",
+   "targetWords": [
+    "weiss"
+   ]
+  },
+  {
+   "id": "de-a2-103",
+   "text": "Geh bitte geradeaus weiter.",
+   "fa": "لطفاً مستقیم ادامه بده.",
+   "pattern": "<Imperativ> weiter.",
+   "targetWords": [
+    "weiter"
+   ]
+  },
+  {
+   "id": "de-a2-104",
+   "text": "Wir müssen weiter üben.",
+   "fa": "باید به تمرین ادامه دهیم.",
+   "pattern": "Wir müssen weiter <Verb>.",
+   "targetWords": [
+    "weiter"
+   ]
+  },
+  {
+   "id": "de-a2-105",
+   "text": "Das war wirklich lecker.",
+   "fa": "واقعاً خوشمزه بود.",
+   "pattern": "Das war wirklich <Adj.>.",
+   "targetWords": [
+    "wirklich"
+   ]
+  },
+  {
+   "id": "de-a2-106",
+   "text": "Willst du wirklich schon gehen?",
+   "fa": "واقعاً می‌خواهی همین حالا بروی؟",
+   "pattern": "Willst du wirklich <Verb>?",
+   "targetWords": [
+    "wirklich"
+   ]
+  },
+  {
+   "id": "de-a2-107",
+   "text": "Der Mann an der Kasse war sehr nett.",
+   "fa": "آن مرد پشت صندوق خیلی مهربان بود.",
+   "pattern": "Der Mann <Ort> war <Adj.>.",
+   "targetWords": [
+    "mann"
+   ]
+  },
+  {
+   "id": "de-a2-108",
+   "text": "Ihr Mann arbeitet im Krankenhaus.",
+   "fa": "شوهرش در بیمارستان کار می‌کند.",
+   "pattern": "Ihr Mann arbeitet <Ort>.",
+   "targetWords": [
+    "mann"
+   ]
+  },
+  {
+   "id": "de-a2-109",
+   "text": "Ich fühle mich hier sehr wohl.",
+   "fa": "اینجا خیلی احساس راحتی می‌کنم.",
+   "pattern": "Ich fühle mich <Ort> wohl.",
+   "targetWords": [
+    "wohl"
+   ]
+  },
+  {
+   "id": "de-a2-110",
+   "text": "Er ist wohl schon zu Hause.",
+   "fa": "احتمالاً دیگر خانه است.",
+   "pattern": "<Person> ist wohl <Ergänzung>.",
+   "targetWords": [
+    "wohl"
+   ]
+  },
+  {
+   "id": "de-a2-111",
+   "text": "Er hat seinen Termin vergessen.",
+   "fa": "او قرارش را فراموش کرد.",
+   "pattern": "Er hat seinen <Nomen> vergessen.",
+   "targetWords": [
+    "seinen"
+   ]
+  },
+  {
+   "id": "de-a2-112",
+   "text": "Er fährt mit seinen Kindern in den Urlaub.",
+   "fa": "او با بچه‌هایش به تعطیلات می‌رود.",
+   "pattern": "Er fährt mit seinen <Pl.> <Ziel>.",
+   "targetWords": [
+    "seinen"
+   ]
+  },
+  {
+   "id": "de-a2-113",
+   "text": "Ich habe keine Zeit dazu.",
+   "fa": "برای این وقت ندارم.",
+   "pattern": "Ich habe keine Zeit dazu.",
+   "targetWords": [
+    "dazu"
+   ]
+  },
+  {
+   "id": "de-a2-114",
+   "text": "Möchten Sie Brot dazu?",
+   "fa": "نان هم با آن می‌خواهید؟",
+   "pattern": "Möchten Sie <Nomen> dazu?",
+   "targetWords": [
+    "dazu"
+   ]
+  },
+  {
+   "id": "de-a2-115",
+   "text": "Ich wünsche euch ein schönes Wochenende.",
+   "fa": "برایتان آخر هفتهٔ خوبی آرزو می‌کنم.",
+   "pattern": "Ich wünsche euch <Akk.>.",
+   "targetWords": [
+    "euch"
+   ]
+  },
+  {
+   "id": "de-a2-116",
+   "text": "Wie geht es euch?",
+   "fa": "حالتان چطور است؟",
+   "pattern": "Wie geht es euch?",
+   "targetWords": [
+    "euch"
+   ]
+  },
+  {
+   "id": "de-a2-117",
+   "text": "Ich habe euch lange nicht gesehen.",
+   "fa": "خیلی وقت است شماها را ندیده‌ام.",
+   "pattern": "Ich habe euch <Zeit> nicht gesehen.",
+   "targetWords": [
+    "euch"
+   ]
+  },
+  {
+   "id": "de-a2-118",
+   "text": "Sei bitte pünktlich!",
+   "fa": "لطفاً سر وقت باش!",
+   "pattern": "Sei bitte <Adj.>!",
+   "targetWords": [
+    "sei"
+   ]
+  },
+  {
+   "id": "de-a2-119",
+   "text": "Sei nicht traurig, es wird besser.",
+   "fa": "ناراحت نباش، بهتر می‌شود.",
+   "pattern": "Sei nicht <Adj.>, <Satz>.",
+   "targetWords": [
+    "sei"
+   ]
+  },
+  {
+   "id": "de-a2-120",
+   "text": "Wir brauchen Brot, Käse sowie etwas Obst.",
+   "fa": "نان، پنیر و همین‌طور کمی میوه لازم داریم.",
+   "pattern": "<A>, <B> sowie <C>.",
+   "targetWords": [
+    "sowie"
+   ]
+  },
+  {
+   "id": "de-a2-121",
+   "text": "Dafür habe ich kein Geld.",
+   "fa": "برای این پول ندارم.",
+   "pattern": "Dafür habe ich kein <Nomen>.",
+   "targetWords": [
+    "dafür"
+   ]
+  },
+  {
+   "id": "de-a2-122",
+   "text": "Vielen Dank dafür!",
+   "fa": "خیلی ممنون بابت این!",
+   "pattern": "Vielen Dank dafür!",
+   "targetWords": [
+    "dafür"
+   ]
+  },
+  {
+   "id": "de-a2-123",
+   "text": "Er ist klein, aber dafür sehr schnell.",
+   "fa": "قدش کوتاه است، ولی در عوض خیلی سریع است.",
+   "pattern": "<A>, aber dafür <B>.",
+   "targetWords": [
+    "dafür"
+   ]
+  },
+  {
+   "id": "de-a2-124",
+   "text": "Kannst du mir sagen, wie spät es ist?",
+   "fa": "می‌توانی بگویی ساعت چند است؟",
+   "pattern": "Kannst du mir sagen, <Frage>?",
+   "targetWords": [
+    "sagen"
+   ]
+  },
+  {
+   "id": "de-a2-125",
+   "text": "Was sagst du dazu?",
+   "fa": "نظرت در این مورد چیست؟",
+   "pattern": "Was sagst du dazu?",
+   "targetWords": [
+    "sagst"
+   ]
+  },
+  {
+   "id": "de-a2-126",
+   "text": "Sag mir bitte, wann du kommst.",
+   "fa": "لطفاً بگو کی می‌آیی.",
+   "pattern": "Sag mir, <Frage>.",
+   "targetWords": [
+    "sag"
+   ]
+  },
+  {
+   "id": "de-a2-127",
+   "text": "Während des Essens klingelte das Telefon.",
+   "fa": "وسط غذا تلفن زنگ زد.",
+   "pattern": "Während <Gen.> <Satz>.",
+   "targetWords": [
+    "während"
+   ]
+  },
+  {
+   "id": "de-a2-128",
+   "text": "Ich höre Musik, während ich koche.",
+   "fa": "وقتی آشپزی می‌کنم موسیقی گوش می‌دهم.",
+   "pattern": "<Satz>, während <Satz>.",
+   "targetWords": [
+    "während"
+   ]
+  },
+  {
+   "id": "de-a2-129",
+   "text": "Am Ende der Strasse ist eine Apotheke.",
+   "fa": "انتهای خیابان یک داروخانه هست.",
+   "pattern": "Am Ende <Gen.> ist <Nomen>.",
+   "targetWords": [
+    "ende"
+   ]
+  },
+  {
+   "id": "de-a2-130",
+   "text": "Ende Mai fahren wir in Urlaub.",
+   "fa": "اواخر مه به تعطیلات می‌رویم.",
+   "pattern": "Ende <Monat> <Satz>.",
+   "targetWords": [
+    "ende"
+   ]
+  },
+  {
+   "id": "de-a2-131",
+   "text": "Ich war noch nie in Wien.",
+   "fa": "تا حالا وین نرفته‌ام.",
+   "pattern": "Ich war noch nie in <Ort>.",
+   "targetWords": [
+    "nie"
+   ]
+  },
+  {
+   "id": "de-a2-132",
+   "text": "Er sagt nie danke.",
+   "fa": "او هیچ‌وقت تشکر نمی‌کند.",
+   "pattern": "<Person> <Verb> nie <Ergänzung>.",
+   "targetWords": [
+    "nie"
+   ]
+  },
+  {
+   "id": "de-a2-133",
+   "text": "Wegen des Wetters bleiben wir zu Hause.",
+   "fa": "به خاطر هوا خانه می‌مانیم.",
+   "pattern": "Wegen <Gen.> <Satz>.",
+   "targetWords": [
+    "wegen"
+   ]
+  },
+  {
+   "id": "de-a2-134",
+   "text": "Ich rufe wegen des Termins an.",
+   "fa": "بابت قرار زنگ می‌زنم.",
+   "pattern": "Ich rufe wegen <Gen.> an.",
+   "targetWords": [
+    "wegen"
+   ]
+  },
+  {
+   "id": "de-a2-135",
+   "text": "Ich möchte die Welt sehen.",
+   "fa": "می‌خواهم دنیا را ببینم.",
+   "pattern": "Ich möchte die Welt <Verb>.",
+   "targetWords": [
+    "welt"
+   ]
+  },
+  {
+   "id": "de-a2-136",
+   "text": "Das ist der beste Kaffee der Welt.",
+   "fa": "این بهترین قهوهٔ دنیاست.",
+   "pattern": "Das ist <Superlativ> der Welt.",
+   "targetWords": [
+    "welt"
+   ]
+  },
+  {
+   "id": "de-a2-137",
+   "text": "Das weiss ich nicht genau.",
+   "fa": "این را دقیق نمی‌دانم.",
+   "pattern": "Das weiss ich nicht genau.",
+   "targetWords": [
+    "genau"
+   ]
+  },
+  {
+   "id": "de-a2-138",
+   "text": "Genau so habe ich es gemeint.",
+   "fa": "دقیقاً منظورم همین بود.",
+   "pattern": "Genau so <Satz>.",
+   "targetWords": [
+    "genau"
+   ]
+  },
+  {
+   "id": "de-a2-139",
+   "text": "Wann genau kommt der Zug?",
+   "fa": "قطار دقیقاً کی می‌رسد؟",
+   "pattern": "<W-Frage> genau <Satz>?",
+   "targetWords": [
+    "genau"
+   ]
+  },
+  {
+   "id": "de-a2-140",
+   "text": "Ich habe gar keine Zeit.",
+   "fa": "اصلاً وقت ندارم.",
+   "pattern": "Ich habe gar kein <Nomen>.",
+   "targetWords": [
+    "gar"
+   ]
+  },
+  {
+   "id": "de-a2-141",
+   "text": "Das ist gar nicht schlecht.",
+   "fa": "اصلاً بد نیست.",
+   "pattern": "Das ist gar nicht <Adj.>.",
+   "targetWords": [
+    "gar"
+   ]
+  },
+  {
+   "id": "de-a2-142",
+   "text": "Ich konnte gestern nicht schlafen.",
+   "fa": "دیشب نتوانستم بخوابم.",
+   "pattern": "Ich konnte <Zeit> nicht <Verb>.",
+   "targetWords": [
+    "konnte"
+   ]
+  },
+  {
+   "id": "de-a2-143",
+   "text": "Er konnte den Weg nicht finden.",
+   "fa": "او نتوانست راه را پیدا کند.",
+   "pattern": "<Person> konnte <Akk.> nicht <Verb>.",
+   "targetWords": [
+    "konnte"
+   ]
+  },
+  {
+   "id": "de-a2-144",
+   "text": "Die Leute hier sind sehr freundlich.",
+   "fa": "مردم اینجا خیلی مهربان‌اند.",
+   "pattern": "Die Leute <Ort> sind <Adj.>.",
+   "targetWords": [
+    "leute"
+   ]
+  },
+  {
+   "id": "de-a2-145",
+   "text": "Viele Leute fahren im Sommer weg.",
+   "fa": "خیلی‌ها تابستان به سفر می‌روند.",
+   "pattern": "Viele Leute <Verb> <Zeit> <Ergänzung>.",
+   "targetWords": [
+    "leute"
+   ]
+  },
+  {
+   "id": "de-a2-146",
+   "text": "Ich brauche einen neuen Computer.",
+   "fa": "به یک کامپیوتر نو نیاز دارم.",
+   "pattern": "Ich brauche einen neuen <Nomen>.",
+   "targetWords": [
+    "neuen"
+   ]
+  },
+  {
+   "id": "de-a2-147",
+   "text": "Wie gefällt dir die neue Wohnung?",
+   "fa": "خانهٔ جدید را دوست داری؟",
+   "pattern": "Wie gefällt dir <Nomen>?",
+   "targetWords": [
+    "neue"
+   ]
+  },
+  {
+   "id": "de-a2-148",
+   "text": "Er fährt mit seinem Fahrrad zur Arbeit.",
+   "fa": "او با دوچرخه‌اش سر کار می‌رود.",
+   "pattern": "Er fährt mit seinem <Nomen> <Ziel>.",
+   "targetWords": [
+    "seinem"
+   ]
+  },
+  {
+   "id": "de-a2-149",
+   "text": "Er wohnt mit seinem Bruder zusammen.",
+   "fa": "او با برادرش هم‌خانه است.",
+   "pattern": "Er wohnt mit seinem <Person> zusammen.",
+   "targetWords": [
+    "seinem"
+   ]
+  },
+  {
+   "id": "de-a2-150",
+   "text": "Dies ist mein Lieblingsplatz.",
+   "fa": "اینجا جای مورد علاقهٔ من است.",
+   "pattern": "Dies ist <Nomen>.",
+   "targetWords": [
+    "dies"
+   ]
+  },
+  {
+   "id": "de-a2-151",
+   "text": "Der Weg dauert etwa zwanzig Minuten.",
+   "fa": "راه حدود بیست دقیقه طول می‌کشد.",
+   "pattern": "<Nomen> dauert etwa <Zeit>.",
+   "targetWords": [
+    "etwa"
+   ]
+  },
+  {
+   "id": "de-a2-152",
+   "text": "Hast du etwa vergessen anzurufen?",
+   "fa": "نکند یادت رفته زنگ بزنی؟",
+   "pattern": "Hast du etwa <Partizip>?",
+   "targetWords": [
+    "etwa"
+   ]
+  },
+  {
+   "id": "de-a2-153",
+   "text": "Jeder kann das lernen.",
+   "fa": "هر کسی می‌تواند این را یاد بگیرد.",
+   "pattern": "Jeder kann <Akk.> <Verb>.",
+   "targetWords": [
+    "jeder"
+   ]
+  },
+  {
+   "id": "de-a2-154",
+   "text": "Jeder Tag ist anders.",
+   "fa": "هر روز فرق می‌کند.",
+   "pattern": "Jeder <Nomen> ist <Adj.>.",
+   "targetWords": [
+    "jeder"
+   ]
+  },
+  {
+   "id": "de-a2-155",
+   "text": "Ich komme gleich zurück.",
+   "fa": "الان برمی‌گردم.",
+   "pattern": "Ich komme gleich <Ergänzung>.",
+   "targetWords": [
+    "gleich"
+   ]
+  },
+  {
+   "id": "de-a2-156",
+   "text": "Wir haben die gleiche Jacke.",
+   "fa": "ما ژاکت یک‌جور داریم.",
+   "pattern": "Wir haben <Akk.> gleiche <Nomen>.",
+   "targetWords": [
+    "gleich"
+   ]
+  },
+  {
+   "id": "de-a2-157",
+   "text": "Wie lange dauert die Fahrt?",
+   "fa": "سفر چقدر طول می‌کشد؟",
+   "pattern": "Wie lange dauert <Nomen>?",
+   "targetWords": [
+    "lange"
+   ]
+  },
+  {
+   "id": "de-a2-158",
+   "text": "Ich habe lange auf dich gewartet.",
+   "fa": "خیلی منتظرت ماندم.",
+   "pattern": "Ich habe lange auf <Akk.> gewartet.",
+   "targetWords": [
+    "lange"
+   ]
+  },
+  {
+   "id": "de-a2-159",
+   "text": "Der erste Teil war besser.",
+   "fa": "قسمت اول بهتر بود.",
+   "pattern": "Der <Ordinalzahl> Teil war <Adj.>.",
+   "targetWords": [
+    "teil"
+   ]
+  },
+  {
+   "id": "de-a2-160",
+   "text": "Nimmst du am Kurs teil?",
+   "fa": "در دوره شرکت می‌کنی؟",
+   "pattern": "Nimmst du an <Dat.> teil?",
+   "targetWords": [
+    "teil"
+   ]
+  },
+  {
+   "id": "de-a2-161",
+   "text": "Vor allem im Winter ist es hier kalt.",
+   "fa": "به‌خصوص در زمستان اینجا سرد است.",
+   "pattern": "Vor allem <Zeit> <Satz>.",
+   "targetWords": [
+    "allem"
+   ]
+  },
+  {
+   "id": "de-a2-162",
+   "text": "Ich mag Obst, vor allem Äpfel.",
+   "fa": "میوه دوست دارم، به‌خصوص سیب.",
+   "pattern": "Ich mag <Nomen>, vor allem <Nomen>.",
+   "targetWords": [
+    "allem"
+   ]
+  },
+  {
+   "id": "de-a2-163",
+   "text": "Die beiden Kinder spielen im Garten.",
+   "fa": "آن دو بچه در باغ بازی می‌کنند.",
+   "pattern": "Die beiden <Pl.> <Verb> <Ort>.",
+   "targetWords": [
+    "beiden"
+   ]
+  },
+  {
+   "id": "de-a2-164",
+   "text": "Ich nehme beide.",
+   "fa": "هر دو را برمی‌دارم.",
+   "pattern": "Ich nehme beide.",
+   "targetWords": [
+    "beide"
+   ]
+  },
+  {
+   "id": "de-a2-165",
+   "text": "Ich habe nichts davon gewusst.",
+   "fa": "من چیزی از آن نمی‌دانستم.",
+   "pattern": "Ich habe nichts davon gewusst.",
+   "targetWords": [
+    "davon"
+   ]
+  },
+  {
+   "id": "de-a2-166",
+   "text": "Möchtest du etwas davon?",
+   "fa": "کمی از آن می‌خواهی؟",
+   "pattern": "Möchtest du etwas davon?",
+   "targetWords": [
+    "davon"
+   ]
+  },
+  {
+   "id": "de-a2-167",
+   "text": "Eigentlich wollte ich früher kommen.",
+   "fa": "راستش می‌خواستم زودتر بیایم.",
+   "pattern": "Eigentlich wollte ich <Verb>.",
+   "targetWords": [
+    "eigentlich"
+   ]
+  },
+  {
+   "id": "de-a2-168",
+   "text": "Was machst du eigentlich hier?",
+   "fa": "راستی اینجا چه کار می‌کنی؟",
+   "pattern": "Was machst du eigentlich <Ergänzung>?",
+   "targetWords": [
+    "eigentlich"
+   ]
+  },
+  {
+   "id": "de-a2-169",
+   "text": "Ich bin fast fertig.",
+   "fa": "تقریباً کارم تمام است.",
+   "pattern": "Ich bin fast <Adj.>.",
+   "targetWords": [
+    "fast"
+   ]
+  },
+  {
+   "id": "de-a2-170",
+   "text": "Wir haben fast den Bus verpasst.",
+   "fa": "نزدیک بود اتوبوس را از دست بدهیم.",
+   "pattern": "Wir haben fast <Akk.> verpasst.",
+   "targetWords": [
+    "fast"
+   ]
+  },
+  {
+   "id": "de-a2-171",
+   "text": "Ist das der richtige Weg?",
+   "fa": "این راه درست است؟",
+   "pattern": "Ist das <Nomen> richtige <Nomen>?",
+   "targetWords": [
+    "richtig"
+   ]
+  },
+  {
+   "id": "de-a2-172",
+   "text": "Du hast richtig geantwortet.",
+   "fa": "درست جواب دادی.",
+   "pattern": "Du hast richtig <Partizip>.",
+   "targetWords": [
+    "richtig"
+   ]
+  },
+  {
+   "id": "de-a2-173",
+   "text": "Was kann ich für Sie tun?",
+   "fa": "چه کاری می‌توانم برایتان انجام دهم؟",
+   "pattern": "Was kann ich für Sie tun?",
+   "targetWords": [
+    "tun"
+   ]
+  },
+  {
+   "id": "de-a2-174",
+   "text": "Mir tut der Kopf weh.",
+   "fa": "سرم درد می‌کند.",
+   "pattern": "Mir tut <Körperteil> weh.",
+   "targetWords": [
+    "tut"
+   ]
+  },
+  {
+   "id": "de-a2-175",
+   "text": "Es tut mir wirklich leid.",
+   "fa": "واقعاً متأسفم.",
+   "pattern": "Es tut mir leid.",
+   "targetWords": [
+    "tut"
+   ]
+  },
+  {
+   "id": "de-a2-176",
+   "text": "Das sind die Freunde, mit denen ich arbeite.",
+   "fa": "این‌ها دوستانی هستند که با آن‌ها کار می‌کنم.",
+   "pattern": "<Pl.>, mit denen <Satz>.",
+   "targetWords": [
+    "denen"
+   ]
+  },
+  {
+   "id": "de-a2-177",
+   "text": "Sie sieht heute müde aus.",
+   "fa": "او امروز خسته به نظر می‌رسد.",
+   "pattern": "<Person> sieht <Adj.> aus.",
+   "targetWords": [
+    "sieht"
+   ]
+  },
+  {
+   "id": "de-a2-178",
+   "text": "Man sieht von hier das Meer.",
+   "fa": "از اینجا دریا دیده می‌شود.",
+   "pattern": "Man sieht von hier <Akk.>.",
+   "targetWords": [
+    "sieht"
+   ]
+  },
+  {
+   "id": "de-a2-179",
+   "text": "Wann kommst du zurück?",
+   "fa": "کی برمی‌گردی؟",
+   "pattern": "Wann kommst du zurück?",
+   "targetWords": [
+    "zurück"
+   ]
+  },
+  {
+   "id": "de-a2-180",
+   "text": "Ich gebe dir das Buch morgen zurück.",
+   "fa": "کتاب را فردا پس می‌دهم.",
+   "pattern": "Ich gebe dir <Akk.> zurück.",
+   "targetWords": [
+    "zurück"
+   ]
+  },
+  {
+   "id": "de-a2-181",
+   "text": "Der Film war lang, jedoch sehr spannend.",
+   "fa": "فیلم طولانی بود، اما خیلی هیجان‌انگیز.",
+   "pattern": "<A>, jedoch <B>.",
+   "targetWords": [
+    "jedoch"
+   ]
+  },
+  {
+   "id": "de-a2-182",
+   "text": "Alles klar, bis morgen!",
+   "fa": "باشه، تا فردا!",
+   "pattern": "Alles klar, <Gruss>!",
+   "targetWords": [
+    "klar"
+   ]
+  },
+  {
+   "id": "de-a2-183",
+   "text": "Ist das jetzt klar?",
+   "fa": "حالا روشن شد؟",
+   "pattern": "Ist das klar?",
+   "targetWords": [
+    "klar"
+   ]
+  },
+  {
+   "id": "de-a2-184",
+   "text": "Ich brauche noch ein paar Minuten.",
+   "fa": "چند دقیقهٔ دیگر لازم دارم.",
+   "pattern": "Ich brauche ein paar <Pl.>.",
+   "targetWords": [
+    "paar"
+   ]
+  },
+  {
+   "id": "de-a2-185",
+   "text": "Wir haben ein paar Fotos gemacht.",
+   "fa": "چند تا عکس گرفتیم.",
+   "pattern": "Wir haben ein paar <Pl.> <Partizip>.",
+   "targetWords": [
+    "paar"
+   ]
+  },
+  {
+   "id": "de-a2-186",
+   "text": "Wir haben eine grosse Küche.",
+   "fa": "ما آشپزخانهٔ بزرگی داریم.",
+   "pattern": "Wir haben eine grosse <Nomen>.",
+   "targetWords": [
+    "grosse"
+   ]
+  },
+  {
+   "id": "de-a2-187",
+   "text": "Ich wohne in einer grossen Stadt.",
+   "fa": "من در یک شهر بزرگ زندگی می‌کنم.",
+   "pattern": "Ich wohne in einer grossen <Nomen>.",
+   "targetWords": [
+    "grossen"
+   ]
+  },
+  {
+   "id": "de-a2-188",
+   "text": "Wissen Sie, wann der Bus kommt?",
+   "fa": "می‌دانید اتوبوس کی می‌آید؟",
+   "pattern": "Wissen Sie, <Frage>?",
+   "targetWords": [
+    "wissen"
+   ]
+  },
+  {
+   "id": "de-a2-189",
+   "text": "Das wissen wir noch nicht.",
+   "fa": "این را هنوز نمی‌دانیم.",
+   "pattern": "Das wissen wir noch nicht.",
+   "targetWords": [
+    "wissen"
+   ]
+  },
+  {
+   "id": "de-a2-190",
+   "text": "Auf jeden Fall komme ich.",
+   "fa": "در هر صورت می‌آیم.",
+   "pattern": "Auf jeden Fall <Satz>.",
+   "targetWords": [
+    "fall"
+   ]
+  },
+  {
+   "id": "de-a2-191",
+   "text": "Für den Fall nehme ich einen Schirm mit.",
+   "fa": "محض احتیاط چتر برمی‌دارم.",
+   "pattern": "Für den Fall <Satz>.",
+   "targetWords": [
+    "fall"
+   ]
+  },
+  {
+   "id": "de-a2-192",
+   "text": "Es gab gestern ein grosses Fest.",
+   "fa": "دیروز جشن بزرگی بود.",
+   "pattern": "Es gab <Zeit> <Akk.>.",
+   "targetWords": [
+    "gab"
+   ]
+  },
+  {
+   "id": "de-a2-193",
+   "text": "Was gab es zum Mittagessen?",
+   "fa": "ناهار چی بود؟",
+   "pattern": "Was gab es zu <Dat.>?",
+   "targetWords": [
+    "gab"
+   ]
+  },
+  {
+   "id": "de-a2-194",
+   "text": "Bist du sicher?",
+   "fa": "مطمئنی؟",
+   "pattern": "Bist du sicher?",
+   "targetWords": [
+    "sicher"
+   ]
+  },
+  {
+   "id": "de-a2-195",
+   "text": "Hier kannst du sicher parken.",
+   "fa": "اینجا می‌توانی با خیال راحت پارک کنی.",
+   "pattern": "Hier kannst du sicher <Verb>.",
+   "targetWords": [
+    "sicher"
+   ]
+  },
+  {
+   "id": "de-a2-196",
+   "text": "Die Frauen sitzen vor dem Haus.",
+   "fa": "خانم‌ها جلوی خانه نشسته‌اند.",
+   "pattern": "Die Frauen <Verb> <Ort>.",
+   "targetWords": [
+    "frauen"
+   ]
+  },
+  {
+   "id": "de-a2-197",
+   "text": "Sie fährt mit ihrem Hund in den Park.",
+   "fa": "او با سگش به پارک می‌رود.",
+   "pattern": "Sie fährt mit ihrem <Nomen> <Ziel>.",
+   "targetWords": [
+    "ihrem"
+   ]
+  },
+  {
+   "id": "de-a2-198",
+   "text": "Gestern kam ein Brief für dich.",
+   "fa": "دیروز نامه‌ای برایت آمد.",
+   "pattern": "<Zeit> kam <Nomen> für <Akk.>.",
+   "targetWords": [
+    "kam"
+   ]
+  },
+  {
+   "id": "de-a2-199",
+   "text": "Er kam zu spät zur Arbeit.",
+   "fa": "او دیر سر کار رسید.",
+   "pattern": "<Person> kam zu spät zu <Dat.>.",
+   "targetWords": [
+    "kam"
+   ]
+  },
+  {
+   "id": "de-a2-200",
+   "text": "Ich habe mit allen gesprochen.",
+   "fa": "با همه صحبت کردم.",
+   "pattern": "Ich habe mit allen <Partizip>.",
+   "targetWords": [
+    "allen"
+   ]
+  },
+  {
+   "id": "de-a2-201",
+   "text": "Vor allen Dingen brauchen wir Ruhe.",
+   "fa": "بیش از هر چیز به آرامش نیاز داریم.",
+   "pattern": "Vor allen Dingen <Satz>.",
+   "targetWords": [
+    "allen"
+   ]
+  },
+  {
+   "id": "de-a2-202",
+   "text": "Ich freue mich schon darauf.",
+   "fa": "از الان برایش هیجان‌زده‌ام.",
+   "pattern": "Ich freue mich darauf.",
+   "targetWords": [
+    "darauf"
+   ]
+  },
+  {
+   "id": "de-a2-203",
+   "text": "Achte bitte darauf.",
+   "fa": "لطفاً حواست به آن باشد.",
+   "pattern": "Achte darauf.",
+   "targetWords": [
+    "darauf"
+   ]
+  },
+  {
+   "id": "de-a2-204",
+   "text": "Er spricht sogar Chinesisch.",
+   "fa": "او حتی چینی هم حرف می‌زند.",
+   "pattern": "<Person> <Verb> sogar <Ergänzung>.",
+   "targetWords": [
+    "sogar"
+   ]
+  },
+  {
+   "id": "de-a2-205",
+   "text": "Sogar die Kinder haben mitgeholfen.",
+   "fa": "حتی بچه‌ها هم کمک کردند.",
+   "pattern": "Sogar <Subjekt> <Satz>.",
+   "targetWords": [
+    "sogar"
+   ]
+  },
+  {
+   "id": "de-a2-206",
+   "text": "Die Rechnung ist schon bezahlt worden.",
+   "fa": "صورت‌حساب قبلاً پرداخت شده.",
+   "pattern": "<Subjekt> ist <Partizip> worden.",
+   "targetWords": [
+    "worden"
+   ]
+  },
+  {
+   "id": "de-a2-207",
+   "text": "Es ist zwar kalt, aber sonnig.",
+   "fa": "درست است که سرد است، اما آفتابی است.",
+   "pattern": "zwar <A>, aber <B>.",
+   "targetWords": [
+    "zwar"
+   ]
+  },
+  {
+   "id": "de-a2-208",
+   "text": "Das Hotel ist schön, allerdings sehr teuer.",
+   "fa": "هتل قشنگ است، البته خیلی گران.",
+   "pattern": "<A>, allerdings <B>.",
+   "targetWords": [
+    "allerdings"
+   ]
+  },
+  {
+   "id": "de-a2-209",
+   "text": "Das ist eine gute Art zu lernen.",
+   "fa": "این روش خوبی برای یادگیری است.",
+   "pattern": "Das ist eine <Adj.> Art zu <Verb>.",
+   "targetWords": [
+    "art"
+   ]
+  },
+  {
+   "id": "de-a2-210",
+   "text": "Komm schnell, der Bus fährt gleich!",
+   "fa": "زود بیا، اتوبوس الان راه می‌افتد!",
+   "pattern": "Komm schnell, <Satz>!",
+   "targetWords": [
+    "schnell"
+   ]
+  },
+  {
+   "id": "de-a2-211",
+   "text": "Er läuft sehr schnell.",
+   "fa": "او خیلی سریع می‌دود.",
+   "pattern": "<Person> <Verb> sehr schnell.",
+   "targetWords": [
+    "schnell"
+   ]
+  },
+  {
+   "id": "de-a2-212",
+   "text": "Sollen wir ein Taxi nehmen?",
+   "fa": "تاکسی بگیریم؟",
+   "pattern": "Sollen wir <Akk.> nehmen?",
+   "targetWords": [
+    "sollen"
+   ]
+  },
+  {
+   "id": "de-a2-213",
+   "text": "Sie sollen hier nicht rauchen.",
+   "fa": "اینجا نباید سیگار بکشید.",
+   "pattern": "Sie sollen hier nicht <Verb>.",
+   "targetWords": [
+    "sollen"
+   ]
+  },
+  {
+   "id": "de-a2-214",
+   "text": "Ist hier jemand?",
+   "fa": "کسی اینجا هست؟",
+   "pattern": "Ist hier jemand?",
+   "targetWords": [
+    "jemand"
+   ]
+  },
+  {
+   "id": "de-a2-215",
+   "text": "Kennt jemand einen guten Zahnarzt?",
+   "fa": "کسی دندان‌پزشک خوبی می‌شناسد؟",
+   "pattern": "Kennt jemand <Akk.>?",
+   "targetWords": [
+    "jemand"
+   ]
+  },
+  {
+   "id": "de-a2-216",
+   "text": "Ich wollte dich nur kurz fragen.",
+   "fa": "فقط می‌خواستم یک سؤال کوتاه بپرسم.",
+   "pattern": "Ich wollte <Akk.> kurz <Verb>.",
+   "targetWords": [
+    "wollte"
+   ]
+  },
+  {
+   "id": "de-a2-217",
+   "text": "Sie wollte gestern anrufen.",
+   "fa": "او می‌خواست دیروز زنگ بزند.",
+   "pattern": "<Person> wollte <Zeit> <Verb>.",
+   "targetWords": [
+    "wollte"
+   ]
+  },
+  {
+   "id": "de-a2-218",
+   "text": "Ich habe den ganzen Tag gearbeitet.",
+   "fa": "تمام روز کار کردم.",
+   "pattern": "Ich habe den ganzen <Zeit> <Partizip>.",
+   "targetWords": [
+    "ganzen"
+   ]
+  },
+  {
+   "id": "de-a2-219",
+   "text": "Die ganze Familie kommt zu Besuch.",
+   "fa": "کل خانواده به دیدن می‌آیند.",
+   "pattern": "Die ganze <Gruppe> <Satz>.",
+   "targetWords": [
+    "ganze"
+   ]
+  },
+  {
+   "id": "de-a2-220",
+   "text": "Ich trinke gerne Tee.",
+   "fa": "چای را با علاقه می‌نوشم.",
+   "pattern": "Ich <Verb> gerne <Akk.>.",
+   "targetWords": [
+    "gerne"
+   ]
+  },
+  {
+   "id": "de-a2-221",
+   "text": "Gerne, kein Problem.",
+   "fa": "با کمال میل، مشکلی نیست.",
+   "pattern": "Gerne, <Ergänzung>.",
+   "targetWords": [
+    "gerne"
+   ]
+  },
+  {
+   "id": "de-a2-222",
+   "text": "Haben Sie noch weitere Fragen?",
+   "fa": "سؤال دیگری دارید؟",
+   "pattern": "Haben Sie weitere <Pl.>?",
+   "targetWords": [
+    "weitere"
+   ]
+  },
+  {
+   "id": "de-a2-223",
+   "text": "Wie heisst das auf Deutsch?",
+   "fa": "این به آلمانی چه می‌شود؟",
+   "pattern": "Wie heisst das auf <Sprache>?",
+   "targetWords": [
+    "heisst"
+   ]
+  },
+  {
+   "id": "de-a2-224",
+   "text": "Das heisst, wir fahren morgen.",
+   "fa": "یعنی فردا می‌رویم.",
+   "pattern": "Das heisst, <Satz>.",
+   "targetWords": [
+    "heisst"
+   ]
+  },
+  {
+   "id": "de-a2-225",
+   "text": "Er sagte, er kommt später.",
+   "fa": "گفت دیرتر می‌آید.",
+   "pattern": "<Person> sagte, <Satz>.",
+   "targetWords": [
+    "sagte"
+   ]
+  },
+  {
+   "id": "de-a2-226",
+   "text": "Meine Mutter sagte nichts.",
+   "fa": "مادرم چیزی نگفت.",
+   "pattern": "<Person> sagte nichts.",
+   "targetWords": [
+    "sagte"
+   ]
+  },
+  {
+   "id": "de-a2-227",
+   "text": "Ich nehme Tee statt Kaffee.",
+   "fa": "به جای قهوه چای می‌گیرم.",
+   "pattern": "Ich nehme <A> statt <B>.",
+   "targetWords": [
+    "statt"
+   ]
+  },
+  {
+   "id": "de-a2-228",
+   "text": "Statt zu schlafen hat er gelesen.",
+   "fa": "به جای خوابیدن کتاب خواند.",
+   "pattern": "Statt zu <Verb> <Satz>.",
+   "targetWords": [
+    "statt"
+   ]
+  },
+  {
+   "id": "de-a2-229",
+   "text": "Das habe ich noch nie gehört.",
+   "fa": "این را تا حالا نشنیده بودم.",
+   "pattern": "Das habe ich noch nie gehört.",
+   "targetWords": [
+    "gehört"
+   ]
+  },
+  {
+   "id": "de-a2-230",
+   "text": "Wem gehört diese Tasche?",
+   "fa": "این کیف مال کیست؟",
+   "pattern": "Wem gehört <Nomen>?",
+   "targetWords": [
+    "gehört"
+   ]
+  },
+  {
+   "id": "de-a2-231",
+   "text": "Sie lässt die Kinder lange schlafen.",
+   "fa": "او می‌گذارد بچه‌ها تا دیر بخوابند.",
+   "pattern": "<Person> lässt <Akk.> <Infinitiv>.",
+   "targetWords": [
+    "lässt"
+   ]
+  },
+  {
+   "id": "de-a2-232",
+   "text": "Das lässt sich leicht erklären.",
+   "fa": "این را راحت می‌شود توضیح داد.",
+   "pattern": "Das lässt sich <Adv.> <Infinitiv>.",
+   "targetWords": [
+    "lässt"
+   ]
+  },
+  {
+   "id": "de-a2-233",
+   "text": "Das Essen war besonders gut.",
+   "fa": "غذا به‌خصوص خوب بود.",
+   "pattern": "<Nomen> war besonders <Adj.>.",
+   "targetWords": [
+    "besonders"
+   ]
+  },
+  {
+   "id": "de-a2-234",
+   "text": "Ich mag besonders den Herbst.",
+   "fa": "من به‌خصوص پاییز را دوست دارم.",
+   "pattern": "Ich mag besonders <Akk.>.",
+   "targetWords": [
+    "besonders"
+   ]
+  },
+  {
+   "id": "de-a2-235",
+   "text": "Wir reden später darüber.",
+   "fa": "بعداً دربارهٔ آن حرف می‌زنیم.",
+   "pattern": "Wir reden <Zeit> darüber.",
+   "targetWords": [
+    "darüber"
+   ]
+  },
+  {
+   "id": "de-a2-236",
+   "text": "Ich habe mich sehr darüber gefreut.",
+   "fa": "از این خیلی خوشحال شدم.",
+   "pattern": "Ich habe mich darüber gefreut.",
+   "targetWords": [
+    "darüber"
+   ]
+  },
+  {
+   "id": "de-a2-237",
+   "text": "Das ist meine Freundin, deren Auto kaputt ist.",
+   "fa": "این دوست من است که ماشینش خراب شده.",
+   "pattern": "<Person>, deren <Nomen> <Satz>.",
+   "targetWords": [
+    "deren"
+   ]
+  },
+  {
+   "id": "de-a2-238",
+   "text": "Was hast du gesagt?",
+   "fa": "چی گفتی؟",
+   "pattern": "Was hast du gesagt?",
+   "targetWords": [
+    "gesagt"
+   ]
+  },
+  {
+   "id": "de-a2-239",
+   "text": "Ich habe es dir doch gesagt.",
+   "fa": "من که به تو گفته بودم.",
+   "pattern": "Ich habe es dir gesagt.",
+   "targetWords": [
+    "gesagt"
+   ]
+  },
+  {
+   "id": "de-a2-240",
+   "text": "Hast du kurz Zeit?",
+   "fa": "یک لحظه وقت داری؟",
+   "pattern": "Hast du kurz Zeit?",
+   "targetWords": [
+    "kurz"
+   ]
+  },
+  {
+   "id": "de-a2-241",
+   "text": "Ich war kurz einkaufen.",
+   "fa": "یک سر رفتم خرید.",
+   "pattern": "Ich war kurz <Infinitiv>.",
+   "targetWords": [
+    "kurz"
+   ]
+  },
+  {
+   "id": "de-a2-242",
+   "text": "Komm schnell, sonst fährt der Zug ohne uns.",
+   "fa": "زود بیا، وگرنه قطار بدون ما می‌رود.",
+   "pattern": "<Imperativ>, sonst <Satz>.",
+   "targetWords": [
+    "sonst"
+   ]
+  },
+  {
+   "id": "de-a2-243",
+   "text": "Sonst noch etwas?",
+   "fa": "چیز دیگری هم می‌خواهید؟",
+   "pattern": "Sonst noch etwas?",
+   "targetWords": [
+    "sonst"
+   ]
+  },
+  {
+   "id": "de-a2-244",
+   "text": "Gestern ging ich früh ins Bett.",
+   "fa": "دیروز زود رفتم بخوابم.",
+   "pattern": "<Zeit> ging ich <Ziel>.",
+   "targetWords": [
+    "ging"
+   ]
+  },
+  {
+   "id": "de-a2-245",
+   "text": "Wie ging das Spiel aus?",
+   "fa": "بازی چطور تمام شد؟",
+   "pattern": "Wie ging <Nomen> aus?",
+   "targetWords": [
+    "ging"
+   ]
+  },
+  {
+   "id": "de-a2-246",
+   "text": "Das Bild hängt über dem Sofa.",
+   "fa": "تابلو بالای مبل آویزان است.",
+   "pattern": "Das Bild hängt <Ort>.",
+   "targetWords": [
+    "bild"
+   ]
+  },
+  {
+   "id": "de-a2-247",
+   "text": "Schick mir ein Bild davon.",
+   "fa": "یک عکس از آن برایم بفرست.",
+   "pattern": "Schick mir ein Bild von <Dat.>.",
+   "targetWords": [
+    "bild"
+   ]
+  },
+  {
+   "id": "de-a2-248",
+   "text": "Ich habe endlich meine eigene Wohnung.",
+   "fa": "بالاخره خانهٔ خودم را دارم.",
+   "pattern": "Ich habe meine eigene <Nomen>.",
+   "targetWords": [
+    "eigene"
+   ]
+  },
+  {
+   "id": "de-a2-249",
+   "text": "Er hat ein eigenes Geschäft.",
+   "fa": "او مغازهٔ خودش را دارد.",
+   "pattern": "<Person> hat ein eigenes <Nomen>.",
+   "targetWords": [
+    "eigenes"
+   ]
+  },
+  {
+   "id": "de-a2-250",
+   "text": "Das ist das beste Essen, das ich je hatte.",
+   "fa": "این بهترین غذایی است که تا حالا خورده‌ام.",
+   "pattern": "<Superlativ>, <Relativsatz> je <Partizip>.",
+   "targetWords": [
+    "je"
+   ]
+  },
+  {
+   "id": "de-a2-251",
+   "text": "Ich habe eben mit ihm gesprochen.",
+   "fa": "همین الان با او صحبت کردم.",
+   "pattern": "Ich habe eben <Partizip>.",
+   "targetWords": [
+    "eben"
+   ]
+  },
+  {
+   "id": "de-a2-252",
+   "text": "Dann gehen wir eben morgen.",
+   "fa": "پس همان فردا می‌رویم.",
+   "pattern": "Dann <Satz> eben <Ergänzung>.",
+   "targetWords": [
+    "eben"
+   ]
+  },
+  {
+   "id": "de-a2-253",
+   "text": "Wo bist du gewesen?",
+   "fa": "کجا بودی؟",
+   "pattern": "Wo bist du gewesen?",
+   "targetWords": [
+    "gewesen"
+   ]
+  },
+  {
+   "id": "de-a2-254",
+   "text": "Es ist ein langer Tag gewesen.",
+   "fa": "روز طولانی‌ای بود.",
+   "pattern": "Es ist <Nomen> gewesen.",
+   "targetWords": [
+    "gewesen"
+   ]
+  },
+  {
+   "id": "de-a2-255",
+   "text": "Ich glaube, es regnet bald.",
+   "fa": "فکر کنم به‌زودی باران بیاید.",
+   "pattern": "Ich glaube, <Satz>.",
+   "targetWords": [
+    "glaube"
+   ]
+  },
+  {
+   "id": "de-a2-256",
+   "text": "Das glaube ich nicht.",
+   "fa": "این را باور نمی‌کنم.",
+   "pattern": "Das glaube ich nicht.",
+   "targetWords": [
+    "glaube"
+   ]
+  },
+  {
+   "id": "de-a2-257",
+   "text": "Ruf bitte die Polizei!",
+   "fa": "لطفاً به پلیس زنگ بزن!",
+   "pattern": "Ruf die Polizei!",
+   "targetWords": [
+    "polizei"
+   ]
+  },
+  {
+   "id": "de-a2-258",
+   "text": "Die Polizei hat die Strasse gesperrt.",
+   "fa": "پلیس خیابان را بسته است.",
+   "pattern": "Die Polizei hat <Akk.> <Partizip>.",
+   "targetWords": [
+    "polizei"
+   ]
+  },
+  {
+   "id": "de-a2-259",
+   "text": "Das Zimmer ist klein, ausserdem ist es laut.",
+   "fa": "اتاق کوچک است، به‌علاوه پر سر و صداست.",
+   "pattern": "<A>, ausserdem <B>.",
+   "targetWords": [
+    "ausserdem"
+   ]
+  },
+  {
+   "id": "de-a2-260",
+   "text": "Beide Wege führen zum Bahnhof.",
+   "fa": "هر دو مسیر به ایستگاه می‌رسند.",
+   "pattern": "Beide <Pl.> <Verb> <Ziel>.",
+   "targetWords": [
+    "beide"
+   ]
+  },
+  {
+   "id": "de-a2-261",
+   "text": "Leider habe ich heute keine Zeit.",
+   "fa": "متأسفانه امروز وقت ندارم.",
+   "pattern": "Leider <Satz>.",
+   "targetWords": [
+    "leider"
+   ]
+  },
+  {
+   "id": "de-a2-262",
+   "text": "Der Laden ist leider schon zu.",
+   "fa": "متأسفانه مغازه دیگر بسته است.",
+   "pattern": "<Nomen> ist leider <Adj.>.",
+   "targetWords": [
+    "leider"
+   ]
+  },
+  {
+   "id": "de-a2-263",
+   "text": "Ich habe die Tickets online gekauft.",
+   "fa": "بلیت‌ها را آنلاین خریدم.",
+   "pattern": "Ich habe <Akk.> online gekauft.",
+   "targetWords": [
+    "online"
+   ]
+  },
+  {
+   "id": "de-a2-264",
+   "text": "Der Kurs findet online statt.",
+   "fa": "دوره به‌صورت آنلاین برگزار می‌شود.",
+   "pattern": "<Nomen> findet online statt.",
+   "targetWords": [
+    "online"
+   ]
+  },
+  {
+   "id": "de-a2-265",
+   "text": "Wir bleiben drei Tage in Hamburg.",
+   "fa": "سه روز در هامبورگ می‌مانیم.",
+   "pattern": "Wir bleiben <Zahl> Tage in <Ort>.",
+   "targetWords": [
+    "tage"
+   ]
+  },
+  {
+   "id": "de-a2-266",
+   "text": "In den letzten Tagen war es sehr heiss.",
+   "fa": "این چند روز آخر خیلی گرم بود.",
+   "pattern": "In den letzten Tagen <Satz>.",
+   "targetWords": [
+    "tagen"
+   ]
+  },
+  {
+   "id": "de-a2-267",
+   "text": "Sie arbeitet für ein grosses Unternehmen.",
+   "fa": "او برای یک شرکت بزرگ کار می‌کند.",
+   "pattern": "<Person> arbeitet für ein <Adj.> Unternehmen.",
+   "targetWords": [
+    "unternehmen"
+   ]
+  },
+  {
+   "id": "de-a2-268",
+   "text": "Was unternehmen wir am Wochenende?",
+   "fa": "آخر هفته چه برنامه‌ای داریم؟",
+   "pattern": "Was unternehmen wir <Zeit>?",
+   "targetWords": [
+    "unternehmen"
+   ]
+  },
+  {
+   "id": "de-a2-269",
+   "text": "Würden Sie bitte das Fenster schliessen?",
+   "fa": "لطفاً پنجره را می‌بندید؟",
+   "pattern": "Würden Sie bitte <Akk.> <Verb>?",
+   "targetWords": [
+    "würden"
+   ]
+  },
+  {
+   "id": "de-a2-270",
+   "text": "Wir würden gern draussen sitzen.",
+   "fa": "دوست داریم بیرون بنشینیم.",
+   "pattern": "Wir würden gern <Verb>.",
+   "targetWords": [
+    "würden"
+   ]
+  },
+  {
+   "id": "de-a2-271",
+   "text": "Es regnet, daher bleiben wir drinnen.",
+   "fa": "باران می‌آید، به همین دلیل داخل می‌مانیم.",
+   "pattern": "<Grund>, daher <Folge>.",
+   "targetWords": [
+    "daher"
+   ]
+  },
+  {
+   "id": "de-a2-272",
+   "text": "Aus diesem Grund kann ich nicht kommen.",
+   "fa": "به همین دلیل نمی‌توانم بیایم.",
+   "pattern": "Aus diesem Grund <Satz>.",
+   "targetWords": [
+    "grund"
+   ]
+  },
+  {
+   "id": "de-a2-273",
+   "text": "Was ist der Grund?",
+   "fa": "دلیلش چیست؟",
+   "pattern": "Was ist der Grund?",
+   "targetWords": [
+    "grund"
+   ]
+  },
+  {
+   "id": "de-a2-274",
+   "text": "Ich habe kaum geschlafen.",
+   "fa": "تقریباً نخوابیدم.",
+   "pattern": "Ich habe kaum <Partizip>.",
+   "targetWords": [
+    "kaum"
+   ]
+  },
+  {
+   "id": "de-a2-275",
+   "text": "Es waren kaum Leute da.",
+   "fa": "تقریباً کسی آنجا نبود.",
+   "pattern": "Es waren kaum <Pl.> da.",
+   "targetWords": [
+    "kaum"
+   ]
+  },
+  {
+   "id": "de-a2-276",
+   "text": "Ich kann mich nicht daran erinnern.",
+   "fa": "نمی‌توانم آن را به یاد بیاورم.",
+   "pattern": "Ich kann mich nicht daran erinnern.",
+   "targetWords": [
+    "daran"
+   ]
+  },
+  {
+   "id": "de-a2-277",
+   "text": "Denk bitte daran!",
+   "fa": "لطفاً یادت نرود!",
+   "pattern": "Denk daran!",
+   "targetWords": [
+    "daran"
+   ]
+  },
+  {
+   "id": "de-a2-278",
+   "text": "Das ist halt so.",
+   "fa": "خب دیگر، همین است.",
+   "pattern": "Das ist halt so.",
+   "targetWords": [
+    "halt"
+   ]
+  },
+  {
+   "id": "de-a2-279",
+   "text": "Gute Nacht und schlaf gut!",
+   "fa": "شب بخیر، خوب بخوابی!",
+   "pattern": "Gute Nacht!",
+   "targetWords": [
+    "nacht"
+   ]
+  },
+  {
+   "id": "de-a2-280",
+   "text": "In der Nacht war es sehr kalt.",
+   "fa": "شب خیلی سرد بود.",
+   "pattern": "In der Nacht war es <Adj.>.",
+   "targetWords": [
+    "nacht"
+   ]
+  },
+  {
+   "id": "de-a2-281",
+   "text": "Der Bus stand schon an der Haltestelle.",
+   "fa": "اتوبوس از قبل در ایستگاه ایستاده بود.",
+   "pattern": "<Subjekt> stand <Ort>.",
+   "targetWords": [
+    "stand"
+   ]
+  },
+  {
+   "id": "de-a2-282",
+   "text": "In der Zeitung stand nichts darüber.",
+   "fa": "در روزنامه چیزی درباره‌اش نوشته نبود.",
+   "pattern": "In <Dat.> stand <Ergänzung>.",
+   "targetWords": [
+    "stand"
+   ]
+  },
+  {
+   "id": "de-a2-283",
+   "text": "Die Fahrt dauert zwei Stunden.",
+   "fa": "سفر دو ساعت طول می‌کشد.",
+   "pattern": "<Nomen> dauert <Zahl> Stunden.",
+   "targetWords": [
+    "stunden"
+   ]
+  },
+  {
+   "id": "de-a2-284",
+   "text": "Ich habe drei Stunden gewartet.",
+   "fa": "سه ساعت منتظر ماندم.",
+   "pattern": "Ich habe <Zahl> Stunden <Partizip>.",
+   "targetWords": [
+    "stunden"
+   ]
+  },
+  {
+   "id": "de-a2-285",
+   "text": "Das ist ein schwieriges Thema.",
+   "fa": "این موضوع سختی است.",
+   "pattern": "Das ist ein <Adj.> Thema.",
+   "targetWords": [
+    "thema"
+   ]
+  },
+  {
+   "id": "de-a2-286",
+   "text": "Können wir das Thema wechseln?",
+   "fa": "می‌شود موضوع را عوض کنیم؟",
+   "pattern": "Können wir <Akk.> wechseln?",
+   "targetWords": [
+    "thema"
+   ]
+  },
+  {
+   "id": "de-a2-287",
+   "text": "Zum Beispiel am Montag oder Dienstag.",
+   "fa": "مثلاً دوشنبه یا سه‌شنبه.",
+   "pattern": "Zum Beispiel <Ergänzung>.",
+   "targetWords": [
+    "beispiel"
+   ]
+  },
+  {
+   "id": "de-a2-288",
+   "text": "Kannst du mir ein Beispiel geben?",
+   "fa": "می‌توانی یک مثال بزنی؟",
+   "pattern": "Kannst du mir ein Beispiel geben?",
+   "targetWords": [
+    "beispiel"
+   ]
+  },
+  {
+   "id": "de-a2-289",
+   "text": "Ich wohne allein.",
+   "fa": "تنها زندگی می‌کنم.",
+   "pattern": "Ich wohne allein.",
+   "targetWords": [
+    "allein"
+   ]
+  },
+  {
+   "id": "de-a2-290",
+   "text": "Sie ist allein nach Berlin gefahren.",
+   "fa": "او تنها به برلین رفت.",
+   "pattern": "<Person> ist allein <Ziel> gefahren.",
+   "targetWords": [
+    "allein"
+   ]
+  },
+  {
+   "id": "de-a2-291",
+   "text": "Das ist mein Freund, dessen Auto kaputt ist.",
+   "fa": "این دوست من است که ماشینش خراب شده.",
+   "pattern": "<Person>, dessen <Nomen> <Satz>.",
+   "targetWords": [
+    "dessen"
+   ]
+  },
+  {
+   "id": "de-a2-292",
+   "text": "Das war echt lustig.",
+   "fa": "واقعاً خنده‌دار بود.",
+   "pattern": "Das war echt <Adj.>.",
+   "targetWords": [
+    "echt"
+   ]
+  },
+  {
+   "id": "de-a2-293",
+   "text": "Ist das echt wahr?",
+   "fa": "واقعاً راست است؟",
+   "pattern": "Ist das echt <Adj.>?",
+   "targetWords": [
+    "echt"
+   ]
+  },
+  {
+   "id": "de-a2-294",
+   "text": "Kannst du das kurz halten?",
+   "fa": "می‌توانی این را یک لحظه نگه داری؟",
+   "pattern": "Kannst du <Akk.> halten?",
+   "targetWords": [
+    "halten"
+   ]
+  },
+  {
+   "id": "de-a2-295",
+   "text": "Der Zug hält nicht in jedem Dorf.",
+   "fa": "قطار در هر روستایی توقف نمی‌کند.",
+   "pattern": "<Verkehrsmittel> hält nicht in <Dat.>.",
+   "targetWords": [
+    "hält"
+   ]
+  },
+  {
+   "id": "de-a2-296",
+   "text": "Solche Fehler passieren jedem.",
+   "fa": "این‌جور اشتباه‌ها برای هر کسی پیش می‌آید.",
+   "pattern": "Solche <Pl.> <Satz>.",
+   "targetWords": [
+    "solche"
+   ]
+  },
+  {
+   "id": "de-a2-297",
+   "text": "Zeig mir bitte den Weg.",
+   "fa": "لطفاً راه را به من نشان بده.",
+   "pattern": "Zeig mir <Akk.>.",
+   "targetWords": [
+    "zeig"
+   ]
+  },
+  {
+   "id": "de-a2-298",
+   "text": "Die Karte zeigt alle Haltestellen.",
+   "fa": "نقشه همهٔ ایستگاه‌ها را نشان می‌دهد.",
+   "pattern": "<Subjekt> zeigt <Akk.>.",
+   "targetWords": [
+    "zeigt"
+   ]
+  },
+  {
+   "id": "de-a2-299",
+   "text": "Hast du überhaupt Hunger?",
+   "fa": "اصلاً گرسنه هستی؟",
+   "pattern": "Hast du überhaupt <Nomen>?",
+   "targetWords": [
+    "überhaupt"
+   ]
+  },
+  {
+   "id": "de-a2-300",
+   "text": "Das ist überhaupt kein Problem.",
+   "fa": "این اصلاً مشکلی نیست.",
+   "pattern": "Das ist überhaupt kein <Nomen>.",
+   "targetWords": [
+    "überhaupt"
+   ]
+  },
+  {
+   "id": "de-a2-301",
+   "text": "Der Weg ist lang, aber schön.",
+   "fa": "راه طولانی است، ولی قشنگ.",
+   "pattern": "<Nomen> ist lang, aber <Adj.>.",
+   "targetWords": [
+    "lang"
+   ]
+  },
+  {
+   "id": "de-a2-302",
+   "text": "Ich war eine Woche lang krank.",
+   "fa": "یک هفتهٔ تمام مریض بودم.",
+   "pattern": "Ich war <Zeit> lang <Adj.>.",
+   "targetWords": [
+    "lang"
+   ]
+  },
+  {
+   "id": "de-a2-303",
+   "text": "Schönes Wochenende! Danke, ebenfalls.",
+   "fa": "آخر هفتهٔ خوبی داشته باشی! ممنون، همچنین.",
+   "pattern": "<Wunsch>! Danke, ebenfalls.",
+   "targetWords": [
+    "ebenfalls"
+   ]
+  },
+  {
+   "id": "de-a2-304",
+   "text": "Ich trinke eher Tee als Kaffee.",
+   "fa": "بیشتر چای می‌نوشم تا قهوه.",
+   "pattern": "Ich <Verb> eher <A> als <B>.",
+   "targetWords": [
+    "eher"
+   ]
+  },
+  {
+   "id": "de-a2-305",
+   "text": "Kannst du etwas eher kommen?",
+   "fa": "می‌توانی کمی زودتر بیایی؟",
+   "pattern": "Kannst du eher <Verb>?",
+   "targetWords": [
+    "eher"
+   ]
+  },
+  {
+   "id": "de-a2-306",
+   "text": "Das Zimmer kostet sechzig Euro pro Nacht.",
+   "fa": "اتاق شبی شصت یورو است.",
+   "pattern": "<Nomen> kostet <Preis> pro <Einheit>.",
+   "targetWords": [
+    "pro"
+   ]
+  },
+  {
+   "id": "de-a2-307",
+   "text": "Ich gehe zweimal pro Woche schwimmen.",
+   "fa": "هفته‌ای دو بار شنا می‌روم.",
+   "pattern": "Ich <Verb> <Zahl>mal pro Woche.",
+   "targetWords": [
+    "pro"
+   ]
+  },
+  {
+   "id": "de-a2-308",
+   "text": "Wir wohnen in einem alten Haus.",
+   "fa": "ما در یک خانهٔ قدیمی زندگی می‌کنیم.",
+   "pattern": "Wir wohnen in einem alten <Nomen>.",
+   "targetWords": [
+    "alten"
+   ]
+  },
+  {
+   "id": "de-a2-309",
+   "text": "Ich habe meine alten Freunde getroffen.",
+   "fa": "دوستان قدیمی‌ام را دیدم.",
+   "pattern": "Ich habe meine alten <Pl.> getroffen.",
+   "targetWords": [
+    "alten"
+   ]
+  },
+  {
+   "id": "de-a2-310",
+   "text": "Haben Sie meine E-Mail erhalten?",
+   "fa": "ایمیل مرا دریافت کردید؟",
+   "pattern": "Haben Sie <Akk.> erhalten?",
+   "targetWords": [
+    "erhalten"
+   ]
+  },
+  {
+   "id": "de-a2-311",
+   "text": "Der junge Mann hilft der alten Frau.",
+   "fa": "مرد جوان به زن سالخورده کمک می‌کند.",
+   "pattern": "Der junge <Person> <Verb> <Dat.>.",
+   "targetWords": [
+    "junge"
+   ]
+  },
+  {
+   "id": "de-a2-312",
+   "text": "Ein Junge spielt mit dem Hund.",
+   "fa": "پسری با سگ بازی می‌کند.",
+   "pattern": "Ein Junge <Verb> mit <Dat.>.",
+   "targetWords": [
+    "junge"
+   ]
+  },
+  {
+   "id": "de-a2-313",
+   "text": "Nachdem ich gegessen hatte, ging ich spazieren.",
+   "fa": "بعد از اینکه غذا خوردم، رفتم قدم بزنم.",
+   "pattern": "Nachdem <Satz>, <Satz>.",
+   "targetWords": [
+    "nachdem"
+   ]
+  },
+  {
+   "id": "de-a2-314",
+   "text": "Das ist ein schöner Ort zum Lesen.",
+   "fa": "اینجا جای قشنگی برای مطالعه است.",
+   "pattern": "Das ist ein <Adj.> Ort zum <Verb>.",
+   "targetWords": [
+    "ort"
+   ]
+  },
+  {
+   "id": "de-a2-315",
+   "text": "Ich komme sofort.",
+   "fa": "الان می‌آیم.",
+   "pattern": "Ich komme sofort.",
+   "targetWords": [
+    "sofort"
+   ]
+  },
+  {
+   "id": "de-a2-316",
+   "text": "Rufen Sie bitte sofort an.",
+   "fa": "لطفاً فوراً زنگ بزنید.",
+   "pattern": "<Imperativ> sofort <Ergänzung>.",
+   "targetWords": [
+    "sofort"
+   ]
+  },
+  {
+   "id": "de-a2-317",
+   "text": "Vor allem brauchen wir Zeit.",
+   "fa": "بیش از هر چیز به زمان نیاز داریم.",
+   "pattern": "Vor allem <Satz>.",
+   "targetWords": [
+    "allem"
+   ]
+  },
+  {
+   "id": "de-a2-318",
+   "text": "Kannst du mir ein Glas Wasser bringen?",
+   "fa": "می‌توانی یک لیوان آب برایم بیاوری؟",
+   "pattern": "Kannst du mir <Akk.> bringen?",
+   "targetWords": [
+    "bringen"
+   ]
+  },
+  {
+   "id": "de-a2-319",
+   "text": "Ich bringe dich zum Bahnhof.",
+   "fa": "تو را تا ایستگاه می‌رسانم.",
+   "pattern": "Ich bringe <Akk.> zu <Dat.>.",
+   "targetWords": [
+    "bringe"
+   ]
+  },
+  {
+   "id": "de-a2-320",
+   "text": "Sprich bitte langsam und deutlich.",
+   "fa": "لطفاً آرام و واضح صحبت کن.",
+   "pattern": "Sprich <Adv.> und deutlich.",
+   "targetWords": [
+    "deutlich"
+   ]
+  },
+  {
+   "id": "de-a2-321",
+   "text": "Gib mir deine Hand.",
+   "fa": "دستت را به من بده.",
+   "pattern": "Gib mir deine Hand.",
+   "targetWords": [
+    "hand"
+   ]
+  },
+  {
+   "id": "de-a2-322",
+   "text": "Ich habe mir die Hand verletzt.",
+   "fa": "دستم زخمی شد.",
+   "pattern": "Ich habe mir <Körperteil> verletzt.",
+   "targetWords": [
+    "hand"
+   ]
+  },
+  {
+   "id": "de-a2-323",
+   "text": "Jede Woche gehe ich schwimmen.",
+   "fa": "هر هفته شنا می‌روم.",
+   "pattern": "Jede <Zeit> <Satz>.",
+   "targetWords": [
+    "jede"
+   ]
+  },
+  {
+   "id": "de-a2-324",
+   "text": "Ich kenne hier jede Strasse.",
+   "fa": "من اینجا هر خیابانی را می‌شناسم.",
+   "pattern": "Ich kenne jede <Nomen>.",
+   "targetWords": [
+    "jede"
+   ]
+  },
+  {
+   "id": "de-a2-325",
+   "text": "Mein Kopf tut weh.",
+   "fa": "سرم درد می‌کند.",
+   "pattern": "Mein <Körperteil> tut weh.",
+   "targetWords": [
+    "kopf"
+   ]
+  },
+  {
+   "id": "de-a2-326",
+   "text": "Der Kopf tut mir seit gestern weh.",
+   "fa": "از دیروز سرم درد می‌کند.",
+   "pattern": "<Körperteil> tut mir seit <Zeit> weh.",
+   "targetWords": [
+    "kopf"
+   ]
+  },
+  {
+   "id": "de-a2-327",
+   "text": "Zwei Männer arbeiten auf der Strasse.",
+   "fa": "دو مرد در خیابان کار می‌کنند.",
+   "pattern": "<Zahl> Männer <Verb> <Ort>.",
+   "targetWords": [
+    "männer"
+   ]
+  },
+  {
+   "id": "de-a2-328",
+   "text": "Damals gab es noch kein Internet.",
+   "fa": "آن موقع هنوز اینترنت نبود.",
+   "pattern": "Damals gab es <Akk.>.",
+   "targetWords": [
+    "damals"
+   ]
+  },
+  {
+   "id": "de-a2-329",
+   "text": "Ich war damals zehn Jahre alt.",
+   "fa": "آن موقع ده سالم بود.",
+   "pattern": "Ich war damals <Alter>.",
+   "targetWords": [
+    "damals"
+   ]
+  },
+  {
+   "id": "de-a2-330",
+   "text": "Endlich ist Wochenende!",
+   "fa": "بالاخره آخر هفته شد!",
+   "pattern": "Endlich <Satz>!",
+   "targetWords": [
+    "endlich"
+   ]
+  },
+  {
+   "id": "de-a2-331",
+   "text": "Bist du endlich fertig?",
+   "fa": "بالاخره کارت تمام شد؟",
+   "pattern": "Bist du endlich <Adj.>?",
+   "targetWords": [
+    "endlich"
+   ]
+  },
+  {
+   "id": "de-a2-332",
+   "text": "Ich habe meinen Schlüssel gefunden.",
+   "fa": "کلیدم را پیدا کردم.",
+   "pattern": "Ich habe <Akk.> gefunden.",
+   "targetWords": [
+    "gefunden"
+   ]
+  },
+  {
+   "id": "de-a2-333",
+   "text": "Hast du eine Wohnung gefunden?",
+   "fa": "خانه پیدا کردی؟",
+   "pattern": "Hast du <Akk.> gefunden?",
+   "targetWords": [
+    "gefunden"
+   ]
+  },
+  {
+   "id": "de-a2-334",
+   "text": "Das Ticket gilt nur heute.",
+   "fa": "بلیت فقط امروز اعتبار دارد.",
+   "pattern": "<Nomen> gilt nur <Zeit>.",
+   "targetWords": [
+    "gilt"
+   ]
+  },
+  {
+   "id": "de-a2-335",
+   "text": "Das gilt für alle.",
+   "fa": "این برای همه صدق می‌کند.",
+   "pattern": "Das gilt für <Akk.>.",
+   "targetWords": [
+    "gilt"
+   ]
+  },
+  {
+   "id": "de-a2-336",
+   "text": "Das ist mir sehr wichtig.",
+   "fa": "این برایم خیلی مهم است.",
+   "pattern": "Das ist mir wichtig.",
+   "targetWords": [
+    "wichtig"
+   ]
+  },
+  {
+   "id": "de-a2-337",
+   "text": "Es ist wichtig, genug zu trinken.",
+   "fa": "مهم است که به‌اندازهٔ کافی آب بنوشیم.",
+   "pattern": "Es ist wichtig, <zu-Infinitiv>.",
+   "targetWords": [
+    "wichtig"
+   ]
+  },
+  {
+   "id": "de-a2-338",
+   "text": "Das ist mir egal.",
+   "fa": "برایم فرقی ندارد.",
+   "pattern": "Das ist mir egal.",
+   "targetWords": [
+    "egal"
+   ]
+  },
+  {
+   "id": "de-a2-339",
+   "text": "Egal was passiert, ich bleibe.",
+   "fa": "هر چه بشود، می‌مانم.",
+   "pattern": "Egal <Frage>, <Satz>.",
+   "targetWords": [
+    "egal"
+   ]
+  },
+  {
+   "id": "de-a2-340",
+   "text": "Ich war in guter Gesellschaft.",
+   "fa": "در جمع خوبی بودم.",
+   "pattern": "Ich war in <Adj.> Gesellschaft.",
+   "targetWords": [
+    "gesellschaft"
+   ]
+  },
+  {
+   "id": "de-a2-341",
+   "text": "Der Berg ist sehr hoch.",
+   "fa": "کوه خیلی بلند است.",
+   "pattern": "<Nomen> ist sehr hoch.",
+   "targetWords": [
+    "hoch"
+   ]
+  },
+  {
+   "id": "de-a2-342",
+   "text": "Die Miete ist zu hoch.",
+   "fa": "اجاره خیلی زیاد است.",
+   "pattern": "<Nomen> ist zu hoch.",
+   "targetWords": [
+    "hoch"
+   ]
+  },
+  {
+   "id": "de-a2-343",
+   "text": "Der Kaffee ist zu stark.",
+   "fa": "قهوه خیلی غلیظ است.",
+   "pattern": "<Nomen> ist zu stark.",
+   "targetWords": [
+    "stark"
+   ]
+  },
+  {
+   "id": "de-a2-344",
+   "text": "Es regnet stark.",
+   "fa": "باران شدیدی می‌بارد.",
+   "pattern": "Es <Wetterverb> stark.",
+   "targetWords": [
+    "stark"
+   ]
+  },
+  {
+   "id": "de-a2-345",
+   "text": "In meinem Alter lernt man langsamer.",
+   "fa": "در سن من آدم آهسته‌تر یاد می‌گیرد.",
+   "pattern": "In meinem Alter <Satz>.",
+   "targetWords": [
+    "alter"
+   ]
+  },
+  {
+   "id": "de-a2-346",
+   "text": "Am Anfang war alles neu.",
+   "fa": "اول همه‌چیز تازه بود.",
+   "pattern": "Am Anfang <Satz>.",
+   "targetWords": [
+    "anfang"
+   ]
+  },
+  {
+   "id": "de-a2-347",
+   "text": "Anfang Juni ziehen wir um.",
+   "fa": "اوایل ژوئن اسباب‌کشی می‌کنیم.",
+   "pattern": "Anfang <Monat> <Satz>.",
+   "targetWords": [
+    "anfang"
+   ]
+  },
+  {
+   "id": "de-a2-348",
+   "text": "Das Bad ist oben.",
+   "fa": "حمام طبقهٔ بالاست.",
+   "pattern": "<Raum> ist oben.",
+   "targetWords": [
+    "oben"
+   ]
+  },
+  {
+   "id": "de-a2-349",
+   "text": "Die Bücher stehen oben im Regal.",
+   "fa": "کتاب‌ها بالای قفسه‌اند.",
+   "pattern": "<Pl.> stehen oben <Ort>.",
+   "targetWords": [
+    "oben"
+   ]
+  },
+  {
+   "id": "de-a2-350",
+   "text": "Die Strasse ist heute gesperrt.",
+   "fa": "خیابان امروز بسته است.",
+   "pattern": "Die Strasse ist <Adj.>.",
+   "targetWords": [
+    "strasse"
+   ]
+  },
+  {
+   "id": "de-a2-351",
+   "text": "Gehen Sie die Strasse geradeaus bis zum Bahnhof.",
+   "fa": "خیابان را مستقیم تا ایستگاه بروید.",
+   "pattern": "Gehen Sie <Akk.> geradeaus bis zu <Dat.>.",
+   "targetWords": [
+    "strasse"
+   ]
+  },
+  {
+   "id": "de-a2-352",
+   "text": "Kommt dir das bekannt vor?",
+   "fa": "به نظرت آشنا می‌آید؟",
+   "pattern": "Kommt dir das bekannt vor?",
+   "targetWords": [
+    "bekannt"
+   ]
+  },
+  {
+   "id": "de-a2-353",
+   "text": "Diese Stadt ist bekannt für ihren Wein.",
+   "fa": "این شهر به شرابش معروف است.",
+   "pattern": "<Ort> ist bekannt für <Akk.>.",
+   "targetWords": [
+    "bekannt"
+   ]
+  },
+  {
+   "id": "de-a2-354",
+   "text": "Bisher hat alles geklappt.",
+   "fa": "تا الان همه‌چیز خوب پیش رفته.",
+   "pattern": "Bisher <Satz>.",
+   "targetWords": [
+    "bisher"
+   ]
+  },
+  {
+   "id": "de-a2-355",
+   "text": "Viele Studenten reisen durch Europa.",
+   "fa": "خیلی از دانشجوها در اروپا سفر می‌کنند.",
+   "pattern": "<Pl.> reisen durch <Ort>.",
+   "targetWords": [
+    "europa"
+   ]
+  },
+  {
+   "id": "de-a2-356",
+   "text": "Gott sei Dank ist nichts passiert.",
+   "fa": "خدا را شکر اتفاقی نیفتاد.",
+   "pattern": "Gott sei Dank <Satz>.",
+   "targetWords": [
+    "gott"
+   ]
+  },
+  {
+   "id": "de-a2-357",
+   "text": "Was ist los mit dir?",
+   "fa": "چه‌ات شده؟",
+   "pattern": "Was ist los mit <Dat.>?",
+   "targetWords": [
+    "los"
+   ]
+  },
+  {
+   "id": "de-a2-358",
+   "text": "Los, wir müssen gehen!",
+   "fa": "یالا، باید برویم!",
+   "pattern": "Los, <Satz>!",
+   "targetWords": [
+    "los"
+   ]
+  },
+  {
+   "id": "de-a2-359",
+   "text": "Mach die Augen zu.",
+   "fa": "چشم‌هایت را ببند.",
+   "pattern": "Mach die Augen zu.",
+   "targetWords": [
+    "augen"
+   ]
+  },
+  {
+   "id": "de-a2-360",
+   "text": "Sie hat grüne Augen.",
+   "fa": "او چشم‌های سبز دارد.",
+   "pattern": "<Person> hat <Farbe> Augen.",
+   "targetWords": [
+    "augen"
+   ]
+  },
+  {
+   "id": "de-a2-361",
+   "text": "Das ist die beste Lösung.",
+   "fa": "این بهترین راه‌حل است.",
+   "pattern": "Das ist die beste <Nomen>.",
+   "targetWords": [
+    "beste"
+   ]
+  },
+  {
+   "id": "de-a2-362",
+   "text": "Alles Gute und das Beste für dich!",
+   "fa": "بهترین‌ها برایت!",
+   "pattern": "Alles Gute und das Beste für <Akk.>!",
+   "targetWords": [
+    "beste"
+   ]
+  },
+  {
+   "id": "de-a2-363",
+   "text": "Ich denke oft an dich.",
+   "fa": "زیاد به تو فکر می‌کنم.",
+   "pattern": "Ich denke an <Akk.>.",
+   "targetWords": [
+    "denke"
+   ]
+  },
+  {
+   "id": "de-a2-364",
+   "text": "Ich denke, das ist eine gute Idee.",
+   "fa": "فکر می‌کنم ایدهٔ خوبی است.",
+   "pattern": "Ich denke, <Satz>.",
+   "targetWords": [
+    "denke"
+   ]
+  },
+  {
+   "id": "de-a2-365",
+   "text": "Wir lernen in einer kleinen Gruppe.",
+   "fa": "در یک گروه کوچک درس می‌خوانیم.",
+   "pattern": "Wir <Verb> in einer <Adj.> Gruppe.",
+   "targetWords": [
+    "gruppe"
+   ]
+  },
+  {
+   "id": "de-a2-366",
+   "text": "Komm bitte her!",
+   "fa": "لطفاً بیا اینجا!",
+   "pattern": "Komm her!",
+   "targetWords": [
+    "her"
+   ]
+  },
+  {
+   "id": "de-a2-367",
+   "text": "Wo kommst du gerade her?",
+   "fa": "همین الان از کجا می‌آیی؟",
+   "pattern": "Wo kommst du her?",
+   "targetWords": [
+    "her"
+   ]
+  },
+  {
+   "id": "de-a2-368",
+   "text": "Die meisten Leute fahren mit dem Bus.",
+   "fa": "بیشتر مردم با اتوبوس می‌روند.",
+   "pattern": "Die meisten <Pl.> <Satz>.",
+   "targetWords": [
+    "meisten"
+   ]
+  },
+  {
+   "id": "de-a2-369",
+   "text": "Am meisten mag ich den Sommer.",
+   "fa": "بیشتر از همه تابستان را دوست دارم.",
+   "pattern": "Am meisten mag ich <Akk.>.",
+   "targetWords": [
+    "meisten"
+   ]
+  },
+  {
+   "id": "de-a2-370",
+   "text": "Das Haus kostet zwei Millionen Euro.",
+   "fa": "این خانه دو میلیون یورو قیمت دارد.",
+   "pattern": "<Nomen> kostet <Zahl> Millionen.",
+   "targetWords": [
+    "millionen"
+   ]
+  },
+  {
+   "id": "de-a2-371",
+   "text": "Es regnet, trotzdem gehen wir raus.",
+   "fa": "باران می‌بارد، با این حال بیرون می‌رویم.",
+   "pattern": "<A>, trotzdem <B>.",
+   "targetWords": [
+    "trotzdem"
+   ]
+  },
+  {
+   "id": "de-a2-372",
+   "text": "Ich war müde, bin aber trotzdem gekommen.",
+   "fa": "خسته بودم، ولی با این حال آمدم.",
+   "pattern": "<A>, aber trotzdem <B>.",
+   "targetWords": [
+    "trotzdem"
+   ]
+  },
+  {
+   "id": "de-a2-373",
+   "text": "Bevor du gehst, mach das Licht aus.",
+   "fa": "قبل از اینکه بروی، چراغ را خاموش کن.",
+   "pattern": "Bevor <Satz>, <Imperativ>.",
+   "targetWords": [
+    "bevor"
+   ]
+  },
+  {
+   "id": "de-a2-374",
+   "text": "Ich lerne seit einem Jahr Deutsch.",
+   "fa": "یک سال است آلمانی یاد می‌گیرم.",
+   "pattern": "Ich <Verb> seit <Zeit> <Akk.>.",
+   "targetWords": [
+    "seit"
+   ]
+  },
+  {
+   "id": "de-a2-375",
+   "text": "Ich bin spät dran, weil der Zug Verspätung hatte.",
+   "fa": "دیر کرده‌ام، چون قطار تأخیر داشت.",
+   "pattern": "<Satz>, weil <Satz>.",
+   "targetWords": [
+    "weil"
+   ]
+  },
+  {
+   "id": "de-a2-376",
+   "text": "Wenn es regnet, nehme ich den Bus.",
+   "fa": "اگر باران بیاید اتوبوس می‌گیرم.",
+   "pattern": "Wenn <Satz>, <Satz>.",
+   "targetWords": [
+    "wenn"
+   ]
+  },
+  {
+   "id": "de-a2-377",
+   "text": "Als ich klein war, wohnten wir in Köln.",
+   "fa": "وقتی بچه بودم در کلن زندگی می‌کردیم.",
+   "pattern": "Als <Satz>, <Satz>.",
+   "targetWords": [
+    "als"
+   ]
+  },
+  {
+   "id": "de-a2-378",
+   "text": "Obwohl er müde war, hat er geholfen.",
+   "fa": "با اینکه خسته بود، کمک کرد.",
+   "pattern": "Obwohl <Satz>, <Satz>.",
+   "targetWords": [
+    "obwohl"
+   ]
+  },
+  {
+   "id": "de-a2-379",
+   "text": "Ich habe verschlafen, deshalb bin ich spät.",
+   "fa": "خواب ماندم، برای همین دیرم شده.",
+   "pattern": "<Grund>, deshalb <Folge>.",
+   "targetWords": [
+    "deshalb"
+   ]
+  },
+  {
+   "id": "de-a2-380",
+   "text": "Darf ich hier fotografieren?",
+   "fa": "اجازه هست اینجا عکس بگیرم؟",
+   "pattern": "Darf ich hier <Verb>?",
+   "targetWords": [
+    "darf"
+   ]
+  },
+  {
+   "id": "de-a2-381",
+   "text": "Musst du heute noch arbeiten?",
+   "fa": "امروز هنوز باید کار کنی؟",
+   "pattern": "Musst du <Zeit> <Verb>?",
+   "targetWords": [
+    "musst"
+   ]
+  },
+  {
+   "id": "de-a2-382",
+   "text": "Könnten Sie das bitte wiederholen?",
+   "fa": "می‌شود لطفاً تکرار کنید؟",
+   "pattern": "Könnten Sie das bitte <Verb>?",
+   "targetWords": [
+    "könnten"
+   ]
+  },
+  {
+   "id": "de-a2-383",
+   "text": "Ich hätte gern eine Tasse Kaffee.",
+   "fa": "یک فنجان قهوه می‌خواهم.",
+   "pattern": "Ich hätte gern <Akk.>.",
+   "targetWords": [
+    "hätte"
+   ]
+  },
+  {
+   "id": "de-a2-384",
+   "text": "Das wäre super!",
+   "fa": "عالی می‌شد!",
+   "pattern": "Das wäre <Adj.>!",
+   "targetWords": [
+    "wäre"
+   ]
+  },
+  {
+   "id": "de-a2-385",
+   "text": "Hast du schon gegessen?",
+   "fa": "غذا خورده‌ای؟",
+   "pattern": "Hast du schon <Partizip>?",
+   "targetWords": [
+    "schon"
+   ]
+  },
+  {
+   "id": "de-a2-386",
+   "text": "Ich brauche noch einen Moment.",
+   "fa": "یک لحظهٔ دیگر وقت لازم دارم.",
+   "pattern": "Ich brauche noch <Akk.>.",
+   "targetWords": [
+    "noch"
+   ]
+  }
+ ]
+}

@@ -50,3 +50,4 @@ dist-focused-coach-dark-home/
 
 # Generated podcast audio (large; host externally)
 dist-podcast/
+scripts/content/.stubs/

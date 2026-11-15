@@ -32,7 +32,7 @@ interface Props {
   dueReviews?: number;
   onReview?: () => void;
   /** Set when this lesson was the last one of its level: offers the full level warm-up. */
-  levelFinished?: { title: string; lessons: number; onStart: () => void };
+  levelFinished?: { title: string; lessons: number; onStart: () => void; /** Content readiness (0–100) of the level's CEFR band; keeps the message honest. */ readiness?: number };
 }
 
 /** Shown once a lesson is saved as complete; the next lesson opens only when the learner taps. */
@@ -68,7 +68,7 @@ export default function LessonCelebration({ visible, lessonTitle, stats, hasNext
             <Text style={styles.streakText}>{stats.streak > 0 ? `روز ${fa(stats.streak)} پیاپی ✓` : 'روز اول ✓'}</Text>
           </View>
           {levelFinished ? <View style={styles.levelBox}>
-            <View style={styles.levelHead}><Trophy size={18} color="#B45309" /><Text style={styles.levelTitle}>سطح «{levelFinished.title}» تمام شد!</Text></View>
+            <View style={styles.levelHead}><Trophy size={18} color="#B45309" /><Text style={styles.levelTitle}>{levelFinished.readiness !== undefined && levelFinished.readiness < 100 ? `درس‌های آمادهٔ سطح «${levelFinished.title}» تمام شد (${fa(levelFinished.readiness)}٪ محتوا)` : `سطح «${levelFinished.title}» تمام شد!`}</Text></View>
             <Text style={styles.levelText}>قبل از رفتن به سطح بعد، یک گرم‌کردن کامل: از هر {fa(levelFinished.lessons)} درس این سطح یک ضربه، به ترتیب.</Text>
             <Pressable accessibilityRole="button" onPress={levelFinished.onStart} style={styles.levelButton}><Flame size={16} color="#FFFFFF" /><Text style={styles.levelButtonText}>گرم‌کردن کامل سطح</Text></Pressable>
           </View> : null}

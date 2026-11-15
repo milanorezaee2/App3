@@ -28,6 +28,8 @@ import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '
 import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } from '@/components/EnglishUI';
 import { starterDisplayPronunciation } from '@/lib/languages/starterEditorial';
 import type { StarterCourse, StarterLesson } from '@/lib/languages/newCourses';
+import LevelReadinessLine from '@/components/LevelReadinessLine';
+import { auditLessonsFromLearning, courseReadiness } from '@/lib/content/courseAudit';
 import type { CourseLevelId as StarterLevelId } from '@/lib/courseContent';
 import type { CourseProgress } from '@/lib/courseProgress';
 import { toPersianDigits as fa } from '@/lib/format';
@@ -82,6 +84,7 @@ const COURSE_WELCOME: Record<string, { title: string; text: string }> = {
 };
 
 export default function StarterHome({course}: {course: StarterCourse}) {
+  const readiness = useMemo(() => courseReadiness(course.id as 'de' | 'fr' | 'es', auditLessonsFromLearning(course.lessons as ReadonlyArray<import('@/lib/languages/types').LearningLesson & { levelId: number }>)), [course]);
   const {lessons, levels, progress: courseProgress} = course;
   const {loadStarterLessonSessionWithPresence} = course.sessions;
   const router = useRouter();
@@ -265,6 +268,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
                         </View>
                         <Text style={styles.levelDesc} numberOfLines={1}>{level.description}</Text>
                         <Text style={styles.levelStats}>{fa(count.completed)} از {fa(count.total)} درس · {level.status === 'planned' ? 'در نقشهٔ آینده' : 'محتوای موجود'}</Text>
+                        <LevelReadinessLine course={readiness} levelId={level.id} color={level.color} />
                       </View>
                       <ChevronLeft size={18} color={HomeColors.muted} />
                     </Pressable>

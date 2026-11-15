@@ -23,6 +23,11 @@ import {
 } from 'expo-audio';
 import { Check, ChevronLeft, Headphones, MessageCircle, Mic2, RefreshCw, RotateCcw, Sparkles, Square, Volume2 } from 'lucide-react-native';
 import { COURSE_LEVELS, getSentenceLesson, SENTENCE_LESSONS } from '@/lib/courseContent';
+import { auditLessonsFromEnglish, auditLessonsFromLearning, courseReadiness, } from '@/lib/content/courseAudit';
+import { bandReadinessForLevel } from '@/lib/content/readiness';
+import { usePackVariations } from '@/lib/content/usePackVariations';
+import { asLessonSentences } from '@/lib/content/packs';
+
 import { addSentenceToReview, completeSentenceLesson, getDueReviewCards } from '@/lib/courseProgress';
 import { evaluateSpokenSentence, type SpeechEvaluation } from '@/lib/speechPractice';
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
@@ -69,7 +74,9 @@ export default function SentenceLessonScreen() {
   const courseLevel = COURSE_LEVELS.find(item => item.id === lesson.levelId) ?? COURSE_LEVELS[0];
   const [evidencePassed, setEvidencePassed] = useState(false);
   const practiceLesson = useMemo(() => ({ id: lesson.id, sentences: lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa, pronunciation: sentence.pronunciation, vocabulary: sentence.vocabulary })) }), [lesson]);
-  const practiceItems = useMemo(() => buildLessonPractice(practiceLesson), [practiceLesson]);
+  const packVariations = usePackVariations('en', useMemo(() => ({ id: lesson.id, levelId: lesson.levelId, sentences: practiceLesson.sentences }), [lesson, practiceLesson]));
+  // Content-pack sentences join the blitz pool (up to two extra strikes) so the learner meets the pattern with new words.
+  const practiceItems = useMemo(() => buildLessonPractice(packVariations.length ? { id: practiceLesson.id, sentences: [...practiceLesson.sentences, ...asLessonSentences(packVariations)] } : practiceLesson, { count: 6 + Math.min(2, packVariations.length) }), [practiceLesson, packVariations]);
   const [practiceDone, setPracticeDone] = useState(false);
   const speakResult = useRef<SpeakDrillResult | null>(null);
   useEffect(() => { setPracticeDone(false); }, [lesson.id]);
@@ -77,7 +84,7 @@ export default function SentenceLessonScreen() {
   const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
   const skipPractice = useCallback(() => { practiceStats.current = { total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 }; setPracticeDone(true); }, []);
   const speakPractice = useCallback((text: string) => { playResponsiveSpeech({ text, locale: 'en-US', rate: ENGLISH_NORMAL_SPEECH_RATE, onError: () => undefined }); }, []);
-  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void; levelFinished?: { title: string; lessons: number; onStart: () => void } } | null>(null);
+  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void; levelFinished?: { title: string; lessons: number; onStart: () => void; readiness?: number } } | null>(null);
   const practiceBlocks = practiceItems.length > 0 && !practiceDone;
   const [completionError, setCompletionError] = useState('');
   const [saving, setSaving] = useState(false);
@@ -354,7 +361,7 @@ export default function SentenceLessonScreen() {
       next: () => { if (nextLesson) router.replace({ pathname: '/course/lesson', params: { id: nextLesson.id } } as never); else router.replace('/lang' as never); },
       dueReviews,
       review: () => router.replace('/review' as never),
-      levelFinished: (!nextLesson || nextLesson.levelId !== lesson.levelId) ? { title: COURSE_LEVELS.find(item => item.id === lesson.levelId)?.title ?? '', lessons: SENTENCE_LESSONS.filter(item => item.levelId === lesson.levelId).length, onStart: () => router.replace({ pathname: '/learn/en/studio', params: { level: String(lesson.levelId), mode: 'warmup' } } as never) } : undefined,
+      levelFinished: (!nextLesson || nextLesson.levelId !== lesson.levelId) ? { readiness: bandReadinessForLevel(courseReadiness('en', auditLessonsFromEnglish(SENTENCE_LESSONS)), lesson.levelId)?.readiness, title: COURSE_LEVELS.find(item => item.id === lesson.levelId)?.title ?? '', lessons: SENTENCE_LESSONS.filter(item => item.levelId === lesson.levelId).length, onStart: () => router.replace({ pathname: '/learn/en/studio', params: { level: String(lesson.levelId), mode: 'warmup' } } as never) } : undefined,
     });
     } catch { setCompletionError('پایان درس ذخیره نشد؛ دوباره تلاش کنید.'); }
     finally { completing.current=false; setSaving(false); }

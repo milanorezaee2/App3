@@ -1,4 +1,5 @@
 import * as Speech from 'expo-speech';
+import { tryPlayRecorded } from '@/lib/content/packAudio';
 import { speechTagFor } from './speechLanguage';
 import { voiceFor } from './voiceRotation';
 
@@ -17,6 +18,9 @@ export function playRussianSpeech(text: string, rate: number, onError?: () => vo
   return enqueue(async () => {
     if (request !== requestId) return;
     await Speech.stop().catch(() => undefined);
+    if (request !== requestId) return;
+    // Content-pack recordings win over the device voice (same voice on every phone, no TTS dependency).
+    if (await tryPlayRecorded(text, rate / 0.78)) return;
     if (request !== requestId) return;
     const voice = await voiceFor('ru-RU', text).catch(() => undefined);
     if (request !== requestId) return;

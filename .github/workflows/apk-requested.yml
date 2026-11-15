@@ -1,6 +1,6 @@
 name: Build requested APKs
 
-# rev 103
+# rev 104
 # rev 76: page-targeted pop-ups (any number per page) with a redesigned card
 # rev 75: learner pop-ups checked on every launch and return (1-min quiet period)
 # rev 74: new English-only no-login APK (english.apk)
@@ -579,6 +579,32 @@ jobs:
             --data "$body")
           echo "Supabase responded $status"; cat resp.json || true
           [ "$status" = "201" ] || [ "$status" = "200" ] || [ "$status" = "204" ]
+
+      # Content packs: the files under content-packs/ (manifest + <lang>/<band>.vN.json
+      # + audio/) are mirrored into the public Storage bucket `content-packs`, so the
+      # apps download new sentences without a new APK. Skipped without the secret.
+      - name: Publish content packs to Supabase Storage
+        shell: bash
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then echo "SUPABASE_SERVICE_ROLE_KEY secret not set; skipping content pack publish."; exit 0; fi
+          [ -f content-packs/manifest.json ] || { echo "no content-packs/manifest.json; nothing to publish"; exit 0; }
+          URL="${SUPABASE_URL:-$(node -p "require('./config/supabase.public.json').EXPO_PUBLIC_SUPABASE_URL")}"
+          AUTH=(-H "apikey: $SUPABASE_SERVICE_ROLE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY")
+          # Ensure the public bucket exists (409 = already there).
+          code=$(curl -sS -o /dev/null -w '%{http_code}' -X POST "$URL/storage/v1/bucket" "${AUTH[@]}" -H "Content-Type: application/json" --data '{"id":"content-packs","name":"content-packs","public":true}')
+          echo "bucket: $code"
+          fail=0
+          while IFS= read -r f; do
+            rel="${f#content-packs/}"
+            case "$f" in *.json) ct="application/json";; *.mp3) ct="audio/mpeg";; *.ogg) ct="audio/ogg";; *) ct="application/octet-stream";; esac
+            code=$(curl -sS -o /dev/null -w '%{http_code}' -X POST "$URL/storage/v1/object/content-packs/$rel" "${AUTH[@]}" -H "Content-Type: $ct" -H "x-upsert: true" -H "cache-control: max-age=300" --data-binary "@$f")
+            echo "$code  $rel"
+            case "$code" in 200|201) ;; *) fail=1;; esac
+          done < <(find content-packs -type f | sort)
+          [ "$fail" = 0 ]
 
       # Retention: keep only the newest 5 "milo-requested-*" releases (and their
       # tags); older APKs are removed so the Releases page stays short.

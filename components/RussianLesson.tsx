@@ -20,6 +20,11 @@ import RussianDialoguePractice from '@/components/RussianDialoguePractice';
 import { modeForLevel } from '@/components/LanguageDialoguePractice';
 import { clearRussianLessonSession, loadRussianLessonSessionWithPresence, saveRussianLessonSession, resetRussianLessonSession } from '@/lib/languages/russianStudyState';
 import { RUSSIAN_LESSONS, RUSSIAN_LEVELS, RUSSIAN_LESSON_STAGES, russianProgress, type RussianCourseLesson } from '@/lib/languages/russian';
+import { auditLessonsFromEnglish, auditLessonsFromLearning, courseReadiness, } from '@/lib/content/courseAudit';
+import { bandReadinessForLevel } from '@/lib/content/readiness';
+import { usePackVariations } from '@/lib/content/usePackVariations';
+import { asLessonSentences } from '@/lib/content/packs';
+
 import type { RussianLessonSession } from '@/lib/languages/russianStudyState';
 import { toPersianDigits as fa } from '@/lib/format';
 import { playRussianSpeech, stopRussianSpeech } from '@/lib/russianSpeech';
@@ -100,13 +105,15 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
   const saveGeneration = useRef(0);
   const current = lesson.sentences[sentenceIndex];
   const checks = useMemo(() => shuffleChecks(lesson.id, lesson.checks), [lesson]);
-  const practiceItems = useMemo(() => buildLessonPractice(lesson), [lesson]);
+  const packVariations = usePackVariations('ru', lesson);
+  // Content-pack sentences join the blitz pool (up to two extra strikes) so the learner meets the pattern with new words.
+  const practiceItems = useMemo(() => buildLessonPractice(packVariations.length ? { id: lesson.id, sentences: [...lesson.sentences, ...asLessonSentences(packVariations)] } : lesson, { count: 6 + Math.min(2, packVariations.length) }), [lesson, packVariations]);
   const [practiceDone, setPracticeDone] = useState(false);
   const speakResult = useRef<SpeakDrillResult | null>(null);
   useEffect(() => { setPracticeDone(false); }, [lesson.id]);
   const practiceStats = useRef<PracticeStats>({ total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 });
   const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
-  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void; levelFinished?: { title: string; lessons: number; onStart: () => void } } | null>(null);
+  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void; levelFinished?: { title: string; lessons: number; onStart: () => void; readiness?: number } } | null>(null);
   const skipPractice = useCallback(() => { practiceStats.current = { total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 }; setPracticeDone(true); }, []);
   const speakPractice = useCallback((text: string) => { void playRussianSpeech(text, NORMAL_SPEECH_RATE, () => setSpeechError('صدای روسی دستگاه در دسترس نیست؛ متن و راهنمای خوانش همچنان دیده می‌شوند.')); }, []);
   const practiceBlocks = practiceItems.length > 0 && !practiceDone;
@@ -274,7 +281,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
         next: () => { if (nextLesson) router.replace({ pathname: '/learn/ru/lesson', params: { id: nextLesson.id } } as never); else router.replace('/learn/ru' as never); },
         dueReviews,
         review: () => router.replace('/learn/ru/review' as never),
-        levelFinished: (!nextLesson || nextLesson.levelId !== lesson.levelId) ? { title: RUSSIAN_LEVELS.find(item => item.id === lesson.levelId)?.title ?? '', lessons: RUSSIAN_LESSONS.filter(item => item.levelId === lesson.levelId).length, onStart: () => router.replace({ pathname: '/learn/ru/studio', params: { level: String(lesson.levelId), mode: 'warmup' } } as never) } : undefined,
+        levelFinished: (!nextLesson || nextLesson.levelId !== lesson.levelId) ? { readiness: bandReadinessForLevel(courseReadiness('ru', auditLessonsFromLearning(RUSSIAN_LESSONS as ReadonlyArray<import('@/lib/languages/types').LearningLesson & { levelId: number }>)), lesson.levelId)?.readiness, title: RUSSIAN_LEVELS.find(item => item.id === lesson.levelId)?.title ?? '', lessons: RUSSIAN_LESSONS.filter(item => item.levelId === lesson.levelId).length, onStart: () => router.replace({ pathname: '/learn/ru/studio', params: { level: String(lesson.levelId), mode: 'warmup' } } as never) } : undefined,
       });
     } catch {
       completing.current = false;
