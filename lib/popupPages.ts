@@ -4,9 +4,7 @@ export interface PopupPage { route: string; title: string; group: string }
 export const POPUP_PAGES: readonly PopupPage[] = Object.freeze([
   { route: '/languages', title: 'صفحهٔ اصلی (انتخاب زبان)', group: 'عمومی' },
   { route: '/profile', title: 'پروفایل', group: 'عمومی' },
-  { route: '/conversations', title: 'مکالمه (فهرست)', group: 'عمومی' },
-  { route: '/conversations/human', title: 'صفحهٔ چت', group: 'عمومی' },
-  { route: '/conversations/invite', title: 'دعوت مخاطب', group: 'عمومی' },
+  { route: '/feedback', title: 'انتقادات و پیشنهادات', group: 'عمومی' },
   { route: '/lang', title: 'خانهٔ انگلیسی', group: 'انگلیسی' },
   { route: '/lang/library', title: 'فهرست درس‌های انگلیسی', group: 'انگلیسی' },
   { route: '/course/lesson', title: 'صفحهٔ درس انگلیسی', group: 'انگلیسی' },

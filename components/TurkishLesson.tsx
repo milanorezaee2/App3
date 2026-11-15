@@ -395,7 +395,7 @@ export default function TurkishLesson({ lesson, fromStart = false }: { lesson: T
 
         {stage >= 8 && <View style={styles.centerStage}>
                     {(() => { const finalSections: FinalSection[] = [
-            { id: 'blitz', title: 'دور سریع', subtitle: `${fa(practiceItems.length)} ضربه؛ هر جملهٔ درس یک بار، هر بار به شکلی دیگر.`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="" intro="بدون نمره. اشتباه؟ همان جمله به شکل دیگری برمی‌گردد." items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} foreignStyle={styles.practiceForeign} accent={Palette.primary} /></> },
+            { id: 'blitz', title: 'دور سریع', subtitle: `${fa(practiceItems.length)} ضربه؛ هر جملهٔ درس یک بار، هر بار به شکلی دیگر.`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="" intro="بدون نمره. اشتباه؟ همان جمله به شکل دیگری برمی‌گردد." items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} summary={practiceStats.current} foreignStyle={styles.practiceForeign} accent={Palette.primary} /></> },
             { id: 'speak', title: 'آزمون گفتاری', subtitle: `${fa(lesson.sentences.length)} جمله؛ هر کدام را بلند بگو و امتیاز بگیر.`, render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale="tr-TR" accent={Palette.success} onSpeak={text => speak(text)} /></> },
             { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش از همین درس؛ بدون نمره، با توضیح.', render: () => <>
           {false ? null : <View style={styles.evidenceCard}>

@@ -22,6 +22,8 @@ interface Props {
   retryKinds?: PracticeKind[];
   onSpeak: (text: string) => void;
   onComplete: (stats: PracticeStats) => void;
+  /** Final stats recorded by the parent; lets a re-mounted block show the right summary (total 0 = skipped). */
+  summary?: PracticeStats;
   completed?: boolean;
   /** Lets the learner skip the rest of the round; reported as completed with zero progress. */
   onSkip?: () => void;
@@ -39,7 +41,7 @@ const KIND_LABEL: Record<PracticeKind, string> = {
   match: 'هر جمله را به معنی‌اش وصل کن',
 };
 
-export default function LessonPracticeBlock({ title, intro, items, source, retryKinds, onSpeak, onComplete, completed, onSkip, exam, foreignStyle, accent = Palette.primary }: Props) {
+export default function LessonPracticeBlock({ title, intro, items, source, retryKinds, onSpeak, onComplete, completed, onSkip, exam, foreignStyle, accent = Palette.primary, summary }: Props) {
   const [queue, setQueue] = useState<PracticeItem[]>(items);
   const [resolved, setResolved] = useState<null | boolean>(null); // null = unanswered, true/false = outcome
   const [done, setDone] = useState(0);
@@ -105,11 +107,19 @@ export default function LessonPracticeBlock({ title, intro, items, source, retry
   }, [current, resolved, source, retryKinds, exam]);
 
   if (total === 0) return null;
+  const fromParent = completed && summary && done === 0 ? summary : null;
+  const skipped = fromParent ? fromParent.total === 0 : finished && done < total;
+  const shownFirstTry = fromParent ? fromParent.firstTryCorrect : firstTry;
+  const shownRetries = fromParent ? fromParent.retries : retries;
+  const shownSeconds = fromParent ? fromParent.seconds : finishedSeconds.current;
   if (finished) {
     return (
       <View style={[styles.card, { borderColor: accent }]}>
-        <View style={styles.doneRow}><CheckCircle2 size={22} color={Palette.success} /><Text style={styles.title}>{title || 'تمام شد'}</Text></View>
-        <Text style={styles.intro}>{fa(firstTry)} از {fa(total)} بار اول درست{finishedSeconds.current > 0 ? ` · ${fa(finishedSeconds.current)} ثانیه` : ''}{retries > 0 ? ` · ${fa(retries)} مورد با قالب دیگر جبران شد` : ''}.</Text>
+        {skipped
+          ? <><View style={styles.doneRow}><SkipForward size={22} color="#B45309" /><Text style={styles.title}>{title ? `${title} · رد شد` : 'رد شد'}</Text></View>
+              <Text style={styles.intro}>{done > 0 ? `${fa(done)} از ${fa(total)} ضربه انجام شد؛ بقیه رد شد.` : 'این بار رد شد؛ در مرور بعدی دوباره می‌آید.'}</Text></>
+          : <><View style={styles.doneRow}><CheckCircle2 size={22} color={Palette.success} /><Text style={styles.title}>{title || 'تمام شد'}</Text></View>
+              <Text style={styles.intro}>{fa(shownFirstTry)} از {fa(total)} بار اول درست{shownSeconds > 0 ? ` · ${fa(shownSeconds)} ثانیه` : ''}{shownRetries > 0 ? ` · ${fa(shownRetries)} مورد با قالب دیگر جبران شد` : ''}.</Text></>}
       </View>
     );
   }
