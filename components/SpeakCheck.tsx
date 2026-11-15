@@ -10,7 +10,7 @@ export { scoreSpeech, type SpeakCheckResult, type SpeakWordState };
 
 function feedbackFor(score: number, nearCount = 0) {
   if (score >= 90) return 'عالی! همهٔ واژه‌ها واضح شنیده شد.';
-  if (score >= 70) return nearCount ? 'خوب بود؛ واژه‌های زرد نزدیک بود، قرمزها را دوباره بگویید. روی هر واژه بزنید تا آهسته بشنوید.' : 'خوب بود؛ واژه‌های قرمز را یک‌بار دیگر بگویید. روی هر واژه بزنید تا آهسته بشنوید.';
+  if (score >= 70) return 'خوب بود؛ قرمزها را دوباره بگویید.';
   if (score >= 40) return 'بخشی شنیده شد؛ آهسته‌تر و نزدیک‌تر به میکروفن تکرار کنید.';
   return 'واضح شنیده نشد؛ ابتدا نمونه را گوش دهید و دوباره بگویید.';
 }
@@ -104,7 +104,7 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
   return (
     <View style={[styles.wrap, compact && styles.wrapCompact]}>
       {!compact && <Text style={styles.title}>{title ?? 'بگو · Speak'}</Text>}
-      {(!compact || listening || result) && <Text style={styles.hint}>{listening ? 'در حال شنیدن… با صدای واضح بگویید.' : result ? feedbackFor(result.score, result.words.filter(w => w.state === 'near').length) : 'میکروفن را بزنید و همین جمله را با صدای بلند بگویید.'}</Text>}
+      {(listening || result) ? <Text style={styles.hint}>{listening ? 'در حال شنیدن…' : result ? feedbackFor(result.score, result.words.filter(w => w.state === 'near').length) : ''}</Text> : null}
       {result ? (
         <View style={styles.wordsRow}>
           {result.words.map((item, index) => <Pressable key={`${item.word}-${index}`} accessibilityRole="button" accessibilityLabel={`شنیدن آهستهٔ ${item.word}`} onPress={() => sayWord(item.word)}><Text keepColor style={[styles.word, item.state === 'ok' ? styles.wordOk : item.state === 'near' ? styles.wordNear : styles.wordMiss]}>{item.word}</Text></Pressable>)}
@@ -115,7 +115,7 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
       {result && result.heard ? <Text style={styles.heard}>شنیده شد: <Text keepColor style={styles.heardText}>{result.heard}</Text></Text> : null}
       {result && missed.length ? <View style={styles.legendRow}>
         <Pressable accessibilityRole="button" onPress={sayMissed} style={styles.missedButton}><Volume2 size={14} color="#B91C1C" /><Text keepColor style={styles.missedText}>{missed.length === 1 ? 'بشنو و فقط همین یکی را دوباره بگو' : `بشنو و فقط این ${fa(missed.length)} واژه را دوباره بگو`}</Text></Pressable>
-        <Text style={styles.legend}>سبز = درست · زرد = نزدیک · قرمز = شنیده نشد</Text>
+        
       </View> : null}
       {!!error && <Text accessibilityRole="alert" keepColor style={styles.error}>{error}</Text>}
       <Pressable

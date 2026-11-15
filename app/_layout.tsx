@@ -15,7 +15,6 @@ import { createAudioPlayer } from 'expo-audio';
 import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { Inter_800ExtraBold } from '@expo-google-fonts/inter/800ExtraBold';
-import { Beiruti_400Regular } from '@expo-google-fonts/beiruti/400Regular';
 import { Beiruti_500Medium } from '@expo-google-fonts/beiruti/500Medium';
 import { Beiruti_700Bold } from '@expo-google-fonts/beiruti/700Bold';
 import { Beiruti_900Black } from '@expo-google-fonts/beiruti/900Black';
@@ -113,7 +112,9 @@ export default function RootLayout() {
     // offline and independent of each Android manufacturer's system fonts.
     // Use the regular face for normal copy; headings and key actions use the
     // separately registered medium, bold and black faces.
-    Beiruti: Beiruti_400Regular,
+    // The regular cut renders hairline-thin (near-invisible) on some Android renderers, so the
+    // base family maps to the medium face; only explicit '-Medium/-Bold/-Black' pick heavier cuts.
+    Beiruti: Beiruti_500Medium,
     'Beiruti-Medium': Beiruti_500Medium,
     'Beiruti-Bold': Beiruti_700Bold,
     'Beiruti-Black': Beiruti_900Black,
@@ -124,7 +125,7 @@ export default function RootLayout() {
     'Inter-ExtraBold': Inter_800ExtraBold,
     // Legacy aliases resolve to Beiruti, preventing an old screen from
     // silently falling back to an OEM font.
-    Lalezar: Beiruti_400Regular,
+    Lalezar: Beiruti_500Medium,
   });
 
   // Learner builds ship without chat alerts: any worker left over from an

@@ -10,6 +10,7 @@ import LessonCelebration, { type CelebrationStats } from '@/components/LessonCel
 import { recordStudyDay } from '@/lib/studyStreak';
 import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { FitScrollView, lessonScrollOffset } from '@/components/FitScrollView';
+import LessonCompactHeader, { COMPACT_HEADER_HEIGHT } from '@/components/LessonCompactHeader';
 import { useFirstTimeHint } from '@/lib/useFirstTimeHint';
 import { GrammarNoteCard, GrammarPatternCard, GrammarStageHeader } from '@/components/GrammarUsage';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -96,10 +97,17 @@ export default function SentenceLessonScreen() {
   const contentOffsetRef = useRef(0);
   /** Header height (brand row, hero, stepper); it is also the room kept below the content so a short stage can still scroll to the top edge. */
   const [headerSpacer, setHeaderSpacer] = useState(0);
+  /** True once the full header has scrolled out; the compact bar then takes over. */
+  const [compactHeader, setCompactHeader] = useState(false);
+  const [viewportHeight, setViewportHeight] = useState(0);
+  const [stageHeight, setStageHeight] = useState(0);
+  /** Room below the stage so even a short stage can scroll until its top sits right under the compact bar. */
+  const scrollScale = lessonScrollOffset(1, Dimensions.get('window').width, stage === 6 ? 'classic' : 'default');
+  const bottomSpacer = Math.max(0, Math.ceil((viewportHeight - COMPACT_HEADER_HEIGHT) / scrollScale) - stageHeight + 8);
   useEffect(() => {
     // After «ادامه» the page jumps past the lesson header so the stage content starts at the top of the screen
     // (same for every stage; the sentence stage additionally targets the current sentence block).
-    const target = () => Math.max(0, lessonScrollOffset(contentOffsetRef.current + (stage === 1 ? stageOffsetRef.current : 0), Dimensions.get('window').width));
+    const target = () => Math.max(0, lessonScrollOffset(contentOffsetRef.current + (stage === 1 ? stageOffsetRef.current : 0), Dimensions.get('window').width) - COMPACT_HEADER_HEIGHT);
     const first = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: target(), animated: true }), 10);
     const second = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: target(), animated: true }), 260);
     return () => { clearTimeout(first); clearTimeout(second); };
@@ -109,7 +117,7 @@ export default function SentenceLessonScreen() {
   useEffect(() => { stageChangedAt.current = Date.now(); }, [stage, scrollKey]);
   useEffect(() => {
     if (Date.now() - stageChangedAt.current > 3000) return;
-    const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: Math.max(0, lessonScrollOffset(contentOffsetRef.current + (stage === 1 ? stageOffsetRef.current : 0), Dimensions.get('window').width)), animated: true }), 10);
+    const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: Math.max(0, lessonScrollOffset(contentOffsetRef.current + (stage === 1 ? stageOffsetRef.current : 0), Dimensions.get('window').width) - COMPACT_HEADER_HEIGHT), animated: true }), 10);
     return () => clearTimeout(handle);
   }, [headerSpacer, stage]);
   const [revealed, setRevealed] = useState(false);
@@ -368,7 +376,7 @@ export default function SentenceLessonScreen() {
   return (
     <View style={styles.root} onTouchStart={timer.interact}>
       {resetting && <Text accessibilityLiveRegion="polite" style={styles.stageDesc}>در حال ذخیرهٔ شروع مجدد…</Text>}
-      <FitScrollView ref={lessonScrollRef} variant={stage === 6 ? 'classic' : 'default'} pointerEvents={resetting ? 'none' : 'auto'} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <FitScrollView ref={lessonScrollRef} variant={stage === 6 ? 'classic' : 'default'} onLayout={event => setViewportHeight(event.nativeEvent.layout.height)} scrollEventThrottle={32} onScroll={event => setCompactHeader(event.nativeEvent.contentOffset.y >= lessonScrollOffset(contentOffsetRef.current, Dimensions.get('window').width, stage === 6 ? 'classic' : 'default') - COMPACT_HEADER_HEIGHT - 2)} pointerEvents={resetting ? 'none' : 'auto'} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
       <View onLayout={event => { const h = event.nativeEvent.layout.height; contentOffsetRef.current = h; setHeaderSpacer(Math.round(h)); }}>
       <View style={styles.brandRow}><MiloGlobeHeadphoneMark size={48} /><PageNavigation backFallback="/lang" /></View>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
@@ -382,15 +390,10 @@ export default function SentenceLessonScreen() {
             <Text style={styles.percentLabel}>پیشرفت</Text>
           </View>
         </View>
-        <View style={styles.headerBottom}>
-          <View style={styles.headerInfoChip}><Text style={styles.headerInfoText}>مسیر اصلی جمله‌محور</Text></View>
-          <Text style={styles.headerInfoText}>{toPersianDigits(lesson.sentences.length)} {lessonUnit(lesson.id)}ٔ اصلی</Text>
-        </View>
       </LinearGradient>
       <View style={styles.stepperCard}>
         <View style={styles.stepperHeading}>
           <View>
-            <Text style={styles.stepperTitle}>جریان این درس</Text>
           </View>
           <View style={styles.stepperNow}>
             
@@ -404,17 +407,12 @@ export default function SentenceLessonScreen() {
 
       {!!(sessionError || timer.error) && <Text style={styles.speechError}>{sessionError || timer.error}</Text>}
       </View>
-      <View style={styles.content}>
+      <View style={styles.content} onLayout={event => setStageHeight(Math.round(event.nativeEvent.layout.height))}>
         {stage === 0 && (
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><Sparkles size={34} color={Colors.accent[400]} /></View>
-            <Text style={styles.stageEyebrow}>موقعیت واقعی</Text>
             <Text style={styles.stageTitle}>{lesson.title}</Text>
             <Text style={styles.situation}>{lesson.situation}</Text>
-            <View style={styles.promiseCard}>
-              <Text style={styles.promiseTitle}>{lesson.c1Section ? 'در این درس تمرین می‌کنید:' : 'در پایان این درس می‌توانید:'}</Text>
-              <Text style={styles.promiseText}>{lesson.c1Section ? `کاربرد ${toPersianDigits(lesson.sentences.length)} جمله و گفت‌وگو در این موقعیت؛ پایان درس به‌تنهایی تسلط را تأیید نمی‌کند.` : `با ${toPersianDigits(lesson.sentences.length)} ${lessonUnit(lesson.id)} کوتاه، این موقعیت را مدیریت کنید.`}</Text>
-            </View>
             {lessonTopics && <View style={styles.promiseCard}>
               <Text style={styles.promiseTitle}>موضوع‌های این درس</Text>
               {lessonTopics.map(topic => <Text key={topic} style={styles.promiseText}>• {topic}</Text>)}
@@ -519,7 +517,7 @@ export default function SentenceLessonScreen() {
             {c1Unit?.topics.map((topic, index) => <GrammarNoteCard key={`${lesson.id}-c1-guide-${index}`} title={topic[0]} text={topic[5]} />)}
             {grammarPatterns.length ? grammarPatterns.map((item, index) => (
               <GrammarPatternCard key={item.sentenceId} index={index + 1} pattern={item.pattern} example={item.exampleEn} translation={item.exampleFa} onSpeak={() => speak(item.exampleEn)} />
-            )) : <GrammarNoteCard title="یادگیری در بافت جمله" text="جملهٔ اصلی را بشنوید و ساختارش را در کاربرد ببینید." />}
+            )) : null}
             {lesson.c1Section && lessonTopics && <EnglishB2TopicPractice key={lesson.id} lessonId={lesson.id} topics={lessonTopics} practice={C1_TOPIC_PRACTICE[lesson.id]} />}
             {lesson.c1Section && <EnglishB2TopicPractice key={`${lesson.id}-application`} lessonId={lesson.id} topics={['تحلیل موقعیت']} practice={C1_APPLICATION_PRACTICE[lesson.id]} heading="کاربرد در موقعیت تازه · اختیاری" description="با توجه به موقعیت تازه بهترین پاسخ را انتخاب کنید؛ این تمرین شرط پایان درس نیست." />}
             {lesson.c1Section && <EnglishB2TopicPractice key={`${lesson.id}-application-extra`} lessonId={lesson.id} topics={['سنجش کاربرد در بافت جدید']} practice={C1_ADDITIONAL_APPLICATION[lesson.id]} heading="سنجش کاربردی تکمیلی · اختیاری" description="به موقعیت تازه پاسخ دهید. نتیجه با بازخورد ثبت می‌شود؛ برای حفظ پیشرفت قبلی شرط تازه‌ای برای پایان درس ایجاد نمی‌کند." />}
@@ -548,7 +546,7 @@ export default function SentenceLessonScreen() {
         {stage >= 8 && (
           <View style={styles.centerStage}>
                         {(() => { const finalSections: FinalSection[] = [
-              { id: 'blitz', title: 'دور سریع', subtitle: `${toPersianDigits(practiceItems.length)} ضربه؛ هر جملهٔ درس یک بار، هر بار به شکلی دیگر.`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="" intro="بدون نمره. اشتباه؟ همان جمله به شکل دیگری برمی‌گردد." items={practiceItems} source={practiceLesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} summary={practiceStats.current} foreignStyle={styles.practiceForeign} accent={Colors.primary[500]} /></> },
+              { id: 'blitz', title: 'دور سریع', subtitle: `${toPersianDigits(practiceItems.length)} ضربه؛ بدون نمره.`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="" intro="" items={practiceItems} source={practiceLesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} summary={practiceStats.current} foreignStyle={styles.practiceForeign} accent={Colors.primary[500]} /></> },
               { id: 'speak', title: 'آزمون گفتاری', subtitle: `${toPersianDigits(lesson.sentences.length)} جمله؛ هر کدام را بلند بگو و امتیاز بگیر.`, render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} onFinish={result => { speakResult.current = result; void saveLessonOutcome('en', lesson.id, { speaking: { ...result, at: new Date().toISOString() } }); }} /></> },
               { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش از همین درس؛ بدون نمره، با توضیح.', render: () => <>
             {false ? null : evidencePassed
@@ -562,7 +560,7 @@ export default function SentenceLessonScreen() {
         )}
         {!!completionError && <Text style={styles.stageDesc}>{completionError}</Text>}
       </View>
-        <View style={{ height: headerSpacer }} />
+        <View style={{ height: bottomSpacer }} />
       </FitScrollView>
 
       <View pointerEvents={resetting ? 'none' : 'auto'} style={styles.footer}>
@@ -576,6 +574,7 @@ export default function SentenceLessonScreen() {
           </Pressable>
         </View>
       </View>
+      <LessonCompactHeader visible={compactHeader} title={lesson.title} stageLabel={stages[stage].labelFa} stageIndex={stage} stageCount={stages.length} onBack={() => { if (router.canGoBack()) router.back(); else router.replace('/lang' as never); }} />
       <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(SENTENCE_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} dueReviews={celebration?.dueReviews ?? 0} onReview={() => { const go = celebration?.review; setCelebration(null); go?.(); }} levelFinished={celebration?.levelFinished ? { ...celebration.levelFinished, onStart: () => { const go = celebration.levelFinished!.onStart; setCelebration(null); go(); } } : undefined} />
     </View>
   );

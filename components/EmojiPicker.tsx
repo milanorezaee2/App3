@@ -1,4 +1,5 @@
-import { ScrollView, StyleSheet, View, Pressable, Text } from 'react-native';
+import { ScrollView, StyleSheet, View, Pressable } from 'react-native';
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { Colors, Spacing } from '@/lib/theme';
 
 const EMOJIS = [

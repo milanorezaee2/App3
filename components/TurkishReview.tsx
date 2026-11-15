@@ -125,16 +125,11 @@ export default function TurkishReview() {
         <View style={styles.summaryActions}><Pressable accessibilityRole="button" disabled={!reviewCount || loading} style={[styles.startButton, (!reviewCount || loading) && styles.disabled]} onPress={startSession}><RefreshCw size={16} color={Palette.primaryDark} /><Text style={styles.startText}>شروع مرور امروز</Text></Pressable>{reviewCount ? <View style={styles.time}><Clock3 size={13} color="#FFE4EA" /><Text style={styles.timeText}>حدود {fa(Math.max(2, Math.ceil(reviewCount * .6)))} دقیقه</Text></View> : null}</View>
       </LinearGradient>
       <Text style={styles.sectionTitle}>مرور چگونه تنظیم می‌شود؟</Text>
-      <View style={styles.methodList}><Method num="۱" title="معنی را ببین و جمله را بگو" desc="پیش از دیدن پاسخ، جملهٔ ترکی استانبولی را با صدای بلند به یاد بیاورید." /><Method num="۲" title="پاسخ را ببین و بشنو" desc="متن ترکی و راهنمای خوانش را با پاسخ خود مقایسه کنید." /><Method num="۳" title="میزان سختی را انتخاب کن" desc="برنامه زمان مرور بعدی را روی همین دستگاه تنظیم می‌کند." /></View>
-      <View style={styles.note}><CheckCircle2 size={18} color={Palette.success} /></View>
     </ScrollView>
     <TurkishBottomNav />
   </View>;
 }
 
-function Method({ num, title, desc }: { num: string; title: string; desc: string }) {
-  return <View style={styles.method}><View style={styles.methodNum}><Text style={styles.methodNumText}>{num}</Text></View><View style={styles.methodText}><Text style={styles.methodTitle}>{title}</Text><Text style={styles.methodDesc}>{desc}</Text></View></View>;
-}
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },

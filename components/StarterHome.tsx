@@ -76,9 +76,9 @@ const starterOnlyStyles = StyleSheet.create({
 });
 
 const COURSE_WELCOME: Record<string, { title: string; text: string }> = {
-  de: { title: 'آلمانی؛ زبان دقت، دانش و فرصت', text: 'از نخستین سلام تا گفت‌وگوی روزمره، گام‌به‌گام و منظم؛ کلید تحصیل و کار در قلب اروپا.' },
-  fr: { title: 'فرانسوی؛ زبان فرهنگ، هنر و دیپلماسی', text: 'آوای ظریف فرانسه را با جمله‌های واقعی زندگی روزمره بیاموزید.' },
-  es: { title: 'اسپانیایی؛ زبان بیست کشور و نیم‌میلیارد انسان', text: 'گرم، روشن و پرکاربرد؛ از همین اولین جمله حرف بزنید.' },
+  de: { title: 'آلمانی', text: 'از نخستین سلام تا گفت‌وگوی روزمره.' },
+  fr: { title: 'فرانسوی', text: 'از نخستین سلام تا گفت‌وگوی روزمره.' },
+  es: { title: 'اسپانیایی', text: 'از نخستین سلام تا گفت‌وگوی روزمره.' },
 };
 
 export default function StarterHome({course}: {course: StarterCourse}) {
@@ -179,7 +179,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
                 <Sparkles size={13} color={HomeColors.gold} />
               </View>
               <Text style={styles.welcomeTitle}>{COURSE_WELCOME[course.id]?.title ?? course.name}</Text>
-              <Text style={styles.welcomeDescription}>{COURSE_WELCOME[course.id]?.text ?? 'از نخستین سلام تا گفت‌وگوی روزمره، گام‌به‌گام.'}</Text>
+              <Text style={styles.welcomeDescription}>{COURSE_WELCOME[course.id]?.text ?? 'از نخستین سلام تا گفت‌وگوی روزمره.'}</Text>
               <View style={styles.welcomeTags}>
                 <View style={styles.welcomeTag}>
                   <BookOpen size={12} color={HomeColors.gold} />
@@ -319,7 +319,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             <View style={styles.lessonHeading}>
               <Text style={styles.lessonEyebrow}>ادامهٔ یادگیری این زبان</Text>
               <Text style={styles.lessonTitle}>{nextLesson ? heroLesson.title : 'درس‌های موجود تکمیل شد'}</Text>
-              <Text style={styles.lessonSubtitle}>{nextLesson ? heroLesson.subtitle : 'درس‌های موجود را مرور کن یا نقشهٔ سطح‌ها را ببین.'}</Text>
+              {nextLesson ? <Text style={styles.lessonSubtitle}>{heroLesson.subtitle}</Text> : null}
             </View>
 
             <View style={styles.sentenceCard}>

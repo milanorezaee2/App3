@@ -280,7 +280,7 @@ export default function RussianHome() {
             <View style={styles.lessonHeading}>
               <Text style={styles.lessonEyebrow}>ادامهٔ یادگیری روسی</Text>
               <Text style={styles.lessonTitle}>{nextLesson ? heroLesson.title : 'مسیر آغازین تکمیل شد'}</Text>
-              <Text style={styles.lessonSubtitle}>{nextLesson ? heroLesson.subtitle : 'درس‌های موجود را مرور کن یا نقشهٔ سطح‌ها را ببین.'}</Text>
+              {nextLesson ? <Text style={styles.lessonSubtitle}>{heroLesson.subtitle}</Text> : null}
             </View>
 
             <View style={styles.sentenceCard}>

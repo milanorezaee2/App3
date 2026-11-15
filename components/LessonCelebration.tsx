@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { Animated, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Modal, Pressable, StyleSheet, View } from 'react-native';
+import { LocalizedText as Text } from '@/components/LocalizedText';
 import { ArrowLeft, CheckCircle2, Flame, RefreshCw, Trophy } from 'lucide-react-native';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { Typography } from '@/lib/theme';
@@ -66,7 +67,6 @@ export default function LessonCelebration({ visible, lessonTitle, stats, hasNext
             <Flame size={16} color="#D97706" />
             <Text style={styles.streakText}>{stats.streak > 0 ? `روز ${fa(stats.streak)} پیاپی ✓` : 'روز اول ✓'}</Text>
           </View>
-          <Text style={styles.streakHint}>{stats.streakExtendedToday ? 'فردا هم یک درس بخوان تا شمارنده ادامه پیدا کند.' : 'امروز قبلاً حساب شده؛ ادامه بده.'}</Text>
           {levelFinished ? <View style={styles.levelBox}>
             <View style={styles.levelHead}><Trophy size={18} color="#B45309" /><Text style={styles.levelTitle}>سطح «{levelFinished.title}» تمام شد!</Text></View>
             <Text style={styles.levelText}>قبل از رفتن به سطح بعد، یک گرم‌کردن کامل: از هر {fa(levelFinished.lessons)} درس این سطح یک ضربه، به ترتیب.</Text>

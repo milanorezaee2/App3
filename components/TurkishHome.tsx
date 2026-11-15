@@ -284,7 +284,7 @@ export default function TurkishHome() {
             <View style={styles.lessonHeading}>
               <Text style={styles.lessonEyebrow}>ادامهٔ یادگیری ترکی استانبولی</Text>
               <Text style={styles.lessonTitle}>{nextLesson ? heroLesson.title : 'سطح‌های A1 و A2 ترکی استانبولی تکمیل شدند'}</Text>
-              <Text style={styles.lessonSubtitle}>{nextLesson ? heroLesson.subtitle : 'درس‌های Foundation، Survival و Everyday Turkish را مرور کن یا نقشهٔ سطح‌ها را ببین.'}</Text>
+              {nextLesson ? <Text style={styles.lessonSubtitle}>{heroLesson.subtitle}</Text> : null}
             </View>
 
             <View style={styles.sentenceCard}>

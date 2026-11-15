@@ -166,22 +166,13 @@ export default function ReviewHome() {
         </LinearGradient>
 
         <Text style={styles.sectionTitle}>مرور چگونه تنظیم می‌شود؟</Text>
-        <View style={styles.methodList}>
-          <Method num="۱" title="معنی را ببین و جمله را بگو" desc="پیش از دیدن پاسخ، جمله را با صدای بلند به یاد بیاورید." />
-          <Method num="۲" title="پاسخ را ببین و بشنو" desc="جمله صحیح را با پاسخ خودتان مقایسه کنید." />
-          <Method num="۳" title="میزان سختی را انتخاب کن" desc="برنامه زمان دقیق مرور بعدی را محاسبه می‌کند." />
-        </View>
 
-        <View style={styles.note}><CheckCircle2 size={18} color={Colors.success[400]} /></View>
       </ScrollView>
       <AppBottomNav />
     </View>
   );
 }
 
-function Method({ num, title, desc }: { num: string; title: string; desc: string }) {
-  return <View style={styles.method}><View style={styles.methodNum}><Text style={styles.methodNumText}>{num}</Text></View><View style={styles.methodText}><Text style={styles.methodTitle}>{title}</Text><Text style={styles.methodDesc}>{desc}</Text></View></View>;
-}
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },
