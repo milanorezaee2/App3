@@ -1,3 +1,5 @@
+import { usePackPool } from '@/lib/content/usePackVariations';
+import { asLessonSentences } from '@/lib/content/packs';
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useEffect, useMemo, useState, type ComponentType, type ReactElement } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -66,7 +68,13 @@ export default function LanguageLevelStudio({ config }: { config: LevelStudioCon
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [level, mode]);
 
-  const pool = useMemo(() => running ? levelPool(courseId, allLessons, running.levelId) : null, [running, courseId, allLessons]);
+  const packPool = usePackPool(courseId, running?.mode === 'practice' ? running.levelId : null);
+  const pool = useMemo(() => {
+    if (!running) return null;
+    const base = levelPool(courseId, allLessons, running.levelId);
+    // Daily supplement draws from shipped sentences plus the level's content pack; exams stay on shipped content.
+    return packPool.length ? { ...base, sentences: [...base.sentences, ...asLessonSentences(packPool)] } : base;
+  }, [running, courseId, allLessons, packPool]);
   const items = useMemo(() => running && pool ? (running.mode === 'exam' ? buildLevelExam(pool, running.attempt) : running.mode === 'warmup' ? buildLevelWarmUp(allLessons, running.levelId) : buildLevelSupplement(pool, running.levelId)) : [], [running, pool, allLessons]);
   const speak = useCallback((text: string) => speakText(text), [speakText]);
 

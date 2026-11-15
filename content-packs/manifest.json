@@ -3,6 +3,13 @@
   "packs": [
     {
       "language": "de",
+      "band": "A1",
+      "version": 1,
+      "path": "de/A1.v1.json",
+      "sentences": 226
+    },
+    {
+      "language": "de",
       "band": "A2",
       "version": 1,
       "path": "de/A2.v1.json",
@@ -10,10 +17,24 @@
     },
     {
       "language": "es",
+      "band": "A1",
+      "version": 1,
+      "path": "es/A1.v1.json",
+      "sentences": 203
+    },
+    {
+      "language": "es",
       "band": "A2",
       "version": 1,
       "path": "es/A2.v1.json",
       "sentences": 184
+    },
+    {
+      "language": "fr",
+      "band": "A1",
+      "version": 1,
+      "path": "fr/A1.v1.json",
+      "sentences": 208
     },
     {
       "language": "fr",
@@ -35,6 +56,13 @@
       "version": 1,
       "path": "ru/A2.v1.json",
       "sentences": 112
+    },
+    {
+      "language": "ru",
+      "band": "pre",
+      "version": 1,
+      "path": "ru/pre.v1.json",
+      "sentences": 180
     }
   ]
 }

@@ -1,0 +1,209 @@
+# French A1 draft · format: targetWords | text | fa | pattern
+aux|Je parle aux enfants.|با بچه‌ها حرف می‌زنم.|Je parle aux <nom>.
+aux|Nous allons aux magasins.|ما به مغازه‌ها می‌رویم.|Nous allons aux <nom>.
+même|C'est la même chose.|همان چیز است.|C'est la même <nom>.
+même|Il travaille même le dimanche.|او حتی یکشنبه‌ها هم کار می‌کند.|Il <verbe> même <temps>.
+ont|Ils ont deux enfants.|آن‌ها دو بچه دارند.|Ils ont <nombre> <nom>.
+ont|Elles ont faim.|آن‌ها گرسنه‌اند.|Elles ont <nom>.
+était|Le film était très bien.|فیلم خیلی خوب بود.|<nom> était <adj.>.
+était|Il était à la maison hier.|او دیروز خانه بود.|Il était <lieu> <temps>.
+ses|Elle cherche ses clés.|او دنبال کلیدهایش می‌گردد.|Elle cherche ses <nom>.
+ses|Il aime ses amis.|او دوستانش را دوست دارد.|Il aime ses <nom>.
+leur|C'est leur maison.|این خانهٔ آن‌هاست.|C'est leur <nom>.
+leur|Je leur donne le livre.|کتاب را به آن‌ها می‌دهم.|Je leur donne <nom>.
+avoir|Je voudrais avoir un café.|یک قهوه می‌خواهم.|Je voudrais avoir <nom>.
+avoir|Il faut avoir un billet.|باید بلیت داشت.|Il faut avoir <nom>.
+alors|Alors, on y va ?|خب، برویم؟|Alors, <phrase> ?
+alors|Il pleut, alors je reste.|باران می‌آید، پس می‌مانم.|<phrase>, alors <phrase>.
+avait|Il avait une question.|او یک سؤال داشت.|Il avait <nom>.
+avait|Il y avait beaucoup de monde.|خیلی شلوغ بود.|Il y avait <nom>.
+dit|Elle dit bonjour à tout le monde.|او به همه سلام می‌کند.|Elle dit <nom> à <nom>.
+dit|Qu'est-ce qu'il dit ?|او چه می‌گوید؟|Qu'est-ce qu'il dit ?
+rien|Je ne vois rien.|چیزی نمی‌بینم.|Je ne <verbe> rien.
+rien|De rien, bonne journée !|خواهش می‌کنم، روز خوبی داشته باشید!|De rien, <salutation> !
+monde|Tout le monde est là.|همه اینجا هستند.|Tout le monde <verbe>.
+monde|Il y a du monde au marché.|بازار شلوغ است.|Il y a du monde <lieu>.
+faut|Il faut partir maintenant.|باید الان رفت.|Il faut <verbe>.
+faut|Il faut du pain pour ce soir.|برای امشب نان لازم است.|Il faut <nom> pour <temps>.
+toujours|Je prends toujours le bus.|من همیشه اتوبوس می‌گیرم.|Je <verbe> toujours <nom>.
+toujours|Tu es toujours en retard.|تو همیشه دیر می‌کنی.|Tu es toujours <adj.>.
+voir|Je vais voir un ami.|می‌روم یک دوست را ببینم.|Je vais voir <nom>.
+voir|On peut voir la mer d'ici.|از اینجا دریا دیده می‌شود.|On peut voir <nom> d'ici.
+contre|La table est contre le mur.|میز کنار دیوار است.|<nom> est contre <nom>.
+avant|Appelle-moi avant midi.|قبل از ظهر به من زنگ بزن.|<impératif> avant <temps>.
+avant|Avant, j'habitais à Lyon.|قبلاً در لیون زندگی می‌کردم.|Avant, <phrase>.
+jamais|Je ne mange jamais de viande.|من هرگز گوشت نمی‌خورم.|Je ne <verbe> jamais <nom>.
+jamais|Il n'est jamais à l'heure.|او هیچ‌وقت سر وقت نیست.|Il n'est jamais <adj.>.
+vie|La vie est belle.|زندگی زیباست.|La vie est <adj.>.
+vie|C'est la vie !|زندگی همین است!|C'est la vie !
+dont|C'est le livre dont je parle.|این همان کتابی است که می‌گویم.|C'est <nom> dont je parle.
+déjà|Tu as déjà fini ?|به این زودی تمام کردی؟|Tu as déjà <participe> ?
+déjà|Je suis déjà là.|من دیگر رسیده‌ام.|Je suis déjà <lieu>.
+soit|Soit le train, soit le bus.|یا قطار، یا اتوبوس.|Soit <A>, soit <B>.
+toute|Je travaille toute la journée.|تمام روز کار می‌کنم.|Je <verbe> toute la <nom>.
+toute|Toute la famille est ici.|همهٔ خانواده اینجا هستند.|Toute la <nom> est <lieu>.
+chez|Je rentre chez moi.|به خانه‌ام برمی‌گردم.|Je rentre chez <pronom>.
+chez|On dîne chez Paul ce soir.|امشب خانهٔ پل شام می‌خوریم.|On dîne chez <nom> <temps>.
+gens|Les gens sont gentils ici.|مردم اینجا مهربان‌اند.|Les gens sont <adj.> <lieu>.
+gens|Il y a beaucoup de gens.|آدم‌های زیادی هستند.|Il y a beaucoup de gens.
+juste|C'est juste à côté.|همین بغل است.|C'est juste <lieu>.
+juste|Juste un moment, s'il vous plaît.|فقط یک لحظه، لطفاً.|Juste <nom>, s'il vous plaît.
+vraiment|C'est vraiment bon.|واقعاً خوشمزه است.|C'est vraiment <adj.>.
+vraiment|Tu viens vraiment ?|واقعاً می‌آیی؟|Tu <verbe> vraiment ?
+ainsi|C'est ainsi, on ne peut rien faire.|همین است، کاری نمی‌شود کرد.|C'est ainsi, <phrase>.
+quelques|J'ai quelques questions.|چند سؤال دارم.|J'ai quelques <nom>.
+quelques|On reste quelques jours.|چند روز می‌مانیم.|On reste quelques <nom>.
+sera|Demain, il sera là.|فردا او اینجا خواهد بود.|<temps>, il sera <lieu>.
+sera|Ce sera dix euros.|می‌شود ده یورو.|Ce sera <prix>.
+nos|Voici nos amis.|این‌ها دوستان ما هستند.|Voici nos <nom>.
+nos|Nos enfants vont à l'école.|بچه‌های ما مدرسه می‌روند.|Nos <nom> vont <lieu>.
+cela|Cela ne fait rien.|اشکالی ندارد.|Cela ne fait rien.
+cela|Cela coûte combien ?|این چقدر می‌شود؟|Cela coûte combien ?
+homme|Cet homme est mon voisin.|این مرد همسایهٔ من است.|Cet homme est <nom>.
+homme|Un homme attend devant la porte.|مردی جلوی در منتظر است.|Un homme <verbe> <lieu>.
+toutes|Toutes les places sont prises.|همهٔ جاها گرفته شده.|Toutes les <nom> sont <adj.>.
+vu|J'ai vu ce film hier.|این فیلم را دیروز دیدم.|J'ai vu <nom> <temps>.
+vu|Tu as vu mes clés ?|کلیدهایم را دیده‌ای؟|Tu as vu <nom> ?
+cas|Dans ce cas, je reste.|در این صورت، می‌مانم.|Dans ce cas, <phrase>.
+doit|On doit partir à huit heures.|باید ساعت هشت برویم.|On doit <verbe> à <heure>.
+doit|Il doit travailler demain.|او فردا باید کار کند.|Il doit <verbe> <temps>.
+car|Je reste, car il pleut.|می‌مانم، چون باران می‌آید.|<phrase>, car <phrase>.
+eu|J'ai eu un problème.|یک مشکل داشتم.|J'ai eu <nom>.
+fin|À la fin, tout va bien.|آخرش همه چیز خوب است.|À la fin, <phrase>.
+fin|C'est la fin du film.|این آخر فیلم است.|C'est la fin de <nom>.
+mieux|Je vais mieux aujourd'hui.|امروز حالم بهتر است.|Je vais mieux <temps>.
+mieux|C'est mieux comme ça.|این‌طوری بهتر است.|C'est mieux comme ça.
+pendant|Je dors pendant le voyage.|در طول سفر می‌خوابم.|Je <verbe> pendant <nom>.
+pendant|Il pleut pendant deux heures.|دو ساعت باران می‌آید.|Il pleut pendant <durée>.
+année|Bonne année à tous !|سال نو بر همه مبارک!|Bonne année à <nom> !
+année|Cette année, je voyage en Italie.|امسال به ایتالیا سفر می‌کنم.|Cette année, <phrase>.
+ceux|Ceux-là sont à moi.|آن‌ها مال من هستند.|Ceux-là sont à <pronom>.
+moment|Un moment, s'il vous plaît.|یک لحظه، لطفاً.|Un moment, s'il vous plaît.
+moment|Ce n'est pas le bon moment.|الان وقت خوبی نیست.|Ce n'est pas le bon moment.
+plusieurs|J'ai plusieurs frères.|چند برادر دارم.|J'ai plusieurs <nom>.
+vers|Je viens vers midi.|حدود ظهر می‌آیم.|Je viens vers <heure>.
+vers|Il marche vers la gare.|او به سمت ایستگاه می‌رود.|Il marche vers <lieu>.
+histoire|C'est une longue histoire.|داستانش طولانی است.|C'est une <adj.> histoire.
+histoire|Raconte-moi une histoire.|یک داستان برایم تعریف کن.|Raconte-moi <nom>.
+années|J'habite ici depuis deux années.|دو سال است اینجا زندگی می‌کنم.|J'habite ici depuis <nombre> années.
+aujourd'hui|Aujourd'hui, il fait beau.|امروز هوا خوب است.|Aujourd'hui, <phrase>.
+aujourd'hui|Tu travailles aujourd'hui ?|امروز کار می‌کنی؟|Tu <verbe> aujourd'hui ?
+compte|Je compte jusqu'à dix.|تا ده می‌شمارم.|Je compte jusqu'à <nombre>.
+compte|J'ai un compte à la banque.|در بانک حساب دارم.|J'ai un compte <lieu>.
+état|La voiture est en bon état.|ماشین سالم است.|<nom> est en bon état.
+vos|Vos papiers, s'il vous plaît.|مدارکتان، لطفاً.|Vos <nom>, s'il vous plaît.
+vos|Comment vont vos parents ?|پدر و مادرتان چطورند؟|Comment vont vos <nom> ?
+celui|Je prends celui-ci.|این یکی را برمی‌دارم.|Je prends celui-ci.
+femme|Cette femme est médecin.|این خانم پزشک است.|Cette femme est <métier>.
+femme|Ma femme travaille à Paris.|همسرم در پاریس کار می‌کند.|Ma femme <verbe> <lieu>.
+prix|Quel est le prix ?|قیمتش چند است؟|Quel est le prix ?
+prix|Le prix est trop élevé.|قیمت خیلی بالاست.|Le prix est <adj.>.
+également|Je prends également un café.|یک قهوه هم می‌گیرم.|Je prends également <nom>.
+point|Je ne vois pas le point.|متوجه نکته نمی‌شوم.|Je ne vois pas <nom>.
+seul|Je vis seul.|تنها زندگی می‌کنم.|Je vis seul.
+seul|Il est seul à la maison.|او تنها خانه است.|Il est seul <lieu>.
+eux|Je pars avec eux.|با آن‌ها می‌روم.|Je pars avec eux.
+eux|C'est pour eux.|این برای آن‌هاست.|C'est pour eux.
+lieu|Le lieu est très calme.|جایش خیلی آرام است.|Le lieu est <adj.>.
+vrai|C'est vrai ?|راست می‌گویی؟|C'est vrai ?
+vrai|Ce n'est pas vrai.|درست نیست.|Ce n'est pas vrai.
+selon|Selon moi, c'est bien.|به نظر من، خوب است.|Selon moi, <phrase>.
+coup|Tout à coup, il pleut.|ناگهان باران می‌آید.|Tout à coup, <phrase>.
+mettre|Je vais mettre la table.|میز را می‌چینم.|Je vais mettre <nom>.
+mettre|Où mettre les sacs ?|کیف‌ها را کجا بگذارم؟|Où mettre <nom> ?
+pense|Je pense que oui.|فکر می‌کنم بله.|Je pense que <phrase>.
+pense|Il pense à sa famille.|او به خانواده‌اش فکر می‌کند.|Il pense à <nom>.
+quelque|Tu veux quelque chose ?|چیزی می‌خواهی؟|Tu veux quelque chose ?
+quelque|Il y a quelque chose ici.|اینجا چیزی هست.|Il y a quelque chose <lieu>.
+tant|Il y a tant de choses à voir.|این‌قدر چیز برای دیدن هست.|Il y a tant de <nom> à <verbe>.
+tant|Tant pis, on reste.|عیبی ندارد، می‌مانیم.|Tant pis, <phrase>.
+groupe|Nous sommes un groupe de cinq.|ما یک گروه پنج‌نفره هستیم.|Nous sommes un groupe de <nombre>.
+assez|C'est assez, merci.|کافی است، ممنون.|C'est assez.
+assez|Il fait assez froid.|هوا نسبتاً سرد است.|Il fait assez <adj.>.
+genre|Quel genre de musique tu aimes ?|چه نوع موسیقی دوست داری؟|Quel genre de <nom> tu aimes ?
+savoir|Je veux savoir l'heure.|می‌خواهم ساعت را بدانم.|Je veux savoir <nom>.
+savoir|Tu peux savoir le prix ?|می‌توانی قیمت را بفهمی؟|Tu peux savoir <nom> ?
+passe|Qu'est-ce qui se passe ?|چه خبر شده؟|Qu'est-ce qui se passe ?
+passe|Le temps passe vite.|زمان زود می‌گذرد.|<nom> passe <adv.>.
+raison|Tu as raison.|حق با توست.|Tu as raison.
+raison|Il n'a pas raison.|حق با او نیست.|Il n'a pas raison.
+sens|Je ne me sens pas bien.|حالم خوب نیست.|Je ne me sens pas <adj.>.
+sens|C'est dans quel sens ?|از کدام طرف است؟|C'est dans quel sens ?
+certains|Certains jours, je travaille tard.|بعضی روزها تا دیروقت کار می‌کنم.|Certains <nom>, <phrase>.
+dis|Dis-moi la vérité.|راستش را به من بگو.|Dis-moi <nom>.
+dis|Je dis non.|می‌گویم نه.|Je dis <réponse>.
+souvent|Je vais souvent au cinéma.|اغلب سینما می‌روم.|Je vais souvent <lieu>.
+souvent|Il pleut souvent ici.|اینجا اغلب باران می‌آید.|Il <verbe> souvent <lieu>.
+surtout|Surtout, n'oublie pas !|مخصوصاً، فراموش نکن!|Surtout, <impératif> !
+jusqu'à|Je travaille jusqu'à six heures.|تا ساعت شش کار می‌کنم.|Je <verbe> jusqu'à <heure>.
+jusqu'à|Allez tout droit jusqu'à la gare.|مستقیم بروید تا ایستگاه.|Allez tout droit jusqu'à <lieu>.
+ni|Ni café, ni thé, merci.|نه قهوه، نه چای، ممنون.|Ni <A>, ni <B>.
+équipe|Notre équipe gagne.|تیم ما می‌برد.|Notre équipe <verbe>.
+dernier|C'est le dernier train.|این آخرین قطار است.|C'est le dernier <nom>.
+dernier|Le mois dernier, j'étais malade.|ماه گذشته مریض بودم.|<temps> dernier, <phrase>.
+enfin|Enfin, tu es là !|بالاخره آمدی!|Enfin, <phrase> !
+font|Ils font du sport le matin.|آن‌ها صبح‌ها ورزش می‌کنند.|Ils font <nom> <temps>.
+font|Que font les enfants ?|بچه‌ها چه کار می‌کنند؟|Que font <nom> ?
+nombre|Quel est le nombre de places ?|تعداد جاها چند است؟|Quel est le nombre de <nom> ?
+seulement|J'ai seulement dix euros.|فقط ده یورو دارم.|J'ai seulement <nom>.
+seulement|Seulement un, merci.|فقط یکی، ممنون.|Seulement <nombre>, merci.
+hommes|Deux hommes attendent dehors.|دو مرد بیرون منتظرند.|<nombre> hommes <verbe>.
+femmes|Les femmes parlent ensemble.|زن‌ها با هم حرف می‌زنند.|Les femmes <verbe>.
+passer|Je vais passer chez toi.|سر راه به تو سر می‌زنم.|Je vais passer chez <pronom>.
+passer|Tu peux passer le sel ?|می‌شود نمک را بدهی؟|Tu peux passer <nom> ?
+quelqu'un|Quelqu'un a appelé.|کسی زنگ زده.|Quelqu'un a <participe>.
+quelqu'un|Il y a quelqu'un ?|کسی هست؟|Il y a quelqu'un ?
+aucun|Je n'ai aucun problème.|هیچ مشکلی ندارم.|Je n'ai aucun <nom>.
+pris|J'ai pris le métro.|مترو گرفتم.|J'ai pris <nom>.
+pris|Tu as pris ton sac ?|کیفت را برداشتی؟|Tu as pris <nom> ?
+dès|Je viens dès demain.|از همین فردا می‌آیم.|Je viens dès <temps>.
+peuvent|Ils peuvent venir ce soir.|آن‌ها امشب می‌توانند بیایند.|Ils peuvent <verbe> <temps>.
+pu|Je n'ai pas pu venir.|نتوانستم بیایم.|Je n'ai pas pu <verbe>.
+autant|Je t'aime autant.|من هم همان‌قدر دوستت دارم.|Je <verbe> autant.
+fille|Ma fille a six ans.|دخترم شش سال دارد.|Ma fille a <nombre> ans.
+fille|Cette fille est ma voisine.|این دختر همسایهٔ من است.|Cette fille est <nom>.
+gros|C'est un gros chien.|این یک سگ بزرگ است.|C'est un gros <nom>.
+gros|J'ai un gros problème.|یک مشکل بزرگ دارم.|J'ai un gros <nom>.
+niveau|Quel est ton niveau de français ?|سطح فرانسوی‌ات چقدر است؟|Quel est ton niveau de <langue> ?
+passé|L'été passé, j'étais à Nice.|تابستان گذشته در نیس بودم.|<temps> passé, <phrase>.
+service|Le service est compris.|سرویس حساب شده است.|Le service est <adj.>.
+seule|Elle habite seule.|او تنها زندگی می‌کند.|Elle <verbe> seule.
+donne|Donne-moi la main.|دستت را به من بده.|Donne-moi <nom>.
+donne|Il donne le pain aux oiseaux.|او به پرنده‌ها نان می‌دهد.|Il donne <nom> aux <nom>.
+donner|Je peux vous donner mon numéro.|می‌توانم شماره‌ام را به شما بدهم.|Je peux vous donner <nom>.
+ligne|La ligne 4 va à la gare.|خط ۴ به ایستگاه می‌رود.|La ligne <nombre> va <lieu>.
+ligne|Restez en ligne.|پشت خط بمانید.|Restez en ligne.
+cause|À cause de la pluie, je reste.|به خاطر باران می‌مانم.|À cause de <nom>, <phrase>.
+crois|Je crois que oui.|فکر کنم بله.|Je crois que <phrase>.
+crois|Tu crois qu'il vient ?|فکر می‌کنی او بیاید؟|Tu crois que <phrase> ?
+début|Au début, c'est difficile.|اولش سخت است.|Au début, <phrase>.
+début|C'est le début du cours.|این شروع کلاس است.|C'est le début de <nom>.
+exemple|Par exemple, le lundi.|مثلاً دوشنبه.|Par exemple, <nom>.
+fils|Mon fils est étudiant.|پسرم دانشجوست.|Mon fils est <métier>.
+jeune|Il est encore jeune.|او هنوز جوان است.|Il est encore jeune.
+jeune|Une jeune femme demande le chemin.|زن جوانی راه را می‌پرسد.|Une jeune <nom> <verbe>.
+mis|J'ai mis le pain sur la table.|نان را روی میز گذاشتم.|J'ai mis <nom> <lieu>.
+air|Il a l'air fatigué.|به نظر خسته می‌آید.|Il a l'air <adj.>.
+air|J'ai besoin d'air.|هوای تازه لازم دارم.|J'ai besoin d'air.
+façon|De toute façon, je viens.|به هر حال، می‌آیم.|De toute façon, <phrase>.
+projet|J'ai un projet pour l'été.|برای تابستان برنامه‌ای دارم.|J'ai un projet pour <temps>.
+dernière|La dernière fois, il pleuvait.|دفعهٔ قبل باران می‌آمد.|La dernière fois, <phrase>.
+nuit|Bonne nuit à tous !|شب همگی بخیر!|Bonne nuit à <nom> !
+nuit|Il fait froid la nuit.|شب‌ها هوا سرد است.|Il fait <adj.> la nuit.
+étais|J'étais malade hier.|دیروز مریض بودم.|J'étais <adj.> <temps>.
+étais|Tu étais où ?|کجا بودی؟|Tu étais où ?
+argent|Je n'ai pas d'argent sur moi.|پول همراهم نیست.|Je n'ai pas d'argent sur moi.
+argent|Où changer de l'argent ?|کجا پول عوض کنم؟|Où changer <nom> ?
+tour|C'est ton tour.|نوبت توست.|C'est ton tour.
+tour|On fait un tour en ville ?|یک دور در شهر بزنیم؟|On fait un tour <lieu> ?
+vue|La vue est magnifique.|منظره فوق‌العاده است.|La vue est <adj.>.
+an|Un an passe vite.|یک سال زود می‌گذرد.|Un an <verbe> <adv.>.
+an|Il vient une fois par an.|او سالی یک بار می‌آید.|Il vient <fréquence> par an.
+aura|Il y aura du soleil demain.|فردا آفتابی است.|Il y aura <nom> <temps>.
+dessus|Le livre est là-dessus.|کتاب آن بالاست.|<nom> est là-dessus.
+meilleur|C'est le meilleur restaurant.|این بهترین رستوران است.|C'est le meilleur <nom>.
+meilleur|Mon meilleur ami habite ici.|بهترین دوستم اینجا زندگی می‌کند.|Mon meilleur <nom> <verbe> <lieu>.
+ensuite|D'abord le pain, ensuite le lait.|اول نان، بعد شیر.|D'abord <A>, ensuite <B>.
+forme|Je suis en forme aujourd'hui.|امروز سرحالم.|Je suis en forme <temps>.
+haut|Le livre est en haut.|کتاب آن بالاست.|<nom> est en haut.
+haut|Parlez plus haut, s'il vous plaît.|لطفاً بلندتر حرف بزنید.|Parlez plus haut.
