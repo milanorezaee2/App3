@@ -91,6 +91,20 @@ gh release upload milo-content-v1 --clobber content-packs/audio-bundles/*.mp3 �
 `scripts/content/ttsProvider.mjs` (OpenAI/Google/ElevenLabs) صرفاً بهعنوان مرجع اختیاری باقی است،
 ولی دیگر مسیر پیشنهادی نیست: تحریم دسترسی به توکن را مسدود میکند.
 
+## وضعیت نهایی (تحویلشده)
+
+| قبل | بعد |
+|---|---|
+| نسخهٔ #116: فقط TTS دستگاه، ۱۰٪ گوشیها منقطع | #117: همان صدای عالی برای ۹۰٪ + کلید «صدای جایگزین» برای ۱۰٪ |
+| باکت `content-packs` ساخته نشده بود، بستهها به اپ نمیرسیدند | `packs-all.json` روی ریلیز عمومی `milo-content-v1`؛ اپ در نبود باکت از همانجا میخواند |
+| آپلود وابسته به `SUPABASE_SERVICE_ROLE_KEY` (موجود نبود) | ۳۴ باندل + ۲ JSON با `GITHUB_TOKEN` خودکار Actions؛ **هیچ Secret تازهای** |
+| ۱۵٬۲۴۳ فایل پراکنده | ۳۴ باندل ۲۱۶ MB / ۱۰٫۵ ساعت، seek دقیق بر اساس frame MP3 |
+
+- رندر CI: run `43768402464` ✓ (۴۹m۴۰s)، **۱۵٬۲۴۳/۱۵٬۲۴۳ جمله، صفر خطا**
+- ریلیز محتوا: `https://github.com/milanorezaee2/App3/releases/tag/milo-content-v1` (۳۶ asset)
+- APK: run `43773188983` ✓ → `https://github.com/milanorezaee2/App3/releases/tag/milo-requested-117`
+- بستهها به نسخهٔ v7/v6/v5 bump شدند، ۳۶/۳۶ ولیدیشن ✓، بازبینی زبانی ✓، حداقل readiness ۹۲٪، `tsc` ✓
+
 ## محدودیتهای باقیمانده
 
 - صدای eSpeak زیبا نیست؛ مزیتش **پیوسته و قابلاطمینان** بودن روی موتور خراب است.
