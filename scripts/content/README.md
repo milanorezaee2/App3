@@ -21,10 +21,14 @@ npx tsx scripts/content/reviewPacks.ts --write                            # 3b. 
 npx tsx scripts/content/buildManifest.ts               # 4. content-packs/manifest.json from the pack files
 npx tsx scripts/content/genPackCoverage.ts --write                       # 4b. bundle the packs' vocabulary index for the UI
 npx tsx scripts/content/reportReadiness.ts --write --target 90            # 4c. acceptance report (min readiness)
-# 5. optional pre-rendered recordings (needs a TTS key as a GitHub Secret — see docs/prerendered-audio.md)
-TTS_API_KEY=... node scripts/content/renderAudio.mjs content-packs/de/A2.v6.json \
-  --provider "node scripts/content/ttsProvider.mjs {lang} {text} {out}" \
+# 5. pre-rendered recordings — OFFLINE, no API key (see docs/prerendered-audio.md)
+npm i --no-save espeak-ng@1.0.2 lamejs@1.2.1
+node scripts/content/renderAudio.mjs content-packs/de/A2.v6.json \
+  --provider "node scripts/content/offlineTts.mjs {lang} {text} {out}" \
   --base https://doagwkssxtxseuavrxnr.supabase.co/storage/v1/object/public/content-packs/audio
+node scripts/content/finalizeAudioPacks.mjs   # bump versions so the app re-downloads
+# or: gh workflow run tts-offline.yml -f scope=pilot -f engine=espeak
+# Optional API-based engine (needs a key): scripts/content/ttsProvider.mjs
 ```
 
 ## 0. Frequency curation
