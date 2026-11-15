@@ -4,6 +4,7 @@ import { SUPABASE_PUBLIC_URL } from '@/lib/supabaseConfig';
 import { bandOfLevel, type CefrBand } from '@/lib/content/courseSpec';
 import { tokenize, type CourseLanguage } from '@/lib/content/readiness';
 import { registerPackAudio } from '@/lib/content/packAudio';
+import { CONTENT_RELEASE_PACKS } from '@/lib/content/audioRelease';
 
 /**
  * Content packs — versioned sentence bundles produced by the content factory (`scripts/content/`) and
@@ -89,19 +90,34 @@ export function loadPacks(language: CourseLanguage): Promise<ContentPack[]> {
       const raw = await readLocal(`${STORE_PREFIX}${language}:${band}`);
       if (raw) { try { const pack = JSON.parse(raw) as unknown; if (isValidPack(pack)) packs.push(pack); } catch { /* ignore corrupt cache */ } }
     }
+    const merge = async (remote: readonly ContentPack[]) => {
+      let changed = false;
+      for (const pack of remote) {
+        if (!isValidPack(pack) || pack.language !== language) continue;
+        const have = packs.find(p => p.band === pack.band);
+        if (have && have.version >= pack.version) continue;
+        const index = packs.findIndex(p => p.band === pack.band);
+        if (index >= 0) packs[index] = pack; else packs.push(pack);
+        await writeLocal(`${STORE_PREFIX}${language}:${pack.band}`, JSON.stringify(pack));
+        changed = true;
+      }
+      if (changed) await writeLocal(`${STORE_PREFIX}${language}:index`, JSON.stringify(packs.map(p => p.band)));
+    };
     const manifest = await fetchJson<PackManifest>(`${BUCKET_URL}/manifest.json`);
     if (manifest?.schema === 1) {
+      const fetched: ContentPack[] = [];
       for (const entry of manifest.packs.filter(p => p.language === language)) {
         const have = packs.find(p => p.band === entry.band);
         if (have && have.version >= entry.version) continue;
         const pack = await fetchJson<unknown>(`${BUCKET_URL}/${entry.path}`);
-        if (!isValidPack(pack) || pack.language !== language) continue;
-        const index = packs.findIndex(p => p.band === pack.band);
-        if (index >= 0) packs[index] = pack; else packs.push(pack);
-        await writeLocal(`${STORE_PREFIX}${language}:${pack.band}`, JSON.stringify(pack));
+        if (isValidPack(pack) && pack.language === language) fetched.push(pack);
       }
-      await writeLocal(`${STORE_PREFIX}${language}:index`, JSON.stringify(packs.map(p => p.band)));
+      await merge(fetched);
     }
+    // The public Supabase bucket is optional. When it is absent (or holds older packs), the same
+    // versioned packs are served as one key-free GitHub release asset so lessons still get audio.
+    const fallback = await fetchJson<{ schema: 1; packs: ContentPack[] }>(CONTENT_RELEASE_PACKS);
+    if (fallback?.schema === 1 && Array.isArray(fallback.packs)) await merge(fallback.packs);
     for (const pack of packs) for (const sentence of pack.sentences) if (sentence.audio) registerPackAudio(sentence.text, sentence.audio);
     memory.set(language, packs);
     inflight.delete(language);

@@ -52,5 +52,7 @@ dist-focused-coach-dark-home/
 dist-podcast/
 scripts/content/.stubs/
 
-# Offline-rendered pack audio (large binaries; uploaded straight to Supabase Storage)
+# Offline-rendered pack audio (large binaries; published as GitHub release assets, not Git)
 content-packs/audio/
+content-packs/audio-bundles/
+content-packs/packs-all.json

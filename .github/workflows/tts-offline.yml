@@ -1,9 +1,10 @@
 name: Render offline TTS (no API key)
 
-# Zero credentials: audio is synthesised INSIDE the GitHub runner with open-source engines.
-# eSpeak NG (WASM) is always available; Piper neural voices are an optional public-model upgrade.
-# The only secret used is the repo's existing SUPABASE_SERVICE_ROLE_KEY, which already publishes
-# the content packs today. Nothing is paid for, no account is created, no sanctioned API is called.
+# Zero credentials: audio is synthesised INSIDE the GitHub runner with open-source engines and
+# published as ordinary GitHub release assets. eSpeak NG (WASM) is always available; Piper neural
+# voices are an optional public-model upgrade. No TTS token, no paid service, no new secret.
+# The repo's SUPABASE_SERVICE_ROLE_KEY is OPTIONAL: if present the same files are mirrored to the
+# public `content-packs` bucket as well; if absent the release-asset path still works.
 #
 # On a feature branch `workflow_dispatch` is often not registered by GitHub, so a push to the
 # marker file also starts a run. Put "all espeak" (or "pilot auto") in tts-trigger.txt and push.
@@ -94,33 +95,54 @@ jobs:
           set -e
           node scripts/content/renderOfflineAudio.mjs --scope "$SCOPE" --workers 8 --base "$BASE"
           echo "MP3 files: $(find content-packs/audio -name '*.mp3' | wc -l)"
+      - name: Bundle MP3s into one file per pack (36 assets, no paid storage)
+        run: |
+          set -e
+          node scripts/content/packAudioBundles.mjs
+          echo "Bundles: $(find content-packs/audio-bundles -name '*.mp3' | wc -l)"
       - name: Bump pack versions and rebuild the manifest / coverage index
         run: |
+          set -e
           node scripts/content/finalizeAudioPacks.mjs
           NODE_OPTIONS="--require ./scripts/content/shim.cjs" node_modules/.bin/tsx scripts/content/genPackCoverage.ts --write
-      - name: Upload audio + updated packs to Supabase Storage
+          node scripts/content/buildContentRelease.mjs
+      - name: Publish bundles + packs as GitHub release assets (no secret required)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: milo-content-v1
+        run: |
+          set -e
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "Milo content packs and offline speech" \
+              --notes "Versioned content packs and concatenated eSpeak NG audio bundles. Public, key-free hosting."
+          gh release upload "$TAG" --repo "$GITHUB_REPOSITORY" --clobber \
+            content-packs/audio-bundles/*.mp3 content-packs/packs-all.json content-packs/manifest.json
+          echo "Published $(find content-packs/audio-bundles -name '*.mp3' | wc -l) bundles + packs-all.json + manifest.json"
+      - name: Mirror to Supabase Storage when the optional secret exists
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           set -e
-          [ -n "$SUPABASE_SERVICE_ROLE_KEY" ] || { echo "SUPABASE_SERVICE_ROLE_KEY secret is missing"; exit 1; }
+          [ -n "$SUPABASE_SERVICE_ROLE_KEY" ] || { echo "No SUPABASE_SERVICE_ROLE_KEY; release-asset hosting is sufficient, skipping mirror."; exit 0; }
           URL="${SUPABASE_URL:-$(node -p "require('./config/supabase.public.json').EXPO_PUBLIC_SUPABASE_URL")}"
           export URL SUPABASE_SERVICE_ROLE_KEY
+          code=$(curl -sS -o /dev/null -w '%{http_code}' -X POST "$URL/storage/v1/bucket" \
+            -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+            -H 'Content-Type: application/json' --data '{"id":"content-packs","name":"content-packs","public":true}')
+          echo "bucket: $code (409/412 = already there)"
           find content-packs -type f \( -name '*.mp3' -o -name '*.json' \) -print0 | \
             xargs -0 -P 8 -I{} bash -c '
               f="$1"; rel="${f#content-packs/}"
               case "$f" in *.mp3) ct="audio/mpeg";; *.json) ct="application/json";; esac
               code=$(curl -sS --retry 3 --retry-delay 1 --max-time 120 -o /dev/null -w "%{http_code}" -X POST \
                 "$URL/storage/v1/object/content-packs/$rel" \
-                -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
-                -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
-                -H "Content-Type: $ct" -H "x-upsert: true" \
-                -H "cache-control: max-age=300" --data-binary "@$f")
+                -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+                -H "Content-Type: $ct" -H "x-upsert: true" -H "cache-control: max-age=300" --data-binary "@$f")
               case "$code" in 200|201) ;; *) echo "$code $rel" >&2; exit 1;; esac
             ' _ {}
-          echo "Uploaded $(find content-packs -type f \( -name '*.mp3' -o -name '*.json' \) | wc -l) files"
-      - name: Commit the updated pack JSON (audio URLs + versions)
+          echo "Mirrored $(find content-packs -type f \( -name '*.mp3' -o -name '*.json' \) | wc -l) files"
+      - name: Commit the updated pack JSON (audio segments + versions)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

@@ -5,7 +5,7 @@ Turns the course spec into content, with measurable quality, without touching th
 ```
 spec (lib/content/courseSpec.ts) ──┐
 frequency lists (curated) ─────────┤
-shipped lessons ──────────────────┴─► 1. gap report ─► 2. draft / coverage generator ─► 3. quality gates ─► 4. pack + manifest ─► 5. audio ─► Supabase Storage
+shipped lessons ──────────────────┴─► 1. gap report ─► 2. draft / coverage generator ─► 3. quality gates ─► 4. pack + manifest ─► 5. audio ─► GitHub release assets (Supabase mirror optional)
 ```
 
 All commands run from the repo root with the lesson-data shim:
@@ -24,11 +24,15 @@ npx tsx scripts/content/reportReadiness.ts --write --target 90            # 4c. 
 # 5. pre-rendered recordings — OFFLINE, no API key, used ONLY as a per-device fallback
 #    (see docs/prerendered-audio.md and lib/content/speechFallback.ts)
 npm i --no-save espeak-ng@1.0.2 lamejs@1.2.1
-node scripts/content/renderOfflineAudio.mjs --scope all --workers 8
-node scripts/content/finalizeAudioPacks.mjs   # bump versions so the app re-downloads
+node scripts/content/renderOfflineAudio.mjs --scope all --workers 8   # 15 243 single-sentence MP3s
+node scripts/content/packAudioBundles.mjs                             # → 36 bundled MP3s + segment URIs
+node scripts/content/finalizeAudioPacks.mjs                           # bump versions so the app re-downloads
+node scripts/content/buildContentRelease.mjs                          # → packs-all.json fallback asset
+# CI publishes audio-bundles/*.mp3, packs-all.json and manifest.json to release `milo-content-v1`.
+# Optional Supabase mirror runs only when SUPABASE_SERVICE_ROLE_KEY exists.
 # Single sentence: node scripts/content/offlineTts.mjs de "Hallo" out.mp3
 # Generic provider path: scripts/content/renderAudio.mjs
-# Optional API-based engine (needs a key): scripts/content/ttsProvider.mjs
+# Optional API-based engine (needs a key, blocked by sanctions): scripts/content/ttsProvider.mjs
 ```
 
 ## 0. Frequency curation
@@ -70,14 +74,18 @@ It also prints how much the pack raises the band's coverage, so a reviewer sees 
 
 ## 4. Pack & manifest
 Packs are immutable files `content-packs/<lang>/<band>.v<N>.json`; `buildManifest.ts` lists the newest
-version of each. Upload the `content-packs/` folder to the public bucket `content-packs` in Supabase
-Storage (keep the same paths). The app checks `manifest.json`, downloads only changed packs, and caches
-them for offline use. Bump `version` for any change — the app never re-downloads an unchanged version.
+version of each. The app checks `manifest.json` in the public Supabase bucket `content-packs`, downloads
+only changed packs, and caches them for offline use. **If that bucket is not configured**, the same
+packs are fetched from the key-free GitHub release asset `packs-all.json` (`milo-content-v1`). Bump
+`version` for any change — the app never re-downloads an unchanged version.
 
-## 5. Audio (optional, recommended)
-`renderAudio.mjs` calls any TTS CLI/provider you configure (`--provider` receives text, lang, output path),
-writes `audio/<lang>/<sentenceId>.mp3`, and fills each sentence's `audio` URL. The app plays these
-recordings instead of the device voice whenever present.
+## 5. Audio (optional, recommended, no token)
+`renderOfflineAudio.mjs` synthesises one MP3 per sentence with eSpeak NG (WASM) + lamejs, entirely
+inside CI. `packAudioBundles.mjs` concatenates them into **one MP3 per pack** (36 release assets instead
+of 15 243) and writes `milo-segment:<bundle>.mp3?start=<ms>&dur=<ms>` into each sentence. The app
+downloads a bundle once, caches it, and seeks to the sentence's slice. Recordings are **not** played
+instead of the device voice: they are a per-device fallback (Profile → حساب → «صدای جایگزین», or
+automatic after 3 hard TTS failures). See `docs/prerendered-audio.md`.
 
 ## Structure (real lessons)
 `genLabLessons.ts` writes `lib/content/labLessons.generated.ts` — ordinary lessons (sentences, dialogue,

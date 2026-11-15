@@ -9,7 +9,7 @@ import { tryPlayRecorded } from './packAudio';
  * share of devices have a broken / choppy engine (missing voice data, network voices, engine bugs).
  * Those devices can switch to the pre-rendered pack recordings:
  *   • manually — a toggle in Profile → حساب,
- *   • automatically — after two hard failures (onError or a playback cut short), persisted.
+ *   • automatically — after three hard failures (onError or a playback cut short), persisted.
  *
  * A "choppy but playing" engine cannot be detected reliably from JavaScript, which is why the
  * manual toggle is the dependable fix and the auto-switch is only a safety net.
@@ -46,7 +46,7 @@ export async function setPrefersRecordedSpeech(value: boolean): Promise<void> {
 
 export function noteSpeechSuccess(): void { consecutiveFailures = 0; }
 
-/** A device-TTS failure; two in a row turn the recorded fallback on for this device. */
+/** A device-TTS failure; three in a row turn the recorded fallback on for this device. */
 export async function noteSpeechFailure(): Promise<void> {
   consecutiveFailures += 1;
   if (consecutiveFailures >= FAILURES_TO_SWITCH && !(await prefersRecordedSpeech())) {
