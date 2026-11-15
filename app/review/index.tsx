@@ -20,15 +20,9 @@ import {
 import { Colors, Radius, Spacing, Typography } from '@/lib/theme';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { toPersianDigits } from '@/lib/format';
+import { ReviewRatingGrid, ReviewSpeakGate, reviewReason } from '@/components/ReviewRecall';
 
 import { useEnglishStudyTimer } from '@/components/useEnglishStudyTimer';
-
-const ratingOptions: Array<{ id: ReviewRating; label: string; hint: string; color: string }> = [
-  { id: 'again', label: 'فراموش کردم', hint: '۱۰ دقیقه', color: Palette.danger },
-  { id: 'hard', label: 'سخت بود', hint: 'فردا', color: Palette.warning },
-  { id: 'good', label: 'خوب بود', hint: 'زمان مناسب', color: Palette.primary },
-  { id: 'easy', label: 'آسان بود', hint: 'فاصله بیشتر', color: Palette.success },
-];
 
 function contentForCard(card: SentenceReviewCard) {
   const lesson = SENTENCE_LESSONS.find((item) => item.id === card.lessonId);
@@ -42,6 +36,7 @@ export default function ReviewHome() {
   const [sessionCards, setSessionCards] = useState<SentenceReviewCard[]>([]);
   const [cardIndex, setCardIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
+  const [spokenScore, setSpokenScore] = useState<number | null>(null);
   const [sessionActive, setSessionActive] = useState(false);
   const [finished, setFinished] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -64,6 +59,7 @@ export default function ReviewHome() {
     setSessionCards(dueCards.slice(0, 20));
     setCardIndex(0);
     setRevealed(false);
+    setSpokenScore(null);
     setFinished(false);
     setSessionActive(true);
   };
@@ -79,6 +75,7 @@ export default function ReviewHome() {
     } else {
       setCardIndex((value) => value + 1);
       setRevealed(false);
+      setSpokenScore(null);
     }
     setSaving(false);
   };
@@ -105,9 +102,9 @@ export default function ReviewHome() {
             <Text style={styles.reviewFa}>{sentence.fa}</Text>
             {!revealed ? (
               <>
-                <Text style={styles.sayHint}>پاسخ را با صدای بلند بگویید.</Text>
+                <ReviewSpeakGate text={sentence.en} locale="en-US" accent={Palette.success} onResult={(result) => { setSpokenScore(result.score); setRevealed(true); }} />
                 <Pressable style={styles.revealButton} onPress={() => setRevealed(true)}>
-                  <Text style={styles.revealButtonText}>نمایش پاسخ</Text>
+                  <Text style={styles.revealButtonText}>میکروفون ندارم؛ نمایش پاسخ</Text>
                 </Pressable>
               </>
             ) : (
@@ -124,19 +121,8 @@ export default function ReviewHome() {
             )}
           </View>
 
-          {revealed ? (
-            <View style={styles.ratingArea}>
-              <Text style={styles.ratingTitle}>یادآوری این جمله چطور بود؟</Text>
-              <View style={styles.ratingGrid}>
-                {ratingOptions.map((option) => (
-                  <Pressable key={option.id} disabled={saving} style={[styles.ratingButton, { borderColor: option.color + '55' }]} onPress={() => void rate(option.id)}>
-                    {saving ? <ActivityIndicator size="small" color={option.color} /> : <Text style={[styles.ratingLabel, { color: option.color }]}>{option.label}</Text>}
-                    <Text style={styles.ratingHint}>{option.hint}</Text>
-                  </Pressable>
-                ))}
-              </View>
-            </View>
-          ) : null}
+          <Text style={{ fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 19, color: '#64748B', textAlign: 'right', writingDirection: 'rtl', width: '100%' }}>چرا این جمله اینجاست؟ {reviewReason(currentCard, lesson.title)}</Text>
+          {revealed ? <ReviewRatingGrid saving={saving} score={spokenScore} onRate={(rating) => void rate(rating)} /> : null}
         </ScrollView>
       </View>
     );

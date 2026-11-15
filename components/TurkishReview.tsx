@@ -9,15 +9,9 @@ import { TurkishBottomNav } from '@/components/TurkishBottomNav';
 import { TURKISH_LESSONS, turkishProgress } from '@/lib/languages/turkish';
 import type { CourseProgress, ReviewRating, SentenceReviewCard } from '@/lib/courseProgress';
 import { toPersianDigits as fa } from '@/lib/format';
+import { ReviewRatingGrid, ReviewSpeakGate, reviewReason } from '@/components/ReviewRecall';
 import { Typography } from '@/lib/theme';
 import { playTurkishSpeech, stopTurkishSpeech } from '@/lib/turkishSpeech';
-
-const ratingOptions: Array<{ id: ReviewRating; label: string; hint: string; color: string }> = [
-  { id: 'again', label: 'فراموش کردم', hint: '۱۰ دقیقه', color: Palette.danger },
-  { id: 'hard', label: 'سخت بود', hint: 'فردا', color: Palette.warning },
-  { id: 'good', label: 'خوب بود', hint: 'زمان مناسب', color: Palette.primary },
-  { id: 'easy', label: 'آسان بود', hint: 'فاصلهٔ بیشتر', color: Palette.success },
-];
 
 function contentForCard(card: SentenceReviewCard) {
   const lesson = TURKISH_LESSONS.find(item => item.id === card.lessonId);
@@ -31,6 +25,7 @@ export default function TurkishReview() {
   const [sessionCards, setSessionCards] = useState<SentenceReviewCard[]>([]);
   const [cardIndex, setCardIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
+  const [spokenScore, setSpokenScore] = useState<number | null>(null);
   const [sessionActive, setSessionActive] = useState(false);
   const [finished, setFinished] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -63,6 +58,7 @@ export default function TurkishReview() {
     setSessionCards(dueCards.slice(0, 20));
     setCardIndex(0);
     setRevealed(false);
+    setSpokenScore(null);
     setFinished(false);
     setSessionActive(true);
   };
@@ -81,6 +77,7 @@ export default function TurkishReview() {
       } else {
         setCardIndex(value => value + 1);
         setRevealed(false);
+        setSpokenScore(null);
       }
     } catch {
       setError('نتیجهٔ مرور ذخیره نشد؛ دوباره تلاش کنید.');
@@ -103,13 +100,14 @@ export default function TurkishReview() {
         <Text style={styles.recallLabel}>جملهٔ ترکی استانبولی را به یاد بیاورید</Text>
         <View style={styles.reviewCard}>
           <Text style={styles.reviewFa}>{sentence.fa}</Text>
-          {!revealed ? <><Text style={styles.sayHint}>پاسخ ترکی را با صدای بلند بگویید.</Text><Pressable accessibilityRole="button" style={styles.revealButton} onPress={() => setRevealed(true)}><Text style={styles.revealButtonText}>نمایش پاسخ</Text></Pressable></> : <View style={styles.answerArea}>
+          {!revealed ? <><ReviewSpeakGate text={sentence.text} locale={'tr-TR'} accent={Palette.success} onResult={result => { setSpokenScore(result.score); setRevealed(true); }} /><Pressable accessibilityRole="button" style={styles.revealButton} onPress={() => setRevealed(true)}><Text style={styles.revealButtonText}>میکروفون ندارم؛ نمایش پاسخ</Text></Pressable></> : <View style={styles.answerArea}>
             <View style={styles.answerDivider} /><Text style={styles.reviewTurkish}>{sentence.text}</Text><Text style={styles.reviewPronunciation}>{sentence.pronunciation}</Text>
             <Pressable accessibilityRole="button" style={styles.soundButton} onPress={() => speak(sentence.text)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.soundText}>پخش جمله</Text></Pressable>
             {vocabulary ? <View style={styles.vocabChip}><Sparkles size={13} color={Palette.warning} /><Text style={styles.vocabText}>{vocabulary}</Text></View> : null}
           </View>}
         </View>
-        {revealed ? <View style={styles.ratingArea}><Text style={styles.ratingTitle}>یادآوری این جمله چطور بود؟</Text><View style={styles.ratingGrid}>{ratingOptions.map(option => <Pressable key={option.id} accessibilityRole="button" disabled={saving} style={[styles.ratingButton, { borderColor: `${option.color}55` }]} onPress={() => void rate(option.id)}><Text style={[styles.ratingLabel, { color: option.color }]}>{saving ? 'در حال ذخیره…' : option.label}</Text><Text style={styles.ratingHint}>{option.hint}</Text></Pressable>)}</View></View> : null}
+        <Text style={{ fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 19, color: '#64748B', textAlign: 'right', writingDirection: 'rtl', width: '100%' }}>چرا این جمله اینجاست؟ {reviewReason(currentCard, lesson.title)}</Text>
+        {revealed ? <ReviewRatingGrid saving={saving} score={spokenScore} onRate={rating => void rate(rating)} /> : null}
       </ScrollView>
     </View>;
   }
