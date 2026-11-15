@@ -41,8 +41,20 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
 // - Desktop (>=520px): centered phone frame 360×800 dp with notch & shadow, light background like international apps
 // - Real mobile (<520px): full-screen without frame to keep native UX
 // - Adds toggle button to switch frame on/off (persisted in localStorage)
+// «حفظ چیدمان اصلی» (keep-desktop) renders the app inside a same-origin <iframe> that really is 1120px wide and is
+// then CSS-scaled into the 360×800 frame. Inside that iframe every measurement (window size, visualViewport,
+// getBoundingClientRect, position:fixed) is consistent, which a zoomed div can never guarantee.
+const ARENA_EMBED_ID = 'arena-desktop-embed';
+const ARENA_IS_EMBED = (() => {
+  if (Platform.OS !== 'web' || typeof window === 'undefined') return false;
+  try { if (window.frameElement && window.frameElement.id === ARENA_EMBED_ID) return true; } catch {}
+  try { return new URLSearchParams(window.location.search).get('arena-embed') === '1'; } catch { return false; }
+})();
+let ARENA_HOSTS_EMBED = false;
+
 if (Platform.OS === 'web' && typeof document !== 'undefined') {
   try {
+    if (ARENA_IS_EMBED) document.documentElement.classList.add('arena-frame-disabled', 'arena-embed');
     const mobileStyle = document.createElement('style');
     mobileStyle.id = 'app-mobile-frame';
     mobileStyle.textContent = `
@@ -215,25 +227,23 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
         html:not(.arena-frame-disabled):not(.arena-keep-desktop) #root > div {
           width: 100% !important;
         }
-        html.arena-keep-desktop:not(.arena-frame-disabled) #root {
-          /* In keep-desktop, we keep desktop layout (no Dimensions patch) and scale via zoom */
-        }
-        html.arena-keep-desktop:not(.arena-frame-disabled) #root > div {
-          /* Scale exactly to fit 360 like xhdpi - preserve original structure without reflow */
-          zoom: 0.3214 !important;
+        /* keep-desktop: real 1120×2489 viewport in an iframe, scaled to 360×800 */
+        html.arena-embed-host #root { direction: ltr !important; }
+        #arena-desktop-embed {
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
           width: 1120px !important;
-          max-width: 1120px !important;
-          transform-origin: top center !important;
-          background: #F8F6FB !important;
           height: calc(800px / 0.3214) !important;
-          min-height: calc(800px / 0.3214) !important;
-          overflow: hidden !important;
+          border: 0 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          display: block !important;
+          background: #F8F6FB !important;
+          transform: scale(0.3214) !important;
+          transform-origin: top left !important;
         }
-        /* Ensure the page content inside still respects scaled width */
-        html.arena-keep-desktop:not(.arena-frame-disabled) #root div[style*="max-width: 1120"],
-        html.arena-keep-desktop:not(.arena-frame-disabled) #root div[style*="max-width:1120"] {
-          max-width: 1120px !important;
-        }
+        html.arena-embed #arena-frame-toggle, html.arena-embed #arena-keep-desktop-toggle, html.arena-embed body::after { display: none !important; }
         #arena-keep-desktop-toggle {
           position: fixed;
           top: 16px;
@@ -275,7 +285,7 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
       if (keepDesktop) document.documentElement.classList.add('arena-keep-desktop');
       // Second toggle for keep-desktop
       const onReadyKeep = () => {
-        if (document.getElementById('arena-keep-desktop-toggle')) return;
+        if (ARENA_IS_EMBED || document.getElementById('arena-keep-desktop-toggle')) return;
         const btn2 = document.createElement('button');
         btn2.id = 'arena-keep-desktop-toggle';
         const updateLabel2 = () => {
@@ -306,7 +316,7 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
       const isDisabled = (() => { try { return localStorage.getItem(KEY) === '1'; } catch { return false; } })();
       if (isDisabled) document.documentElement.classList.add('arena-frame-disabled');
       const onReady = () => {
-        if (document.getElementById('arena-frame-toggle')) return;
+        if (ARENA_IS_EMBED || document.getElementById('arena-frame-toggle')) return;
         const btn = document.createElement('button');
         btn.id = 'arena-frame-toggle';
         const updateLabel = () => {
@@ -319,6 +329,7 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
           const nowDisabled = html.classList.contains('arena-frame-disabled');
           try { localStorage.setItem(KEY, nowDisabled ? '1' : '0'); } catch {}
           updateLabel();
+          if (ARENA_HOSTS_EMBED || (!nowDisabled && html.classList.contains('arena-keep-desktop'))) setTimeout(() => { try { location.reload(); } catch {} }, 50);
         });
         updateLabel();
         // Wait for body to exist
@@ -336,17 +347,13 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
     try {
       const FRAME_W = 360;
       const FRAME_H = 800;
-      // keep-desktop: the root is laid out at DESK_W and scaled by zoom (DESK_W × 0.3214 = 360). The app must
-      // therefore measure the window as DESK_W × DESK_H too, otherwise it lays out for the real window width and
-      // overflows/clips inside the frame.
-      const DESK_W = 1120;
-      const DESK_H = Math.round(FRAME_H / 0.3214);
       const BP = 520;
       // Width/height the app should see, or null to fall through to the real values.
       const virtualSize = (realWinW) => {
         const cls = document.documentElement.classList;
         if (cls.contains('arena-frame-disabled') || realWinW < BP) return null;
-        return cls.contains('arena-keep-desktop') ? { w: DESK_W, h: DESK_H } : { w: FRAME_W, h: FRAME_H };
+        if (cls.contains('arena-keep-desktop')) return null; // the app lives in the embed iframe with a real viewport
+        return { w: FRAME_W, h: FRAME_H };
       };
       const winProto = Object.getPrototypeOf(window);
       const origWDesc = Object.getOwnPropertyDescriptor(winProto, 'innerWidth');
@@ -497,4 +504,32 @@ try {
   // worst case we're back to default behavior.
 }
 
-require('expo-router/entry');
+function arenaMountDesktopEmbed() {
+  if (Platform.OS !== 'web' || typeof document === 'undefined' || ARENA_IS_EMBED) return false;
+  try {
+    const html = document.documentElement;
+    const disabled = html.classList.contains('arena-frame-disabled');
+    const keep = html.classList.contains('arena-keep-desktop');
+    const wide = window.innerWidth >= 520;
+    if (disabled || !keep || !wide) return false;
+    const root = document.getElementById('root');
+    if (!root) return false;
+    const url = new URL(window.location.href);
+    url.searchParams.set('arena-embed', '1');
+    const frame = document.createElement('iframe');
+    frame.id = ARENA_EMBED_ID;
+    frame.title = 'Milo';
+    frame.setAttribute('allow', 'autoplay; microphone; clipboard-write');
+    frame.src = url.toString();
+    html.classList.add('arena-embed-host');
+    root.appendChild(frame);
+    ARENA_HOSTS_EMBED = true;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+if (!arenaMountDesktopEmbed()) {
+  require('expo-router/entry');
+}
