@@ -23,6 +23,7 @@ for (const entry of manifest.packs) {
   const file = path.join(root, entry.path);
   const pack = JSON.parse(fs.readFileSync(file, 'utf8'));
   const bundleName = `${pack.language}-${pack.band}.mp3`;
+  if (!pack.sentences.length) { console.log(`${bundleName}: empty pack, skipped`); continue; }
   const chunks = [];
   let offset = 0;
   for (const sentence of pack.sentences) {

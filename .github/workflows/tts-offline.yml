@@ -95,7 +95,7 @@ jobs:
           set -e
           node scripts/content/renderOfflineAudio.mjs --scope "$SCOPE" --workers 8 --base "$BASE"
           echo "MP3 files: $(find content-packs/audio -name '*.mp3' | wc -l)"
-      - name: Bundle MP3s into one file per pack (36 assets, no paid storage)
+      - name: Bundle MP3s into one file per non-empty pack (34 assets, no paid storage)
         run: |
           set -e
           node scripts/content/packAudioBundles.mjs

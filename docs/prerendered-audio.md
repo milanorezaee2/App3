@@ -38,13 +38,13 @@
 
 | چیز | محل | نیاز |
 |---|---|---|
-| ۳۶ فایل `de-A1.mp3` … `ru-C1.mp3` | **GitHub Release `milo-content-v1`** | `GITHUB_TOKEN` خودکار Actions |
+| ۳۴ فایل `de-A1.mp3` … `ru-C1.mp3` (دو بستهٔ خالی en/A1 و en/A2 باندل ندارند) | **GitHub Release `milo-content-v1`** | `GITHUB_TOKEN` خودکار Actions |
 | `packs-all.json` + `manifest.json` | همان ریلیز | همان |
 | بستههای JSON نسخهبندیشده | داخل مخزن (کامیت) | همان |
 | mirror به باکت Supabase | فقط **اگر** `SUPABASE_SERVICE_ROLE_KEY` موجود باشد | اختیاری، الزامی نیست |
 
-یعنی ۳۶ asset بهجای ۱۵٬۲۴۳ شیء (سقف ریلیز ۱۰۰۰ asset است)، بدون سرویس پولی و بدون کلید
-service-role. اپ همان هاستی را استفاده میکند که APKها از آن دانلود میشوند؛ پس اگر APK میرسد،
+یعنی ۳۴ باندل + ۲ فایل JSON بهجای ۱۵٬۲۴۳ شیء (سقف ریلیز ۱۰۰۰ asset است)، بدون سرویس پولی و
+بدون کلید service-role. اپ همان هاستی را استفاده میکند که APKها از آن دانلود میشوند؛ پس اگر APK میرسد،
 صدا هم میرسد. URL ثابت:
 `https://github.com/milanorezaee2/App3/releases/download/milo-content-v1/…`
 
@@ -52,7 +52,7 @@ service-role. اپ همان هاستی را استفاده میکند که APKه
 
 ```
 node scripts/content/renderOfflineAudio.mjs --scope all --workers 8
-node scripts/content/packAudioBundles.mjs      # ۱۵٬۲۴۳ → ۳۶ باندل + offset هر جمله
+node scripts/content/packAudioBundles.mjs      # ۱۵٬۲۴۳ → ۳۴ باندل + offset هر جمله
 node scripts/content/finalizeAudioPacks.mjs    # bump نسخهها (کش اپ باطل شود)
 node scripts/content/buildContentRelease.mjs   # packs-all.json
 gh release upload milo-content-v1 --clobber content-packs/audio-bundles/*.mp3 …
@@ -75,8 +75,8 @@ gh release upload milo-content-v1 --clobber content-packs/audio-bundles/*.mp3 �
 
 ## مقیاس و هزینه
 
-- **۱۵٬۲۴۳ جمله** در ۳۶ بسته · ≈ ۹–۱۰ ساعت گفتار · ≈ ۱۵۰ MB MP3 مونو ۴۸ kbps / ۲۲٫۰۵ kHz
-- ۳۶ باندل (هرکدام ~۰٫۵–۸ MB) · **۰ دلار، ۰ توکن، ۰ Secret تازه**
+- **۱۵٬۲۴۳ جمله** در ۳۶ بسته (۳۴ بستهٔ غیرخالی) · ≈ ۹–۱۰ ساعت گفتار · ≈ ۱۵۰ MB MP3 مونو ۴۸ kbps / ۲۲٫۰۵ kHz
+- ۳۴ باندل (هرکدام ~۰٫۵–۸ MB) · **۰ دلار، ۰ توکن، ۰ Secret تازه**
 - فایلهای صوتی وارد Git نمیشوند (`content-packs/audio/` و `audio-bundles/` در `.gitignore`)
 - `scope=pilot` = `pre+A1` (۱٬۷۰۷ کلیپ) برای تست سریع؛ `scope=all` = پوشش کامل
 

@@ -25,7 +25,7 @@ npx tsx scripts/content/reportReadiness.ts --write --target 90            # 4c. 
 #    (see docs/prerendered-audio.md and lib/content/speechFallback.ts)
 npm i --no-save espeak-ng@1.0.2 lamejs@1.2.1
 node scripts/content/renderOfflineAudio.mjs --scope all --workers 8   # 15 243 single-sentence MP3s
-node scripts/content/packAudioBundles.mjs                             # → 36 bundled MP3s + segment URIs
+node scripts/content/packAudioBundles.mjs                             # → 34 bundled MP3s + segment URIs (en/A1,A2 are empty packs)
 node scripts/content/finalizeAudioPacks.mjs                           # bump versions so the app re-downloads
 node scripts/content/buildContentRelease.mjs                          # → packs-all.json fallback asset
 # CI publishes audio-bundles/*.mp3, packs-all.json and manifest.json to release `milo-content-v1`.
@@ -81,8 +81,8 @@ packs are fetched from the key-free GitHub release asset `packs-all.json` (`milo
 
 ## 5. Audio (optional, recommended, no token)
 `renderOfflineAudio.mjs` synthesises one MP3 per sentence with eSpeak NG (WASM) + lamejs, entirely
-inside CI. `packAudioBundles.mjs` concatenates them into **one MP3 per pack** (36 release assets instead
-of 15 243) and writes `milo-segment:<bundle>.mp3?start=<ms>&dur=<ms>` into each sentence. The app
+inside CI. `packAudioBundles.mjs` concatenates them into **one MP3 per non-empty pack** (34 release assets
+instead of 15 243; en/A1 and en/A2 are empty packs) and writes `milo-segment:<bundle>.mp3?start=<ms>&dur=<ms>` into each sentence. The app
 downloads a bundle once, caches it, and seeks to the sentence's slice. Recordings are **not** played
 instead of the device voice: they are a per-device fallback (Profile → حساب → «صدای جایگزین», or
 automatic after 3 hard TTS failures). See `docs/prerendered-audio.md`.
