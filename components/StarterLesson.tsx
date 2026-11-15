@@ -17,7 +17,8 @@ import StarterExtraPractice from '@/components/StarterExtraPractice';
 import StarterWritingPractice from '@/components/StarterWritingPractice';
 import StarterA1Skill from '@/components/StarterA1Skill';
 import SpeakCheck from '@/components/SpeakCheck';
-import SpeakDrill from '@/components/SpeakDrill';
+import SpeakDrill, { type SpeakDrillResult } from '@/components/SpeakDrill';
+import { saveLessonOutcome, weakSpokenSentences } from '@/lib/lessonOutcomes';
 import { autoRead } from '@/lib/autoRead';
 import StarterB1Production from '@/components/StarterB1Production';
 import {b1Production} from '@/lib/languages/b1Production';
@@ -113,6 +114,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
   const previousLesson = useMemo(() => { const index = lessons.findIndex(item => item.id === lesson.id); return index > 0 ? lessons[index - 1] : null; }, [lesson.id, lessons]);
   const warmUpItems = useMemo(() => buildWarmUp(previousLesson), [previousLesson]);
   const [practiceDone, setPracticeDone] = useState(false);
+  const speakResult = useRef<SpeakDrillResult | null>(null);
   const [warmUpDone, setWarmUpDone] = useState(false);
   useEffect(() => { setPracticeDone(false); setWarmUpDone(false); }, [lesson.id]);
   const practiceStats = useRef<PracticeStats>({ total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 });
@@ -280,11 +282,16 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
       const nextIndex = nextLesson ? lessons.findIndex(item => item.id === nextLesson.id) : -1;
       const progressTarget = currentProgressIndex > nextIndex ? progress.currentLessonId : nextLesson?.id;
       await courseProgress.completeSentenceLesson(lesson.id, progressTarget);
+      const weak = weakSpokenSentences(speakResult.current ? { ...speakResult.current, at: '' } : null);
+      for (const sentenceId of weak) await courseProgress.addSentenceToReview(sentenceId, lesson.id).catch(() => undefined);
+      const assessmentTotal = checks.length; const assessmentCorrect = checks.filter((question, index) => answers[String(index)] === question.correctIndex).length;
+      if (assessmentTotal) void saveLessonOutcome(course.id, lesson.id, { assessment: { correct: assessmentCorrect, total: assessmentTotal, at: new Date().toISOString() } });
+
       if (!preserveExistingSession.current) await clearStarterLessonSession(lesson.id);
       const streak = await recordStudyDay();
       const dueReviews = await courseProgress.getDueReviewCards().then(cards => cards.length).catch(() => 0);
       setCelebration({
-        stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceFirstTry: practiceStats.current.firstTryCorrect, practiceSeconds: practiceStats.current.seconds, streak: streak.count, streakExtendedToday: streak.extendedToday },
+        stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceFirstTry: practiceStats.current.firstTryCorrect, practiceSeconds: practiceStats.current.seconds, speakingAverage: speakResult.current?.average, assessmentCorrect, assessmentTotal, streak: streak.count, streakExtendedToday: streak.extendedToday },
         next: () => { if (nextLesson) router.replace({ pathname: `${course.home}/lesson`, params: { id: nextLesson.id } } as never); else router.replace(course.home as never); },
         dueReviews,
         review: () => router.replace(`${course.home}/review` as never),
@@ -429,7 +436,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
         {stage >= 8 && <View style={styles.centerStage}>
                     {(() => { const finalSections: FinalSection[] = [
             { id: 'blitz', title: 'دور سریع', subtitle: `${fa(practiceItems.length)} ضربه؛ هر جملهٔ درس یک بار، هر بار به شکلی دیگر.`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="" intro="بدون نمره. اشتباه؟ همان جمله به شکل دیگری برمی‌گردد." items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} summary={practiceStats.current} foreignStyle={styles.practiceForeign} accent={Palette.primary} /></> },
-            { id: 'speak', title: 'آزمون گفتاری', subtitle: `${fa(lesson.sentences.length)} جمله؛ هر کدام را بلند بگو و امتیاز بگیر.`, render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale={course.locale} accent={Palette.success} onSpeak={text => speak(text)} /></> },
+            { id: 'speak', title: 'آزمون گفتاری', subtitle: `${fa(lesson.sentences.length)} جمله؛ هر کدام را بلند بگو و امتیاز بگیر.`, render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale={course.locale} accent={Palette.success} onSpeak={text => speak(text)} onFinish={result => { speakResult.current = result; void saveLessonOutcome(course.id, lesson.id, { speaking: { ...result, at: new Date().toISOString() } }); }} /></> },
             { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش از همین درس؛ بدون نمره، با توضیح.', render: () => <>
           {false ? null : <View style={styles.evidenceCard}>
             {checks.map((question, index) => <View key={index} style={styles.question}>

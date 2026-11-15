@@ -11,6 +11,11 @@ export interface CelebrationStats {
   practiceTotal: number;
   practiceFirstTry: number;
   practiceSeconds: number;
+  /** Average speaking-check score (0–100) when the learner did it. */
+  speakingAverage?: number;
+  /** Short-assessment result when the learner answered it. */
+  assessmentCorrect?: number;
+  assessmentTotal?: number;
   streak: number;
   /** True when this lesson is the one that extended the streak today. */
   streakExtendedToday: boolean;
@@ -54,6 +59,8 @@ export default function LessonCelebration({ visible, lessonTitle, stats, hasNext
             <View style={styles.stat}><Text style={styles.statValue}>{fa(stats.sentences)}</Text><Text style={styles.statLabel}>جمله</Text></View>
             {stats.practiceTotal > 0 ? <View style={styles.stat}><Text style={styles.statValue}>{fa(stats.practiceFirstTry)}/{fa(stats.practiceTotal)}</Text><Text style={styles.statLabel}>چالش</Text></View> : null}
             {stats.practiceSeconds > 0 ? <View style={styles.stat}><Text style={styles.statValue}>{fa(stats.practiceSeconds)}</Text><Text style={styles.statLabel}>ثانیه</Text></View> : null}
+            {typeof stats.speakingAverage === 'number' ? <View style={styles.stat}><Text style={styles.statValue}>{fa(stats.speakingAverage)}٪</Text><Text style={styles.statLabel}>گفتاری</Text></View> : null}
+            {stats.assessmentTotal ? <View style={styles.stat}><Text style={styles.statValue}>{fa(stats.assessmentCorrect ?? 0)}/{fa(stats.assessmentTotal)}</Text><Text style={styles.statLabel}>سنجش</Text></View> : null}
           </View>
           <View style={styles.streakPill}>
             <Flame size={16} color="#D97706" />

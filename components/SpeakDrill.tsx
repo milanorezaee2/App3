@@ -8,13 +8,14 @@ import { Typography } from '@/lib/theme';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 
 type Item = { id: string; text: string; fa?: string };
-type Props = { items: Item[]; locale: string; accent?: string; onSpeak?: (text: string) => void };
+export type SpeakDrillResult = { average: number; scores: Record<string, number> };
+type Props = { items: Item[]; locale: string; accent?: string; onSpeak?: (text: string) => void; /** Called once when the learner reaches the result page. */ onFinish?: (result: SpeakDrillResult) => void };
 
 /**
  * «آزمون گفتاری» — a speaking checkpoint: the learner says every sentence of the lesson
  * one by one, each attempt is scored with SpeakCheck, and a final average is shown.
  */
-export default function SpeakDrill({ items, locale, accent = Palette.primary, onSpeak }: Props) {
+export default function SpeakDrill({ items, locale, accent = Palette.primary, onSpeak, onFinish }: Props) {
   const [index, setIndex] = useState(0);
   const [scores, setScores] = useState<Record<string, number>>({});
   const [done, setDone] = useState(false);
@@ -28,7 +29,13 @@ export default function SpeakDrill({ items, locale, accent = Palette.primary, on
   if (!items.length) return null;
 
   const restart = () => { setIndex(0); setScores({}); setDone(false); };
-  const next = () => { if (index < items.length - 1) setIndex(index + 1); else setDone(true); };
+  const next = () => {
+    if (index < items.length - 1) { setIndex(index + 1); return; }
+    setDone(true);
+    const filled: Record<string, number> = {};
+    for (const item of items) filled[item.id] = scores[item.id] ?? 0;
+    onFinish?.({ average, scores: filled });
+  };
   const onResult = (result: SpeakCheckResult) => { if (current) setScores(previous => ({ ...previous, [current.id]: Math.max(previous[current.id] ?? 0, result.score) })); };
 
   if (done) {
