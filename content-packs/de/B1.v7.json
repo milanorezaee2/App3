@@ -1,0 +1,4602 @@
+{
+ "schema": 1,
+ "language": "de",
+ "band": "B1",
+ "version": 7,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "de-b1-001",
+   "text": "Ich habe endlich meine eigene Wohnung gefunden.",
+   "fa": "بالاخره آپارتمان خودم را پیدا کردم.",
+   "pattern": "Ich habe endlich <Akk.> gefunden.",
+   "targetWords": [
+    "eigenen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=0&dur=2508"
+  },
+  {
+   "id": "de-b1-002",
+   "text": "Er fährt lieber mit dem eigenen Auto als mit dem Zug.",
+   "fa": "او ترجیح می‌دهد با ماشین خودش برود تا با قطار.",
+   "pattern": "Er fährt lieber mit <Dat.> als mit <Dat.>.",
+   "targetWords": [
+    "eigenen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=2508&dur=3422"
+  },
+  {
+   "id": "de-b1-003",
+   "text": "Das ist die beste Pizza aller Zeiten.",
+   "fa": "این بهترین پیتزای تمام دوران است.",
+   "pattern": "Das ist <Superlativ> aller Zeiten.",
+   "targetWords": [
+    "aller"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=5930&dur=2247"
+  },
+  {
+   "id": "de-b1-004",
+   "text": "Trotz aller Probleme bin ich zufrieden.",
+   "fa": "با وجود همهٔ مشکلات راضی‌ام.",
+   "pattern": "Trotz aller <Nomen> <Satz>.",
+   "targetWords": [
+    "aller"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=8177&dur=2273"
+  },
+  {
+   "id": "de-b1-005",
+   "text": "Du schaffst die Prüfung bestimmt.",
+   "fa": "حتماً امتحان را قبول می‌شوی.",
+   "pattern": "Du schaffst <Akk.> bestimmt.",
+   "targetWords": [
+    "bestimmt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=10450&dur=1907"
+  },
+  {
+   "id": "de-b1-006",
+   "text": "Er hat bestimmt den Bus verpasst.",
+   "fa": "حتماً اتوبوس را از دست داده.",
+   "pattern": "Er hat bestimmt <Akk.> verpasst.",
+   "targetWords": [
+    "bestimmt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=12357&dur=2011"
+  },
+  {
+   "id": "de-b1-007",
+   "text": "Die Folge war, dass niemand mehr kam.",
+   "fa": "نتیجه این شد که دیگر کسی نیامد.",
+   "pattern": "Die Folge war, dass <Satz>.",
+   "targetWords": [
+    "folge"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=14368&dur=2273"
+  },
+  {
+   "id": "de-b1-008",
+   "text": "Ich habe die letzte Folge noch nicht gesehen.",
+   "fa": "قسمت آخر را هنوز ندیده‌ام.",
+   "pattern": "Ich habe <Akk.> noch nicht gesehen.",
+   "targetWords": [
+    "folge"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=16641&dur=2534"
+  },
+  {
+   "id": "de-b1-009",
+   "text": "Zum Glück war der Arzt noch da.",
+   "fa": "خوشبختانه دکتر هنوز آنجا بود.",
+   "pattern": "Zum Glück <Satz>.",
+   "targetWords": [
+    "glück"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=19175&dur=2090"
+  },
+  {
+   "id": "de-b1-010",
+   "text": "Viel Glück bei deinem Vorstellungsgespräch!",
+   "fa": "در مصاحبهٔ کاری‌ات موفق باشی!",
+   "pattern": "Viel Glück bei <Dat.>!",
+   "targetWords": [
+    "glück"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=21265&dur=2508"
+  },
+  {
+   "id": "de-b1-011",
+   "text": "Herr Müller, könnten Sie mich bitte zurückrufen?",
+   "fa": "آقای مولر، می‌شود لطفاً با من تماس بگیرید؟",
+   "pattern": "Herr <Name>, könnten Sie <Verb>?",
+   "targetWords": [
+    "herr"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=23773&dur=2717"
+  },
+  {
+   "id": "de-b1-012",
+   "text": "Ich habe mehrere Wohnungen angeschaut, aber keine passte.",
+   "fa": "چند آپارتمان دیدم، ولی هیچ‌کدام مناسب نبود.",
+   "pattern": "Ich habe mehrere <Nomen> angeschaut.",
+   "targetWords": [
+    "mehrere"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=26490&dur=3135"
+  },
+  {
+   "id": "de-b1-013",
+   "text": "Die Reparatur dauert mehrere Tage.",
+   "fa": "تعمیر چند روز طول می‌کشد.",
+   "pattern": "<Nomen> dauert mehrere <Zeit>.",
+   "targetWords": [
+    "mehrere"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=29625&dur=2142"
+  },
+  {
+   "id": "de-b1-014",
+   "text": "Niemand hat mir gesagt, dass die Sitzung ausfällt.",
+   "fa": "هیچ‌کس به من نگفت که جلسه لغو شده.",
+   "pattern": "Niemand hat mir gesagt, dass <Satz>.",
+   "targetWords": [
+    "niemand"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=31767&dur=3030"
+  },
+  {
+   "id": "de-b1-015",
+   "text": "Als ich anrief, war niemand im Büro.",
+   "fa": "وقتی زنگ زدم، کسی در دفتر نبود.",
+   "pattern": "Als <Satz>, war niemand <Ort>.",
+   "targetWords": [
+    "niemand"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=34797&dur=2482"
+  },
+  {
+   "id": "de-b1-016",
+   "text": "Über Politik streiten wir lieber nicht beim Essen.",
+   "fa": "سر غذا ترجیحاً دربارهٔ سیاست بحث نمی‌کنیم.",
+   "pattern": "Über <Akk.> streiten wir lieber nicht.",
+   "targetWords": [
+    "politik"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=37279&dur=2795"
+  },
+  {
+   "id": "de-b1-017",
+   "text": "Das ist eine Sache zwischen dir und ihm.",
+   "fa": "این موضوعی بین تو و اوست.",
+   "pattern": "Das ist eine Sache zwischen <Dat.> und <Dat.>.",
+   "targetWords": [
+    "sache"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=40074&dur=2429"
+  },
+  {
+   "id": "de-b1-018",
+   "text": "Zur Sache: Wann können Sie anfangen?",
+   "fa": "برویم سر اصل مطلب: کی می‌توانید شروع کنید؟",
+   "pattern": "Zur Sache: <Frage>?",
+   "targetWords": [
+    "sache"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=42503&dur=2351"
+  },
+  {
+   "id": "de-b1-019",
+   "text": "Es scheint, dass der Zug Verspätung hat.",
+   "fa": "به نظر می‌رسد قطار تأخیر دارد.",
+   "pattern": "Es scheint, dass <Satz>.",
+   "targetWords": [
+    "scheint"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=44854&dur=2534"
+  },
+  {
+   "id": "de-b1-020",
+   "text": "Sie scheint mit der Lösung zufrieden zu sein.",
+   "fa": "به نظر می‌رسد او از راه‌حل راضی است.",
+   "pattern": "Sie scheint <Adj.> zu sein.",
+   "targetWords": [
+    "scheint"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=47388&dur=2769"
+  },
+  {
+   "id": "de-b1-021",
+   "text": "Zunächst füllen Sie bitte dieses Formular aus.",
+   "fa": "ابتدا لطفاً این فرم را پر کنید.",
+   "pattern": "Zunächst <Satz>.",
+   "targetWords": [
+    "zunächst"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=50157&dur=2691"
+  },
+  {
+   "id": "de-b1-022",
+   "text": "Zunächst war ich unsicher, dann sehr zufrieden.",
+   "fa": "اول مطمئن نبودم، بعد خیلی راضی شدم.",
+   "pattern": "Zunächst war ich <Adj.>, dann <Adj.>.",
+   "targetWords": [
+    "zunächst"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=52848&dur=2821"
+  },
+  {
+   "id": "de-b1-023",
+   "text": "Meine alte Schule gibt es nicht mehr.",
+   "fa": "مدرسهٔ قدیمی‌ام دیگر وجود ندارد.",
+   "pattern": "<Nomen> gibt es nicht mehr.",
+   "targetWords": [
+    "alte"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=55669&dur=2220"
+  },
+  {
+   "id": "de-b1-024",
+   "text": "Ich fand den Film ehrlich gesagt langweilig.",
+   "fa": "راستش فیلم را کسل‌کننده یافتم.",
+   "pattern": "Ich fand <Akk.> ehrlich gesagt <Adj.>.",
+   "targetWords": [
+    "fand"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=57889&dur=2664"
+  },
+  {
+   "id": "de-b1-025",
+   "text": "Das Gespräch fand gestern Nachmittag statt.",
+   "fa": "گفت‌وگو دیروز بعدازظهر برگزار شد.",
+   "pattern": "<Nomen> fand <Zeit> statt.",
+   "targetWords": [
+    "fand"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=60553&dur=2534"
+  },
+  {
+   "id": "de-b1-026",
+   "text": "Die Regierung hat neue Regeln für Mieter beschlossen.",
+   "fa": "دولت قوانین جدیدی برای مستأجران تصویب کرده.",
+   "pattern": "<Nomen> hat <Akk.> beschlossen.",
+   "targetWords": [
+    "regierung"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=63087&dur=2847"
+  },
+  {
+   "id": "de-b1-027",
+   "text": "Schliesslich haben wir uns für das kleinere Auto entschieden.",
+   "fa": "در نهایت ماشین کوچک‌تر را انتخاب کردیم.",
+   "pattern": "Schliesslich haben wir uns für <Akk.> entschieden.",
+   "targetWords": [
+    "schliesslich"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=65934&dur=3344"
+  },
+  {
+   "id": "de-b1-028",
+   "text": "Es gibt wichtigere Dinge als Geld.",
+   "fa": "چیزهای مهم‌تری از پول هست.",
+   "pattern": "Es gibt wichtigere Dinge als <Nomen>.",
+   "targetWords": [
+    "dinge"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=69278&dur=2194"
+  },
+  {
+   "id": "de-b1-029",
+   "text": "Nimm nur die wichtigsten Dinge mit.",
+   "fa": "فقط مهم‌ترین چیزها را با خودت ببر.",
+   "pattern": "Nimm nur <Akk.> mit.",
+   "targetWords": [
+    "dinge"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=71472&dur=2090"
+  },
+  {
+   "id": "de-b1-030",
+   "text": "Es ist spät geworden, ich muss los.",
+   "fa": "دیر شده، باید بروم.",
+   "pattern": "Es ist <Adj.> geworden.",
+   "targetWords": [
+    "geworden"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=73562&dur=2220"
+  },
+  {
+   "id": "de-b1-031",
+   "text": "Sie ist letztes Jahr Mutter geworden.",
+   "fa": "او پارسال مادر شد.",
+   "pattern": "Sie ist <Zeit> <Nomen> geworden.",
+   "targetWords": [
+    "geworden"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=75782&dur=2038"
+  },
+  {
+   "id": "de-b1-032",
+   "text": "Die Miete ist um zehn Prozent gestiegen.",
+   "fa": "اجاره ده درصد بالا رفته.",
+   "pattern": "<Nomen> ist um <Zahl> Prozent gestiegen.",
+   "targetWords": [
+    "prozent"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=77820&dur=2508"
+  },
+  {
+   "id": "de-b1-033",
+   "text": "Mein Sohn macht gerade seine Ausbildung.",
+   "fa": "پسرم الان دورهٔ کارآموزی‌اش را می‌گذراند.",
+   "pattern": "<Nomen> macht gerade <Akk.>.",
+   "targetWords": [
+    "sohn"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=80328&dur=2456"
+  },
+  {
+   "id": "de-b1-034",
+   "text": "Hauptsache, die Arbeit macht Spass.",
+   "fa": "مهم این است که کار لذت‌بخش باشد.",
+   "pattern": "Hauptsache, <Satz>.",
+   "targetWords": [
+    "spass"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=82784&dur=2273"
+  },
+  {
+   "id": "de-b1-035",
+   "text": "Wir hatten trotz Regen viel Spass.",
+   "fa": "با وجود باران خیلی خوش گذشت.",
+   "pattern": "Wir hatten trotz <Gen.> viel Spass.",
+   "targetWords": [
+    "spass"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=85057&dur=2142"
+  },
+  {
+   "id": "de-b1-036",
+   "text": "Ich verstehe kein Wort, sprich bitte langsamer.",
+   "fa": "یک کلمه هم نمی‌فهمم، لطفاً آهسته‌تر حرف بزن.",
+   "pattern": "Ich verstehe kein Wort.",
+   "targetWords": [
+    "wort"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=87199&dur=2821"
+  },
+  {
+   "id": "de-b1-037",
+   "text": "Er hält immer sein Wort.",
+   "fa": "او همیشه سر حرفش می‌ماند.",
+   "pattern": "Er hält sein Wort.",
+   "targetWords": [
+    "wort"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=90020&dur=1593"
+  },
+  {
+   "id": "de-b1-038",
+   "text": "Ist das dein Ernst?",
+   "fa": "جدی می‌گویی؟",
+   "pattern": "Ist das dein Ernst?",
+   "targetWords": [
+    "ernst"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=91613&dur=1306"
+  },
+  {
+   "id": "de-b1-039",
+   "text": "Nimm die Warnung bitte ernst.",
+   "fa": "لطفاً هشدار را جدی بگیر.",
+   "pattern": "Nimm <Akk.> ernst.",
+   "targetWords": [
+    "ernst"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=92919&dur=1750"
+  },
+  {
+   "id": "de-b1-040",
+   "text": "Das Mädchen neben mir hat mir den Weg erklärt.",
+   "fa": "دختری که کنارم بود راه را برایم توضیح داد.",
+   "pattern": "<Nomen> hat mir <Akk.> erklärt.",
+   "targetWords": [
+    "mädchen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=94669&dur=2691"
+  },
+  {
+   "id": "de-b1-041",
+   "text": "In Zukunft melde ich mich früher.",
+   "fa": "از این به بعد زودتر خبر می‌دهم.",
+   "pattern": "In Zukunft <Satz>.",
+   "targetWords": [
+    "zukunft"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=97360&dur=2038"
+  },
+  {
+   "id": "de-b1-042",
+   "text": "Niemand weiss, was die Zukunft bringt.",
+   "fa": "هیچ‌کس نمی‌داند آینده چه می‌آورد.",
+   "pattern": "Niemand weiss, was <Satz>.",
+   "targetWords": [
+    "zukunft"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=99398&dur=2612"
+  },
+  {
+   "id": "de-b1-043",
+   "text": "Es regnet, darum bleiben wir zu Hause.",
+   "fa": "باران می‌آید، به همین دلیل خانه می‌مانیم.",
+   "pattern": "<Satz>, darum <Satz>.",
+   "targetWords": [
+    "darum"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=102010&dur=2586"
+  },
+  {
+   "id": "de-b1-044",
+   "text": "Darum geht es gar nicht.",
+   "fa": "اصلاً موضوع این نیست.",
+   "pattern": "Darum geht es nicht.",
+   "targetWords": [
+    "darum"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=104596&dur=1646"
+  },
+  {
+   "id": "de-b1-045",
+   "text": "Bitte schicken Sie die Anmeldung in schriftlicher Form.",
+   "fa": "لطفاً ثبت‌نام را به صورت کتبی بفرستید.",
+   "pattern": "Bitte schicken Sie <Akk.> in <Adj.> Form.",
+   "targetWords": [
+    "form"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=106242&dur=2847"
+  },
+  {
+   "id": "de-b1-046",
+   "text": "Ich bin heute nicht in Form.",
+   "fa": "امروز سرحال نیستم.",
+   "pattern": "Ich bin nicht in Form.",
+   "targetWords": [
+    "form"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=109089&dur=1750"
+  },
+  {
+   "id": "de-b1-047",
+   "text": "Jedes Mal vergisst er seinen Schlüssel.",
+   "fa": "هر بار کلیدش را فراموش می‌کند.",
+   "pattern": "Jedes Mal <Satz>.",
+   "targetWords": [
+    "jedes"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=110839&dur=2247"
+  },
+  {
+   "id": "de-b1-048",
+   "text": "Jedes Kind bekommt ein Geschenk.",
+   "fa": "هر بچه‌ای یک هدیه می‌گیرد.",
+   "pattern": "Jedes <Nomen> bekommt <Akk.>.",
+   "targetWords": [
+    "jedes"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=113086&dur=2038"
+  },
+  {
+   "id": "de-b1-049",
+   "text": "Die Unterlagen liegen auf meinem Schreibtisch.",
+   "fa": "مدارک روی میز کارم است.",
+   "pattern": "<Nomen> liegen <Ort>.",
+   "targetWords": [
+    "liegen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=115124&dur=2429"
+  },
+  {
+   "id": "de-b1-050",
+   "text": "Die Gründe liegen auf der Hand.",
+   "fa": "دلایلش روشن است.",
+   "pattern": "<Nomen> liegen auf der Hand.",
+   "targetWords": [
+    "liegen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=117553&dur=1724"
+  },
+  {
+   "id": "de-b1-051",
+   "text": "Das Museum ist einen Besuch wert.",
+   "fa": "موزه ارزش دیدن دارد.",
+   "pattern": "<Nomen> ist <Akk.> wert.",
+   "targetWords": [
+    "wert"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=119277&dur=2090"
+  },
+  {
+   "id": "de-b1-052",
+   "text": "Ich lege Wert auf Pünktlichkeit.",
+   "fa": "برای من وقت‌شناسی مهم است.",
+   "pattern": "Ich lege Wert auf <Akk.>.",
+   "targetWords": [
+    "wert"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=121367&dur=1985"
+  },
+  {
+   "id": "de-b1-053",
+   "text": "Das ist der einzige Nachteil der Wohnung.",
+   "fa": "این تنها عیب آپارتمان است.",
+   "pattern": "Das ist der einzige <Nomen>.",
+   "targetWords": [
+    "einzige"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=123352&dur=2325"
+  },
+  {
+   "id": "de-b1-054",
+   "text": "Sie war die Einzige, die geholfen hat.",
+   "fa": "او تنها کسی بود که کمک کرد.",
+   "pattern": "Sie war die Einzige, die <Satz>.",
+   "targetWords": [
+    "einzige"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=125677&dur=2325"
+  },
+  {
+   "id": "de-b1-055",
+   "text": "Die Entwicklung der Preise macht mir Sorgen.",
+   "fa": "روند قیمت‌ها نگرانم می‌کند.",
+   "pattern": "<Nomen> macht mir Sorgen.",
+   "targetWords": [
+    "entwicklung"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=128002&dur=2325"
+  },
+  {
+   "id": "de-b1-056",
+   "text": "Bitte folgen Sie mir zum Ausgang.",
+   "fa": "لطفاً دنبال من تا خروجی بیایید.",
+   "pattern": "Bitte folgen Sie <Dat.> zu <Dat.>.",
+   "targetWords": [
+    "folgen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=130327&dur=2168"
+  },
+  {
+   "id": "de-b1-057",
+   "text": "Das wird Folgen haben.",
+   "fa": "این عواقبی خواهد داشت.",
+   "pattern": "Das wird Folgen haben.",
+   "targetWords": [
+    "folgen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=132495&dur=1620"
+  },
+  {
+   "id": "de-b1-058",
+   "text": "Dieser Weg führt direkt zum Bahnhof.",
+   "fa": "این راه مستقیم به ایستگاه می‌رسد.",
+   "pattern": "<Nomen> führt zu <Dat.>.",
+   "targetWords": [
+    "führt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=134115&dur=2664"
+  },
+  {
+   "id": "de-b1-059",
+   "text": "Stress führt oft zu Kopfschmerzen.",
+   "fa": "استرس اغلب به سردرد منجر می‌شود.",
+   "pattern": "<Nomen> führt zu <Dat.>.",
+   "targetWords": [
+    "führt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=136779&dur=2351"
+  },
+  {
+   "id": "de-b1-060",
+   "text": "Die Wohnung ist ziemlich teuer für diese Gegend.",
+   "fa": "آپارتمان برای این منطقه نسبتاً گران است.",
+   "pattern": "<Nomen> ist ziemlich <Adj.>.",
+   "targetWords": [
+    "ziemlich"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=139130&dur=2743"
+  },
+  {
+   "id": "de-b1-061",
+   "text": "Ich war ziemlich überrascht über seine Antwort.",
+   "fa": "از جوابش حسابی تعجب کردم.",
+   "pattern": "Ich war ziemlich <Adj.> über <Akk.>.",
+   "targetWords": [
+    "ziemlich"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=141873&dur=2743"
+  },
+  {
+   "id": "de-b1-062",
+   "text": "Dadurch sparen wir jeden Monat Geld.",
+   "fa": "از این طریق هر ماه پول پس‌انداز می‌کنیم.",
+   "pattern": "Dadurch <Satz>.",
+   "targetWords": [
+    "dadurch"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=144616&dur=2403"
+  },
+  {
+   "id": "de-b1-063",
+   "text": "Der Kurs war ein grosser Erfolg.",
+   "fa": "دوره موفقیت بزرگی بود.",
+   "pattern": "<Nomen> war ein grosser Erfolg.",
+   "targetWords": [
+    "erfolg"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=147019&dur=1959"
+  },
+  {
+   "id": "de-b1-064",
+   "text": "Viel Erfolg bei der Prüfung!",
+   "fa": "در امتحان موفق باشی!",
+   "pattern": "Viel Erfolg bei <Dat.>!",
+   "targetWords": [
+    "erfolg"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=148978&dur=1881"
+  },
+  {
+   "id": "de-b1-065",
+   "text": "Meine Grosseltern haben den Krieg erlebt.",
+   "fa": "پدربزرگ و مادربزرگم جنگ را تجربه کرده‌اند.",
+   "pattern": "<Nomen> haben <Akk.> erlebt.",
+   "targetWords": [
+    "krieg"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=150859&dur=2482"
+  },
+  {
+   "id": "de-b1-066",
+   "text": "Die Wohnung hat eine sehr gute Lage.",
+   "fa": "آپارتمان موقعیت خیلی خوبی دارد.",
+   "pattern": "<Nomen> hat eine <Adj.> Lage.",
+   "targetWords": [
+    "lage"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=153341&dur=2116"
+  },
+  {
+   "id": "de-b1-067",
+   "text": "In dieser Lage würde ich den Chef anrufen.",
+   "fa": "در این وضعیت من به رئیس زنگ می‌زدم.",
+   "pattern": "In dieser Lage würde ich <Verb>.",
+   "targetWords": [
+    "lage"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=155457&dur=2429"
+  },
+  {
+   "id": "de-b1-068",
+   "text": "Im September beginnt das neue Semester.",
+   "fa": "ترم جدید در سپتامبر شروع می‌شود.",
+   "pattern": "Im <Monat> beginnt <Nomen>.",
+   "targetWords": [
+    "september"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=157886&dur=2351"
+  },
+  {
+   "id": "de-b1-069",
+   "text": "Wieso hast du nicht Bescheid gesagt?",
+   "fa": "چرا خبر ندادی؟",
+   "pattern": "Wieso hast du nicht <Partizip>?",
+   "targetWords": [
+    "wieso"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=160237&dur=2247"
+  },
+  {
+   "id": "de-b1-070",
+   "text": "Aufgrund des Wetters bleibt das Schwimmbad geschlossen.",
+   "fa": "به دلیل هوا استخر بسته می‌ماند.",
+   "pattern": "Aufgrund <Gen.> <Satz>.",
+   "targetWords": [
+    "aufgrund"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=162484&dur=3082"
+  },
+  {
+   "id": "de-b1-071",
+   "text": "Bitte antworten Sie innerhalb von drei Tagen.",
+   "fa": "لطفاً ظرف سه روز پاسخ دهید.",
+   "pattern": "Bitte <Verb> Sie innerhalb von <Zeit>.",
+   "targetWords": [
+    "innerhalb"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=165566&dur=2743"
+  },
+  {
+   "id": "de-b1-072",
+   "text": "Sie nimmt jeden Morgen den Zug um sieben.",
+   "fa": "او هر صبح قطار ساعت هفت را می‌گیرد.",
+   "pattern": "Sie nimmt <Akk.> um <Uhrzeit>.",
+   "targetWords": [
+    "nimmt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=168309&dur=2482"
+  },
+  {
+   "id": "de-b1-073",
+   "text": "Das nimmt zu viel Zeit in Anspruch.",
+   "fa": "این وقت زیادی می‌گیرد.",
+   "pattern": "Das nimmt <Akk.> in Anspruch.",
+   "targetWords": [
+    "nimmt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=170791&dur=2351"
+  },
+  {
+   "id": "de-b1-074",
+   "text": "Komm rein, draussen ist es kalt.",
+   "fa": "بیا تو، بیرون سرد است.",
+   "pattern": "Komm rein, <Satz>.",
+   "targetWords": [
+    "rein"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=173142&dur=2194"
+  },
+  {
+   "id": "de-b1-075",
+   "text": "Geld spielt dabei keine Rolle.",
+   "fa": "پول در این مورد نقشی ندارد.",
+   "pattern": "<Nomen> spielt keine Rolle.",
+   "targetWords": [
+    "rolle"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=175336&dur=1959"
+  },
+  {
+   "id": "de-b1-076",
+   "text": "Nach dem Tod seines Vaters zog er nach Hamburg.",
+   "fa": "بعد از مرگ پدرش به هامبورگ نقل مکان کرد.",
+   "pattern": "Nach dem Tod <Gen.> <Satz>.",
+   "targetWords": [
+    "tod"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=177295&dur=3030"
+  },
+  {
+   "id": "de-b1-077",
+   "text": "Du hast völlig recht.",
+   "fa": "کاملاً حق با توست.",
+   "pattern": "Du hast völlig recht.",
+   "targetWords": [
+    "völlig"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=180325&dur=1358"
+  },
+  {
+   "id": "de-b1-078",
+   "text": "Das ist mir völlig egal.",
+   "fa": "برایم اصلاً مهم نیست.",
+   "pattern": "Das ist mir völlig egal.",
+   "targetWords": [
+    "völlig"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=181683&dur=1672"
+  },
+  {
+   "id": "de-b1-079",
+   "text": "Die Wohnung ist klein und zudem ziemlich laut.",
+   "fa": "آپارتمان کوچک است و علاوه بر آن نسبتاً پرسروصدا.",
+   "pattern": "<Satz> und zudem <Adj.>.",
+   "targetWords": [
+    "zudem"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=183355&dur=2978"
+  },
+  {
+   "id": "de-b1-080",
+   "text": "Ausser dir weiss niemand davon.",
+   "fa": "جز تو کسی از این خبر ندارد.",
+   "pattern": "Ausser <Dat.> weiss niemand davon.",
+   "targetWords": [
+    "ausser"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=186333&dur=1881"
+  },
+  {
+   "id": "de-b1-081",
+   "text": "Ich esse alles ausser Fisch.",
+   "fa": "من همه چیز می‌خورم به جز ماهی.",
+   "pattern": "Ich esse alles ausser <Dat.>.",
+   "targetWords": [
+    "ausser"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=188214&dur=1646"
+  },
+  {
+   "id": "de-b1-082",
+   "text": "Irgendwie habe ich heute keine Lust.",
+   "fa": "یک جورایی امروز حوصله ندارم.",
+   "pattern": "Irgendwie <Satz>.",
+   "targetWords": [
+    "irgendwie"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=189860&dur=2168"
+  },
+  {
+   "id": "de-b1-083",
+   "text": "Die Kirche im Dorf ist über 500 Jahre alt.",
+   "fa": "کلیسای روستا بیش از ۵۰۰ سال قدمت دارد.",
+   "pattern": "<Nomen> ist über <Zahl> Jahre alt.",
+   "targetWords": [
+    "kirche"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=192028&dur=3109"
+  },
+  {
+   "id": "de-b1-084",
+   "text": "Meist fahre ich mit dem Rad zur Arbeit.",
+   "fa": "بیشتر وقت‌ها با دوچرخه سر کار می‌روم.",
+   "pattern": "Meist <Satz>.",
+   "targetWords": [
+    "meist"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=195137&dur=2691"
+  },
+  {
+   "id": "de-b1-085",
+   "text": "Im März wird es langsam wärmer.",
+   "fa": "در مارس کم‌کم هوا گرم‌تر می‌شود.",
+   "pattern": "Im <Monat> wird es <Komparativ>.",
+   "targetWords": [
+    "märz"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=197828&dur=2011"
+  },
+  {
+   "id": "de-b1-086",
+   "text": "Na, wie war dein Wochenende?",
+   "fa": "خب، آخر هفته‌ات چطور بود؟",
+   "pattern": "Na, <Frage>?",
+   "targetWords": [
+    "na"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=199839&dur=1933"
+  },
+  {
+   "id": "de-b1-087",
+   "text": "Er verkauft das Haus seines Grossvaters.",
+   "fa": "او خانهٔ پدربزرگش را می‌فروشد.",
+   "pattern": "Er verkauft <Akk.> seines <Gen.>.",
+   "targetWords": [
+    "seines"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=201772&dur=2429"
+  },
+  {
+   "id": "de-b1-088",
+   "text": "Wir haben verschiedene Angebote verglichen.",
+   "fa": "پیشنهادهای مختلف را مقایسه کردیم.",
+   "pattern": "Wir haben verschiedene <Nomen> verglichen.",
+   "targetWords": [
+    "verschiedenen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=204201&dur=2456"
+  },
+  {
+   "id": "de-b1-089",
+   "text": "Die schlimmste Zeit ist vorbei.",
+   "fa": "بدترین دوران گذشته.",
+   "pattern": "<Nomen> ist vorbei.",
+   "targetWords": [
+    "vorbei"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=206657&dur=1933"
+  },
+  {
+   "id": "de-b1-090",
+   "text": "Ich komme später kurz bei dir vorbei.",
+   "fa": "بعداً یک سر به تو می‌زنم.",
+   "pattern": "Ich komme bei <Dat.> vorbei.",
+   "targetWords": [
+    "vorbei"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=208590&dur=2194"
+  },
+  {
+   "id": "de-b1-091",
+   "text": "Vom Balkon hat man einen schönen Blick auf den See.",
+   "fa": "از بالکن منظرهٔ قشنگی به دریاچه دارد.",
+   "pattern": "Man hat einen Blick auf <Akk.>.",
+   "targetWords": [
+    "blick"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=210784&dur=2952"
+  },
+  {
+   "id": "de-b1-092",
+   "text": "Auf den ersten Blick sah alles gut aus.",
+   "fa": "در نگاه اول همه چیز خوب به نظر می‌رسید.",
+   "pattern": "Auf den ersten Blick <Satz>.",
+   "targetWords": [
+    "blick"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=213736&dur=2534"
+  },
+  {
+   "id": "de-b1-093",
+   "text": "Ich habe nichts dagegen, wenn du früher gehst.",
+   "fa": "مخالفتی ندارم اگر زودتر بروی.",
+   "pattern": "Ich habe nichts dagegen, wenn <Satz>.",
+   "targetWords": [
+    "dagegen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=216270&dur=2717"
+  },
+  {
+   "id": "de-b1-094",
+   "text": "Er spricht ebenso gut Englisch wie Deutsch.",
+   "fa": "او انگلیسی را به خوبی آلمانی حرف می‌زند.",
+   "pattern": "Er <Verb> ebenso <Adj.> wie <Nomen>.",
+   "targetWords": [
+    "ebenso"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=218987&dur=2612"
+  },
+  {
+   "id": "de-b1-095",
+   "text": "Welche Partei hat die Wahl gewonnen?",
+   "fa": "کدام حزب انتخابات را برد؟",
+   "pattern": "Welche Partei hat <Akk.> gewonnen?",
+   "targetWords": [
+    "partei"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=221599&dur=2142"
+  },
+  {
+   "id": "de-b1-096",
+   "text": "Ich habe zugesagt, wobei ich mir nicht sicher bin.",
+   "fa": "قبول کردم، هرچند مطمئن نیستم.",
+   "pattern": "<Satz>, wobei <Satz>.",
+   "targetWords": [
+    "wobei"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=223741&dur=3030"
+  },
+  {
+   "id": "de-b1-097",
+   "text": "Die jungen Leute ziehen in die Grossstädte.",
+   "fa": "جوان‌ها به شهرهای بزرگ می‌روند.",
+   "pattern": "Die jungen <Nomen> <Verb>.",
+   "targetWords": [
+    "jungen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=226771&dur=2247"
+  },
+  {
+   "id": "de-b1-098",
+   "text": "Schick mir das Video, wenn du Zeit hast.",
+   "fa": "اگر وقت داشتی ویدیو را برایم بفرست.",
+   "pattern": "Schick mir <Akk.>, wenn <Satz>.",
+   "targetWords": [
+    "video"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=229018&dur=2560"
+  },
+  {
+   "id": "de-b1-099",
+   "text": "Im August ist die halbe Stadt im Urlaub.",
+   "fa": "در اوت نصف شهر در تعطیلات است.",
+   "pattern": "Im <Monat> <Satz>.",
+   "targetWords": [
+    "august"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=231578&dur=2429"
+  },
+  {
+   "id": "de-b1-100",
+   "text": "Die Bilder vom Urlaub sind wunderschön geworden.",
+   "fa": "عکس‌های سفر فوق‌العاده شده‌اند.",
+   "pattern": "<Nomen> sind <Adj.> geworden.",
+   "targetWords": [
+    "bilder"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=234007&dur=2769"
+  },
+  {
+   "id": "de-b1-101",
+   "text": "Ich dachte, du wärst schon weg.",
+   "fa": "فکر کردم دیگر رفته‌ای.",
+   "pattern": "Ich dachte, <Konjunktiv-Satz>.",
+   "targetWords": [
+    "dachte"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=236776&dur=2090"
+  },
+  {
+   "id": "de-b1-102",
+   "text": "Er dachte lange über das Angebot nach.",
+   "fa": "او مدتی طولانی دربارهٔ پیشنهاد فکر کرد.",
+   "pattern": "Er dachte über <Akk.> nach.",
+   "targetWords": [
+    "dachte"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=238866&dur=2403"
+  },
+  {
+   "id": "de-b1-103",
+   "text": "Ich kann kaum glauben, dass es schon Dezember ist.",
+   "fa": "باورم نمی‌شود که دسامبر شده.",
+   "pattern": "Ich kann kaum glauben, dass <Satz>.",
+   "targetWords": [
+    "glauben"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=241269&dur=2926"
+  },
+  {
+   "id": "de-b1-104",
+   "text": "Wir treffen uns Mitte nächster Woche.",
+   "fa": "اواسط هفتهٔ آینده همدیگر را می‌بینیم.",
+   "pattern": "Wir treffen uns Mitte <Gen.>.",
+   "targetWords": [
+    "mitte"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=244195&dur=2064"
+  },
+  {
+   "id": "de-b1-105",
+   "text": "Im November wird es früh dunkel.",
+   "fa": "در نوامبر زود هوا تاریک می‌شود.",
+   "pattern": "Im <Monat> wird es <Adj.>.",
+   "targetWords": [
+    "november"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=246259&dur=2038"
+  },
+  {
+   "id": "de-b1-106",
+   "text": "Sie spricht sowohl Deutsch als auch Türkisch.",
+   "fa": "او هم آلمانی حرف می‌زند هم ترکی.",
+   "pattern": "Sie <Verb> sowohl <A> als auch <B>.",
+   "targetWords": [
+    "sowohl"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=248297&dur=2586"
+  },
+  {
+   "id": "de-b1-107",
+   "text": "Im April ist das Wetter unberechenbar.",
+   "fa": "در آوریل هوا غیرقابل پیش‌بینی است.",
+   "pattern": "Im <Monat> ist <Nomen> <Adj.>.",
+   "targetWords": [
+    "april"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=250883&dur=2325"
+  },
+  {
+   "id": "de-b1-108",
+   "text": "Insbesondere am Wochenende ist der Park voll.",
+   "fa": "به‌خصوص آخر هفته پارک شلوغ است.",
+   "pattern": "Insbesondere <Zeit> <Satz>.",
+   "targetWords": [
+    "insbesondere"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=253208&dur=2664"
+  },
+  {
+   "id": "de-b1-109",
+   "text": "Das neue System ist einfacher zu bedienen.",
+   "fa": "سیستم جدید ساده‌تر کار می‌کند.",
+   "pattern": "<Nomen> ist einfacher zu <Verb>.",
+   "targetWords": [
+    "system"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=255872&dur=2534"
+  },
+  {
+   "id": "de-b1-110",
+   "text": "Er hat tatsächlich die Prüfung bestanden.",
+   "fa": "او واقعاً امتحان را قبول شد.",
+   "pattern": "Er hat tatsächlich <Akk.> bestanden.",
+   "targetWords": [
+    "tatsächlich"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=258406&dur=2351"
+  },
+  {
+   "id": "de-b1-111",
+   "text": "Wir haben unser Ziel erreicht.",
+   "fa": "به هدفمان رسیدیم.",
+   "pattern": "Wir haben <Akk.> erreicht.",
+   "targetWords": [
+    "erreicht"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=260757&dur=1933"
+  },
+  {
+   "id": "de-b1-112",
+   "text": "Ich habe ihn telefonisch nicht erreicht.",
+   "fa": "تلفنی به او دسترسی پیدا نکردم.",
+   "pattern": "Ich habe <Akk.> nicht erreicht.",
+   "targetWords": [
+    "erreicht"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=262690&dur=2220"
+  },
+  {
+   "id": "de-b1-113",
+   "text": "Wir haben die Aufgabe gemeinsam gelöst.",
+   "fa": "مسئله را با هم حل کردیم.",
+   "pattern": "Wir haben <Akk.> gemeinsam gelöst.",
+   "targetWords": [
+    "gemeinsam"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=264910&dur=2456"
+  },
+  {
+   "id": "de-b1-114",
+   "text": "Im Juli fahren wir ans Meer.",
+   "fa": "در ژوئیه به دریا می‌رویم.",
+   "pattern": "Im <Monat> fahren wir <Ort>.",
+   "targetWords": [
+    "juli"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=267366&dur=1855"
+  },
+  {
+   "id": "de-b1-115",
+   "text": "Ich kann nicht kommen, ich arbeite nämlich.",
+   "fa": "نمی‌توانم بیایم، آخر کار دارم.",
+   "pattern": "<Satz>, <Satz> nämlich.",
+   "targetWords": [
+    "nämlich"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=269221&dur=2456"
+  },
+  {
+   "id": "de-b1-116",
+   "text": "Im Oktober beginnt bei uns die Heizsaison.",
+   "fa": "در اکتبر فصل گرمایش ما شروع می‌شود.",
+   "pattern": "Im <Monat> beginnt <Nomen>.",
+   "targetWords": [
+    "oktober"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=271677&dur=2508"
+  },
+  {
+   "id": "de-b1-117",
+   "text": "Wir schaffen das bis Freitag.",
+   "fa": "تا جمعه از پسش برمی‌آییم.",
+   "pattern": "Wir schaffen das bis <Zeit>.",
+   "targetWords": [
+    "schaffen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=274185&dur=1907"
+  },
+  {
+   "id": "de-b1-118",
+   "text": "Ohne Hilfe schaffen wir das nicht rechtzeitig.",
+   "fa": "بدون کمک به‌موقع از پسش برنمی‌آییم.",
+   "pattern": "Ohne <Akk.> schaffen wir das nicht.",
+   "targetWords": [
+    "schaffen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=276092&dur=2508"
+  },
+  {
+   "id": "de-b1-119",
+   "text": "Ich habe mehrmals versucht, dich zu erreichen.",
+   "fa": "چند بار سعی کردم با تو تماس بگیرم.",
+   "pattern": "Ich habe versucht, <Infinitiv>.",
+   "targetWords": [
+    "versucht"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=278600&dur=2795"
+  },
+  {
+   "id": "de-b1-120",
+   "text": "Danke für Ihren Einsatz im Team.",
+   "fa": "ممنون بابت تلاشتان در تیم.",
+   "pattern": "Danke für <Akk.>.",
+   "targetWords": [
+    "einsatz"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=281395&dur=2116"
+  },
+  {
+   "id": "de-b1-121",
+   "text": "Falls es regnet, bleiben wir einfach drinnen.",
+   "fa": "اگر باران بیاید، همین‌طوری داخل می‌مانیم.",
+   "pattern": "Falls <Satz>, <Satz>.",
+   "targetWords": [
+    "falls"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=283511&dur=2664"
+  },
+  {
+   "id": "de-b1-122",
+   "text": "Das war ein grosser Fehler.",
+   "fa": "این اشتباه بزرگی بود.",
+   "pattern": "Das war ein grosser <Nomen>.",
+   "targetWords": [
+    "grosser"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=286175&dur=1541"
+  },
+  {
+   "id": "de-b1-123",
+   "text": "Habt ihr schon eine Entscheidung getroffen?",
+   "fa": "شما تصمیم گرفته‌اید؟",
+   "pattern": "Habt ihr schon <Akk.> getroffen?",
+   "targetWords": [
+    "habt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=287716&dur=2403"
+  },
+  {
+   "id": "de-b1-124",
+   "text": "Sie hat den Namen ihres Chefs vergessen.",
+   "fa": "او اسم رئیسش را فراموش کرده.",
+   "pattern": "Sie hat <Akk.> ihres <Gen.> vergessen.",
+   "targetWords": [
+    "ihres"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=290119&dur=2299"
+  },
+  {
+   "id": "de-b1-125",
+   "text": "Im Rahmen des Projekts lernen wir viel.",
+   "fa": "در چارچوب پروژه چیزهای زیادی یاد می‌گیریم.",
+   "pattern": "Im Rahmen <Gen.> <Satz>.",
+   "targetWords": [
+    "rahmen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=292418&dur=2429"
+  },
+  {
+   "id": "de-b1-126",
+   "text": "Lass deine Sachen nicht überall liegen.",
+   "fa": "وسایلت را همه‌جا پخش نکن.",
+   "pattern": "Lass <Akk.> nicht liegen.",
+   "targetWords": [
+    "sachen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=294847&dur=2168"
+  },
+  {
+   "id": "de-b1-127",
+   "text": "Der Unterricht fällt heute aus.",
+   "fa": "کلاس امروز تشکیل نمی‌شود.",
+   "pattern": "<Nomen> fällt aus.",
+   "targetWords": [
+    "fällt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=297015&dur=1985"
+  },
+  {
+   "id": "de-b1-128",
+   "text": "Mir fällt gerade sein Name nicht ein.",
+   "fa": "الان اسمش یادم نمی‌آید.",
+   "pattern": "Mir fällt <Nomen> nicht ein.",
+   "targetWords": [
+    "fällt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=299000&dur=2325"
+  },
+  {
+   "id": "de-b1-129",
+   "text": "Hast du deine Tabletten genommen?",
+   "fa": "قرص‌هایت را خورده‌ای؟",
+   "pattern": "Hast du <Akk.> genommen?",
+   "targetWords": [
+    "genommen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=301325&dur=1802"
+  },
+  {
+   "id": "de-b1-130",
+   "text": "Die Kosten liegen in Höhe von 200 Euro.",
+   "fa": "هزینه‌ها حدود ۲۰۰ یورو است.",
+   "pattern": "<Nomen> liegen in Höhe von <Betrag>.",
+   "targetWords": [
+    "höhe"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=303127&dur=2873"
+  },
+  {
+   "id": "de-b1-131",
+   "text": "Sie hat einen neuen Job in München gefunden.",
+   "fa": "او کار جدیدی در مونیخ پیدا کرده.",
+   "pattern": "Sie hat einen neuen Job gefunden.",
+   "targetWords": [
+    "job"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=306000&dur=2429"
+  },
+  {
+   "id": "de-b1-132",
+   "text": "Er liess mich einfach nicht ausreden.",
+   "fa": "او اصلاً نگذاشت حرفم تمام شود.",
+   "pattern": "Er liess mich nicht <Infinitiv>.",
+   "targetWords": [
+    "liess"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=308429&dur=2168"
+  },
+  {
+   "id": "de-b1-133",
+   "text": "Unsere Tochter studiert jetzt in Wien.",
+   "fa": "دخترمان حالا در وین درس می‌خواند.",
+   "pattern": "<Nomen> studiert jetzt in <Ort>.",
+   "targetWords": [
+    "tochter"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=310597&dur=2429"
+  },
+  {
+   "id": "de-b1-134",
+   "text": "Wären Sie so nett, das Fenster zu schliessen?",
+   "fa": "لطف می‌کنید پنجره را ببندید؟",
+   "pattern": "Wären Sie so nett, <Infinitiv>?",
+   "targetWords": [
+    "wären"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=313026&dur=2691"
+  },
+  {
+   "id": "de-b1-135",
+   "text": "Die Zahl der Besucher steigt jedes Jahr.",
+   "fa": "تعداد بازدیدکنندگان هر سال بیشتر می‌شود.",
+   "pattern": "Die Zahl <Gen.> steigt.",
+   "targetWords": [
+    "zahl"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=315717&dur=2534"
+  },
+  {
+   "id": "de-b1-136",
+   "text": "Es handelt sich um ein Missverständnis.",
+   "fa": "موضوع یک سوءتفاهم است.",
+   "pattern": "Es handelt sich um <Akk.>.",
+   "targetWords": [
+    "handelt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=318251&dur=2247"
+  },
+  {
+   "id": "de-b1-137",
+   "text": "Ich interessiere mich sehr für moderne Kunst.",
+   "fa": "به هنر مدرن خیلی علاقه دارم.",
+   "pattern": "Ich interessiere mich für <Akk.>.",
+   "targetWords": [
+    "kunst"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=320498&dur=2664"
+  },
+  {
+   "id": "de-b1-138",
+   "text": "Alle Mitarbeiter sind zur Besprechung eingeladen.",
+   "fa": "همهٔ کارمندان به جلسه دعوت‌اند.",
+   "pattern": "Alle Mitarbeiter sind <Partizip>.",
+   "targetWords": [
+    "mitarbeiter"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=323162&dur=2900"
+  },
+  {
+   "id": "de-b1-139",
+   "text": "Ich sah ihn zuletzt vor zwei Jahren.",
+   "fa": "آخرین بار دو سال پیش او را دیدم.",
+   "pattern": "Ich sah <Akk.> zuletzt vor <Zeit>.",
+   "targetWords": [
+    "sah"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=326062&dur=2377"
+  },
+  {
+   "id": "de-b1-140",
+   "text": "Ich habe meinen Ausweis verloren.",
+   "fa": "کارت شناسایی‌ام را گم کرده‌ام.",
+   "pattern": "Ich habe <Akk.> verloren.",
+   "targetWords": [
+    "verloren"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=328439&dur=2038"
+  },
+  {
+   "id": "de-b1-141",
+   "text": "Auf diese Weise sparen wir Zeit.",
+   "fa": "به این روش در وقت صرفه‌جویی می‌کنیم.",
+   "pattern": "Auf diese Weise <Satz>.",
+   "targetWords": [
+    "weise"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=330477&dur=2142"
+  },
+  {
+   "id": "de-b1-142",
+   "text": "Zumindest hat es nicht geregnet.",
+   "fa": "دست‌کم باران نیامد.",
+   "pattern": "Zumindest <Satz>.",
+   "targetWords": [
+    "zumindest"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=332619&dur=2011"
+  },
+  {
+   "id": "de-b1-143",
+   "text": "Übrigens, Anna lässt dich grüssen.",
+   "fa": "راستی، آنا سلام رساند.",
+   "pattern": "Übrigens, <Satz>.",
+   "targetWords": [
+    "übrigens"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=334630&dur=2090"
+  },
+  {
+   "id": "de-b1-144",
+   "text": "Das ist eine gute Chance für dich.",
+   "fa": "این فرصت خوبی برای توست.",
+   "pattern": "Das ist eine gute Chance für <Akk.>.",
+   "targetWords": [
+    "chance"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=336720&dur=2142"
+  },
+  {
+   "id": "de-b1-145",
+   "text": "Was hat dich auf diese Idee gebracht?",
+   "fa": "چه چیزی این فکر را به سرت انداخت؟",
+   "pattern": "Was hat dich auf <Akk.> gebracht?",
+   "targetWords": [
+    "gebracht"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=338862&dur=2116"
+  },
+  {
+   "id": "de-b1-146",
+   "text": "Darüber hinaus bietet die Firma flexible Arbeitszeiten.",
+   "fa": "علاوه بر این، شرکت ساعت کاری منعطف دارد.",
+   "pattern": "Darüber hinaus <Satz>.",
+   "targetWords": [
+    "hinaus"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=340978&dur=3318"
+  },
+  {
+   "id": "de-b1-147",
+   "text": "Ich habe noch eine Menge zu tun.",
+   "fa": "هنوز کلی کار دارم.",
+   "pattern": "Ich habe eine Menge zu tun.",
+   "targetWords": [
+    "menge"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=344296&dur=1959"
+  },
+  {
+   "id": "de-b1-148",
+   "text": "Der Bahnhof ist nur zweihundert Meter entfernt.",
+   "fa": "ایستگاه فقط دویست متر فاصله دارد.",
+   "pattern": "<Nomen> ist <Zahl> Meter entfernt.",
+   "targetWords": [
+    "meter"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=346255&dur=2978"
+  },
+  {
+   "id": "de-b1-149",
+   "text": "Du solltest mindestens acht Stunden schlafen.",
+   "fa": "باید دست‌کم هشت ساعت بخوابی.",
+   "pattern": "Du solltest mindestens <Zeit> <Verb>.",
+   "targetWords": [
+    "mindestens"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=349233&dur=2664"
+  },
+  {
+   "id": "de-b1-150",
+   "text": "Das kann ich selber reparieren.",
+   "fa": "این را خودم می‌توانم تعمیر کنم.",
+   "pattern": "Das kann ich selber <Verb>.",
+   "targetWords": [
+    "selber"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=351897&dur=1802"
+  },
+  {
+   "id": "de-b1-151",
+   "text": "Zur Sicherheit nehme ich einen Regenschirm mit.",
+   "fa": "محض احتیاط چتر با خودم می‌برم.",
+   "pattern": "Zur Sicherheit <Satz>.",
+   "targetWords": [
+    "sicherheit"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=353699&dur=2560"
+  },
+  {
+   "id": "de-b1-152",
+   "text": "Wir arbeiten in der gleichen Abteilung.",
+   "fa": "ما در یک بخش کار می‌کنیم.",
+   "pattern": "Wir <Verb> in der gleichen <Nomen>.",
+   "targetWords": [
+    "gleichen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=356259&dur=2220"
+  },
+  {
+   "id": "de-b1-153",
+   "text": "Die Verhandlungen laufen noch.",
+   "fa": "مذاکرات هنوز ادامه دارد.",
+   "pattern": "<Nomen> laufen noch.",
+   "targetWords": [
+    "laufen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=358479&dur=1698"
+  },
+  {
+   "id": "de-b1-154",
+   "text": "Ich laufe jeden Morgen eine halbe Stunde.",
+   "fa": "هر صبح نیم ساعت می‌دوم.",
+   "pattern": "Ich laufe <Zeit>.",
+   "targetWords": [
+    "laufen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=360177&dur=2325"
+  },
+  {
+   "id": "de-b1-155",
+   "text": "Der Lehrer erklärt «gekommen», «führen» und «reden» noch einmal.",
+   "fa": "معلم دوباره «gekommen»، «führen» و «reden» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "gekommen",
+    "führen",
+    "reden"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=362502&dur=3866"
+  },
+  {
+   "id": "de-b1-156",
+   "text": "Ich habe «willst», «peter» und «juni» geschrieben.",
+   "fa": "من «willst»، «peter» و «juni» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "willst",
+    "peter",
+    "juni"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=366368&dur=3187"
+  },
+  {
+   "id": "de-b1-157",
+   "text": "Wir haben «mach», «stück» und «michael» im Text gelesen.",
+   "fa": "ما «mach»، «stück» و «michael» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "mach",
+    "stück",
+    "michael"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=369555&dur=3709"
+  },
+  {
+   "id": "de-b1-158",
+   "text": "Ich kann «titel», «band» und «drauf» jetzt besser verstehen.",
+   "fa": "اکنون «titel»، «band» و «drauf» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "titel",
+    "band",
+    "drauf"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=373264&dur=3736"
+  },
+  {
+   "id": "de-b1-159",
+   "text": "Die Wörter «medien» und «saison» stehen hier.",
+   "fa": "واژههای «medien» و «saison» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "medien",
+    "saison"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=377000&dur=2900"
+  },
+  {
+   "id": "de-b1-160",
+   "text": "Der Lehrer erklärt «bahn» und «dennoch» noch einmal.",
+   "fa": "معلم دوباره «bahn» و «dennoch» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "bahn",
+    "dennoch"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=379900&dur=3109"
+  },
+  {
+   "id": "de-b1-161",
+   "text": "Im Text stehen «gesicht» und «guter».",
+   "fa": "در متن «gesicht» و «guter» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "gesicht",
+    "guter"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=383009&dur=2429"
+  },
+  {
+   "id": "de-b1-162",
+   "text": "Wir haben «seien» und «somit» hier.",
+   "fa": "ما «seien» و «somit» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "seien",
+    "somit"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=385438&dur=2456"
+  },
+  {
+   "id": "de-b1-163",
+   "text": "Das ist «thomas».",
+   "fa": "این «thomas» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "thomas"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=387894&dur=1306"
+  },
+  {
+   "id": "de-b1-164",
+   "text": "Das Wort «toll» steht hier.",
+   "fa": "واژهٔ «toll» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "toll"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=389200&dur=1959"
+  },
+  {
+   "id": "de-b1-165",
+   "text": "Ich lese «gedanken» heute.",
+   "fa": "امروز «gedanken» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "gedanken"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=391159&dur=1776"
+  },
+  {
+   "id": "de-b1-166",
+   "text": "Ich verstehe «gutes» jetzt besser.",
+   "fa": "اکنون «gutes» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "gutes"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=392935&dur=2168"
+  },
+  {
+   "id": "de-b1-167",
+   "text": "Der Lehrer erklärt «herz», «januar» und «jeweils» noch einmal.",
+   "fa": "معلم دوباره «herz»، «januar» و «jeweils» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "herz",
+    "januar",
+    "jeweils",
+    "jeweiligen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=395103&dur=4075"
+  },
+  {
+   "id": "de-b1-168",
+   "text": "Ich habe «siehe», «sinn» und «stuttgart» geschrieben.",
+   "fa": "من «siehe»، «sinn» و «stuttgart» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "siehe",
+    "sinn",
+    "stuttgart"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=399178&dur=3239"
+  },
+  {
+   "id": "de-b1-169",
+   "text": "Wir haben «sucht», «falsch» und «häufig» im Text gelesen.",
+   "fa": "ما «sucht»، «falsch» و «häufig» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "sucht",
+    "falsch",
+    "falsche",
+    "häufig"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=402417&dur=3892"
+  },
+  {
+   "id": "de-b1-170",
+   "text": "Ich kann «kultur», «könig» und «la» jetzt besser verstehen.",
+   "fa": "اکنون «kultur»، «könig» و «la» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "kultur",
+    "könig",
+    "la"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=406309&dur=3892"
+  },
+  {
+   "id": "de-b1-171",
+   "text": "Die Wörter «luft» und «nen» stehen hier.",
+   "fa": "واژههای «luft» و «nen» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "luft",
+    "nen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=410201&dur=2717"
+  },
+  {
+   "id": "de-b1-172",
+   "text": "Der Lehrer erklärt «reihe» und «boden» noch einmal.",
+   "fa": "معلم دوباره «reihe» و «boden» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "reihe",
+    "boden"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=412918&dur=3082"
+  },
+  {
+   "id": "de-b1-173",
+   "text": "Im Text stehen «februar» und «fussball».",
+   "fa": "در متن «februar» و «fussball» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "februar",
+    "fussball"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=416000&dur=2717"
+  },
+  {
+   "id": "de-b1-174",
+   "text": "Wir haben «heraus» und «kennt» hier.",
+   "fa": "ما «heraus» و «kennt» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "heraus",
+    "kennt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=418717&dur=2586"
+  },
+  {
+   "id": "de-b1-175",
+   "text": "Das ist «kritik».",
+   "fa": "این «kritik» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "kritik"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=421303&dur=1332"
+  },
+  {
+   "id": "de-b1-176",
+   "text": "Das Wort «neuer» steht hier.",
+   "fa": "واژهٔ «neuer» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "neuer"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=422635&dur=1959"
+  },
+  {
+   "id": "de-b1-177",
+   "text": "Ich lese «nochmal» heute.",
+   "fa": "امروز «nochmal» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "nochmal"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=424594&dur=1802"
+  },
+  {
+   "id": "de-b1-178",
+   "text": "Ich verstehe «opfer» jetzt besser.",
+   "fa": "اکنون «opfer» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "opfer"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=426396&dur=2194"
+  },
+  {
+   "id": "de-b1-179",
+   "text": "Der Lehrer erklärt «plötzlich», «region» und «setzt» noch einmal.",
+   "fa": "معلم دوباره «plötzlich»، «region» و «setzt» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "plötzlich",
+    "region",
+    "setzt",
+    "setzte"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=428590&dur=4206"
+  },
+  {
+   "id": "de-b1-180",
+   "text": "Ich habe «unten», «wirtschaft» und «bevölkerung» geschrieben.",
+   "fa": "من «unten»، «wirtschaft» و «bevölkerung» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "unten",
+    "wirtschaft",
+    "bevölkerung"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=432796&dur=3709"
+  },
+  {
+   "id": "de-b1-181",
+   "text": "Wir haben «darin», «gewinnen» und «hohen» im Text gelesen.",
+   "fa": "ما «darin»، «gewinnen» و «hohen» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "darin",
+    "gewinnen",
+    "gewinn",
+    "hohen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=436505&dur=3736"
+  },
+  {
+   "id": "de-b1-182",
+   "text": "Ich kann «kamen», «kreis» und «körper» jetzt besser verstehen.",
+   "fa": "اکنون «kamen»، «kreis» و «körper» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "kamen",
+    "kreis",
+    "körper"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=440241&dur=3944"
+  },
+  {
+   "id": "de-b1-183",
+   "text": "Die Wörter «mitglieder» und «punkt» stehen hier.",
+   "fa": "واژههای «mitglieder» و «punkt» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "mitglieder",
+    "mitglied",
+    "punkt",
+    "punkte",
+    "punkten"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=444185&dur=3056"
+  },
+  {
+   "id": "de-b1-184",
+   "text": "Der Lehrer erklärt «rede» und «typ» noch einmal.",
+   "fa": "معلم دوباره «rede» و «typ» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "rede",
+    "typ"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=447241&dur=3161"
+  },
+  {
+   "id": "de-b1-185",
+   "text": "Im Text stehen «verein» und «verwendet».",
+   "fa": "در متن «verein» و «verwendet» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "verein",
+    "verwendet",
+    "verwendung",
+    "verwenden"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=450402&dur=2717"
+  },
+  {
+   "id": "de-b1-186",
+   "text": "Wir haben «beispielsweise» und «deswegen» hier.",
+   "fa": "ما «beispielsweise» و «deswegen» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "beispielsweise",
+    "deswegen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=453119&dur=3004"
+  },
+  {
+   "id": "de-b1-187",
+   "text": "Das ist «eure».",
+   "fa": "این «eure» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "eure"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=456123&dur=1176"
+  },
+  {
+   "id": "de-b1-188",
+   "text": "Das Wort «grünen» steht hier.",
+   "fa": "واژهٔ «grünen» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "grünen",
+    "grüne"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=457299&dur=1985"
+  },
+  {
+   "id": "de-b1-189",
+   "text": "Ich lese «mittlerweile» heute.",
+   "fa": "امروز «mittlerweile» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "mittlerweile"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=459284&dur=1933"
+  },
+  {
+   "id": "de-b1-190",
+   "text": "Ich verstehe «russland» jetzt besser.",
+   "fa": "اکنون «russland» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "russland"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=461217&dur=2247"
+  },
+  {
+   "id": "de-b1-191",
+   "text": "Der Lehrer erklärt «staat», «teilweise» und «weder» noch einmal.",
+   "fa": "معلم دوباره «staat»، «teilweise» و «weder» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "staat",
+    "staaten",
+    "teilweise",
+    "weder"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=463464&dur=4101"
+  },
+  {
+   "id": "de-b1-192",
+   "text": "Ich habe «europäischen», «hälfte» und «lag» geschrieben.",
+   "fa": "من «europäischen»، «hälfte» و «lag» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "europäischen",
+    "europäische",
+    "hälfte",
+    "lag"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=467565&dur=3579"
+  },
+  {
+   "id": "de-b1-193",
+   "text": "Wir haben «martin», «programm» und «reicht» im Text gelesen.",
+   "fa": "ما «martin»، «programm» و «reicht» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "martin",
+    "programm",
+    "reicht",
+    "reich",
+    "reichen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=471144&dur=3944"
+  },
+  {
+   "id": "de-b1-194",
+   "text": "Ich kann «schüler», «selten» und «sowas» jetzt besser verstehen.",
+   "fa": "اکنون «schüler»، «selten» و «sowas» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "schüler",
+    "selten",
+    "sowas"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=475088&dur=3997"
+  },
+  {
+   "id": "de-b1-195",
+   "text": "Die Wörter «unbedingt» und «verbindung» stehen hier.",
+   "fa": "واژههای «unbedingt» و «verbindung» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "unbedingt",
+    "verbindung"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=479085&dur=3135"
+  },
+  {
+   "id": "de-b1-196",
+   "text": "Der Lehrer erklärt «zeitung» und «zuvor» noch einmal.",
+   "fa": "معلم دوباره «zeitung» و «zuvor» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "zeitung",
+    "zuvor"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=482220&dur=3448"
+  },
+  {
+   "id": "de-b1-197",
+   "text": "Im Text stehen «ahnung» und «bürger».",
+   "fa": "در متن «ahnung» و «bürger» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "ahnung",
+    "bürger"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=485668&dur=2377"
+  },
+  {
+   "id": "de-b1-198",
+   "text": "Wir haben «erzählt» und «grad» hier.",
+   "fa": "ما «erzählt» و «grad» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "erzählt",
+    "erzählen",
+    "grad"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=488045&dur=2664"
+  },
+  {
+   "id": "de-b1-199",
+   "text": "Das ist «grösste».",
+   "fa": "این «grösste» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "grösste",
+    "grössten",
+    "grösse",
+    "grössere",
+    "grösser",
+    "grösseren"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=490709&dur=1202"
+  },
+  {
+   "id": "de-b1-200",
+   "text": "Das Wort «hohe» steht hier.",
+   "fa": "واژهٔ «hohe» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "hohe"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=491911&dur=1985"
+  },
+  {
+   "id": "de-b1-201",
+   "text": "Ich lese «indem» heute.",
+   "fa": "امروز «indem» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "indem"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=493896&dur=1750"
+  },
+  {
+   "id": "de-b1-202",
+   "text": "Ich verstehe «kampf» jetzt besser.",
+   "fa": "اکنون «kampf» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "kampf"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=495646&dur=2299"
+  },
+  {
+   "id": "de-b1-203",
+   "text": "Der Lehrer erklärt «kraft», «nahm» und «okay» noch einmal.",
+   "fa": "معلم دوباره «kraft»، «nahm» و «okay» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "kraft",
+    "nahm",
+    "okay"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=497945&dur=3892"
+  },
+  {
+   "id": "de-b1-204",
+   "text": "Ich habe «politischen», «präsident» und «sport» geschrieben.",
+   "fa": "من «politischen»، «präsident» و «sport» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "politischen",
+    "präsident",
+    "sport"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=501837&dur=3736"
+  },
+  {
+   "id": "de-b1-205",
+   "text": "Wir haben «tat», «druck» und «facebook» im Text gelesen.",
+   "fa": "ما «tat»، «druck» و «facebook» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "tat",
+    "druck",
+    "facebook"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=505573&dur=3944"
+  },
+  {
+   "id": "de-b1-206",
+   "text": "Ich kann «fehlt», «hans» und «herren» jetzt besser verstehen.",
+   "fa": "اکنون «fehlt»، «hans» و «herren» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "fehlt",
+    "hans",
+    "herren"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=509517&dur=3892"
+  },
+  {
+   "id": "de-b1-207",
+   "text": "Die Wörter «lediglich» und «liste» stehen hier.",
+   "fa": "واژههای «lediglich» و «liste» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "lediglich",
+    "liste"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=513409&dur=2952"
+  },
+  {
+   "id": "de-b1-208",
+   "text": "Der Lehrer erklärt «soweit» und «dran» noch einmal.",
+   "fa": "معلم دوباره «soweit» و «dran» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "soweit",
+    "dran"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=516361&dur=3318"
+  },
+  {
+   "id": "de-b1-209",
+   "text": "Im Text stehen «erwartet» und «fallen».",
+   "fa": "در متن «erwartet» و «fallen» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "erwartet",
+    "erwarten",
+    "fallen",
+    "falle"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=519679&dur=2560"
+  },
+  {
+   "id": "de-b1-210",
+   "text": "Wir haben «inzwischen» und «komplett» hier.",
+   "fa": "ما «inzwischen» و «komplett» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "inzwischen",
+    "komplett"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=522239&dur=2847"
+  },
+  {
+   "id": "de-b1-211",
+   "text": "Das ist «müsste».",
+   "fa": "این «müsste» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "müsste",
+    "müssten"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=525086&dur=1176"
+  },
+  {
+   "id": "de-b1-212",
+   "text": "Das Wort «schritt» steht hier.",
+   "fa": "واژهٔ «schritt» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "schritt",
+    "schrieb"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=526262&dur=2011"
+  },
+  {
+   "id": "de-b1-213",
+   "text": "Ich lese «verfügung» heute.",
+   "fa": "امروز «verfügung» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "verfügung"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=528273&dur=1933"
+  },
+  {
+   "id": "de-b1-214",
+   "text": "Ich verstehe «verlassen» jetzt besser.",
+   "fa": "اکنون «verlassen» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "verlassen",
+    "verlag"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=530206&dur=2273"
+  },
+  {
+   "id": "de-b1-215",
+   "text": "Der Lehrer erklärt «blieb», «einzelnen» und «genannt» noch einmal.",
+   "fa": "معلم دوباره «blieb»، «einzelnen» و «genannt» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "blieb",
+    "einzelnen",
+    "einzelne",
+    "genannt",
+    "genannten"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=532479&dur=4049"
+  },
+  {
+   "id": "de-b1-216",
+   "text": "Ich habe «google», «hilft» und «linie» geschrieben.",
+   "fa": "من «google»، «hilft» و «linie» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "google",
+    "hilft",
+    "linie"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=536528&dur=3265"
+  },
+  {
+   "id": "de-b1-217",
+   "text": "Wir haben «max», «natur» und «top» im Text gelesen.",
+   "fa": "ما «max»، «natur» و «top» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "max",
+    "natur",
+    "top"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=539793&dur=3814"
+  },
+  {
+   "id": "de-b1-218",
+   "text": "Ich kann «wahrheit», «worte» und «aufs» jetzt besser verstehen.",
+   "fa": "اکنون «wahrheit»، «worte» و «aufs» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "wahrheit",
+    "worte",
+    "aufs"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=543607&dur=3918"
+  },
+  {
+   "id": "de-b1-219",
+   "text": "Die Wörter «co» und «gmbh» stehen hier.",
+   "fa": "واژههای «co» و «gmbh» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "co",
+    "gmbh"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=547525&dur=3056"
+  },
+  {
+   "id": "de-b1-220",
+   "text": "Der Lehrer erklärt «klingt» und «knapp» noch einmal.",
+   "fa": "معلم دوباره «klingt» و «knapp» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "klingt",
+    "knapp"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=550581&dur=3265"
+  },
+  {
+   "id": "de-b1-221",
+   "text": "Im Text stehen «live» und «mannschaft».",
+   "fa": "در متن «live» و «mannschaft» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "live",
+    "mannschaft"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=553846&dur=2560"
+  },
+  {
+   "id": "de-b1-222",
+   "text": "Wir haben «ordnung» und «bezeichnet» hier.",
+   "fa": "ما «ordnung» و «bezeichnet» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "ordnung",
+    "bezeichnet"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=556406&dur=2743"
+  },
+  {
+   "id": "de-b1-223",
+   "text": "Das ist «dollar».",
+   "fa": "این «dollar» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "dollar"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=559149&dur=1228"
+  },
+  {
+   "id": "de-b1-224",
+   "text": "Das Wort «entweder» steht hier.",
+   "fa": "واژهٔ «entweder» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "entweder"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=560377&dur=2194"
+  },
+  {
+   "id": "de-b1-225",
+   "text": "Ich lese «geh» heute.",
+   "fa": "امروز «geh» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "geh"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=562571&dur=1567"
+  },
+  {
+   "id": "de-b1-226",
+   "text": "Ich verstehe «gewählt» jetzt besser.",
+   "fa": "اکنون «gewählt» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "gewählt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=564138&dur=2247"
+  },
+  {
+   "id": "de-b1-227",
+   "text": "Der Lehrer erklärt «john», «leipzig» und «runde» noch einmal.",
+   "fa": "معلم دوباره «john»، «leipzig» و «runde» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "john",
+    "leipzig",
+    "runde"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=566385&dur=3918"
+  },
+  {
+   "id": "de-b1-228",
+   "text": "Ich habe «serie», «total» und «veröffentlicht» geschrieben.",
+   "fa": "من «serie»، «total» و «veröffentlicht» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "serie",
+    "total",
+    "veröffentlicht"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=570303&dur=3814"
+  },
+  {
+   "id": "de-b1-229",
+   "text": "Wir haben «ähnlich», «bank» und «beitrag» im Text gelesen.",
+   "fa": "ما «ähnlich»، «bank» و «beitrag» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "ähnlich",
+    "bank",
+    "beitrag",
+    "beiträge"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=574117&dur=3840"
+  },
+  {
+   "id": "de-b1-230",
+   "text": "Ich kann «erkennen», «gesetz» und «hotel» jetzt besser verstehen.",
+   "fa": "اکنون «erkennen»، «gesetz» و «hotel» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "erkennen",
+    "gesetz",
+    "gesetzt",
+    "hotel"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=577957&dur=3866"
+  },
+  {
+   "id": "de-b1-231",
+   "text": "Die Wörter «jedenfalls» und «ländern» stehen hier.",
+   "fa": "واژههای «jedenfalls» و «ländern» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "jedenfalls",
+    "ländern",
+    "länder"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=581823&dur=3109"
+  },
+  {
+   "id": "de-b1-232",
+   "text": "Der Lehrer erklärt «nennen» und «zieht» noch einmal.",
+   "fa": "معلم دوباره «nennen» و «zieht» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "nennen",
+    "zieht"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=584932&dur=3135"
+  },
+  {
+   "id": "de-b1-233",
+   "text": "Im Text stehen «aktuell» und «bewegung».",
+   "fa": "در متن «aktuell» و «bewegung» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "aktuell",
+    "aktuelle",
+    "aktuellen",
+    "bewegung",
+    "bewegen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=588067&dur=2691"
+  },
+  {
+   "id": "de-b1-234",
+   "text": "Wir haben «china» und «ehe» hier.",
+   "fa": "ما «china» و «ehe» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "china",
+    "ehe"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=590758&dur=2377"
+  },
+  {
+   "id": "de-b1-235",
+   "text": "Das ist «erde».",
+   "fa": "این «erde» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "erde"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=593135&dur=1176"
+  },
+  {
+   "id": "de-b1-236",
+   "text": "Das Wort «flüchtlinge» steht hier.",
+   "fa": "واژهٔ «flüchtlinge» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "flüchtlinge"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=594311&dur=2194"
+  },
+  {
+   "id": "de-b1-237",
+   "text": "Ich lese «folgt» heute.",
+   "fa": "امروز «folgt» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "folgt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=596505&dur=1829"
+  },
+  {
+   "id": "de-b1-238",
+   "text": "Ich verstehe «gebe» jetzt besser.",
+   "fa": "اکنون «gebe» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "gebe"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=598334&dur=2090"
+  },
+  {
+   "id": "de-b1-239",
+   "text": "Der Lehrer erklärt «gehabt», «gespielt» und «gewalt» noch einmal.",
+   "fa": "معلم دوباره «gehabt»، «gespielt» و «gewalt» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "gehabt",
+    "gespielt",
+    "gewalt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=600424&dur=4101"
+  },
+  {
+   "id": "de-b1-240",
+   "text": "Ich habe «gold», «karl» und «nix» geschrieben.",
+   "fa": "من «gold»، «karl» و «nix» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "gold",
+    "karl",
+    "nix"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=604525&dur=3082"
+  },
+  {
+   "id": "de-b1-241",
+   "text": "Wir haben «sieg», «universität» und «verdient» im Text gelesen.",
+   "fa": "ما «sieg»، «universität» و «verdient» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "sieg",
+    "universität",
+    "verdient",
+    "verdienen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=607607&dur=4258"
+  },
+  {
+   "id": "de-b1-242",
+   "text": "Ich kann «verhalten», «aktiv» und «bildung» jetzt besser verstehen.",
+   "fa": "اکنون «verhalten»، «aktiv» و «bildung» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "verhalten",
+    "aktiv",
+    "bildung"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=611865&dur=4153"
+  },
+  {
+   "id": "de-b1-243",
+   "text": "Die Wörter «darunter» und «denkt» stehen hier.",
+   "fa": "واژههای «darunter» و «denkt» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "darunter",
+    "denkt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=616018&dur=2926"
+  },
+  {
+   "id": "de-b1-244",
+   "text": "Der Lehrer erklärt «dürfte» und «eh» noch einmal.",
+   "fa": "معلم دوباره «dürfte» و «eh» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "dürfte",
+    "eh"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=618944&dur=3056"
+  },
+  {
+   "id": "de-b1-245",
+   "text": "Im Text stehen «gefragt» und «glücklich».",
+   "fa": "در متن «gefragt» و «glücklich» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "gefragt",
+    "glücklich"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=622000&dur=2691"
+  },
+  {
+   "id": "de-b1-246",
+   "text": "Wir haben «hart» und «landes» hier.",
+   "fa": "ما «hart» و «landes» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "hart",
+    "landes"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=624691&dur=2482"
+  },
+  {
+   "id": "de-b1-247",
+   "text": "Das ist «linken».",
+   "fa": "این «linken» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "linken",
+    "linke"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=627173&dur=1254"
+  },
+  {
+   "id": "de-b1-248",
+   "text": "Das Wort «post» steht hier.",
+   "fa": "واژهٔ «post» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "post"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=628427&dur=1985"
+  },
+  {
+   "id": "de-b1-249",
+   "text": "Ich lese «sinne» heute.",
+   "fa": "امروز «sinne» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "sinne"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=630412&dur=1620"
+  },
+  {
+   "id": "de-b1-250",
+   "text": "Ich verstehe «werk» jetzt besser.",
+   "fa": "اکنون «werk» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "werk"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=632032&dur=2142"
+  },
+  {
+   "id": "de-b1-251",
+   "text": "Der Lehrer erklärt «begriff», «drin» und «fans» noch einmal.",
+   "fa": "معلم دوباره «begriff»، «drin» و «fans» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "begriff",
+    "drin",
+    "fans"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=634174&dur=3866"
+  },
+  {
+   "id": "de-b1-252",
+   "text": "Ich habe «freien», «freiheit» und «hannover» geschrieben.",
+   "fa": "من «freien»، «freiheit» و «hannover» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "freien",
+    "freie",
+    "freiheit",
+    "hannover"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=638040&dur=3500"
+  },
+  {
+   "id": "de-b1-253",
+   "text": "Wir haben «lebt», «nennt» und «stolz» im Text gelesen.",
+   "fa": "ما «lebt»، «nennt» و «stolz» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "lebt",
+    "nennt",
+    "stolz"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=641540&dur=3840"
+  },
+  {
+   "id": "de-b1-254",
+   "text": "Ich kann «verfahren», «vorstellen» und «york» jetzt besser verstehen.",
+   "fa": "اکنون «verfahren»، «vorstellen» و «york» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "verfahren",
+    "vorstellen",
+    "vorstellung",
+    "york"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=645380&dur=4232"
+  },
+  {
+   "id": "de-b1-255",
+   "text": "Die Wörter «zahlreiche» und «absolut» stehen hier.",
+   "fa": "واژههای «zahlreiche» و «absolut» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "zahlreiche",
+    "zahlreichen",
+    "absolut"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=649612&dur=3265"
+  },
+  {
+   "id": "de-b1-256",
+   "text": "Der Lehrer erklärt «auswahl» und «christian» noch einmal.",
+   "fa": "معلم دوباره «auswahl» و «christian» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "auswahl",
+    "christian"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=652877&dur=3657"
+  },
+  {
+   "id": "de-b1-257",
+   "text": "Im Text stehen «derzeit» und «erfolgreich».",
+   "fa": "در متن «derzeit» و «erfolgreich» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "derzeit",
+    "erfolgreich"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=656534&dur=2795"
+  },
+  {
+   "id": "de-b1-258",
+   "text": "Wir haben «freude» und «jungs» hier.",
+   "fa": "ما «freude» و «jungs» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "freude",
+    "jungs"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=659329&dur=2508"
+  },
+  {
+   "id": "de-b1-259",
+   "text": "Das ist «leistung».",
+   "fa": "این «leistung» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "leistung",
+    "leisten",
+    "leistungen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=661837&dur=1332"
+  },
+  {
+   "id": "de-b1-260",
+   "text": "Das Wort «meint» steht hier.",
+   "fa": "واژهٔ «meint» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "meint",
+    "meinte"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=663169&dur=2038"
+  },
+  {
+   "id": "de-b1-261",
+   "text": "Ich lese «regelmässig» heute.",
+   "fa": "امروز «regelmässig» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "regelmässig"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=665207&dur=1985"
+  },
+  {
+   "id": "de-b1-262",
+   "text": "Ich verstehe «trifft» jetzt besser.",
+   "fa": "اکنون «trifft» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "trifft"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=667192&dur=2194"
+  },
+  {
+   "id": "de-b1-263",
+   "text": "Der Lehrer erklärt «vertrag», «befindet» und «en» noch einmal.",
+   "fa": "معلم دوباره «vertrag»، «befindet» و «en» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "vertrag",
+    "vertrauen",
+    "vertreten",
+    "vertreter",
+    "befindet",
+    "befinden",
+    "en"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=669386&dur=4075"
+  },
+  {
+   "id": "de-b1-264",
+   "text": "Ich habe «erstmals», «getan» und «grenzen» geschrieben.",
+   "fa": "من «erstmals»، «getan» و «grenzen» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "erstmals",
+    "erstmal",
+    "getan",
+    "grenzen",
+    "grenze"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=673461&dur=3631"
+  },
+  {
+   "id": "de-b1-265",
+   "text": "Wir haben «hund», «sicht» und «zeitpunkt» im Text gelesen.",
+   "fa": "ما «hund»، «sicht» و «zeitpunkt» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "hund",
+    "sicht",
+    "zeitpunkt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=677092&dur=4075"
+  },
+  {
+   "id": "de-b1-266",
+   "text": "Ich kann «anzahl», «baden» und «bau» jetzt besser verstehen.",
+   "fa": "اکنون «anzahl»، «baden» و «bau» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "anzahl",
+    "baden",
+    "bau"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=681167&dur=3814"
+  },
+  {
+   "id": "de-b1-267",
+   "text": "Die Wörter «bloss» und «entsprechend» stehen hier.",
+   "fa": "واژههای «bloss» و «entsprechend» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "bloss",
+    "entsprechend",
+    "entspricht",
+    "entsprechenden",
+    "entsprechende"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=684981&dur=3004"
+  },
+  {
+   "id": "de-b1-268",
+   "text": "Der Lehrer erklärt «heutigen» und «sobald» noch einmal.",
+   "fa": "معلم دوباره «heutigen» و «sobald» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "heutigen",
+    "sobald"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=687985&dur=3474"
+  },
+  {
+   "id": "de-b1-269",
+   "text": "Im Text stehen «solange» und «sonne».",
+   "fa": "در متن «solange» و «sonne» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "solange",
+    "sonne"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=691459&dur=2429"
+  },
+  {
+   "id": "de-b1-270",
+   "text": "Wir haben «tiere» und «trägt» hier.",
+   "fa": "ما «tiere» و «trägt» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "tiere",
+    "trägt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=693888&dur=2586"
+  },
+  {
+   "id": "de-b1-271",
+   "text": "Das ist «volk».",
+   "fa": "این «volk» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "volk"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=696474&dur=1228"
+  },
+  {
+   "id": "de-b1-272",
+   "text": "Das Wort «al» steht hier.",
+   "fa": "واژهٔ «al» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "al"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=697702&dur=1985"
+  },
+  {
+   "id": "de-b1-273",
+   "text": "Ich lese «arsch» heute.",
+   "fa": "امروز «arsch» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "arsch"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=699687&dur=1646"
+  },
+  {
+   "id": "de-b1-274",
+   "text": "Ich verstehe «frank» jetzt besser.",
+   "fa": "اکنون «frank» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "frank"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=701333&dur=2194"
+  },
+  {
+   "id": "de-b1-275",
+   "text": "Der Lehrer erklärt «gesamte», «gezeigt» und «internationalen» noch einmal.",
+   "fa": "معلم دوباره «gesamte»، «gezeigt» و «internationalen» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "gesamte",
+    "gesamten",
+    "gezeigt",
+    "internationalen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=703527&dur=4624"
+  },
+  {
+   "id": "de-b1-276",
+   "text": "Ich habe «kontakt», «laden» und «lustig» geschrieben.",
+   "fa": "من «kontakt»، «laden» و «lustig» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "kontakt",
+    "laden",
+    "lustig"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=708151&dur=3448"
+  },
+  {
+   "id": "de-b1-277",
+   "text": "Wir haben «perfekt», «position» und «schloss» im Text gelesen.",
+   "fa": "ما «perfekt»، «position» و «schloss» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "perfekt",
+    "position",
+    "positiv",
+    "schloss"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=711599&dur=4258"
+  },
+  {
+   "id": "de-b1-278",
+   "text": "Ich kann «schutz», «ständig» und «wagen» jetzt besser verstehen.",
+   "fa": "اکنون «schutz»، «ständig» و «wagen» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "schutz",
+    "ständig",
+    "wagen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=715857&dur=3918"
+  },
+  {
+   "id": "de-b1-279",
+   "text": "Die Wörter «winter» und «zusätzlich» stehen hier.",
+   "fa": "واژههای «winter» و «zusätzlich» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "winter",
+    "zusätzlich"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=719775&dur=3109"
+  },
+  {
+   "id": "de-b1-280",
+   "text": "Der Lehrer erklärt «ag» und «anschliessend» noch einmal.",
+   "fa": "معلم دوباره «ag» و «anschliessend» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "ag",
+    "anschliessend"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=722884&dur=3448"
+  },
+  {
+   "id": "de-b1-281",
+   "text": "Im Text stehen «italien» und «legen».",
+   "fa": "در متن «italien» و «legen» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "italien",
+    "legen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=726332&dur=2586"
+  },
+  {
+   "id": "de-b1-282",
+   "text": "Wir haben «london» und «naja» hier.",
+   "fa": "ما «london» و «naja» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "london",
+    "naja"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=728918&dur=2560"
+  },
+  {
+   "id": "de-b1-283",
+   "text": "Das ist «quelle».",
+   "fa": "این «quelle» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "quelle",
+    "quellen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=731478&dur=1228"
+  },
+  {
+   "id": "de-b1-284",
+   "text": "Das Wort «sachsen» steht hier.",
+   "fa": "واژهٔ «sachsen» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "sachsen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=732706&dur=2090"
+  },
+  {
+   "id": "de-b1-285",
+   "text": "Ich lese «technik» heute.",
+   "fa": "امروز «technik» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "technik"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=734796&dur=1776"
+  },
+  {
+   "id": "de-b1-286",
+   "text": "Ich verstehe «union» jetzt besser.",
+   "fa": "اکنون «union» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "union"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=736572&dur=2247"
+  },
+  {
+   "id": "de-b1-287",
+   "text": "Der Lehrer erklärt «verletzt», «werbung» und «amt» noch einmal.",
+   "fa": "معلم دوباره «verletzt»، «werbung» و «amt» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "verletzt",
+    "werbung",
+    "amt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=738819&dur=3944"
+  },
+  {
+   "id": "de-b1-288",
+   "text": "Ich habe «auge», «betrieb» und «bier» geschrieben.",
+   "fa": "من «auge»، «betrieb» و «bier» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "auge",
+    "betrieb",
+    "bier"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=742763&dur=3135"
+  },
+  {
+   "id": "de-b1-289",
+   "text": "Wir haben «brachte», «club» und «einfluss» im Text gelesen.",
+   "fa": "ما «brachte»، «club» و «einfluss» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "brachte",
+    "club",
+    "einfluss"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=745898&dur=3971"
+  },
+  {
+   "id": "de-b1-290",
+   "text": "Ich kann «erwähnt», «fällen» und «fühlen» jetzt besser verstehen.",
+   "fa": "اکنون «erwähnt»، «fällen» و «fühlen» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "erwähnt",
+    "fällen",
+    "fälle",
+    "fühlen",
+    "fühle"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=749869&dur=3892"
+  },
+  {
+   "id": "de-b1-291",
+   "text": "Die Wörter «fürs» und «gebiet» stehen hier.",
+   "fa": "واژههای «fürs» و «gebiet» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "fürs",
+    "gebiet"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=753761&dur=2847"
+  },
+  {
+   "id": "de-b1-292",
+   "text": "Der Lehrer erklärt «himmel» und «jahrhundert» noch einmal.",
+   "fa": "معلم دوباره «himmel» و «jahrhundert» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "himmel",
+    "jahrhundert",
+    "jahrhunderts"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=756608&dur=3396"
+  },
+  {
+   "id": "de-b1-293",
+   "text": "Im Text stehen «jugend» und «maria».",
+   "fa": "در متن «jugend» و «maria» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "jugend",
+    "maria"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=760004&dur=2560"
+  },
+  {
+   "id": "de-b1-294",
+   "text": "Wir haben «massnahmen» und «patienten» hier.",
+   "fa": "ما «massnahmen» و «patienten» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "massnahmen",
+    "patienten"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=762564&dur=2873"
+  },
+  {
+   "id": "de-b1-295",
+   "text": "Das ist «persönlich».",
+   "fa": "این «persönlich» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "persönlich",
+    "persönliche"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=765437&dur=1489"
+  },
+  {
+   "id": "de-b1-296",
+   "text": "Das Wort «tief» steht hier.",
+   "fa": "واژهٔ «tief» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "tief"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=766926&dur=2011"
+  },
+  {
+   "id": "de-b1-297",
+   "text": "Ich lese «verbunden» heute.",
+   "fa": "امروز «verbunden» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "verbunden"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=768937&dur=1881"
+  },
+  {
+   "id": "de-b1-298",
+   "text": "Ich verstehe «voller» jetzt besser.",
+   "fa": "اکنون «voller» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "voller"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=770818&dur=2116"
+  },
+  {
+   "id": "de-b1-299",
+   "text": "Der Lehrer erklärt «autos», «bauen» und «energie» noch einmal.",
+   "fa": "معلم دوباره «autos»، «bauen» و «energie» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "autos",
+    "bauen",
+    "energie"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=772934&dur=3918"
+  },
+  {
+   "id": "de-b1-300",
+   "text": "Ich habe «erinnert», «ex» und «fuss» geschrieben.",
+   "fa": "من «erinnert»، «ex» و «fuss» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "erinnert",
+    "erinnern",
+    "erinnerung",
+    "ex",
+    "fuss"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=776852&dur=3109"
+  },
+  {
+   "id": "de-b1-301",
+   "text": "Wir haben «geboren», «herzen» und «hoffnung» im Text gelesen.",
+   "fa": "ما «geboren»، «herzen» و «hoffnung» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "geboren",
+    "herzen",
+    "hoffnung"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=779961&dur=3997"
+  },
+  {
+   "id": "de-b1-302",
+   "text": "Ich kann «holen», «kilometer» und «merkel» jetzt besser verstehen.",
+   "fa": "اکنون «holen»، «kilometer» و «merkel» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "holen",
+    "kilometer",
+    "merkel"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=783958&dur=4075"
+  },
+  {
+   "id": "de-b1-303",
+   "text": "Die Wörter «relativ» und «show» stehen hier.",
+   "fa": "واژههای «relativ» و «show» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "relativ",
+    "show"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=788033&dur=2952"
+  },
+  {
+   "id": "de-b1-304",
+   "text": "Der Lehrer erklärt «sitzt» und «sterben» noch einmal.",
+   "fa": "معلم دوباره «sitzt» و «sterben» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "sitzt",
+    "sterben"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=790985&dur=3291"
+  },
+  {
+   "id": "de-b1-305",
+   "text": "Im Text stehen «stets» und «tolle».",
+   "fa": "در متن «stets» و «tolle» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "stets",
+    "tolle"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=794276&dur=2508"
+  },
+  {
+   "id": "de-b1-306",
+   "text": "Wir haben «trainer» und «usw» hier.",
+   "fa": "ما «trainer» و «usw» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "trainer",
+    "training",
+    "usw"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=796784&dur=2456"
+  },
+  {
+   "id": "de-b1-307",
+   "text": "Das ist «wald».",
+   "fa": "این «wald» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "wald"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=799240&dur=1228"
+  },
+  {
+   "id": "de-b1-308",
+   "text": "Das Wort «abschluss» steht hier.",
+   "fa": "واژهٔ «abschluss» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "abschluss"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=800468&dur=2194"
+  },
+  {
+   "id": "de-b1-309",
+   "text": "Ich lese «aufgenommen» heute.",
+   "fa": "امروز «aufgenommen» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "aufgenommen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=802662&dur=1933"
+  },
+  {
+   "id": "de-b1-310",
+   "text": "Ich verstehe «basis» jetzt besser.",
+   "fa": "اکنون «basis» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "basis"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=804595&dur=2220"
+  },
+  {
+   "id": "de-b1-311",
+   "text": "Der Lehrer erklärt «begann», «dahin» und «ding» noch einmal.",
+   "fa": "معلم دوباره «begann»، «dahin» و «ding» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "begann",
+    "dahin",
+    "ding"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=806815&dur=3683"
+  },
+  {
+   "id": "de-b1-312",
+   "text": "Ich habe «friedrich», «gelten» und «gesucht» geschrieben.",
+   "fa": "من «friedrich»، «gelten» و «gesucht» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "friedrich",
+    "frieden",
+    "gelten",
+    "gesucht"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=810498&dur=3422"
+  },
+  {
+   "id": "de-b1-313",
+   "text": "Wir haben «meinst», «nötig» und «partner» im Text gelesen.",
+   "fa": "ما «meinst»، «nötig» و «partner» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "meinst",
+    "nötig",
+    "partner"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=813920&dur=3918"
+  },
+  {
+   "id": "de-b1-314",
+   "text": "Ich kann «party», «qualität» und «schaden» jetzt besser verstehen.",
+   "fa": "اکنون «party»، «qualität» و «schaden» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "party",
+    "qualität",
+    "schaden",
+    "schade"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=817838&dur=4232"
+  },
+  {
+   "id": "de-b1-315",
+   "text": "Die Wörter «tor» und «täglich» stehen hier.",
+   "fa": "واژههای «tor» و «täglich» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "tor",
+    "täglich"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=822070&dur=2900"
+  },
+  {
+   "id": "de-b1-316",
+   "text": "Der Lehrer erklärt «verlieren» und «wahr» noch einmal.",
+   "fa": "معلم دوباره «verlieren» و «wahr» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "verlieren",
+    "wahr"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=824970&dur=3344"
+  },
+  {
+   "id": "de-b1-317",
+   "text": "Im Text stehen «aktion» und «anteil».",
+   "fa": "در متن «aktion» و «anteil» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "aktion",
+    "anteil"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=828314&dur=2769"
+  },
+  {
+   "id": "de-b1-318",
+   "text": "Wir haben «ausschliesslich» und «beziehung» hier.",
+   "fa": "ما «ausschliesslich» و «beziehung» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "ausschliesslich",
+    "beziehung"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=831083&dur=2900"
+  },
+  {
+   "id": "de-b1-319",
+   "text": "Das ist «david».",
+   "fa": "این «david» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "david"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=833983&dur=1228"
+  },
+  {
+   "id": "de-b1-320",
+   "text": "Das Wort «dresden» steht hier.",
+   "fa": "واژهٔ «dresden» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "dresden"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=835211&dur=2064"
+  },
+  {
+   "id": "de-b1-321",
+   "text": "Ich lese «funktion» heute.",
+   "fa": "امروز «funktion» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "funktion"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=837275&dur=2090"
+  },
+  {
+   "id": "de-b1-322",
+   "text": "Ich verstehe «genutzt» jetzt besser.",
+   "fa": "اکنون «genutzt» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "genutzt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=839365&dur=2220"
+  },
+  {
+   "id": "de-b1-323",
+   "text": "Der Lehrer erklärt «haut», «hielt» und «inhalt» noch einmal.",
+   "fa": "معلم دوباره «haut»، «hielt» و «inhalt» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "haut",
+    "hielt",
+    "inhalt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=841585&dur=3944"
+  },
+  {
+   "id": "de-b1-324",
+   "text": "Ich habe «kontrolle», «rücken» und «soldaten» geschrieben.",
+   "fa": "من «kontrolle»، «rücken» و «soldaten» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "kontrolle",
+    "rücken",
+    "soldaten"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=845529&dur=3553"
+  },
+  {
+   "id": "de-b1-325",
+   "text": "Wir haben «sozialen», «vergangenheit» und «wirkt» im Text gelesen.",
+   "fa": "ما «sozialen»، «vergangenheit» و «wirkt» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "sozialen",
+    "soziale",
+    "vergangenheit",
+    "vergangenen",
+    "wirkt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=849082&dur=4519"
+  },
+  {
+   "id": "de-b1-326",
+   "text": "Ich kann «zustand», «bewusst» und «bremen» jetzt besser verstehen.",
+   "fa": "اکنون «zustand»، «bewusst» و «bremen» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "zustand",
+    "bewusst",
+    "bremen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=853601&dur=3997"
+  },
+  {
+   "id": "de-b1-327",
+   "text": "Die Wörter «damen» und «diskussion» stehen hier.",
+   "fa": "واژههای «damen» و «diskussion» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "damen",
+    "diskussion"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=857598&dur=3030"
+  },
+  {
+   "id": "de-b1-328",
+   "text": "Der Lehrer erklärt «fort» und «franz» noch einmal.",
+   "fa": "معلم دوباره «fort» و «franz» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "fort",
+    "franz"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=860628&dur=3265"
+  },
+  {
+   "id": "de-b1-329",
+   "text": "Im Text stehen «gehalten» und «gestorben».",
+   "fa": "در متن «gehalten» و «gestorben» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "gehalten",
+    "gestorben"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=863893&dur=2638"
+  },
+  {
+   "id": "de-b1-330",
+   "text": "Wir haben «ideen» und «künstler» hier.",
+   "fa": "ما «ideen» و «künstler» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "ideen",
+    "künstler"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=866531&dur=2612"
+  },
+  {
+   "id": "de-b1-331",
+   "text": "Das ist «literatur».",
+   "fa": "این «literatur» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "literatur"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=869143&dur=1515"
+  },
+  {
+   "id": "de-b1-332",
+   "text": "Das Wort «miteinander» steht hier.",
+   "fa": "واژهٔ «miteinander» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "miteinander"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=870658&dur=2247"
+  },
+  {
+   "id": "de-b1-333",
+   "text": "Ich lese «organisation» heute.",
+   "fa": "امروز «organisation» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "organisation"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=872905&dur=2194"
+  },
+  {
+   "id": "de-b1-334",
+   "text": "Ich verstehe «rennen» jetzt besser.",
+   "fa": "اکنون «rennen» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "rennen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=875099&dur=2090"
+  },
+  {
+   "id": "de-b1-335",
+   "text": "Der Lehrer erklärt «sage», «sekunden» und «türkei» noch einmal.",
+   "fa": "معلم دوباره «sage»، «sekunden» و «türkei» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "sage",
+    "sekunden",
+    "türkei"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=877189&dur=4127"
+  },
+  {
+   "id": "de-b1-336",
+   "text": "Ich habe «umgebung», «weltweit» und «wünsche» geschrieben.",
+   "fa": "من «umgebung»، «weltweit» و «wünsche» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "umgebung",
+    "weltweit",
+    "wünsche",
+    "wünschen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=881316&dur=3579"
+  },
+  {
+   "id": "de-b1-337",
+   "text": "Wir haben «youtube», «düsseldorf» und «et» im Text gelesen.",
+   "fa": "ما «youtube»، «düsseldorf» و «et» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "youtube",
+    "düsseldorf",
+    "et"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=884895&dur=3918"
+  },
+  {
+   "id": "de-b1-338",
+   "text": "Ich kann «geburtstag», «grundsätzlich» und «hände» jetzt besser verstehen.",
+   "fa": "اکنون «geburtstag»، «grundsätzlich» و «hände» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "geburtstag",
+    "grundsätzlich",
+    "hände"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=888813&dur=4389"
+  },
+  {
+   "id": "de-b1-339",
+   "text": "Die Wörter «insel» und «netz» stehen hier.",
+   "fa": "واژههای «insel» و «netz» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "insel",
+    "netz"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=893202&dur=2743"
+  },
+  {
+   "id": "de-b1-340",
+   "text": "Der Lehrer erklärt «vorhanden» und «wolfgang» noch einmal.",
+   "fa": "معلم دوباره «vorhanden» و «wolfgang» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "vorhanden",
+    "wolfgang"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=895945&dur=3631"
+  },
+  {
+   "id": "de-b1-341",
+   "text": "Im Text stehen «zuhause» und «autor».",
+   "fa": "در متن «zuhause» و «autor» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "zuhause",
+    "autor"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=899576&dur=2691"
+  },
+  {
+   "id": "de-b1-342",
+   "text": "Wir haben «dumm» und «eindruck» hier.",
+   "fa": "ما «dumm» و «eindruck» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "dumm",
+    "eindruck"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=902267&dur=2508"
+  },
+  {
+   "id": "de-b1-343",
+   "text": "Das ist «enthält».",
+   "fa": "این «enthält» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "enthält"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=904775&dur=1384"
+  },
+  {
+   "id": "de-b1-344",
+   "text": "Das Wort «entstehen» steht hier.",
+   "fa": "واژهٔ «entstehen» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "entstehen",
+    "entstanden",
+    "entsteht"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=906159&dur=2194"
+  },
+  {
+   "id": "de-b1-345",
+   "text": "Ich lese «feiern» heute.",
+   "fa": "امروز «feiern» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "feiern"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=908353&dur=1750"
+  },
+  {
+   "id": "de-b1-346",
+   "text": "Ich verstehe «feuer» jetzt besser.",
+   "fa": "اکنون «feuer» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "feuer"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=910103&dur=2142"
+  },
+  {
+   "id": "de-b1-347",
+   "text": "Der Lehrer erklärt «halle», «hingegen» und «kamera» noch einmal.",
+   "fa": "معلم دوباره «halle»، «hingegen» و «kamera» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "halle",
+    "hingegen",
+    "kamera"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=912245&dur=4127"
+  },
+  {
+   "id": "de-b1-348",
+   "text": "Ich habe «lachen», «szene» und «verhindern» geschrieben.",
+   "fa": "من «lachen»، «szene» و «verhindern» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "lachen",
+    "szene",
+    "verhindern"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=916372&dur=3422"
+  },
+  {
+   "id": "de-b1-349",
+   "text": "Wir haben «zugleich», «zählt» und «album» im Text gelesen.",
+   "fa": "ما «zugleich»، «zählt» و «album» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "zugleich",
+    "zählt",
+    "album"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=919794&dur=4075"
+  },
+  {
+   "id": "de-b1-350",
+   "text": "Ich kann «allgemein», «bundesliga» und «dar» jetzt besser verstehen.",
+   "fa": "اکنون «allgemein»، «bundesliga» و «dar» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "allgemein",
+    "allgemeinen",
+    "allgemeine",
+    "bundesliga",
+    "dar"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=923869&dur=4075"
+  },
+  {
+   "id": "de-b1-351",
+   "text": "Die Wörter «demokratie» und «entdeckt» stehen hier.",
+   "fa": "واژههای «demokratie» و «entdeckt» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "demokratie",
+    "entdeckt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=927944&dur=3187"
+  },
+  {
+   "id": "de-b1-352",
+   "text": "Der Lehrer erklärt «extrem» und «gebaut» noch einmal.",
+   "fa": "معلم دوباره «extrem» و «gebaut» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "extrem",
+    "gebaut"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=931131&dur=3422"
+  },
+  {
+   "id": "de-b1-353",
+   "text": "Im Text stehen «jährige» und «link».",
+   "fa": "در متن «jährige» و «link» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "jährige",
+    "jährigen",
+    "link"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=934553&dur=2534"
+  },
+  {
+   "id": "de-b1-354",
+   "text": "Wir haben «längst» und «mund» hier.",
+   "fa": "ما «längst» و «mund» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "längst",
+    "mund"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=937087&dur=2456"
+  },
+  {
+   "id": "de-b1-355",
+   "text": "Das ist «osten».",
+   "fa": "این «osten» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "osten"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=939543&dur=1202"
+  },
+  {
+   "id": "de-b1-356",
+   "text": "Das Wort «schützen» steht hier.",
+   "fa": "واژهٔ «schützen» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "schützen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=940745&dur=2090"
+  },
+  {
+   "id": "de-b1-357",
+   "text": "Ich lese «tot» heute.",
+   "fa": "امروز «tot» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "tot"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=942835&dur=1698"
+  },
+  {
+   "id": "de-b1-358",
+   "text": "Ich verstehe «tritt» jetzt besser.",
+   "fa": "اکنون «tritt» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "tritt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=944533&dur=2142"
+  },
+  {
+   "id": "de-b1-359",
+   "text": "Der Lehrer erklärt «verkehr», «wen» und «werke» noch einmal.",
+   "fa": "معلم دوباره «verkehr»، «wen» و «werke» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "verkehr",
+    "wen",
+    "werke"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=946675&dur=3997"
+  },
+  {
+   "id": "de-b1-360",
+   "text": "Ich habe «wiener», «wirken» und «anschluss» geschrieben.",
+   "fa": "من «wiener»، «wirken» و «anschluss» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "wiener",
+    "wirken",
+    "anschluss"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=950672&dur=3344"
+  },
+  {
+   "id": "de-b1-361",
+   "text": "Wir haben «arm», «armee» und «auftrag» im Text gelesen.",
+   "fa": "ما «arm»، «armee» و «auftrag» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "arm",
+    "armee",
+    "auftrag",
+    "auftritt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=954016&dur=3814"
+  },
+  {
+   "id": "de-b1-362",
+   "text": "Ich kann «ausland», «behandlung» und «böse» jetzt besser verstehen.",
+   "fa": "اکنون «ausland»، «behandlung» و «böse» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "ausland",
+    "behandlung",
+    "behandelt",
+    "böse"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=957830&dur=4023"
+  },
+  {
+   "id": "de-b1-363",
+   "text": "Die Wörter «diesmal» und «erhält» stehen hier.",
+   "fa": "واژههای «diesmal» و «erhält» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "diesmal",
+    "erhält"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=961853&dur=2900"
+  },
+  {
+   "id": "de-b1-364",
+   "text": "Der Lehrer erklärt «erscheint» und «fiel» noch einmal.",
+   "fa": "معلم دوباره «erscheint» و «fiel» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "erscheint",
+    "fiel"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=964753&dur=3318"
+  },
+  {
+   "id": "de-b1-365",
+   "text": "Im Text stehen «herbst» und «hoffentlich».",
+   "fa": "در متن «herbst» و «hoffentlich» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "herbst",
+    "hoffentlich"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=968071&dur=2743"
+  },
+  {
+   "id": "de-b1-366",
+   "text": "Wir haben «konzept» und «kämpfen» hier.",
+   "fa": "ما «konzept» و «kämpfen» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "konzept",
+    "konzert",
+    "kämpfen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=970814&dur=2926"
+  },
+  {
+   "id": "de-b1-367",
+   "text": "Das ist «min».",
+   "fa": "این «min» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "min"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=973740&dur=1202"
+  },
+  {
+   "id": "de-b1-368",
+   "text": "Das Wort «notwendig» steht hier.",
+   "fa": "واژهٔ «notwendig» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "notwendig"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=974942&dur=2273"
+  },
+  {
+   "id": "de-b1-369",
+   "text": "Ich lese «plus» heute.",
+   "fa": "امروز «plus» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "plus"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=977215&dur=1698"
+  },
+  {
+   "id": "de-b1-370",
+   "text": "Ich verstehe «professor» jetzt besser.",
+   "fa": "اکنون «professor» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "professor"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=978913&dur=2403"
+  },
+  {
+   "id": "de-b1-371",
+   "text": "Der Lehrer erklärt «rat», «spiegel» und «spitze» noch einmal.",
+   "fa": "معلم دوباره «rat»، «spiegel» و «spitze» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "rat",
+    "spiegel",
+    "spitze"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=981316&dur=3918"
+  },
+  {
+   "id": "de-b1-372",
+   "text": "Ich habe «star», «test» und «tour» geschrieben.",
+   "fa": "من «star»، «test» و «tour» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "star",
+    "test",
+    "tour"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=985234&dur=3135"
+  },
+  {
+   "id": "de-b1-373",
+   "text": "Wir haben «wege», «wesentlich» und «wunsch» im Text gelesen.",
+   "fa": "ما «wege»، «wesentlich» و «wunsch» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "wege",
+    "wesentlich",
+    "wunsch"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=988369&dur=3971"
+  },
+  {
+   "id": "de-b1-374",
+   "text": "Ich kann «andreas», «blut» und «bürgermeister» jetzt besser verstehen.",
+   "fa": "اکنون «andreas»، «blut» و «bürgermeister» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "andreas",
+    "blut",
+    "bürgermeister"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=992340&dur=4101"
+  },
+  {
+   "id": "de-b1-375",
+   "text": "Die Wörter «ehemaligen» und «erlaubt» stehen hier.",
+   "fa": "واژههای «ehemaligen» و «erlaubt» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "ehemaligen",
+    "ehemalige",
+    "erlaubt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=996441&dur=3135"
+  },
+  {
+   "id": "de-b1-376",
+   "text": "Der Lehrer erklärt «fanden» und «führung» noch einmal.",
+   "fa": "معلم دوباره «fanden» و «führung» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "fanden",
+    "führung"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=999576&dur=3318"
+  },
+  {
+   "id": "de-b1-377",
+   "text": "Im Text stehen «garten» und «gegner».",
+   "fa": "در متن «garten» و «gegner» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "garten",
+    "gegner"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1002894&dur=2429"
+  },
+  {
+   "id": "de-b1-378",
+   "text": "Wir haben «heimat» und «industrie» hier.",
+   "fa": "ما «heimat» و «industrie» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "heimat",
+    "industrie"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1005323&dur=2743"
+  },
+  {
+   "id": "de-b1-379",
+   "text": "Das ist «innen».",
+   "fa": "این «innen» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "innen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1008066&dur=1097"
+  },
+  {
+   "id": "de-b1-380",
+   "text": "Das Wort «legt» steht hier.",
+   "fa": "واژهٔ «legt» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "legt"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1009163&dur=2064"
+  },
+  {
+   "id": "de-b1-381",
+   "text": "Ich lese «leitung» heute.",
+   "fa": "امروز «leitung» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "leitung"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1011227&dur=1776"
+  },
+  {
+   "id": "de-b1-382",
+   "text": "Ich verstehe «lied» jetzt besser.",
+   "fa": "اکنون «lied» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "lied"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1013003&dur=2090"
+  },
+  {
+   "id": "de-b1-383",
+   "text": "Der Lehrer erklärt «liga», «mehrheit» und «offensichtlich» noch einmal.",
+   "fa": "معلم دوباره «liga»، «mehrheit» و «offensichtlich» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "liga",
+    "mehrheit",
+    "offensichtlich"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1015093&dur=4336"
+  },
+  {
+   "id": "de-b1-384",
+   "text": "Ich habe «robert», «unglaublich» und «van» geschrieben.",
+   "fa": "من «robert»، «unglaublich» و «van» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "robert",
+    "unglaublich",
+    "van"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1019429&dur=3500"
+  },
+  {
+   "id": "de-b1-385",
+   "text": "Wir haben «vorne», «waffen» und «westen» im Text gelesen.",
+   "fa": "ما «vorne»، «waffen» و «westen» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "vorne",
+    "waffen",
+    "westen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1022929&dur=3736"
+  },
+  {
+   "id": "de-b1-386",
+   "text": "Ich kann «abs», «bezug» und «england» jetzt besser verstehen.",
+   "fa": "اکنون «abs»، «bezug» و «england» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "abs",
+    "bezug",
+    "england"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1026665&dur=3866"
+  },
+  {
+   "id": "de-b1-387",
+   "text": "Die Wörter «fernsehen» und «finale» stehen hier.",
+   "fa": "واژههای «fernsehen» و «finale» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "fernsehen",
+    "finale"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1030531&dur=3056"
+  },
+  {
+   "id": "de-b1-388",
+   "text": "Der Lehrer erklärt «find» und «general» noch einmal.",
+   "fa": "معلم دوباره «find» و «general» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "find",
+    "general",
+    "generation"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1033587&dur=3370"
+  },
+  {
+   "id": "de-b1-389",
+   "text": "Im Text stehen «kaiser» und «leiter».",
+   "fa": "در متن «kaiser» و «leiter» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "kaiser",
+    "leiter"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1036957&dur=2482"
+  },
+  {
+   "id": "de-b1-390",
+   "text": "Wir haben «polen» und «theater» hier.",
+   "fa": "ما «polen» و «theater» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "polen",
+    "theater"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1039439&dur=2612"
+  },
+  {
+   "id": "de-b1-391",
+   "text": "Das ist «traum».",
+   "fa": "این «traum» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "traum"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1042051&dur=1306"
+  },
+  {
+   "id": "de-b1-392",
+   "text": "Das Wort «werte» steht hier.",
+   "fa": "واژهٔ «werte» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "werte"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1043357&dur=2038"
+  },
+  {
+   "id": "de-b1-393",
+   "text": "Ich lese «wirkung» heute.",
+   "fa": "امروز «wirkung» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "wirkung"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1045395&dur=1802"
+  },
+  {
+   "id": "de-b1-394",
+   "text": "Ich verstehe «alexander» jetzt besser.",
+   "fa": "اکنون «alexander» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "alexander"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1047197&dur=2456"
+  },
+  {
+   "id": "de-b1-395",
+   "text": "Der Lehrer erklärt «anlage», «arme» und «arten» noch einmal.",
+   "fa": "معلم دوباره «anlage»، «arme» و «arten» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "anlage",
+    "arme",
+    "arten"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1049653&dur=3866"
+  },
+  {
+   "id": "de-b1-396",
+   "text": "Ich habe «baby», «brief» und «enthalten» geschrieben.",
+   "fa": "من «baby»، «brief» و «enthalten» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "baby",
+    "brief",
+    "enthalten"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1053519&dur=3396"
+  },
+  {
+   "id": "de-b1-397",
+   "text": "Wir haben «gewissen», «herum» und «juden» im Text gelesen.",
+   "fa": "ما «gewissen»، «herum» و «juden» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "gewissen",
+    "herum",
+    "juden"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1056915&dur=3814"
+  },
+  {
+   "id": "de-b1-398",
+   "text": "Ich kann «kauf», «landkreis» und «modell» jetzt besser verstehen.",
+   "fa": "اکنون «kauf»، «landkreis» و «modell» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "kauf",
+    "landkreis",
+    "modell"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1060729&dur=4049"
+  },
+  {
+   "id": "de-b1-399",
+   "text": "Die Wörter «religion» und «roten» stehen hier.",
+   "fa": "واژههای «religion» و «roten» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "religion",
+    "roten"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1064778&dur=3030"
+  },
+  {
+   "id": "de-b1-400",
+   "text": "Der Lehrer erklärt «stärker» und «urteil» noch einmal.",
+   "fa": "معلم دوباره «stärker» و «urteil» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "stärker",
+    "urteil"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1067808&dur=3318"
+  },
+  {
+   "id": "de-b1-401",
+   "text": "Im Text stehen «verwaltung» und «übernehmen».",
+   "fa": "در متن «verwaltung» و «übernehmen» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "verwaltung",
+    "übernehmen",
+    "übernommen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1071126&dur=2847"
+  },
+  {
+   "id": "de-b1-402",
+   "text": "Wir haben «angriff» und «bekam» hier.",
+   "fa": "ما «angriff» و «bekam» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "angriff",
+    "bekam"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1073973&dur=2612"
+  },
+  {
+   "id": "de-b1-403",
+   "text": "Das ist «echte».",
+   "fa": "این «echte» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "echte"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1076585&dur=1176"
+  },
+  {
+   "id": "de-b1-404",
+   "text": "Das Wort «forschung» steht hier.",
+   "fa": "واژهٔ «forschung» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "forschung"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1077761&dur=2142"
+  },
+  {
+   "id": "de-b1-405",
+   "text": "Ich lese «grundlage» heute.",
+   "fa": "امروز «grundlage» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "grundlage"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1079903&dur=1855"
+  },
+  {
+   "id": "de-b1-406",
+   "text": "Ich verstehe «herrn» jetzt besser.",
+   "fa": "اکنون «herrn» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "herrn"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1081758&dur=2090"
+  },
+  {
+   "id": "de-b1-407",
+   "text": "Der Lehrer erklärt «jung», «karriere» und «material» noch einmal.",
+   "fa": "معلم دوباره «jung»، «karriere» و «material» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "jung",
+    "karriere",
+    "material"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1083848&dur=4284"
+  },
+  {
+   "id": "de-b1-408",
+   "text": "Ich habe «seele», «strom» und «treten» geschrieben.",
+   "fa": "من «seele»، «strom» و «treten» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "seele",
+    "strom",
+    "treten"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1088132&dur=3422"
+  },
+  {
+   "id": "de-b1-409",
+   "text": "Wir haben «trump», «unfall» und «ungefähr» im Text gelesen.",
+   "fa": "ما «trump»، «unfall» و «ungefähr» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "trump",
+    "unfall",
+    "ungefähr"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1091554&dur=4023"
+  },
+  {
+   "id": "de-b1-410",
+   "text": "Ich kann «abgeschlossen», «daniel» und «entgegen» jetzt besser verstehen.",
+   "fa": "اکنون «abgeschlossen»، «daniel» و «entgegen» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "abgeschlossen",
+    "daniel",
+    "entgegen"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1095577&dur=4206"
+  },
+  {
+   "id": "de-b1-411",
+   "text": "Die Wörter «geil» und «gelegenheit» stehen hier.",
+   "fa": "واژههای «geil» و «gelegenheit» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "geil",
+    "gelegenheit"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1099783&dur=3004"
+  },
+  {
+   "id": "de-b1-412",
+   "text": "Der Lehrer erklärt «gingen» und «hinzu» noch einmal.",
+   "fa": "معلم دوباره «gingen» و «hinzu» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "gingen",
+    "hinzu"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1102787&dur=3265"
+  },
+  {
+   "id": "de-b1-413",
+   "text": "Im Text stehen «lauf» und «lief».",
+   "fa": "در متن «lauf» و «lief» آمده است.",
+   "pattern": "Im Text stehen <W1> und <W2>.",
+   "targetWords": [
+    "lauf",
+    "lief"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1106052&dur=2403"
+  },
+  {
+   "id": "de-b1-414",
+   "text": "Wir haben «rom» und «rum» hier.",
+   "fa": "ما «rom» و «rum» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "rom",
+    "rum"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1108455&dur=2351"
+  },
+  {
+   "id": "de-b1-415",
+   "text": "Das ist «strecke».",
+   "fa": "این «strecke» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "strecke"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1110806&dur=1280"
+  },
+  {
+   "id": "de-b1-416",
+   "text": "Das Wort «städte» steht hier.",
+   "fa": "واژهٔ «städte» اینجا نوشته شده است.",
+   "pattern": "Das Wort <W1> steht hier.",
+   "targetWords": [
+    "städte",
+    "städten"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1112086&dur=2038"
+  },
+  {
+   "id": "de-b1-417",
+   "text": "Ich lese «wind» heute.",
+   "fa": "امروز «wind» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "wind"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1114124&dur=1698"
+  },
+  {
+   "id": "de-b1-418",
+   "text": "Ich verstehe «alternative» jetzt besser.",
+   "fa": "اکنون «alternative» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "alternative"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1115822&dur=2456"
+  },
+  {
+   "id": "de-b1-419",
+   "text": "Der Lehrer erklärt «aussage», «davor» und «dortmund» noch einmal.",
+   "fa": "معلم دوباره «aussage»، «davor» و «dortmund» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1>, <W2> und <W3> noch einmal.",
+   "targetWords": [
+    "aussage",
+    "aussagen",
+    "davor",
+    "dortmund"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1118278&dur=4232"
+  },
+  {
+   "id": "de-b1-420",
+   "text": "Ich habe «erhielt», «extra» und «gesundheit» geschrieben.",
+   "fa": "من «erhielt»، «extra» و «gesundheit» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "erhielt",
+    "extra",
+    "gesundheit"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1122510&dur=3657"
+  },
+  {
+   "id": "de-b1-421",
+   "text": "Wir haben «ha», «hof» und «klaus» im Text gelesen.",
+   "fa": "ما «ha»، «hof» و «klaus» را در متن خواندیم.",
+   "pattern": "Wir haben <W1>, <W2> und <W3> im Text gelesen.",
+   "targetWords": [
+    "ha",
+    "hof",
+    "klaus"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1126167&dur=3788"
+  },
+  {
+   "id": "de-b1-422",
+   "text": "Ich kann «ma», «mama» und «presse» jetzt besser verstehen.",
+   "fa": "اکنون «ma»، «mama» و «presse» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "ma",
+    "mama",
+    "presse"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1129955&dur=3788"
+  },
+  {
+   "id": "de-b1-423",
+   "text": "Die Wörter «radio» und «selbstverständlich» stehen hier.",
+   "fa": "واژههای «radio» و «selbstverständlich» اینجا نوشته شدهاند.",
+   "pattern": "Die Wörter <W1> und <W2> stehen hier.",
+   "targetWords": [
+    "radio",
+    "selbstverständlich"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1133743&dur=3631"
+  },
+  {
+   "id": "de-b1-424",
+   "text": "Der Lehrer erklärt «sendung» und «song» noch einmal.",
+   "fa": "معلم دوباره «sendung» و «song» را توضیح میدهد.",
+   "pattern": "Der Lehrer erklärt <W1> und <W2> noch einmal.",
+   "targetWords": [
+    "sendung",
+    "song"
+   ],
+   "audio": "milo-segment:de-B1.mp3?start=1137374&dur=3239"
+  }
+ ]
+}

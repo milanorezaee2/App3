@@ -1,0 +1,3271 @@
+{
+ "schema": 1,
+ "language": "ru",
+ "band": "A2",
+ "version": 7,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "ru-a2-001",
+   "text": "Может, пойдём в кафе?",
+   "fa": "شاید برویم کافه؟",
+   "pronunciation": "MÓ-zhit, pay-DYÓM f ka-FÉ",
+   "pattern": "Может, <фраза>?",
+   "targetWords": [
+    "может"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=0&dur=1620"
+  },
+  {
+   "id": "ru-a2-002",
+   "text": "Он также работает по субботам.",
+   "fa": "او شنبه‌ها هم کار می‌کند.",
+   "pronunciation": "on TÁK-zhe ra-BÓ-ta-yit pa su-BÓ-tam",
+   "pattern": "<лицо> также <глагол>.",
+   "targetWords": [
+    "также"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=1620&dur=2038"
+  },
+  {
+   "id": "ru-a2-003",
+   "text": "Я хотел бы быть врачом.",
+   "fa": "دوست داشتم پزشک باشم.",
+   "pronunciation": "ya kha-TYÉL by byt' vra-CHÓM",
+   "pattern": "Я хотел бы быть <твор.>.",
+   "targetWords": [
+    "быть"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=3658&dur=1620"
+  },
+  {
+   "id": "ru-a2-004",
+   "text": "Мы живём под Москвой.",
+   "fa": "ما نزدیک مسکو زندگی می‌کنیم.",
+   "pronunciation": "my zhi-VYÓM pad mask-VÓY",
+   "pattern": "Мы живём под <твор.>.",
+   "targetWords": [
+    "под"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=5278&dur=1541"
+  },
+  {
+   "id": "ru-a2-005",
+   "text": "Даже летом здесь холодно.",
+   "fa": "حتی تابستان هم اینجا سرد است.",
+   "pronunciation": "DÁ-zhe LYÉ-tam zdyes' KHÓ-lad-na",
+   "pattern": "Даже <время> <фраза>.",
+   "targetWords": [
+    "даже"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=6819&dur=1567"
+  },
+  {
+   "id": "ru-a2-006",
+   "text": "Просто скажи правду.",
+   "fa": "فقط راستش را بگو.",
+   "pronunciation": "PRÓS-ta ska-ZHÍ PRÁV-du",
+   "pattern": "Просто <повелит.>.",
+   "targetWords": [
+    "просто"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=8386&dur=1463"
+  },
+  {
+   "id": "ru-a2-007",
+   "text": "После этого мы пошли домой.",
+   "fa": "بعد از آن به خانه رفتیم.",
+   "pronunciation": "PÓS-li É-ta-va my pash-LÍ da-MÓY",
+   "pattern": "После этого <фраза>.",
+   "targetWords": [
+    "этого"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=9849&dur=1672"
+  },
+  {
+   "id": "ru-a2-008",
+   "text": "Более того, он опоздал.",
+   "fa": "از آن گذشته، او دیر کرد.",
+   "pronunciation": "BÓ-li-ye ta-VÓ, on a-paz-DÁL",
+   "pattern": "Более того, <фраза>.",
+   "targetWords": [
+    "более"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=11521&dur=1593"
+  },
+  {
+   "id": "ru-a2-009",
+   "text": "Я ничего ни у кого не брал.",
+   "fa": "من از هیچ‌کس چیزی نگرفتم.",
+   "pronunciation": "ya ni-chi-VÓ ni u ka-VÓ ni bral",
+   "pattern": "Я ничего ни у кого не <глагол>.",
+   "targetWords": [
+    "ни"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=13114&dur=1750"
+  },
+  {
+   "id": "ru-a2-010",
+   "text": "Он человек слова.",
+   "fa": "او آدم قول و قرار است.",
+   "pronunciation": "on chi-la-VYÉK SLÓ-va",
+   "pattern": "<лицо> человек <род.>.",
+   "targetWords": [
+    "человек"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=14864&dur=1254"
+  },
+  {
+   "id": "ru-a2-011",
+   "text": "Спроси, открыт ли магазин.",
+   "fa": "بپرس مغازه باز است یا نه.",
+   "pronunciation": "spra-SÍ, at-KRÝT li ma-ga-ZÍN",
+   "pattern": "Спроси, <прил.> ли <сущ.>.",
+   "targetWords": [
+    "ли"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=16118&dur=1855"
+  },
+  {
+   "id": "ru-a2-012",
+   "text": "Это лучший ресторан из всех.",
+   "fa": "این بهترین رستوران از همه است.",
+   "pronunciation": "É-ta LÚ-chshiy ris-ta-RÁN is fsyekh",
+   "pattern": "Это <превосх.> из всех.",
+   "targetWords": [
+    "всех"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=17973&dur=1802"
+  },
+  {
+   "id": "ru-a2-013",
+   "text": "Больше всего я люблю лето.",
+   "fa": "بیشتر از همه تابستان را دوست دارم.",
+   "pronunciation": "BÓL'-she fsi-VÓ ya lyub-LYÚ LYÉ-ta",
+   "pattern": "Больше всего я люблю <вин.>.",
+   "targetWords": [
+    "всего"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=19775&dur=1620"
+  },
+  {
+   "id": "ru-a2-014",
+   "text": "Ему нужно отдохнуть.",
+   "fa": "او باید استراحت کند.",
+   "pronunciation": "yi-MÚ NÚZH-na a-dakh-NÚT'",
+   "pattern": "Ему нужно <инф.>.",
+   "targetWords": [
+    "ему"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=21395&dur=1332"
+  },
+  {
+   "id": "ru-a2-015",
+   "text": "Для них это важно.",
+   "fa": "برای آن‌ها این مهم است.",
+   "pronunciation": "dlya nikh É-ta VÁZH-na",
+   "pattern": "Для них это <прил.>.",
+   "targetWords": [
+    "них"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=22727&dur=1254"
+  },
+  {
+   "id": "ru-a2-016",
+   "text": "Мне тоже так кажется.",
+   "fa": "به نظر من هم همین‌طور است.",
+   "pronunciation": "mnye TÓ-zhe tak KÁ-zhit-sya",
+   "pattern": "Мне тоже так кажется.",
+   "targetWords": [
+    "тоже"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=23981&dur=1437"
+  },
+  {
+   "id": "ru-a2-017",
+   "text": "Он работает в области медицины.",
+   "fa": "او در حوزهٔ پزشکی کار می‌کند.",
+   "pronunciation": "on ra-BÓ-ta-yit v ÓB-las-ti mi-di-TSÝ-ny",
+   "pattern": "<лицо> работает в области <род.>.",
+   "targetWords": [
+    "области"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=25418&dur=1907"
+  },
+  {
+   "id": "ru-a2-018",
+   "text": "Это лучший день в моей жизни.",
+   "fa": "این بهترین روز زندگی من است.",
+   "pronunciation": "É-ta LÚ-chshiy dyen' v ma-YÉY ZHÍZ-ni",
+   "pattern": "Это <превосх.> в моей жизни.",
+   "targetWords": [
+    "жизни"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=27325&dur=1881"
+  },
+  {
+   "id": "ru-a2-019",
+   "text": "Я им очень благодарен.",
+   "fa": "خیلی از آن‌ها ممنونم.",
+   "pronunciation": "ya im Ó-chin' bla-ga-DÁ-rin",
+   "pattern": "Я им очень благодарен.",
+   "targetWords": [
+    "им"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=29206&dur=1332"
+  },
+  {
+   "id": "ru-a2-020",
+   "text": "Между нами говоря, он прав.",
+   "fa": "بین خودمان باشد، حق با اوست.",
+   "pronunciation": "MYÉZH-du NÁ-mi ga-va-RYÁ, on praf",
+   "pattern": "Между нами говоря, <фраза>.",
+   "targetWords": [
+    "между"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=30538&dur=1933"
+  },
+  {
+   "id": "ru-a2-021",
+   "text": "Я не ожидал такой погоды.",
+   "fa": "انتظار چنین هوایی را نداشتم.",
+   "pronunciation": "ya ni a-zhi-DÁL ta-KÓY pa-GÓ-dy",
+   "pattern": "Я не ожидал такой <род.>.",
+   "targetWords": [
+    "такой"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=32471&dur=1567"
+  },
+  {
+   "id": "ru-a2-022",
+   "text": "Однако это было нелегко.",
+   "fa": "با این حال، آسان نبود.",
+   "pronunciation": "ad-NÁ-ka É-ta BÝ-la ni-lik-KÓ",
+   "pattern": "Однако <фраза>.",
+   "targetWords": [
+    "однако"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=34038&dur=1489"
+  },
+  {
+   "id": "ru-a2-023",
+   "text": "Люди часто спешат.",
+   "fa": "مردم اغلب عجله دارند.",
+   "pronunciation": "LYÚ-di CHÁS-ta spi-SHÁT",
+   "pattern": "Люди часто <глагол>.",
+   "targetWords": [
+    "люди"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=35527&dur=1411"
+  },
+  {
+   "id": "ru-a2-024",
+   "text": "Тут что-то не так.",
+   "fa": "اینجا یک چیزی درست نیست.",
+   "pronunciation": "tut SHTÓ-ta ni tak",
+   "pattern": "Тут что-то не так.",
+   "targetWords": [
+    "тут"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=36938&dur=1280"
+  },
+  {
+   "id": "ru-a2-025",
+   "text": "Я давно её не видел.",
+   "fa": "خیلی وقت است او را ندیده‌ام.",
+   "pronunciation": "ya dav-NÓ yi-YÓ ni VÍ-dil",
+   "pattern": "Я давно её не <глагол>.",
+   "targetWords": [
+    "её"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=38218&dur=1332"
+  },
+  {
+   "id": "ru-a2-026",
+   "text": "Жизнь в деревне спокойная.",
+   "fa": "زندگی در روستا آرام است.",
+   "pronunciation": "zhizn' v di-RYÉV-nye spa-KÓY-na-ya",
+   "pattern": "Жизнь в <предл.> <прил.>.",
+   "targetWords": [
+    "жизнь"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=39550&dur=1750"
+  },
+  {
+   "id": "ru-a2-027",
+   "text": "Нам повезло с погодой.",
+   "fa": "با هوا شانس آوردیم.",
+   "pronunciation": "nam pa-viz-LÓ s pa-GÓ-day",
+   "pattern": "Нам повезло с <твор.>.",
+   "targetWords": [
+    "нам"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=41300&dur=1437"
+  },
+  {
+   "id": "ru-a2-028",
+   "text": "Я прожил там несколько лет.",
+   "fa": "چند سال آنجا زندگی کردم.",
+   "pronunciation": "ya pra-ZHÍL tam NYÉ-skal'-ka lyet",
+   "pattern": "Я прожил там несколько лет.",
+   "targetWords": [
+    "несколько"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=42737&dur=1698"
+  },
+  {
+   "id": "ru-a2-029",
+   "text": "Она гордится своей работой.",
+   "fa": "او به کارش افتخار می‌کند.",
+   "pronunciation": "a-NÁ gar-DÍT-sya sva-YÉY ra-BÓ-tay",
+   "pattern": "Она гордится своей <твор.>.",
+   "targetWords": [
+    "своей"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=44435&dur=1698"
+  },
+  {
+   "id": "ru-a2-030",
+   "text": "Врач сказал больше отдыхать.",
+   "fa": "دکتر گفت بیشتر استراحت کنم.",
+   "pronunciation": "vrach ska-ZÁL BÓL'-she at-dy-KHÁT'",
+   "pattern": "<лицо> сказал <инф.>.",
+   "targetWords": [
+    "сказал"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=46133&dur=1724"
+  },
+  {
+   "id": "ru-a2-031",
+   "text": "Москва является столицей России.",
+   "fa": "مسکو پایتخت روسیه است.",
+   "pronunciation": "mask-VÁ yiv-LYÁ-yit-sya sta-LÍ-tsey ras-SÍ-i",
+   "pattern": "<сущ.> является <твор.>.",
+   "targetWords": [
+    "является"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=47857&dur=2011"
+  },
+  {
+   "id": "ru-a2-032",
+   "text": "Это лишь начало.",
+   "fa": "این تازه شروع است.",
+   "pronunciation": "É-ta lish na-CHÁ-la",
+   "pattern": "Это лишь <сущ.>.",
+   "targetWords": [
+    "лишь"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=49868&dur=1071"
+  },
+  {
+   "id": "ru-a2-033",
+   "text": "У каждого свои планы.",
+   "fa": "هر کسی برنامه‌های خودش را دارد.",
+   "pronunciation": "u KÁZH-da-va sva-Í PLÁ-ny",
+   "pattern": "У каждого свои <мн.>.",
+   "targetWords": [
+    "свои"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=50939&dur=1306"
+  },
+  {
+   "id": "ru-a2-034",
+   "text": "Я жду одного человека.",
+   "fa": "منتظر یک نفر هستم.",
+   "pronunciation": "ya zhdu ad-na-VÓ chi-la-VYÉ-ka",
+   "pattern": "Я жду <вин.> человека.",
+   "targetWords": [
+    "человека"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=52245&dur=1489"
+  },
+  {
+   "id": "ru-a2-035",
+   "text": "Дело в том, что я заболел.",
+   "fa": "قضیه این است که مریض شدم.",
+   "pronunciation": "DYÉ-la f tom, shto ya za-ba-LYÉL",
+   "pattern": "Дело в том, что <фраза>.",
+   "targetWords": [
+    "дело"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=53734&dur=1698"
+  },
+  {
+   "id": "ru-a2-036",
+   "text": "Как идут дела на работе?",
+   "fa": "کارها در محل کار چطور پیش می‌رود؟",
+   "pronunciation": "kak i-DÚT di-LÁ na ra-BÓ-tye",
+   "pattern": "Как идут дела <место>?",
+   "targetWords": [
+    "дела"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=55432&dur=1489"
+  },
+  {
+   "id": "ru-a2-037",
+   "text": "Я работаю над проектом.",
+   "fa": "روی یک پروژه کار می‌کنم.",
+   "pronunciation": "ya ra-BÓ-ta-yu nat pra-YÉK-tam",
+   "pattern": "Я работаю над <твор.>.",
+   "targetWords": [
+    "над"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=56921&dur=1646"
+  },
+  {
+   "id": "ru-a2-038",
+   "text": "Это тот самый ресторан.",
+   "fa": "این همان رستوران است.",
+   "pronunciation": "É-ta tot SÁ-myy ris-ta-RÁN",
+   "pattern": "Это тот самый <сущ.>.",
+   "targetWords": [
+    "тот"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=58567&dur=1620"
+  },
+  {
+   "id": "ru-a2-039",
+   "text": "Именно это я и хотел сказать.",
+   "fa": "دقیقاً همین را می‌خواستم بگویم.",
+   "pronunciation": "Í-min-na É-ta ya i kha-TYÉL ska-ZÁT'",
+   "pattern": "Именно это я и хотел <инф.>.",
+   "targetWords": [
+    "именно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=60187&dur=1750"
+  },
+  {
+   "id": "ru-a2-040",
+   "text": "Я хочу всё сделать сегодня.",
+   "fa": "می‌خواهم همه‌چیز را امروز انجام دهم.",
+   "pronunciation": "ya kha-CHÚ fsyo SDYÉ-lat' si-VÓD-nya",
+   "pattern": "Я хочу <инф.> <время>.",
+   "targetWords": [
+    "сделать"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=61937&dur=1855"
+  },
+  {
+   "id": "ru-a2-041",
+   "text": "Конечно, я помогу тебе.",
+   "fa": "البته که کمکت می‌کنم.",
+   "pronunciation": "ka-NYÉSH-na, ya pa-ma-GÚ ti-BYÉ",
+   "pattern": "Конечно, я <глагол>.",
+   "targetWords": [
+    "конечно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=63792&dur=1698"
+  },
+  {
+   "id": "ru-a2-042",
+   "text": "Это самый большой город мира.",
+   "fa": "این بزرگ‌ترین شهر دنیاست.",
+   "pronunciation": "É-ta SÁ-myy bal'-SHÓY GÓ-rat MÍ-ra",
+   "pattern": "Это самый <прил.> <сущ.> мира.",
+   "targetWords": [
+    "мира"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=65490&dur=1724"
+  },
+  {
+   "id": "ru-a2-043",
+   "text": "Он стал врачом.",
+   "fa": "او پزشک شد.",
+   "pronunciation": "on stal vra-CHÓM",
+   "pattern": "<лицо> стал <твор.>.",
+   "targetWords": [
+    "стал"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=67214&dur=1228"
+  },
+  {
+   "id": "ru-a2-044",
+   "text": "Вечером стало холодно.",
+   "fa": "عصر سرد شد.",
+   "pronunciation": "VYÉ-chi-ram STÁ-la KHÓ-lad-na",
+   "pattern": "<время> стало <наречие>.",
+   "targetWords": [
+    "стало"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=68442&dur=1411"
+  },
+  {
+   "id": "ru-a2-045",
+   "text": "В первый раз было трудно.",
+   "fa": "بار اول سخت بود.",
+   "pronunciation": "f PYÉR-vyy ras BÝ-la TRÚD-na",
+   "pattern": "В первый раз <фраза>.",
+   "targetWords": [
+    "первый"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=69853&dur=1567"
+  },
+  {
+   "id": "ru-a2-046",
+   "text": "Что такое счастье?",
+   "fa": "خوشبختی چیست؟",
+   "pronunciation": "shto ta-KÓ-ye SHÁST'-ye",
+   "pattern": "Что такое <сущ.>?",
+   "targetWords": [
+    "такое"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=71420&dur=1332"
+  },
+  {
+   "id": "ru-a2-047",
+   "text": "Хотя было холодно, мы гуляли.",
+   "fa": "گرچه سرد بود، قدم زدیم.",
+   "pronunciation": "kha-TYÁ BÝ-la KHÓ-lad-na, my gu-LYÁ-li",
+   "pattern": "Хотя <фраза>, <фраза>.",
+   "targetWords": [
+    "хотя"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=72752&dur=1776"
+  },
+  {
+   "id": "ru-a2-048",
+   "text": "Для чего это нужно?",
+   "fa": "این برای چیست؟",
+   "pronunciation": "dlya chi-VÓ É-ta NÚZH-na",
+   "pattern": "Для чего это нужно?",
+   "targetWords": [
+    "чего"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=74528&dur=1228"
+  },
+  {
+   "id": "ru-a2-049",
+   "text": "Ты ведь придёшь?",
+   "fa": "تو که می‌آیی، نه؟",
+   "pronunciation": "ty vyet' pri-DYÓSH",
+   "pattern": "Ты ведь <глагол>?",
+   "targetWords": [
+    "ведь"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=75756&dur=1254"
+  },
+  {
+   "id": "ru-a2-050",
+   "text": "Вообще-то я не голоден.",
+   "fa": "راستش گرسنه نیستم.",
+   "pronunciation": "va-ap-SHÉ-ta ya ni GÓ-la-din",
+   "pattern": "Вообще-то <фраза>.",
+   "targetWords": [
+    "вообще"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=77010&dur=1463"
+  },
+  {
+   "id": "ru-a2-051",
+   "text": "Будут вопросы — звоните.",
+   "fa": "سؤالی بود، زنگ بزنید.",
+   "pronunciation": "BÚ-dut vap-RÓ-sy — zva-NÍ-tye",
+   "pattern": "Будут <мн.> — <повелит.>.",
+   "targetWords": [
+    "будут"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=78473&dur=1724"
+  },
+  {
+   "id": "ru-a2-052",
+   "text": "Вы должны заполнить форму.",
+   "fa": "باید فرم را پر کنید.",
+   "pronunciation": "vy dalzh-NÝ za-PÓL-nit' FÓR-mu",
+   "pattern": "Вы должны <инф.> <вин.>.",
+   "targetWords": [
+    "должны"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=80197&dur=1541"
+  },
+  {
+   "id": "ru-a2-053",
+   "text": "Дети могут играть здесь.",
+   "fa": "بچه‌ها می‌توانند اینجا بازی کنند.",
+   "pronunciation": "DYÉ-ti MÓ-gut ig-RÁT' zdyes'",
+   "pattern": "<мн.> могут <инф.> <место>.",
+   "targetWords": [
+    "могут"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=81738&dur=1593"
+  },
+  {
+   "id": "ru-a2-054",
+   "text": "Никогда не поздно начать.",
+   "fa": "برای شروع هیچ‌وقت دیر نیست.",
+   "pronunciation": "ni-kag-DÁ ni PÓZ-na na-CHÁT'",
+   "pattern": "Никогда не поздно <инф.>.",
+   "targetWords": [
+    "никогда"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=83331&dur=1646"
+  },
+  {
+   "id": "ru-a2-055",
+   "text": "Он сам всё приготовил.",
+   "fa": "خودش همه‌چیز را آماده کرد.",
+   "pronunciation": "on sam fsyo pri-ga-TÓ-vil",
+   "pattern": "<лицо> сам <глагол>.",
+   "targetWords": [
+    "сам"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=84977&dur=1567"
+  },
+  {
+   "id": "ru-a2-056",
+   "text": "Я давно не видел своих друзей.",
+   "fa": "خیلی وقت است دوستانم را ندیده‌ام.",
+   "pronunciation": "ya dav-NÓ ni VÍ-dil sva-ÍKH dru-ZYÉY",
+   "pattern": "Я давно не видел своих <род. мн.>.",
+   "targetWords": [
+    "своих"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=86544&dur=1907"
+  },
+  {
+   "id": "ru-a2-057",
+   "text": "Деньги — не главное.",
+   "fa": "پول مهم‌ترین چیز نیست.",
+   "pronunciation": "DYÉN'-gi ni GLÁV-na-ye",
+   "pattern": "<сущ.> — не главное.",
+   "targetWords": [
+    "деньги"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=88451&dur=1489"
+  },
+  {
+   "id": "ru-a2-058",
+   "text": "Не думай о других.",
+   "fa": "به دیگران فکر نکن.",
+   "pronunciation": "ni DÚ-may a dru-GÍKH",
+   "pattern": "Не думай о других.",
+   "targetWords": [
+    "других"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=89940&dur=1149"
+  },
+  {
+   "id": "ru-a2-059",
+   "text": "Я почти ничего не ел.",
+   "fa": "تقریباً هیچ چیزی نخوردم.",
+   "pronunciation": "ya pach-TÍ ni-chi-VÓ ni yel",
+   "pattern": "Я почти ничего не <глагол>.",
+   "targetWords": [
+    "почти"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=91089&dur=1620"
+  },
+  {
+   "id": "ru-a2-060",
+   "text": "Я жду своего друга.",
+   "fa": "منتظر دوستم هستم.",
+   "pronunciation": "ya zhdu sva-yi-VÓ DRÚ-ga",
+   "pattern": "Я жду своего <род.>.",
+   "targetWords": [
+    "своего"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=92709&dur=1384"
+  },
+  {
+   "id": "ru-a2-061",
+   "text": "Каждый выбирает свой путь.",
+   "fa": "هر کسی راه خودش را انتخاب می‌کند.",
+   "pronunciation": "KÁZH-dyy vy-bi-RÁ-yit svoy put'",
+   "pattern": "Каждый выбирает свой <вин.>.",
+   "targetWords": [
+    "свой"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=94093&dur=1776"
+  },
+  {
+   "id": "ru-a2-062",
+   "text": "Большая часть времени ушла на дорогу.",
+   "fa": "بیشتر زمان در راه گذشت.",
+   "pronunciation": "bal'-SHÁ-ya chast' VRYÉ-mi-ni ush-LÁ na da-RÓ-gu",
+   "pattern": "Большая часть <род.> <глагол>.",
+   "targetWords": [
+    "часть"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=95869&dur=2038"
+  },
+  {
+   "id": "ru-a2-063",
+   "text": "Через двух остановок выходите.",
+   "fa": "دو ایستگاه بعد پیاده شوید.",
+   "pronunciation": "CHÉ-ris dvukh as-ta-NÓ-vak vy-kha-DÍ-tye",
+   "pattern": "Через <число> остановок выходите.",
+   "targetWords": [
+    "двух"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=97907&dur=1959"
+  },
+  {
+   "id": "ru-a2-064",
+   "text": "Автобус должен прийти в пять.",
+   "fa": "اتوبوس باید ساعت پنج برسد.",
+   "pronunciation": "af-TÓ-bus DÓL-zhin priy-TÍ f pyat'",
+   "pattern": "<сущ.> должен <инф.> в <время>.",
+   "targetWords": [
+    "должен"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=99866&dur=1776"
+  },
+  {
+   "id": "ru-a2-065",
+   "text": "Кроме того, это дорого.",
+   "fa": "به‌علاوه، گران است.",
+   "pronunciation": "KRÓ-mye ta-VÓ, É-ta DÓ-ra-ga",
+   "pattern": "Кроме того, <фраза>.",
+   "targetWords": [
+    "кроме"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=101642&dur=1672"
+  },
+  {
+   "id": "ru-a2-066",
+   "text": "В связи с этим я не приду.",
+   "fa": "در این رابطه، من نمی‌آیم.",
+   "pronunciation": "f svya-ZÍ s É-tim ya ni pri-DÚ",
+   "pattern": "В связи с этим <фраза>.",
+   "targetWords": [
+    "связи"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=103314&dur=1750"
+  },
+  {
+   "id": "ru-a2-067",
+   "text": "Здесь нет связи.",
+   "fa": "اینجا آنتن نیست.",
+   "pronunciation": "zdyes' nyet SVYÁ-zi",
+   "pattern": "Здесь нет связи.",
+   "targetWords": [
+    "связи"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=105064&dur=1306"
+  },
+  {
+   "id": "ru-a2-068",
+   "text": "Центр города недалеко.",
+   "fa": "مرکز شهر دور نیست.",
+   "pronunciation": "tsentr GÓ-ra-da ni-da-li-KÓ",
+   "pattern": "Центр города <наречие>.",
+   "targetWords": [
+    "города"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=106370&dur=1541"
+  },
+  {
+   "id": "ru-a2-069",
+   "text": "Каждый из нас устал.",
+   "fa": "هر کدام از ما خسته‌ایم.",
+   "pronunciation": "KÁZH-dyy iz nas us-TÁL",
+   "pattern": "Каждый из нас <прил.>.",
+   "targetWords": [
+    "каждый"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=107911&dur=1306"
+  },
+  {
+   "id": "ru-a2-070",
+   "text": "Кто-нибудь говорит по-английски?",
+   "fa": "کسی انگلیسی بلد است؟",
+   "pronunciation": "KTÓ-ni-but' ga-va-RÍT pa-an-GLÍY-ski",
+   "pattern": "Кто-нибудь <глагол>?",
+   "targetWords": [
+    "нибудь"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=109217&dur=1907"
+  },
+  {
+   "id": "ru-a2-071",
+   "text": "Расскажи что-нибудь интересное.",
+   "fa": "یک چیز جالب تعریف کن.",
+   "pronunciation": "ras-ska-ZHÍ SHTÓ-ni-but' in-ti-RYÉS-na-ye",
+   "pattern": "Расскажи что-нибудь <прил.>.",
+   "targetWords": [
+    "нибудь"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=111124&dur=1881"
+  },
+  {
+   "id": "ru-a2-072",
+   "text": "В любом случае, я приду.",
+   "fa": "در هر صورت می‌آیم.",
+   "pronunciation": "v lyu-BÓM SLÚ-cha-ye, ya pri-DÚ",
+   "pattern": "В любом случае, <фраза>.",
+   "targetWords": [
+    "случае"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=113005&dur=1829"
+  },
+  {
+   "id": "ru-a2-073",
+   "text": "В этом случае я дома.",
+   "fa": "در این صورت خانه‌ام.",
+   "pronunciation": "v É-tam SLÚ-cha-ye ya DÓ-ma",
+   "pattern": "В этом случае <фраза>.",
+   "targetWords": [
+    "случае"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=114834&dur=1437"
+  },
+  {
+   "id": "ru-a2-074",
+   "text": "Среди гостей были мои друзья.",
+   "fa": "میان مهمان‌ها دوستانم بودند.",
+   "pronunciation": "sri-DÍ gas-TYÉY BÝ-li ma-Í druz'-YÁ",
+   "pattern": "Среди <род. мн.> были <мн.>.",
+   "targetWords": [
+    "среди"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=116271&dur=1881"
+  },
+  {
+   "id": "ru-a2-075",
+   "text": "Такие вещи случаются.",
+   "fa": "این‌جور چیزها پیش می‌آید.",
+   "pronunciation": "ta-KÍ-ye VYÉ-shi slu-CHÁ-yut-sya",
+   "pattern": "Такие <мн.> случаются.",
+   "targetWords": [
+    "такие"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=118152&dur=1593"
+  },
+  {
+   "id": "ru-a2-076",
+   "text": "Я не знаю этих людей.",
+   "fa": "این آدم‌ها را نمی‌شناسم.",
+   "pronunciation": "ya ni ZNÁ-yu É-tikh lyu-DYÉY",
+   "pattern": "Я не знаю этих <род. мн.>.",
+   "targetWords": [
+    "этих"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=119745&dur=1620"
+  },
+  {
+   "id": "ru-a2-077",
+   "text": "Россия — большая страна.",
+   "fa": "روسیه کشور بزرگی است.",
+   "pronunciation": "ras-SÍ-ya bal'-SHÁ-ya stra-NÁ",
+   "pattern": "<страна> — <прил.> страна.",
+   "targetWords": [
+    "россия"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=121365&dur=1750"
+  },
+  {
+   "id": "ru-a2-078",
+   "text": "Я этим не занимаюсь.",
+   "fa": "من به این کار نمی‌پردازم.",
+   "pronunciation": "ya É-tim ni za-ni-MÁ-yus'",
+   "pattern": "Я этим не занимаюсь.",
+   "targetWords": [
+    "этим"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=123115&dur=1411"
+  },
+  {
+   "id": "ru-a2-079",
+   "text": "Другие уже ушли.",
+   "fa": "بقیه دیگر رفته‌اند.",
+   "pronunciation": "dru-GÍ-ye u-ZHÉ ush-LÍ",
+   "pattern": "Другие уже <глагол>.",
+   "targetWords": [
+    "другие"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=124526&dur=1123"
+  },
+  {
+   "id": "ru-a2-080",
+   "text": "Я с ней согласен.",
+   "fa": "با او موافقم.",
+   "pronunciation": "ya s nyey sag-LÁ-sin",
+   "pattern": "Я с ней согласен.",
+   "targetWords": [
+    "ней"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=125649&dur=1228"
+  },
+  {
+   "id": "ru-a2-081",
+   "text": "Я пойду с ним.",
+   "fa": "با او می‌روم.",
+   "pronunciation": "ya pay-DÚ s nim",
+   "pattern": "Я пойду с ним.",
+   "targetWords": [
+    "ним"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=126877&dur=1071"
+  },
+  {
+   "id": "ru-a2-082",
+   "text": "Либо сегодня, либо никогда.",
+   "fa": "یا امروز، یا هیچ‌وقت.",
+   "pronunciation": "LÍ-ba si-VÓD-nya, LÍ-ba ni-kag-DÁ",
+   "pattern": "Либо <А>, либо <Б>.",
+   "targetWords": [
+    "либо"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=127948&dur=1881"
+  },
+  {
+   "id": "ru-a2-083",
+   "text": "Она живёт одна.",
+   "fa": "او تنها زندگی می‌کند.",
+   "pronunciation": "a-NÁ zhi-VYÓT ad-NÁ",
+   "pattern": "Она живёт одна.",
+   "targetWords": [
+    "одна"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=129829&dur=1176"
+  },
+  {
+   "id": "ru-a2-084",
+   "text": "Ей нужно позвонить.",
+   "fa": "باید به او زنگ زد.",
+   "pronunciation": "yey NÚZH-na paz-va-NÍT'",
+   "pattern": "Ей нужно <инф.>.",
+   "targetWords": [
+    "ей"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=131005&dur=1306"
+  },
+  {
+   "id": "ru-a2-085",
+   "text": "Я люблю истории о жизни.",
+   "fa": "داستان‌های زندگی را دوست دارم.",
+   "pronunciation": "ya lyub-LYÚ is-TÓ-ri-i a ZHÍZ-ni",
+   "pattern": "Я люблю истории о <предл.>.",
+   "targetWords": [
+    "истории"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=132311&dur=1593"
+  },
+  {
+   "id": "ru-a2-086",
+   "text": "Кого ты ждёшь?",
+   "fa": "منتظر کی هستی؟",
+   "pronunciation": "ka-VÓ ty zhdyosh",
+   "pattern": "Кого ты ждёшь?",
+   "targetWords": [
+    "кого"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=133904&dur=1123"
+  },
+  {
+   "id": "ru-a2-087",
+   "text": "Никто не ответил.",
+   "fa": "هیچ‌کس جواب نداد.",
+   "pronunciation": "nik-TÓ ni at-VYÉ-til",
+   "pattern": "Никто не <глагол>.",
+   "targetWords": [
+    "никто"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=135027&dur=1306"
+  },
+  {
+   "id": "ru-a2-088",
+   "text": "С одной стороны, это дорого.",
+   "fa": "از یک طرف، گران است.",
+   "pronunciation": "s ad-NÓY sta-ra-NÝ, É-ta DÓ-ra-ga",
+   "pattern": "С одной стороны, <фраза>.",
+   "targetWords": [
+    "стороны"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=136333&dur=1802"
+  },
+  {
+   "id": "ru-a2-089",
+   "text": "Таким образом, мы успели.",
+   "fa": "به این ترتیب به‌موقع رسیدیم.",
+   "pronunciation": "ta-KÍM ÓB-ra-zam, my us-PYÉ-li",
+   "pattern": "Таким образом, <фраза>.",
+   "targetWords": [
+    "таким"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=138135&dur=1672"
+  },
+  {
+   "id": "ru-a2-090",
+   "text": "В этой части города тихо.",
+   "fa": "در این بخش شهر آرام است.",
+   "pronunciation": "v É-tay CHÁS-ti GÓ-ra-da TÍ-kha",
+   "pattern": "В этой части <род.> <наречие>.",
+   "targetWords": [
+    "части"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=139807&dur=1541"
+  },
+  {
+   "id": "ru-a2-091",
+   "text": "Это не имеет значения.",
+   "fa": "این اهمیتی ندارد.",
+   "pronunciation": "É-ta ni i-MYÉ-yit zna-CHÉ-ni-ya",
+   "pattern": "Это не имеет значения.",
+   "targetWords": [
+    "имеет"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=141348&dur=1620"
+  },
+  {
+   "id": "ru-a2-092",
+   "text": "Трудно сказать точно.",
+   "fa": "دقیق گفتنش سخت است.",
+   "pronunciation": "TRÚD-na ska-ZÁT' TÓCH-na",
+   "pattern": "Трудно сказать <наречие>.",
+   "targetWords": [
+    "сказать"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=142968&dur=1489"
+  },
+  {
+   "id": "ru-a2-093",
+   "text": "Что ты хочешь этим сказать?",
+   "fa": "منظورت از این چیست؟",
+   "pronunciation": "shto ty KHÓ-chish É-tim ska-ZÁT'",
+   "pattern": "Что ты хочешь этим сказать?",
+   "targetWords": [
+    "сказать"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=144457&dur=1750"
+  },
+  {
+   "id": "ru-a2-094",
+   "text": "Я не понял последние слова.",
+   "fa": "کلمات آخر را نفهمیدم.",
+   "pronunciation": "ya ni PÓ-nyal pas-LYÉD-ni-ye sla-VÁ",
+   "pattern": "Я не понял <прил.> слова.",
+   "targetWords": [
+    "слова"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=146207&dur=1829"
+  },
+  {
+   "id": "ru-a2-095",
+   "text": "Мы помогаем друг другу.",
+   "fa": "ما به هم کمک می‌کنیم.",
+   "pronunciation": "my pa-ma-GÁ-yim druk DRÚ-gu",
+   "pattern": "Мы <глагол> друг другу.",
+   "targetWords": [
+    "друг"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=148036&dur=1489"
+  },
+  {
+   "id": "ru-a2-096",
+   "text": "Например, можно поехать на море.",
+   "fa": "مثلاً می‌شود به دریا رفت.",
+   "pronunciation": "na-pri-MYÉR, MÓZH-na pa-YÉ-khat' na MÓ-rye",
+   "pattern": "Например, можно <инф.>.",
+   "targetWords": [
+    "например"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=149525&dur=2116"
+  },
+  {
+   "id": "ru-a2-097",
+   "text": "Сначала работа, затем отдых.",
+   "fa": "اول کار، بعد استراحت.",
+   "pronunciation": "sna-CHÁ-la ra-BÓ-ta, za-TYÉM ÓD-dykh",
+   "pattern": "Сначала <А>, затем <Б>.",
+   "targetWords": [
+    "затем"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=151641&dur=1959"
+  },
+  {
+   "id": "ru-a2-098",
+   "text": "Каким образом вы приехали?",
+   "fa": "چطور آمدید؟",
+   "pronunciation": "ka-KÍM ÓB-ra-zam vy pri-YÉ-kha-li",
+   "pattern": "Каким образом вы <глагол>?",
+   "targetWords": [
+    "образом"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=153600&dur=1750"
+  },
+  {
+   "id": "ru-a2-099",
+   "text": "Оно мне не нравится.",
+   "fa": "آن را دوست ندارم.",
+   "pronunciation": "a-NÓ mnye ni NRÁ-vit-sya",
+   "pattern": "Оно мне не нравится.",
+   "targetWords": [
+    "оно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=155350&dur=1437"
+  },
+  {
+   "id": "ru-a2-100",
+   "text": "Расскажи про свою поездку.",
+   "fa": "از سفرت تعریف کن.",
+   "pronunciation": "ras-ska-ZHÍ pra sva-YÚ pa-YÉST-ku",
+   "pattern": "Расскажи про <вин.>.",
+   "targetWords": [
+    "про"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=156787&dur=1829"
+  },
+  {
+   "id": "ru-a2-101",
+   "text": "Я сразу понял.",
+   "fa": "فوراً فهمیدم.",
+   "pronunciation": "ya SRÁ-zu PÓ-nyal",
+   "pattern": "Я сразу <глагол>.",
+   "targetWords": [
+    "сразу"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=158616&dur=1149"
+  },
+  {
+   "id": "ru-a2-102",
+   "text": "Какие у вас планы на выходные?",
+   "fa": "برای آخر هفته چه برنامه‌ای دارید؟",
+   "pronunciation": "ka-KÍ-ye u vas PLÁ-ny na vy-khad-NÝ-ye",
+   "pattern": "Какие у вас планы на <вин.>?",
+   "targetWords": [
+    "какие"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=159765&dur=1776"
+  },
+  {
+   "id": "ru-a2-103",
+   "text": "Здесь нельзя курить.",
+   "fa": "اینجا سیگار کشیدن ممنوع است.",
+   "pronunciation": "zdyes' nil'-ZYÁ ku-RÍT'",
+   "pattern": "Здесь нельзя <инф.>.",
+   "targetWords": [
+    "нельзя"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=161541&dur=1280"
+  },
+  {
+   "id": "ru-a2-104",
+   "text": "Возьми с собой воду.",
+   "fa": "آب با خودت ببر.",
+   "pronunciation": "vaz'-MÍ s sa-BÓY VÓ-du",
+   "pattern": "Возьми с собой <вин.>.",
+   "targetWords": [
+    "собой"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=162821&dur=1358"
+  },
+  {
+   "id": "ru-a2-105",
+   "text": "Я совсем забыл.",
+   "fa": "پاک فراموش کردم.",
+   "pronunciation": "ya saf-SYÉM za-BÝL",
+   "pattern": "Я совсем <глагол>.",
+   "targetWords": [
+    "совсем"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=164179&dur=1254"
+  },
+  {
+   "id": "ru-a2-106",
+   "text": "Это правда или нет?",
+   "fa": "راست است یا نه؟",
+   "pronunciation": "É-ta PRÁV-da Í-li nyet",
+   "pattern": "Это правда или нет?",
+   "targetWords": [
+    "правда"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=165433&dur=1306"
+  },
+  {
+   "id": "ru-a2-107",
+   "text": "Правда, было весело.",
+   "fa": "واقعاً خوش گذشت.",
+   "pronunciation": "PRÁV-da, BÝ-la VYÉ-si-la",
+   "pattern": "Правда, <фраза>.",
+   "targetWords": [
+    "правда"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=166739&dur=1437"
+  },
+  {
+   "id": "ru-a2-108",
+   "text": "Я из другой страны.",
+   "fa": "اهل کشور دیگری هستم.",
+   "pronunciation": "ya iz dru-GÓY stra-NÝ",
+   "pattern": "Я из <прил.> страны.",
+   "targetWords": [
+    "страны"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=168176&dur=1332"
+  },
+  {
+   "id": "ru-a2-109",
+   "text": "Значит, встречаемся в семь.",
+   "fa": "پس ساعت هفت همدیگر را می‌بینیم.",
+   "pronunciation": "ZNÁ-chit, fstri-CHÁ-yim-sya f syem'",
+   "pattern": "Значит, <фраза>.",
+   "targetWords": [
+    "значит"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=169508&dur=2064"
+  },
+  {
+   "id": "ru-a2-110",
+   "text": "Куда ты идёшь?",
+   "fa": "کجا می‌روی؟",
+   "pronunciation": "ku-DÁ ty i-DYÓSH",
+   "pattern": "Куда ты идёшь?",
+   "targetWords": [
+    "куда"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=171572&dur=1097"
+  },
+  {
+   "id": "ru-a2-111",
+   "text": "Те дни были счастливыми.",
+   "fa": "آن روزها شاد بودند.",
+   "pronunciation": "tye dni BÝ-li shis-LÍ-vy-mi",
+   "pattern": "Те <мн.> были <твор. мн.>.",
+   "targetWords": [
+    "те"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=172669&dur=1489"
+  },
+  {
+   "id": "ru-a2-112",
+   "text": "Мы работаем в группах.",
+   "fa": "ما گروهی کار می‌کنیم.",
+   "pronunciation": "my ra-BÓ-ta-yim v GRÚ-pakh",
+   "pattern": "Мы работаем в группах.",
+   "targetWords": [
+    "группы"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=174158&dur=1515"
+  },
+  {
+   "id": "ru-a2-113",
+   "text": "Сегодня я вижу «всю», «новости» и «одно».",
+   "fa": "امروز «всю»، «новости» و «одно» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "всю",
+    "новости",
+    "одно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=175673&dur=2821"
+  },
+  {
+   "id": "ru-a2-114",
+   "text": "Теперь я знаю «власти», «мир» и «организации».",
+   "fa": "اکنون «власти»، «мир» و «организации» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "власти",
+    "власть",
+    "мир",
+    "организации"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=178494&dur=3004"
+  },
+  {
+   "id": "ru-a2-115",
+   "text": "Он говорит «партии», «слишком» и «таких» ещё раз.",
+   "fa": "او دوباره «партии»، «слишком» و «таких» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "партии",
+    "слишком",
+    "таких"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=181498&dur=3265"
+  },
+  {
+   "id": "ru-a2-116",
+   "text": "Мы уже знаем «участие», «иногда» и «качестве».",
+   "fa": "ما از پیش «участие»، «иногда» و «качестве» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "участие",
+    "иногда",
+    "качестве"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=184763&dur=2978"
+  },
+  {
+   "id": "ru-a2-117",
+   "text": "Тут есть «месте» и «момент».",
+   "fa": "اینجا «месте» و «момент» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "месте",
+    "момент"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=187741&dur=1933"
+  },
+  {
+   "id": "ru-a2-118",
+   "text": "Это слова «наши» и «некоторые».",
+   "fa": "این واژهها «наши» و «некоторые» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "наши",
+    "некоторые",
+    "некоторых"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=189674&dur=2038"
+  },
+  {
+   "id": "ru-a2-119",
+   "text": "Можно «развития» и «своим»?",
+   "fa": "آیا «развития» و «своим» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "развития",
+    "развитие",
+    "своим",
+    "своими"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=191712&dur=1933"
+  },
+  {
+   "id": "ru-a2-120",
+   "text": "Нужно «системы» и «возможно».",
+   "fa": "به «системы» و «возможно» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "системы",
+    "система",
+    "возможно",
+    "возможность",
+    "возможности"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=193645&dur=1907"
+  },
+  {
+   "id": "ru-a2-121",
+   "text": "Вот и «го».",
+   "fa": "این هم «го».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "го"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=195552&dur=940"
+  },
+  {
+   "id": "ru-a2-122",
+   "text": "У меня есть «д».",
+   "fa": "من «д» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "д"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=196492&dur=1149"
+  },
+  {
+   "id": "ru-a2-123",
+   "text": "Я хочу «права».",
+   "fa": "من «права» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "права"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=197641&dur=1306"
+  },
+  {
+   "id": "ru-a2-124",
+   "text": "Он сказал «свое».",
+   "fa": "او «свое» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "свое"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=198947&dur=1306"
+  },
+  {
+   "id": "ru-a2-125",
+   "text": "Сегодня я вижу «совета», «такого» и «тому».",
+   "fa": "امروز «совета»، «такого» و «тому» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "совета",
+    "совет",
+    "такого",
+    "тому"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=200253&dur=2821"
+  },
+  {
+   "id": "ru-a2-126",
+   "text": "Теперь я знаю «этому», «дней» и «марта».",
+   "fa": "اکنون «этому»، «дней» و «марта» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "этому",
+    "дней",
+    "марта"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=203074&dur=2664"
+  },
+  {
+   "id": "ru-a2-127",
+   "text": "Он говорит «менее», «результате» и «федерации» ещё раз.",
+   "fa": "او دوباره «менее»، «результате» و «федерации» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "менее",
+    "результате",
+    "результаты",
+    "федерации"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=205738&dur=3605"
+  },
+  {
+   "id": "ru-a2-128",
+   "text": "Мы уже знаем «зачем», «проблемы» и «самое».",
+   "fa": "ما از پیش «зачем»، «проблемы» و «самое» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "зачем",
+    "проблемы",
+    "проблем",
+    "проблема",
+    "самое"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=209343&dur=2821"
+  },
+  {
+   "id": "ru-a2-129",
+   "text": "Тут есть «самом» и «стала».",
+   "fa": "اینجا «самом» و «стала» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "самом",
+    "стала"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=212164&dur=1724"
+  },
+  {
+   "id": "ru-a2-130",
+   "text": "Это слова «территории» и «течение».",
+   "fa": "این واژهها «территории» و «течение» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "территории",
+    "течение"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=213888&dur=2273"
+  },
+  {
+   "id": "ru-a2-131",
+   "text": "Можно «действительно» и «й»?",
+   "fa": "آیا «действительно» و «й» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "действительно",
+    "й"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=216161&dur=2168"
+  },
+  {
+   "id": "ru-a2-132",
+   "text": "Нужно «многие» и «период».",
+   "fa": "به «многие» و «период» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "многие",
+    "многих",
+    "период"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=218329&dur=1672"
+  },
+  {
+   "id": "ru-a2-133",
+   "text": "Вот и «пор».",
+   "fa": "این هم «пор».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "пор"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=220001&dur=940"
+  },
+  {
+   "id": "ru-a2-134",
+   "text": "У меня есть «александр».",
+   "fa": "من «александр» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "александр",
+    "алексей",
+    "александра"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=220941&dur=1620"
+  },
+  {
+   "id": "ru-a2-135",
+   "text": "Я хочу «деле».",
+   "fa": "من «деле» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "деле"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=222561&dur=1097"
+  },
+  {
+   "id": "ru-a2-136",
+   "text": "Он сказал «достаточно».",
+   "fa": "او «достаточно» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "достаточно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=223658&dur=1489"
+  },
+  {
+   "id": "ru-a2-137",
+   "text": "Сегодня я вижу «количество», «мире» и «мог».",
+   "fa": "امروز «количество»، «мире» و «мог» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "количество",
+    "мире",
+    "мог"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=225147&dur=2821"
+  },
+  {
+   "id": "ru-a2-138",
+   "text": "Теперь я знаю «типа», «уж» и «хочет».",
+   "fa": "اکنون «типа»، «уж» و «хочет» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "типа",
+    "уж",
+    "хочет"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=227968&dur=2612"
+  },
+  {
+   "id": "ru-a2-139",
+   "text": "Он говорит «впервые», «имя» и «пусть» ещё раз.",
+   "fa": "او دوباره «впервые»، «имя» و «пусть» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "впервые",
+    "имя",
+    "пусть"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=230580&dur=3056"
+  },
+  {
+   "id": "ru-a2-140",
+   "text": "Мы уже знаем «руки», «управления» и «внимание».",
+   "fa": "ما از پیش «руки»، «управления» و «внимание» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "руки",
+    "управления",
+    "внимание"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=233636&dur=3082"
+  },
+  {
+   "id": "ru-a2-141",
+   "text": "Тут есть «млн» и «мной».",
+   "fa": "اینجا «млн» و «мной» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "млн",
+    "мной"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=236718&dur=1750"
+  },
+  {
+   "id": "ru-a2-142",
+   "text": "Это слова «населения» и «нового».",
+   "fa": "این واژهها «населения» و «нового» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "населения",
+    "нового"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=238468&dur=2064"
+  },
+  {
+   "id": "ru-a2-143",
+   "text": "Можно «смерти» и «стать»?",
+   "fa": "آیا «смерти» و «стать» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "смерти",
+    "смерть",
+    "стать"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=240532&dur=1750"
+  },
+  {
+   "id": "ru-a2-144",
+   "text": "Нужно «хоть» и «жить».",
+   "fa": "به «хоть» و «жить» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "хоть",
+    "жить"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=242282&dur=1541"
+  },
+  {
+   "id": "ru-a2-145",
+   "text": "Вот и «компании».",
+   "fa": "این هم «компании».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "компании",
+    "компания"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=243823&dur=1228"
+  },
+  {
+   "id": "ru-a2-146",
+   "text": "У меня есть «новых».",
+   "fa": "من «новых» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "новых"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=245051&dur=1358"
+  },
+  {
+   "id": "ru-a2-147",
+   "text": "Я хочу «одним».",
+   "fa": "من «одним» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "одним"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=246409&dur=1280"
+  },
+  {
+   "id": "ru-a2-148",
+   "text": "Он сказал «р».",
+   "fa": "او «р» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "р"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=247689&dur=1071"
+  },
+  {
+   "id": "ru-a2-149",
+   "text": "Сегодня я вижу «тыс», «февраля» и «места».",
+   "fa": "امروز «тыс»، «февраля» و «места» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "тыс",
+    "февраля",
+    "места"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=248760&dur=2847"
+  },
+  {
+   "id": "ru-a2-150",
+   "text": "Теперь я знаю «наконец», «новой» и «роль».",
+   "fa": "اکنون «наконец»، «новой» و «роль» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "наконец",
+    "новой",
+    "роль"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=251607&dur=2795"
+  },
+  {
+   "id": "ru-a2-151",
+   "text": "Он говорит «ж», «ноября» и «решение» ещё раз.",
+   "fa": "او دوباره «ж»، «ноября» و «решение» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "ж",
+    "ноября",
+    "решение",
+    "решения"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=254402&dur=3161"
+  },
+  {
+   "id": "ru-a2-152",
+   "text": "Мы уже знаем «тысяч», «идет» и «л».",
+   "fa": "ما از پیش «тысяч»، «идет» و «л» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "тысяч",
+    "идет",
+    "л"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=257563&dur=2351"
+  },
+  {
+   "id": "ru-a2-153",
+   "text": "Тут есть «опять» и «районе».",
+   "fa": "اینجا «опять» و «районе» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "опять",
+    "районе",
+    "района"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=259914&dur=1829"
+  },
+  {
+   "id": "ru-a2-154",
+   "text": "Это слова «скоро» и «чуть».",
+   "fa": "این واژهها «скоро» و «чуть» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "скоро",
+    "чуть"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=261743&dur=1750"
+  },
+  {
+   "id": "ru-a2-155",
+   "text": "Можно «января» и «будто»?",
+   "fa": "آیا «января» و «будто» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "января",
+    "будто"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=263493&dur=1698"
+  },
+  {
+   "id": "ru-a2-156",
+   "text": "Нужно «данным» и «денег».",
+   "fa": "به «данным» و «денег» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "данным",
+    "данные",
+    "данных",
+    "денег"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=265191&dur=1646"
+  },
+  {
+   "id": "ru-a2-157",
+   "text": "Вот и «обычно».",
+   "fa": "این هم «обычно».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "обычно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=266837&dur=1123"
+  },
+  {
+   "id": "ru-a2-158",
+   "text": "У меня есть «поскольку».",
+   "fa": "من «поскольку» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "поскольку"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=267960&dur=1463"
+  },
+  {
+   "id": "ru-a2-159",
+   "text": "Я хочу «происходит».",
+   "fa": "من «происходит» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "происходит"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=269423&dur=1567"
+  },
+  {
+   "id": "ru-a2-160",
+   "text": "Он сказал «республики».",
+   "fa": "او «республики» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "республики"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=270990&dur=1515"
+  },
+  {
+   "id": "ru-a2-161",
+   "text": "Сегодня я вижу «августа», «дальше» и «декабря».",
+   "fa": "امروز «августа»، «дальше» و «декабря» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "августа",
+    "дальше",
+    "декабря"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=272505&dur=2900"
+  },
+  {
+   "id": "ru-a2-162",
+   "text": "Теперь я знаю «деятельности», «кому» и «могли».",
+   "fa": "اکنون «деятельности»، «кому» و «могли» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "деятельности",
+    "деятельность",
+    "кому",
+    "могли"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=275405&dur=2900"
+  },
+  {
+   "id": "ru-a2-163",
+   "text": "Он говорит «наших», «особенно» и «полностью» ещё раз.",
+   "fa": "او دوباره «наших»، «особенно» و «полностью» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "наших",
+    "особенно",
+    "полностью"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=278305&dur=3474"
+  },
+  {
+   "id": "ru-a2-164",
+   "text": "Мы уже знаем «сама», «сами» и «сильно».",
+   "fa": "ما از پیش «сама»، «сами» و «сильно» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "сама",
+    "сами",
+    "сильно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=281779&dur=2403"
+  },
+  {
+   "id": "ru-a2-165",
+   "text": "Тут есть «женщина» и «отношения».",
+   "fa": "اینجا «женщина» و «отношения» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "женщина",
+    "женщины",
+    "женщин",
+    "отношения",
+    "отношении"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=284182&dur=2168"
+  },
+  {
+   "id": "ru-a2-166",
+   "text": "Это слова «сайт» и «самых».",
+   "fa": "این واژهها «сайт» و «самых» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "сайт",
+    "самых"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=286350&dur=1829"
+  },
+  {
+   "id": "ru-a2-167",
+   "text": "Можно «всей» и «европы»?",
+   "fa": "آیا «всей» و «европы» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "всей",
+    "европы"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=288179&dur=1750"
+  },
+  {
+   "id": "ru-a2-168",
+   "text": "Нужно «книги» и «несмотря».",
+   "fa": "به «книги» و «несмотря» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "книги",
+    "несмотря"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=289929&dur=1933"
+  },
+  {
+   "id": "ru-a2-169",
+   "text": "Вот и «право».",
+   "fa": "این هم «право».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "право"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=291862&dur=1097"
+  },
+  {
+   "id": "ru-a2-170",
+   "text": "У меня есть «скорее».",
+   "fa": "من «скорее» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "скорее"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=292959&dur=1384"
+  },
+  {
+   "id": "ru-a2-171",
+   "text": "Я хочу «составе».",
+   "fa": "من «составе» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "состав",
+    "составляет",
+    "составе"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=294343&dur=1384"
+  },
+  {
+   "id": "ru-a2-172",
+   "text": "Он сказал «долго».",
+   "fa": "او «долго» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "долго"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=295727&dur=1149"
+  },
+  {
+   "id": "ru-a2-173",
+   "text": "Сегодня я вижу «июня», «наиболее» и «нем».",
+   "fa": "امروز «июня»، «наиболее» و «нем» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "июня",
+    "наиболее",
+    "нем"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=296876&dur=2847"
+  },
+  {
+   "id": "ru-a2-174",
+   "text": "Теперь я знаю «ними», «президент» и «пути».",
+   "fa": "اکنون «ними»، «президент» و «пути» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "ними",
+    "президент",
+    "президента",
+    "пути"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=299723&dur=2900"
+  },
+  {
+   "id": "ru-a2-175",
+   "text": "Он говорит «сил», «виде» и «вся» ещё раз.",
+   "fa": "او دوباره «сил»، «виде» و «вся» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "сил",
+    "виде",
+    "вся"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=302623&dur=2795"
+  },
+  {
+   "id": "ru-a2-176",
+   "text": "Мы уже знаем «имени», «прежде» и «сборной».",
+   "fa": "ما از پیش «имени»، «прежде» و «сборной» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "имени",
+    "прежде",
+    "сборной"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=305418&dur=2691"
+  },
+  {
+   "id": "ru-a2-177",
+   "text": "Тут есть «слово» и «благодаря».",
+   "fa": "اینجا «слово» و «благодаря» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "слово",
+    "благодаря"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=308109&dur=1855"
+  },
+  {
+   "id": "ru-a2-178",
+   "text": "Это слова «владимир» и «июля».",
+   "fa": "این واژهها «владимир» و «июля» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "владимир",
+    "июля"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=309964&dur=1907"
+  },
+  {
+   "id": "ru-a2-179",
+   "text": "Можно «конца» и «одну»?",
+   "fa": "آیا «конца» و «одну» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "конца",
+    "одну"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=311871&dur=1698"
+  },
+  {
+   "id": "ru-a2-180",
+   "text": "Нужно «сайте» и «таки».",
+   "fa": "به «сайте» و «таки» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "сайте",
+    "таки"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=313569&dur=1620"
+  },
+  {
+   "id": "ru-a2-181",
+   "text": "Вот и «вокруг».",
+   "fa": "این هم «вокруг».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "вокруг"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=315189&dur=1176"
+  },
+  {
+   "id": "ru-a2-182",
+   "text": "У меня есть «вроде».",
+   "fa": "من «вроде» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "вроде"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=316365&dur=1384"
+  },
+  {
+   "id": "ru-a2-183",
+   "text": "Я хочу «государства».",
+   "fa": "من «государства» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "государства"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=317749&dur=1541"
+  },
+  {
+   "id": "ru-a2-184",
+   "text": "Он сказал «движения».",
+   "fa": "او «движения» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "движения",
+    "движение"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=319290&dur=1515"
+  },
+  {
+   "id": "ru-a2-185",
+   "text": "Сегодня я вижу «закон», «культуры» и «настоящее».",
+   "fa": "امروز «закон»، «культуры» و «настоящее» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "закон",
+    "культуры",
+    "настоящее",
+    "настолько"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=320805&dur=3161"
+  },
+  {
+   "id": "ru-a2-186",
+   "text": "Теперь я знаю «образования», «самого» и «силы».",
+   "fa": "اکنون «образования»، «самого» و «силы» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "образования",
+    "самого",
+    "силы"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=323966&dur=2978"
+  },
+  {
+   "id": "ru-a2-187",
+   "text": "Он говорит «удалось», «уровень» и «являются» ещё раз.",
+   "fa": "او دوباره «удалось»، «уровень» و «являются» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "удалось",
+    "уровень",
+    "являются"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=326944&dur=3344"
+  },
+  {
+   "id": "ru-a2-188",
+   "text": "Мы уже знаем «вновь», «германии» и «известно».",
+   "fa": "ما از پیش «вновь»، «германии» و «известно» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "вновь",
+    "германии",
+    "известно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=330288&dur=2821"
+  },
+  {
+   "id": "ru-a2-189",
+   "text": "Тут есть «команды» и «сердце».",
+   "fa": "اینجا «команды» و «сердце» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "команды",
+    "команда",
+    "сердце"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=333109&dur=1933"
+  },
+  {
+   "id": "ru-a2-190",
+   "text": "Это слова «столько» и «э».",
+   "fa": "این واژهها «столько» و «э» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "столько",
+    "э"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=335042&dur=1620"
+  },
+  {
+   "id": "ru-a2-191",
+   "text": "Можно «действия» и «довольно»?",
+   "fa": "آیا «действия» و «довольно» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "действия",
+    "довольно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=336662&dur=1829"
+  },
+  {
+   "id": "ru-a2-192",
+   "text": "Нужно «доме» и «кстати».",
+   "fa": "به «доме» و «кстати» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "доме",
+    "кстати"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=338491&dur=1620"
+  },
+  {
+   "id": "ru-a2-193",
+   "text": "Вот и «лицо».",
+   "fa": "این هم «лицо».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "лицо"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=340111&dur=1071"
+  },
+  {
+   "id": "ru-a2-194",
+   "text": "У меня есть «любовь».",
+   "fa": "من «любовь» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "любовь"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=341182&dur=1411"
+  },
+  {
+   "id": "ru-a2-195",
+   "text": "Я хочу «наверное».",
+   "fa": "من «наверное» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "наверное"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=342593&dur=1411"
+  },
+  {
+   "id": "ru-a2-196",
+   "text": "Он сказал «постоянно».",
+   "fa": "او «постоянно» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "постоянно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=344004&dur=1515"
+  },
+  {
+   "id": "ru-a2-197",
+   "text": "Сегодня я вижу «правильно», «ранее» и «ряд».",
+   "fa": "امروز «правильно»، «ранее» و «ряд» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "правильно",
+    "ранее",
+    "ряд"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=345519&dur=2926"
+  },
+  {
+   "id": "ru-a2-198",
+   "text": "Теперь я знаю «той», «частности» и «армии».",
+   "fa": "اکنون «той»، «частности» و «армии» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "той",
+    "частности",
+    "армии"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=348445&dur=2821"
+  },
+  {
+   "id": "ru-a2-199",
+   "text": "Он говорит «безопасности», «надеюсь» и «одном» ещё раз.",
+   "fa": "او دوباره «безопасности»، «надеюсь» و «одном» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "безопасности",
+    "надеюсь",
+    "одном"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=351266&dur=3527"
+  },
+  {
+   "id": "ru-a2-200",
+   "text": "Мы уже знаем «самым», «сергей» и «станет».",
+   "fa": "ما از پیش «самым»، «сергей» و «станет» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "самым",
+    "сергей",
+    "станет"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=354793&dur=2691"
+  },
+  {
+   "id": "ru-a2-201",
+   "text": "Тут есть «нашего» и «общества».",
+   "fa": "اینجا «нашего» و «общества» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "нашего",
+    "общества"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=357484&dur=2011"
+  },
+  {
+   "id": "ru-a2-202",
+   "text": "Это слова «сих» и «список».",
+   "fa": "این واژهها «сих» و «список» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "сих",
+    "список"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=359495&dur=1776"
+  },
+  {
+   "id": "ru-a2-203",
+   "text": "Можно «счет» и «школы»?",
+   "fa": "آیا «счет» و «школы» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "счет",
+    "школы"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=361271&dur=1567"
+  },
+  {
+   "id": "ru-a2-204",
+   "text": "Нужно «автор» и «гг».",
+   "fa": "به «автор» و «гг» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "автор",
+    "гг"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=362838&dur=1593"
+  },
+  {
+   "id": "ru-a2-205",
+   "text": "Вот и «глава».",
+   "fa": "این هم «глава».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "глава"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=364431&dur=1071"
+  },
+  {
+   "id": "ru-a2-206",
+   "text": "У меня есть «земли».",
+   "fa": "من «земли» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "земли"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=365502&dur=1384"
+  },
+  {
+   "id": "ru-a2-207",
+   "text": "Я хочу «мое».",
+   "fa": "من «мое» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "мое"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=366886&dur=1228"
+  },
+  {
+   "id": "ru-a2-208",
+   "text": "Он сказал «необходимо».",
+   "fa": "او «необходимо» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "необходимо"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=368114&dur=1489"
+  },
+  {
+   "id": "ru-a2-209",
+   "text": "Сегодня я вижу «руб», «своем» и «совершенно».",
+   "fa": "امروز «руб»، «своем» و «совершенно» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "руб",
+    "своем",
+    "своему",
+    "совершенно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=369603&dur=3082"
+  },
+  {
+   "id": "ru-a2-210",
+   "text": "Теперь я знаю «долларов», «наша» и «правительства».",
+   "fa": "اکنون «долларов»، «наша» و «правительства» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "долларов",
+    "наша",
+    "правительства",
+    "правительство"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=372685&dur=3109"
+  },
+  {
+   "id": "ru-a2-211",
+   "text": "Он говорит «произошло», «самой» и «средств» ещё раз.",
+   "fa": "او دوباره «произошло»، «самой» و «средств» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "произошло",
+    "производства",
+    "производство",
+    "самой",
+    "средств",
+    "средства"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=375794&dur=3474"
+  },
+  {
+   "id": "ru-a2-212",
+   "text": "Мы уже знаем «вдруг», «игра» и «использовать».",
+   "fa": "ما از پیش «вдруг»، «игра» و «использовать» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "вдруг",
+    "игра",
+    "использовать"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=379268&dur=2743"
+  },
+  {
+   "id": "ru-a2-213",
+   "text": "Тут есть «любой» и «нью».",
+   "fa": "اینجا «любой» و «нью» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "любой",
+    "нью"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=382011&dur=1802"
+  },
+  {
+   "id": "ru-a2-214",
+   "text": "Это слова «первая» и «примерно».",
+   "fa": "این واژهها «первая» و «примерно» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "первая",
+    "примерно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=383813&dur=2116"
+  },
+  {
+   "id": "ru-a2-215",
+   "text": "Можно «программы» и «степени»?",
+   "fa": "آیا «программы» و «степени» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "программы",
+    "программа",
+    "степени"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=385929&dur=2011"
+  },
+  {
+   "id": "ru-a2-216",
+   "text": "Нужно «жителей» и «имеют».",
+   "fa": "به «жителей» و «имеют» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "жителей",
+    "имеют"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=387940&dur=1776"
+  },
+  {
+   "id": "ru-a2-217",
+   "text": "Вот и «легко».",
+   "fa": "این هم «легко».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "легко"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=389716&dur=1097"
+  },
+  {
+   "id": "ru-a2-218",
+   "text": "У меня есть «мере».",
+   "fa": "من «мере» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "мере"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=390813&dur=1280"
+  },
+  {
+   "id": "ru-a2-219",
+   "text": "Я хочу «сезон».",
+   "fa": "من «сезон» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "сезон",
+    "сезона"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=392093&dur=1332"
+  },
+  {
+   "id": "ru-a2-220",
+   "text": "Он сказал «семьи».",
+   "fa": "او «семьи» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "семьи"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=393425&dur=1254"
+  },
+  {
+   "id": "ru-a2-221",
+   "text": "Сегодня я вижу «сможет», «выше» и «государственной».",
+   "fa": "امروز «сможет»، «выше» و «государственной» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "сможет",
+    "выше",
+    "государственной",
+    "государственного"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=394679&dur=3291"
+  },
+  {
+   "id": "ru-a2-222",
+   "text": "Теперь я знаю «новая», «первую» и «победы».",
+   "fa": "اکنون «новая»، «первую» و «победы» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "новая",
+    "первую",
+    "победы"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=397970&dur=2952"
+  },
+  {
+   "id": "ru-a2-223",
+   "text": "Он говорит «поле», «путин» и «разных» ещё раз.",
+   "fa": "او دوباره «поле»، «путин» و «разных» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "поле",
+    "путин",
+    "разных"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=400922&dur=3082"
+  },
+  {
+   "id": "ru-a2-224",
+   "text": "Мы уже знаем «ребенка», «суд» и «труда».",
+   "fa": "ما از پیش «ребенка»، «суд» و «труда» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "ребенка",
+    "суд",
+    "труда"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=404004&dur=2664"
+  },
+  {
+   "id": "ru-a2-225",
+   "text": "Тут есть «ходе» и «хотят».",
+   "fa": "اینجا «ходе» و «хотят» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "ходе",
+    "хотят"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=406668&dur=1855"
+  },
+  {
+   "id": "ru-a2-226",
+   "text": "Это слова «честь» и «шоу».",
+   "fa": "این واژهها «честь» و «шоу» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "честь",
+    "шоу"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=408523&dur=1724"
+  },
+  {
+   "id": "ru-a2-227",
+   "text": "Можно «взять» и «девушка»?",
+   "fa": "آیا «взять» و «девушка» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "взять",
+    "девушка"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=410247&dur=1750"
+  },
+  {
+   "id": "ru-a2-228",
+   "text": "Нужно «идти» и «информации».",
+   "fa": "به «идти» و «информации» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "идти",
+    "информации"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=411997&dur=1881"
+  },
+  {
+   "id": "ru-a2-229",
+   "text": "Вот и «км».",
+   "fa": "این هم «км».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "км"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=413878&dur=1071"
+  },
+  {
+   "id": "ru-a2-230",
+   "text": "У меня есть «мужчина».",
+   "fa": "من «мужчина» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "мужчина",
+    "мужчины",
+    "мужчин"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=414949&dur=1332"
+  },
+  {
+   "id": "ru-a2-231",
+   "text": "Я хочу «никаких».",
+   "fa": "من «никаких» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "никаких",
+    "никак"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=416281&dur=1411"
+  },
+  {
+   "id": "ru-a2-232",
+   "text": "Он сказал «ночью».",
+   "fa": "او «ночью» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "ночью"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=417692&dur=1358"
+  },
+  {
+   "id": "ru-a2-233",
+   "text": "Сегодня я вижу «песни», «различных» и «союза».",
+   "fa": "امروز «песни»، «различных» و «союза» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "песни",
+    "различных",
+    "союза"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=419050&dur=3161"
+  },
+  {
+   "id": "ru-a2-234",
+   "text": "Теперь я знаю «умер», «франции» и «большинство».",
+   "fa": "اکنون «умер»، «франции» و «большинство» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "умер",
+    "франции",
+    "большинство"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=422211&dur=3109"
+  },
+  {
+   "id": "ru-a2-235",
+   "text": "Он говорит «дел», «др» и «жена» ещё раз.",
+   "fa": "او دوباره «дел»، «др» و «жена» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "дел",
+    "др",
+    "жена"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=425320&dur=2717"
+  },
+  {
+   "id": "ru-a2-236",
+   "text": "Мы уже знаем «знать», «иначе» и «кем».",
+   "fa": "ما از پیش «знать»، «иначе» و «кем» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "знать",
+    "иначе",
+    "кем"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=428037&dur=2560"
+  },
+  {
+   "id": "ru-a2-237",
+   "text": "Тут есть «клуб» и «невозможно».",
+   "fa": "اینجا «клуб» و «невозможно» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "клуб",
+    "невозможно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=430597&dur=1985"
+  },
+  {
+   "id": "ru-a2-238",
+   "text": "Это слова «придется» и «речь».",
+   "fa": "این واژهها «придется» و «речь» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "придется",
+    "речь"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=432582&dur=2011"
+  },
+  {
+   "id": "ru-a2-239",
+   "text": "Можно «серии» и «чемпионата»?",
+   "fa": "آیا «серии» و «чемпионата» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "серии",
+    "чемпионата"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=434593&dur=1907"
+  },
+  {
+   "id": "ru-a2-240",
+   "text": "Нужно «член» и «чтоб».",
+   "fa": "به «член» و «чтоб» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "член",
+    "чтоб"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=436500&dur=1620"
+  },
+  {
+   "id": "ru-a2-241",
+   "text": "Вот и «века».",
+   "fa": "این هم «века».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "века"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=438120&dur=1045"
+  },
+  {
+   "id": "ru-a2-242",
+   "text": "У меня есть «дать».",
+   "fa": "من «дать» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "дать"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=439165&dur=1202"
+  },
+  {
+   "id": "ru-a2-243",
+   "text": "Я хочу «дочь».",
+   "fa": "من «дочь» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "дочь"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=440367&dur=1123"
+  },
+  {
+   "id": "ru-a2-244",
+   "text": "Он сказал «иметь».",
+   "fa": "او «иметь» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "иметь"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=441490&dur=1280"
+  },
+  {
+   "id": "ru-a2-245",
+   "text": "Сегодня я вижу «матче», «официальный» и «практически».",
+   "fa": "امروز «матче»، «официальный» و «практически» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "матче",
+    "официальный",
+    "практически"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=442770&dur=3422"
+  },
+  {
+   "id": "ru-a2-246",
+   "text": "Теперь я знаю «существует», «ф» и «целью».",
+   "fa": "اکنون «существует»، «ф» و «целью» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "существует",
+    "ф",
+    "целью"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=446192&dur=3004"
+  },
+  {
+   "id": "ru-a2-247",
+   "text": "Он говорит «ю», «бизнес» и «внутри» ещё раз.",
+   "fa": "او دوباره «ю»، «бизнес» و «внутри» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "ю",
+    "бизнес",
+    "внутри"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=449196&dur=3056"
+  },
+  {
+   "id": "ru-a2-248",
+   "text": "Мы уже знаем «вполне», «людям» и «одновременно».",
+   "fa": "ما از پیش «вполне»، «людям» و «одновременно» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "вполне",
+    "людям",
+    "одновременно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=452252&dur=3030"
+  },
+  {
+   "id": "ru-a2-249",
+   "text": "Тут есть «основе» и «план».",
+   "fa": "اینجا «основе» و «план» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "основе",
+    "основном",
+    "основные",
+    "план"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=455282&dur=1855"
+  },
+  {
+   "id": "ru-a2-250",
+   "text": "Это слова «ради» и «санкт».",
+   "fa": "این واژهها «ради» و «санкт» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "ради",
+    "санкт"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=457137&dur=1933"
+  },
+  {
+   "id": "ru-a2-251",
+   "text": "Можно «сети» и «сми»?",
+   "fa": "آیا «сети» و «сми» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "сети",
+    "сми"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=459070&dur=1646"
+  },
+  {
+   "id": "ru-a2-252",
+   "text": "Нужно «улице» и «уровня».",
+   "fa": "به «улице» و «уровня» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "улице",
+    "уровня",
+    "уровне"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=460716&dur=1646"
+  },
+  {
+   "id": "ru-a2-253",
+   "text": "Вот и «знаешь».",
+   "fa": "این هم «знаешь».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "знаешь"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=462362&dur=1149"
+  },
+  {
+   "id": "ru-a2-254",
+   "text": "У меня есть «мировой».",
+   "fa": "من «мировой» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "мировой"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=463511&dur=1463"
+  },
+  {
+   "id": "ru-a2-255",
+   "text": "Я хочу «наук».",
+   "fa": "من «наук» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "наук"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=464974&dur=1149"
+  },
+  {
+   "id": "ru-a2-256",
+   "text": "Он сказал «пару».",
+   "fa": "او «пару» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "пару"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=466123&dur=1176"
+  },
+  {
+   "id": "ru-a2-257",
+   "text": "Сегодня я вижу «рамках», «самые» и «силу».",
+   "fa": "امروز «рамках»، «самые» و «силу» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "рамках",
+    "самые",
+    "силу"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=467299&dur=2717"
+  },
+  {
+   "id": "ru-a2-258",
+   "text": "Теперь я знаю «ст», «строительство» и «узнать».",
+   "fa": "اکنون «ст»، «строительство» و «узнать» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "ст",
+    "строительство",
+    "строительства",
+    "узнать"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=470016&dur=3030"
+  },
+  {
+   "id": "ru-a2-259",
+   "text": "Он говорит «ч», «школу» и «голос» ещё раз.",
+   "fa": "او دوباره «ч»، «школу» و «голос» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "ч",
+    "школу",
+    "голос"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=473046&dur=2900"
+  },
+  {
+   "id": "ru-a2-260",
+   "text": "Мы уже знаем «киев», «линии» и «откуда».",
+   "fa": "ما از پیش «киев»، «линии» و «откуда» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "киев",
+    "линии",
+    "откуда"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=475946&dur=2560"
+  },
+  {
+   "id": "ru-a2-261",
+   "text": "Тут есть «процесс» и «сюда».",
+   "fa": "اینجا «процесс» و «сюда» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "процесс",
+    "сюда"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=478506&dur=2038"
+  },
+  {
+   "id": "ru-a2-262",
+   "text": "Это слова «целом» и «вышел».",
+   "fa": "این واژهها «целом» و «вышел» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "целом",
+    "вышел"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=480544&dur=1881"
+  },
+  {
+   "id": "ru-a2-263",
+   "text": "Можно «игр» и «игру»?",
+   "fa": "آیا «игр» و «игру» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "игр",
+    "игру"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=482425&dur=1489"
+  },
+  {
+   "id": "ru-a2-264",
+   "text": "Нужно «комитета» и «лица».",
+   "fa": "به «комитета» و «лица» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "комитета",
+    "лица"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=483914&dur=1829"
+  },
+  {
+   "id": "ru-a2-265",
+   "text": "Вот и «любви».",
+   "fa": "این هم «любви».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "любви"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=485743&dur=1149"
+  },
+  {
+   "id": "ru-a2-266",
+   "text": "У меня есть «матч».",
+   "fa": "من «матч» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "матч"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=486892&dur=1358"
+  },
+  {
+   "id": "ru-a2-267",
+   "text": "Я хочу «михаил».",
+   "fa": "من «михаил» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "михаил"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=488250&dur=1202"
+  },
+  {
+   "id": "ru-a2-268",
+   "text": "Он сказал «мм».",
+   "fa": "او «мм» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "мм"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=489452&dur=1280"
+  },
+  {
+   "id": "ru-a2-269",
+   "text": "Сегодня я вижу «народ», «ниже» и «осталось».",
+   "fa": "امروز «народ»، «ниже» و «осталось» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "народ",
+    "ниже",
+    "осталось"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=490732&dur=2743"
+  },
+  {
+   "id": "ru-a2-270",
+   "text": "Теперь я знаю «порядке», «рода» и «андрей».",
+   "fa": "اکنون «порядке»، «рода» و «андрей» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "порядке",
+    "рода",
+    "андрей"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=493475&dur=2900"
+  },
+  {
+   "id": "ru-a2-271",
+   "text": "Он говорит «вести», «клуба» и «моего» ещё раз.",
+   "fa": "او دوباره «вести»، «клуба» و «моего» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "вести",
+    "клуба",
+    "моего"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=496375&dur=3109"
+  },
+  {
+   "id": "ru-a2-272",
+   "text": "Мы уже знаем «нему», «оба» и «отца».",
+   "fa": "ما از پیش «нему»، «оба» و «отца» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "нему",
+    "оба",
+    "отца"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=499484&dur=2429"
+  },
+  {
+   "id": "ru-a2-273",
+   "text": "Тут есть «поводу» и «положение».",
+   "fa": "اینجا «поводу» و «положение» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "поводу",
+    "положение"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=501913&dur=2011"
+  },
+  {
+   "id": "ru-a2-274",
+   "text": "Это слова «помочь» и «руку».",
+   "fa": "این واژهها «помочь» و «руку» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "помочь",
+    "руку"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=503924&dur=1802"
+  },
+  {
+   "id": "ru-a2-275",
+   "text": "Можно «точки» и «условиях»?",
+   "fa": "آیا «точки» و «условиях» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "точки",
+    "условиях",
+    "условия"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=505726&dur=1959"
+  },
+  {
+   "id": "ru-a2-276",
+   "text": "Нужно «всему» и «зрения».",
+   "fa": "به «всему» و «зрения» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "всему",
+    "зрения"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=507685&dur=1802"
+  },
+  {
+   "id": "ru-a2-277",
+   "text": "Вот и «края».",
+   "fa": "این هم «края».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "края"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=509487&dur=1097"
+  },
+  {
+   "id": "ru-a2-278",
+   "text": "У меня есть «мысли».",
+   "fa": "من «мысли» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "мысли"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=510584&dur=1332"
+  },
+  {
+   "id": "ru-a2-279",
+   "text": "Я хочу «национальной».",
+   "fa": "من «национальной» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "национальной"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=511916&dur=1489"
+  },
+  {
+   "id": "ru-a2-280",
+   "text": "Он сказал «обязательно».",
+   "fa": "او «обязательно» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "обязательно"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=513405&dur=1463"
+  },
+  {
+   "id": "ru-a2-281",
+   "text": "Сегодня я вижу «площади», «политики» и «службы».",
+   "fa": "امروز «площади»، «политики» و «службы» را میبینم.",
+   "pattern": "Сегодня я вижу <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "площади",
+    "политики",
+    "службы"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=514868&dur=3082"
+  },
+  {
+   "id": "ru-a2-282",
+   "text": "Теперь я знаю «смотреть», «состоянии» и «такую».",
+   "fa": "اکنون «смотреть»، «состоянии» و «такую» را میدانم.",
+   "pattern": "Теперь я знаю <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "смотреть",
+    "состоянии",
+    "состояние",
+    "такую"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=517950&dur=3239"
+  },
+  {
+   "id": "ru-a2-283",
+   "text": "Он говорит «трех», «чаще» и «языка» ещё раз.",
+   "fa": "او دوباره «трех»، «чаще» و «языка» را میگوید.",
+   "pattern": "Он говорит <W1>, <W2> и <W3> ещё раз.",
+   "targetWords": [
+    "трех",
+    "чаще",
+    "языка"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=521189&dur=3135"
+  },
+  {
+   "id": "ru-a2-284",
+   "text": "Мы уже знаем «бог», «версия» и «видео».",
+   "fa": "ما از پیش «бог»، «версия» و «видео» را میدانیم.",
+   "pattern": "Мы уже знаем <W1>, <W2> и <W3>.",
+   "targetWords": [
+    "бог",
+    "версия",
+    "версии",
+    "видео"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=524324&dur=2508"
+  },
+  {
+   "id": "ru-a2-285",
+   "text": "Тут есть «видеть» и «доктор».",
+   "fa": "اینجا «видеть» و «доктор» هستند.",
+   "pattern": "Тут есть <W1> и <W2>.",
+   "targetWords": [
+    "видеть",
+    "доктор"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=526832&dur=1829"
+  },
+  {
+   "id": "ru-a2-286",
+   "text": "Это слова «знал» и «мнению».",
+   "fa": "این واژهها «знал» و «мнению» هستند.",
+   "pattern": "Это слова <W1> и <W2>.",
+   "targetWords": [
+    "знал",
+    "мнению",
+    "мнение"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=528661&dur=1907"
+  },
+  {
+   "id": "ru-a2-287",
+   "text": "Можно «насколько» и «нужны»?",
+   "fa": "آیا «насколько» و «нужны» ممکن است؟",
+   "pattern": "Можно <W1> и <W2>?",
+   "targetWords": [
+    "насколько",
+    "нужны"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=530568&dur=1802"
+  },
+  {
+   "id": "ru-a2-288",
+   "text": "Нужно «пора» и «заявил».",
+   "fa": "به «пора» و «заявил» نیاز است.",
+   "pattern": "Нужно <W1> и <W2>.",
+   "targetWords": [
+    "пора",
+    "заявил"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=532370&dur=1620"
+  },
+  {
+   "id": "ru-a2-289",
+   "text": "Вот и «изменения».",
+   "fa": "این هم «изменения».",
+   "pattern": "Вот и <W1>.",
+   "targetWords": [
+    "изменения"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=533990&dur=1332"
+  },
+  {
+   "id": "ru-a2-290",
+   "text": "У меня есть «исследования».",
+   "fa": "من «исследования» را دارم.",
+   "pattern": "У меня есть <W1>.",
+   "targetWords": [
+    "исследования"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=535322&dur=1724"
+  },
+  {
+   "id": "ru-a2-291",
+   "text": "Я хочу «конец».",
+   "fa": "من «конец» را میخواهم.",
+   "pattern": "Я хочу <W1>.",
+   "targetWords": [
+    "конец"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=537046&dur=1332"
+  },
+  {
+   "id": "ru-a2-292",
+   "text": "Он сказал «крым».",
+   "fa": "او «крым» را گفت.",
+   "pattern": "Он сказал <W1>.",
+   "targetWords": [
+    "крым"
+   ],
+   "audio": "milo-segment:ru-A2.mp3?start=538378&dur=1358"
+  }
+ ]
+}

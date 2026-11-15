@@ -1,0 +1,2235 @@
+{
+ "schema": 1,
+ "language": "tr",
+ "band": "A1",
+ "version": 7,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "tr-a1-001",
+   "text": "Kardeşim gibi konuşuyorsun.",
+   "fa": "مثل برادرم حرف می‌زنی.",
+   "pattern": "<isim> gibi <fiil>.",
+   "targetWords": [
+    "gibi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=0&dur=2325"
+  },
+  {
+   "id": "tr-a1-002",
+   "text": "Bugün yaz gibi sıcak.",
+   "fa": "امروز مثل تابستان گرم است.",
+   "pattern": "Bugün <isim> gibi <sıfat>.",
+   "targetWords": [
+    "gibi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=2325&dur=1802"
+  },
+  {
+   "id": "tr-a1-003",
+   "text": "Çay gibi bir şey var mı?",
+   "fa": "چیزی مثل چای دارید؟",
+   "pattern": "<isim> gibi bir şey var mı?",
+   "targetWords": [
+    "gibi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=4127&dur=1985"
+  },
+  {
+   "id": "tr-a1-004",
+   "text": "Masada olan kitap benim.",
+   "fa": "کتابی که روی میز است مال من است.",
+   "pattern": "<yer> olan <isim> benim.",
+   "targetWords": [
+    "olan"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=6112&dur=2064"
+  },
+  {
+   "id": "tr-a1-005",
+   "text": "Burada olan herkes öğrenci.",
+   "fa": "همهٔ کسانی که اینجا هستند دانشجو هستند.",
+   "pattern": "<yer> olan herkes <isim>.",
+   "targetWords": [
+    "olan"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=8176&dur=2220"
+  },
+  {
+   "id": "tr-a1-006",
+   "text": "Umarım ki gelirsin.",
+   "fa": "امیدوارم که بیایی.",
+   "pattern": "Umarım ki <cümle>.",
+   "targetWords": [
+    "ki"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=10396&dur=1698"
+  },
+  {
+   "id": "tr-a1-007",
+   "text": "Biliyorum ki yorgunsun.",
+   "fa": "می‌دانم که خسته‌ای.",
+   "pattern": "Biliyorum ki <cümle>.",
+   "targetWords": [
+    "ki"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=12094&dur=1907"
+  },
+  {
+   "id": "tr-a1-008",
+   "text": "Bu ilk dersim.",
+   "fa": "این اولین درس من است.",
+   "pattern": "Bu ilk <isim>.",
+   "targetWords": [
+    "ilk"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=14001&dur=1306"
+  },
+  {
+   "id": "tr-a1-009",
+   "text": "İlk önce kahvaltı yapalım.",
+   "fa": "اول صبحانه بخوریم.",
+   "pattern": "İlk önce <fiil>.",
+   "targetWords": [
+    "ilk"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=15307&dur=2168"
+  },
+  {
+   "id": "tr-a1-010",
+   "text": "Ben çay, o ise kahve istiyor.",
+   "fa": "من چای می‌خواهم، او اما قهوه.",
+   "pattern": "<A> <isim>, <B> ise <isim> istiyor.",
+   "targetWords": [
+    "ise"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=17475&dur=2403"
+  },
+  {
+   "id": "tr-a1-011",
+   "text": "Bir kelime bile bilmiyorum.",
+   "fa": "حتی یک کلمه هم نمی‌دانم.",
+   "pattern": "<isim> bile <fiil>.",
+   "targetWords": [
+    "bile"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=19878&dur=2011"
+  },
+  {
+   "id": "tr-a1-012",
+   "text": "O bile geldi.",
+   "fa": "حتی او هم آمد.",
+   "pattern": "<isim> bile geldi.",
+   "targetWords": [
+    "bile"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=21889&dur=1228"
+  },
+  {
+   "id": "tr-a1-013",
+   "text": "Böyle daha iyi.",
+   "fa": "این‌طوری بهتر است.",
+   "pattern": "Böyle daha <sıfat>.",
+   "targetWords": [
+    "böyle"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=23117&dur=1332"
+  },
+  {
+   "id": "tr-a1-014",
+   "text": "Neden böyle yorgunsun?",
+   "fa": "چرا این‌قدر خسته‌ای؟",
+   "pattern": "Neden böyle <sıfat>?",
+   "targetWords": [
+    "böyle"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=24449&dur=1855"
+  },
+  {
+   "id": "tr-a1-015",
+   "text": "Tek bir sorum var.",
+   "fa": "فقط یک سؤال دارم.",
+   "pattern": "Tek bir <isim> var.",
+   "targetWords": [
+    "tek"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=26304&dur=1646"
+  },
+  {
+   "id": "tr-a1-016",
+   "text": "Evde tek başımayım.",
+   "fa": "در خانه تنها هستم.",
+   "pattern": "<yer> tek başımayım.",
+   "targetWords": [
+    "tek"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=27950&dur=1698"
+  },
+  {
+   "id": "tr-a1-017",
+   "text": "Tüm gün evdeyim.",
+   "fa": "تمام روز خانه‌ام.",
+   "pattern": "Tüm <zaman> <yer>.",
+   "targetWords": [
+    "tüm"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=29648&dur=1489"
+  },
+  {
+   "id": "tr-a1-018",
+   "text": "Tüm arkadaşlarım burada.",
+   "fa": "همهٔ دوستانم اینجا هستند.",
+   "pattern": "Tüm <isim> <yer>.",
+   "targetWords": [
+    "tüm"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=31137&dur=2038"
+  },
+  {
+   "id": "tr-a1-019",
+   "text": "Doğru, sen haklısın.",
+   "fa": "درست است، حق با توست.",
+   "pattern": "Doğru, <cümle>.",
+   "targetWords": [
+    "doğru"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=33175&dur=1907"
+  },
+  {
+   "id": "tr-a1-020",
+   "text": "Bu yol doğru mu?",
+   "fa": "این راه درست است؟",
+   "pattern": "Bu <isim> doğru mu?",
+   "targetWords": [
+    "doğru"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=35082&dur=1332"
+  },
+  {
+   "id": "tr-a1-021",
+   "text": "Okula doğru yürüyorum.",
+   "fa": "به سمت مدرسه پیاده می‌روم.",
+   "pattern": "<yer>-e doğru yürüyorum.",
+   "targetWords": [
+    "doğru"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=36414&dur=1829"
+  },
+  {
+   "id": "tr-a1-022",
+   "text": "Hasta olduğunu bilmiyordum.",
+   "fa": "نمی‌دانستم مریض هستی.",
+   "pattern": "<sıfat> olduğunu bilmiyordum.",
+   "targetWords": [
+    "olduğunu"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=38243&dur=1985"
+  },
+  {
+   "id": "tr-a1-023",
+   "text": "Yorgunsun diye erken geldim.",
+   "fa": "چون خسته بودی زود آمدم.",
+   "pattern": "<cümle> diye <fiil>.",
+   "targetWords": [
+    "diye"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=40228&dur=2299"
+  },
+  {
+   "id": "tr-a1-024",
+   "text": "Evde olduğu için gelmedi.",
+   "fa": "چون خانه بود، نیامد.",
+   "pattern": "<yer> olduğu için <fiil>.",
+   "targetWords": [
+    "olduğu"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=42527&dur=2011"
+  },
+  {
+   "id": "tr-a1-025",
+   "text": "Diğer çanta daha ucuz.",
+   "fa": "کیف دیگر ارزان‌تر است.",
+   "pattern": "Diğer <isim> daha <sıfat>.",
+   "targetWords": [
+    "diğer"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=44538&dur=1855"
+  },
+  {
+   "id": "tr-a1-026",
+   "text": "Diğer gün görüşürüz.",
+   "fa": "روز دیگر می‌بینمت.",
+   "pattern": "Diğer <zaman> görüşürüz.",
+   "targetWords": [
+    "diğer"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=46393&dur=1750"
+  },
+  {
+   "id": "tr-a1-027",
+   "text": "Çok fazla tuz var.",
+   "fa": "نمک خیلی زیاد است.",
+   "pattern": "Çok fazla <isim> var.",
+   "targetWords": [
+    "fazla"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=48143&dur=1750"
+  },
+  {
+   "id": "tr-a1-028",
+   "text": "Fazla bekleme, gel.",
+   "fa": "زیاد منتظر نمان، بیا.",
+   "pattern": "Fazla <fiil>, <fiil>.",
+   "targetWords": [
+    "fazla"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=49893&dur=1881"
+  },
+  {
+   "id": "tr-a1-029",
+   "text": "Doktor olmak istiyorum.",
+   "fa": "می‌خواهم پزشک شوم.",
+   "pattern": "<meslek> olmak istiyorum.",
+   "targetWords": [
+    "olmak"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=51774&dur=1855"
+  },
+  {
+   "id": "tr-a1-030",
+   "text": "Mutlu olmak kolay.",
+   "fa": "خوشحال بودن آسان است.",
+   "pattern": "<sıfat> olmak <sıfat>.",
+   "targetWords": [
+    "olmak"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=53629&dur=1567"
+  },
+  {
+   "id": "tr-a1-031",
+   "text": "Geliyorum, ancak geç kalırım.",
+   "fa": "می‌آیم، اما دیر می‌رسم.",
+   "pattern": "<cümle>, ancak <cümle>.",
+   "targetWords": [
+    "ancak"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=55196&dur=2508"
+  },
+  {
+   "id": "tr-a1-032",
+   "text": "Ancak akşam müsaitim.",
+   "fa": "فقط عصر وقت دارم.",
+   "pattern": "Ancak <zaman> müsaitim.",
+   "targetWords": [
+    "ancak"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=57704&dur=1881"
+  },
+  {
+   "id": "tr-a1-033",
+   "text": "Biri kapıda bekliyor.",
+   "fa": "یکی دم در منتظر است.",
+   "pattern": "Biri <yer> bekliyor.",
+   "targetWords": [
+    "biri"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=59585&dur=1776"
+  },
+  {
+   "id": "tr-a1-034",
+   "text": "Arkadaşlarımdan biri doktor.",
+   "fa": "یکی از دوستانم پزشک است.",
+   "pattern": "<isim>-dan biri <meslek>.",
+   "targetWords": [
+    "biri"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=61361&dur=2299"
+  },
+  {
+   "id": "tr-a1-035",
+   "text": "Bunu çok istiyorum.",
+   "fa": "این را خیلی می‌خواهم.",
+   "pattern": "Bunu çok <fiil>.",
+   "targetWords": [
+    "bunu"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=63660&dur=1593"
+  },
+  {
+   "id": "tr-a1-036",
+   "text": "Bunu kim yaptı?",
+   "fa": "این را کی درست کرد؟",
+   "pattern": "Bunu kim yaptı?",
+   "targetWords": [
+    "bunu"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=65253&dur=1332"
+  },
+  {
+   "id": "tr-a1-037",
+   "text": "Öyle mi? Harika!",
+   "fa": "جدی؟ عالی!",
+   "pattern": "Öyle mi? <cümle>!",
+   "targetWords": [
+    "öyle"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=66585&dur=1776"
+  },
+  {
+   "id": "tr-a1-038",
+   "text": "Ben öyle düşünmüyorum.",
+   "fa": "من این‌طور فکر نمی‌کنم.",
+   "pattern": "Ben öyle <fiil>.",
+   "targetWords": [
+    "öyle"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=68361&dur=1724"
+  },
+  {
+   "id": "tr-a1-039",
+   "text": "Bu şekilde daha kolay.",
+   "fa": "این‌طوری آسان‌تر است.",
+   "pattern": "Bu şekilde daha <sıfat>.",
+   "targetWords": [
+    "şekilde"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=70085&dur=1907"
+  },
+  {
+   "id": "tr-a1-040",
+   "text": "Bütün gün çalıştım.",
+   "fa": "تمام روز کار کردم.",
+   "pattern": "Bütün <zaman> <fiil>.",
+   "targetWords": [
+    "bütün"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=71992&dur=1672"
+  },
+  {
+   "id": "tr-a1-041",
+   "text": "Bütün aile burada.",
+   "fa": "همهٔ خانواده اینجا هستند.",
+   "pattern": "Bütün <isim> <yer>.",
+   "targetWords": [
+    "bütün"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=73664&dur=1541"
+  },
+  {
+   "id": "tr-a1-042",
+   "text": "Dünya çok büyük.",
+   "fa": "دنیا خیلی بزرگ است.",
+   "pattern": "Dünya çok <sıfat>.",
+   "targetWords": [
+    "dünya"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=75205&dur=1411"
+  },
+  {
+   "id": "tr-a1-043",
+   "text": "Dünyanın en güzel şehri İstanbul.",
+   "fa": "زیباترین شهر دنیا استانبول است.",
+   "pattern": "Dünyanın en <sıfat> <isim> <isim>.",
+   "targetWords": [
+    "dünya"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=76616&dur=2508"
+  },
+  {
+   "id": "tr-a1-044",
+   "text": "Genel olarak iyiyim.",
+   "fa": "به‌طور کلی خوبم.",
+   "pattern": "Genel olarak <sıfat>.",
+   "targetWords": [
+    "genel"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=79124&dur=1646"
+  },
+  {
+   "id": "tr-a1-045",
+   "text": "Yine geç kaldın.",
+   "fa": "باز هم دیر کردی.",
+   "pattern": "Yine <fiil>.",
+   "targetWords": [
+    "yine"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=80770&dur=1515"
+  },
+  {
+   "id": "tr-a1-046",
+   "text": "Yarın yine görüşürüz.",
+   "fa": "فردا باز هم می‌بینمت.",
+   "pattern": "<zaman> yine görüşürüz.",
+   "targetWords": [
+    "yine"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=82285&dur=1802"
+  },
+  {
+   "id": "tr-a1-047",
+   "text": "Yardım eden kişi öğretmen.",
+   "fa": "کسی که کمک کرد معلم است.",
+   "pattern": "<isim> eden kişi <meslek>.",
+   "targetWords": [
+    "eden"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=84087&dur=2116"
+  },
+  {
+   "id": "tr-a1-048",
+   "text": "Film hakkında konuşalım.",
+   "fa": "دربارهٔ فیلم حرف بزنیم.",
+   "pattern": "<isim> hakkında konuşalım.",
+   "targetWords": [
+    "hakkında"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=86203&dur=2142"
+  },
+  {
+   "id": "tr-a1-049",
+   "text": "Sen hakkında ne düşünüyorsun?",
+   "fa": "تو در این باره چه فکر می‌کنی؟",
+   "pattern": "<isim> hakkında ne düşünüyorsun?",
+   "targetWords": [
+    "hakkında"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=88345&dur=2351"
+  },
+  {
+   "id": "tr-a1-050",
+   "text": "Bilet alan var mı?",
+   "fa": "کسی بلیت گرفته؟",
+   "pattern": "<isim> alan var mı?",
+   "targetWords": [
+    "alan"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=90696&dur=1541"
+  },
+  {
+   "id": "tr-a1-051",
+   "text": "Bazı günler erken kalkarım.",
+   "fa": "بعضی روزها زود بیدار می‌شوم.",
+   "pattern": "Bazı <zaman> <fiil>.",
+   "targetWords": [
+    "bazı"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=92237&dur=2247"
+  },
+  {
+   "id": "tr-a1-052",
+   "text": "Bazı insanlar kahve sevmez.",
+   "fa": "بعضی آدم‌ها قهوه دوست ندارند.",
+   "pattern": "Bazı insanlar <isim> sevmez.",
+   "targetWords": [
+    "bazı"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=94484&dur=2299"
+  },
+  {
+   "id": "tr-a1-053",
+   "text": "Hemen geri geliyorum.",
+   "fa": "الان برمی‌گردم.",
+   "pattern": "Hemen geri geliyorum.",
+   "targetWords": [
+    "geri"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=96783&dur=1750"
+  },
+  {
+   "id": "tr-a1-054",
+   "text": "Kitabı geri ver, lütfen.",
+   "fa": "کتاب را پس بده، لطفاً.",
+   "pattern": "<isim> geri ver, lütfen.",
+   "targetWords": [
+    "geri"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=98533&dur=2220"
+  },
+  {
+   "id": "tr-a1-055",
+   "text": "Yarın hava güzel olacak.",
+   "fa": "فردا هوا خوب می‌شود.",
+   "pattern": "<zaman> <isim> <sıfat> olacak.",
+   "targetWords": [
+    "olacak"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=100753&dur=2064"
+  },
+  {
+   "id": "tr-a1-056",
+   "text": "Her şey iyi olacak.",
+   "fa": "همه چیز خوب می‌شود.",
+   "pattern": "Her şey <sıfat> olacak.",
+   "targetWords": [
+    "olacak"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=102817&dur=1698"
+  },
+  {
+   "id": "tr-a1-057",
+   "text": "Kapıya gelen kim?",
+   "fa": "کی دم در آمده؟",
+   "pattern": "<yer>-a gelen kim?",
+   "targetWords": [
+    "gelen"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=104515&dur=1593"
+  },
+  {
+   "id": "tr-a1-058",
+   "text": "Dün gelen misafir amcam.",
+   "fa": "مهمانی که دیروز آمد عموی من است.",
+   "pattern": "<zaman> gelen <isim> <isim>.",
+   "targetWords": [
+    "gelen"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=106108&dur=1985"
+  },
+  {
+   "id": "tr-a1-059",
+   "text": "Onu iyi tanıyorum.",
+   "fa": "او را خوب می‌شناسم.",
+   "pattern": "Onu iyi <fiil>.",
+   "targetWords": [
+    "onu"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=108093&dur=1463"
+  },
+  {
+   "id": "tr-a1-060",
+   "text": "Onu her gün görüyorum.",
+   "fa": "او را هر روز می‌بینم.",
+   "pattern": "Onu her gün <fiil>.",
+   "targetWords": [
+    "onu"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=109556&dur=1802"
+  },
+  {
+   "id": "tr-a1-061",
+   "text": "Hem çay hem kahve var.",
+   "fa": "هم چای هست هم قهوه.",
+   "pattern": "Hem <A> hem <B> var.",
+   "targetWords": [
+    "hem"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=111358&dur=2038"
+  },
+  {
+   "id": "tr-a1-062",
+   "text": "Hem çalışıyor hem okuyor.",
+   "fa": "هم کار می‌کند هم درس می‌خواند.",
+   "pattern": "Hem <fiil> hem <fiil>.",
+   "targetWords": [
+    "hem"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=113396&dur=2142"
+  },
+  {
+   "id": "tr-a1-063",
+   "text": "Yani yarın gelmiyorsun?",
+   "fa": "یعنی فردا نمی‌آیی؟",
+   "pattern": "Yani <cümle>?",
+   "targetWords": [
+    "yani"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=115538&dur=1881"
+  },
+  {
+   "id": "tr-a1-064",
+   "text": "Yani, ben bilmiyorum.",
+   "fa": "یعنی، من نمی‌دانم.",
+   "pattern": "Yani, <cümle>.",
+   "targetWords": [
+    "yani"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=117419&dur=1855"
+  },
+  {
+   "id": "tr-a1-065",
+   "text": "Ayrıca su da alalım.",
+   "fa": "ضمناً آب هم بگیریم.",
+   "pattern": "Ayrıca <isim> da alalım.",
+   "targetWords": [
+    "ayrıca"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=119274&dur=1750"
+  },
+  {
+   "id": "tr-a1-066",
+   "text": "Bu eski bir ev.",
+   "fa": "این خانه‌ای قدیمی است.",
+   "pattern": "Bu eski bir <isim>.",
+   "targetWords": [
+    "eski"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=121024&dur=1358"
+  },
+  {
+   "id": "tr-a1-067",
+   "text": "Eski arkadaşımla buluştum.",
+   "fa": "با دوست قدیمی‌ام قرار گذاشتم.",
+   "pattern": "Eski <isim>-la buluştum.",
+   "targetWords": [
+    "eski"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=122382&dur=2194"
+  },
+  {
+   "id": "tr-a1-068",
+   "text": "Teklifi kabul ediyorum.",
+   "fa": "پیشنهاد را قبول می‌کنم.",
+   "pattern": "<isim> kabul ediyorum.",
+   "targetWords": [
+    "kabul"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=124576&dur=1985"
+  },
+  {
+   "id": "tr-a1-069",
+   "text": "Kabul, yarın görüşürüz.",
+   "fa": "قبول، فردا می‌بینمت.",
+   "pattern": "Kabul, <cümle>.",
+   "targetWords": [
+    "kabul"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=126561&dur=2194"
+  },
+  {
+   "id": "tr-a1-070",
+   "text": "Teşekkür etti ve gitti.",
+   "fa": "تشکر کرد و رفت.",
+   "pattern": "<isim> etti ve <fiil>.",
+   "targetWords": [
+    "etti"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=128755&dur=2064"
+  },
+  {
+   "id": "tr-a1-071",
+   "text": "Bu konuyla ilgili sorum var.",
+   "fa": "دربارهٔ این موضوع سؤال دارم.",
+   "pattern": "<isim>-la ilgili sorum var.",
+   "targetWords": [
+    "ilgili"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=130819&dur=2194"
+  },
+  {
+   "id": "tr-a1-072",
+   "text": "Bugün özel bir gün.",
+   "fa": "امروز روز خاصی است.",
+   "pattern": "Bugün özel bir <isim>.",
+   "targetWords": [
+    "özel"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=133013&dur=1593"
+  },
+  {
+   "id": "tr-a1-073",
+   "text": "Özel bir şey ister misin?",
+   "fa": "چیز خاصی می‌خواهی؟",
+   "pattern": "Özel bir şey ister misin?",
+   "targetWords": [
+    "özel"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=134606&dur=1985"
+  },
+  {
+   "id": "tr-a1-074",
+   "text": "Her evde bir mutfak vardır.",
+   "fa": "هر خانه‌ای یک آشپزخانه دارد.",
+   "pattern": "Her <yer> bir <isim> vardır.",
+   "targetWords": [
+    "vardır"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=136591&dur=2194"
+  },
+  {
+   "id": "tr-a1-075",
+   "text": "Geliyorum, fakat geç.",
+   "fa": "می‌آیم، اما دیر.",
+   "pattern": "<cümle>, fakat <zarf>.",
+   "targetWords": [
+    "fakat"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=138785&dur=1985"
+  },
+  {
+   "id": "tr-a1-076",
+   "text": "İki arabaya sahip.",
+   "fa": "او دو ماشین دارد.",
+   "pattern": "<isim>-e sahip.",
+   "targetWords": [
+    "sahip"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=140770&dur=1593"
+  },
+  {
+   "id": "tr-a1-077",
+   "text": "Fiyat çok yüksek.",
+   "fa": "قیمت خیلی بالاست.",
+   "pattern": "<isim> çok yüksek.",
+   "targetWords": [
+    "yüksek"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=142363&dur=1567"
+  },
+  {
+   "id": "tr-a1-078",
+   "text": "Yüksek sesle konuşma.",
+   "fa": "بلند حرف نزن.",
+   "pattern": "Yüksek sesle <fiil>.",
+   "targetWords": [
+    "yüksek"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=143930&dur=1855"
+  },
+  {
+   "id": "tr-a1-079",
+   "text": "Ben zaten biliyorum.",
+   "fa": "خودم می‌دانم.",
+   "pattern": "Ben zaten <fiil>.",
+   "targetWords": [
+    "zaten"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=145785&dur=1672"
+  },
+  {
+   "id": "tr-a1-080",
+   "text": "Zaten geç oldu.",
+   "fa": "دیگر دیر شده.",
+   "pattern": "Zaten <sıfat> oldu.",
+   "targetWords": [
+    "zaten"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=147457&dur=1437"
+  },
+  {
+   "id": "tr-a1-081",
+   "text": "Kitabı masanın üzerine koy.",
+   "fa": "کتاب را روی میز بگذار.",
+   "pattern": "<isim> <isim>-in üzerine koy.",
+   "targetWords": [
+    "üzerine"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=148894&dur=2116"
+  },
+  {
+   "id": "tr-a1-082",
+   "text": "Telefon masanın üzerinde.",
+   "fa": "تلفن روی میز است.",
+   "pattern": "<isim> <isim>-in üzerinde.",
+   "targetWords": [
+    "üzerinde"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=151010&dur=1959"
+  },
+  {
+   "id": "tr-a1-083",
+   "text": "Devlet okulunda okuyorum.",
+   "fa": "در مدرسهٔ دولتی درس می‌خوانم.",
+   "pattern": "Devlet <isim>-inde okuyorum.",
+   "targetWords": [
+    "devlet"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=152969&dur=2038"
+  },
+  {
+   "id": "tr-a1-084",
+   "text": "Bu farklı bir lezzet.",
+   "fa": "این طعم متفاوتی است.",
+   "pattern": "Bu farklı bir <isim>.",
+   "targetWords": [
+    "farklı"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=155007&dur=1750"
+  },
+  {
+   "id": "tr-a1-085",
+   "text": "Farklı bir renk var mı?",
+   "fa": "رنگ دیگری دارید؟",
+   "pattern": "Farklı bir <isim> var mı?",
+   "targetWords": [
+    "farklı"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=156757&dur=1907"
+  },
+  {
+   "id": "tr-a1-086",
+   "text": "Hep aynı şeyi söylüyorsun.",
+   "fa": "همیشه همان حرف را می‌زنی.",
+   "pattern": "Hep aynı <isim> <fiil>.",
+   "targetWords": [
+    "hep"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=158664&dur=2116"
+  },
+  {
+   "id": "tr-a1-087",
+   "text": "Ben hep buradayım.",
+   "fa": "من همیشه اینجا هستم.",
+   "pattern": "Ben hep <yer>.",
+   "targetWords": [
+    "hep"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=160780&dur=1567"
+  },
+  {
+   "id": "tr-a1-088",
+   "text": "Eğer istersen gelirim.",
+   "fa": "اگر بخواهی می‌آیم.",
+   "pattern": "Eğer <cümle> <fiil>.",
+   "targetWords": [
+    "eğer"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=162347&dur=1829"
+  },
+  {
+   "id": "tr-a1-089",
+   "text": "Eğer vaktin varsa gel.",
+   "fa": "اگر وقت داری بیا.",
+   "pattern": "Eğer <cümle> <fiil>.",
+   "targetWords": [
+    "eğer"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=164176&dur=1933"
+  },
+  {
+   "id": "tr-a1-090",
+   "text": "Herkes burada mı?",
+   "fa": "همه اینجا هستند؟",
+   "pattern": "Herkes <yer> mı?",
+   "targetWords": [
+    "herkes"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=166109&dur=1541"
+  },
+  {
+   "id": "tr-a1-091",
+   "text": "Herkes seni seviyor.",
+   "fa": "همه تو را دوست دارند.",
+   "pattern": "Herkes <isim> seviyor.",
+   "targetWords": [
+    "herkes"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=167650&dur=1829"
+  },
+  {
+   "id": "tr-a1-092",
+   "text": "Hala evde misin?",
+   "fa": "هنوز خانه‌ای؟",
+   "pattern": "Hala <yer> misin?",
+   "targetWords": [
+    "hala"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=169479&dur=1489"
+  },
+  {
+   "id": "tr-a1-093",
+   "text": "Ben hala açım.",
+   "fa": "من هنوز گرسنه‌ام.",
+   "pattern": "Ben hala <sıfat>.",
+   "targetWords": [
+    "hala"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=170968&dur=1358"
+  },
+  {
+   "id": "tr-a1-094",
+   "text": "Şu an müsait değilim.",
+   "fa": "الان وقت ندارم.",
+   "pattern": "Şu an <sıfat> değilim.",
+   "targetWords": [
+    "an"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=172326&dur=1724"
+  },
+  {
+   "id": "tr-a1-095",
+   "text": "Bir an bekle.",
+   "fa": "یک لحظه صبر کن.",
+   "pattern": "Bir an <fiil>.",
+   "targetWords": [
+    "an"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=174050&dur=1254"
+  },
+  {
+   "id": "tr-a1-096",
+   "text": "Söz veriyorum, geleceğim.",
+   "fa": "قول می‌دهم، می‌آیم.",
+   "pattern": "Söz veriyorum, <cümle>.",
+   "targetWords": [
+    "söz"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=175304&dur=2194"
+  },
+  {
+   "id": "tr-a1-097",
+   "text": "Bizi burada bekle.",
+   "fa": "اینجا منتظر ما بمان.",
+   "pattern": "Bizi <yer> <fiil>.",
+   "targetWords": [
+    "bizi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=177498&dur=1620"
+  },
+  {
+   "id": "tr-a1-098",
+   "text": "Bizi arabayla aldı.",
+   "fa": "با ماشین ما را برد.",
+   "pattern": "Bizi <isim>-la aldı.",
+   "targetWords": [
+    "bizi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=179118&dur=1620"
+  },
+  {
+   "id": "tr-a1-099",
+   "text": "Evde kimse yok.",
+   "fa": "کسی خانه نیست.",
+   "pattern": "<yer> kimse yok.",
+   "targetWords": [
+    "kimse"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=180738&dur=1463"
+  },
+  {
+   "id": "tr-a1-100",
+   "text": "Kimse cevap bilmiyor.",
+   "fa": "هیچ‌کس جواب را نمی‌داند.",
+   "pattern": "Kimse <isim> <fiil>.",
+   "targetWords": [
+    "kimse"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=182201&dur=1829"
+  },
+  {
+   "id": "tr-a1-101",
+   "text": "Çay yerine kahve alayım.",
+   "fa": "به جای چای قهوه بگیرم.",
+   "pattern": "<A> yerine <B> alayım.",
+   "targetWords": [
+    "yerine"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=184030&dur=2064"
+  },
+  {
+   "id": "tr-a1-102",
+   "text": "Hava çok kötü.",
+   "fa": "هوا خیلی بد است.",
+   "pattern": "<isim> çok kötü.",
+   "targetWords": [
+    "kötü"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=186094&dur=1463"
+  },
+  {
+   "id": "tr-a1-103",
+   "text": "Bugün kötü hissediyorum.",
+   "fa": "امروز حالم بد است.",
+   "pattern": "<zaman> kötü hissediyorum.",
+   "targetWords": [
+    "kötü"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=187557&dur=2011"
+  },
+  {
+   "id": "tr-a1-104",
+   "text": "Bak, otobüs geliyor.",
+   "fa": "ببین، اتوبوس دارد می‌آید.",
+   "pattern": "Bak, <cümle>.",
+   "targetWords": [
+    "bak"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=189568&dur=1855"
+  },
+  {
+   "id": "tr-a1-105",
+   "text": "Şuraya bir bak.",
+   "fa": "یک نگاه به آنجا بینداز.",
+   "pattern": "<yer>-e bir bak.",
+   "targetWords": [
+    "bak"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=191423&dur=1384"
+  },
+  {
+   "id": "tr-a1-106",
+   "text": "Acele etmek gerek.",
+   "fa": "باید عجله کرد.",
+   "pattern": "<fiil>-mek gerek.",
+   "targetWords": [
+    "gerek"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=192807&dur=1567"
+  },
+  {
+   "id": "tr-a1-107",
+   "text": "Gerek yok, teşekkürler.",
+   "fa": "لازم نیست، ممنون.",
+   "pattern": "Gerek yok, teşekkürler.",
+   "targetWords": [
+    "gerek"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=194374&dur=2142"
+  },
+  {
+   "id": "tr-a1-108",
+   "text": "Bu benim ikinci günüm.",
+   "fa": "این دومین روز من است.",
+   "pattern": "Bu benim ikinci <isim>.",
+   "targetWords": [
+    "ikinci"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=196516&dur=1698"
+  },
+  {
+   "id": "tr-a1-109",
+   "text": "Bu ikinci çayım.",
+   "fa": "این دومین چای من است.",
+   "pattern": "Bu ikinci <isim>.",
+   "targetWords": [
+    "ikinci"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=198214&dur=1411"
+  },
+  {
+   "id": "tr-a1-110",
+   "text": "Kısa bir yürüyüş yapalım.",
+   "fa": "یک پیاده‌روی کوتاه بکنیم.",
+   "pattern": "Kısa bir <isim> yapalım.",
+   "targetWords": [
+    "kısa"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=199625&dur=2064"
+  },
+  {
+   "id": "tr-a1-111",
+   "text": "Yol çok kısa.",
+   "fa": "راه خیلی کوتاه است.",
+   "pattern": "<isim> çok kısa.",
+   "targetWords": [
+    "kısa"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=201689&dur=1384"
+  },
+  {
+   "id": "tr-a1-112",
+   "text": "Ona dün söyledim.",
+   "fa": "دیروز به او گفتم.",
+   "pattern": "Ona <zaman> <fiil>.",
+   "targetWords": [
+    "ona"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=203073&dur=1515"
+  },
+  {
+   "id": "tr-a1-113",
+   "text": "Ona bir çay ver.",
+   "fa": "به او یک چای بده.",
+   "pattern": "Ona bir <isim> ver.",
+   "targetWords": [
+    "ona"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=204588&dur=1489"
+  },
+  {
+   "id": "tr-a1-114",
+   "text": "Birçok arkadaşım var.",
+   "fa": "دوستان زیادی دارم.",
+   "pattern": "Birçok <isim> var.",
+   "targetWords": [
+    "birçok"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=206077&dur=1985"
+  },
+  {
+   "id": "tr-a1-115",
+   "text": "Ne kadar süre kalıyorsun?",
+   "fa": "چه مدت می‌مانی؟",
+   "pattern": "Ne kadar süre <fiil>?",
+   "targetWords": [
+    "süre"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=208062&dur=2116"
+  },
+  {
+   "id": "tr-a1-116",
+   "text": "Kısa bir süre bekleyin.",
+   "fa": "مدت کوتاهی صبر کنید.",
+   "pattern": "Kısa bir süre <fiil>.",
+   "targetWords": [
+    "süre"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=210178&dur=1959"
+  },
+  {
+   "id": "tr-a1-117",
+   "text": "Yarın gelirim dedi.",
+   "fa": "گفت فردا می‌آیم.",
+   "pattern": "<cümle> dedi.",
+   "targetWords": [
+    "dedi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=212137&dur=1646"
+  },
+  {
+   "id": "tr-a1-118",
+   "text": "Onun adı ne?",
+   "fa": "اسم او چیست؟",
+   "pattern": "Onun adı ne?",
+   "targetWords": [
+    "adı"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=213783&dur=1149"
+  },
+  {
+   "id": "tr-a1-119",
+   "text": "Kedinin adı Boncuk.",
+   "fa": "اسم گربه بونجوک است.",
+   "pattern": "<isim>-in adı <isim>.",
+   "targetWords": [
+    "adı"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=214932&dur=1567"
+  },
+  {
+   "id": "tr-a1-120",
+   "text": "Aslında çok yorgunum.",
+   "fa": "راستش خیلی خسته‌ام.",
+   "pattern": "Aslında <sıfat>.",
+   "targetWords": [
+    "aslında"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=216499&dur=1776"
+  },
+  {
+   "id": "tr-a1-121",
+   "text": "Aslında sen haklısın.",
+   "fa": "راستش حق با توست.",
+   "pattern": "Aslında <cümle>.",
+   "targetWords": [
+    "aslında"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=218275&dur=1802"
+  },
+  {
+   "id": "tr-a1-122",
+   "text": "Hadi yeniden deneyelim.",
+   "fa": "بیا دوباره امتحان کنیم.",
+   "pattern": "Hadi yeniden <fiil>.",
+   "targetWords": [
+    "yeniden"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=220077&dur=1907"
+  },
+  {
+   "id": "tr-a1-123",
+   "text": "Yeniden hoş geldiniz.",
+   "fa": "دوباره خوش آمدید.",
+   "pattern": "Yeniden hoş geldiniz.",
+   "targetWords": [
+    "yeniden"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=221984&dur=1829"
+  },
+  {
+   "id": "tr-a1-124",
+   "text": "Yol boyunca konuştuk.",
+   "fa": "در طول راه حرف زدیم.",
+   "pattern": "<isim> boyunca <fiil>.",
+   "targetWords": [
+    "boyunca"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=223813&dur=1698"
+  },
+  {
+   "id": "tr-a1-125",
+   "text": "Bu yol nereye gidiyor?",
+   "fa": "این راه به کجا می‌رود؟",
+   "pattern": "Bu yol nereye gidiyor?",
+   "targetWords": [
+    "yol"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=225511&dur=1776"
+  },
+  {
+   "id": "tr-a1-126",
+   "text": "Yol uzun, hadi gidelim.",
+   "fa": "راه طولانی است، برویم.",
+   "pattern": "Yol <sıfat>, <cümle>.",
+   "targetWords": [
+    "yol"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=227287&dur=2168"
+  },
+  {
+   "id": "tr-a1-127",
+   "text": "Buna ne dersin?",
+   "fa": "نظرت در این باره چیست؟",
+   "pattern": "Buna ne dersin?",
+   "targetWords": [
+    "buna"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=229455&dur=1358"
+  },
+  {
+   "id": "tr-a1-128",
+   "text": "Buna ihtiyacım var.",
+   "fa": "به این نیاز دارم.",
+   "pattern": "Buna ihtiyacım var.",
+   "targetWords": [
+    "buna"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=230813&dur=1646"
+  },
+  {
+   "id": "tr-a1-129",
+   "text": "Dikkat et, yol ıslak.",
+   "fa": "مواظب باش، جاده خیس است.",
+   "pattern": "Dikkat et, <cümle>.",
+   "targetWords": [
+    "dikkat"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=232459&dur=1933"
+  },
+  {
+   "id": "tr-a1-130",
+   "text": "Dikkat, kapı kapanıyor.",
+   "fa": "توجه، در بسته می‌شود.",
+   "pattern": "Dikkat, <cümle>.",
+   "targetWords": [
+    "dikkat"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=234392&dur=2090"
+  },
+  {
+   "id": "tr-a1-131",
+   "text": "Sonunda eve geldin!",
+   "fa": "بالاخره آمدی خانه!",
+   "pattern": "Sonunda <yer> <fiil>!",
+   "targetWords": [
+    "sonunda"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=236482&dur=1698"
+  },
+  {
+   "id": "tr-a1-132",
+   "text": "Yolun sonunda bir market var.",
+   "fa": "آخر خیابان یک سوپرمارکت است.",
+   "pattern": "<isim>-in sonunda bir <isim> var.",
+   "targetWords": [
+    "sonunda"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=238180&dur=2351"
+  },
+  {
+   "id": "tr-a1-133",
+   "text": "Hadi eve gidelim.",
+   "fa": "بیا برویم خانه.",
+   "pattern": "Hadi <yer> <fiil>.",
+   "targetWords": [
+    "hadi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=240531&dur=1567"
+  },
+  {
+   "id": "tr-a1-134",
+   "text": "Hadi, geç kalıyoruz.",
+   "fa": "یالا، داریم دیر می‌کنیم.",
+   "pattern": "Hadi, <cümle>.",
+   "targetWords": [
+    "hadi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=242098&dur=2011"
+  },
+  {
+   "id": "tr-a1-135",
+   "text": "Güzel şeyler oluyor.",
+   "fa": "اتفاق‌های خوبی می‌افتد.",
+   "pattern": "<sıfat> şeyler oluyor.",
+   "targetWords": [
+    "şeyler"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=244109&dur=1750"
+  },
+  {
+   "id": "tr-a1-136",
+   "text": "Bazı şeyler değişmez.",
+   "fa": "بعضی چیزها عوض نمی‌شوند.",
+   "pattern": "Bazı şeyler <fiil>.",
+   "targetWords": [
+    "şeyler"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=245859&dur=1855"
+  },
+  {
+   "id": "tr-a1-137",
+   "text": "Çocuklar oyun oynuyor.",
+   "fa": "بچه‌ها بازی می‌کنند.",
+   "pattern": "<isim> oyun oynuyor.",
+   "targetWords": [
+    "oyun"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=247714&dur=1776"
+  },
+  {
+   "id": "tr-a1-138",
+   "text": "Bu oyun çok eğlenceli.",
+   "fa": "این بازی خیلی سرگرم‌کننده است.",
+   "pattern": "Bu oyun çok <sıfat>.",
+   "targetWords": [
+    "oyun"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=249490&dur=1776"
+  },
+  {
+   "id": "tr-a1-139",
+   "text": "Yere oturma, lütfen.",
+   "fa": "روی زمین ننشین، لطفاً.",
+   "pattern": "Yere <fiil>, lütfen.",
+   "targetWords": [
+    "yere"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=251266&dur=1881"
+  },
+  {
+   "id": "tr-a1-140",
+   "text": "Başka bir yere gidelim.",
+   "fa": "جای دیگری برویم.",
+   "pattern": "Başka bir yere gidelim.",
+   "targetWords": [
+    "yere"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=253147&dur=1881"
+  },
+  {
+   "id": "tr-a1-141",
+   "text": "Yağmura rağmen geldi.",
+   "fa": "با وجود باران آمد.",
+   "pattern": "<isim>-a rağmen <fiil>.",
+   "targetWords": [
+    "rağmen"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=255028&dur=1724"
+  },
+  {
+   "id": "tr-a1-142",
+   "text": "Dün çok iş vardı.",
+   "fa": "دیروز کار زیادی بود.",
+   "pattern": "<zaman> çok <isim> vardı.",
+   "targetWords": [
+    "vardı"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=256752&dur=1567"
+  },
+  {
+   "id": "tr-a1-143",
+   "text": "Evde ekmek vardı.",
+   "fa": "در خانه نان بود.",
+   "pattern": "<yer> <isim> vardı.",
+   "targetWords": [
+    "vardı"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=258319&dur=1567"
+  },
+  {
+   "id": "tr-a1-144",
+   "text": "Annem kek yaptı.",
+   "fa": "مادرم کیک درست کرد.",
+   "pattern": "<isim> <isim> yaptı.",
+   "targetWords": [
+    "yaptı"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=259886&dur=1515"
+  },
+  {
+   "id": "tr-a1-145",
+   "text": "Bugün erken çıktı.",
+   "fa": "امروز زود رفت بیرون.",
+   "pattern": "<zaman> <zarf> çıktı.",
+   "targetWords": [
+    "çıktı"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=261401&dur=1646"
+  },
+  {
+   "id": "tr-a1-146",
+   "text": "Beraber yemek yiyelim.",
+   "fa": "با هم غذا بخوریم.",
+   "pattern": "Beraber <isim> yiyelim.",
+   "targetWords": [
+    "beraber"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=263047&dur=1802"
+  },
+  {
+   "id": "tr-a1-147",
+   "text": "Hep beraber gidiyoruz.",
+   "fa": "همه با هم می‌رویم.",
+   "pattern": "Hep beraber <fiil>.",
+   "targetWords": [
+    "beraber"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=264849&dur=1855"
+  },
+  {
+   "id": "tr-a1-148",
+   "text": "Dün niye gelmedin?",
+   "fa": "دیروز چرا نیامدی؟",
+   "pattern": "<zaman> niye <fiil>?",
+   "targetWords": [
+    "niye"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=266704&dur=1515"
+  },
+  {
+   "id": "tr-a1-149",
+   "text": "Niye bu kadar pahalı?",
+   "fa": "چرا این‌قدر گران است؟",
+   "pattern": "Niye bu kadar <sıfat>?",
+   "targetWords": [
+    "niye"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=268219&dur=1776"
+  },
+  {
+   "id": "tr-a1-150",
+   "text": "Bana adını söyledi.",
+   "fa": "اسمش را به من گفت.",
+   "pattern": "Bana <isim> söyledi.",
+   "targetWords": [
+    "söyledi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=269995&dur=1567"
+  },
+  {
+   "id": "tr-a1-151",
+   "text": "Her şeyi anladım.",
+   "fa": "همه چیز را فهمیدم.",
+   "pattern": "Her şeyi <fiil>.",
+   "targetWords": [
+    "şeyi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=271562&dur=1515"
+  },
+  {
+   "id": "tr-a1-152",
+   "text": "Bu şeyi istemiyorum.",
+   "fa": "این را نمی‌خواهم.",
+   "pattern": "Bu şeyi <fiil>.",
+   "targetWords": [
+    "şeyi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=273077&dur=1620"
+  },
+  {
+   "id": "tr-a1-153",
+   "text": "Çay falan ister misin?",
+   "fa": "چای یا چیزی می‌خواهی؟",
+   "pattern": "<isim> falan ister misin?",
+   "targetWords": [
+    "falan"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=274697&dur=1802"
+  },
+  {
+   "id": "tr-a1-154",
+   "text": "Çay çok güçlü.",
+   "fa": "چای خیلی پررنگ است.",
+   "pattern": "<isim> çok güçlü.",
+   "targetWords": [
+    "güçlü"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=276499&dur=1437"
+  },
+  {
+   "id": "tr-a1-155",
+   "text": "O çok güçlü biri.",
+   "fa": "او آدم خیلی قوی‌ای است.",
+   "pattern": "O çok güçlü biri.",
+   "targetWords": [
+    "güçlü"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=277936&dur=1541"
+  },
+  {
+   "id": "tr-a1-156",
+   "text": "Suyunu iç, lütfen.",
+   "fa": "آبت را بخور، لطفاً.",
+   "pattern": "<isim> iç, lütfen.",
+   "targetWords": [
+    "iç"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=279477&dur=1724"
+  },
+  {
+   "id": "tr-a1-157",
+   "text": "Çayını sıcak iç.",
+   "fa": "چایت را داغ بخور.",
+   "pattern": "<isim> <sıfat> iç.",
+   "targetWords": [
+    "iç"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=281201&dur=1515"
+  },
+  {
+   "id": "tr-a1-158",
+   "text": "Bana bir çay verdi.",
+   "fa": "یک چای به من داد.",
+   "pattern": "Bana bir <isim> verdi.",
+   "targetWords": [
+    "verdi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=282716&dur=1620"
+  },
+  {
+   "id": "tr-a1-159",
+   "text": "Cevap ver, lütfen.",
+   "fa": "لطفاً جواب بده.",
+   "pattern": "Cevap ver, lütfen.",
+   "targetWords": [
+    "cevap"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=284336&dur=1802"
+  },
+  {
+   "id": "tr-a1-160",
+   "text": "Doğru cevap bu.",
+   "fa": "جواب درست این است.",
+   "pattern": "Doğru cevap bu.",
+   "targetWords": [
+    "cevap"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=286138&dur=1384"
+  },
+  {
+   "id": "tr-a1-161",
+   "text": "Göz doktoruna gidiyorum.",
+   "fa": "پیش چشم‌پزشک می‌روم.",
+   "pattern": "Göz doktoruna gidiyorum.",
+   "targetWords": [
+    "göz"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=287522&dur=1959"
+  },
+  {
+   "id": "tr-a1-162",
+   "text": "Yaz çok sıcak.",
+   "fa": "تابستان خیلی گرم است.",
+   "pattern": "Yaz çok <sıfat>.",
+   "targetWords": [
+    "yaz"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=289481&dur=1437"
+  },
+  {
+   "id": "tr-a1-163",
+   "text": "Adını buraya yaz.",
+   "fa": "اسمت را اینجا بنویس.",
+   "pattern": "<isim> buraya yaz.",
+   "targetWords": [
+    "yaz"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=290918&dur=1515"
+  },
+  {
+   "id": "tr-a1-164",
+   "text": "Hangi ülke daha güzel?",
+   "fa": "کدام کشور قشنگ‌تر است؟",
+   "pattern": "Hangi ülke daha <sıfat>?",
+   "targetWords": [
+    "ülke"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=292433&dur=1881"
+  },
+  {
+   "id": "tr-a1-165",
+   "text": "Bu ülke çok güzel.",
+   "fa": "این کشور خیلی زیباست.",
+   "pattern": "Bu ülke çok <sıfat>.",
+   "targetWords": [
+    "ülke"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=294314&dur=1620"
+  },
+  {
+   "id": "tr-a1-166",
+   "text": "Annem ekmek aldı.",
+   "fa": "مادرم نان خرید.",
+   "pattern": "<isim> <isim> aldı.",
+   "targetWords": [
+    "aldı"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=295934&dur=1489"
+  },
+  {
+   "id": "tr-a1-167",
+   "text": "Şehir dışında yaşıyorum.",
+   "fa": "خارج از شهر زندگی می‌کنم.",
+   "pattern": "<isim> dışında yaşıyorum.",
+   "targetWords": [
+    "dışında"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=297423&dur=2038"
+  },
+  {
+   "id": "tr-a1-168",
+   "text": "Bunun dışında her şey iyi.",
+   "fa": "غیر از این، همه چیز خوب است.",
+   "pattern": "Bunun dışında her şey <sıfat>.",
+   "targetWords": [
+    "dışında"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=299461&dur=2090"
+  },
+  {
+   "id": "tr-a1-169",
+   "text": "Yaklaşık on dakika sürer.",
+   "fa": "حدود ده دقیقه طول می‌کشد.",
+   "pattern": "Yaklaşık <sayı> <isim> sürer.",
+   "targetWords": [
+    "yaklaşık"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=301551&dur=2194"
+  },
+  {
+   "id": "tr-a1-170",
+   "text": "Belli değil, bakarız.",
+   "fa": "معلوم نیست، می‌بینیم.",
+   "pattern": "Belli değil, <cümle>.",
+   "targetWords": [
+    "belli"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=303745&dur=1907"
+  },
+  {
+   "id": "tr-a1-171",
+   "text": "Saat belli mi?",
+   "fa": "ساعتش معلوم است؟",
+   "pattern": "<isim> belli mi?",
+   "targetWords": [
+    "belli"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=305652&dur=1332"
+  },
+  {
+   "id": "tr-a1-172",
+   "text": "Halk pazarı pazar günü açık.",
+   "fa": "بازار مردمی یکشنبه باز است.",
+   "pattern": "<isim> <zaman> açık.",
+   "targetWords": [
+    "halk"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=306984&dur=2273"
+  },
+  {
+   "id": "tr-a1-173",
+   "text": "Vaktin varsa gel.",
+   "fa": "اگر وقت داری بیا.",
+   "pattern": "<isim> varsa <fiil>.",
+   "targetWords": [
+    "varsa"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=309257&dur=1620"
+  },
+  {
+   "id": "tr-a1-174",
+   "text": "Sorun varsa söyle.",
+   "fa": "اگر مشکلی هست بگو.",
+   "pattern": "<isim> varsa söyle.",
+   "targetWords": [
+    "varsa"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=310877&dur=1698"
+  },
+  {
+   "id": "tr-a1-175",
+   "text": "Yemek konusunda sen seç.",
+   "fa": "در مورد غذا تو انتخاب کن.",
+   "pattern": "<isim> konusunda sen seç.",
+   "targetWords": [
+    "konusunda"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=312575&dur=2038"
+  },
+  {
+   "id": "tr-a1-176",
+   "text": "Sanki kış geldi.",
+   "fa": "انگار زمستان آمده.",
+   "pattern": "Sanki <cümle>.",
+   "targetWords": [
+    "sanki"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=314613&dur=1489"
+  },
+  {
+   "id": "tr-a1-177",
+   "text": "Tabi ki gelirim.",
+   "fa": "حتماً می‌آیم.",
+   "pattern": "Tabi ki <fiil>.",
+   "targetWords": [
+    "tabi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=316102&dur=1489"
+  },
+  {
+   "id": "tr-a1-178",
+   "text": "Tabi, buyurun oturun.",
+   "fa": "البته، بفرمایید بنشینید.",
+   "pattern": "Tabi, <cümle>.",
+   "targetWords": [
+    "tabi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=317591&dur=1933"
+  },
+  {
+   "id": "tr-a1-179",
+   "text": "Bugün «a», «istanbul» ve «i» yazdım.",
+   "fa": "امروز «a»، «istanbul» و «i» را نوشتم.",
+   "pattern": "Bugün <W1>, <W2> ve <W3> yazdım.",
+   "targetWords": [
+    "a",
+    "istanbul",
+    "i"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=319524&dur=3135"
+  },
+  {
+   "id": "tr-a1-180",
+   "text": "Bu metinde «yapılan», «bulunan» ve «yılında» var.",
+   "fa": "در این متن «yapılan»، «bulunan» و «yılında» هست.",
+   "pattern": "Bu metinde <W1>, <W2> ve <W3> var.",
+   "targetWords": [
+    "yapılan",
+    "bulunan",
+    "bulundu",
+    "yılında"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=322659&dur=3971"
+  },
+  {
+   "id": "tr-a1-181",
+   "text": "Şimdi «in», «ortaya» ve «yapan» daha iyi anlıyorum.",
+   "fa": "اکنون «in»، «ortaya» و «yapan» را بهتر میفهمم.",
+   "pattern": "Şimdi <W1>, <W2> ve <W3> daha iyi anlıyorum.",
+   "targetWords": [
+    "in",
+    "ortaya",
+    "yapan"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=326630&dur=4075"
+  },
+  {
+   "id": "tr-a1-182",
+   "text": "Yarın «eğitim», «ardından» ve «olup» tekrar var.",
+   "fa": "فردا دوباره «eğitim»، «ardından» و «olup» هست.",
+   "pattern": "Yarın <W1>, <W2> ve <W3> tekrar var.",
+   "targetWords": [
+    "eğitim",
+    "ardından",
+    "olup"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=330705&dur=3918"
+  },
+  {
+   "id": "tr-a1-183",
+   "text": "Bu metinde «ı» ve «olsa» var.",
+   "fa": "در این متن «ı» و «olsa» هست.",
+   "pattern": "Bu metinde <W1> ve <W2> var.",
+   "targetWords": [
+    "ı",
+    "olsa"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=334623&dur=2560"
+  },
+  {
+   "id": "tr-a1-184",
+   "text": "Bugün «olmayan» ve «ali» önemli.",
+   "fa": "امروز «olmayan» و «ali» مهماند.",
+   "pattern": "Bugün <W1> ve <W2> önemli.",
+   "targetWords": [
+    "olmayan",
+    "ali"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=337183&dur=2664"
+  },
+  {
+   "id": "tr-a1-185",
+   "text": "Şimdi «ait» ve «bağlı» daha iyi.",
+   "fa": "اکنون «ait» و «bağlı» بهتراند.",
+   "pattern": "Şimdi <W1> ve <W2> daha iyi.",
+   "targetWords": [
+    "ait",
+    "bağlı"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=339847&dur=2717"
+  },
+  {
+   "id": "tr-a1-186",
+   "text": "Yarın «il» ve «milyon» tekrar var.",
+   "fa": "فردا دوباره «il» و «milyon» هست.",
+   "pattern": "Yarın <W1> ve <W2> tekrar var.",
+   "targetWords": [
+    "il",
+    "milyon"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=342564&dur=2952"
+  },
+  {
+   "id": "tr-a1-187",
+   "text": "«sosyal» burada var.",
+   "fa": "«sosyal» اینجا هست.",
+   "pattern": "<W1> burada var.",
+   "targetWords": [
+    "sosyal"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=345516&dur=1881"
+  },
+  {
+   "id": "tr-a1-188",
+   "text": "Bugün «özellikle» var.",
+   "fa": "امروز «özellikle» هست.",
+   "pattern": "Bugün <W1> var.",
+   "targetWords": [
+    "özellikle"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=347397&dur=2064"
+  },
+  {
+   "id": "tr-a1-189",
+   "text": "«destek» kelimesi burada.",
+   "fa": "واژهٔ «destek» اینجاست.",
+   "pattern": "<W1> kelimesi burada.",
+   "targetWords": [
+    "destek"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=349461&dur=2090"
+  },
+  {
+   "id": "tr-a1-190",
+   "text": "Ben «abd» anlıyorum.",
+   "fa": "من «abd» را میفهمم.",
+   "pattern": "Ben <W1> anlıyorum.",
+   "targetWords": [
+    "abd"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=351551&dur=2011"
+  },
+  {
+   "id": "tr-a1-191",
+   "text": "Bugün «edilen», «avrupa» ve «parti» yazdım.",
+   "fa": "امروز «edilen»، «avrupa» و «parti» را نوشتم.",
+   "pattern": "Bugün <W1>, <W2> ve <W3> yazdım.",
+   "targetWords": [
+    "edilen",
+    "avrupa",
+    "parti"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=353562&dur=3736"
+  },
+  {
+   "id": "tr-a1-192",
+   "text": "Bu metinde «merkezi», «teknik» ve «elde» var.",
+   "fa": "در این متن «merkezi»، «teknik» و «elde» هست.",
+   "pattern": "Bu metinde <W1>, <W2> ve <W3> var.",
+   "targetWords": [
+    "merkezi",
+    "teknik",
+    "elde"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=357298&dur=3788"
+  },
+  {
+   "id": "tr-a1-193",
+   "text": "Şimdi «allah», «temmuz» ve «tl» daha iyi anlıyorum.",
+   "fa": "اکنون «allah»، «temmuz» و «tl» را بهتر میفهمم.",
+   "pattern": "Şimdi <W1>, <W2> ve <W3> daha iyi anlıyorum.",
+   "targetWords": [
+    "allah",
+    "temmuz",
+    "tl"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=361086&dur=4180"
+  },
+  {
+   "id": "tr-a1-194",
+   "text": "Yarın «uluslararası», «mehmet» ve «nedeniyle» tekrar var.",
+   "fa": "فردا دوباره «uluslararası»، «mehmet» و «nedeniyle» هست.",
+   "pattern": "Yarın <W1>, <W2> ve <W3> tekrar var.",
+   "targetWords": [
+    "uluslararası",
+    "mehmet",
+    "nedeniyle"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=365266&dur=4545"
+  },
+  {
+   "id": "tr-a1-195",
+   "text": "Bu metinde «veren» ve «bundan» var.",
+   "fa": "در این متن «veren» و «bundan» هست.",
+   "pattern": "Bu metinde <W1> ve <W2> var.",
+   "targetWords": [
+    "veren",
+    "bundan"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=369811&dur=2873"
+  },
+  {
+   "id": "tr-a1-196",
+   "text": "Bugün «eylül» ve «kan» önemli.",
+   "fa": "امروز «eylül» و «kan» مهماند.",
+   "pattern": "Bugün <W1> ve <W2> önemli.",
+   "targetWords": [
+    "eylül",
+    "kan"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=372684&dur=2586"
+  },
+  {
+   "id": "tr-a1-197",
+   "text": "Şimdi «savaş» ve «başına» daha iyi.",
+   "fa": "اکنون «savaş» و «başına» بهتراند.",
+   "pattern": "Şimdi <W1> ve <W2> daha iyi.",
+   "targetWords": [
+    "savaş",
+    "başına"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=375270&dur=3030"
+  },
+  {
+   "id": "tr-a1-198",
+   "text": "Yarın «dedim» ve «den» tekrar var.",
+   "fa": "فردا دوباره «dedim» و «den» هست.",
+   "pattern": "Yarın <W1> ve <W2> tekrar var.",
+   "targetWords": [
+    "dedim",
+    "den"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=378300&dur=2873"
+  },
+  {
+   "id": "tr-a1-199",
+   "text": "«hayat» burada var.",
+   "fa": "«hayat» اینجا هست.",
+   "pattern": "<W1> burada var.",
+   "targetWords": [
+    "hayat"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=381173&dur=1776"
+  },
+  {
+   "id": "tr-a1-200",
+   "text": "Bugün «kalan» var.",
+   "fa": "امروز «kalan» هست.",
+   "pattern": "Bugün <W1> var.",
+   "targetWords": [
+    "kalan"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=382949&dur=1802"
+  },
+  {
+   "id": "tr-a1-201",
+   "text": "«mustafa» kelimesi burada.",
+   "fa": "واژهٔ «mustafa» اینجاست.",
+   "pattern": "<W1> kelimesi burada.",
+   "targetWords": [
+    "mustafa"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=384751&dur=2247"
+  },
+  {
+   "id": "tr-a1-202",
+   "text": "Ben «ye» anlıyorum.",
+   "fa": "من «ye» را میفهمم.",
+   "pattern": "Ben <W1> anlıyorum.",
+   "targetWords": [
+    "ye"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=386998&dur=1724"
+  },
+  {
+   "id": "tr-a1-203",
+   "text": "Bugün «ahmet», «arada» ve «belediye» yazdım.",
+   "fa": "امروز «ahmet»، «arada» و «belediye» را نوشتم.",
+   "pattern": "Bugün <W1>, <W2> ve <W3> yazdım.",
+   "targetWords": [
+    "ahmet",
+    "arada",
+    "belediye"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=388722&dur=3683"
+  },
+  {
+   "id": "tr-a1-204",
+   "text": "Bu metinde «canlı», «dolayı» ve «ele» var.",
+   "fa": "در این متن «canlı»، «dolayı» و «ele» هست.",
+   "pattern": "Bu metinde <W1>, <W2> ve <W3> var.",
+   "targetWords": [
+    "canlı",
+    "dolayı",
+    "ele"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=392405&dur=3422"
+  },
+  {
+   "id": "tr-a1-205",
+   "text": "Şimdi «olursa», «sürekli» ve «yolu» daha iyi anlıyorum.",
+   "fa": "اکنون «olursa»، «sürekli» و «yolu» را بهتر میفهمم.",
+   "pattern": "Şimdi <W1>, <W2> ve <W3> daha iyi anlıyorum.",
+   "targetWords": [
+    "olursa",
+    "sürekli",
+    "yolu"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=395827&dur=4415"
+  },
+  {
+   "id": "tr-a1-206",
+   "text": "Yarın «üst», «ara» ve «at» tekrar var.",
+   "fa": "فردا دوباره «üst»، «ara» و «at» هست.",
+   "pattern": "Yarın <W1>, <W2> ve <W3> tekrar var.",
+   "targetWords": [
+    "üst",
+    "ara",
+    "at"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=400242&dur=3291"
+  },
+  {
+   "id": "tr-a1-207",
+   "text": "Bu metinde «izmir» ve «milli» var.",
+   "fa": "در این متن «izmir» و «milli» هست.",
+   "pattern": "Bu metinde <W1> ve <W2> var.",
+   "targetWords": [
+    "izmir",
+    "milli"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=403533&dur=2847"
+  },
+  {
+   "id": "tr-a1-208",
+   "text": "Bugün «olun» ve «ses» önemli.",
+   "fa": "امروز «olun» و «ses» مهماند.",
+   "pattern": "Bugün <W1> ve <W2> önemli.",
+   "targetWords": [
+    "olun",
+    "ses"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=406380&dur=2560"
+  },
+  {
+   "id": "tr-a1-209",
+   "text": "Şimdi «tane» ve «verilen» daha iyi.",
+   "fa": "اکنون «tane» و «verilen» بهتراند.",
+   "pattern": "Şimdi <W1> ve <W2> daha iyi.",
+   "targetWords": [
+    "tane",
+    "verilen"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=408940&dur=2926"
+  },
+  {
+   "id": "tr-a1-210",
+   "text": "Yarın «video» ve «görev» tekrar var.",
+   "fa": "فردا دوباره «video» و «görev» هست.",
+   "pattern": "Yarın <W1> ve <W2> tekrar var.",
+   "targetWords": [
+    "video",
+    "görev"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=411866&dur=3109"
+  },
+  {
+   "id": "tr-a1-211",
+   "text": "«hak» burada var.",
+   "fa": "«hak» اینجا هست.",
+   "pattern": "<W1> burada var.",
+   "targetWords": [
+    "hak"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=414975&dur=1672"
+  },
+  {
+   "id": "tr-a1-212",
+   "text": "Bugün «izin» var.",
+   "fa": "امروز «izin» هست.",
+   "pattern": "Bugün <W1> var.",
+   "targetWords": [
+    "izin"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=416647&dur=1724"
+  },
+  {
+   "id": "tr-a1-213",
+   "text": "«müzik» kelimesi burada.",
+   "fa": "واژهٔ «müzik» اینجاست.",
+   "pattern": "<W1> kelimesi burada.",
+   "targetWords": [
+    "müzik"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=418371&dur=2090"
+  },
+  {
+   "id": "tr-a1-214",
+   "text": "Ben «resmi» anlıyorum.",
+   "fa": "من «resmi» را میفهمم.",
+   "pattern": "Ben <W1> anlıyorum.",
+   "targetWords": [
+    "resmi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=420461&dur=1907"
+  },
+  {
+   "id": "tr-a1-215",
+   "text": "Bugün «satın», «tür» ve «günlük» yazdım.",
+   "fa": "امروز «satın»، «tür» و «günlük» را نوشتم.",
+   "pattern": "Bugün <W1>, <W2> ve <W3> yazdım.",
+   "targetWords": [
+    "satın",
+    "tür",
+    "günlük"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=422368&dur=3370"
+  },
+  {
+   "id": "tr-a1-216",
+   "text": "Bu metinde «hatta», «ilçe» ve «içine» var.",
+   "fa": "در این متن «hatta»، «ilçe» و «içine» هست.",
+   "pattern": "Bu metinde <W1>, <W2> ve <W3> var.",
+   "targetWords": [
+    "hatta",
+    "ilçe",
+    "içine"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=425738&dur=3657"
+  },
+  {
+   "id": "tr-a1-217",
+   "text": "Şimdi «kültür», «sahibi» ve «sistemi» daha iyi anlıyorum.",
+   "fa": "اکنون «kültür»، «sahibi» و «sistemi» را بهتر میفهمم.",
+   "pattern": "Şimdi <W1>, <W2> ve <W3> daha iyi anlıyorum.",
+   "targetWords": [
+    "kültür",
+    "sahibi",
+    "sistemi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=429395&dur=4467"
+  },
+  {
+   "id": "tr-a1-218",
+   "text": "Yarın «dolu», «hepsi» ve «işi» tekrar var.",
+   "fa": "فردا دوباره «dolu»، «hepsi» و «işi» هست.",
+   "pattern": "Yarın <W1>, <W2> ve <W3> tekrar var.",
+   "targetWords": [
+    "dolu",
+    "hepsi",
+    "işi"
+   ],
+   "audio": "milo-segment:tr-A1.mp3?start=433862&dur=3657"
+  }
+ ]
+}

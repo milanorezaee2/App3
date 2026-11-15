@@ -1,0 +1,444 @@
+{
+ "schema": 1,
+ "language": "en",
+ "band": "pre",
+ "version": 6,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "en-pre-001",
+   "text": "The teacher explains «some», «also» and «them» once again.",
+   "fa": "معلم یک بار دیگر «some»، «also» و «them» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1>, <W2> and <W3> once again.",
+   "targetWords": [
+    "some",
+    "also",
+    "them"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=0&dur=4153"
+  },
+  {
+   "id": "en-pre-002",
+   "text": "I wrote «now», «other» and «its» in my review.",
+   "fa": "«now»، «other» و «its» را در مرورم نوشتم.",
+   "pattern": "I wrote <W1>, <W2> and <W3> in my review.",
+   "targetWords": [
+    "now",
+    "other",
+    "its"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=4153&dur=3213"
+  },
+  {
+   "id": "en-pre-003",
+   "text": "The words «than» and «only» are here.",
+   "fa": "واژههای «than» و «only» اینجا هستند.",
+   "pattern": "The words <W1> and <W2> are here.",
+   "targetWords": [
+    "than",
+    "only"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=7366&dur=2534"
+  },
+  {
+   "id": "en-pre-004",
+   "text": "My friend asks about «first» and «him».",
+   "fa": "دوستم دربارهٔ «first» و «him» میپرسد.",
+   "pattern": "My friend asks about <W1> and <W2>.",
+   "targetWords": [
+    "first",
+    "him"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=9900&dur=2664"
+  },
+  {
+   "id": "en-pre-005",
+   "text": "The teacher explains «into» and «know» again.",
+   "fa": "معلم دوباره «into» و «know» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1> and <W2> again.",
+   "targetWords": [
+    "into",
+    "know"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=12564&dur=3109"
+  },
+  {
+   "id": "en-pre-006",
+   "text": "This is «make».",
+   "fa": "این «make» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "make"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=15673&dur=1176"
+  },
+  {
+   "id": "en-pre-007",
+   "text": "The word «over» is here.",
+   "fa": "واژهٔ «over» اینجاست.",
+   "pattern": "The word <W1> is here.",
+   "targetWords": [
+    "over"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=16849&dur=1802"
+  },
+  {
+   "id": "en-pre-008",
+   "text": "I can read «think» now.",
+   "fa": "حالا میتوانم «think» را بخوانم.",
+   "pattern": "I can read <W1> now.",
+   "targetWords": [
+    "think"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=18651&dur=1855"
+  },
+  {
+   "id": "en-pre-009",
+   "text": "We need «any» today.",
+   "fa": "امروز به «any» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "any"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=20506&dur=1672"
+  },
+  {
+   "id": "en-pre-010",
+   "text": "The teacher explains «then», «could» and «back» once again.",
+   "fa": "معلم یک بار دیگر «then»، «could» و «back» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1>, <W2> and <W3> once again.",
+   "targetWords": [
+    "then",
+    "could",
+    "back"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=22178&dur=4023"
+  },
+  {
+   "id": "en-pre-011",
+   "text": "I wrote «these», «us» and «want» in my review.",
+   "fa": "«these»، «us» و «want» را در مرورم نوشتم.",
+   "pattern": "I wrote <W1>, <W2> and <W3> in my review.",
+   "targetWords": [
+    "these",
+    "us",
+    "want"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=26201&dur=3135"
+  },
+  {
+   "id": "en-pre-012",
+   "text": "The words «because» and «go» are here.",
+   "fa": "واژههای «because» و «go» اینجا هستند.",
+   "pattern": "The words <W1> and <W2> are here.",
+   "targetWords": [
+    "because",
+    "go"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=29336&dur=2586"
+  },
+  {
+   "id": "en-pre-013",
+   "text": "My friend asks about «well» and «said».",
+   "fa": "دوستم دربارهٔ «well» و «said» میپرسد.",
+   "pattern": "My friend asks about <W1> and <W2>.",
+   "targetWords": [
+    "well",
+    "said"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=31922&dur=2664"
+  },
+  {
+   "id": "en-pre-014",
+   "text": "The teacher explains «way» and «most» again.",
+   "fa": "معلم دوباره «way» و «most» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1> and <W2> again.",
+   "targetWords": [
+    "way",
+    "most"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=34586&dur=3161"
+  },
+  {
+   "id": "en-pre-015",
+   "text": "This is «where».",
+   "fa": "این «where» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "where"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=37747&dur=1202"
+  },
+  {
+   "id": "en-pre-016",
+   "text": "The word «even» is here.",
+   "fa": "واژهٔ «even» اینجاست.",
+   "pattern": "The word <W1> is here.",
+   "targetWords": [
+    "even"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=38949&dur=1829"
+  },
+  {
+   "id": "en-pre-017",
+   "text": "I can read «should» now.",
+   "fa": "حالا میتوانم «should» را بخوانم.",
+   "pattern": "I can read <W1> now.",
+   "targetWords": [
+    "should"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=40778&dur=1750"
+  },
+  {
+   "id": "en-pre-018",
+   "text": "We need «may» today.",
+   "fa": "امروز به «may» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "may"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=42528&dur=1698"
+  },
+  {
+   "id": "en-pre-019",
+   "text": "The teacher explains «here», «need» and «really» once again.",
+   "fa": "معلم یک بار دیگر «here»، «need» و «really» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1>, <W2> and <W3> once again.",
+   "targetWords": [
+    "here",
+    "need",
+    "really"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=44226&dur=4101"
+  },
+  {
+   "id": "en-pre-020",
+   "text": "I wrote «did», «right» and «work» in my review.",
+   "fa": "«did»، «right» و «work» را در مرورم نوشتم.",
+   "pattern": "I wrote <W1>, <W2> and <W3> in my review.",
+   "targetWords": [
+    "did",
+    "right",
+    "work"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=48327&dur=3135"
+  },
+  {
+   "id": "en-pre-021",
+   "text": "The words «year» and «years» are here.",
+   "fa": "واژههای «year» و «years» اینجا هستند.",
+   "pattern": "The words <W1> and <W2> are here.",
+   "targetWords": [
+    "year",
+    "years"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=51462&dur=2691"
+  },
+  {
+   "id": "en-pre-022",
+   "text": "My friend asks about «being» and «day».",
+   "fa": "دوستم دربارهٔ «being» و «day» میپرسد.",
+   "pattern": "My friend asks about <W1> and <W2>.",
+   "targetWords": [
+    "being",
+    "day"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=54153&dur=2534"
+  },
+  {
+   "id": "en-pre-023",
+   "text": "The teacher explains «too» and «going» again.",
+   "fa": "معلم دوباره «too» و «going» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1> and <W2> again.",
+   "targetWords": [
+    "too",
+    "going"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=56687&dur=3109"
+  },
+  {
+   "id": "en-pre-024",
+   "text": "This is «before».",
+   "fa": "این «before» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "before"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=59796&dur=1280"
+  },
+  {
+   "id": "en-pre-025",
+   "text": "The word «off» is here.",
+   "fa": "واژهٔ «off» اینجاست.",
+   "pattern": "The word <W1> is here.",
+   "targetWords": [
+    "off"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=61076&dur=1776"
+  },
+  {
+   "id": "en-pre-026",
+   "text": "I can read «why» now.",
+   "fa": "حالا میتوانم «why» را بخوانم.",
+   "pattern": "I can read <W1> now.",
+   "targetWords": [
+    "why"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=62852&dur=1698"
+  },
+  {
+   "id": "en-pre-027",
+   "text": "We need «made» today.",
+   "fa": "امروز به «made» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "made"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=64550&dur=1724"
+  },
+  {
+   "id": "en-pre-028",
+   "text": "The teacher explains «still», «take» and «got» once again.",
+   "fa": "معلم یک بار دیگر «still»، «take» و «got» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1>, <W2> and <W3> once again.",
+   "targetWords": [
+    "still",
+    "take",
+    "got"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=66274&dur=4049"
+  },
+  {
+   "id": "en-pre-029",
+   "text": "I wrote «many», «never» and «those» in my review.",
+   "fa": "«many»، «never» و «those» را در مرورم نوشتم.",
+   "pattern": "I wrote <W1>, <W2> and <W3> in my review.",
+   "targetWords": [
+    "many",
+    "never",
+    "those"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=70323&dur=3265"
+  },
+  {
+   "id": "en-pre-030",
+   "text": "The words «life» and «say» are here.",
+   "fa": "واژههای «life» و «say» اینجا هستند.",
+   "pattern": "The words <W1> and <W2> are here.",
+   "targetWords": [
+    "life",
+    "say"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=73588&dur=2586"
+  },
+  {
+   "id": "en-pre-031",
+   "text": "My friend asks about «world» and «down».",
+   "fa": "دوستم دربارهٔ «world» و «down» میپرسد.",
+   "pattern": "My friend asks about <W1> and <W2>.",
+   "targetWords": [
+    "world",
+    "down"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=76174&dur=2638"
+  },
+  {
+   "id": "en-pre-032",
+   "text": "The teacher explains «great» and «through» again.",
+   "fa": "معلم دوباره «great» و «through» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1> and <W2> again.",
+   "targetWords": [
+    "great",
+    "through"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=78812&dur=3056"
+  },
+  {
+   "id": "en-pre-033",
+   "text": "This is «last».",
+   "fa": "این «last» است.",
+   "pattern": "This is <W1>.",
+   "targetWords": [
+    "last"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=81868&dur=1202"
+  },
+  {
+   "id": "en-pre-034",
+   "text": "The word «while» is here.",
+   "fa": "واژهٔ «while» اینجاست.",
+   "pattern": "The word <W1> is here.",
+   "targetWords": [
+    "while"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=83070&dur=1776"
+  },
+  {
+   "id": "en-pre-035",
+   "text": "I can read «best» now.",
+   "fa": "حالا میتوانم «best» را بخوانم.",
+   "pattern": "I can read <W1> now.",
+   "targetWords": [
+    "best"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=84846&dur=1750"
+  },
+  {
+   "id": "en-pre-036",
+   "text": "We need «such» today.",
+   "fa": "امروز به «such» نیاز داریم.",
+   "pattern": "We need <W1> today.",
+   "targetWords": [
+    "such"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=86596&dur=1776"
+  },
+  {
+   "id": "en-pre-037",
+   "text": "The teacher explains «love», «man» and «home» once again.",
+   "fa": "معلم یک بار دیگر «love»، «man» و «home» را توضیح میدهد.",
+   "pattern": "The teacher explains <W1>, <W2> and <W3> once again.",
+   "targetWords": [
+    "love",
+    "man",
+    "home"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=88372&dur=4127"
+  },
+  {
+   "id": "en-pre-038",
+   "text": "I wrote «long», «look» and «something» in my review.",
+   "fa": "«long»، «look» و «something» را در مرورم نوشتم.",
+   "pattern": "I wrote <W1>, <W2> and <W3> in my review.",
+   "targetWords": [
+    "long",
+    "look",
+    "something"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=92499&dur=3500"
+  },
+  {
+   "id": "en-pre-039",
+   "text": "The words «use» and «same» are here.",
+   "fa": "واژههای «use» و «same» اینجا هستند.",
+   "pattern": "The words <W1> and <W2> are here.",
+   "targetWords": [
+    "use",
+    "same"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=95999&dur=2612"
+  },
+  {
+   "id": "en-pre-040",
+   "text": "My friend asks about «used» and «both».",
+   "fa": "دوستم دربارهٔ «used» و «both» میپرسد.",
+   "pattern": "My friend asks about <W1> and <W2>.",
+   "targetWords": [
+    "used",
+    "both"
+   ],
+   "audio": "milo-segment:en-pre.mp3?start=98611&dur=2691"
+  }
+ ]
+}

@@ -1,0 +1,536 @@
+{
+ "schema": 1,
+ "language": "fr",
+ "band": "pre",
+ "version": 6,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "fr-pre-001",
+   "text": "Ce sont «les» et «des».",
+   "fa": "اینها «les» و «des» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "les",
+    "des"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=0&dur=1384"
+  },
+  {
+   "id": "fr-pre-002",
+   "text": "Nous avons «dans» et «sur» ici.",
+   "fa": "ما «dans» و «sur» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "dans",
+    "sur"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=1384&dur=1933"
+  },
+  {
+   "id": "fr-pre-003",
+   "text": "C'est «par».",
+   "fa": "این «par» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "par"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=3317&dur=914"
+  },
+  {
+   "id": "fr-pre-004",
+   "text": "J'ai «avec» ici.",
+   "fa": "«avec» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "avec"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=4231&dur=1332"
+  },
+  {
+   "id": "fr-pre-005",
+   "text": "Ce sont «mais» et «se».",
+   "fa": "اینها «mais» و «se» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "mais",
+    "se"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=5563&dur=1489"
+  },
+  {
+   "id": "fr-pre-006",
+   "text": "Nous avons «son» et «ou» ici.",
+   "fa": "ما «son» و «ou» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "son",
+    "ou"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=7052&dur=1881"
+  },
+  {
+   "id": "fr-pre-007",
+   "text": "C'est «si».",
+   "fa": "این «si» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "si"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=8933&dur=888"
+  },
+  {
+   "id": "fr-pre-008",
+   "text": "J'ai «sont» ici.",
+   "fa": "«sont» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "sont"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=9821&dur=1228"
+  },
+  {
+   "id": "fr-pre-009",
+   "text": "Ce sont «tout» et «fait».",
+   "fa": "اینها «tout» و «fait» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "tout",
+    "fait"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=11049&dur=1541"
+  },
+  {
+   "id": "fr-pre-010",
+   "text": "Nous avons «être» et «ils» ici.",
+   "fa": "ما «être» و «ils» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "être",
+    "ils"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=12590&dur=1959"
+  },
+  {
+   "id": "fr-pre-011",
+   "text": "C'est «cette».",
+   "fa": "این «cette» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "cette"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=14549&dur=967"
+  },
+  {
+   "id": "fr-pre-012",
+   "text": "J'ai «faire» ici.",
+   "fa": "«faire» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "faire"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=15516&dur=1280"
+  },
+  {
+   "id": "fr-pre-013",
+   "text": "Ce sont «sa» et «aux».",
+   "fa": "اینها «sa» و «aux» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "sa",
+    "aux"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=16796&dur=1437"
+  },
+  {
+   "id": "fr-pre-014",
+   "text": "Nous avons «même» et «me» ici.",
+   "fa": "ما «même» و «me» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "même",
+    "me"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=18233&dur=1933"
+  },
+  {
+   "id": "fr-pre-015",
+   "text": "C'est «ont».",
+   "fa": "این «ont» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "ont"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=20166&dur=836"
+  },
+  {
+   "id": "fr-pre-016",
+   "text": "J'ai «était» ici.",
+   "fa": "«était» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "était"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=21002&dur=1254"
+  },
+  {
+   "id": "fr-pre-017",
+   "text": "Ce sont «ses» et «lui».",
+   "fa": "اینها «ses» و «lui» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "ses",
+    "lui"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=22256&dur=1541"
+  },
+  {
+   "id": "fr-pre-018",
+   "text": "Nous avons «aussi» et «peut» ici.",
+   "fa": "ما «aussi» و «peut» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "aussi",
+    "peut"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=23797&dur=1985"
+  },
+  {
+   "id": "fr-pre-019",
+   "text": "C'est «leur».",
+   "fa": "این «leur» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "leur"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=25782&dur=914"
+  },
+  {
+   "id": "fr-pre-020",
+   "text": "J'ai «moi» ici.",
+   "fa": "«moi» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "moi"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=26696&dur=1280"
+  },
+  {
+   "id": "fr-pre-021",
+   "text": "Ce sont «ces» et «quand».",
+   "fa": "اینها «ces» و «quand» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "ces",
+    "quand"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=27976&dur=1541"
+  },
+  {
+   "id": "fr-pre-022",
+   "text": "Nous avons «tous» et «sans» ici.",
+   "fa": "ما «tous» و «sans» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "tous",
+    "sans"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=29517&dur=2011"
+  },
+  {
+   "id": "fr-pre-023",
+   "text": "C'est «avoir».",
+   "fa": "این «avoir» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "avoir"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=31528&dur=1097"
+  },
+  {
+   "id": "fr-pre-024",
+   "text": "J'ai «alors» ici.",
+   "fa": "«alors» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "alors"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=32625&dur=1306"
+  },
+  {
+   "id": "fr-pre-025",
+   "text": "Ce sont «avait» et «entre».",
+   "fa": "اینها «avait» و «entre» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "avait",
+    "entre"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=33931&dur=1672"
+  },
+  {
+   "id": "fr-pre-026",
+   "text": "Nous avons «temps» et «ans» ici.",
+   "fa": "ما «temps» و «ans» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "temps",
+    "ans"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=35603&dur=1881"
+  },
+  {
+   "id": "fr-pre-027",
+   "text": "C'est «dit».",
+   "fa": "این «dit» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "dit"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=37484&dur=810"
+  },
+  {
+   "id": "fr-pre-028",
+   "text": "J'ai «peu» ici.",
+   "fa": "«peu» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "peu"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=38294&dur=1202"
+  },
+  {
+   "id": "fr-pre-029",
+   "text": "Ce sont «rien» et «monde».",
+   "fa": "اینها «rien» و «monde» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "rien",
+    "monde"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=39496&dur=1750"
+  },
+  {
+   "id": "fr-pre-030",
+   "text": "Nous avons «te» et «faut» ici.",
+   "fa": "ما «te» و «faut» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "te",
+    "faut"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=41246&dur=1907"
+  },
+  {
+   "id": "fr-pre-031",
+   "text": "C'est «toujours».",
+   "fa": "این «toujours» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "toujours"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=43153&dur=1097"
+  },
+  {
+   "id": "fr-pre-032",
+   "text": "J'ai «voir» ici.",
+   "fa": "«voir» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "voir"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=44250&dur=1332"
+  },
+  {
+   "id": "fr-pre-033",
+   "text": "Ce sont «contre» et «avant».",
+   "fa": "اینها «contre» و «avant» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "contre",
+    "avant"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=45582&dur=1750"
+  },
+  {
+   "id": "fr-pre-034",
+   "text": "Nous avons «depuis» et «donc» ici.",
+   "fa": "ما «depuis» و «donc» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "depuis",
+    "donc"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=47332&dur=2064"
+  },
+  {
+   "id": "fr-pre-035",
+   "text": "C'est «notre».",
+   "fa": "این «notre» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "notre"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=49396&dur=967"
+  },
+  {
+   "id": "fr-pre-036",
+   "text": "J'ai «sous» ici.",
+   "fa": "«sous» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "sous"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=50363&dur=1228"
+  },
+  {
+   "id": "fr-pre-037",
+   "text": "Ce sont «jamais» et «vie».",
+   "fa": "اینها «jamais» و «vie» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "jamais",
+    "vie"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=51591&dur=1646"
+  },
+  {
+   "id": "fr-pre-038",
+   "text": "Nous avons «moins» et «dont» ici.",
+   "fa": "ما «moins» و «dont» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "moins",
+    "dont"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=53237&dur=1907"
+  },
+  {
+   "id": "fr-pre-039",
+   "text": "C'est «déjà».",
+   "fa": "این «déjà» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "déjà"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=55144&dur=967"
+  },
+  {
+   "id": "fr-pre-040",
+   "text": "J'ai «soit» ici.",
+   "fa": "«soit» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "soit"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=56111&dur=1280"
+  },
+  {
+   "id": "fr-pre-041",
+   "text": "Ce sont «trop» et «leurs».",
+   "fa": "اینها «trop» و «leurs» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "trop",
+    "leurs"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=57391&dur=1620"
+  },
+  {
+   "id": "fr-pre-042",
+   "text": "Nous avons «ton» et «toute» ici.",
+   "fa": "ما «ton» و «toute» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "ton",
+    "toute"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=59011&dur=1959"
+  },
+  {
+   "id": "fr-pre-043",
+   "text": "C'est «chez».",
+   "fa": "این «chez» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "chez"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=60970&dur=914"
+  },
+  {
+   "id": "fr-pre-044",
+   "text": "J'ai «gens» ici.",
+   "fa": "«gens» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "gens"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=61884&dur=1228"
+  },
+  {
+   "id": "fr-pre-045",
+   "text": "Ce sont «juste» et «vraiment».",
+   "fa": "اینها «juste» و «vraiment» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "juste",
+    "vraiment"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=63112&dur=1829"
+  },
+  {
+   "id": "fr-pre-046",
+   "text": "Nous avons «ainsi» et «grand» ici.",
+   "fa": "ما «ainsi» و «grand» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "ainsi",
+    "grand"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=64941&dur=2011"
+  },
+  {
+   "id": "fr-pre-047",
+   "text": "C'est «pays».",
+   "fa": "این «pays» است.",
+   "pattern": "C'est <W1>.",
+   "targetWords": [
+    "pays"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=66952&dur=914"
+  },
+  {
+   "id": "fr-pre-048",
+   "text": "J'ai «mes» ici.",
+   "fa": "«mes» را اینجا دارم.",
+   "pattern": "J'ai <W1> ici.",
+   "targetWords": [
+    "mes"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=67866&dur=1176"
+  },
+  {
+   "id": "fr-pre-049",
+   "text": "Ce sont «quelques» et «premier».",
+   "fa": "اینها «quelques» و «premier» هستند.",
+   "pattern": "Ce sont <W1> et <W2>.",
+   "targetWords": [
+    "quelques",
+    "premier"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=69042&dur=1959"
+  },
+  {
+   "id": "fr-pre-050",
+   "text": "Nous avons «sera» et «nos» ici.",
+   "fa": "ما «sera» و «nos» را اینجا داریم.",
+   "pattern": "Nous avons <W1> et <W2> ici.",
+   "targetWords": [
+    "sera",
+    "nos"
+   ],
+   "audio": "milo-segment:fr-pre.mp3?start=71001&dur=2011"
+  }
+ ]
+}

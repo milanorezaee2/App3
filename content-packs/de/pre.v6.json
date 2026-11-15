@@ -1,0 +1,560 @@
+{
+ "schema": 1,
+ "language": "de",
+ "band": "pre",
+ "version": 6,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "de-pre-001",
+   "text": "Ich habe «den», «von» und «mit» geschrieben.",
+   "fa": "من «den»، «von» و «mit» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "den",
+    "von",
+    "mit"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=0&dur=2821"
+  },
+  {
+   "id": "de-pre-002",
+   "text": "Ich kann «im», «eine» und «sich» jetzt besser verstehen.",
+   "fa": "اکنون «im»، «eine» و «sich» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "im",
+    "eine",
+    "sich"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=2821&dur=3344"
+  },
+  {
+   "id": "de-pre-003",
+   "text": "Wir haben «auch» und «des» hier.",
+   "fa": "ما «auch» و «des» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "auch",
+    "des"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=6165&dur=2194"
+  },
+  {
+   "id": "de-pre-004",
+   "text": "Das ist «als».",
+   "fa": "این «als» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "als"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=8359&dur=1123"
+  },
+  {
+   "id": "de-pre-005",
+   "text": "Ich lese «er» heute.",
+   "fa": "امروز «er» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "er"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=9482&dur=1463"
+  },
+  {
+   "id": "de-pre-006",
+   "text": "Ich verstehe «an» jetzt besser.",
+   "fa": "اکنون «an» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "an"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=10945&dur=1959"
+  },
+  {
+   "id": "de-pre-007",
+   "text": "Ich habe «dass», «so» und «bei» geschrieben.",
+   "fa": "من «dass»، «so» و «bei» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "dass",
+    "so",
+    "bei"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=12904&dur=2743"
+  },
+  {
+   "id": "de-pre-008",
+   "text": "Ich kann «aber», «hat» und «sind» jetzt besser verstehen.",
+   "fa": "اکنون «aber»، «hat» و «sind» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "aber",
+    "hat",
+    "sind"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=15647&dur=3527"
+  },
+  {
+   "id": "de-pre-009",
+   "text": "Wir haben «nach» und «war» hier.",
+   "fa": "ما «nach» و «war» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "nach",
+    "war"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=19174&dur=2247"
+  },
+  {
+   "id": "de-pre-010",
+   "text": "Das ist «nur».",
+   "fa": "این «nur» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "nur"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=21421&dur=1149"
+  },
+  {
+   "id": "de-pre-011",
+   "text": "Ich lese «wenn» heute.",
+   "fa": "امروز «wenn» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "wenn"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=22570&dur=1593"
+  },
+  {
+   "id": "de-pre-012",
+   "text": "Ich verstehe «oder» jetzt besser.",
+   "fa": "اکنون «oder» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "oder"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=24163&dur=2064"
+  },
+  {
+   "id": "de-pre-013",
+   "text": "Ich habe «wird», «werden» und «am» geschrieben.",
+   "fa": "من «wird»، «werden» و «am» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "wird",
+    "werden",
+    "am"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=26227&dur=2978"
+  },
+  {
+   "id": "de-pre-014",
+   "text": "Ich kann «haben», «einer» und «zum» jetzt besser verstehen.",
+   "fa": "اکنون «haben»، «einer» و «zum» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "haben",
+    "einer",
+    "zum"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=29205&dur=3631"
+  },
+  {
+   "id": "de-pre-015",
+   "text": "Wir haben «kann» und «über» hier.",
+   "fa": "ما «kann» و «über» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "kann",
+    "über"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=32836&dur=2299"
+  },
+  {
+   "id": "de-pre-016",
+   "text": "Das ist «da».",
+   "fa": "این «da» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "da"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=35135&dur=1123"
+  },
+  {
+   "id": "de-pre-017",
+   "text": "Ich lese «dann» heute.",
+   "fa": "امروز «dann» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "dann"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=36258&dur=1515"
+  },
+  {
+   "id": "de-pre-018",
+   "text": "Ich verstehe «einem» jetzt besser.",
+   "fa": "اکنون «einem» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "einem"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=37773&dur=2064"
+  },
+  {
+   "id": "de-pre-019",
+   "text": "Ich habe «schon», «mehr» und «sein» geschrieben.",
+   "fa": "من «schon»، «mehr» و «sein» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "schon",
+    "mehr",
+    "sein"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=39837&dur=3056"
+  },
+  {
+   "id": "de-pre-020",
+   "text": "Ich kann «vor», «mal» und «zur» jetzt besser verstehen.",
+   "fa": "اکنون «vor»، «mal» و «zur» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "vor",
+    "mal",
+    "zur"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=42893&dur=3579"
+  },
+  {
+   "id": "de-pre-021",
+   "text": "Wir haben «durch» und «mich» hier.",
+   "fa": "ما «durch» و «mich» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "durch",
+    "mich"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=46472&dur=2194"
+  },
+  {
+   "id": "de-pre-022",
+   "text": "Das ist «doch».",
+   "fa": "این «doch» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "doch"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=48666&dur=1071"
+  },
+  {
+   "id": "de-pre-023",
+   "text": "Ich lese «ihr» heute.",
+   "fa": "امروز «ihr» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "ihr"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=49737&dur=1489"
+  },
+  {
+   "id": "de-pre-024",
+   "text": "Ich verstehe «immer» jetzt besser.",
+   "fa": "اکنون «immer» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "immer"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=51226&dur=2038"
+  },
+  {
+   "id": "de-pre-025",
+   "text": "Ich habe «diese», «wurde» und «wieder» geschrieben.",
+   "fa": "من «diese»، «wurde» و «wieder» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "diese",
+    "dieser",
+    "diesem",
+    "dieses",
+    "wurde",
+    "wurden",
+    "wieder"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=53264&dur=3082"
+  },
+  {
+   "id": "de-pre-026",
+   "text": "Ich kann «keine», «alle» und «können» jetzt besser verstehen.",
+   "fa": "اکنون «keine»، «alle» و «können» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "keine",
+    "alle",
+    "können"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=56346&dur=3553"
+  },
+  {
+   "id": "de-pre-027",
+   "text": "Wir haben «muss» und «uns» hier.",
+   "fa": "ما «muss» و «uns» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "muss",
+    "uns"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=59899&dur=2273"
+  },
+  {
+   "id": "de-pre-028",
+   "text": "Das ist «unter».",
+   "fa": "این «unter» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "unter"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=62172&dur=1149"
+  },
+  {
+   "id": "de-pre-029",
+   "text": "Ich lese «vom» heute.",
+   "fa": "امروز «vom» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "vom"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=63321&dur=1593"
+  },
+  {
+   "id": "de-pre-030",
+   "text": "Ich verstehe «gibt» jetzt besser.",
+   "fa": "اکنون «gibt» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "gibt"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=64914&dur=2168"
+  },
+  {
+   "id": "de-pre-031",
+   "text": "Ich habe «hatte», «ihre» und «gegen» geschrieben.",
+   "fa": "من «hatte»، «ihre» و «gegen» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "hatte",
+    "ihre",
+    "gegen"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=67082&dur=2978"
+  },
+  {
+   "id": "de-pre-032",
+   "text": "Ich kann «seine», «alles» und «also» jetzt besser verstehen.",
+   "fa": "اکنون «seine»، «alles» و «also» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "seine",
+    "seiner",
+    "alles",
+    "also"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=70060&dur=3709"
+  },
+  {
+   "id": "de-pre-033",
+   "text": "Wir haben «viel» und «zeit» hier.",
+   "fa": "ما «viel» و «zeit» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "viel",
+    "zeit"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=73769&dur=2508"
+  },
+  {
+   "id": "de-pre-034",
+   "text": "Das ist «ab».",
+   "fa": "این «ab» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "ab"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=76277&dur=1045"
+  },
+  {
+   "id": "de-pre-035",
+   "text": "Ich lese «ganz» heute.",
+   "fa": "امروز «ganz» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "ganz"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=77322&dur=1646"
+  },
+  {
+   "id": "de-pre-036",
+   "text": "Ich verstehe «machen» jetzt besser.",
+   "fa": "اکنون «machen» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "machen"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=78968&dur=2142"
+  },
+  {
+   "id": "de-pre-037",
+   "text": "Ich habe «denn», «damit» und «will» geschrieben.",
+   "fa": "من «denn»، «damit» و «will» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "denn",
+    "damit",
+    "will"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=81110&dur=2900"
+  },
+  {
+   "id": "de-pre-038",
+   "text": "Ich kann «einfach», «ohne» und «weil» jetzt besser verstehen.",
+   "fa": "اکنون «einfach»، «ohne» و «weil» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "einfach",
+    "ohne",
+    "weil"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=84010&dur=3736"
+  },
+  {
+   "id": "de-pre-039",
+   "text": "Wir haben «beim» und «waren» hier.",
+   "fa": "ما «beim» و «waren» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "beim",
+    "waren"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=87746&dur=2299"
+  },
+  {
+   "id": "de-pre-040",
+   "text": "Das ist «eines».",
+   "fa": "این «eines» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "eines"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=90045&dur=1176"
+  },
+  {
+   "id": "de-pre-041",
+   "text": "Ich lese «kein» heute.",
+   "fa": "امروز «kein» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "kein"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=91221&dur=1724"
+  },
+  {
+   "id": "de-pre-042",
+   "text": "Ich verstehe «seit» jetzt besser.",
+   "fa": "اکنون «seit» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "seit"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=92945&dur=2064"
+  },
+  {
+   "id": "de-pre-043",
+   "text": "Ich habe «soll», «selbst» und «dich» geschrieben.",
+   "fa": "من «soll»، «selbst» و «dich» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "soll",
+    "selbst",
+    "dich"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=95009&dur=3135"
+  },
+  {
+   "id": "de-pre-044",
+   "text": "Ich kann «menschen», «hab» und «kommt» jetzt besser verstehen.",
+   "fa": "اکنون «menschen»، «hab» و «kommt» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "menschen",
+    "hab",
+    "kommt"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=98144&dur=3866"
+  },
+  {
+   "id": "de-pre-045",
+   "text": "Wir haben «nun» und «würde» hier.",
+   "fa": "ما «nun» و «würde» را اینجا داریم.",
+   "pattern": "Wir haben <W1> und <W2> hier.",
+   "targetWords": [
+    "nun",
+    "würde"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=102010&dur=2403"
+  },
+  {
+   "id": "de-pre-046",
+   "text": "Das ist «leben».",
+   "fa": "این «leben» است.",
+   "pattern": "Das ist <W1>.",
+   "targetWords": [
+    "leben"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=104413&dur=1202"
+  },
+  {
+   "id": "de-pre-047",
+   "text": "Ich lese «macht» heute.",
+   "fa": "امروز «macht» را میخوانم.",
+   "pattern": "Ich lese <W1> heute.",
+   "targetWords": [
+    "macht"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=105615&dur=1672"
+  },
+  {
+   "id": "de-pre-048",
+   "text": "Ich verstehe «anderen» jetzt besser.",
+   "fa": "اکنون «anderen» را بهتر میفهمم.",
+   "pattern": "Ich verstehe <W1> jetzt besser.",
+   "targetWords": [
+    "anderen"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=107287&dur=2220"
+  },
+  {
+   "id": "de-pre-049",
+   "text": "Ich habe «ihm», «jahr» und «ob» geschrieben.",
+   "fa": "من «ihm»، «jahr» و «ob» را نوشتم.",
+   "pattern": "Ich habe <W1>, <W2> und <W3> geschrieben.",
+   "targetWords": [
+    "ihm",
+    "jahr",
+    "ob"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=109507&dur=2926"
+  },
+  {
+   "id": "de-pre-050",
+   "text": "Ich kann «ihn», «jahren» und «zwischen» jetzt besser verstehen.",
+   "fa": "اکنون «ihn»، «jahren» و «zwischen» را بهتر میفهمم.",
+   "pattern": "Ich kann <W1>, <W2> und <W3> jetzt besser verstehen.",
+   "targetWords": [
+    "ihn",
+    "jahren",
+    "jahre",
+    "zwischen"
+   ],
+   "audio": "milo-segment:de-pre.mp3?start=112433&dur=3788"
+  }
+ ]
+}

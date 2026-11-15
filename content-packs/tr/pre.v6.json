@@ -1,0 +1,663 @@
+{
+ "schema": 1,
+ "language": "tr",
+ "band": "pre",
+ "version": 6,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "tr-pre-001",
+   "text": "Bugün «için», «de» ve «da» yazdım.",
+   "fa": "امروز «için»، «de» و «da» را نوشتم.",
+   "pattern": "Bugün <W1>, <W2> ve <W3> yazdım.",
+   "targetWords": [
+    "için",
+    "de",
+    "da"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=0&dur=2978"
+  },
+  {
+   "id": "tr-pre-002",
+   "text": "Bu metinde «ile», «daha» ve «en» var.",
+   "fa": "در این متن «ile»، «daha» و «en» هست.",
+   "pattern": "Bu metinde <W1>, <W2> ve <W3> var.",
+   "targetWords": [
+    "ile",
+    "daha",
+    "en"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=2978&dur=3135"
+  },
+  {
+   "id": "tr-pre-003",
+   "text": "Şimdi «gibi», «olarak» ve «her» daha iyi anlıyorum.",
+   "fa": "اکنون «gibi»، «olarak» و «her» را بهتر میفهمم.",
+   "pattern": "Şimdi <W1>, <W2> ve <W3> daha iyi anlıyorum.",
+   "targetWords": [
+    "gibi",
+    "olarak",
+    "her"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=6113&dur=4075"
+  },
+  {
+   "id": "tr-pre-004",
+   "text": "Yarın «kadar», «olan» ve «var» tekrar var.",
+   "fa": "فردا دوباره «kadar»، «olan» و «var» هست.",
+   "pattern": "Yarın <W1>, <W2> ve <W3> tekrar var.",
+   "targetWords": [
+    "kadar",
+    "olan",
+    "var"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=10188&dur=3736"
+  },
+  {
+   "id": "tr-pre-005",
+   "text": "Bu metinde «ama» ve «ki» var.",
+   "fa": "در این متن «ama» و «ki» هست.",
+   "pattern": "Bu metinde <W1> ve <W2> var.",
+   "targetWords": [
+    "ama",
+    "ki"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=13924&dur=2508"
+  },
+  {
+   "id": "tr-pre-006",
+   "text": "Bugün «yok» ve «ya» önemli.",
+   "fa": "امروز «yok» و «ya» مهماند.",
+   "pattern": "Bugün <W1> ve <W2> önemli.",
+   "targetWords": [
+    "yok",
+    "ya"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=16432&dur=2403"
+  },
+  {
+   "id": "tr-pre-007",
+   "text": "Şimdi «değil» ve «sadece» daha iyi.",
+   "fa": "اکنون «değil» و «sadece» بهتراند.",
+   "pattern": "Şimdi <W1> ve <W2> daha iyi.",
+   "targetWords": [
+    "değil",
+    "sadece"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=18835&dur=2900"
+  },
+  {
+   "id": "tr-pre-008",
+   "text": "Yarın «zaman» ve «ilk» tekrar var.",
+   "fa": "فردا دوباره «zaman» و «ilk» هست.",
+   "pattern": "Yarın <W1> ve <W2> tekrar var.",
+   "targetWords": [
+    "zaman",
+    "ilk"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=21735&dur=2952"
+  },
+  {
+   "id": "tr-pre-009",
+   "text": "«mi» burada var.",
+   "fa": "«mi» اینجا هست.",
+   "pattern": "<W1> burada var.",
+   "targetWords": [
+    "mi"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=24687&dur=1541"
+  },
+  {
+   "id": "tr-pre-010",
+   "text": "Bugün «hiç» var.",
+   "fa": "امروز «hiç» هست.",
+   "pattern": "Bugün <W1> var.",
+   "targetWords": [
+    "hiç"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=26228&dur=1672"
+  },
+  {
+   "id": "tr-pre-011",
+   "text": "«ise» kelimesi burada.",
+   "fa": "واژهٔ «ise» اینجاست.",
+   "pattern": "<W1> kelimesi burada.",
+   "targetWords": [
+    "ise"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=27900&dur=1985"
+  },
+  {
+   "id": "tr-pre-012",
+   "text": "Ben «oldu» anlıyorum.",
+   "fa": "من «oldu» را میفهمم.",
+   "pattern": "Ben <W1> anlıyorum.",
+   "targetWords": [
+    "oldu"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=29885&dur=1802"
+  },
+  {
+   "id": "tr-pre-013",
+   "text": "Bugün «bile», «şey» ve «benim» yazdım.",
+   "fa": "امروز «bile»، «şey» و «benim» را نوشتم.",
+   "pattern": "Bugün <W1>, <W2> ve <W3> yazdım.",
+   "targetWords": [
+    "bile",
+    "şey",
+    "benim"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=31687&dur=3213"
+  },
+  {
+   "id": "tr-pre-014",
+   "text": "Bu metinde «böyle», «son» ve «tek» var.",
+   "fa": "در این متن «böyle»، «son» و «tek» هست.",
+   "pattern": "Bu metinde <W1>, <W2> ve <W3> var.",
+   "targetWords": [
+    "böyle",
+    "son",
+    "tek"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=34900&dur=3318"
+  },
+  {
+   "id": "tr-pre-015",
+   "text": "Şimdi «gün», «tüm» ve «yer» daha iyi anlıyorum.",
+   "fa": "اکنون «gün»، «tüm» و «yer» را بهتر میفهمم.",
+   "pattern": "Şimdi <W1>, <W2> ve <W3> daha iyi anlıyorum.",
+   "targetWords": [
+    "gün",
+    "tüm",
+    "yer"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=38218&dur=3762"
+  },
+  {
+   "id": "tr-pre-016",
+   "text": "Yarın «önce», «artık» ve «göre» tekrar var.",
+   "fa": "فردا دوباره «önce»، «artık» و «göre» هست.",
+   "pattern": "Yarın <W1>, <W2> ve <W3> tekrar var.",
+   "targetWords": [
+    "önce",
+    "artık",
+    "göre"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=41980&dur=3657"
+  },
+  {
+   "id": "tr-pre-017",
+   "text": "Bu metinde «seni» ve «beni» var.",
+   "fa": "در این متن «seni» و «beni» هست.",
+   "pattern": "Bu metinde <W1> ve <W2> var.",
+   "targetWords": [
+    "seni",
+    "beni"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=45637&dur=2664"
+  },
+  {
+   "id": "tr-pre-018",
+   "text": "Bugün «aynı» ve «bana» önemli.",
+   "fa": "امروز «aynı» و «bana» مهماند.",
+   "pattern": "Bugün <W1> ve <W2> önemli.",
+   "targetWords": [
+    "aynı",
+    "bana"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=48301&dur=2534"
+  },
+  {
+   "id": "tr-pre-019",
+   "text": "Şimdi «tarafından» ve «türk» daha iyi.",
+   "fa": "اکنون «tarafından» و «türk» بهتراند.",
+   "pattern": "Şimdi <W1> ve <W2> daha iyi.",
+   "targetWords": [
+    "tarafından",
+    "türk"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=50835&dur=3135"
+  },
+  {
+   "id": "tr-pre-020",
+   "text": "Yarın «doğru» ve «veya» tekrar var.",
+   "fa": "فردا دوباره «doğru» و «veya» هست.",
+   "pattern": "Yarın <W1> ve <W2> tekrar var.",
+   "targetWords": [
+    "doğru",
+    "veya"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=53970&dur=2978"
+  },
+  {
+   "id": "tr-pre-021",
+   "text": "«olduğunu» burada var.",
+   "fa": "«olduğunu» اینجا هست.",
+   "pattern": "<W1> burada var.",
+   "targetWords": [
+    "olduğunu",
+    "olduğu"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=56948&dur=1855"
+  },
+  {
+   "id": "tr-pre-022",
+   "text": "Bugün «diye» var.",
+   "fa": "امروز «diye» هست.",
+   "pattern": "Bugün <W1> var.",
+   "targetWords": [
+    "diye"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=58803&dur=1646"
+  },
+  {
+   "id": "tr-pre-023",
+   "text": "«kendi» kelimesi burada.",
+   "fa": "واژهٔ «kendi» اینجاست.",
+   "pattern": "<W1> kelimesi burada.",
+   "targetWords": [
+    "kendi"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=60449&dur=2090"
+  },
+  {
+   "id": "tr-pre-024",
+   "text": "Ben «olur» anlıyorum.",
+   "fa": "من «olur» را میفهمم.",
+   "pattern": "Ben <W1> anlıyorum.",
+   "targetWords": [
+    "olur"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=62539&dur=1855"
+  },
+  {
+   "id": "tr-pre-025",
+   "text": "Bugün «şu», «birlikte» ve «devam» yazdım.",
+   "fa": "امروز «şu»، «birlikte» و «devam» را نوشتم.",
+   "pattern": "Bugün <W1>, <W2> ve <W3> yazdım.",
+   "targetWords": [
+    "şu",
+    "birlikte",
+    "devam"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=64394&dur=3500"
+  },
+  {
+   "id": "tr-pre-026",
+   "text": "Bu metinde «diğer», «sana» ve «fazla» var.",
+   "fa": "در این متن «diğer»، «sana» و «fazla» هست.",
+   "pattern": "Bu metinde <W1>, <W2> ve <W3> var.",
+   "targetWords": [
+    "diğer",
+    "sana",
+    "fazla"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=67894&dur=3553"
+  },
+  {
+   "id": "tr-pre-027",
+   "text": "Şimdi «neden», «a» ve «önemli» daha iyi anlıyorum.",
+   "fa": "اکنون «neden»، «a» و «önemli» را بهتر میفهمم.",
+   "pattern": "Şimdi <W1>, <W2> ve <W3> daha iyi anlıyorum.",
+   "targetWords": [
+    "neden",
+    "a",
+    "önemli"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=71447&dur=3971"
+  },
+  {
+   "id": "tr-pre-028",
+   "text": "Yarın «yıl», «içinde» ve «olmak» tekrar var.",
+   "fa": "فردا دوباره «yıl»، «içinde» و «olmak» هست.",
+   "pattern": "Yarın <W1>, <W2> ve <W3> tekrar var.",
+   "targetWords": [
+    "yıl",
+    "içinde",
+    "olmak"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=75418&dur=3736"
+  },
+  {
+   "id": "tr-pre-029",
+   "text": "Bu metinde «çünkü» ve «ancak» var.",
+   "fa": "در این متن «çünkü» و «ancak» هست.",
+   "pattern": "Bu metinde <W1> ve <W2> var.",
+   "targetWords": [
+    "çünkü",
+    "ancak"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=79154&dur=2873"
+  },
+  {
+   "id": "tr-pre-030",
+   "text": "Bugün «başka» ve «biri» önemli.",
+   "fa": "امروز «başka» و «biri» مهماند.",
+   "pattern": "Bugün <W1> ve <W2> önemli.",
+   "targetWords": [
+    "başka",
+    "biri"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=82027&dur=2586"
+  },
+  {
+   "id": "tr-pre-031",
+   "text": "Şimdi «bunu» ve «işte» daha iyi.",
+   "fa": "اکنون «bunu» و «işte» بهتراند.",
+   "pattern": "Şimdi <W1> ve <W2> daha iyi.",
+   "targetWords": [
+    "bunu",
+    "işte"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=84613&dur=2691"
+  },
+  {
+   "id": "tr-pre-032",
+   "text": "Yarın «olsun» ve «karşı» tekrar var.",
+   "fa": "فردا دوباره «olsun» و «karşı» هست.",
+   "pattern": "Yarın <W1> ve <W2> tekrar var.",
+   "targetWords": [
+    "olsun",
+    "karşı"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=87304&dur=3161"
+  },
+  {
+   "id": "tr-pre-033",
+   "text": "«arasında» burada var.",
+   "fa": "«arasında» اینجا هست.",
+   "pattern": "<W1> burada var.",
+   "targetWords": [
+    "arasında"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=90465&dur=1985"
+  },
+  {
+   "id": "tr-pre-034",
+   "text": "Bugün «insanlar» var.",
+   "fa": "امروز «insanlar» هست.",
+   "pattern": "Bugün <W1> var.",
+   "targetWords": [
+    "insanlar",
+    "insan"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=92450&dur=1933"
+  },
+  {
+   "id": "tr-pre-035",
+   "text": "«öyle» kelimesi burada.",
+   "fa": "واژهٔ «öyle» اینجاست.",
+   "pattern": "<W1> kelimesi burada.",
+   "targetWords": [
+    "öyle"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=94383&dur=2038"
+  },
+  {
+   "id": "tr-pre-036",
+   "text": "Ben «şekilde» anlıyorum.",
+   "fa": "من «şekilde» را میفهمم.",
+   "pattern": "Ben <W1> anlıyorum.",
+   "targetWords": [
+    "şekilde"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=96421&dur=2116"
+  },
+  {
+   "id": "tr-pre-037",
+   "text": "Bugün «bütün», «istanbul» ve «iş» yazdım.",
+   "fa": "امروز «bütün»، «istanbul» و «iş» را نوشتم.",
+   "pattern": "Bugün <W1>, <W2> ve <W3> yazdım.",
+   "targetWords": [
+    "bütün",
+    "istanbul",
+    "iş"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=98537&dur=3422"
+  },
+  {
+   "id": "tr-pre-038",
+   "text": "Bu metinde «senin», «dünya» ve «genel» var.",
+   "fa": "در این متن «senin»، «dünya» و «genel» هست.",
+   "pattern": "Bu metinde <W1>, <W2> ve <W3> var.",
+   "targetWords": [
+    "senin",
+    "dünya",
+    "genel"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=101959&dur=3500"
+  },
+  {
+   "id": "tr-pre-039",
+   "text": "Şimdi «hemen», «yine» ve «adam» daha iyi anlıyorum.",
+   "fa": "اکنون «hemen»، «yine» و «adam» را بهتر میفهمم.",
+   "pattern": "Şimdi <W1>, <W2> ve <W3> daha iyi anlıyorum.",
+   "targetWords": [
+    "hemen",
+    "yine",
+    "adam"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=105459&dur=4101"
+  },
+  {
+   "id": "tr-pre-040",
+   "text": "Yarın «tam», «uzun» ve «bizim» tekrar var.",
+   "fa": "فردا دوباره «tam»، «uzun» و «bizim» هست.",
+   "pattern": "Yarın <W1>, <W2> ve <W3> tekrar var.",
+   "targetWords": [
+    "tam",
+    "uzun",
+    "bizim"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=109560&dur=3631"
+  },
+  {
+   "id": "tr-pre-041",
+   "text": "Bu metinde «az» ve «bunun» var.",
+   "fa": "در این متن «az» و «bunun» هست.",
+   "pattern": "Bu metinde <W1> ve <W2> var.",
+   "targetWords": [
+    "az",
+    "bunun"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=113191&dur=2638"
+  },
+  {
+   "id": "tr-pre-042",
+   "text": "Bugün «eden» ve «hakkında» önemli.",
+   "fa": "امروز «eden» و «hakkında» مهماند.",
+   "pattern": "Bugün <W1> ve <W2> önemli.",
+   "targetWords": [
+    "eden",
+    "hakkında"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=115829&dur=2926"
+  },
+  {
+   "id": "tr-pre-043",
+   "text": "Şimdi «size» ve «alan» daha iyi.",
+   "fa": "اکنون «size» و «alan» بهتراند.",
+   "pattern": "Şimdi <W1> ve <W2> daha iyi.",
+   "targetWords": [
+    "size",
+    "alan"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=118755&dur=2847"
+  },
+  {
+   "id": "tr-pre-044",
+   "text": "Yarın «bazı» ve «geri» tekrar var.",
+   "fa": "فردا دوباره «bazı» و «geri» هست.",
+   "pattern": "Yarın <W1> ve <W2> tekrar var.",
+   "targetWords": [
+    "bazı",
+    "geri"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=121602&dur=2900"
+  },
+  {
+   "id": "tr-pre-045",
+   "text": "«olacak» burada var.",
+   "fa": "«olacak» اینجا هست.",
+   "pattern": "<W1> burada var.",
+   "targetWords": [
+    "olacak"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=124502&dur=1907"
+  },
+  {
+   "id": "tr-pre-046",
+   "text": "Bugün «gelen» var.",
+   "fa": "امروز «gelen» هست.",
+   "pattern": "Bugün <W1> var.",
+   "targetWords": [
+    "gelen"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=126409&dur=1698"
+  },
+  {
+   "id": "tr-pre-047",
+   "text": "«kadın» kelimesi burada.",
+   "fa": "واژهٔ «kadın» اینجاست.",
+   "pattern": "<W1> kelimesi burada.",
+   "targetWords": [
+    "kadın"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=128107&dur=2142"
+  },
+  {
+   "id": "tr-pre-048",
+   "text": "Ben «onu» anlıyorum.",
+   "fa": "من «onu» را میفهمم.",
+   "pattern": "Ben <W1> anlıyorum.",
+   "targetWords": [
+    "onu"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=130249&dur=1750"
+  },
+  {
+   "id": "tr-pre-049",
+   "text": "Bugün «biraz», «gece» ve «hem» yazdım.",
+   "fa": "امروز «biraz»، «gece» و «hem» را نوشتم.",
+   "pattern": "Bugün <W1>, <W2> ve <W3> yazdım.",
+   "targetWords": [
+    "biraz",
+    "gece",
+    "hem"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=131999&dur=3344"
+  },
+  {
+   "id": "tr-pre-050",
+   "text": "Bu metinde «yani», «ayrıca» ve «eski» var.",
+   "fa": "در این متن «yani»، «ayrıca» و «eski» هست.",
+   "pattern": "Bu metinde <W1>, <W2> ve <W3> var.",
+   "targetWords": [
+    "yani",
+    "ayrıca",
+    "eski"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=135343&dur=3579"
+  },
+  {
+   "id": "tr-pre-051",
+   "text": "Şimdi «i», «kabul» ve «etti» daha iyi anlıyorum.",
+   "fa": "اکنون «i»، «kabul» و «etti» را بهتر میفهمم.",
+   "pattern": "Şimdi <W1>, <W2> ve <W3> daha iyi anlıyorum.",
+   "targetWords": [
+    "i",
+    "kabul",
+    "etti"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=138922&dur=3892"
+  },
+  {
+   "id": "tr-pre-052",
+   "text": "Yarın «hiçbir», «ilgili» ve «yapılan» tekrar var.",
+   "fa": "فردا دوباره «hiçbir»، «ilgili» و «yapılan» هست.",
+   "pattern": "Yarın <W1>, <W2> ve <W3> tekrar var.",
+   "targetWords": [
+    "hiçbir",
+    "ilgili",
+    "yapılan"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=142814&dur=4127"
+  },
+  {
+   "id": "tr-pre-053",
+   "text": "Bu metinde «özel» ve «bize» var.",
+   "fa": "در این متن «özel» و «bize» هست.",
+   "pattern": "Bu metinde <W1> ve <W2> var.",
+   "targetWords": [
+    "özel",
+    "bize"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=146941&dur=2743"
+  },
+  {
+   "id": "tr-pre-054",
+   "text": "Bugün «gerçek» ve «e» önemli.",
+   "fa": "امروز «gerçek» و «e» مهماند.",
+   "pattern": "Bugün <W1> ve <W2> önemli.",
+   "targetWords": [
+    "gerçek",
+    "e"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=149684&dur=2534"
+  },
+  {
+   "id": "tr-pre-055",
+   "text": "Şimdi «vardır» ve «fakat» daha iyi.",
+   "fa": "اکنون «vardır» و «fakat» بهتراند.",
+   "pattern": "Şimdi <W1> ve <W2> daha iyi.",
+   "targetWords": [
+    "vardır",
+    "fakat"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=152218&dur=2978"
+  },
+  {
+   "id": "tr-pre-056",
+   "text": "Yarın «kez» ve «sahip» tekrar var.",
+   "fa": "فردا دوباره «kez» و «sahip» هست.",
+   "pattern": "Yarın <W1> ve <W2> tekrar var.",
+   "targetWords": [
+    "kez",
+    "sahip"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=155196&dur=3004"
+  },
+  {
+   "id": "tr-pre-057",
+   "text": "«yüksek» burada var.",
+   "fa": "«yüksek» اینجا هست.",
+   "pattern": "<W1> burada var.",
+   "targetWords": [
+    "yüksek"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=158200&dur=1881"
+  },
+  {
+   "id": "tr-pre-058",
+   "text": "Bugün «zaten» var.",
+   "fa": "امروز «zaten» هست.",
+   "pattern": "Bugün <W1> var.",
+   "targetWords": [
+    "zaten"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=160081&dur=1776"
+  },
+  {
+   "id": "tr-pre-059",
+   "text": "Şimdi «üzerine» ve «geldi» daha iyi.",
+   "fa": "اکنون «üzerine» و «geldi» بهتراند.",
+   "pattern": "Şimdi <W1> ve <W2> daha iyi.",
+   "targetWords": [
+    "üzerine",
+    "geldi"
+   ],
+   "audio": "milo-segment:tr-pre.mp3?start=161857&dur=2978"
+  }
+ ]
+}

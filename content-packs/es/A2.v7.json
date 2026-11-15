@@ -1,0 +1,3306 @@
+{
+ "schema": 1,
+ "language": "es",
+ "band": "A2",
+ "version": 7,
+ "generatedAt": "2026-11-15",
+ "source": "factory v3 · hand-drafted lines: 10% sample review · generated lines: 100% linguistic review (72 reviewed frames + every line) · automatic gates · human native sign-off unavailable in this environment",
+ "sentences": [
+  {
+   "id": "es-a2-001",
+   "text": "Ya he comido, gracias.",
+   "fa": "دیگر غذا خورده‌ام، ممنون.",
+   "pattern": "Ya he <participio>.",
+   "targetWords": [
+    "ya"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=0&dur=1724"
+  },
+  {
+   "id": "es-a2-002",
+   "text": "¿Ya estás listo?",
+   "fa": "آماده‌ای دیگر؟",
+   "pattern": "¿Ya estás <adj.>?",
+   "targetWords": [
+    "ya"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=1724&dur=1228"
+  },
+  {
+   "id": "es-a2-003",
+   "text": "Ya no vivo allí.",
+   "fa": "دیگر آنجا زندگی نمی‌کنم.",
+   "pattern": "Ya no <verbo> <lugar>.",
+   "targetWords": [
+    "ya"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=2952&dur=1306"
+  },
+  {
+   "id": "es-a2-004",
+   "text": "Cuando llegas a casa, me llamas.",
+   "fa": "وقتی رسیدی خانه، به من زنگ بزن.",
+   "pattern": "Cuando <frase>, <frase>.",
+   "targetWords": [
+    "cuando"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=4258&dur=2273"
+  },
+  {
+   "id": "es-a2-005",
+   "text": "Cuando era niño, vivía en Madrid.",
+   "fa": "وقتی بچه بودم در مادرید زندگی می‌کردم.",
+   "pattern": "Cuando era <edad>, <frase>.",
+   "targetWords": [
+    "cuando"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=6531&dur=2247"
+  },
+  {
+   "id": "es-a2-006",
+   "text": "Quiero ser médico.",
+   "fa": "می‌خواهم پزشک شوم.",
+   "pattern": "Quiero ser <profesión>.",
+   "targetWords": [
+    "ser"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=8778&dur=1411"
+  },
+  {
+   "id": "es-a2-007",
+   "text": "Puede ser más tarde.",
+   "fa": "شاید دیرتر باشد.",
+   "pattern": "Puede ser <complemento>.",
+   "targetWords": [
+    "ser"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=10189&dur=1593"
+  },
+  {
+   "id": "es-a2-008",
+   "text": "Hablamos sobre el viaje.",
+   "fa": "دربارهٔ سفر صحبت می‌کنیم.",
+   "pattern": "Hablamos sobre <sust.>.",
+   "targetWords": [
+    "sobre"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=11782&dur=1593"
+  },
+  {
+   "id": "es-a2-009",
+   "text": "El libro está sobre la mesa.",
+   "fa": "کتاب روی میز است.",
+   "pattern": "<sust.> está sobre <sust.>.",
+   "targetWords": [
+    "sobre"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=13375&dur=1802"
+  },
+  {
+   "id": "es-a2-010",
+   "text": "Así se hace.",
+   "fa": "این‌طور انجام می‌شود.",
+   "pattern": "Así se <verbo>.",
+   "targetWords": [
+    "así"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=15177&dur=1045"
+  },
+  {
+   "id": "es-a2-011",
+   "text": "No hables así.",
+   "fa": "این‌طوری حرف نزن.",
+   "pattern": "No <verbo> así.",
+   "targetWords": [
+    "así"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=16222&dur=1149"
+  },
+  {
+   "id": "es-a2-012",
+   "text": "El banco está entre la farmacia y el café.",
+   "fa": "بانک بین داروخانه و کافه است.",
+   "pattern": "<lugar> está entre <A> y <B>.",
+   "targetWords": [
+    "entre"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=17371&dur=2612"
+  },
+  {
+   "id": "es-a2-013",
+   "text": "Entre semana trabajo mucho.",
+   "fa": "وسط هفته زیاد کار می‌کنم.",
+   "pattern": "Entre semana <frase>.",
+   "targetWords": [
+    "entre"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=19983&dur=1776"
+  },
+  {
+   "id": "es-a2-014",
+   "text": "Antes era más fácil.",
+   "fa": "قبلاً آسان‌تر بود.",
+   "pattern": "Antes era más <adj.>.",
+   "targetWords": [
+    "era"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=21759&dur=1541"
+  },
+  {
+   "id": "es-a2-015",
+   "text": "Mi abuelo era profesor.",
+   "fa": "پدربزرگم معلم بود.",
+   "pattern": "<persona> era <profesión>.",
+   "targetWords": [
+    "era"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=23300&dur=1620"
+  },
+  {
+   "id": "es-a2-016",
+   "text": "No tengo ni tiempo ni dinero.",
+   "fa": "نه وقت دارم نه پول.",
+   "pattern": "No tengo ni <A> ni <B>.",
+   "targetWords": [
+    "ni"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=24920&dur=1907"
+  },
+  {
+   "id": "es-a2-017",
+   "text": "Esta es la casa donde nací.",
+   "fa": "این خانه‌ای است که در آن به دنیا آمدم.",
+   "pattern": "<sust.> donde <frase>.",
+   "targetWords": [
+    "donde"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=26827&dur=1855"
+  },
+  {
+   "id": "es-a2-018",
+   "text": "¿Dónde quedamos esta tarde?",
+   "fa": "امروز عصر کجا قرار بگذاریم؟",
+   "pattern": "¿Dónde quedamos <tiempo>?",
+   "targetWords": [
+    "donde"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=28682&dur=1776"
+  },
+  {
+   "id": "es-a2-019",
+   "text": "Vivo en la parte vieja de la ciudad.",
+   "fa": "در بخش قدیمی شهر زندگی می‌کنم.",
+   "pattern": "Vivo en la parte <adj.> de <lugar>.",
+   "targetWords": [
+    "parte"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=30458&dur=2299"
+  },
+  {
+   "id": "es-a2-020",
+   "text": "¿De parte de quién?",
+   "fa": "از طرف چه کسی؟",
+   "pattern": "¿De parte de quién?",
+   "targetWords": [
+    "parte"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=32757&dur=1358"
+  },
+  {
+   "id": "es-a2-021",
+   "text": "No es tan difícil.",
+   "fa": "آن‌قدر سخت نیست.",
+   "pattern": "No es tan <adj.>.",
+   "targetWords": [
+    "tan"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=34115&dur=1463"
+  },
+  {
+   "id": "es-a2-022",
+   "text": "Eres tan amable.",
+   "fa": "خیلی مهربانی.",
+   "pattern": "Eres tan <adj.>.",
+   "targetWords": [
+    "tan"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=35578&dur=1202"
+  },
+  {
+   "id": "es-a2-023",
+   "text": "La vida aquí es tranquila.",
+   "fa": "زندگی اینجا آرام است.",
+   "pattern": "La vida <lugar> es <adj.>.",
+   "targetWords": [
+    "vida"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=36780&dur=1672"
+  },
+  {
+   "id": "es-a2-024",
+   "text": "Nunca en mi vida he visto eso.",
+   "fa": "در عمرم چنین چیزی ندیده‌ام.",
+   "pattern": "Nunca en mi vida he <participio>.",
+   "targetWords": [
+    "vida"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=38452&dur=1907"
+  },
+  {
+   "id": "es-a2-025",
+   "text": "Mis padres han llegado.",
+   "fa": "پدر و مادرم رسیده‌اند.",
+   "pattern": "<personas> han <participio>.",
+   "targetWords": [
+    "han"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=40359&dur=1593"
+  },
+  {
+   "id": "es-a2-026",
+   "text": "¿Han llegado ya tus padres?",
+   "fa": "پدر و مادرت رسیده‌اند؟",
+   "pattern": "¿Han <participio> ya <personas>?",
+   "targetWords": [
+    "han"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=41952&dur=1829"
+  },
+  {
+   "id": "es-a2-027",
+   "text": "Siempre llega tarde.",
+   "fa": "او همیشه دیر می‌رسد.",
+   "pattern": "Siempre <verbo> <complemento>.",
+   "targetWords": [
+    "siempre"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=43781&dur=1541"
+  },
+  {
+   "id": "es-a2-028",
+   "text": "Como siempre, café con leche.",
+   "fa": "مثل همیشه، قهوه با شیر.",
+   "pattern": "Como siempre, <sust.>.",
+   "targetWords": [
+    "siempre"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=45322&dur=2116"
+  },
+  {
+   "id": "es-a2-029",
+   "text": "Hay mucha gente en la plaza.",
+   "fa": "آدم زیادی در میدان است.",
+   "pattern": "Hay mucha gente <lugar>.",
+   "targetWords": [
+    "gente"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=47438&dur=1750"
+  },
+  {
+   "id": "es-a2-030",
+   "text": "La gente aquí es muy simpática.",
+   "fa": "مردم اینجا خیلی خوش‌برخوردند.",
+   "pattern": "La gente <lugar> es <adj.>.",
+   "targetWords": [
+    "gente"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=49188&dur=2142"
+  },
+  {
+   "id": "es-a2-031",
+   "text": "Todo el mundo lo sabe.",
+   "fa": "همه این را می‌دانند.",
+   "pattern": "Todo el mundo <verbo>.",
+   "targetWords": [
+    "mundo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=51330&dur=1567"
+  },
+  {
+   "id": "es-a2-032",
+   "text": "Quiero viajar por el mundo.",
+   "fa": "می‌خواهم دور دنیا سفر کنم.",
+   "pattern": "Quiero viajar por el mundo.",
+   "targetWords": [
+    "mundo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=52897&dur=1802"
+  },
+  {
+   "id": "es-a2-033",
+   "text": "Les escribí ayer.",
+   "fa": "دیروز برایشان نوشتم.",
+   "pattern": "Les <verbo pasado> <tiempo>.",
+   "targetWords": [
+    "les"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=54699&dur=1411"
+  },
+  {
+   "id": "es-a2-034",
+   "text": "¿Les gusta la comida?",
+   "fa": "غذا را دوست دارند؟",
+   "pattern": "¿Les gusta <sust.>?",
+   "targetWords": [
+    "les"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=56110&dur=1437"
+  },
+  {
+   "id": "es-a2-035",
+   "text": "Otros días trabajo desde casa.",
+   "fa": "روزهای دیگر از خانه کار می‌کنم.",
+   "pattern": "Otros <pl.> <frase>.",
+   "targetWords": [
+    "otros"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=57547&dur=2064"
+  },
+  {
+   "id": "es-a2-036",
+   "text": "Los otros ya se han ido.",
+   "fa": "بقیه دیگر رفته‌اند.",
+   "pattern": "Los otros ya <frase>.",
+   "targetWords": [
+    "otros"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=59611&dur=1593"
+  },
+  {
+   "id": "es-a2-037",
+   "text": "Tengo muchas cosas que hacer.",
+   "fa": "کلی کار دارم.",
+   "pattern": "Tengo muchas cosas que hacer.",
+   "targetWords": [
+    "cosas"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=61204&dur=1933"
+  },
+  {
+   "id": "es-a2-038",
+   "text": "¿Dónde dejo mis cosas?",
+   "fa": "وسایلم را کجا بگذارم؟",
+   "pattern": "¿Dónde dejo mis cosas?",
+   "targetWords": [
+    "cosas"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=63137&dur=1593"
+  },
+  {
+   "id": "es-a2-039",
+   "text": "Es una gran ciudad.",
+   "fa": "شهر بزرگی است.",
+   "pattern": "Es una gran <sust.>.",
+   "targetWords": [
+    "gran"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=64730&dur=1515"
+  },
+  {
+   "id": "es-a2-040",
+   "text": "Tengo una gran noticia.",
+   "fa": "یک خبر مهم دارم.",
+   "pattern": "Tengo una gran <sust.>.",
+   "targetWords": [
+    "gran"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=66245&dur=1646"
+  },
+  {
+   "id": "es-a2-041",
+   "text": "Nunca he estado en Sevilla.",
+   "fa": "هیچ‌وقت سویا نرفته‌ام.",
+   "pattern": "Nunca he estado en <lugar>.",
+   "targetWords": [
+    "nunca"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=67891&dur=1829"
+  },
+  {
+   "id": "es-a2-042",
+   "text": "Nunca es tarde para aprender.",
+   "fa": "برای یادگیری هیچ‌وقت دیر نیست.",
+   "pattern": "Nunca es tarde para <verbo>.",
+   "targetWords": [
+    "nunca"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=69720&dur=1933"
+  },
+  {
+   "id": "es-a2-043",
+   "text": "No comas tanto.",
+   "fa": "این‌قدر نخور.",
+   "pattern": "No <verbo> tanto.",
+   "targetWords": [
+    "tanto"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=71653&dur=1228"
+  },
+  {
+   "id": "es-a2-044",
+   "text": "Hace tanto calor hoy.",
+   "fa": "امروز خیلی گرم است.",
+   "pattern": "Hace tanto <sust.> <tiempo>.",
+   "targetWords": [
+    "tanto"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=72881&dur=1489"
+  },
+  {
+   "id": "es-a2-045",
+   "text": "Que sea rápido, por favor.",
+   "fa": "لطفاً سریع باشد.",
+   "pattern": "Que sea <adj.>.",
+   "targetWords": [
+    "sea"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=74370&dur=2038"
+  },
+  {
+   "id": "es-a2-046",
+   "text": "O sea, mañana no vienes.",
+   "fa": "یعنی فردا نمی‌آیی.",
+   "pattern": "O sea, <frase>.",
+   "targetWords": [
+    "sea"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=76408&dur=1881"
+  },
+  {
+   "id": "es-a2-047",
+   "text": "Había mucha cola en el banco.",
+   "fa": "صف طولانی‌ای در بانک بود.",
+   "pattern": "Había <cantidad> <lugar>.",
+   "targetWords": [
+    "había"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=78289&dur=1855"
+  },
+  {
+   "id": "es-a2-048",
+   "text": "No había nadie en casa.",
+   "fa": "کسی خانه نبود.",
+   "pattern": "No había nadie <lugar>.",
+   "targetWords": [
+    "había"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=80144&dur=1593"
+  },
+  {
+   "id": "es-a2-049",
+   "text": "Durante el verano trabajo en un hotel.",
+   "fa": "در تابستان در یک هتل کار می‌کنم.",
+   "pattern": "Durante <tiempo> <frase>.",
+   "targetWords": [
+    "durante"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=81737&dur=2220"
+  },
+  {
+   "id": "es-a2-050",
+   "text": "Llovió durante toda la noche.",
+   "fa": "تمام شب باران بارید.",
+   "pattern": "<verbo> durante <duración>.",
+   "targetWords": [
+    "durante"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=83957&dur=1881"
+  },
+  {
+   "id": "es-a2-051",
+   "text": "Es un lugar muy bonito.",
+   "fa": "جای خیلی قشنگی است.",
+   "pattern": "Es un lugar <adj.>.",
+   "targetWords": [
+    "lugar"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=85838&dur=1620"
+  },
+  {
+   "id": "es-a2-052",
+   "text": "En primer lugar, gracias por venir.",
+   "fa": "اول از همه، ممنون که آمدید.",
+   "pattern": "En primer lugar, <frase>.",
+   "targetWords": [
+    "lugar"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=87458&dur=2377"
+  },
+  {
+   "id": "es-a2-053",
+   "text": "Sólo quiero un vaso de agua.",
+   "fa": "فقط یک لیوان آب می‌خواهم.",
+   "pattern": "Sólo quiero <sust.>.",
+   "targetWords": [
+    "sólo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=89835&dur=1933"
+  },
+  {
+   "id": "es-a2-054",
+   "text": "Aunque llueva, vamos a salir.",
+   "fa": "حتی اگر باران بیاید، بیرون می‌رویم.",
+   "pattern": "Aunque <frase>, <frase>.",
+   "targetWords": [
+    "aunque"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=91768&dur=2038"
+  },
+  {
+   "id": "es-a2-055",
+   "text": "Me gusta, aunque es caro.",
+   "fa": "دوستش دارم، گرچه گران است.",
+   "pattern": "<frase>, aunque <frase>.",
+   "targetWords": [
+    "aunque"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=93806&dur=1776"
+  },
+  {
+   "id": "es-a2-056",
+   "text": "Estoy en contra de esa idea.",
+   "fa": "با آن ایده مخالفم.",
+   "pattern": "Estoy en contra de <sust.>.",
+   "targetWords": [
+    "contra"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=95582&dur=1829"
+  },
+  {
+   "id": "es-a2-057",
+   "text": "Jugamos contra el equipo de Juan.",
+   "fa": "با تیم خوان بازی می‌کنیم.",
+   "pattern": "Jugamos contra <equipo>.",
+   "targetWords": [
+    "contra"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=97411&dur=2247"
+  },
+  {
+   "id": "es-a2-058",
+   "text": "¿Qué quieres decir?",
+   "fa": "منظورت چیست؟",
+   "pattern": "¿Qué quieres decir?",
+   "targetWords": [
+    "decir"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=99658&dur=1358"
+  },
+  {
+   "id": "es-a2-059",
+   "text": "Es decir, no hay clase mañana.",
+   "fa": "یعنی فردا کلاس نیست.",
+   "pattern": "Es decir, <frase>.",
+   "targetWords": [
+    "decir"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=101016&dur=2220"
+  },
+  {
+   "id": "es-a2-060",
+   "text": "Todas las mesas están ocupadas.",
+   "fa": "همهٔ میزها پر است.",
+   "pattern": "Todas las <pl.> están <adj.>.",
+   "targetWords": [
+    "todas"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=103236&dur=2168"
+  },
+  {
+   "id": "es-a2-061",
+   "text": "Voy todas las semanas.",
+   "fa": "هر هفته می‌روم.",
+   "pattern": "Voy todas las <tiempo>.",
+   "targetWords": [
+    "todas"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=105404&dur=1593"
+  },
+  {
+   "id": "es-a2-062",
+   "text": "De todas formas, te llamo.",
+   "fa": "به هر حال زنگ می‌زنم.",
+   "pattern": "De todas formas, <frase>.",
+   "targetWords": [
+    "forma"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=106997&dur=1959"
+  },
+  {
+   "id": "es-a2-063",
+   "text": "Es la mejor forma de aprender.",
+   "fa": "بهترین روش یادگیری است.",
+   "pattern": "Es la mejor forma de <verbo>.",
+   "targetWords": [
+    "forma"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=108956&dur=2011"
+  },
+  {
+   "id": "es-a2-064",
+   "text": "Ha sido un día largo.",
+   "fa": "روز طولانی‌ای بود.",
+   "pattern": "Ha sido un <sust.> <adj.>.",
+   "targetWords": [
+    "sido"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=110967&dur=1567"
+  },
+  {
+   "id": "es-a2-065",
+   "text": "Ha sido un placer.",
+   "fa": "باعث افتخار بود.",
+   "pattern": "Ha sido un placer.",
+   "targetWords": [
+    "sido"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=112534&dur=1384"
+  },
+  {
+   "id": "es-a2-066",
+   "text": "Estaba muy cansado ayer.",
+   "fa": "دیروز خیلی خسته بودم.",
+   "pattern": "Estaba <adj.> <tiempo>.",
+   "targetWords": [
+    "estaba"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=113918&dur=1802"
+  },
+  {
+   "id": "es-a2-067",
+   "text": "La puerta estaba abierta.",
+   "fa": "در باز بود.",
+   "pattern": "<sust.> estaba <adj.>.",
+   "targetWords": [
+    "estaba"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=115720&dur=1724"
+  },
+  {
+   "id": "es-a2-068",
+   "text": "Prefiero estar en casa.",
+   "fa": "ترجیح می‌دهم خانه باشم.",
+   "pattern": "Prefiero estar <lugar>.",
+   "targetWords": [
+    "estar"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=117444&dur=1593"
+  },
+  {
+   "id": "es-a2-069",
+   "text": "Debe de estar en la oficina.",
+   "fa": "باید در دفتر باشد.",
+   "pattern": "Debe de estar <lugar>.",
+   "targetWords": [
+    "estar"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=119037&dur=1776"
+  },
+  {
+   "id": "es-a2-070",
+   "text": "¿Hay alguien aquí?",
+   "fa": "کسی اینجا هست؟",
+   "pattern": "¿Hay alguien <lugar>?",
+   "targetWords": [
+    "alguien"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=120813&dur=1176"
+  },
+  {
+   "id": "es-a2-071",
+   "text": "Alguien ha llamado para ti.",
+   "fa": "کسی برایت زنگ زده.",
+   "pattern": "Alguien ha <participio> <complemento>.",
+   "targetWords": [
+    "alguien"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=121989&dur=1698"
+  },
+  {
+   "id": "es-a2-072",
+   "text": "¿Quién es ese hombre?",
+   "fa": "آن مرد کیست؟",
+   "pattern": "¿Quién es <sust.>?",
+   "targetWords": [
+    "quién"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=123687&dur=1411"
+  },
+  {
+   "id": "es-a2-073",
+   "text": "Es mi amigo, con quien viajé.",
+   "fa": "دوست من است که با او سفر کردم.",
+   "pattern": "<persona>, con quien <frase>.",
+   "targetWords": [
+    "quien"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=125098&dur=2142"
+  },
+  {
+   "id": "es-a2-074",
+   "text": "He trabajado toda la mañana.",
+   "fa": "تمام صبح کار کردم.",
+   "pattern": "He <participio> toda la <tiempo>.",
+   "targetWords": [
+    "toda"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=127240&dur=1829"
+  },
+  {
+   "id": "es-a2-075",
+   "text": "Toda la familia viene el domingo.",
+   "fa": "کل خانواده یکشنبه می‌آیند.",
+   "pattern": "Toda la <grupo> <verbo>.",
+   "targetWords": [
+    "toda"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=129069&dur=2168"
+  },
+  {
+   "id": "es-a2-076",
+   "text": "En ese caso, mejor mañana.",
+   "fa": "در این صورت، بهتر است فردا.",
+   "pattern": "En ese caso, <frase>.",
+   "targetWords": [
+    "caso"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=131237&dur=2011"
+  },
+  {
+   "id": "es-a2-077",
+   "text": "No le hagas caso.",
+   "fa": "به او محل نگذار.",
+   "pattern": "No le hagas caso.",
+   "targetWords": [
+    "caso"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=133248&dur=1254"
+  },
+  {
+   "id": "es-a2-078",
+   "text": "Me parece buena idea.",
+   "fa": "به نظرم ایدهٔ خوبی است.",
+   "pattern": "Me parece <adj.> <sust.>.",
+   "targetWords": [
+    "parece"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=134502&dur=1515"
+  },
+  {
+   "id": "es-a2-079",
+   "text": "Parece que va a llover.",
+   "fa": "انگار می‌خواهد باران بیاید.",
+   "pattern": "Parece que <frase>.",
+   "targetWords": [
+    "parece"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=136017&dur=1593"
+  },
+  {
+   "id": "es-a2-080",
+   "text": "Espero poder venir.",
+   "fa": "امیدوارم بتوانم بیایم.",
+   "pattern": "Espero poder <verbo>.",
+   "targetWords": [
+    "poder"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=137610&dur=1437"
+  },
+  {
+   "id": "es-a2-081",
+   "text": "Pues no lo sé.",
+   "fa": "خب، نمی‌دانم.",
+   "pattern": "Pues <frase>.",
+   "targetWords": [
+    "pues"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=139047&dur=1176"
+  },
+  {
+   "id": "es-a2-082",
+   "text": "¿Vienes? Pues claro.",
+   "fa": "می‌آیی؟ معلوم است.",
+   "pattern": "¿<pregunta>? Pues claro.",
+   "targetWords": [
+    "pues"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=140223&dur=1750"
+  },
+  {
+   "id": "es-a2-083",
+   "text": "¿De verdad vienes mañana?",
+   "fa": "واقعاً فردا می‌آیی؟",
+   "pattern": "¿De verdad <frase>?",
+   "targetWords": [
+    "verdad"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=141973&dur=1750"
+  },
+  {
+   "id": "es-a2-084",
+   "text": "Hace frío, ¿verdad?",
+   "fa": "سرد است، نه؟",
+   "pattern": "<frase>, ¿verdad?",
+   "targetWords": [
+    "verdad"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=143723&dur=1541"
+  },
+  {
+   "id": "es-a2-085",
+   "text": "Cuéntame la historia.",
+   "fa": "داستان را برایم تعریف کن.",
+   "pattern": "Cuéntame <sust.>.",
+   "targetWords": [
+    "historia"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=145264&dur=1437"
+  },
+  {
+   "id": "es-a2-086",
+   "text": "Es una historia muy larga.",
+   "fa": "داستانش خیلی طولانی است.",
+   "pattern": "Es una historia <adj.>.",
+   "targetWords": [
+    "historia"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=146701&dur=1776"
+  },
+  {
+   "id": "es-a2-087",
+   "text": "Escucho música mientras cocino.",
+   "fa": "وقتی آشپزی می‌کنم موسیقی گوش می‌دهم.",
+   "pattern": "<frase> mientras <frase>.",
+   "targetWords": [
+    "mientras"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=148477&dur=2168"
+  },
+  {
+   "id": "es-a2-088",
+   "text": "Mientras tanto, pon la mesa.",
+   "fa": "در این فاصله میز را بچین.",
+   "pattern": "Mientras tanto, <imperativo>.",
+   "targetWords": [
+    "mientras"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=150645&dur=1985"
+  },
+  {
+   "id": "es-a2-089",
+   "text": "Nadie contesta el teléfono.",
+   "fa": "کسی تلفن را جواب نمی‌دهد.",
+   "pattern": "Nadie <verbo> <sust.>.",
+   "targetWords": [
+    "nadie"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=152630&dur=1907"
+  },
+  {
+   "id": "es-a2-090",
+   "text": "No conozco a nadie aquí.",
+   "fa": "اینجا کسی را نمی‌شناسم.",
+   "pattern": "No conozco a nadie <lugar>.",
+   "targetWords": [
+    "nadie"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=154537&dur=1724"
+  },
+  {
+   "id": "es-a2-091",
+   "text": "Otras veces voy en bici.",
+   "fa": "بعضی وقت‌ها با دوچرخه می‌روم.",
+   "pattern": "Otras veces <frase>.",
+   "targetWords": [
+    "otras"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=156261&dur=1750"
+  },
+  {
+   "id": "es-a2-092",
+   "text": "¿Cuál prefieres, este o ese?",
+   "fa": "کدام را ترجیح می‌دهی، این یا آن؟",
+   "pattern": "¿Cuál prefieres, <A> o <B>?",
+   "targetWords": [
+    "cuál"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=158011&dur=2038"
+  },
+  {
+   "id": "es-a2-093",
+   "text": "Usted debe rellenar este formulario.",
+   "fa": "شما باید این فرم را پر کنید.",
+   "pattern": "Usted debe <verbo> <sust.>.",
+   "targetWords": [
+    "debe"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=160049&dur=2351"
+  },
+  {
+   "id": "es-a2-094",
+   "text": "Debe de ser muy caro.",
+   "fa": "باید خیلی گران باشد.",
+   "pattern": "Debe de ser <adj.>.",
+   "targetWords": [
+    "debe"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=162400&dur=1489"
+  },
+  {
+   "id": "es-a2-095",
+   "text": "Mi madre dijo que no.",
+   "fa": "مادرم گفت نه.",
+   "pattern": "<persona> dijo que <frase>.",
+   "targetWords": [
+    "dijo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=163889&dur=1489"
+  },
+  {
+   "id": "es-a2-096",
+   "text": "¿Qué te dijo el médico?",
+   "fa": "دکتر به تو چه گفت؟",
+   "pattern": "¿Qué te dijo <persona>?",
+   "targetWords": [
+    "dijo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=165378&dur=1620"
+  },
+  {
+   "id": "es-a2-097",
+   "text": "¿Qué tipo de música te gusta?",
+   "fa": "چه نوع موسیقی‌ای دوست داری؟",
+   "pattern": "¿Qué tipo de <sust.> te gusta?",
+   "targetWords": [
+    "tipo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=166998&dur=1933"
+  },
+  {
+   "id": "es-a2-098",
+   "text": "En general, duermo bien.",
+   "fa": "معمولاً خوب می‌خوابم.",
+   "pattern": "En general, <frase>.",
+   "targetWords": [
+    "general"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=168931&dur=1907"
+  },
+  {
+   "id": "es-a2-099",
+   "text": "Mi hermano mayor vive en Chile.",
+   "fa": "برادر بزرگم در شیلی زندگی می‌کند.",
+   "pattern": "Mi <familiar> mayor vive en <lugar>.",
+   "targetWords": [
+    "mayor"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=170838&dur=1933"
+  },
+  {
+   "id": "es-a2-100",
+   "text": "La mayor parte del tiempo trabajo.",
+   "fa": "بیشتر وقت کار می‌کنم.",
+   "pattern": "La mayor parte de <sust.> <frase>.",
+   "targetWords": [
+    "mayor"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=172771&dur=2273"
+  },
+  {
+   "id": "es-a2-101",
+   "text": "Además, es muy barato.",
+   "fa": "به‌علاوه، خیلی ارزان است.",
+   "pattern": "Además, <frase>.",
+   "targetWords": [
+    "además"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=175044&dur=1776"
+  },
+  {
+   "id": "es-a2-102",
+   "text": "Me siento mal hoy.",
+   "fa": "امروز حالم بد است.",
+   "pattern": "Me siento mal <tiempo>.",
+   "targetWords": [
+    "mal"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=176820&dur=1280"
+  },
+  {
+   "id": "es-a2-103",
+   "text": "No está mal.",
+   "fa": "بد نیست.",
+   "pattern": "No está mal.",
+   "targetWords": [
+    "mal"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=178100&dur=1097"
+  },
+  {
+   "id": "es-a2-104",
+   "text": "Según el mapa, está cerca.",
+   "fa": "طبق نقشه نزدیک است.",
+   "pattern": "Según <fuente>, <frase>.",
+   "targetWords": [
+    "según"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=179197&dur=2038"
+  },
+  {
+   "id": "es-a2-105",
+   "text": "Cualquier día es bueno para mí.",
+   "fa": "هر روزی برای من خوب است.",
+   "pattern": "Cualquier <sust.> es <adj.>.",
+   "targetWords": [
+    "cualquier"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=181235&dur=2090"
+  },
+  {
+   "id": "es-a2-106",
+   "text": "Fueron unos días muy buenos.",
+   "fa": "روزهای خیلی خوبی بود.",
+   "pattern": "Fueron unos <pl.> <adj.>.",
+   "targetWords": [
+    "fueron"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=183325&dur=1933"
+  },
+  {
+   "id": "es-a2-107",
+   "text": "Mis amigos fueron al cine.",
+   "fa": "دوستانم به سینما رفتند.",
+   "pattern": "<personas> fueron a <lugar>.",
+   "targetWords": [
+    "fueron"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=185258&dur=1776"
+  },
+  {
+   "id": "es-a2-108",
+   "text": "De ninguna manera.",
+   "fa": "به هیچ وجه.",
+   "pattern": "De ninguna manera.",
+   "targetWords": [
+    "manera"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=187034&dur=1254"
+  },
+  {
+   "id": "es-a2-109",
+   "text": "Lo hizo de otra manera.",
+   "fa": "آن را طور دیگری انجام داد.",
+   "pattern": "<verbo> de otra manera.",
+   "targetWords": [
+    "manera"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=188288&dur=1437"
+  },
+  {
+   "id": "es-a2-110",
+   "text": "Es la ley.",
+   "fa": "قانون است.",
+   "pattern": "Es la ley.",
+   "targetWords": [
+    "ley"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=189725&dur=888"
+  },
+  {
+   "id": "es-a2-111",
+   "text": "Son las dos y media.",
+   "fa": "ساعت دو و نیم است.",
+   "pattern": "Son las <hora> y media.",
+   "targetWords": [
+    "media"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=190613&dur=1489"
+  },
+  {
+   "id": "es-a2-112",
+   "text": "Vivo en medio de la ciudad.",
+   "fa": "وسط شهر زندگی می‌کنم.",
+   "pattern": "Vivo en medio de <lugar>.",
+   "targetWords": [
+    "medio"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=192102&dur=1855"
+  },
+  {
+   "id": "es-a2-113",
+   "text": "Vamos a comer fuera.",
+   "fa": "برویم بیرون غذا بخوریم.",
+   "pattern": "Vamos a <verbo> fuera.",
+   "targetWords": [
+    "fuera"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=193957&dur=1463"
+  },
+  {
+   "id": "es-a2-114",
+   "text": "Mi hermano está fuera del país.",
+   "fa": "برادرم خارج از کشور است.",
+   "pattern": "<persona> está fuera de <lugar>.",
+   "targetWords": [
+    "fuera"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=195420&dur=2011"
+  },
+  {
+   "id": "es-a2-115",
+   "text": "Camina hacia la estación.",
+   "fa": "به سمت ایستگاه برو.",
+   "pattern": "Camina hacia <lugar>.",
+   "targetWords": [
+    "hacia"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=197431&dur=1698"
+  },
+  {
+   "id": "es-a2-116",
+   "text": "Salimos hacia las ocho.",
+   "fa": "حدود ساعت هشت راه می‌افتیم.",
+   "pattern": "Salimos hacia las <hora>.",
+   "targetWords": [
+    "hacia"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=199129&dur=1567"
+  },
+  {
+   "id": "es-a2-117",
+   "text": "No es rojo, sino naranja.",
+   "fa": "قرمز نیست، نارنجی است.",
+   "pattern": "No es <A>, sino <B>.",
+   "targetWords": [
+    "sino"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=200696&dur=1985"
+  },
+  {
+   "id": "es-a2-118",
+   "text": "Me da igual.",
+   "fa": "برایم فرقی ندارد.",
+   "pattern": "Me da igual.",
+   "targetWords": [
+    "da"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=202681&dur=1123"
+  },
+  {
+   "id": "es-a2-119",
+   "text": "¿Qué más da?",
+   "fa": "چه فرقی می‌کند؟",
+   "pattern": "¿Qué más da?",
+   "targetWords": [
+    "da"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=203804&dur=1019"
+  },
+  {
+   "id": "es-a2-120",
+   "text": "Viajamos en grupo.",
+   "fa": "گروهی سفر می‌کنیم.",
+   "pattern": "Viajamos en grupo.",
+   "targetWords": [
+    "grupo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=204823&dur=1358"
+  },
+  {
+   "id": "es-a2-121",
+   "text": "Debe haber un error.",
+   "fa": "باید اشتباهی شده باشد.",
+   "pattern": "Debe haber <sust.>.",
+   "targetWords": [
+    "haber"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=206181&dur=1332"
+  },
+  {
+   "id": "es-a2-122",
+   "text": "Ese hombre es mi vecino.",
+   "fa": "آن مرد همسایهٔ من است.",
+   "pattern": "Ese hombre es <sust.>.",
+   "targetWords": [
+    "hombre"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=207513&dur=1620"
+  },
+  {
+   "id": "es-a2-123",
+   "text": "Mi mujer trabaja en un hospital.",
+   "fa": "همسرم در بیمارستان کار می‌کند.",
+   "pattern": "Mi mujer trabaja en <lugar>.",
+   "targetWords": [
+    "mujer"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=209133&dur=2090"
+  },
+  {
+   "id": "es-a2-124",
+   "text": "Una mujer me preguntó la hora.",
+   "fa": "زنی از من ساعت را پرسید.",
+   "pattern": "Una mujer me preguntó <sust.>.",
+   "targetWords": [
+    "mujer"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=211223&dur=1855"
+  },
+  {
+   "id": "es-a2-125",
+   "text": "Casi llego tarde.",
+   "fa": "نزدیک بود دیر برسم.",
+   "pattern": "Casi <verbo>.",
+   "targetWords": [
+    "casi"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=213078&dur=1437"
+  },
+  {
+   "id": "es-a2-126",
+   "text": "Son casi las diez.",
+   "fa": "تقریباً ساعت ده است.",
+   "pattern": "Son casi las <hora>.",
+   "targetWords": [
+    "casi"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=214515&dur=1515"
+  },
+  {
+   "id": "es-a2-127",
+   "text": "Ayer hizo mucho frío.",
+   "fa": "دیروز خیلی سرد بود.",
+   "pattern": "<tiempo> hizo <clima>.",
+   "targetWords": [
+    "hizo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=216030&dur=1515"
+  },
+  {
+   "id": "es-a2-128",
+   "text": "¿Qué hizo usted el fin de semana?",
+   "fa": "آخر هفته چه کار کردید؟",
+   "pattern": "¿Qué hizo usted <tiempo>?",
+   "targetWords": [
+    "hizo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=217545&dur=2064"
+  },
+  {
+   "id": "es-a2-129",
+   "text": "Deja la bolsa ahí.",
+   "fa": "کیسه را آنجا بگذار.",
+   "pattern": "Deja <sust.> ahí.",
+   "targetWords": [
+    "ahí"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=219609&dur=1332"
+  },
+  {
+   "id": "es-a2-130",
+   "text": "Ahí viene el autobús.",
+   "fa": "اوناهاش، اتوبوس دارد می‌آید.",
+   "pattern": "Ahí viene <sust.>.",
+   "targetWords": [
+    "ahí"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=220941&dur=1463"
+  },
+  {
+   "id": "es-a2-131",
+   "text": "Una cosa más, por favor.",
+   "fa": "یک چیز دیگر، لطفاً.",
+   "pattern": "Una cosa más.",
+   "targetWords": [
+    "cosa"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=222404&dur=1985"
+  },
+  {
+   "id": "es-a2-132",
+   "text": "¿Qué es esa cosa?",
+   "fa": "آن چیز چیست؟",
+   "pattern": "¿Qué es esa cosa?",
+   "targetWords": [
+    "cosa"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=224389&dur=1332"
+  },
+  {
+   "id": "es-a2-133",
+   "text": "Las llaves están dentro del bolso.",
+   "fa": "کلیدها داخل کیف است.",
+   "pattern": "<sust.> están dentro de <sust.>.",
+   "targetWords": [
+    "dentro"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=225721&dur=2194"
+  },
+  {
+   "id": "es-a2-134",
+   "text": "Vuelvo dentro de una hora.",
+   "fa": "تا یک ساعت دیگر برمی‌گردم.",
+   "pattern": "Vuelvo dentro de <tiempo>.",
+   "targetWords": [
+    "dentro"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=227915&dur=1620"
+  },
+  {
+   "id": "es-a2-135",
+   "text": "Aún no he terminado.",
+   "fa": "هنوز تمام نکرده‌ام.",
+   "pattern": "Aún no he <participio>.",
+   "targetWords": [
+    "aún"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=229535&dur=1411"
+  },
+  {
+   "id": "es-a2-136",
+   "text": "Vivimos en la misma calle.",
+   "fa": "در یک خیابان زندگی می‌کنیم.",
+   "pattern": "Vivimos en la misma <sust.>.",
+   "targetWords": [
+    "misma"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=230946&dur=1750"
+  },
+  {
+   "id": "es-a2-137",
+   "text": "Lo hice yo misma.",
+   "fa": "خودم انجامش دادم.",
+   "pattern": "Lo hice yo misma.",
+   "targetWords": [
+    "misma"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=232696&dur=1280"
+  },
+  {
+   "id": "es-a2-138",
+   "text": "Tenía diez años entonces.",
+   "fa": "آن موقع ده سالم بود.",
+   "pattern": "Tenía <edad> entonces.",
+   "targetWords": [
+    "tenía"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=233976&dur=1933"
+  },
+  {
+   "id": "es-a2-139",
+   "text": "No tenía dinero.",
+   "fa": "پول نداشتم.",
+   "pattern": "No tenía <sust.>.",
+   "targetWords": [
+    "tenía"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=235909&dur=1228"
+  },
+  {
+   "id": "es-a2-140",
+   "text": "¿De quién son esos zapatos?",
+   "fa": "آن کفش‌ها مال کیست؟",
+   "pattern": "¿De quién son esos <pl.>?",
+   "targetWords": [
+    "esos"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=237137&dur=1881"
+  },
+  {
+   "id": "es-a2-141",
+   "text": "Las mujeres hablan en la cocina.",
+   "fa": "خانم‌ها در آشپزخانه صحبت می‌کنند.",
+   "pattern": "Las mujeres <verbo> <lugar>.",
+   "targetWords": [
+    "mujeres"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=239018&dur=1985"
+  },
+  {
+   "id": "es-a2-142",
+   "text": "Son las ocho en punto.",
+   "fa": "ساعت دقیقاً هشت است.",
+   "pattern": "Son las <hora> en punto.",
+   "targetWords": [
+    "punto"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=241003&dur=1567"
+  },
+  {
+   "id": "es-a2-143",
+   "text": "Estoy a punto de salir.",
+   "fa": "دارم راه می‌افتم.",
+   "pattern": "Estoy a punto de <verbo>.",
+   "targetWords": [
+    "punto"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=242570&dur=1620"
+  },
+  {
+   "id": "es-a2-144",
+   "text": "Nuestro equipo ganó ayer.",
+   "fa": "تیم ما دیروز برد.",
+   "pattern": "Nuestro equipo <verbo> <tiempo>.",
+   "targetWords": [
+    "equipo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=244190&dur=1724"
+  },
+  {
+   "id": "es-a2-145",
+   "text": "Quiero saber la verdad.",
+   "fa": "می‌خواهم حقیقت را بدانم.",
+   "pattern": "Quiero saber <sust.>.",
+   "targetWords": [
+    "saber"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=245914&dur=1620"
+  },
+  {
+   "id": "es-a2-146",
+   "text": "¿Sabes a qué hora abre?",
+   "fa": "می‌دانی ساعت چند باز می‌کند؟",
+   "pattern": "¿Sabes <pregunta>?",
+   "targetWords": [
+    "sabes"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=247534&dur=1411"
+  },
+  {
+   "id": "es-a2-147",
+   "text": "Ante todo, gracias.",
+   "fa": "قبل از هر چیز، ممنون.",
+   "pattern": "Ante todo, <frase>.",
+   "targetWords": [
+    "ante"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=248945&dur=1567"
+  },
+  {
+   "id": "es-a2-148",
+   "text": "Voy a dar un paseo.",
+   "fa": "می‌روم قدم بزنم.",
+   "pattern": "Voy a dar un paseo.",
+   "targetWords": [
+    "dar"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=250512&dur=1411"
+  },
+  {
+   "id": "es-a2-149",
+   "text": "¿Me puedes dar tu número?",
+   "fa": "می‌توانی شماره‌ات را بدهی؟",
+   "pattern": "¿Me puedes dar <sust.>?",
+   "targetWords": [
+    "dar"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=251923&dur=1620"
+  },
+  {
+   "id": "es-a2-150",
+   "text": "Es caro; sin embargo, lo compro.",
+   "fa": "گران است؛ با این حال می‌خرمش.",
+   "pattern": "<frase>; sin embargo, <frase>.",
+   "targetWords": [
+    "embargo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=253543&dur=2534"
+  },
+  {
+   "id": "es-a2-151",
+   "text": "Es muy importante para mí.",
+   "fa": "برایم خیلی مهم است.",
+   "pattern": "Es muy importante para <persona>.",
+   "targetWords": [
+    "importante"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=256077&dur=1802"
+  },
+  {
+   "id": "es-a2-152",
+   "text": "¿Qué pasa con el tren?",
+   "fa": "قطار چه‌اش شده؟",
+   "pattern": "¿Qué pasa con <sust.>?",
+   "targetWords": [
+    "pasa"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=257879&dur=1541"
+  },
+  {
+   "id": "es-a2-153",
+   "text": "No pasa nada.",
+   "fa": "چیزی نیست.",
+   "pattern": "No pasa nada.",
+   "targetWords": [
+    "pasa"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=259420&dur=1149"
+  },
+  {
+   "id": "es-a2-154",
+   "text": "Por ejemplo, el lunes.",
+   "fa": "مثلاً دوشنبه.",
+   "pattern": "Por ejemplo, <propuesta>.",
+   "targetWords": [
+    "ejemplo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=260569&dur=1802"
+  },
+  {
+   "id": "es-a2-155",
+   "text": "El viaje dura dos horas.",
+   "fa": "سفر دو ساعت طول می‌کشد.",
+   "pattern": "<sust.> dura <número> horas.",
+   "targetWords": [
+    "horas"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=262371&dur=1672"
+  },
+  {
+   "id": "es-a2-156",
+   "text": "¿A qué horas abre la tienda?",
+   "fa": "مغازه چه ساعتی باز می‌کند؟",
+   "pattern": "¿A qué horas abre <lugar>?",
+   "targetWords": [
+    "horas"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=264043&dur=1620"
+  },
+  {
+   "id": "es-a2-157",
+   "text": "Me da igual el color.",
+   "fa": "رنگش برایم فرقی ندارد.",
+   "pattern": "Me da igual <sust.>.",
+   "targetWords": [
+    "igual"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=265663&dur=1541"
+  },
+  {
+   "id": "es-a2-158",
+   "text": "Igual llego tarde.",
+   "fa": "شاید دیر برسم.",
+   "pattern": "Igual <frase>.",
+   "targetWords": [
+    "igual"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=267204&dur=1463"
+  },
+  {
+   "id": "es-a2-159",
+   "text": "La casa cuesta dos millones.",
+   "fa": "خانه دو میلیون قیمت دارد.",
+   "pattern": "<sust.> cuesta <número> millones.",
+   "targetWords": [
+    "millones"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=268667&dur=1985"
+  },
+  {
+   "id": "es-a2-160",
+   "text": "Esto es para ti.",
+   "fa": "این برای توست.",
+   "pattern": "Esto es para ti.",
+   "targetWords": [
+    "ti"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=270652&dur=1228"
+  },
+  {
+   "id": "es-a2-161",
+   "text": "Pienso mucho en ti.",
+   "fa": "زیاد به تو فکر می‌کنم.",
+   "pattern": "Pienso en ti.",
+   "targetWords": [
+    "ti"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=271880&dur=1437"
+  },
+  {
+   "id": "es-a2-162",
+   "text": "Me falta dinero.",
+   "fa": "پول کم دارم.",
+   "pattern": "Me falta <sust.>.",
+   "targetWords": [
+    "falta"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=273317&dur=1228"
+  },
+  {
+   "id": "es-a2-163",
+   "text": "No hace falta.",
+   "fa": "لازم نیست.",
+   "pattern": "No hace falta.",
+   "targetWords": [
+    "falta"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=274545&dur=1176"
+  },
+  {
+   "id": "es-a2-164",
+   "text": "¿Qué estás haciendo?",
+   "fa": "داری چه کار می‌کنی؟",
+   "pattern": "¿Qué estás haciendo?",
+   "targetWords": [
+    "haciendo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=275721&dur=1411"
+  },
+  {
+   "id": "es-a2-165",
+   "text": "Dos hombres trabajan en la calle.",
+   "fa": "دو مرد در خیابان کار می‌کنند.",
+   "pattern": "<número> hombres <verbo> <lugar>.",
+   "targetWords": [
+    "hombres"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=277132&dur=2011"
+  },
+  {
+   "id": "es-a2-166",
+   "text": "Llevo tres meses aquí.",
+   "fa": "سه ماه است اینجا هستم.",
+   "pattern": "Llevo <número> meses <lugar>.",
+   "targetWords": [
+    "meses"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=279143&dur=1567"
+  },
+  {
+   "id": "es-a2-167",
+   "text": "Dentro de dos meses nos mudamos.",
+   "fa": "دو ماه دیگر اسباب‌کشی می‌کنیم.",
+   "pattern": "Dentro de <número> meses <frase>.",
+   "targetWords": [
+    "meses"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=280710&dur=2090"
+  },
+  {
+   "id": "es-a2-168",
+   "text": "¿Podría repetir, por favor?",
+   "fa": "می‌شود لطفاً تکرار کنید؟",
+   "pattern": "¿Podría <verbo>, por favor?",
+   "targetWords": [
+    "podría"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=282800&dur=2064"
+  },
+  {
+   "id": "es-a2-169",
+   "text": "Podría ser mañana.",
+   "fa": "ممکن است فردا باشد.",
+   "pattern": "Podría ser <tiempo>.",
+   "targetWords": [
+    "podría"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=284864&dur=1437"
+  },
+  {
+   "id": "es-a2-170",
+   "text": "En realidad, no me gusta.",
+   "fa": "راستش، دوستش ندارم.",
+   "pattern": "En realidad, <frase>.",
+   "targetWords": [
+    "realidad"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=286301&dur=1881"
+  },
+  {
+   "id": "es-a2-171",
+   "text": "¿Tienes algún problema?",
+   "fa": "مشکلی داری؟",
+   "pattern": "¿Tienes algún <sust.>?",
+   "targetWords": [
+    "algún"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=288182&dur=1593"
+  },
+  {
+   "id": "es-a2-172",
+   "text": "Algún día iré a Japón.",
+   "fa": "یک روز به ژاپن می‌روم.",
+   "pattern": "Algún día <frase>.",
+   "targetWords": [
+    "algún"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=289775&dur=1620"
+  },
+  {
+   "id": "es-a2-173",
+   "text": "Lo hago con amor.",
+   "fa": "با عشق انجامش می‌دهم.",
+   "pattern": "Lo hago con amor.",
+   "targetWords": [
+    "amor"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=291395&dur=1202"
+  },
+  {
+   "id": "es-a2-174",
+   "text": "¿Qué has dicho?",
+   "fa": "چی گفتی؟",
+   "pattern": "¿Qué has dicho?",
+   "targetWords": [
+    "dicho"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=292597&dur=1097"
+  },
+  {
+   "id": "es-a2-175",
+   "text": "Eran las diez cuando llegué.",
+   "fa": "وقتی رسیدم ساعت ده بود.",
+   "pattern": "Eran las <hora> cuando <frase>.",
+   "targetWords": [
+    "eran"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=293694&dur=1855"
+  },
+  {
+   "id": "es-a2-176",
+   "text": "La parada está en frente del hotel.",
+   "fa": "ایستگاه روبه‌روی هتل است.",
+   "pattern": "<lugar> está en frente de <lugar>.",
+   "targetWords": [
+    "frente"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=295549&dur=2116"
+  },
+  {
+   "id": "es-a2-177",
+   "text": "Es una historia real.",
+   "fa": "داستان واقعی است.",
+   "pattern": "Es <sust.> real.",
+   "targetWords": [
+    "real"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=297665&dur=1541"
+  },
+  {
+   "id": "es-a2-178",
+   "text": "Mi hijo tiene cinco años.",
+   "fa": "پسرم پنج ساله است.",
+   "pattern": "Mi hijo tiene <edad>.",
+   "targetWords": [
+    "hijo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=299206&dur=1829"
+  },
+  {
+   "id": "es-a2-179",
+   "text": "Cambiemos de tema.",
+   "fa": "موضوع را عوض کنیم.",
+   "pattern": "Cambiemos de tema.",
+   "targetWords": [
+    "tema"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=301035&dur=1384"
+  },
+  {
+   "id": "es-a2-180",
+   "text": "Es un tema difícil.",
+   "fa": "موضوع سختی است.",
+   "pattern": "Es un tema <adj.>.",
+   "targetWords": [
+    "tema"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=302419&dur=1567"
+  },
+  {
+   "id": "es-a2-181",
+   "text": "Tengo varios amigos en Madrid.",
+   "fa": "چند دوست در مادرید دارم.",
+   "pattern": "Tengo varios <pl.> <lugar>.",
+   "targetWords": [
+    "varios"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=303986&dur=1985"
+  },
+  {
+   "id": "es-a2-182",
+   "text": "Mi nivel de español es básico.",
+   "fa": "سطح اسپانیایی من مقدماتی است.",
+   "pattern": "Mi nivel de <idioma> es <adj.>.",
+   "targetWords": [
+    "nivel"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=305971&dur=2090"
+  },
+  {
+   "id": "es-a2-183",
+   "text": "Los niños juegan en el parque.",
+   "fa": "بچه‌ها در پارک بازی می‌کنند.",
+   "pattern": "Los niños <verbo> <lugar>.",
+   "targetWords": [
+    "niños"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=308061&dur=1985"
+  },
+  {
+   "id": "es-a2-184",
+   "text": "¿Tiene usted niños?",
+   "fa": "شما بچه دارید؟",
+   "pattern": "¿Tiene usted niños?",
+   "targetWords": [
+    "niños"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=310046&dur=1463"
+  },
+  {
+   "id": "es-a2-185",
+   "text": "He visto «cara», «línea» y «mundial» en el texto.",
+   "fa": "«cara»، «línea» و «mundial» را در متن دیدم.",
+   "pattern": "He visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "cara",
+    "línea",
+    "mundial"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=311509&dur=3344"
+  },
+  {
+   "id": "es-a2-186",
+   "text": "El profesor explica «obra», «ojos» y «os» otra vez.",
+   "fa": "معلم دوباره «obra»، «ojos» و «os» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1>, <W2> y <W3> otra vez.",
+   "targetWords": [
+    "obra",
+    "ojos",
+    "os"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=314853&dur=3683"
+  },
+  {
+   "id": "es-a2-187",
+   "text": "Puedo ahora entender mejor «pensar», «atención» y «julio».",
+   "fa": "اکنون میتوانم «pensar»، «atención» و «julio» را بهتر بفهمم.",
+   "pattern": "Puedo ahora entender mejor <W1>, <W2> y <W3>.",
+   "targetWords": [
+    "pensar",
+    "atención",
+    "julio"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=318536&dur=3892"
+  },
+  {
+   "id": "es-a2-188",
+   "text": "Hemos visto «pueda», «respecto» y «ve» en el texto.",
+   "fa": "ما «pueda»، «respecto» و «ve» را در متن دیدیم.",
+   "pattern": "Hemos visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "pueda",
+    "puedan",
+    "respecto",
+    "respeto",
+    "ve"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=322428&dur=3527"
+  },
+  {
+   "id": "es-a2-189",
+   "text": "Aquí están «vivir» y «capital».",
+   "fa": "«vivir» و «capital» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "vivir",
+    "capital"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=325955&dur=2299"
+  },
+  {
+   "id": "es-a2-190",
+   "text": "El profesor explica «casos» y «luz» otra vez.",
+   "fa": "معلم دوباره «casos» و «luz» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1> y <W2> otra vez.",
+   "targetWords": [
+    "casos",
+    "luz"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=328254&dur=3239"
+  },
+  {
+   "id": "es-a2-191",
+   "text": "En el texto veo «población» y «relación».",
+   "fa": "در متن «población» و «relación» را میبینم.",
+   "pattern": "En el texto veo <W1> y <W2>.",
+   "targetWords": [
+    "población",
+    "relación",
+    "relaciones"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=331493&dur=2847"
+  },
+  {
+   "id": "es-a2-192",
+   "text": "Hoy vemos «suerte» y «varias».",
+   "fa": "امروز «suerte» و «varias» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "suerte",
+    "varias"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=334340&dur=2116"
+  },
+  {
+   "id": "es-a2-193",
+   "text": "Esto es «bastante».",
+   "fa": "این «bastante» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "bastante"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=336456&dur=1437"
+  },
+  {
+   "id": "es-a2-194",
+   "text": "Aquí está «cultura».",
+   "fa": "«cultura» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "cultura",
+    "cultural"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=337893&dur=1515"
+  },
+  {
+   "id": "es-a2-195",
+   "text": "Veo la palabra «debido».",
+   "fa": "واژهٔ «debido» را میبینم.",
+   "pattern": "Veo la palabra <W1>.",
+   "targetWords": [
+    "debido"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=339408&dur=1567"
+  },
+  {
+   "id": "es-a2-196",
+   "text": "Puedo entender mejor «dio».",
+   "fa": "میتوانم «dio» را بهتر بفهمم.",
+   "pattern": "Puedo entender mejor <W1>.",
+   "targetWords": [
+    "dio"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=340975&dur=1881"
+  },
+  {
+   "id": "es-a2-197",
+   "text": "He visto «fuerte», «miedo» y «poner» en el texto.",
+   "fa": "«fuerte»، «miedo» و «poner» را در متن دیدم.",
+   "pattern": "He visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "fuerte",
+    "miedo",
+    "poner"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=342856&dur=3396"
+  },
+  {
+   "id": "es-a2-198",
+   "text": "El profesor explica «rey», «vos» y «apoyo» otra vez.",
+   "fa": "معلم دوباره «rey»، «vos» و «apoyo» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1>, <W2> y <W3> otra vez.",
+   "targetWords": [
+    "rey",
+    "vos",
+    "apoyo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=346252&dur=3762"
+  },
+  {
+   "id": "es-a2-199",
+   "text": "Puedo ahora entender mejor «dado», «fuerza» y «josé».",
+   "fa": "اکنون میتوانم «dado»، «fuerza» و «josé» را بهتر بفهمم.",
+   "pattern": "Puedo ahora entender mejor <W1>, <W2> y <W3>.",
+   "targetWords": [
+    "dado",
+    "fuerza",
+    "fuerzas",
+    "josé"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=350014&dur=3605"
+  },
+  {
+   "id": "es-a2-200",
+   "text": "Hemos visto «manos», «propio» y «deben» en el texto.",
+   "fa": "ما «manos»، «propio» و «deben» را در متن دیدیم.",
+   "pattern": "Hemos visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "manos",
+    "propio",
+    "propia",
+    "propiedad",
+    "deben"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=353619&dur=3500"
+  },
+  {
+   "id": "es-a2-201",
+   "text": "Aquí están «encontrar» y «marzo».",
+   "fa": "«encontrar» و «marzo» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "encontrar",
+    "marzo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=357119&dur=2351"
+  },
+  {
+   "id": "es-a2-202",
+   "text": "El profesor explica «peor» y «serie» otra vez.",
+   "fa": "معلم دوباره «peor» و «serie» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1> y <W2> otra vez.",
+   "targetWords": [
+    "peor",
+    "serie"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=359470&dur=3213"
+  },
+  {
+   "id": "es-a2-203",
+   "text": "En el texto veo «sur» y «asi».",
+   "fa": "در متن «sur» و «asi» را میبینم.",
+   "pattern": "En el texto veo <W1> y <W2>.",
+   "targetWords": [
+    "sur",
+    "asi"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=362683&dur=2194"
+  },
+  {
+   "id": "es-a2-204",
+   "text": "Hoy vemos «edad» y «futuro».",
+   "fa": "امروز «edad» و «futuro» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "edad",
+    "futuro"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=364877&dur=2038"
+  },
+  {
+   "id": "es-a2-205",
+   "text": "Esto es «justicia».",
+   "fa": "این «justicia» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "justicia"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=366915&dur=1567"
+  },
+  {
+   "id": "es-a2-206",
+   "text": "Aquí está «libertad».",
+   "fa": "«libertad» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "libertad"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=368482&dur=1567"
+  },
+  {
+   "id": "es-a2-207",
+   "text": "Veo la palabra «pesar».",
+   "fa": "واژهٔ «pesar» را میبینم.",
+   "pattern": "Veo la palabra <W1>.",
+   "targetWords": [
+    "pesar"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=370049&dur=1593"
+  },
+  {
+   "id": "es-a2-208",
+   "text": "Puedo entender mejor «tampoco».",
+   "fa": "میتوانم «tampoco» را بهتر بفهمم.",
+   "pattern": "Puedo entender mejor <W1>.",
+   "targetWords": [
+    "tampoco"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=371642&dur=2168"
+  },
+  {
+   "id": "es-a2-209",
+   "text": "He visto «venezuela», «allá» y «cantidad» en el texto.",
+   "fa": "«venezuela»، «allá» و «cantidad» را در متن دیدم.",
+   "pattern": "He visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "venezuela",
+    "allá",
+    "cantidad"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=373810&dur=3657"
+  },
+  {
+   "id": "es-a2-210",
+   "text": "El profesor explica «corazón», «diciembre» y «existe» otra vez.",
+   "fa": "معلم دوباره «corazón»، «diciembre» و «existe» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1>, <W2> y <W3> otra vez.",
+   "targetWords": [
+    "corazón",
+    "diciembre",
+    "diciendo",
+    "existe",
+    "existen"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=377467&dur=4389"
+  },
+  {
+   "id": "es-a2-211",
+   "text": "Puedo ahora entender mejor «imagen», «norte» y «octubre».",
+   "fa": "اکنون میتوانم «imagen»، «norte» و «octubre» را بهتر بفهمم.",
+   "pattern": "Puedo ahora entender mejor <W1>, <W2> y <W3>.",
+   "targetWords": [
+    "imagen",
+    "norte",
+    "octubre"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=381856&dur=3736"
+  },
+  {
+   "id": "es-a2-212",
+   "text": "Hemos visto «principal», «vista» y «voz» en el texto.",
+   "fa": "ما «principal»، «vista» و «voz» را در متن دیدیم.",
+   "pattern": "Hemos visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "principal",
+    "principio",
+    "principales",
+    "principios",
+    "vista",
+    "voz"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=385592&dur=3657"
+  },
+  {
+   "id": "es-a2-213",
+   "text": "Aquí están «actual» y «ambos».",
+   "fa": "«actual» و «ambos» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "actual",
+    "ambos"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=389249&dur=2299"
+  },
+  {
+   "id": "es-a2-214",
+   "text": "El profesor explica «elecciones» y «mira» otra vez.",
+   "fa": "معلم دوباره «elecciones» و «mira» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1> y <W2> otra vez.",
+   "targetWords": [
+    "elecciones",
+    "mira"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=391548&dur=3474"
+  },
+  {
+   "id": "es-a2-215",
+   "text": "En el texto veo «modo» y «pasó».",
+   "fa": "در متن «modo» و «pasó» را میبینم.",
+   "pattern": "En el texto veo <W1> y <W2>.",
+   "targetWords": [
+    "modo",
+    "pasó"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=395022&dur=2299"
+  },
+  {
+   "id": "es-a2-216",
+   "text": "Hoy vemos «sean» y «tenido».",
+   "fa": "امروز «sean» و «tenido» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "sean",
+    "tenido"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=397321&dur=2038"
+  },
+  {
+   "id": "es-a2-217",
+   "text": "Esto es «abril».",
+   "fa": "این «abril» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "abril"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=399359&dur=1358"
+  },
+  {
+   "id": "es-a2-218",
+   "text": "Aquí está «campo».",
+   "fa": "«campo» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "campo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=400717&dur=1437"
+  },
+  {
+   "id": "es-a2-219",
+   "text": "Veo la palabra «hubiera».",
+   "fa": "واژهٔ «hubiera» را میبینم.",
+   "pattern": "Veo la palabra <W1>.",
+   "targetWords": [
+    "hubiera"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=402154&dur=1567"
+  },
+  {
+   "id": "es-a2-220",
+   "text": "Puedo entender mejor «joven».",
+   "fa": "میتوانم «joven» را بهتر بفهمم.",
+   "pattern": "Puedo entender mejor <W1>.",
+   "targetWords": [
+    "joven"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=403721&dur=2064"
+  },
+  {
+   "id": "es-a2-221",
+   "text": "He visto «plan», «región» y «comunidad» en el texto.",
+   "fa": "«plan»، «región» و «comunidad» را در متن دیدم.",
+   "pattern": "He visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "plan",
+    "región",
+    "comunidad",
+    "comunicación"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=405785&dur=3709"
+  },
+  {
+   "id": "es-a2-222",
+   "text": "El profesor explica «investigación», «junio» y «república» otra vez.",
+   "fa": "معلم دوباره «investigación»، «junio» و «república» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1>, <W2> y <W3> otra vez.",
+   "targetWords": [
+    "investigación",
+    "junio",
+    "república"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=409494&dur=4780"
+  },
+  {
+   "id": "es-a2-223",
+   "text": "Puedo ahora entender mejor «resto», «consejo» y «dan».",
+   "fa": "اکنون میتوانم «resto»، «consejo» و «dan» را بهتر بفهمم.",
+   "pattern": "Puedo ahora entender mejor <W1>, <W2> y <W3>.",
+   "targetWords": [
+    "resto",
+    "consejo",
+    "conseguir",
+    "dan"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=414274&dur=3605"
+  },
+  {
+   "id": "es-a2-224",
+   "text": "Hemos visto «movimiento», «noviembre» y «papel» en el texto.",
+   "fa": "ما «movimiento»، «noviembre» و «papel» را در متن دیدیم.",
+   "pattern": "Hemos visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "movimiento",
+    "noviembre",
+    "papel"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=417879&dur=3997"
+  },
+  {
+   "id": "es-a2-225",
+   "text": "Aquí están «respuesta» y «simplemente».",
+   "fa": "«respuesta» و «simplemente» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "respuesta",
+    "simplemente"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=421876&dur=2664"
+  },
+  {
+   "id": "es-a2-226",
+   "text": "El profesor explica «única» y «agosto» otra vez.",
+   "fa": "معلم دوباره «única» و «agosto» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1> y <W2> otra vez.",
+   "targetWords": [
+    "única",
+    "agosto"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=424540&dur=3318"
+  },
+  {
+   "id": "es-a2-227",
+   "text": "En el texto veo «aun» y «cargo».",
+   "fa": "در متن «aun» و «cargo» را میبینم.",
+   "pattern": "En el texto veo <W1> y <W2>.",
+   "targetWords": [
+    "aun",
+    "cargo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=427858&dur=2325"
+  },
+  {
+   "id": "es-a2-228",
+   "text": "Hoy vemos «cuales» y «enero».",
+   "fa": "امروز «cuales» و «enero» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "cuales",
+    "enero"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=430183&dur=2064"
+  },
+  {
+   "id": "es-a2-229",
+   "text": "Esto es «experiencia».",
+   "fa": "این «experiencia» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "experiencia"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=432247&dur=1724"
+  },
+  {
+   "id": "es-a2-230",
+   "text": "Aquí está «jefe».",
+   "fa": "«jefe» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "jefe"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=433971&dur=1411"
+  },
+  {
+   "id": "es-a2-231",
+   "text": "Veo la palabra «miembros».",
+   "fa": "واژهٔ «miembros» را میبینم.",
+   "pattern": "Veo la palabra <W1>.",
+   "targetWords": [
+    "miembros"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=435382&dur=1776"
+  },
+  {
+   "id": "es-a2-232",
+   "text": "Puedo entender mejor «pena».",
+   "fa": "میتوانم «pena» را بهتر بفهمم.",
+   "pattern": "Puedo entender mejor <W1>.",
+   "targetWords": [
+    "pena"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=437158&dur=1959"
+  },
+  {
+   "id": "es-a2-233",
+   "text": "He visto «producción», «siglo» y «cabo» en el texto.",
+   "fa": "«producción»، «siglo» و «cabo» را در متن دیدم.",
+   "pattern": "He visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "producción",
+    "productos",
+    "siglo",
+    "cabo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=439117&dur=3683"
+  },
+  {
+   "id": "es-a2-234",
+   "text": "El profesor explica «común», «economía» y «espacio» otra vez.",
+   "fa": "معلم دوباره «común»، «economía» و «espacio» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1>, <W2> y <W3> otra vez.",
+   "targetWords": [
+    "común",
+    "economía",
+    "espacio"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=442800&dur=4310"
+  },
+  {
+   "id": "es-a2-235",
+   "text": "Puedo ahora entender mejor «febrero», «haga» y «opinión».",
+   "fa": "اکنون میتوانم «febrero»، «haga» و «opinión» را بهتر بفهمم.",
+   "pattern": "Puedo ahora entender mejor <W1>, <W2> y <W3>.",
+   "targetWords": [
+    "febrero",
+    "haga",
+    "opinión"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=447110&dur=3657"
+  },
+  {
+   "id": "es-a2-236",
+   "text": "Hemos visto «oportunidad», «organización» y «resultados» en el texto.",
+   "fa": "ما «oportunidad»، «organización» و «resultados» را در متن دیدیم.",
+   "pattern": "Hemos visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "oportunidad",
+    "organización",
+    "resultados",
+    "resultado"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=450767&dur=4754"
+  },
+  {
+   "id": "es-a2-237",
+   "text": "Aquí están «santa» y «vale».",
+   "fa": "«santa» و «vale» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "santa",
+    "vale"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=455521&dur=2011"
+  },
+  {
+   "id": "es-a2-238",
+   "text": "El profesor explica «acción» y «arte» otra vez.",
+   "fa": "معلم دوباره «acción» و «arte» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1> y <W2> otra vez.",
+   "targetWords": [
+    "acción",
+    "arte"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=457532&dur=3318"
+  },
+  {
+   "id": "es-a2-239",
+   "text": "En el texto veo «condiciones» y «estuvo».",
+   "fa": "در متن «condiciones» و «estuvo» را میبینم.",
+   "pattern": "En el texto veo <W1> y <W2>.",
+   "targetWords": [
+    "condiciones",
+    "estuvo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=460850&dur=2795"
+  },
+  {
+   "id": "es-a2-240",
+   "text": "Hoy vemos «septiembre» y «valor».",
+   "fa": "امروز «septiembre» و «valor» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "septiembre",
+    "valor"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=463645&dur=2351"
+  },
+  {
+   "id": "es-a2-241",
+   "text": "Esto es «calidad».",
+   "fa": "این «calidad» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "calidad"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=465996&dur=1489"
+  },
+  {
+   "id": "es-a2-242",
+   "text": "Aquí está «causa».",
+   "fa": "«causa» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "causa"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=467485&dur=1437"
+  },
+  {
+   "id": "es-a2-243",
+   "text": "Veo la palabra «duda».",
+   "fa": "واژهٔ «duda» را میبینم.",
+   "pattern": "Veo la palabra <W1>.",
+   "targetWords": [
+    "duda"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=468922&dur=1463"
+  },
+  {
+   "id": "es-a2-244",
+   "text": "Puedo entender mejor «europa».",
+   "fa": "میتوانم «europa» را بهتر بفهمم.",
+   "pattern": "Puedo entender mejor <W1>.",
+   "targetWords": [
+    "europa"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=470385&dur=2011"
+  },
+  {
+   "id": "es-a2-245",
+   "text": "He visto «feliz», «iglesia» y «obras» en el texto.",
+   "fa": "«feliz»، «iglesia» و «obras» را در متن دیدم.",
+   "pattern": "He visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "feliz",
+    "iglesia",
+    "obras"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=472396&dur=3500"
+  },
+  {
+   "id": "es-a2-246",
+   "text": "El profesor explica «alta», «civil» y «colombia» otra vez.",
+   "fa": "معلم دوباره «alta»، «civil» و «colombia» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1>, <W2> y <W3> otra vez.",
+   "targetWords": [
+    "alta",
+    "civil",
+    "colombia"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=475896&dur=4101"
+  },
+  {
+   "id": "es-a2-247",
+   "text": "Puedo ahora entender mejor «local», «mar» y «acerca».",
+   "fa": "اکنون میتوانم «local»، «mar» و «acerca» را بهتر بفهمم.",
+   "pattern": "Puedo ahora entender mejor <W1>, <W2> y <W3>.",
+   "targetWords": [
+    "local",
+    "mar",
+    "acerca"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=479997&dur=3553"
+  },
+  {
+   "id": "es-a2-248",
+   "text": "Hemos visto «acá», «alrededor» y «campaña» en el texto.",
+   "fa": "ما «acá»، «alrededor» و «campaña» را در متن دیدیم.",
+   "pattern": "Hemos visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "acá",
+    "alrededor",
+    "campaña"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=483550&dur=3840"
+  },
+  {
+   "id": "es-a2-249",
+   "text": "Aquí están «carrera» y «ejército».",
+   "fa": "«carrera» و «ejército» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "carrera",
+    "ejército"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=487390&dur=2456"
+  },
+  {
+   "id": "es-a2-250",
+   "text": "El profesor explica «encima» e «interés» otra vez.",
+   "fa": "معلم دوباره «encima» و «interés» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1> y <W2> otra vez.",
+   "targetWords": [
+    "encima",
+    "interés"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=489846&dur=3422"
+  },
+  {
+   "id": "es-a2-251",
+   "text": "En el texto veo «llegó» y «objetivo».",
+   "fa": "در متن «llegó» و «objetivo» را میبینم.",
+   "pattern": "En el texto veo <W1> y <W2>.",
+   "targetWords": [
+    "llegó",
+    "objetivo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=493268&dur=2560"
+  },
+  {
+   "id": "es-a2-252",
+   "text": "Hoy vemos «popular» y «provincia».",
+   "fa": "امروز «popular» و «provincia» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "popular",
+    "provincia"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=495828&dur=2351"
+  },
+  {
+   "id": "es-a2-253",
+   "text": "Esto es «recursos».",
+   "fa": "این «recursos» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "recursos"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=498179&dur=1620"
+  },
+  {
+   "id": "es-a2-254",
+   "text": "Aquí está «red».",
+   "fa": "«red» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "red"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=499799&dur=1332"
+  },
+  {
+   "id": "es-a2-255",
+   "text": "Veo la palabra «río».",
+   "fa": "واژهٔ «río» را میبینم.",
+   "pattern": "Veo la palabra <W1>.",
+   "targetWords": [
+    "río"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=501131&dur=1463"
+  },
+  {
+   "id": "es-a2-256",
+   "text": "Puedo entender mejor «ah».",
+   "fa": "میتوانم «ah» را بهتر بفهمم.",
+   "pattern": "Puedo entender mejor <W1>.",
+   "targetWords": [
+    "ah"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=502594&dur=1802"
+  },
+  {
+   "id": "es-a2-257",
+   "text": "He visto «aquellos», «carlos» y «especialmente» en el texto.",
+   "fa": "«aquellos»، «carlos» و «especialmente» را در متن دیدم.",
+   "pattern": "He visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "aquellos",
+    "carlos",
+    "especialmente"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=504396&dur=4075"
+  },
+  {
+   "id": "es-a2-258",
+   "text": "El profesor explica «ganar», «lucha» y «nota» otra vez.",
+   "fa": "معلم دوباره «ganar»، «lucha» و «nota» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1>, <W2> y <W3> otra vez.",
+   "targetWords": [
+    "ganar",
+    "lucha",
+    "nota"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=508471&dur=3788"
+  },
+  {
+   "id": "es-a2-259",
+   "text": "Puedo ahora entender mejor «prueba», «saben» y «twitter».",
+   "fa": "اکنون میتوانم «prueba»، «saben» و «twitter» را بهتر بفهمم.",
+   "pattern": "Puedo ahora entender mejor <W1>, <W2> y <W3>.",
+   "targetWords": [
+    "prueba",
+    "saben",
+    "twitter"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=512259&dur=3657"
+  },
+  {
+   "id": "es-a2-260",
+   "text": "Hemos visto «vaya», «anterior» y «buscar» en el texto.",
+   "fa": "ما «vaya»، «anterior» و «buscar» را در متن دیدیم.",
+   "pattern": "Hemos visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "vaya",
+    "anterior",
+    "buscar",
+    "busca",
+    "buscando"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=515916&dur=3657"
+  },
+  {
+   "id": "es-a2-261",
+   "text": "Aquí están «dia» y «justo».",
+   "fa": "«dia» و «justo» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "dia",
+    "justo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=519573&dur=1985"
+  },
+  {
+   "id": "es-a2-262",
+   "text": "El profesor explica «medida» y «podía» otra vez.",
+   "fa": "معلم دوباره «medida» و «podía» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1> y <W2> otra vez.",
+   "targetWords": [
+    "medida",
+    "medidas",
+    "podía"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=521558&dur=3344"
+  },
+  {
+   "id": "es-a2-263",
+   "text": "En el texto veo «temas» y «ven».",
+   "fa": "در متن «temas» و «ven» را میبینم.",
+   "pattern": "En el texto veo <W1> y <W2>.",
+   "targetWords": [
+    "temas",
+    "ven"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=524902&dur=2299"
+  },
+  {
+   "id": "es-a2-264",
+   "text": "Hoy vemos «éxito» y «actividades».",
+   "fa": "امروز «éxito» و «actividades» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "éxito",
+    "actividades",
+    "actividad"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=527201&dur=2560"
+  },
+  {
+   "id": "es-a2-265",
+   "text": "Esto es «adelante».",
+   "fa": "این «adelante» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "adelante"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=529761&dur=1463"
+  },
+  {
+   "id": "es-a2-266",
+   "text": "Aquí está «aire».",
+   "fa": "«aire» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "aire"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=531224&dur=1280"
+  },
+  {
+   "id": "es-a2-267",
+   "text": "Veo la palabra «américa».",
+   "fa": "واژهٔ «américa» را میبینم.",
+   "pattern": "Veo la palabra <W1>.",
+   "targetWords": [
+    "américa"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=532504&dur=1646"
+  },
+  {
+   "id": "es-a2-268",
+   "text": "Puedo entender mejor «arriba».",
+   "fa": "میتوانم «arriba» را بهتر بفهمم.",
+   "pattern": "Puedo entender mejor <W1>.",
+   "targetWords": [
+    "arriba"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=534150&dur=2038"
+  },
+  {
+   "id": "es-a2-269",
+   "text": "He visto «autor», «baja» y «dije» en el texto.",
+   "fa": "«autor»، «baja» و «dije» را در متن دیدم.",
+   "pattern": "He visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "autor",
+    "baja",
+    "dije"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=536188&dur=3187"
+  },
+  {
+   "id": "es-a2-270",
+   "text": "El profesor explica «estilo», «ex» y «luis» otra vez.",
+   "fa": "معلم دوباره «estilo»، «ex» و «luis» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1>, <W2> y <W3> otra vez.",
+   "targetWords": [
+    "estilo",
+    "ex",
+    "luis"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=539375&dur=3866"
+  },
+  {
+   "id": "es-a2-271",
+   "text": "Puedo ahora entender mejor «mala», «maría» y «militar».",
+   "fa": "اکنون میتوانم «mala»، «maría» و «militar» را بهتر بفهمم.",
+   "pattern": "Puedo ahora entender mejor <W1>, <W2> y <W3>.",
+   "targetWords": [
+    "mala",
+    "maría",
+    "militar"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=543241&dur=3527"
+  },
+  {
+   "id": "es-a2-272",
+   "text": "Hemos visto «muestra», «oro» y «par» en el texto.",
+   "fa": "ما «muestra»، «oro» و «par» را در متن دیدیم.",
+   "pattern": "Hemos visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "muestra",
+    "oro",
+    "par"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=546768&dur=3291"
+  },
+  {
+   "id": "es-a2-273",
+   "text": "Aquí están «plata» y «sola».",
+   "fa": "«plata» و «sola» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "plata",
+    "sola"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=550059&dur=2064"
+  },
+  {
+   "id": "es-a2-274",
+   "text": "El profesor explica «canción» y «contigo» otra vez.",
+   "fa": "معلم دوباره «canción» و «contigo» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1> y <W2> otra vez.",
+   "targetWords": [
+    "canción",
+    "contigo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=552123&dur=3553"
+  },
+  {
+   "id": "es-a2-275",
+   "text": "En el texto veo «defensa» y «dólares».",
+   "fa": "در متن «defensa» و «dólares» را میبینم.",
+   "pattern": "En el texto veo <W1> y <W2>.",
+   "targetWords": [
+    "defensa",
+    "dólares"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=555676&dur=2508"
+  },
+  {
+   "id": "es-a2-276",
+   "text": "Hoy vemos «fondo» e «hija».",
+   "fa": "امروز «fondo» و «hija» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "fondo",
+    "hija"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=558184&dur=1933"
+  },
+  {
+   "id": "es-a2-277",
+   "text": "Esto es «humanos».",
+   "fa": "این «humanos» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "humanos",
+    "humano"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=560117&dur=1411"
+  },
+  {
+   "id": "es-a2-278",
+   "text": "Aquí está «ideas».",
+   "fa": "«ideas» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "ideas"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=561528&dur=1463"
+  },
+  {
+   "id": "es-a2-279",
+   "text": "Veo la palabra «menor».",
+   "fa": "واژهٔ «menor» را میبینم.",
+   "pattern": "Veo la palabra <W1>.",
+   "targetWords": [
+    "menor"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=562991&dur=1567"
+  },
+  {
+   "id": "es-a2-280",
+   "text": "Puedo entender mejor «ministerio».",
+   "fa": "میتوانم «ministerio» را بهتر بفهمم.",
+   "pattern": "Puedo entender mejor <W1>.",
+   "targetWords": [
+    "ministerio",
+    "ministro"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=564558&dur=2273"
+  },
+  {
+   "id": "es-a2-281",
+   "text": "He visto «quería», «recuerdo» y «acceso» en el texto.",
+   "fa": "«quería»، «recuerdo» و «acceso» را در متن دیدم.",
+   "pattern": "He visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "quería",
+    "recuerdo",
+    "acceso"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=566831&dur=3683"
+  },
+  {
+   "id": "es-a2-282",
+   "text": "El profesor explica «armas», «congreso» y «evitar» otra vez.",
+   "fa": "معلم دوباره «armas»، «congreso» و «evitar» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1>, <W2> y <W3> otra vez.",
+   "targetWords": [
+    "armas",
+    "congreso",
+    "evitar"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=570514&dur=4127"
+  },
+  {
+   "id": "es-a2-283",
+   "text": "Puedo ahora entender mejor «finalmente», «fuente» y «hubo».",
+   "fa": "اکنون میتوانم «finalmente»، «fuente» و «hubo» را بهتر بفهمم.",
+   "pattern": "Puedo ahora entender mejor <W1>, <W2> y <W3>.",
+   "targetWords": [
+    "finalmente",
+    "fuente",
+    "hubo"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=574641&dur=3762"
+  },
+  {
+   "id": "es-a2-284",
+   "text": "Hemos visto «jugar», «puta» y «siquiera» en el texto.",
+   "fa": "ما «jugar»، «puta» و «siquiera» را در متن دیدیم.",
+   "pattern": "Hemos visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "jugar",
+    "puta",
+    "siquiera"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=578403&dur=3683"
+  },
+  {
+   "id": "es-a2-285",
+   "text": "Aquí están «época» y «acciones».",
+   "fa": "«época» و «acciones» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "época",
+    "acciones"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=582086&dur=2377"
+  },
+  {
+   "id": "es-a2-286",
+   "text": "El profesor explica «construcción» y «corte» otra vez.",
+   "fa": "معلم دوباره «construcción» و «corte» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1> y <W2> otra vez.",
+   "targetWords": [
+    "construcción",
+    "constitución",
+    "corte"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=584463&dur=3709"
+  },
+  {
+   "id": "es-a2-287",
+   "text": "En el texto veo «departamento» y «mitad».",
+   "fa": "در متن «departamento» و «mitad» را میبینم.",
+   "pattern": "En el texto veo <W1> y <W2>.",
+   "targetWords": [
+    "departamento",
+    "mitad"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=588172&dur=2717"
+  },
+  {
+   "id": "es-a2-288",
+   "text": "Hoy vemos «presente» y «sector».",
+   "fa": "امروز «presente» و «sector» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "presente",
+    "presencia",
+    "sector"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=590889&dur=2299"
+  },
+  {
+   "id": "es-a2-289",
+   "text": "Esto es «serio».",
+   "fa": "این «serio» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "serio"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=593188&dur=1332"
+  },
+  {
+   "id": "es-a2-290",
+   "text": "Aquí está «superior».",
+   "fa": "«superior» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "superior"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=594520&dur=1620"
+  },
+  {
+   "id": "es-a2-291",
+   "text": "Veo la palabra «supuesto».",
+   "fa": "واژهٔ «supuesto» را میبینم.",
+   "pattern": "Veo la palabra <W1>.",
+   "targetWords": [
+    "supuesto"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=596140&dur=1776"
+  },
+  {
+   "id": "es-a2-292",
+   "text": "Puedo entender mejor «boca».",
+   "fa": "میتوانم «boca» را بهتر بفهمم.",
+   "pattern": "Puedo entender mejor <W1>.",
+   "targetWords": [
+    "boca"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=597916&dur=1959"
+  },
+  {
+   "id": "es-a2-293",
+   "text": "He visto «capacidad», «crear» y «energía» en el texto.",
+   "fa": "«capacidad»، «crear» و «energía» را در متن دیدم.",
+   "pattern": "He visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "capacidad",
+    "crear",
+    "energía"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=599875&dur=3840"
+  },
+  {
+   "id": "es-a2-294",
+   "text": "El profesor explica «hicieron», «malo» y «mantener» otra vez.",
+   "fa": "معلم دوباره «hicieron»، «malo» و «mantener» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1>, <W2> y <W3> otra vez.",
+   "targetWords": [
+    "hicieron",
+    "malo",
+    "mantener"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=603715&dur=4075"
+  },
+  {
+   "id": "es-a2-295",
+   "text": "Puedo ahora entender mejor «modelo», «natural» y «radio».",
+   "fa": "اکنون میتوانم «modelo»، «natural» و «radio» را بهتر بفهمم.",
+   "pattern": "Puedo ahora entender mejor <W1>, <W2> y <W3>.",
+   "targetWords": [
+    "modelo",
+    "natural",
+    "radio"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=607790&dur=3736"
+  },
+  {
+   "id": "es-a2-296",
+   "text": "Hemos visto «viejo», «administración» y «comisión» en el texto.",
+   "fa": "ما «viejo»، «administración» و «comisión» را در متن دیدیم.",
+   "pattern": "Hemos visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "viejo",
+    "administración",
+    "comisión"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=611526&dur=4206"
+  },
+  {
+   "id": "es-a2-297",
+   "text": "Aquí están «costa» y «cree».",
+   "fa": "«costa» و «cree» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "costa",
+    "cree"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=615732&dur=2090"
+  },
+  {
+   "id": "es-a2-298",
+   "text": "El profesor explica «crisis» y «culpa» otra vez.",
+   "fa": "معلم دوباره «crisis» و «culpa» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1> y <W2> otra vez.",
+   "targetWords": [
+    "crisis",
+    "culpa"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=617822&dur=3422"
+  },
+  {
+   "id": "es-a2-299",
+   "text": "En el texto veo «cámara» y «diario».",
+   "fa": "در متن «cámara» و «diario» را میبینم.",
+   "pattern": "En el texto veo <W1> y <W2>.",
+   "targetWords": [
+    "cámara",
+    "diario"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=621244&dur=2377"
+  },
+  {
+   "id": "es-a2-300",
+   "text": "Hoy vemos «empezar» y «esté».",
+   "fa": "امروز «empezar» و «esté» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "empezar",
+    "esté"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=623621&dur=2090"
+  },
+  {
+   "id": "es-a2-301",
+   "text": "Esto es «fuego».",
+   "fa": "این «fuego» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "fuego"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=625711&dur=1358"
+  },
+  {
+   "id": "es-a2-302",
+   "text": "Aquí está «habrá».",
+   "fa": "«habrá» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "habrá"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=627069&dur=1332"
+  },
+  {
+   "id": "es-a2-303",
+   "text": "Veo la palabra «jóvenes».",
+   "fa": "واژهٔ «jóvenes» را میبینم.",
+   "pattern": "Veo la palabra <W1>.",
+   "targetWords": [
+    "jóvenes"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=628401&dur=1724"
+  },
+  {
+   "id": "es-a2-304",
+   "text": "Puedo entender mejor «perder».",
+   "fa": "میتوانم «perder» را بهتر بفهمم.",
+   "pattern": "Puedo entender mejor <W1>.",
+   "targetWords": [
+    "perder"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=630125&dur=2142"
+  },
+  {
+   "id": "es-a2-305",
+   "text": "He visto «pone», «posición» y «título» en el texto.",
+   "fa": "«pone»، «posición» و «título» را در متن دیدم.",
+   "pattern": "He visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "pone",
+    "posición",
+    "título"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=632267&dur=3553"
+  },
+  {
+   "id": "es-a2-306",
+   "text": "El profesor explica «actualmente», «creer» y «mamá» otra vez.",
+   "fa": "معلم دوباره «actualmente»، «creer» و «mamá» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1>, <W2> y <W3> otra vez.",
+   "targetWords": [
+    "actualmente",
+    "creer",
+    "mamá"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=635820&dur=4180"
+  },
+  {
+   "id": "es-a2-307",
+   "text": "Puedo ahora entender mejor «participación», «sangre» y «toma».",
+   "fa": "اکنون میتوانم «participación»، «sangre» و «toma» را بهتر بفهمم.",
+   "pattern": "Puedo ahora entender mejor <W1>, <W2> y <W3>.",
+   "targetWords": [
+    "participación",
+    "sangre",
+    "toma"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=640000&dur=4101"
+  },
+  {
+   "id": "es-a2-308",
+   "text": "Hemos visto «violencia», «auto» y «brasil» en el texto.",
+   "fa": "ما «violencia»، «auto» و «brasil» را در متن دیدیم.",
+   "pattern": "Hemos visto <W1>, <W2> y <W3> en el texto.",
+   "targetWords": [
+    "violencia",
+    "auto",
+    "brasil"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=644101&dur=3631"
+  },
+  {
+   "id": "es-a2-309",
+   "text": "Aquí están «carta» y «china».",
+   "fa": "«carta» و «china» اینجا هستند.",
+   "pattern": "Aquí están <W1> y <W2>.",
+   "targetWords": [
+    "carta",
+    "china"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=647732&dur=2116"
+  },
+  {
+   "id": "es-a2-310",
+   "text": "El profesor explica «ciudadanos» y «facebook» otra vez.",
+   "fa": "معلم دوباره «ciudadanos» و «facebook» را توضیح میدهد.",
+   "pattern": "El profesor explica <W1> y <W2> otra vez.",
+   "targetWords": [
+    "ciudadanos",
+    "facebook"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=649848&dur=3736"
+  },
+  {
+   "id": "es-a2-311",
+   "text": "En el texto veo «leyes» y «probablemente».",
+   "fa": "در متن «leyes» و «probablemente» را میبینم.",
+   "pattern": "En el texto veo <W1> y <W2>.",
+   "targetWords": [
+    "leyes",
+    "probablemente"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=653584&dur=2795"
+  },
+  {
+   "id": "es-a2-312",
+   "text": "Hoy vemos «solamente» y «área».",
+   "fa": "امروز «solamente» و «área» را میبینیم.",
+   "pattern": "Hoy vemos <W1> y <W2>.",
+   "targetWords": [
+    "solamente",
+    "área"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=656379&dur=2116"
+  },
+  {
+   "id": "es-a2-313",
+   "text": "Esto es «aires».",
+   "fa": "این «aires» است.",
+   "pattern": "Esto es <W1>.",
+   "targetWords": [
+    "aires"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=658495&dur=1280"
+  },
+  {
+   "id": "es-a2-314",
+   "text": "Aquí está «banda».",
+   "fa": "«banda» اینجاست.",
+   "pattern": "Aquí está <W1>.",
+   "targetWords": [
+    "banda"
+   ],
+   "audio": "milo-segment:es-A2.mp3?start=659775&dur=1358"
+  }
+ ]
+}
