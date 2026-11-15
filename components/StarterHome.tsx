@@ -29,6 +29,7 @@ import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } fro
 import { starterDisplayPronunciation } from '@/lib/languages/starterEditorial';
 import type { StarterCourse, StarterLesson } from '@/lib/languages/newCourses';
 import LevelReadinessLine from '@/components/LevelReadinessLine';
+import PlacementCard from '@/components/PlacementCard';
 import { auditLessonsFromLearning, courseReadiness } from '@/lib/content/courseAudit';
 import type { CourseLevelId as StarterLevelId } from '@/lib/courseContent';
 import type { CourseProgress } from '@/lib/courseProgress';
@@ -308,6 +309,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             <Text style={starterOnlyStyles.foundationText}>۲۵ موضوع پایه و ۳۰ موقعیت پیشرفته؛ درس‌های مرتبط و سرفصل‌های در حال تدوین را ببینید.</Text>
           </Pressable>
 
+          <PlacementCard courseId={course.id} href={`/learn/${course.id}/placement`} hasProgress={hasStartedCourse} />
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#4D9AF2', '#20C49A', '#4D9AF2']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
             <View style={styles.lessonMetaRow}>

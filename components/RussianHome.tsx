@@ -28,6 +28,7 @@ import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } fro
 import { RUSSIAN_LEVELS, RUSSIAN_LESSONS, russianProgress, type RussianLevelId } from '@/lib/languages/russian';
 const READINESS = courseReadiness('ru', auditLessonsFromLearning(RUSSIAN_LESSONS as ReadonlyArray<import('@/lib/languages/types').LearningLesson & { levelId: number }>));
 import LevelReadinessLine from '@/components/LevelReadinessLine';
+import PlacementCard from '@/components/PlacementCard';
 import { auditLessonsFromLearning, courseReadiness } from '@/lib/content/courseAudit';
 import { loadRussianLessonSessionWithPresence } from '@/lib/languages/russianStudyState';
 import type { CourseProgress } from '@/lib/courseProgress';
@@ -269,6 +270,7 @@ export default function RussianHome() {
             </View>
           )}
 
+          <PlacementCard courseId={'ru'} href={'/learn/ru/placement'} hasProgress={hasStartedCourse} />
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#4D9AF2', '#20C49A', '#4D9AF2']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
             <View style={styles.lessonMetaRow}>

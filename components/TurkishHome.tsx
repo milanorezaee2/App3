@@ -30,6 +30,7 @@ import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } fro
 import { TURKISH_LEVELS, TURKISH_LESSONS, turkishProgress, type TurkishLevelId } from '@/lib/languages/turkish';
 const READINESS = courseReadiness('tr', auditLessonsFromLearning(TURKISH_LESSONS as ReadonlyArray<import('@/lib/languages/types').LearningLesson & { levelId: number }>));
 import LevelReadinessLine from '@/components/LevelReadinessLine';
+import PlacementCard from '@/components/PlacementCard';
 import { auditLessonsFromLearning, courseReadiness } from '@/lib/content/courseAudit';
 import { loadTurkishLessonSessionWithPresence } from '@/lib/languages/turkishStudyState';
 import type { CourseProgress } from '@/lib/courseProgress';
@@ -273,6 +274,7 @@ export default function TurkishHome() {
 
           <FoundationA1Entry language="tr" />
 
+          <PlacementCard courseId={'tr'} href={'/learn/tr/placement'} hasProgress={hasStartedCourse} />
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#D94F64', '#E07A5F', '#D94F64']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
             <View style={styles.lessonMetaRow}>

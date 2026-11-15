@@ -11,7 +11,8 @@ import { playTurkishSpeech, stopTurkishSpeech } from '@/lib/turkishSpeech';
 import { playStarterSpeech, stopStarterSpeech } from '@/lib/starterSpeech';
 import { AppBottomNav } from '@/components/AppBottomNav';
 import { COURSE_LEVELS, SENTENCE_LESSONS } from '@/lib/courseContent';
-import { getCourseProgress } from '@/lib/courseProgress';
+import { getCourseProgress, setCurrentLesson as setEnglishCurrentLesson } from '@/lib/courseProgress';
+import PlacementTest, { type PlacementConfig } from '@/components/PlacementTest';
 import { playResponsiveSpeech, stopResponsiveSpeech } from '@/lib/responsiveSpeech';
 
 /** Per-course wiring for the shared end-of-level exam + daily supplement screen. */
@@ -41,4 +42,17 @@ export function StarterLevelStudio({ course }: { course: StarterCourse }) {
     BottomNav: () => <StarterBottomNav course={course} />,
   }), [course]);
   return <LanguageLevelStudio config={config} />;
+}
+
+/** Entry placement test, same wiring plus the course's "set current lesson" and home route. */
+export function EnglishPlacement() { return <PlacementTest config={{ ...ENGLISH, setCurrentLesson: setEnglishCurrentLesson, homeHref: '/lang' }} />; }
+export function RussianPlacement() { return <PlacementTest config={{ ...RUSSIAN, setCurrentLesson: russianProgress.setCurrentLesson, homeHref: '/learn/ru' }} />; }
+export function TurkishPlacement() { return <PlacementTest config={{ ...TURKISH, setCurrentLesson: turkishProgress.setCurrentLesson, homeHref: '/learn/tr' }} />; }
+export function StarterPlacement({ course }: { course: StarterCourse }) {
+  const config = useMemo<PlacementConfig>(() => ({
+    courseId: course.id, nameFa: course.name, levels: course.levels, lessons: course.lessons, progress: course.progress,
+    speak: text => { void playStarterSpeech(course.locale, text, 0.85, () => undefined); }, stopSpeech: () => { void stopStarterSpeech(); },
+    BottomNav: () => <StarterBottomNav course={course} />, setCurrentLesson: course.progress.setCurrentLesson, homeHref: `/learn/${course.id}`,
+  }), [course]);
+  return <PlacementTest config={config} />;
 }

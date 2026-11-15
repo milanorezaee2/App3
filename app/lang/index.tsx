@@ -32,6 +32,7 @@ import { ProfileIcon } from '@/components/ProfileIcon';
 import { PageNavigation } from '@/components/PageNavigation';
 import { COURSE_LEVELS, SENTENCE_LESSONS } from '@/lib/courseContent';
 import LevelReadinessLine from '@/components/LevelReadinessLine';
+import PlacementCard from '@/components/PlacementCard';
 import { auditLessonsFromEnglish, courseReadiness } from '@/lib/content/courseAudit';
 const READINESS = courseReadiness('en', auditLessonsFromEnglish(SENTENCE_LESSONS));
 import { getCourseProgress, setCurrentLesson, type CourseProgress } from '@/lib/courseProgress';
@@ -248,6 +249,7 @@ export default function LearningHome() {
 
           <EnglishPodcastEntry />
 
+          <PlacementCard courseId={'en'} href={'/learn/en/placement'} hasProgress={hasStartedCourse} />
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#5146E5', '#20C49A', '#5146E5']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
             <View style={styles.lessonMetaRow}>
