@@ -146,7 +146,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add content-packs/manifest.json content-packs/*/*.json lib/content/packCoverage.generated.json
+          git add -A content-packs lib/content/packCoverage.generated.json
           git diff --cached --quiet && { echo "nothing to commit"; exit 0; }
           git commit -m "audio: offline TTS render ($SCOPE, $ENGINE) — no API key"
           git push origin HEAD:${{ github.ref_name }}

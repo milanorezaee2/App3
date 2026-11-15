@@ -75,8 +75,8 @@ gh release upload milo-content-v1 --clobber content-packs/audio-bundles/*.mp3 �
 
 ## مقیاس و هزینه
 
-- **۱۵٬۲۴۳ جمله** در ۳۶ بسته (۳۴ بستهٔ غیرخالی) · ≈ ۹–۱۰ ساعت گفتار · ≈ ۱۵۰ MB MP3 مونو ۴۸ kbps / ۲۲٫۰۵ kHz
-- ۳۴ باندل (هرکدام ~۰٫۵–۸ MB) · **۰ دلار، ۰ توکن، ۰ Secret تازه**
+- **۱۵٬۲۴۳ جمله** در ۳۶ بسته (۳۴ بستهٔ غیرخالی) · **۱۰٫۵ ساعت گفتار · ۲۱۶ MB** MP3 مونو ۴۸ kbps / ۲۲٫۰۵ kHz
+- ۳۴ باندل (۰٫۹–۱۹ MB) · **۰ دلار، ۰ توکن، ۰ Secret تازه**
 - فایلهای صوتی وارد Git نمیشوند (`content-packs/audio/` و `audio-bundles/` در `.gitignore`)
 - `scope=pilot` = `pre+A1` (۱٬۷۰۷ کلیپ) برای تست سریع؛ `scope=all` = پوشش کامل
 

@@ -18,7 +18,7 @@ fs.mkdirSync(outDir, { recursive: true });
 import { mp3DurationMs } from './mp3Duration.mjs';
 
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json'), 'utf8'));
-let totalBytes = 0, totalMs = 0, sentences = 0;
+let totalBytes = 0, totalMs = 0, sentences = 0, bundles = 0;
 for (const entry of manifest.packs) {
   const file = path.join(root, entry.path);
   const pack = JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -41,6 +41,7 @@ for (const entry of manifest.packs) {
   fs.writeFileSync(file, JSON.stringify(pack, null, 1) + '\n');
   totalBytes += bundle.length;
   totalMs += offset;
+  bundles++;
   console.log(`${bundleName}: ${pack.sentences.length} sentences · ${(bundle.length / 1048576).toFixed(2)} MB · ${(offset / 1000).toFixed(1)} s`);
 }
-console.log(`bundles: ${manifest.packs.length} files · ${sentences} sentences · ${(totalBytes / 1048576).toFixed(1)} MB · ${(totalMs / 60000).toFixed(1)} min speech`);
+console.log(`bundles: ${bundles} files · ${sentences} sentences · ${(totalBytes / 1048576).toFixed(1)} MB · ${(totalMs / 60000).toFixed(1)} min speech`);
