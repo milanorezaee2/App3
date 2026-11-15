@@ -1,6 +1,6 @@
 name: Build requested APKs
 
-# rev 96
+# rev 97
 # rev 76: page-targeted pop-ups (any number per page) with a redesigned card
 # rev 75: learner pop-ups checked on every launch and return (1-min quiet period)
 # rev 74: new English-only no-login APK (english.apk)
@@ -543,7 +543,6 @@ jobs:
       # the Admin App → به‌روزرسانی اپ‌ها form writes), so learner apps see the update
       # as soon as the release exists. Without the secret this step is skipped.
       - name: Publish release records to Supabase (in-app updates)
-        if: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY != '' }}
         shell: bash
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -551,6 +550,7 @@ jobs:
           TAG: milo-requested-${{ github.run_number }}
           NOTES: ${{ github.event.head_commit.message }}
         run: |
+          if [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then echo "SUPABASE_SERVICE_ROLE_KEY secret not set; skipping in-app update publish."; exit 0; fi
           URL="${SUPABASE_URL:-$(node -p "require('./config/supabase.public.json').EXPO_PUBLIC_SUPABASE_URL")}"
           CODE=$((100 + GITHUB_RUN_NUMBER))
           FIRST_LINE="$(printf '%s' "$NOTES" | head -n 1 | cut -c1-300)"
