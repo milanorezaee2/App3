@@ -220,6 +220,7 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
         display: block !important;
         padding: 0 !important;
       }
+      html.arena-frame-disabled #root > div:not(iframe) { width: 100% !important; }
       html.arena-frame-disabled #root {
         width: 100% !important;
         max-width: 100% !important;
@@ -247,6 +248,7 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
         }
         /* keep-desktop: real 1120×2489 viewport in an iframe, scaled to 360×800 */
         html.arena-embed-host #root { direction: ltr !important; }
+        html.arena-embed-host #root > div { display: none !important; }
         #arena-desktop-embed {
           position: absolute !important;
           top: 0 !important;
@@ -374,8 +376,8 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
         return { w: FRAME_W, h: FRAME_H };
       };
       const winProto = Object.getPrototypeOf(window);
-      const origWDesc = Object.getOwnPropertyDescriptor(winProto, 'innerWidth');
-      const origHDesc = Object.getOwnPropertyDescriptor(winProto, 'innerHeight');
+      const origWDesc = Object.getOwnPropertyDescriptor(window, 'innerWidth') || Object.getOwnPropertyDescriptor(winProto, 'innerWidth');
+      const origHDesc = Object.getOwnPropertyDescriptor(window, 'innerHeight') || Object.getOwnPropertyDescriptor(winProto, 'innerHeight');
       const origWGet = origWDesc && origWDesc.get;
       const origHGet = origHDesc && origHDesc.get;
       const getRealW = () => {

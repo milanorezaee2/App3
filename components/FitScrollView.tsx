@@ -33,6 +33,11 @@ export const FitScrollView = forwardRef<ScrollView, FitScrollViewProps>(function
           <View
             onLayout={event => { const h = event.nativeEvent.layout.height; if (Math.abs(h - natural) >= 1) setNatural(h); }}
             style={{
+              // Anchored explicitly at the left edge: the inner box is wider than its parent, and on web with an
+              // RTL document a wider in-flow child overflows to the LEFT, which shifted every lesson page sideways.
+              position: 'absolute',
+              top: 0,
+              left: 0,
               width: width / scale,
               // Scale around the top-left corner so the content starts at the top and spans the full width.
               transform: [{ translateX: -(width / scale) * (1 - scale) / 2 }, { translateY: -(natural * (1 - scale)) / 2 }, { scale }],
