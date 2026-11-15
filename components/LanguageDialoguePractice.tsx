@@ -7,6 +7,7 @@ import type { LearningLesson } from '@/lib/languages/types';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { Typography } from '@/lib/theme';
 import { toPersianDigits as fa } from '@/lib/format';
+import { fillLine, followUpLanguageFromLocale, followUpMoves, type FollowUpOption } from '@/lib/dialogueFollowUps';
 
 /**
  * Guided dialogue practice shared by every non-English course.
@@ -47,7 +48,8 @@ function judge(mode: DialogueMode, result: SpeakCheckResult, keywords: string[])
   return result.score >= 70;
 }
 
-type DialogueLine = LearningLesson['dialogue'][number] & { branch?: 'partner' | 'reply' };
+type ChoiceOption = { text: string; fa: string; after: { text: string; fa: string } };
+type DialogueLine = LearningLesson['dialogue'][number] & { branch?: 'partner' | 'reply' | 'choice' | 'after'; options?: readonly [ChoiceOption, ChoiceOption] };
 type PoolSentence = { text: string; fa: string };
 
 const contentWords = (text: string) => new Set(text.split(/\s+/).map(clean).filter(w => w.length >= 4).map(w => w.toLowerCase()));
@@ -72,7 +74,7 @@ function branchDialogue(base: readonly DialogueLine[], pool: readonly PoolSenten
     out.push(line);
     const isPartner = line.speaker !== myRole;
     const nextIsMine = base[index + 1]?.speaker === myRole;
-    if (!isPartner || !nextIsMine || inserted >= 2) return;
+    if (!isPartner || !nextIsMine || inserted >= 1) return;
     const topic = `${line.text} ${base[index + 1]?.text ?? ''} ${base[index - 1]?.text ?? ''}`;
     // Every pool sentence is on the lesson's topic; shared words only decide the order.
     const ranked = questions.filter(q => !used.has(q.text)).map(q => ({ q, score: overlap(topic, q.text) })).sort((a, b) => b.score - a.score);
@@ -88,6 +90,33 @@ function branchDialogue(base: readonly DialogueLine[], pool: readonly PoolSenten
     out.push({ speaker: myRole, text: reply.text, fa: reply.fa, branch: 'reply' });
     inserted++;
   });
+  return out;
+}
+
+/**
+ * Choice branch available in every language: right after one of the learner's lines the partner asks
+ * for a repeat / confirmation / slower pace. The learner picks one of two reactions and the partner
+ * acknowledges each one differently, then the scripted dialogue resumes. `chosen` (per restart) turns
+ * the placeholder choice line into the picked reaction followed by the partner's acknowledgement.
+ */
+function choiceBranch(lines: readonly DialogueLine[], myRole: string, locale: string | undefined, variant: number, chosen: number | null): DialogueLine[] {
+  const language = followUpLanguageFromLocale(locale);
+  if (variant % 2 === 0 || !language) return [...lines];
+  const partner = lines.find(line => line.speaker !== myRole)?.speaker;
+  const spots = lines.map((line, i) => i).filter(i => lines[i].speaker === myRole && !lines[i].branch && i < lines.length - 1 && lines[i + 1].speaker !== myRole);
+  if (!partner || !spots.length) return [...lines];
+  const turn = variant >> 1;
+  const at = spots[turn % spots.length];
+  const moves = followUpMoves(language);
+  const move = moves[(turn + at) % moves.length];
+  const line = lines[at].text;
+  const options = move.options.map(option => ({ text: fillLine(option.text, line), fa: option.fa.replace('{line}', line), after: option.after })) as unknown as [ChoiceOption, ChoiceOption];
+  const picked = chosen === null ? null : options[chosen];
+  const out = [...lines];
+  out.splice(at + 1, 0,
+    { speaker: partner, text: fillLine(move.ask, line), fa: move.askFa.replace('{line}', line), branch: 'partner' },
+    picked ? { speaker: myRole, text: picked.text, fa: picked.fa, branch: 'reply' } : { speaker: myRole, text: '', fa: '', branch: 'choice', options },
+    ...(picked ? [{ speaker: partner, text: picked.after.text, fa: picked.after.fa, branch: 'after' as const }] : []));
   return out;
 }
 
@@ -115,9 +144,10 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
   const speakers = [...new Set(dialogue.map(line => line.speaker))];
   const [myRole, setMyRole] = useState(fixedRole ?? speakers[0]);
   const baseDialogue = dialogue;
-  const lines = useMemo(() => branchPool ? branchDialogue(baseDialogue as DialogueLine[], branchPool, myRole, variant) : [...(baseDialogue as DialogueLine[])], [baseDialogue, branchPool, myRole, variant]);
+  const [chosen, setChosen] = useState<number | null>(null);
+  const lines = useMemo(() => choiceBranch(branchPool ? branchDialogue(baseDialogue as DialogueLine[], branchPool, myRole, variant) : [...(baseDialogue as DialogueLine[])], myRole, locale, variant, chosen), [baseDialogue, branchPool, myRole, variant, locale, chosen]);
   const hasBranch = lines.some(line => line.branch);
-  const canBranch = !!branchPool && branchDialogue(baseDialogue as DialogueLine[], branchPool, myRole, 1).some(line => line.branch);
+  const canBranch = (!!branchPool && branchDialogue(baseDialogue as DialogueLine[], branchPool, myRole, 1).some(line => line.branch)) || choiceBranch(baseDialogue as DialogueLine[], myRole, locale, 1, null).some(line => line.branch);
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const current = lines[index];
@@ -125,8 +155,10 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
 
   const keywords = current ? keywordsOf(current.text) : [];
   const resetLine = () => { setRevealed(false); setVerdict(null); setAttempted(false); };
-  const restart = () => { setIndex(0); resetLine(); };
-  const restartOtherPath = () => { setVariant(value => value + 1); setIndex(0); resetLine(); };
+  const restart = () => { setIndex(0); setChosen(null); resetLine(); };
+  const restartOtherPath = () => { setVariant(value => value + 1); setIndex(0); setChosen(null); resetLine(); };
+  const isChoice = current?.branch === 'choice';
+  const choose = (option: number) => { setChosen(option); setRevealed(true); };
   const advance = () => { resetLine(); setIndex(value => Math.min(value + 1, lines.length - 1)); };
   const changeMode = (next: DialogueMode) => { setMode(next); resetLine(); };
   const onResult = (result: SpeakCheckResult) => { setAttempted(true); setVerdict(judge(mode, result, keywords)); setRevealed(true); };
@@ -143,15 +175,21 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
           <Pressable accessibilityRole="button" accessibilityState={{ selected: hasBranch }} onPress={() => { if (!hasBranch) restartOtherPath(); }} style={[styles.pathButton, hasBranch && styles.pathButtonBranch]}><GitBranch size={12} color={hasBranch ? '#FFFFFF' : '#7C3AED'} /><Text style={[styles.pathText, { color: hasBranch ? '#FFFFFF' : '#7C3AED' }]}>با سؤال غیرمنتظره</Text></Pressable>
         </View> : null}
       </View>
-      {canBranch && hasBranch ? <Text style={styles.branchIntro}>در این مسیر، طرف مقابل وسط گفت‌وگو سؤالی می‌پرسد که در متن اصلی نیست؛ با جمله‌ای از همین درس جواب بده. خط‌های تازه با رنگ بنفش مشخص‌اند.</Text> : null}
+      {canBranch && hasBranch ? <Text style={styles.branchIntro}>در این مسیر، طرف مقابل وسط گفت‌وگو چیزی می‌گوید که در متن اصلی نیست؛ تو از بین دو واکنش یکی را انتخاب می‌کنی و طرف مقابل به همان جواب می‌دهد. خط‌های تازه با رنگ بنفش مشخص‌اند.</Text> : null}
       {productive && locale ? <View style={styles.modeRow}>{(['guide', 'cloze', 'free'] as DialogueMode[]).map(item => <Pressable key={item} accessibilityRole="button" accessibilityState={{ selected: mode === item }} onPress={() => changeMode(item)} style={[styles.modeButton, mode === item && styles.modeButtonActive]}><Text style={[styles.modeText, mode === item && styles.modeTextActive]}>{MODE_META[item].label}</Text></Pressable>)}</View> : null}
       <Text style={styles.instruction}>{productive && locale ? MODE_META[mode].hint : 'نقش خود را انتخاب کنید و پاسخ را بلند بگویید.'}</Text>
       {fixedRole ? null : <View style={styles.roleRow}>{speakers.map(speaker => <Pressable key={speaker} accessibilityRole="button" accessibilityState={{ selected: myRole === speaker }} onPress={() => changeRole(speaker)} style={[styles.roleButton, myRole === speaker && styles.roleButtonActive]}><Text style={[styles.roleText, myRole === speaker && styles.roleTextActive]}>{speaker}</Text></Pressable>)}</View>}
       {current && <View style={[styles.bubble, isMyLine ? styles.bubbleLearner : styles.bubblePartner, current.branch ? styles.bubbleBranch : null]}>
         <Text style={styles.speaker}>{isMyLine ? 'نوبت شما' : current.speaker}</Text>
         {current.branch === 'partner' ? <View style={styles.branchNote}><GitBranch size={13} color="#7C3AED" /><Text style={styles.branchNoteText}>سؤال غیرمنتظره — این خط در متن اصلی نبود.</Text></View> : null}
-        {current.branch === 'reply' ? <View style={styles.branchNote}><GitBranch size={13} color="#7C3AED" /><Text style={styles.branchNoteText}>جوابِ پیشنهادی از جمله‌های همین درس است.</Text></View> : null}
-        {isMyLine
+        {current.branch === 'reply' ? <View style={styles.branchNote}><GitBranch size={13} color="#7C3AED" /><Text style={styles.branchNoteText}>{chosen !== null ? 'واکنشی که انتخاب کردی؛ حالا بلند بگو.' : 'جوابِ پیشنهادی از جمله‌های همین درس است.'}</Text></View> : null}
+        {current.branch === 'after' ? <View style={styles.branchNote}><GitBranch size={13} color="#7C3AED" /><Text style={styles.branchNoteText}>واکنش طرف مقابل به انتخاب تو.</Text></View> : null}
+        {isChoice
+          ? <>
+              <Text style={styles.persian}>چطور جواب می‌دهی؟ یکی را انتخاب کن:</Text>
+              {current.options?.map((option, i) => <Pressable key={i} accessibilityRole="button" style={styles.choiceButton} onPress={() => choose(i)}><Text style={styles.choiceText}>{option.text}</Text><Text style={styles.choiceFa}>{option.fa}</Text></Pressable>)}
+            </>
+          : isMyLine
           ? <>
               <Text style={styles.persian}>{mode === 'free' && productiveMode ? `بگو: ${current.fa}` : current.fa}</Text>
               {revealed ? <Text style={styles.target}>{current.text}</Text>
@@ -160,6 +198,7 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
                 : <Text style={styles.hint}>اول جملهٔ {languageLabel} را از حافظه بگویید، سپس نمونه را ببینید.</Text>}
             </>
           : <><Text style={styles.target}>{current.text}</Text><Text style={styles.persian}>{current.fa}</Text></>}
+        {isChoice ? null : <>
         {isMyLine && productiveMode && locale && !attempted ? <SpeakCheck key={`${mode}-${index}-${current.text}`} text={current.text} locale={locale} accent={Palette.success} title={mode === 'cloze' ? 'کل جمله را بگو' : 'منظورت را بگو'} onResult={onResult} /> : null}
         {isMyLine && productiveMode && verdict !== null ? <View style={[styles.verdict, verdict ? styles.verdictOk : styles.verdictMiss]}>
           {verdict ? <CheckCircle2 size={16} color="#15803D" /> : <XCircle size={16} color="#B91C1C" />}
@@ -170,8 +209,9 @@ export default function LanguageDialoguePractice({ dialogue, onSpeak, languageLa
           ? <Pressable accessibilityRole="button" style={styles.revealButton} onPress={() => setRevealed(true)}><Text style={styles.revealText}>نمایش پاسخ نمونه</Text></Pressable>
           : (!isMyLine || revealed) ? <Pressable accessibilityRole="button" accessibilityLabel={`شنیدن: ${current.text}`} style={styles.soundButton} onPress={() => onSpeak(current.text)}><Volume2 size={17} color={Palette.primary} /><Text style={styles.soundText}>{isMyLine ? 'شنیدن پاسخ' : 'شنیدن طرف مقابل'}</Text></Pressable> : null}
         {isMyLine && revealed && locale && !productiveMode ? <SpeakCheck key={`${index}-${current.text}`} text={current.text} locale={locale} accent={Palette.success} /> : null}
+        </>}
       </View>}
-      {isMyLine && !revealed && !(productiveMode && attempted) ? null : index < lines.length - 1
+      {isChoice || (isMyLine && !revealed && !(productiveMode && attempted)) ? null : index < lines.length - 1
         ? <Pressable accessibilityRole="button" style={styles.nextButton} onPress={advance}><Text style={styles.nextText}>{isMyLine ? 'گفتم؛ ادامه' : 'ادامهٔ گفت‌وگو'}</Text><ChevronLeft size={18} color="#FFFFFF" /></Pressable>
         : <>
             {canBranch ? <Pressable accessibilityRole="button" style={styles.branchButton} onPress={restartOtherPath}><GitBranch size={16} color="#FFFFFF" /><Text style={styles.branchButtonText}>{hasBranch ? 'دوباره، مسیر اصلی' : 'دوباره، با سؤال غیرمنتظره'}</Text></Pressable> : null}
@@ -198,6 +238,9 @@ const styles = StyleSheet.create({
   speaker: { fontFamily: Typography.fontFamily, fontSize: 11, color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
   target: { fontFamily: 'Times New Roman', fontSize: 16, fontWeight: '800', lineHeight: 27, color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
   persian: { fontFamily: Typography.fontFamily, fontSize: 14, lineHeight: 23, color: Palette.text, textAlign: 'right', writingDirection: 'rtl' },
+  choiceButton: { borderWidth: 1, borderColor: '#C4B5FD', backgroundColor: '#FFFFFF', borderRadius: 12, padding: 11, gap: 3 },
+  choiceText: { fontFamily: 'Times New Roman', fontSize: 15, fontWeight: '800', lineHeight: 24, color: Palette.ink, textAlign: 'right', writingDirection: 'ltr' },
+  choiceFa: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl' },
   hint: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: Palette.muted, textAlign: 'right', writingDirection: 'rtl' },
   soundButton: { alignSelf: 'flex-start', minHeight: 34, flexDirection: 'row-reverse', alignItems: 'center', gap: 5 },
   soundText: { fontFamily: Typography.fontFamily, fontSize: 12, color: Palette.primary, writingDirection: 'rtl' },
