@@ -1,5 +1,5 @@
-import React, { createContext, forwardRef, useState } from 'react';
-import { ScrollView, View, useWindowDimensions, type ScrollViewProps } from 'react-native';
+import React, { createContext, forwardRef, useEffect, useRef, useState } from 'react';
+import { Platform, ScrollView, View, useWindowDimensions, type ScrollViewProps } from 'react-native';
 
 /**
  * Lesson pages render at a slightly lower "resolution" on phones: the whole
@@ -24,14 +24,31 @@ export const FitScrollView = forwardRef<ScrollView, FitScrollViewProps>(function
   const scale = windowWidth >= WIDE_BREAKPOINT ? 1 : phoneScale;
   const [width, setWidth] = useState(0);
   const [natural, setNatural] = useState(0);
+  const naturalRef = useRef(0);
+  naturalRef.current = natural;
+  const innerRef = useRef<View>(null);
   const ready = scale < 1 && width > 0;
+  const applyNatural = (h: number) => { if (Math.abs(h - naturalRef.current) >= 1) setNatural(h); };
+  // react-native-web does not deliver onLayout for this absolutely positioned, transformed box, so on web the
+  // natural (unscaled) height is observed directly; without it the scaled content sat ~120px too low.
+  useEffect(() => {
+    if (Platform.OS !== 'web' || !ready) return;
+    const node = innerRef.current as unknown as HTMLElement | null;
+    if (!node || typeof ResizeObserver === 'undefined') return;
+    const update = () => applyNatural(node.offsetHeight);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [ready]);
 
   return (
     <ScrollView ref={ref} {...props} onLayout={event => { onLayout?.(event); setWidth(event.nativeEvent.layout.width); }}>
       {ready ? (
         <View style={{ width, height: natural ? natural * scale : undefined, overflow: 'visible' }}>
           <View
-            onLayout={event => { const h = event.nativeEvent.layout.height; if (Math.abs(h - natural) >= 1) setNatural(h); }}
+            ref={innerRef}
+            onLayout={event => applyNatural(event.nativeEvent.layout.height)}
             style={{
               // Anchored explicitly at the left edge: the inner box is wider than its parent, and on web with an
               // RTL document a wider in-flow child overflows to the LEFT, which shifted every lesson page sideways.

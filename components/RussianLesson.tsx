@@ -58,14 +58,24 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
   const stageOffsetRef = useRef(0);
   const scrollKey = stage === 1 ? sentenceIndex : -1;
   const contentOffsetRef = useRef(0);
+  /** Header height (brand row, hero, stepper); it is also the room kept below the content so a short stage can still scroll to the top edge. */
+  const [headerSpacer, setHeaderSpacer] = useState(0);
   useEffect(() => {
     // After «ادامه» the page jumps past the lesson header so the stage content starts at the top of the screen
     // (same for every stage; the sentence stage additionally targets the current sentence block).
-    const target = () => Math.max(0, lessonScrollOffset(contentOffsetRef.current + (stage === 1 ? stageOffsetRef.current : 0), Dimensions.get('window').width) - 8);
+    const target = () => Math.max(0, lessonScrollOffset(contentOffsetRef.current + (stage === 1 ? stageOffsetRef.current : 0), Dimensions.get('window').width));
     const first = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: target(), animated: true }), 10);
     const second = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: target(), animated: true }), 260);
     return () => { clearTimeout(first); clearTimeout(second); };
   }, [stage, scrollKey]);
+  // The header re-measures shortly after a stage change (its labels change); follow it so the page still lands on the content.
+  const stageChangedAt = useRef(0);
+  useEffect(() => { stageChangedAt.current = Date.now(); }, [stage, scrollKey]);
+  useEffect(() => {
+    if (Date.now() - stageChangedAt.current > 3000) return;
+    const handle = setTimeout(() => lessonScrollRef.current?.scrollTo({ y: Math.max(0, lessonScrollOffset(contentOffsetRef.current + (stage === 1 ? stageOffsetRef.current : 0), Dimensions.get('window').width)), animated: true }), 10);
+    return () => clearTimeout(handle);
+  }, [headerSpacer, stage]);
   const [revealed, setRevealed] = useState(false);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [showCheckAnswers, setShowCheckAnswers] = useState(false);
@@ -274,6 +284,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
   return (
     <View style={styles.root}>
       <FitScrollView ref={lessonScrollRef} variant={stage === 6 ? 'classic' : 'default'} style={styles.lessonScroll} contentContainerStyle={styles.lessonScrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <View onLayout={event => { const h = event.nativeEvent.layout.height; contentOffsetRef.current = h; setHeaderSpacer(Math.round(h)); }}>
       <View style={styles.brandRow}><MiloGlobeHeadphoneMark size={48} /><Pressable accessibilityRole="button" accessibilityLabel="بازگشت" style={styles.back} onPress={() => router.back()}><ArrowRight size={19} color="#4F438D" strokeWidth={2.4} /></Pressable></View>
       <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[courseLevel.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.header}>
         <View style={styles.headerTop}>
@@ -295,7 +306,8 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
       </View>
 
       {!!(sessionError || speechError) && <Text accessibilityRole="alert" style={styles.error}>{sessionError || speechError}</Text>}
-      <View style={styles.content} onLayout={event => { contentOffsetRef.current = event.nativeEvent.layout.y; }}>
+      </View>
+      <View style={styles.content}>
         {stage === 0 && <View style={styles.centerStage}>
           <View style={styles.bigIcon}><Sparkles size={34} color={Palette.warning} /></View>
           <Text style={styles.stageEyebrow}>موقعیت واقعی</Text>
@@ -417,6 +429,7 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
         {!!(sessionError || completionError) && <Text accessibilityRole="alert" style={styles.error}>{sessionError || completionError}</Text>}
         {sessionError ? <Pressable accessibilityRole="button" style={styles.retrySaveButton} onPress={() => setSaveRetry(value => value + 1)}><Text style={styles.retrySaveText}>تلاش دوباره برای ذخیرهٔ جلسه</Text></Pressable> : null}
       </View>
+        <View style={{ height: headerSpacer }} />
       </FitScrollView>
 
       <View style={styles.footer}>
