@@ -1,0 +1,1130 @@
+{
+ "schema": 1,
+ "language": "ru",
+ "band": "A2",
+ "version": 1,
+ "generatedAt": "2026-11-15",
+ "source": "factory v1 · automatic gates · 10% sample review",
+ "sentences": [
+  {
+   "id": "ru-a2-001",
+   "text": "Может, пойдём в кафе?",
+   "fa": "شاید برویم کافه؟",
+   "pronunciation": "MÓ-zhit, pay-DYÓM f ka-FÉ",
+   "pattern": "Может, <фраза>?",
+   "targetWords": [
+    "может"
+   ]
+  },
+  {
+   "id": "ru-a2-002",
+   "text": "Он также работает по субботам.",
+   "fa": "او شنبه‌ها هم کار می‌کند.",
+   "pronunciation": "on TÁK-zhe ra-BÓ-ta-yit pa su-BÓ-tam",
+   "pattern": "<лицо> также <глагол>.",
+   "targetWords": [
+    "также"
+   ]
+  },
+  {
+   "id": "ru-a2-003",
+   "text": "Я хотел бы быть врачом.",
+   "fa": "دوست داشتم پزشک باشم.",
+   "pronunciation": "ya kha-TYÉL by byt' vra-CHÓM",
+   "pattern": "Я хотел бы быть <твор.>.",
+   "targetWords": [
+    "быть"
+   ]
+  },
+  {
+   "id": "ru-a2-004",
+   "text": "Мы живём под Москвой.",
+   "fa": "ما نزدیک مسکو زندگی می‌کنیم.",
+   "pronunciation": "my zhi-VYÓM pad mask-VÓY",
+   "pattern": "Мы живём под <твор.>.",
+   "targetWords": [
+    "под"
+   ]
+  },
+  {
+   "id": "ru-a2-005",
+   "text": "Даже летом здесь холодно.",
+   "fa": "حتی تابستان هم اینجا سرد است.",
+   "pronunciation": "DÁ-zhe LYÉ-tam zdyes' KHÓ-lad-na",
+   "pattern": "Даже <время> <фраза>.",
+   "targetWords": [
+    "даже"
+   ]
+  },
+  {
+   "id": "ru-a2-006",
+   "text": "Просто скажи правду.",
+   "fa": "فقط راستش را بگو.",
+   "pronunciation": "PRÓS-ta ska-ZHÍ PRÁV-du",
+   "pattern": "Просто <повелит.>.",
+   "targetWords": [
+    "просто"
+   ]
+  },
+  {
+   "id": "ru-a2-007",
+   "text": "После этого мы пошли домой.",
+   "fa": "بعد از آن به خانه رفتیم.",
+   "pronunciation": "PÓS-li É-ta-va my pash-LÍ da-MÓY",
+   "pattern": "После этого <фраза>.",
+   "targetWords": [
+    "этого"
+   ]
+  },
+  {
+   "id": "ru-a2-008",
+   "text": "Более того, он опоздал.",
+   "fa": "از آن گذشته، او دیر کرد.",
+   "pronunciation": "BÓ-li-ye ta-VÓ, on a-paz-DÁL",
+   "pattern": "Более того, <фраза>.",
+   "targetWords": [
+    "более"
+   ]
+  },
+  {
+   "id": "ru-a2-009",
+   "text": "Я ничего ни у кого не брал.",
+   "fa": "من از هیچ‌کس چیزی نگرفتم.",
+   "pronunciation": "ya ni-chi-VÓ ni u ka-VÓ ni bral",
+   "pattern": "Я ничего ни у кого не <глагол>.",
+   "targetWords": [
+    "ни"
+   ]
+  },
+  {
+   "id": "ru-a2-010",
+   "text": "Он человек слова.",
+   "fa": "او آدم قول و قرار است.",
+   "pronunciation": "on chi-la-VYÉK SLÓ-va",
+   "pattern": "<лицо> человек <род.>.",
+   "targetWords": [
+    "человек"
+   ]
+  },
+  {
+   "id": "ru-a2-011",
+   "text": "Спроси, открыт ли магазин.",
+   "fa": "بپرس مغازه باز است یا نه.",
+   "pronunciation": "spra-SÍ, at-KRÝT li ma-ga-ZÍN",
+   "pattern": "Спроси, <прил.> ли <сущ.>.",
+   "targetWords": [
+    "ли"
+   ]
+  },
+  {
+   "id": "ru-a2-012",
+   "text": "Это лучший ресторан из всех.",
+   "fa": "این بهترین رستوران از همه است.",
+   "pronunciation": "É-ta LÚ-chshiy ris-ta-RÁN is fsyekh",
+   "pattern": "Это <превосх.> из всех.",
+   "targetWords": [
+    "всех"
+   ]
+  },
+  {
+   "id": "ru-a2-013",
+   "text": "Больше всего я люблю лето.",
+   "fa": "بیشتر از همه تابستان را دوست دارم.",
+   "pronunciation": "BÓL'-she fsi-VÓ ya lyub-LYÚ LYÉ-ta",
+   "pattern": "Больше всего я люблю <вин.>.",
+   "targetWords": [
+    "всего"
+   ]
+  },
+  {
+   "id": "ru-a2-014",
+   "text": "Ему нужно отдохнуть.",
+   "fa": "او باید استراحت کند.",
+   "pronunciation": "yi-MÚ NÚZH-na a-dakh-NÚT'",
+   "pattern": "Ему нужно <инф.>.",
+   "targetWords": [
+    "ему"
+   ]
+  },
+  {
+   "id": "ru-a2-015",
+   "text": "Для них это важно.",
+   "fa": "برای آن‌ها این مهم است.",
+   "pronunciation": "dlya nikh É-ta VÁZH-na",
+   "pattern": "Для них это <прил.>.",
+   "targetWords": [
+    "них"
+   ]
+  },
+  {
+   "id": "ru-a2-016",
+   "text": "Мне тоже так кажется.",
+   "fa": "به نظر من هم همین‌طور است.",
+   "pronunciation": "mnye TÓ-zhe tak KÁ-zhit-sya",
+   "pattern": "Мне тоже так кажется.",
+   "targetWords": [
+    "тоже"
+   ]
+  },
+  {
+   "id": "ru-a2-017",
+   "text": "Он работает в области медицины.",
+   "fa": "او در حوزهٔ پزشکی کار می‌کند.",
+   "pronunciation": "on ra-BÓ-ta-yit v ÓB-las-ti mi-di-TSÝ-ny",
+   "pattern": "<лицо> работает в области <род.>.",
+   "targetWords": [
+    "области"
+   ]
+  },
+  {
+   "id": "ru-a2-018",
+   "text": "Это лучший день в моей жизни.",
+   "fa": "این بهترین روز زندگی من است.",
+   "pronunciation": "É-ta LÚ-chshiy dyen' v ma-YÉY ZHÍZ-ni",
+   "pattern": "Это <превосх.> в моей жизни.",
+   "targetWords": [
+    "жизни"
+   ]
+  },
+  {
+   "id": "ru-a2-019",
+   "text": "Я им очень благодарен.",
+   "fa": "خیلی از آن‌ها ممنونم.",
+   "pronunciation": "ya im Ó-chin' bla-ga-DÁ-rin",
+   "pattern": "Я им очень благодарен.",
+   "targetWords": [
+    "им"
+   ]
+  },
+  {
+   "id": "ru-a2-020",
+   "text": "Между нами говоря, он прав.",
+   "fa": "بین خودمان باشد، حق با اوست.",
+   "pronunciation": "MYÉZH-du NÁ-mi ga-va-RYÁ, on praf",
+   "pattern": "Между нами говоря, <фраза>.",
+   "targetWords": [
+    "между"
+   ]
+  },
+  {
+   "id": "ru-a2-021",
+   "text": "Я не ожидал такой погоды.",
+   "fa": "انتظار چنین هوایی را نداشتم.",
+   "pronunciation": "ya ni a-zhi-DÁL ta-KÓY pa-GÓ-dy",
+   "pattern": "Я не ожидал такой <род.>.",
+   "targetWords": [
+    "такой"
+   ]
+  },
+  {
+   "id": "ru-a2-022",
+   "text": "Однако это было нелегко.",
+   "fa": "با این حال، آسان نبود.",
+   "pronunciation": "ad-NÁ-ka É-ta BÝ-la ni-lik-KÓ",
+   "pattern": "Однако <фраза>.",
+   "targetWords": [
+    "однако"
+   ]
+  },
+  {
+   "id": "ru-a2-023",
+   "text": "Люди часто спешат.",
+   "fa": "مردم اغلب عجله دارند.",
+   "pronunciation": "LYÚ-di CHÁS-ta spi-SHÁT",
+   "pattern": "Люди часто <глагол>.",
+   "targetWords": [
+    "люди"
+   ]
+  },
+  {
+   "id": "ru-a2-024",
+   "text": "Тут что-то не так.",
+   "fa": "اینجا یک چیزی درست نیست.",
+   "pronunciation": "tut SHTÓ-ta ni tak",
+   "pattern": "Тут что-то не так.",
+   "targetWords": [
+    "тут"
+   ]
+  },
+  {
+   "id": "ru-a2-025",
+   "text": "Я давно её не видел.",
+   "fa": "خیلی وقت است او را ندیده‌ام.",
+   "pronunciation": "ya dav-NÓ yi-YÓ ni VÍ-dil",
+   "pattern": "Я давно её не <глагол>.",
+   "targetWords": [
+    "её"
+   ]
+  },
+  {
+   "id": "ru-a2-026",
+   "text": "Жизнь в деревне спокойная.",
+   "fa": "زندگی در روستا آرام است.",
+   "pronunciation": "zhizn' v di-RYÉV-nye spa-KÓY-na-ya",
+   "pattern": "Жизнь в <предл.> <прил.>.",
+   "targetWords": [
+    "жизнь"
+   ]
+  },
+  {
+   "id": "ru-a2-027",
+   "text": "Нам повезло с погодой.",
+   "fa": "با هوا شانس آوردیم.",
+   "pronunciation": "nam pa-viz-LÓ s pa-GÓ-day",
+   "pattern": "Нам повезло с <твор.>.",
+   "targetWords": [
+    "нам"
+   ]
+  },
+  {
+   "id": "ru-a2-028",
+   "text": "Я прожил там несколько лет.",
+   "fa": "چند سال آنجا زندگی کردم.",
+   "pronunciation": "ya pra-ZHÍL tam NYÉ-skal'-ka lyet",
+   "pattern": "Я прожил там несколько лет.",
+   "targetWords": [
+    "несколько"
+   ]
+  },
+  {
+   "id": "ru-a2-029",
+   "text": "Она гордится своей работой.",
+   "fa": "او به کارش افتخار می‌کند.",
+   "pronunciation": "a-NÁ gar-DÍT-sya sva-YÉY ra-BÓ-tay",
+   "pattern": "Она гордится своей <твор.>.",
+   "targetWords": [
+    "своей"
+   ]
+  },
+  {
+   "id": "ru-a2-030",
+   "text": "Врач сказал больше отдыхать.",
+   "fa": "دکتر گفت بیشتر استراحت کنم.",
+   "pronunciation": "vrach ska-ZÁL BÓL'-she at-dy-KHÁT'",
+   "pattern": "<лицо> сказал <инф.>.",
+   "targetWords": [
+    "сказал"
+   ]
+  },
+  {
+   "id": "ru-a2-031",
+   "text": "Москва является столицей России.",
+   "fa": "مسکو پایتخت روسیه است.",
+   "pronunciation": "mask-VÁ yiv-LYÁ-yit-sya sta-LÍ-tsey ras-SÍ-i",
+   "pattern": "<сущ.> является <твор.>.",
+   "targetWords": [
+    "является"
+   ]
+  },
+  {
+   "id": "ru-a2-032",
+   "text": "Это лишь начало.",
+   "fa": "این تازه شروع است.",
+   "pronunciation": "É-ta lish na-CHÁ-la",
+   "pattern": "Это лишь <сущ.>.",
+   "targetWords": [
+    "лишь"
+   ]
+  },
+  {
+   "id": "ru-a2-033",
+   "text": "У каждого свои планы.",
+   "fa": "هر کسی برنامه‌های خودش را دارد.",
+   "pronunciation": "u KÁZH-da-va sva-Í PLÁ-ny",
+   "pattern": "У каждого свои <мн.>.",
+   "targetWords": [
+    "свои"
+   ]
+  },
+  {
+   "id": "ru-a2-034",
+   "text": "Я жду одного человека.",
+   "fa": "منتظر یک نفر هستم.",
+   "pronunciation": "ya zhdu ad-na-VÓ chi-la-VYÉ-ka",
+   "pattern": "Я жду <вин.> человека.",
+   "targetWords": [
+    "человека"
+   ]
+  },
+  {
+   "id": "ru-a2-035",
+   "text": "Дело в том, что я заболел.",
+   "fa": "قضیه این است که مریض شدم.",
+   "pronunciation": "DYÉ-la f tom, shto ya za-ba-LYÉL",
+   "pattern": "Дело в том, что <фраза>.",
+   "targetWords": [
+    "дело"
+   ]
+  },
+  {
+   "id": "ru-a2-036",
+   "text": "Как идут дела на работе?",
+   "fa": "کارها در محل کار چطور پیش می‌رود؟",
+   "pronunciation": "kak i-DÚT di-LÁ na ra-BÓ-tye",
+   "pattern": "Как идут дела <место>?",
+   "targetWords": [
+    "дела"
+   ]
+  },
+  {
+   "id": "ru-a2-037",
+   "text": "Я работаю над проектом.",
+   "fa": "روی یک پروژه کار می‌کنم.",
+   "pronunciation": "ya ra-BÓ-ta-yu nat pra-YÉK-tam",
+   "pattern": "Я работаю над <твор.>.",
+   "targetWords": [
+    "над"
+   ]
+  },
+  {
+   "id": "ru-a2-038",
+   "text": "Это тот самый ресторан.",
+   "fa": "این همان رستوران است.",
+   "pronunciation": "É-ta tot SÁ-myy ris-ta-RÁN",
+   "pattern": "Это тот самый <сущ.>.",
+   "targetWords": [
+    "тот"
+   ]
+  },
+  {
+   "id": "ru-a2-039",
+   "text": "Именно это я и хотел сказать.",
+   "fa": "دقیقاً همین را می‌خواستم بگویم.",
+   "pronunciation": "Í-min-na É-ta ya i kha-TYÉL ska-ZÁT'",
+   "pattern": "Именно это я и хотел <инф.>.",
+   "targetWords": [
+    "именно"
+   ]
+  },
+  {
+   "id": "ru-a2-040",
+   "text": "Я хочу всё сделать сегодня.",
+   "fa": "می‌خواهم همه‌چیز را امروز انجام دهم.",
+   "pronunciation": "ya kha-CHÚ fsyo SDYÉ-lat' si-VÓD-nya",
+   "pattern": "Я хочу <инф.> <время>.",
+   "targetWords": [
+    "сделать"
+   ]
+  },
+  {
+   "id": "ru-a2-041",
+   "text": "Конечно, я помогу тебе.",
+   "fa": "البته که کمکت می‌کنم.",
+   "pronunciation": "ka-NYÉSH-na, ya pa-ma-GÚ ti-BYÉ",
+   "pattern": "Конечно, я <глагол>.",
+   "targetWords": [
+    "конечно"
+   ]
+  },
+  {
+   "id": "ru-a2-042",
+   "text": "Это самый большой город мира.",
+   "fa": "این بزرگ‌ترین شهر دنیاست.",
+   "pronunciation": "É-ta SÁ-myy bal'-SHÓY GÓ-rat MÍ-ra",
+   "pattern": "Это самый <прил.> <сущ.> мира.",
+   "targetWords": [
+    "мира"
+   ]
+  },
+  {
+   "id": "ru-a2-043",
+   "text": "Он стал врачом.",
+   "fa": "او پزشک شد.",
+   "pronunciation": "on stal vra-CHÓM",
+   "pattern": "<лицо> стал <твор.>.",
+   "targetWords": [
+    "стал"
+   ]
+  },
+  {
+   "id": "ru-a2-044",
+   "text": "Вечером стало холодно.",
+   "fa": "عصر سرد شد.",
+   "pronunciation": "VYÉ-chi-ram STÁ-la KHÓ-lad-na",
+   "pattern": "<время> стало <наречие>.",
+   "targetWords": [
+    "стало"
+   ]
+  },
+  {
+   "id": "ru-a2-045",
+   "text": "В первый раз было трудно.",
+   "fa": "بار اول سخت بود.",
+   "pronunciation": "f PYÉR-vyy ras BÝ-la TRÚD-na",
+   "pattern": "В первый раз <фраза>.",
+   "targetWords": [
+    "первый"
+   ]
+  },
+  {
+   "id": "ru-a2-046",
+   "text": "Что такое счастье?",
+   "fa": "خوشبختی چیست؟",
+   "pronunciation": "shto ta-KÓ-ye SHÁST'-ye",
+   "pattern": "Что такое <сущ.>?",
+   "targetWords": [
+    "такое"
+   ]
+  },
+  {
+   "id": "ru-a2-047",
+   "text": "Хотя было холодно, мы гуляли.",
+   "fa": "گرچه سرد بود، قدم زدیم.",
+   "pronunciation": "kha-TYÁ BÝ-la KHÓ-lad-na, my gu-LYÁ-li",
+   "pattern": "Хотя <фраза>, <фраза>.",
+   "targetWords": [
+    "хотя"
+   ]
+  },
+  {
+   "id": "ru-a2-048",
+   "text": "Для чего это нужно?",
+   "fa": "این برای چیست؟",
+   "pronunciation": "dlya chi-VÓ É-ta NÚZH-na",
+   "pattern": "Для чего это нужно?",
+   "targetWords": [
+    "чего"
+   ]
+  },
+  {
+   "id": "ru-a2-049",
+   "text": "Ты ведь придёшь?",
+   "fa": "تو که می‌آیی، نه؟",
+   "pronunciation": "ty vyet' pri-DYÓSH",
+   "pattern": "Ты ведь <глагол>?",
+   "targetWords": [
+    "ведь"
+   ]
+  },
+  {
+   "id": "ru-a2-050",
+   "text": "Вообще-то я не голоден.",
+   "fa": "راستش گرسنه نیستم.",
+   "pronunciation": "va-ap-SHÉ-ta ya ni GÓ-la-din",
+   "pattern": "Вообще-то <фраза>.",
+   "targetWords": [
+    "вообще"
+   ]
+  },
+  {
+   "id": "ru-a2-051",
+   "text": "Будут вопросы — звоните.",
+   "fa": "سؤالی بود، زنگ بزنید.",
+   "pronunciation": "BÚ-dut vap-RÓ-sy — zva-NÍ-tye",
+   "pattern": "Будут <мн.> — <повелит.>.",
+   "targetWords": [
+    "будут"
+   ]
+  },
+  {
+   "id": "ru-a2-052",
+   "text": "Вы должны заполнить форму.",
+   "fa": "باید فرم را پر کنید.",
+   "pronunciation": "vy dalzh-NÝ za-PÓL-nit' FÓR-mu",
+   "pattern": "Вы должны <инф.> <вин.>.",
+   "targetWords": [
+    "должны"
+   ]
+  },
+  {
+   "id": "ru-a2-053",
+   "text": "Дети могут играть здесь.",
+   "fa": "بچه‌ها می‌توانند اینجا بازی کنند.",
+   "pronunciation": "DYÉ-ti MÓ-gut ig-RÁT' zdyes'",
+   "pattern": "<мн.> могут <инф.> <место>.",
+   "targetWords": [
+    "могут"
+   ]
+  },
+  {
+   "id": "ru-a2-054",
+   "text": "Никогда не поздно начать.",
+   "fa": "برای شروع هیچ‌وقت دیر نیست.",
+   "pronunciation": "ni-kag-DÁ ni PÓZ-na na-CHÁT'",
+   "pattern": "Никогда не поздно <инф.>.",
+   "targetWords": [
+    "никогда"
+   ]
+  },
+  {
+   "id": "ru-a2-055",
+   "text": "Он сам всё приготовил.",
+   "fa": "خودش همه‌چیز را آماده کرد.",
+   "pronunciation": "on sam fsyo pri-ga-TÓ-vil",
+   "pattern": "<лицо> сам <глагол>.",
+   "targetWords": [
+    "сам"
+   ]
+  },
+  {
+   "id": "ru-a2-056",
+   "text": "Я давно не видел своих друзей.",
+   "fa": "خیلی وقت است دوستانم را ندیده‌ام.",
+   "pronunciation": "ya dav-NÓ ni VÍ-dil sva-ÍKH dru-ZYÉY",
+   "pattern": "Я давно не видел своих <род. мн.>.",
+   "targetWords": [
+    "своих"
+   ]
+  },
+  {
+   "id": "ru-a2-057",
+   "text": "Деньги — не главное.",
+   "fa": "پول مهم‌ترین چیز نیست.",
+   "pronunciation": "DYÉN'-gi ni GLÁV-na-ye",
+   "pattern": "<сущ.> — не главное.",
+   "targetWords": [
+    "деньги"
+   ]
+  },
+  {
+   "id": "ru-a2-058",
+   "text": "Не думай о других.",
+   "fa": "به دیگران فکر نکن.",
+   "pronunciation": "ni DÚ-may a dru-GÍKH",
+   "pattern": "Не думай о других.",
+   "targetWords": [
+    "других"
+   ]
+  },
+  {
+   "id": "ru-a2-059",
+   "text": "Я почти ничего не ел.",
+   "fa": "تقریباً هیچ چیزی نخوردم.",
+   "pronunciation": "ya pach-TÍ ni-chi-VÓ ni yel",
+   "pattern": "Я почти ничего не <глагол>.",
+   "targetWords": [
+    "почти"
+   ]
+  },
+  {
+   "id": "ru-a2-060",
+   "text": "Я жду своего друга.",
+   "fa": "منتظر دوستم هستم.",
+   "pronunciation": "ya zhdu sva-yi-VÓ DRÚ-ga",
+   "pattern": "Я жду своего <род.>.",
+   "targetWords": [
+    "своего"
+   ]
+  },
+  {
+   "id": "ru-a2-061",
+   "text": "Каждый выбирает свой путь.",
+   "fa": "هر کسی راه خودش را انتخاب می‌کند.",
+   "pronunciation": "KÁZH-dyy vy-bi-RÁ-yit svoy put'",
+   "pattern": "Каждый выбирает свой <вин.>.",
+   "targetWords": [
+    "свой"
+   ]
+  },
+  {
+   "id": "ru-a2-062",
+   "text": "Большая часть времени ушла на дорогу.",
+   "fa": "بیشتر زمان در راه گذشت.",
+   "pronunciation": "bal'-SHÁ-ya chast' VRYÉ-mi-ni ush-LÁ na da-RÓ-gu",
+   "pattern": "Большая часть <род.> <глагол>.",
+   "targetWords": [
+    "часть"
+   ]
+  },
+  {
+   "id": "ru-a2-063",
+   "text": "Через двух остановок выходите.",
+   "fa": "دو ایستگاه بعد پیاده شوید.",
+   "pronunciation": "CHÉ-ris dvukh as-ta-NÓ-vak vy-kha-DÍ-tye",
+   "pattern": "Через <число> остановок выходите.",
+   "targetWords": [
+    "двух"
+   ]
+  },
+  {
+   "id": "ru-a2-064",
+   "text": "Автобус должен прийти в пять.",
+   "fa": "اتوبوس باید ساعت پنج برسد.",
+   "pronunciation": "af-TÓ-bus DÓL-zhin priy-TÍ f pyat'",
+   "pattern": "<сущ.> должен <инф.> в <время>.",
+   "targetWords": [
+    "должен"
+   ]
+  },
+  {
+   "id": "ru-a2-065",
+   "text": "Кроме того, это дорого.",
+   "fa": "به‌علاوه، گران است.",
+   "pronunciation": "KRÓ-mye ta-VÓ, É-ta DÓ-ra-ga",
+   "pattern": "Кроме того, <фраза>.",
+   "targetWords": [
+    "кроме"
+   ]
+  },
+  {
+   "id": "ru-a2-066",
+   "text": "В связи с этим я не приду.",
+   "fa": "در این رابطه، من نمی‌آیم.",
+   "pronunciation": "f svya-ZÍ s É-tim ya ni pri-DÚ",
+   "pattern": "В связи с этим <фраза>.",
+   "targetWords": [
+    "связи"
+   ]
+  },
+  {
+   "id": "ru-a2-067",
+   "text": "Здесь нет связи.",
+   "fa": "اینجا آنتن نیست.",
+   "pronunciation": "zdyes' nyet SVYÁ-zi",
+   "pattern": "Здесь нет связи.",
+   "targetWords": [
+    "связи"
+   ]
+  },
+  {
+   "id": "ru-a2-068",
+   "text": "Центр города недалеко.",
+   "fa": "مرکز شهر دور نیست.",
+   "pronunciation": "tsentr GÓ-ra-da ni-da-li-KÓ",
+   "pattern": "Центр города <наречие>.",
+   "targetWords": [
+    "города"
+   ]
+  },
+  {
+   "id": "ru-a2-069",
+   "text": "Каждый из нас устал.",
+   "fa": "هر کدام از ما خسته‌ایم.",
+   "pronunciation": "KÁZH-dyy iz nas us-TÁL",
+   "pattern": "Каждый из нас <прил.>.",
+   "targetWords": [
+    "каждый"
+   ]
+  },
+  {
+   "id": "ru-a2-070",
+   "text": "Кто-нибудь говорит по-английски?",
+   "fa": "کسی انگلیسی بلد است؟",
+   "pronunciation": "KTÓ-ni-but' ga-va-RÍT pa-an-GLÍY-ski",
+   "pattern": "Кто-нибудь <глагол>?",
+   "targetWords": [
+    "нибудь"
+   ]
+  },
+  {
+   "id": "ru-a2-071",
+   "text": "Расскажи что-нибудь интересное.",
+   "fa": "یک چیز جالب تعریف کن.",
+   "pronunciation": "ras-ska-ZHÍ SHTÓ-ni-but' in-ti-RYÉS-na-ye",
+   "pattern": "Расскажи что-нибудь <прил.>.",
+   "targetWords": [
+    "нибудь"
+   ]
+  },
+  {
+   "id": "ru-a2-072",
+   "text": "В любом случае, я приду.",
+   "fa": "در هر صورت می‌آیم.",
+   "pronunciation": "v lyu-BÓM SLÚ-cha-ye, ya pri-DÚ",
+   "pattern": "В любом случае, <фраза>.",
+   "targetWords": [
+    "случае"
+   ]
+  },
+  {
+   "id": "ru-a2-073",
+   "text": "В этом случае я дома.",
+   "fa": "در این صورت خانه‌ام.",
+   "pronunciation": "v É-tam SLÚ-cha-ye ya DÓ-ma",
+   "pattern": "В этом случае <фраза>.",
+   "targetWords": [
+    "случае"
+   ]
+  },
+  {
+   "id": "ru-a2-074",
+   "text": "Среди гостей были мои друзья.",
+   "fa": "میان مهمان‌ها دوستانم بودند.",
+   "pronunciation": "sri-DÍ gas-TYÉY BÝ-li ma-Í druz'-YÁ",
+   "pattern": "Среди <род. мн.> были <мн.>.",
+   "targetWords": [
+    "среди"
+   ]
+  },
+  {
+   "id": "ru-a2-075",
+   "text": "Такие вещи случаются.",
+   "fa": "این‌جور چیزها پیش می‌آید.",
+   "pronunciation": "ta-KÍ-ye VYÉ-shi slu-CHÁ-yut-sya",
+   "pattern": "Такие <мн.> случаются.",
+   "targetWords": [
+    "такие"
+   ]
+  },
+  {
+   "id": "ru-a2-076",
+   "text": "Я не знаю этих людей.",
+   "fa": "این آدم‌ها را نمی‌شناسم.",
+   "pronunciation": "ya ni ZNÁ-yu É-tikh lyu-DYÉY",
+   "pattern": "Я не знаю этих <род. мн.>.",
+   "targetWords": [
+    "этих"
+   ]
+  },
+  {
+   "id": "ru-a2-077",
+   "text": "Россия — большая страна.",
+   "fa": "روسیه کشور بزرگی است.",
+   "pronunciation": "ras-SÍ-ya bal'-SHÁ-ya stra-NÁ",
+   "pattern": "<страна> — <прил.> страна.",
+   "targetWords": [
+    "россия"
+   ]
+  },
+  {
+   "id": "ru-a2-078",
+   "text": "Я этим не занимаюсь.",
+   "fa": "من به این کار نمی‌پردازم.",
+   "pronunciation": "ya É-tim ni za-ni-MÁ-yus'",
+   "pattern": "Я этим не занимаюсь.",
+   "targetWords": [
+    "этим"
+   ]
+  },
+  {
+   "id": "ru-a2-079",
+   "text": "Другие уже ушли.",
+   "fa": "بقیه دیگر رفته‌اند.",
+   "pronunciation": "dru-GÍ-ye u-ZHÉ ush-LÍ",
+   "pattern": "Другие уже <глагол>.",
+   "targetWords": [
+    "другие"
+   ]
+  },
+  {
+   "id": "ru-a2-080",
+   "text": "Я с ней согласен.",
+   "fa": "با او موافقم.",
+   "pronunciation": "ya s nyey sag-LÁ-sin",
+   "pattern": "Я с ней согласен.",
+   "targetWords": [
+    "ней"
+   ]
+  },
+  {
+   "id": "ru-a2-081",
+   "text": "Я пойду с ним.",
+   "fa": "با او می‌روم.",
+   "pronunciation": "ya pay-DÚ s nim",
+   "pattern": "Я пойду с ним.",
+   "targetWords": [
+    "ним"
+   ]
+  },
+  {
+   "id": "ru-a2-082",
+   "text": "Либо сегодня, либо никогда.",
+   "fa": "یا امروز، یا هیچ‌وقت.",
+   "pronunciation": "LÍ-ba si-VÓD-nya, LÍ-ba ni-kag-DÁ",
+   "pattern": "Либо <А>, либо <Б>.",
+   "targetWords": [
+    "либо"
+   ]
+  },
+  {
+   "id": "ru-a2-083",
+   "text": "Она живёт одна.",
+   "fa": "او تنها زندگی می‌کند.",
+   "pronunciation": "a-NÁ zhi-VYÓT ad-NÁ",
+   "pattern": "Она живёт одна.",
+   "targetWords": [
+    "одна"
+   ]
+  },
+  {
+   "id": "ru-a2-084",
+   "text": "Ей нужно позвонить.",
+   "fa": "باید به او زنگ زد.",
+   "pronunciation": "yey NÚZH-na paz-va-NÍT'",
+   "pattern": "Ей нужно <инф.>.",
+   "targetWords": [
+    "ей"
+   ]
+  },
+  {
+   "id": "ru-a2-085",
+   "text": "Я люблю истории о жизни.",
+   "fa": "داستان‌های زندگی را دوست دارم.",
+   "pronunciation": "ya lyub-LYÚ is-TÓ-ri-i a ZHÍZ-ni",
+   "pattern": "Я люблю истории о <предл.>.",
+   "targetWords": [
+    "истории"
+   ]
+  },
+  {
+   "id": "ru-a2-086",
+   "text": "Кого ты ждёшь?",
+   "fa": "منتظر کی هستی؟",
+   "pronunciation": "ka-VÓ ty zhdyosh",
+   "pattern": "Кого ты ждёшь?",
+   "targetWords": [
+    "кого"
+   ]
+  },
+  {
+   "id": "ru-a2-087",
+   "text": "Никто не ответил.",
+   "fa": "هیچ‌کس جواب نداد.",
+   "pronunciation": "nik-TÓ ni at-VYÉ-til",
+   "pattern": "Никто не <глагол>.",
+   "targetWords": [
+    "никто"
+   ]
+  },
+  {
+   "id": "ru-a2-088",
+   "text": "С одной стороны, это дорого.",
+   "fa": "از یک طرف، گران است.",
+   "pronunciation": "s ad-NÓY sta-ra-NÝ, É-ta DÓ-ra-ga",
+   "pattern": "С одной стороны, <фраза>.",
+   "targetWords": [
+    "стороны"
+   ]
+  },
+  {
+   "id": "ru-a2-089",
+   "text": "Таким образом, мы успели.",
+   "fa": "به این ترتیب به‌موقع رسیدیم.",
+   "pronunciation": "ta-KÍM ÓB-ra-zam, my us-PYÉ-li",
+   "pattern": "Таким образом, <фраза>.",
+   "targetWords": [
+    "таким"
+   ]
+  },
+  {
+   "id": "ru-a2-090",
+   "text": "В этой части города тихо.",
+   "fa": "در این بخش شهر آرام است.",
+   "pronunciation": "v É-tay CHÁS-ti GÓ-ra-da TÍ-kha",
+   "pattern": "В этой части <род.> <наречие>.",
+   "targetWords": [
+    "части"
+   ]
+  },
+  {
+   "id": "ru-a2-091",
+   "text": "Это не имеет значения.",
+   "fa": "این اهمیتی ندارد.",
+   "pronunciation": "É-ta ni i-MYÉ-yit zna-CHÉ-ni-ya",
+   "pattern": "Это не имеет значения.",
+   "targetWords": [
+    "имеет"
+   ]
+  },
+  {
+   "id": "ru-a2-092",
+   "text": "Трудно сказать точно.",
+   "fa": "دقیق گفتنش سخت است.",
+   "pronunciation": "TRÚD-na ska-ZÁT' TÓCH-na",
+   "pattern": "Трудно сказать <наречие>.",
+   "targetWords": [
+    "сказать"
+   ]
+  },
+  {
+   "id": "ru-a2-093",
+   "text": "Что ты хочешь этим сказать?",
+   "fa": "منظورت از این چیست؟",
+   "pronunciation": "shto ty KHÓ-chish É-tim ska-ZÁT'",
+   "pattern": "Что ты хочешь этим сказать?",
+   "targetWords": [
+    "сказать"
+   ]
+  },
+  {
+   "id": "ru-a2-094",
+   "text": "Я не понял последние слова.",
+   "fa": "کلمات آخر را نفهمیدم.",
+   "pronunciation": "ya ni PÓ-nyal pas-LYÉD-ni-ye sla-VÁ",
+   "pattern": "Я не понял <прил.> слова.",
+   "targetWords": [
+    "слова"
+   ]
+  },
+  {
+   "id": "ru-a2-095",
+   "text": "Мы помогаем друг другу.",
+   "fa": "ما به هم کمک می‌کنیم.",
+   "pronunciation": "my pa-ma-GÁ-yim druk DRÚ-gu",
+   "pattern": "Мы <глагол> друг другу.",
+   "targetWords": [
+    "друг"
+   ]
+  },
+  {
+   "id": "ru-a2-096",
+   "text": "Например, можно поехать на море.",
+   "fa": "مثلاً می‌شود به دریا رفت.",
+   "pronunciation": "na-pri-MYÉR, MÓZH-na pa-YÉ-khat' na MÓ-rye",
+   "pattern": "Например, можно <инф.>.",
+   "targetWords": [
+    "например"
+   ]
+  },
+  {
+   "id": "ru-a2-097",
+   "text": "Сначала работа, затем отдых.",
+   "fa": "اول کار، بعد استراحت.",
+   "pronunciation": "sna-CHÁ-la ra-BÓ-ta, za-TYÉM ÓD-dykh",
+   "pattern": "Сначала <А>, затем <Б>.",
+   "targetWords": [
+    "затем"
+   ]
+  },
+  {
+   "id": "ru-a2-098",
+   "text": "Каким образом вы приехали?",
+   "fa": "چطور آمدید؟",
+   "pronunciation": "ka-KÍM ÓB-ra-zam vy pri-YÉ-kha-li",
+   "pattern": "Каким образом вы <глагол>?",
+   "targetWords": [
+    "образом"
+   ]
+  },
+  {
+   "id": "ru-a2-099",
+   "text": "Оно мне не нравится.",
+   "fa": "آن را دوست ندارم.",
+   "pronunciation": "a-NÓ mnye ni NRÁ-vit-sya",
+   "pattern": "Оно мне не нравится.",
+   "targetWords": [
+    "оно"
+   ]
+  },
+  {
+   "id": "ru-a2-100",
+   "text": "Расскажи про свою поездку.",
+   "fa": "از سفرت تعریف کن.",
+   "pronunciation": "ras-ska-ZHÍ pra sva-YÚ pa-YÉST-ku",
+   "pattern": "Расскажи про <вин.>.",
+   "targetWords": [
+    "про"
+   ]
+  },
+  {
+   "id": "ru-a2-101",
+   "text": "Я сразу понял.",
+   "fa": "فوراً فهمیدم.",
+   "pronunciation": "ya SRÁ-zu PÓ-nyal",
+   "pattern": "Я сразу <глагол>.",
+   "targetWords": [
+    "сразу"
+   ]
+  },
+  {
+   "id": "ru-a2-102",
+   "text": "Какие у вас планы на выходные?",
+   "fa": "برای آخر هفته چه برنامه‌ای دارید؟",
+   "pronunciation": "ka-KÍ-ye u vas PLÁ-ny na vy-khad-NÝ-ye",
+   "pattern": "Какие у вас планы на <вин.>?",
+   "targetWords": [
+    "какие"
+   ]
+  },
+  {
+   "id": "ru-a2-103",
+   "text": "Здесь нельзя курить.",
+   "fa": "اینجا سیگار کشیدن ممنوع است.",
+   "pronunciation": "zdyes' nil'-ZYÁ ku-RÍT'",
+   "pattern": "Здесь нельзя <инф.>.",
+   "targetWords": [
+    "нельзя"
+   ]
+  },
+  {
+   "id": "ru-a2-104",
+   "text": "Возьми с собой воду.",
+   "fa": "آب با خودت ببر.",
+   "pronunciation": "vaz'-MÍ s sa-BÓY VÓ-du",
+   "pattern": "Возьми с собой <вин.>.",
+   "targetWords": [
+    "собой"
+   ]
+  },
+  {
+   "id": "ru-a2-105",
+   "text": "Я совсем забыл.",
+   "fa": "پاک فراموش کردم.",
+   "pronunciation": "ya saf-SYÉM za-BÝL",
+   "pattern": "Я совсем <глагол>.",
+   "targetWords": [
+    "совсем"
+   ]
+  },
+  {
+   "id": "ru-a2-106",
+   "text": "Это правда или нет?",
+   "fa": "راست است یا نه؟",
+   "pronunciation": "É-ta PRÁV-da Í-li nyet",
+   "pattern": "Это правда или нет?",
+   "targetWords": [
+    "правда"
+   ]
+  },
+  {
+   "id": "ru-a2-107",
+   "text": "Правда, было весело.",
+   "fa": "واقعاً خوش گذشت.",
+   "pronunciation": "PRÁV-da, BÝ-la VYÉ-si-la",
+   "pattern": "Правда, <фраза>.",
+   "targetWords": [
+    "правда"
+   ]
+  },
+  {
+   "id": "ru-a2-108",
+   "text": "Я из другой страны.",
+   "fa": "اهل کشور دیگری هستم.",
+   "pronunciation": "ya iz dru-GÓY stra-NÝ",
+   "pattern": "Я из <прил.> страны.",
+   "targetWords": [
+    "страны"
+   ]
+  },
+  {
+   "id": "ru-a2-109",
+   "text": "Значит, встречаемся в семь.",
+   "fa": "پس ساعت هفت همدیگر را می‌بینیم.",
+   "pronunciation": "ZNÁ-chit, fstri-CHÁ-yim-sya f syem'",
+   "pattern": "Значит, <фраза>.",
+   "targetWords": [
+    "значит"
+   ]
+  },
+  {
+   "id": "ru-a2-110",
+   "text": "Куда ты идёшь?",
+   "fa": "کجا می‌روی؟",
+   "pronunciation": "ku-DÁ ty i-DYÓSH",
+   "pattern": "Куда ты идёшь?",
+   "targetWords": [
+    "куда"
+   ]
+  },
+  {
+   "id": "ru-a2-111",
+   "text": "Те дни были счастливыми.",
+   "fa": "آن روزها شاد بودند.",
+   "pronunciation": "tye dni BÝ-li shis-LÍ-vy-mi",
+   "pattern": "Те <мн.> были <твор. мн.>.",
+   "targetWords": [
+    "те"
+   ]
+  },
+  {
+   "id": "ru-a2-112",
+   "text": "Мы работаем в группах.",
+   "fa": "ما گروهی کار می‌کنیم.",
+   "pronunciation": "my ra-BÓ-ta-yim v GRÚ-pakh",
+   "pattern": "Мы работаем в группах.",
+   "targetWords": [
+    "группы"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1666 @@
+{
+ "schema": 1,
+ "language": "es",
+ "band": "A2",
+ "version": 1,
+ "generatedAt": "2026-11-15",
+ "source": "factory v1 · automatic gates · 10% sample review",
+ "sentences": [
+  {
+   "id": "es-a2-001",
+   "text": "Ya he comido, gracias.",
+   "fa": "دیگر غذا خورده‌ام، ممنون.",
+   "pattern": "Ya he <participio>.",
+   "targetWords": [
+    "ya"
+   ]
+  },
+  {
+   "id": "es-a2-002",
+   "text": "¿Ya estás listo?",
+   "fa": "آماده‌ای دیگر؟",
+   "pattern": "¿Ya estás <adj.>?",
+   "targetWords": [
+    "ya"
+   ]
+  },
+  {
+   "id": "es-a2-003",
+   "text": "Ya no vivo allí.",
+   "fa": "دیگر آنجا زندگی نمی‌کنم.",
+   "pattern": "Ya no <verbo> <lugar>.",
+   "targetWords": [
+    "ya"
+   ]
+  },
+  {
+   "id": "es-a2-004",
+   "text": "Cuando llegas a casa, me llamas.",
+   "fa": "وقتی رسیدی خانه، به من زنگ بزن.",
+   "pattern": "Cuando <frase>, <frase>.",
+   "targetWords": [
+    "cuando"
+   ]
+  },
+  {
+   "id": "es-a2-005",
+   "text": "Cuando era niño, vivía en Madrid.",
+   "fa": "وقتی بچه بودم در مادرید زندگی می‌کردم.",
+   "pattern": "Cuando era <edad>, <frase>.",
+   "targetWords": [
+    "cuando"
+   ]
+  },
+  {
+   "id": "es-a2-006",
+   "text": "Quiero ser médico.",
+   "fa": "می‌خواهم پزشک شوم.",
+   "pattern": "Quiero ser <profesión>.",
+   "targetWords": [
+    "ser"
+   ]
+  },
+  {
+   "id": "es-a2-007",
+   "text": "Puede ser más tarde.",
+   "fa": "شاید دیرتر باشد.",
+   "pattern": "Puede ser <complemento>.",
+   "targetWords": [
+    "ser"
+   ]
+  },
+  {
+   "id": "es-a2-008",
+   "text": "Hablamos sobre el viaje.",
+   "fa": "دربارهٔ سفر صحبت می‌کنیم.",
+   "pattern": "Hablamos sobre <sust.>.",
+   "targetWords": [
+    "sobre"
+   ]
+  },
+  {
+   "id": "es-a2-009",
+   "text": "El libro está sobre la mesa.",
+   "fa": "کتاب روی میز است.",
+   "pattern": "<sust.> está sobre <sust.>.",
+   "targetWords": [
+    "sobre"
+   ]
+  },
+  {
+   "id": "es-a2-010",
+   "text": "Así se hace.",
+   "fa": "این‌طور انجام می‌شود.",
+   "pattern": "Así se <verbo>.",
+   "targetWords": [
+    "así"
+   ]
+  },
+  {
+   "id": "es-a2-011",
+   "text": "No hables así.",
+   "fa": "این‌طوری حرف نزن.",
+   "pattern": "No <verbo> así.",
+   "targetWords": [
+    "así"
+   ]
+  },
+  {
+   "id": "es-a2-012",
+   "text": "El banco está entre la farmacia y el café.",
+   "fa": "بانک بین داروخانه و کافه است.",
+   "pattern": "<lugar> está entre <A> y <B>.",
+   "targetWords": [
+    "entre"
+   ]
+  },
+  {
+   "id": "es-a2-013",
+   "text": "Entre semana trabajo mucho.",
+   "fa": "وسط هفته زیاد کار می‌کنم.",
+   "pattern": "Entre semana <frase>.",
+   "targetWords": [
+    "entre"
+   ]
+  },
+  {
+   "id": "es-a2-014",
+   "text": "Antes era más fácil.",
+   "fa": "قبلاً آسان‌تر بود.",
+   "pattern": "Antes era más <adj.>.",
+   "targetWords": [
+    "era"
+   ]
+  },
+  {
+   "id": "es-a2-015",
+   "text": "Mi abuelo era profesor.",
+   "fa": "پدربزرگم معلم بود.",
+   "pattern": "<persona> era <profesión>.",
+   "targetWords": [
+    "era"
+   ]
+  },
+  {
+   "id": "es-a2-016",
+   "text": "No tengo ni tiempo ni dinero.",
+   "fa": "نه وقت دارم نه پول.",
+   "pattern": "No tengo ni <A> ni <B>.",
+   "targetWords": [
+    "ni"
+   ]
+  },
+  {
+   "id": "es-a2-017",
+   "text": "Esta es la casa donde nací.",
+   "fa": "این خانه‌ای است که در آن به دنیا آمدم.",
+   "pattern": "<sust.> donde <frase>.",
+   "targetWords": [
+    "donde"
+   ]
+  },
+  {
+   "id": "es-a2-018",
+   "text": "¿Dónde quedamos esta tarde?",
+   "fa": "امروز عصر کجا قرار بگذاریم؟",
+   "pattern": "¿Dónde quedamos <tiempo>?",
+   "targetWords": [
+    "donde"
+   ]
+  },
+  {
+   "id": "es-a2-019",
+   "text": "Vivo en la parte vieja de la ciudad.",
+   "fa": "در بخش قدیمی شهر زندگی می‌کنم.",
+   "pattern": "Vivo en la parte <adj.> de <lugar>.",
+   "targetWords": [
+    "parte"
+   ]
+  },
+  {
+   "id": "es-a2-020",
+   "text": "¿De parte de quién?",
+   "fa": "از طرف چه کسی؟",
+   "pattern": "¿De parte de quién?",
+   "targetWords": [
+    "parte"
+   ]
+  },
+  {
+   "id": "es-a2-021",
+   "text": "No es tan difícil.",
+   "fa": "آن‌قدر سخت نیست.",
+   "pattern": "No es tan <adj.>.",
+   "targetWords": [
+    "tan"
+   ]
+  },
+  {
+   "id": "es-a2-022",
+   "text": "Eres tan amable.",
+   "fa": "خیلی مهربانی.",
+   "pattern": "Eres tan <adj.>.",
+   "targetWords": [
+    "tan"
+   ]
+  },
+  {
+   "id": "es-a2-023",
+   "text": "La vida aquí es tranquila.",
+   "fa": "زندگی اینجا آرام است.",
+   "pattern": "La vida <lugar> es <adj.>.",
+   "targetWords": [
+    "vida"
+   ]
+  },
+  {
+   "id": "es-a2-024",
+   "text": "Nunca en mi vida he visto eso.",
+   "fa": "در عمرم چنین چیزی ندیده‌ام.",
+   "pattern": "Nunca en mi vida he <participio>.",
+   "targetWords": [
+    "vida"
+   ]
+  },
+  {
+   "id": "es-a2-025",
+   "text": "Mis padres han llegado.",
+   "fa": "پدر و مادرم رسیده‌اند.",
+   "pattern": "<personas> han <participio>.",
+   "targetWords": [
+    "han"
+   ]
+  },
+  {
+   "id": "es-a2-026",
+   "text": "¿Han llegado ya tus padres?",
+   "fa": "پدر و مادرت رسیده‌اند؟",
+   "pattern": "¿Han <participio> ya <personas>?",
+   "targetWords": [
+    "han"
+   ]
+  },
+  {
+   "id": "es-a2-027",
+   "text": "Siempre llega tarde.",
+   "fa": "او همیشه دیر می‌رسد.",
+   "pattern": "Siempre <verbo> <complemento>.",
+   "targetWords": [
+    "siempre"
+   ]
+  },
+  {
+   "id": "es-a2-028",
+   "text": "Como siempre, café con leche.",
+   "fa": "مثل همیشه، قهوه با شیر.",
+   "pattern": "Como siempre, <sust.>.",
+   "targetWords": [
+    "siempre"
+   ]
+  },
+  {
+   "id": "es-a2-029",
+   "text": "Hay mucha gente en la plaza.",
+   "fa": "آدم زیادی در میدان است.",
+   "pattern": "Hay mucha gente <lugar>.",
+   "targetWords": [
+    "gente"
+   ]
+  },
+  {
+   "id": "es-a2-030",
+   "text": "La gente aquí es muy simpática.",
+   "fa": "مردم اینجا خیلی خوش‌برخوردند.",
+   "pattern": "La gente <lugar> es <adj.>.",
+   "targetWords": [
+    "gente"
+   ]
+  },
+  {
+   "id": "es-a2-031",
+   "text": "Todo el mundo lo sabe.",
+   "fa": "همه این را می‌دانند.",
+   "pattern": "Todo el mundo <verbo>.",
+   "targetWords": [
+    "mundo"
+   ]
+  },
+  {
+   "id": "es-a2-032",
+   "text": "Quiero viajar por el mundo.",
+   "fa": "می‌خواهم دور دنیا سفر کنم.",
+   "pattern": "Quiero viajar por el mundo.",
+   "targetWords": [
+    "mundo"
+   ]
+  },
+  {
+   "id": "es-a2-033",
+   "text": "Les escribí ayer.",
+   "fa": "دیروز برایشان نوشتم.",
+   "pattern": "Les <verbo pasado> <tiempo>.",
+   "targetWords": [
+    "les"
+   ]
+  },
+  {
+   "id": "es-a2-034",
+   "text": "¿Les gusta la comida?",
+   "fa": "غذا را دوست دارند؟",
+   "pattern": "¿Les gusta <sust.>?",
+   "targetWords": [
+    "les"
+   ]
+  },
+  {
+   "id": "es-a2-035",
+   "text": "Otros días trabajo desde casa.",
+   "fa": "روزهای دیگر از خانه کار می‌کنم.",
+   "pattern": "Otros <pl.> <frase>.",
+   "targetWords": [
+    "otros"
+   ]
+  },
+  {
+   "id": "es-a2-036",
+   "text": "Los otros ya se han ido.",
+   "fa": "بقیه دیگر رفته‌اند.",
+   "pattern": "Los otros ya <frase>.",
+   "targetWords": [
+    "otros"
+   ]
+  },
+  {
+   "id": "es-a2-037",
+   "text": "Tengo muchas cosas que hacer.",
+   "fa": "کلی کار دارم.",
+   "pattern": "Tengo muchas cosas que hacer.",
+   "targetWords": [
+    "cosas"
+   ]
+  },
+  {
+   "id": "es-a2-038",
+   "text": "¿Dónde dejo mis cosas?",
+   "fa": "وسایلم را کجا بگذارم؟",
+   "pattern": "¿Dónde dejo mis cosas?",
+   "targetWords": [
+    "cosas"
+   ]
+  },
+  {
+   "id": "es-a2-039",
+   "text": "Es una gran ciudad.",
+   "fa": "شهر بزرگی است.",
+   "pattern": "Es una gran <sust.>.",
+   "targetWords": [
+    "gran"
+   ]
+  },
+  {
+   "id": "es-a2-040",
+   "text": "Tengo una gran noticia.",
+   "fa": "یک خبر مهم دارم.",
+   "pattern": "Tengo una gran <sust.>.",
+   "targetWords": [
+    "gran"
+   ]
+  },
+  {
+   "id": "es-a2-041",
+   "text": "Nunca he estado en Sevilla.",
+   "fa": "هیچ‌وقت سویا نرفته‌ام.",
+   "pattern": "Nunca he estado en <lugar>.",
+   "targetWords": [
+    "nunca"
+   ]
+  },
+  {
+   "id": "es-a2-042",
+   "text": "Nunca es tarde para aprender.",
+   "fa": "برای یادگیری هیچ‌وقت دیر نیست.",
+   "pattern": "Nunca es tarde para <verbo>.",
+   "targetWords": [
+    "nunca"
+   ]
+  },
+  {
+   "id": "es-a2-043",
+   "text": "No comas tanto.",
+   "fa": "این‌قدر نخور.",
+   "pattern": "No <verbo> tanto.",
+   "targetWords": [
+    "tanto"
+   ]
+  },
+  {
+   "id": "es-a2-044",
+   "text": "Hace tanto calor hoy.",
+   "fa": "امروز خیلی گرم است.",
+   "pattern": "Hace tanto <sust.> <tiempo>.",
+   "targetWords": [
+    "tanto"
+   ]
+  },
+  {
+   "id": "es-a2-045",
+   "text": "Que sea rápido, por favor.",
+   "fa": "لطفاً سریع باشد.",
+   "pattern": "Que sea <adj.>.",
+   "targetWords": [
+    "sea"
+   ]
+  },
+  {
+   "id": "es-a2-046",
+   "text": "O sea, mañana no vienes.",
+   "fa": "یعنی فردا نمی‌آیی.",
+   "pattern": "O sea, <frase>.",
+   "targetWords": [
+    "sea"
+   ]
+  },
+  {
+   "id": "es-a2-047",
+   "text": "Había mucha cola en el banco.",
+   "fa": "صف طولانی‌ای در بانک بود.",
+   "pattern": "Había <cantidad> <lugar>.",
+   "targetWords": [
+    "había"
+   ]
+  },
+  {
+   "id": "es-a2-048",
+   "text": "No había nadie en casa.",
+   "fa": "کسی خانه نبود.",
+   "pattern": "No había nadie <lugar>.",
+   "targetWords": [
+    "había"
+   ]
+  },
+  {
+   "id": "es-a2-049",
+   "text": "Durante el verano trabajo en un hotel.",
+   "fa": "در تابستان در یک هتل کار می‌کنم.",
+   "pattern": "Durante <tiempo> <frase>.",
+   "targetWords": [
+    "durante"
+   ]
+  },
+  {
+   "id": "es-a2-050",
+   "text": "Llovió durante toda la noche.",
+   "fa": "تمام شب باران بارید.",
+   "pattern": "<verbo> durante <duración>.",
+   "targetWords": [
+    "durante"
+   ]
+  },
+  {
+   "id": "es-a2-051",
+   "text": "Es un lugar muy bonito.",
+   "fa": "جای خیلی قشنگی است.",
+   "pattern": "Es un lugar <adj.>.",
+   "targetWords": [
+    "lugar"
+   ]
+  },
+  {
+   "id": "es-a2-052",
+   "text": "En primer lugar, gracias por venir.",
+   "fa": "اول از همه، ممنون که آمدید.",
+   "pattern": "En primer lugar, <frase>.",
+   "targetWords": [
+    "lugar"
+   ]
+  },
+  {
+   "id": "es-a2-053",
+   "text": "Sólo quiero un vaso de agua.",
+   "fa": "فقط یک لیوان آب می‌خواهم.",
+   "pattern": "Sólo quiero <sust.>.",
+   "targetWords": [
+    "sólo"
+   ]
+  },
+  {
+   "id": "es-a2-054",
+   "text": "Aunque llueva, vamos a salir.",
+   "fa": "حتی اگر باران بیاید، بیرون می‌رویم.",
+   "pattern": "Aunque <frase>, <frase>.",
+   "targetWords": [
+    "aunque"
+   ]
+  },
+  {
+   "id": "es-a2-055",
+   "text": "Me gusta, aunque es caro.",
+   "fa": "دوستش دارم، گرچه گران است.",
+   "pattern": "<frase>, aunque <frase>.",
+   "targetWords": [
+    "aunque"
+   ]
+  },
+  {
+   "id": "es-a2-056",
+   "text": "Estoy en contra de esa idea.",
+   "fa": "با آن ایده مخالفم.",
+   "pattern": "Estoy en contra de <sust.>.",
+   "targetWords": [
+    "contra"
+   ]
+  },
+  {
+   "id": "es-a2-057",
+   "text": "Jugamos contra el equipo de Juan.",
+   "fa": "با تیم خوان بازی می‌کنیم.",
+   "pattern": "Jugamos contra <equipo>.",
+   "targetWords": [
+    "contra"
+   ]
+  },
+  {
+   "id": "es-a2-058",
+   "text": "¿Qué quieres decir?",
+   "fa": "منظورت چیست؟",
+   "pattern": "¿Qué quieres decir?",
+   "targetWords": [
+    "decir"
+   ]
+  },
+  {
+   "id": "es-a2-059",
+   "text": "Es decir, no hay clase mañana.",
+   "fa": "یعنی فردا کلاس نیست.",
+   "pattern": "Es decir, <frase>.",
+   "targetWords": [
+    "decir"
+   ]
+  },
+  {
+   "id": "es-a2-060",
+   "text": "Todas las mesas están ocupadas.",
+   "fa": "همهٔ میزها پر است.",
+   "pattern": "Todas las <pl.> están <adj.>.",
+   "targetWords": [
+    "todas"
+   ]
+  },
+  {
+   "id": "es-a2-061",
+   "text": "Voy todas las semanas.",
+   "fa": "هر هفته می‌روم.",
+   "pattern": "Voy todas las <tiempo>.",
+   "targetWords": [
+    "todas"
+   ]
+  },
+  {
+   "id": "es-a2-062",
+   "text": "De todas formas, te llamo.",
+   "fa": "به هر حال زنگ می‌زنم.",
+   "pattern": "De todas formas, <frase>.",
+   "targetWords": [
+    "forma"
+   ]
+  },
+  {
+   "id": "es-a2-063",
+   "text": "Es la mejor forma de aprender.",
+   "fa": "بهترین روش یادگیری است.",
+   "pattern": "Es la mejor forma de <verbo>.",
+   "targetWords": [
+    "forma"
+   ]
+  },
+  {
+   "id": "es-a2-064",
+   "text": "Ha sido un día largo.",
+   "fa": "روز طولانی‌ای بود.",
+   "pattern": "Ha sido un <sust.> <adj.>.",
+   "targetWords": [
+    "sido"
+   ]
+  },
+  {
+   "id": "es-a2-065",
+   "text": "Ha sido un placer.",
+   "fa": "باعث افتخار بود.",
+   "pattern": "Ha sido un placer.",
+   "targetWords": [
+    "sido"
+   ]
+  },
+  {
+   "id": "es-a2-066",
+   "text": "Estaba muy cansado ayer.",
+   "fa": "دیروز خیلی خسته بودم.",
+   "pattern": "Estaba <adj.> <tiempo>.",
+   "targetWords": [
+    "estaba"
+   ]
+  },
+  {
+   "id": "es-a2-067",
+   "text": "La puerta estaba abierta.",
+   "fa": "در باز بود.",
+   "pattern": "<sust.> estaba <adj.>.",
+   "targetWords": [
+    "estaba"
+   ]
+  },
+  {
+   "id": "es-a2-068",
+   "text": "Prefiero estar en casa.",
+   "fa": "ترجیح می‌دهم خانه باشم.",
+   "pattern": "Prefiero estar <lugar>.",
+   "targetWords": [
+    "estar"
+   ]
+  },
+  {
+   "id": "es-a2-069",
+   "text": "Debe de estar en la oficina.",
+   "fa": "باید در دفتر باشد.",
+   "pattern": "Debe de estar <lugar>.",
+   "targetWords": [
+    "estar"
+   ]
+  },
+  {
+   "id": "es-a2-070",
+   "text": "¿Hay alguien aquí?",
+   "fa": "کسی اینجا هست؟",
+   "pattern": "¿Hay alguien <lugar>?",
+   "targetWords": [
+    "alguien"
+   ]
+  },
+  {
+   "id": "es-a2-071",
+   "text": "Alguien ha llamado para ti.",
+   "fa": "کسی برایت زنگ زده.",
+   "pattern": "Alguien ha <participio> <complemento>.",
+   "targetWords": [
+    "alguien"
+   ]
+  },
+  {
+   "id": "es-a2-072",
+   "text": "¿Quién es ese hombre?",
+   "fa": "آن مرد کیست؟",
+   "pattern": "¿Quién es <sust.>?",
+   "targetWords": [
+    "quién"
+   ]
+  },
+  {
+   "id": "es-a2-073",
+   "text": "Es mi amigo, con quien viajé.",
+   "fa": "دوست من است که با او سفر کردم.",
+   "pattern": "<persona>, con quien <frase>.",
+   "targetWords": [
+    "quien"
+   ]
+  },
+  {
+   "id": "es-a2-074",
+   "text": "He trabajado toda la mañana.",
+   "fa": "تمام صبح کار کردم.",
+   "pattern": "He <participio> toda la <tiempo>.",
+   "targetWords": [
+    "toda"
+   ]
+  },
+  {
+   "id": "es-a2-075",
+   "text": "Toda la familia viene el domingo.",
+   "fa": "کل خانواده یکشنبه می‌آیند.",
+   "pattern": "Toda la <grupo> <verbo>.",
+   "targetWords": [
+    "toda"
+   ]
+  },
+  {
+   "id": "es-a2-076",
+   "text": "En ese caso, mejor mañana.",
+   "fa": "در این صورت، بهتر است فردا.",
+   "pattern": "En ese caso, <frase>.",
+   "targetWords": [
+    "caso"
+   ]
+  },
+  {
+   "id": "es-a2-077",
+   "text": "No le hagas caso.",
+   "fa": "به او محل نگذار.",
+   "pattern": "No le hagas caso.",
+   "targetWords": [
+    "caso"
+   ]
+  },
+  {
+   "id": "es-a2-078",
+   "text": "Me parece buena idea.",
+   "fa": "به نظرم ایدهٔ خوبی است.",
+   "pattern": "Me parece <adj.> <sust.>.",
+   "targetWords": [
+    "parece"
+   ]
+  },
+  {
+   "id": "es-a2-079",
+   "text": "Parece que va a llover.",
+   "fa": "انگار می‌خواهد باران بیاید.",
+   "pattern": "Parece que <frase>.",
+   "targetWords": [
+    "parece"
+   ]
+  },
+  {
+   "id": "es-a2-080",
+   "text": "Espero poder venir.",
+   "fa": "امیدوارم بتوانم بیایم.",
+   "pattern": "Espero poder <verbo>.",
+   "targetWords": [
+    "poder"
+   ]
+  },
+  {
+   "id": "es-a2-081",
+   "text": "Pues no lo sé.",
+   "fa": "خب، نمی‌دانم.",
+   "pattern": "Pues <frase>.",
+   "targetWords": [
+    "pues"
+   ]
+  },
+  {
+   "id": "es-a2-082",
+   "text": "¿Vienes? Pues claro.",
+   "fa": "می‌آیی؟ معلوم است.",
+   "pattern": "¿<pregunta>? Pues claro.",
+   "targetWords": [
+    "pues"
+   ]
+  },
+  {
+   "id": "es-a2-083",
+   "text": "¿De verdad vienes mañana?",
+   "fa": "واقعاً فردا می‌آیی؟",
+   "pattern": "¿De verdad <frase>?",
+   "targetWords": [
+    "verdad"
+   ]
+  },
+  {
+   "id": "es-a2-084",
+   "text": "Hace frío, ¿verdad?",
+   "fa": "سرد است، نه؟",
+   "pattern": "<frase>, ¿verdad?",
+   "targetWords": [
+    "verdad"
+   ]
+  },
+  {
+   "id": "es-a2-085",
+   "text": "Cuéntame la historia.",
+   "fa": "داستان را برایم تعریف کن.",
+   "pattern": "Cuéntame <sust.>.",
+   "targetWords": [
+    "historia"
+   ]
+  },
+  {
+   "id": "es-a2-086",
+   "text": "Es una historia muy larga.",
+   "fa": "داستانش خیلی طولانی است.",
+   "pattern": "Es una historia <adj.>.",
+   "targetWords": [
+    "historia"
+   ]
+  },
+  {
+   "id": "es-a2-087",
+   "text": "Escucho música mientras cocino.",
+   "fa": "وقتی آشپزی می‌کنم موسیقی گوش می‌دهم.",
+   "pattern": "<frase> mientras <frase>.",
+   "targetWords": [
+    "mientras"
+   ]
+  },
+  {
+   "id": "es-a2-088",
+   "text": "Mientras tanto, pon la mesa.",
+   "fa": "در این فاصله میز را بچین.",
+   "pattern": "Mientras tanto, <imperativo>.",
+   "targetWords": [
+    "mientras"
+   ]
+  },
+  {
+   "id": "es-a2-089",
+   "text": "Nadie contesta el teléfono.",
+   "fa": "کسی تلفن را جواب نمی‌دهد.",
+   "pattern": "Nadie <verbo> <sust.>.",
+   "targetWords": [
+    "nadie"
+   ]
+  },
+  {
+   "id": "es-a2-090",
+   "text": "No conozco a nadie aquí.",
+   "fa": "اینجا کسی را نمی‌شناسم.",
+   "pattern": "No conozco a nadie <lugar>.",
+   "targetWords": [
+    "nadie"
+   ]
+  },
+  {
+   "id": "es-a2-091",
+   "text": "Otras veces voy en bici.",
+   "fa": "بعضی وقت‌ها با دوچرخه می‌روم.",
+   "pattern": "Otras veces <frase>.",
+   "targetWords": [
+    "otras"
+   ]
+  },
+  {
+   "id": "es-a2-092",
+   "text": "¿Cuál prefieres, este o ese?",
+   "fa": "کدام را ترجیح می‌دهی، این یا آن؟",
+   "pattern": "¿Cuál prefieres, <A> o <B>?",
+   "targetWords": [
+    "cuál"
+   ]
+  },
+  {
+   "id": "es-a2-093",
+   "text": "Usted debe rellenar este formulario.",
+   "fa": "شما باید این فرم را پر کنید.",
+   "pattern": "Usted debe <verbo> <sust.>.",
+   "targetWords": [
+    "debe"
+   ]
+  },
+  {
+   "id": "es-a2-094",
+   "text": "Debe de ser muy caro.",
+   "fa": "باید خیلی گران باشد.",
+   "pattern": "Debe de ser <adj.>.",
+   "targetWords": [
+    "debe"
+   ]
+  },
+  {
+   "id": "es-a2-095",
+   "text": "Mi madre dijo que no.",
+   "fa": "مادرم گفت نه.",
+   "pattern": "<persona> dijo que <frase>.",
+   "targetWords": [
+    "dijo"
+   ]
+  },
+  {
+   "id": "es-a2-096",
+   "text": "¿Qué te dijo el médico?",
+   "fa": "دکتر به تو چه گفت؟",
+   "pattern": "¿Qué te dijo <persona>?",
+   "targetWords": [
+    "dijo"
+   ]
+  },
+  {
+   "id": "es-a2-097",
+   "text": "¿Qué tipo de música te gusta?",
+   "fa": "چه نوع موسیقی‌ای دوست داری؟",
+   "pattern": "¿Qué tipo de <sust.> te gusta?",
+   "targetWords": [
+    "tipo"
+   ]
+  },
+  {
+   "id": "es-a2-098",
+   "text": "En general, duermo bien.",
+   "fa": "معمولاً خوب می‌خوابم.",
+   "pattern": "En general, <frase>.",
+   "targetWords": [
+    "general"
+   ]
+  },
+  {
+   "id": "es-a2-099",
+   "text": "Mi hermano mayor vive en Chile.",
+   "fa": "برادر بزرگم در شیلی زندگی می‌کند.",
+   "pattern": "Mi <familiar> mayor vive en <lugar>.",
+   "targetWords": [
+    "mayor"
+   ]
+  },
+  {
+   "id": "es-a2-100",
+   "text": "La mayor parte del tiempo trabajo.",
+   "fa": "بیشتر وقت کار می‌کنم.",
+   "pattern": "La mayor parte de <sust.> <frase>.",
+   "targetWords": [
+    "mayor"
+   ]
+  },
+  {
+   "id": "es-a2-101",
+   "text": "Además, es muy barato.",
+   "fa": "به‌علاوه، خیلی ارزان است.",
+   "pattern": "Además, <frase>.",
+   "targetWords": [
+    "además"
+   ]
+  },
+  {
+   "id": "es-a2-102",
+   "text": "Me siento mal hoy.",
+   "fa": "امروز حالم بد است.",
+   "pattern": "Me siento mal <tiempo>.",
+   "targetWords": [
+    "mal"
+   ]
+  },
+  {
+   "id": "es-a2-103",
+   "text": "No está mal.",
+   "fa": "بد نیست.",
+   "pattern": "No está mal.",
+   "targetWords": [
+    "mal"
+   ]
+  },
+  {
+   "id": "es-a2-104",
+   "text": "Según el mapa, está cerca.",
+   "fa": "طبق نقشه نزدیک است.",
+   "pattern": "Según <fuente>, <frase>.",
+   "targetWords": [
+    "según"
+   ]
+  },
+  {
+   "id": "es-a2-105",
+   "text": "Cualquier día es bueno para mí.",
+   "fa": "هر روزی برای من خوب است.",
+   "pattern": "Cualquier <sust.> es <adj.>.",
+   "targetWords": [
+    "cualquier"
+   ]
+  },
+  {
+   "id": "es-a2-106",
+   "text": "Fueron unos días muy buenos.",
+   "fa": "روزهای خیلی خوبی بود.",
+   "pattern": "Fueron unos <pl.> <adj.>.",
+   "targetWords": [
+    "fueron"
+   ]
+  },
+  {
+   "id": "es-a2-107",
+   "text": "Mis amigos fueron al cine.",
+   "fa": "دوستانم به سینما رفتند.",
+   "pattern": "<personas> fueron a <lugar>.",
+   "targetWords": [
+    "fueron"
+   ]
+  },
+  {
+   "id": "es-a2-108",
+   "text": "De ninguna manera.",
+   "fa": "به هیچ وجه.",
+   "pattern": "De ninguna manera.",
+   "targetWords": [
+    "manera"
+   ]
+  },
+  {
+   "id": "es-a2-109",
+   "text": "Lo hizo de otra manera.",
+   "fa": "آن را طور دیگری انجام داد.",
+   "pattern": "<verbo> de otra manera.",
+   "targetWords": [
+    "manera"
+   ]
+  },
+  {
+   "id": "es-a2-110",
+   "text": "Es la ley.",
+   "fa": "قانون است.",
+   "pattern": "Es la ley.",
+   "targetWords": [
+    "ley"
+   ]
+  },
+  {
+   "id": "es-a2-111",
+   "text": "Son las dos y media.",
+   "fa": "ساعت دو و نیم است.",
+   "pattern": "Son las <hora> y media.",
+   "targetWords": [
+    "media"
+   ]
+  },
+  {
+   "id": "es-a2-112",
+   "text": "Vivo en medio de la ciudad.",
+   "fa": "وسط شهر زندگی می‌کنم.",
+   "pattern": "Vivo en medio de <lugar>.",
+   "targetWords": [
+    "medio"
+   ]
+  },
+  {
+   "id": "es-a2-113",
+   "text": "Vamos a comer fuera.",
+   "fa": "برویم بیرون غذا بخوریم.",
+   "pattern": "Vamos a <verbo> fuera.",
+   "targetWords": [
+    "fuera"
+   ]
+  },
+  {
+   "id": "es-a2-114",
+   "text": "Mi hermano está fuera del país.",
+   "fa": "برادرم خارج از کشور است.",
+   "pattern": "<persona> está fuera de <lugar>.",
+   "targetWords": [
+    "fuera"
+   ]
+  },
+  {
+   "id": "es-a2-115",
+   "text": "Camina hacia la estación.",
+   "fa": "به سمت ایستگاه برو.",
+   "pattern": "Camina hacia <lugar>.",
+   "targetWords": [
+    "hacia"
+   ]
+  },
+  {
+   "id": "es-a2-116",
+   "text": "Salimos hacia las ocho.",
+   "fa": "حدود ساعت هشت راه می‌افتیم.",
+   "pattern": "Salimos hacia las <hora>.",
+   "targetWords": [
+    "hacia"
+   ]
+  },
+  {
+   "id": "es-a2-117",
+   "text": "No es rojo, sino naranja.",
+   "fa": "قرمز نیست، نارنجی است.",
+   "pattern": "No es <A>, sino <B>.",
+   "targetWords": [
+    "sino"
+   ]
+  },
+  {
+   "id": "es-a2-118",
+   "text": "Me da igual.",
+   "fa": "برایم فرقی ندارد.",
+   "pattern": "Me da igual.",
+   "targetWords": [
+    "da"
+   ]
+  },
+  {
+   "id": "es-a2-119",
+   "text": "¿Qué más da?",
+   "fa": "چه فرقی می‌کند؟",
+   "pattern": "¿Qué más da?",
+   "targetWords": [
+    "da"
+   ]
+  },
+  {
+   "id": "es-a2-120",
+   "text": "Viajamos en grupo.",
+   "fa": "گروهی سفر می‌کنیم.",
+   "pattern": "Viajamos en grupo.",
+   "targetWords": [
+    "grupo"
+   ]
+  },
+  {
+   "id": "es-a2-121",
+   "text": "Debe haber un error.",
+   "fa": "باید اشتباهی شده باشد.",
+   "pattern": "Debe haber <sust.>.",
+   "targetWords": [
+    "haber"
+   ]
+  },
+  {
+   "id": "es-a2-122",
+   "text": "Ese hombre es mi vecino.",
+   "fa": "آن مرد همسایهٔ من است.",
+   "pattern": "Ese hombre es <sust.>.",
+   "targetWords": [
+    "hombre"
+   ]
+  },
+  {
+   "id": "es-a2-123",
+   "text": "Mi mujer trabaja en un hospital.",
+   "fa": "همسرم در بیمارستان کار می‌کند.",
+   "pattern": "Mi mujer trabaja en <lugar>.",
+   "targetWords": [
+    "mujer"
+   ]
+  },
+  {
+   "id": "es-a2-124",
+   "text": "Una mujer me preguntó la hora.",
+   "fa": "زنی از من ساعت را پرسید.",
+   "pattern": "Una mujer me preguntó <sust.>.",
+   "targetWords": [
+    "mujer"
+   ]
+  },
+  {
+   "id": "es-a2-125",
+   "text": "Casi llego tarde.",
+   "fa": "نزدیک بود دیر برسم.",
+   "pattern": "Casi <verbo>.",
+   "targetWords": [
+    "casi"
+   ]
+  },
+  {
+   "id": "es-a2-126",
+   "text": "Son casi las diez.",
+   "fa": "تقریباً ساعت ده است.",
+   "pattern": "Son casi las <hora>.",
+   "targetWords": [
+    "casi"
+   ]
+  },
+  {
+   "id": "es-a2-127",
+   "text": "Ayer hizo mucho frío.",
+   "fa": "دیروز خیلی سرد بود.",
+   "pattern": "<tiempo> hizo <clima>.",
+   "targetWords": [
+    "hizo"
+   ]
+  },
+  {
+   "id": "es-a2-128",
+   "text": "¿Qué hizo usted el fin de semana?",
+   "fa": "آخر هفته چه کار کردید؟",
+   "pattern": "¿Qué hizo usted <tiempo>?",
+   "targetWords": [
+    "hizo"
+   ]
+  },
+  {
+   "id": "es-a2-129",
+   "text": "Deja la bolsa ahí.",
+   "fa": "کیسه را آنجا بگذار.",
+   "pattern": "Deja <sust.> ahí.",
+   "targetWords": [
+    "ahí"
+   ]
+  },
+  {
+   "id": "es-a2-130",
+   "text": "Ahí viene el autobús.",
+   "fa": "اوناهاش، اتوبوس دارد می‌آید.",
+   "pattern": "Ahí viene <sust.>.",
+   "targetWords": [
+    "ahí"
+   ]
+  },
+  {
+   "id": "es-a2-131",
+   "text": "Una cosa más, por favor.",
+   "fa": "یک چیز دیگر، لطفاً.",
+   "pattern": "Una cosa más.",
+   "targetWords": [
+    "cosa"
+   ]
+  },
+  {
+   "id": "es-a2-132",
+   "text": "¿Qué es esa cosa?",
+   "fa": "آن چیز چیست؟",
+   "pattern": "¿Qué es esa cosa?",
+   "targetWords": [
+    "cosa"
+   ]
+  },
+  {
+   "id": "es-a2-133",
+   "text": "Las llaves están dentro del bolso.",
+   "fa": "کلیدها داخل کیف است.",
+   "pattern": "<sust.> están dentro de <sust.>.",
+   "targetWords": [
+    "dentro"
+   ]
+  },
+  {
+   "id": "es-a2-134",
+   "text": "Vuelvo dentro de una hora.",
+   "fa": "تا یک ساعت دیگر برمی‌گردم.",
+   "pattern": "Vuelvo dentro de <tiempo>.",
+   "targetWords": [
+    "dentro"
+   ]
+  },
+  {
+   "id": "es-a2-135",
+   "text": "Aún no he terminado.",
+   "fa": "هنوز تمام نکرده‌ام.",
+   "pattern": "Aún no he <participio>.",
+   "targetWords": [
+    "aún"
+   ]
+  },
+  {
+   "id": "es-a2-136",
+   "text": "Vivimos en la misma calle.",
+   "fa": "در یک خیابان زندگی می‌کنیم.",
+   "pattern": "Vivimos en la misma <sust.>.",
+   "targetWords": [
+    "misma"
+   ]
+  },
+  {
+   "id": "es-a2-137",
+   "text": "Lo hice yo misma.",
+   "fa": "خودم انجامش دادم.",
+   "pattern": "Lo hice yo misma.",
+   "targetWords": [
+    "misma"
+   ]
+  },
+  {
+   "id": "es-a2-138",
+   "text": "Tenía diez años entonces.",
+   "fa": "آن موقع ده سالم بود.",
+   "pattern": "Tenía <edad> entonces.",
+   "targetWords": [
+    "tenía"
+   ]
+  },
+  {
+   "id": "es-a2-139",
+   "text": "No tenía dinero.",
+   "fa": "پول نداشتم.",
+   "pattern": "No tenía <sust.>.",
+   "targetWords": [
+    "tenía"
+   ]
+  },
+  {
+   "id": "es-a2-140",
+   "text": "¿De quién son esos zapatos?",
+   "fa": "آن کفش‌ها مال کیست؟",
+   "pattern": "¿De quién son esos <pl.>?",
+   "targetWords": [
+    "esos"
+   ]
+  },
+  {
+   "id": "es-a2-141",
+   "text": "Las mujeres hablan en la cocina.",
+   "fa": "خانم‌ها در آشپزخانه صحبت می‌کنند.",
+   "pattern": "Las mujeres <verbo> <lugar>.",
+   "targetWords": [
+    "mujeres"
+   ]
+  },
+  {
+   "id": "es-a2-142",
+   "text": "Son las ocho en punto.",
+   "fa": "ساعت دقیقاً هشت است.",
+   "pattern": "Son las <hora> en punto.",
+   "targetWords": [
+    "punto"
+   ]
+  },
+  {
+   "id": "es-a2-143",
+   "text": "Estoy a punto de salir.",
+   "fa": "دارم راه می‌افتم.",
+   "pattern": "Estoy a punto de <verbo>.",
+   "targetWords": [
+    "punto"
+   ]
+  },
+  {
+   "id": "es-a2-144",
+   "text": "Nuestro equipo ganó ayer.",
+   "fa": "تیم ما دیروز برد.",
+   "pattern": "Nuestro equipo <verbo> <tiempo>.",
+   "targetWords": [
+    "equipo"
+   ]
+  },
+  {
+   "id": "es-a2-145",
+   "text": "Quiero saber la verdad.",
+   "fa": "می‌خواهم حقیقت را بدانم.",
+   "pattern": "Quiero saber <sust.>.",
+   "targetWords": [
+    "saber"
+   ]
+  },
+  {
+   "id": "es-a2-146",
+   "text": "¿Sabes a qué hora abre?",
+   "fa": "می‌دانی ساعت چند باز می‌کند؟",
+   "pattern": "¿Sabes <pregunta>?",
+   "targetWords": [
+    "sabes"
+   ]
+  },
+  {
+   "id": "es-a2-147",
+   "text": "Ante todo, gracias.",
+   "fa": "قبل از هر چیز، ممنون.",
+   "pattern": "Ante todo, <frase>.",
+   "targetWords": [
+    "ante"
+   ]
+  },
+  {
+   "id": "es-a2-148",
+   "text": "Voy a dar un paseo.",
+   "fa": "می‌روم قدم بزنم.",
+   "pattern": "Voy a dar un paseo.",
+   "targetWords": [
+    "dar"
+   ]
+  },
+  {
+   "id": "es-a2-149",
+   "text": "¿Me puedes dar tu número?",
+   "fa": "می‌توانی شماره‌ات را بدهی؟",
+   "pattern": "¿Me puedes dar <sust.>?",
+   "targetWords": [
+    "dar"
+   ]
+  },
+  {
+   "id": "es-a2-150",
+   "text": "Es caro; sin embargo, lo compro.",
+   "fa": "گران است؛ با این حال می‌خرمش.",
+   "pattern": "<frase>; sin embargo, <frase>.",
+   "targetWords": [
+    "embargo"
+   ]
+  },
+  {
+   "id": "es-a2-151",
+   "text": "Es muy importante para mí.",
+   "fa": "برایم خیلی مهم است.",
+   "pattern": "Es muy importante para <persona>.",
+   "targetWords": [
+    "importante"
+   ]
+  },
+  {
+   "id": "es-a2-152",
+   "text": "¿Qué pasa con el tren?",
+   "fa": "قطار چه‌اش شده؟",
+   "pattern": "¿Qué pasa con <sust.>?",
+   "targetWords": [
+    "pasa"
+   ]
+  },
+  {
+   "id": "es-a2-153",
+   "text": "No pasa nada.",
+   "fa": "چیزی نیست.",
+   "pattern": "No pasa nada.",
+   "targetWords": [
+    "pasa"
+   ]
+  },
+  {
+   "id": "es-a2-154",
+   "text": "Por ejemplo, el lunes.",
+   "fa": "مثلاً دوشنبه.",
+   "pattern": "Por ejemplo, <propuesta>.",
+   "targetWords": [
+    "ejemplo"
+   ]
+  },
+  {
+   "id": "es-a2-155",
+   "text": "El viaje dura dos horas.",
+   "fa": "سفر دو ساعت طول می‌کشد.",
+   "pattern": "<sust.> dura <número> horas.",
+   "targetWords": [
+    "horas"
+   ]
+  },
+  {
+   "id": "es-a2-156",
+   "text": "¿A qué horas abre la tienda?",
+   "fa": "مغازه چه ساعتی باز می‌کند؟",
+   "pattern": "¿A qué horas abre <lugar>?",
+   "targetWords": [
+    "horas"
+   ]
+  },
+  {
+   "id": "es-a2-157",
+   "text": "Me da igual el color.",
+   "fa": "رنگش برایم فرقی ندارد.",
+   "pattern": "Me da igual <sust.>.",
+   "targetWords": [
+    "igual"
+   ]
+  },
+  {
+   "id": "es-a2-158",
+   "text": "Igual llego tarde.",
+   "fa": "شاید دیر برسم.",
+   "pattern": "Igual <frase>.",
+   "targetWords": [
+    "igual"
+   ]
+  },
+  {
+   "id": "es-a2-159",
+   "text": "La casa cuesta dos millones.",
+   "fa": "خانه دو میلیون قیمت دارد.",
+   "pattern": "<sust.> cuesta <número> millones.",
+   "targetWords": [
+    "millones"
+   ]
+  },
+  {
+   "id": "es-a2-160",
+   "text": "Esto es para ti.",
+   "fa": "این برای توست.",
+   "pattern": "Esto es para ti.",
+   "targetWords": [
+    "ti"
+   ]
+  },
+  {
+   "id": "es-a2-161",
+   "text": "Pienso mucho en ti.",
+   "fa": "زیاد به تو فکر می‌کنم.",
+   "pattern": "Pienso en ti.",
+   "targetWords": [
+    "ti"
+   ]
+  },
+  {
+   "id": "es-a2-162",
+   "text": "Me falta dinero.",
+   "fa": "پول کم دارم.",
+   "pattern": "Me falta <sust.>.",
+   "targetWords": [
+    "falta"
+   ]
+  },
+  {
+   "id": "es-a2-163",
+   "text": "No hace falta.",
+   "fa": "لازم نیست.",
+   "pattern": "No hace falta.",
+   "targetWords": [
+    "falta"
+   ]
+  },
+  {
+   "id": "es-a2-164",
+   "text": "¿Qué estás haciendo?",
+   "fa": "داری چه کار می‌کنی؟",
+   "pattern": "¿Qué estás haciendo?",
+   "targetWords": [
+    "haciendo"
+   ]
+  },
+  {
+   "id": "es-a2-165",
+   "text": "Dos hombres trabajan en la calle.",
+   "fa": "دو مرد در خیابان کار می‌کنند.",
+   "pattern": "<número> hombres <verbo> <lugar>.",
+   "targetWords": [
+    "hombres"
+   ]
+  },
+  {
+   "id": "es-a2-166",
+   "text": "Llevo tres meses aquí.",
+   "fa": "سه ماه است اینجا هستم.",
+   "pattern": "Llevo <número> meses <lugar>.",
+   "targetWords": [
+    "meses"
+   ]
+  },
+  {
+   "id": "es-a2-167",
+   "text": "Dentro de dos meses nos mudamos.",
+   "fa": "دو ماه دیگر اسباب‌کشی می‌کنیم.",
+   "pattern": "Dentro de <número> meses <frase>.",
+   "targetWords": [
+    "meses"
+   ]
+  },
+  {
+   "id": "es-a2-168",
+   "text": "¿Podría repetir, por favor?",
+   "fa": "می‌شود لطفاً تکرار کنید؟",
+   "pattern": "¿Podría <verbo>, por favor?",
+   "targetWords": [
+    "podría"
+   ]
+  },
+  {
+   "id": "es-a2-169",
+   "text": "Podría ser mañana.",
+   "fa": "ممکن است فردا باشد.",
+   "pattern": "Podría ser <tiempo>.",
+   "targetWords": [
+    "podría"
+   ]
+  },
+  {
+   "id": "es-a2-170",
+   "text": "En realidad, no me gusta.",
+   "fa": "راستش، دوستش ندارم.",
+   "pattern": "En realidad, <frase>.",
+   "targetWords": [
+    "realidad"
+   ]
+  },
+  {
+   "id": "es-a2-171",
+   "text": "¿Tienes algún problema?",
+   "fa": "مشکلی داری؟",
+   "pattern": "¿Tienes algún <sust.>?",
+   "targetWords": [
+    "algún"
+   ]
+  },
+  {
+   "id": "es-a2-172",
+   "text": "Algún día iré a Japón.",
+   "fa": "یک روز به ژاپن می‌روم.",
+   "pattern": "Algún día <frase>.",
+   "targetWords": [
+    "algún"
+   ]
+  },
+  {
+   "id": "es-a2-173",
+   "text": "Lo hago con amor.",
+   "fa": "با عشق انجامش می‌دهم.",
+   "pattern": "Lo hago con amor.",
+   "targetWords": [
+    "amor"
+   ]
+  },
+  {
+   "id": "es-a2-174",
+   "text": "¿Qué has dicho?",
+   "fa": "چی گفتی؟",
+   "pattern": "¿Qué has dicho?",
+   "targetWords": [
+    "dicho"
+   ]
+  },
+  {
+   "id": "es-a2-175",
+   "text": "Eran las diez cuando llegué.",
+   "fa": "وقتی رسیدم ساعت ده بود.",
+   "pattern": "Eran las <hora> cuando <frase>.",
+   "targetWords": [
+    "eran"
+   ]
+  },
+  {
+   "id": "es-a2-176",
+   "text": "La parada está en frente del hotel.",
+   "fa": "ایستگاه روبه‌روی هتل است.",
+   "pattern": "<lugar> está en frente de <lugar>.",
+   "targetWords": [
+    "frente"
+   ]
+  },
+  {
+   "id": "es-a2-177",
+   "text": "Es una historia real.",
+   "fa": "داستان واقعی است.",
+   "pattern": "Es <sust.> real.",
+   "targetWords": [
+    "real"
+   ]
+  },
+  {
+   "id": "es-a2-178",
+   "text": "Mi hijo tiene cinco años.",
+   "fa": "پسرم پنج ساله است.",
+   "pattern": "Mi hijo tiene <edad>.",
+   "targetWords": [
+    "hijo"
+   ]
+  },
+  {
+   "id": "es-a2-179",
+   "text": "Cambiemos de tema.",
+   "fa": "موضوع را عوض کنیم.",
+   "pattern": "Cambiemos de tema.",
+   "targetWords": [
+    "tema"
+   ]
+  },
+  {
+   "id": "es-a2-180",
+   "text": "Es un tema difícil.",
+   "fa": "موضوع سختی است.",
+   "pattern": "Es un tema <adj.>.",
+   "targetWords": [
+    "tema"
+   ]
+  },
+  {
+   "id": "es-a2-181",
+   "text": "Tengo varios amigos en Madrid.",
+   "fa": "چند دوست در مادرید دارم.",
+   "pattern": "Tengo varios <pl.> <lugar>.",
+   "targetWords": [
+    "varios"
+   ]
+  },
+  {
+   "id": "es-a2-182",
+   "text": "Mi nivel de español es básico.",
+   "fa": "سطح اسپانیایی من مقدماتی است.",
+   "pattern": "Mi nivel de <idioma> es <adj.>.",
+   "targetWords": [
+    "nivel"
+   ]
+  },
+  {
+   "id": "es-a2-183",
+   "text": "Los niños juegan en el parque.",
+   "fa": "بچه‌ها در پارک بازی می‌کنند.",
+   "pattern": "Los niños <verbo> <lugar>.",
+   "targetWords": [
+    "niños"
+   ]
+  },
+  {
+   "id": "es-a2-184",
+   "text": "¿Tiene usted niños?",
+   "fa": "شما بچه دارید؟",
+   "pattern": "¿Tiene usted niños?",
+   "targetWords": [
+    "niños"
+   ]
+  }
+ ]
+}

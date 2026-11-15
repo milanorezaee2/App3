@@ -7,6 +7,34 @@
       "version": 1,
       "path": "de/A2.v1.json",
       "sentences": 386
+    },
+    {
+      "language": "es",
+      "band": "A2",
+      "version": 1,
+      "path": "es/A2.v1.json",
+      "sentences": 184
+    },
+    {
+      "language": "fr",
+      "band": "A2",
+      "version": 1,
+      "path": "fr/A2.v1.json",
+      "sentences": 188
+    },
+    {
+      "language": "ru",
+      "band": "A1",
+      "version": 1,
+      "path": "ru/A1.v1.json",
+      "sentences": 163
+    },
+    {
+      "language": "ru",
+      "band": "A2",
+      "version": 1,
+      "path": "ru/A2.v1.json",
+      "sentences": 112
     }
   ]
 }

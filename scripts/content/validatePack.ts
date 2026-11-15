@@ -30,6 +30,7 @@ const seenTexts = new Set<string>(); const seenIds = new Set<string>();
 const [minLen, maxLen] = pack.band === 'pre' || pack.band === 'A1' ? [3, 9] : [3, 14];
 const taughtStems = new Set(shipped.filter(l => CEFR_BANDS.indexOf(bandOf(l.levelId)) <= CEFR_BANDS.indexOf(pack.band)).flatMap(l => l.sentences.flatMap(s => tokenize(s.text))));
 
+const fold = (w: string) => w.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 function norm(t: string) { return tokenize(t).join(' '); }
 function bandOf(levelId: number): CefrBand { return levelId <= -1 ? 'pre' : levelId <= 1 ? 'A1' : levelId === 2 ? 'A2' : levelId === 3 ? 'B1' : levelId === 4 ? 'B2' : 'C1'; }
 function stemEq(a: string, b: string) { return a === b || (a.length >= 5 && b.length >= 5 && a.slice(0, 5) === b.slice(0, 5) && Math.abs(a.length - b.length) <= 3); }
@@ -53,7 +54,7 @@ for (const s of pack.sentences) {
   });
   if (above.length > 1) errors.push(`${where}: ${above.length} words above the ${pack.band} ceiling / not taught yet: ${above.join(', ')} (max 1)`);
   if (!Array.isArray(s.targetWords) || !s.targetWords.length) errors.push(`${where}: targetWords missing`);
-  else for (const t of s.targetWords) if (!words.some(w => stemEq(w, t.toLowerCase()))) errors.push(`${where}: target word "${t}" not in sentence`);
+  else for (const t of s.targetWords) { const parts = tokenize(t); if (!parts.every(part => words.some(w => stemEq(fold(w), fold(part))))) errors.push(`${where}: target word "${t}" not in sentence`); }
   if (s.lesson && !shippedIds.has(s.lesson)) errors.push(`${where}: lesson "${s.lesson}" does not exist`);
 }
 
