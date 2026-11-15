@@ -225,7 +225,9 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
           max-width: 1120px !important;
           transform-origin: top center !important;
           background: #F8F6FB !important;
+          height: calc(800px / 0.3214) !important;
           min-height: calc(800px / 0.3214) !important;
+          overflow: hidden !important;
         }
         /* Ensure the page content inside still respects scaled width */
         html.arena-keep-desktop:not(.arena-frame-disabled) #root div[style*="max-width: 1120"],
@@ -334,7 +336,18 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
     try {
       const FRAME_W = 360;
       const FRAME_H = 800;
+      // keep-desktop: the root is laid out at DESK_W and scaled by zoom (DESK_W × 0.3214 = 360). The app must
+      // therefore measure the window as DESK_W × DESK_H too, otherwise it lays out for the real window width and
+      // overflows/clips inside the frame.
+      const DESK_W = 1120;
+      const DESK_H = Math.round(FRAME_H / 0.3214);
       const BP = 520;
+      // Width/height the app should see, or null to fall through to the real values.
+      const virtualSize = (realWinW) => {
+        const cls = document.documentElement.classList;
+        if (cls.contains('arena-frame-disabled') || realWinW < BP) return null;
+        return cls.contains('arena-keep-desktop') ? { w: DESK_W, h: DESK_H } : { w: FRAME_W, h: FRAME_H };
+      };
       const winProto = Object.getPrototypeOf(window);
       const origWDesc = Object.getOwnPropertyDescriptor(winProto, 'innerWidth');
       const origHDesc = Object.getOwnPropertyDescriptor(winProto, 'innerHeight');
@@ -349,20 +362,16 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
       Object.defineProperty(window, 'innerWidth', {
         get() {
           const real = getRealW();
-          const disabled = document.documentElement.classList.contains('arena-frame-disabled');
-          const keepDesktop = document.documentElement.classList.contains('arena-keep-desktop');
-          if (!disabled && !keepDesktop && real >= BP) return FRAME_W;
-          return real;
+          const v = virtualSize(real);
+          return v ? v.w : real;
         },
         configurable: true,
       });
       Object.defineProperty(window, 'innerHeight', {
         get() {
           const real = getRealH();
-          const disabled = document.documentElement.classList.contains('arena-frame-disabled');
-          const keepDesktop = document.documentElement.classList.contains('arena-keep-desktop');
-          if (!disabled && !keepDesktop && real >= BP) return FRAME_H;
-          return real;
+          const v = virtualSize(getRealW());
+          return v ? v.h : real;
         },
         configurable: true,
       });
@@ -378,11 +387,8 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
             get() {
               if (this === document.documentElement) {
                 const real = origCWGet.call(this);
-                const disabled = document.documentElement.classList.contains('arena-frame-disabled');
-                const keepDesktop = document.documentElement.classList.contains('arena-keep-desktop');
-                const realWinW = getRealW();
-                if (!disabled && !keepDesktop && realWinW >= BP) return FRAME_W;
-                return real;
+                const v = virtualSize(getRealW());
+                return v ? v.w : real;
               }
               return origCWGet.call(this);
             },
@@ -394,11 +400,8 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
             get() {
               if (this === document.documentElement) {
                 const real = origCHGet.call(this);
-                const disabled = document.documentElement.classList.contains('arena-frame-disabled');
-                const keepDesktop = document.documentElement.classList.contains('arena-keep-desktop');
-                const realWinW = getRealW();
-                if (!disabled && !keepDesktop && realWinW >= BP) return FRAME_H;
-                return real;
+                const v = virtualSize(getRealW());
+                return v ? v.h : real;
               }
               return origCHGet.call(this);
             },
@@ -414,10 +417,7 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
         if (vpGet) {
           Object.defineProperty(window, 'visualViewport', {
             get() {
-              const disabled = document.documentElement.classList.contains('arena-frame-disabled');
-              const keepDesktop = document.documentElement.classList.contains('arena-keep-desktop');
-              const realWinW = getRealW();
-              if (!disabled && !keepDesktop && realWinW >= BP) return null;
+              if (virtualSize(getRealW())) return null;
               return vpGet.call(window);
             },
             configurable: true,
@@ -425,10 +425,7 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
         } else if (realVP !== undefined) {
           Object.defineProperty(window, 'visualViewport', {
             get() {
-              const disabled = document.documentElement.classList.contains('arena-frame-disabled');
-              const keepDesktop = document.documentElement.classList.contains('arena-keep-desktop');
-              const realWinW = getRealW();
-              if (!disabled && !keepDesktop && realWinW >= BP) return null;
+              if (virtualSize(getRealW())) return null;
               return realVP;
             },
             set(v) { realVP = v; },
