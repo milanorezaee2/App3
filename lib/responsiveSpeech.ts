@@ -1,6 +1,7 @@
 import * as Speech from 'expo-speech';
 import { voiceFor } from './voiceRotation';
 import { speechTagFor } from './speechLanguage';
+import { tryPlayRecorded, stopRecorded } from '@/lib/content/packAudio';
 
 type SpeechLocale = 'en-US';
 
@@ -75,7 +76,13 @@ export function playResponsiveSpeech({
     }
   };
 
-  const begin = () => { void voiceFor(locale, text).catch(() => undefined).then(voice => start(voice)); };
+  const begin = () => {
+    // A published recording wins over the device voice (same voice on every phone, offline after sync).
+    void tryPlayRecorded(text, selectedRate).catch(() => false).then(played => {
+      if (currentRequest !== requestId || played) return;
+      void voiceFor(locale, text).catch(() => undefined).then(voice => start(voice));
+    });
+  };
   if (active) {
     void Speech.stop().catch(() => undefined).finally(begin);
   } else {
@@ -88,5 +95,6 @@ export function playResponsiveSpeech({
 export function stopResponsiveSpeech() {
   requestId += 1;
   active = false;
+  stopRecorded();
   return Speech.stop().catch(() => undefined);
 }
