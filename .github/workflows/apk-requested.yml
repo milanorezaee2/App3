@@ -1,6 +1,6 @@
 name: Build requested APKs
 
-# rev 95
+# rev 96
 # rev 76: page-targeted pop-ups (any number per page) with a redesigned card
 # rev 75: learner pop-ups checked on every launch and return (1-min quiet period)
 # rev 74: new English-only no-login APK (english.apk)
@@ -537,6 +537,48 @@ jobs:
           printf '\n\n' >> body.md
           cat breakdown.md >> body.md
           gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --notes-file body.md
+
+      # Zero-click in-app updates: when the repository has a SUPABASE_SERVICE_ROLE_KEY
+      # secret, every APK of this run is upserted into public.app_releases (same rows
+      # the Admin App → به‌روزرسانی اپ‌ها form writes), so learner apps see the update
+      # as soon as the release exists. Without the secret this step is skipped.
+      - name: Publish release records to Supabase (in-app updates)
+        if: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY != '' }}
+        shell: bash
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          TAG: milo-requested-${{ github.run_number }}
+          NOTES: ${{ github.event.head_commit.message }}
+        run: |
+          URL="${SUPABASE_URL:-$(node -p "require('./config/supabase.public.json').EXPO_PUBLIC_SUPABASE_URL")}"
+          CODE=$((100 + GITHUB_RUN_NUMBER))
+          FIRST_LINE="$(printf '%s' "$NOTES" | head -n 1 | cut -c1-300)"
+          rows=""
+          while IFS='|' read -r pkg apk; do
+            f="out/$apk/$apk"
+            size=$(stat -c %s "$f")
+            sha=$(cut -d' ' -f1 "out/$apk/$apk.sha256" 2>/dev/null || sha256sum "$f" | cut -d' ' -f1)
+            row=$(jq -n --arg pkg "$pkg" --arg vn "1.0.$CODE" --argjson vc "$CODE" \
+              --arg url "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$apk" \
+              --argjson size "$size" --arg sha "$sha" --arg notes "$FIRST_LINE" \
+              '{package_name:$pkg, platform:"android", version_name:$vn, version_code:$vc, download_url:$url, file_size:$size, sha256:$sha, release_notes:$notes, mandatory:false, published:true}')
+            rows="$rows$row,"
+          done <<'LIST'
+          com.devicecontrol.milofive|5update.apk
+          com.devicecontrol.milomultilang|login.5update.apk
+          com.devicecontrol.miloenglish|english.apk
+          com.devicecontrol.companion|2update.apk
+          com.devicecontrol.miloadmin|AdminApp.apk
+          LIST
+          body="[${rows%,}]"
+          echo "$body" | jq '.[] | {package_name, version_code, download_url}'
+          status=$(curl -sS -o resp.json -w '%{http_code}' -X POST "$URL/rest/v1/app_releases?on_conflict=package_name,platform,version_code" \
+            -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+            -H "Content-Type: application/json" -H "Prefer: resolution=merge-duplicates,return=minimal" \
+            --data "$body")
+          echo "Supabase responded $status"; cat resp.json || true
+          [ "$status" = "201" ] || [ "$status" = "200" ] || [ "$status" = "204" ]
 
       # Retention: keep only the newest 5 "milo-requested-*" releases (and their
       # tags); older APKs are removed so the Releases page stays short.
