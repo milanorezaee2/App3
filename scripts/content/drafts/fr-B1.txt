@@ -1,0 +1,141 @@
+# French B1 draft · format: targetWords | text | fa | pattern
+mort|Depuis la mort de son père, il a changé.|از وقتی پدرش فوت کرده، عوض شده.|Depuis la mort de <nom>, <phrase>.
+mort|Je suis mort de fatigue après cette journée.|بعد از این روز از خستگی مرده‌ام.|Je suis mort de <nom>.
+politique|On évite de parler politique en famille.|در خانواده از حرف زدن دربارهٔ سیاست پرهیز می‌کنیم.|On évite de parler <nom>.
+lors|Lors de la réunion, personne n'a posé de question.|در جلسه، هیچ‌کس سؤالی نپرسید.|Lors de <nom>, <phrase>.
+fut|Ce fut une belle surprise pour toute l'équipe.|سورپرایز قشنگی برای کل تیم بود.|Ce fut <nom> pour <nom>.
+gouvernement|Le gouvernement a annoncé de nouvelles mesures.|دولت اقدامات جدیدی اعلام کرده.|<nom> a annoncé <nom>.
+guerre|Mes grands-parents ont connu la guerre.|پدربزرگ و مادربزرگم جنگ را دیده‌اند.|<nom> ont connu <nom>.
+président|Le président de l'association démissionne.|رئیس انجمن استعفا می‌دهد.|Le président de <nom> <verbe>.
+système|Le nouveau système est plus simple à utiliser.|سیستم جدید ساده‌تر کار می‌کند.|<nom> est plus simple à <verbe>.
+notamment|Il aime les voyages, notamment en Asie.|او سفر دوست دارد، به‌ویژه به آسیا.|<phrase>, notamment <nom>.
+plutôt|Je préfère plutôt partir tôt le matin.|ترجیح می‌دهم صبح زود راه بیفتم.|Je préfère plutôt <verbe>.
+plutôt|Il est plutôt timide au début.|او اولش نسبتاً خجالتی است.|Il est plutôt <adj.>.
+avaient|Ils avaient prévu de venir, mais ils ont annulé.|قصد داشتند بیایند، ولی لغو کردند.|Ils avaient prévu de <verbe>, mais <phrase>.
+chef|Mon chef m'a demandé de rester plus tard.|رئیسم از من خواست بیشتر بمانم.|<nom> m'a demandé de <verbe>.
+chef|Le chef de ce restaurant est très connu.|سرآشپز این رستوران خیلی معروف است.|Le chef de <nom> est <adj.>.
+fort|Parle plus fort, je ne t'entends pas.|بلندتر حرف بزن، صدایت را نمی‌شنوم.|Parle plus fort, <phrase>.
+fort|Il est fort en maths mais faible en langues.|در ریاضی قوی است ولی در زبان ضعیف.|Il est fort en <nom> mais faible en <nom>.
+ayant|Ayant fini le travail, elle est rentrée tôt.|چون کارش را تمام کرده بود، زود برگشت.|Ayant <participe>, <phrase>.
+terre|Ils ont acheté un bout de terre à la campagne.|یک تکه زمین در روستا خریده‌اند.|Ils ont acheté <nom> à <lieu>.
+titre|Je ne me souviens plus du titre du film.|اسم فیلم یادم نمی‌آید.|Je ne me souviens plus du titre de <nom>.
+mise|La mise en place du projet prend du temps.|راه‌اندازی پروژه زمان می‌برد.|La mise en place de <nom> <verbe>.
+saison|C'est la saison des pluies dans cette région.|در این منطقه فصل باران است.|C'est la saison de <nom>.
+sait|Personne ne sait quand il reviendra.|هیچ‌کس نمی‌داند کی برمی‌گردد.|Personne ne sait quand <phrase>.
+type|Ce n'est pas mon type de musique.|این نوع موسیقیِ من نیست.|Ce n'est pas mon type de <nom>.
+long|Le voyage est long mais très beau.|سفر طولانی ولی خیلی قشنگ است.|<nom> est long mais <adj.>.
+long|Tout au long de l'année, il fait doux ici.|در تمام طول سال، هوای اینجا ملایم است.|Tout au long de <nom>, <phrase>.
+yeux|Elle a les yeux fatigués après l'écran.|چشم‌هایش بعد از صفحه خسته است.|Elle a les yeux <adj.>.
+amour|C'est une histoire d'amour un peu triste.|داستان عاشقانهٔ کمی غمگینی است.|C'est une histoire d'amour <adj.>.
+base|À la base, je voulais devenir médecin.|در اصل می‌خواستم پزشک شوم.|À la base, <phrase>.
+nord|Le nord du pays est plus froid.|شمال کشور سردتر است.|Le nord de <nom> est <adj.>.
+grâce|Grâce à toi, j'ai trouvé un appartement.|به لطف تو آپارتمان پیدا کردم.|Grâce à <nom>, <phrase>.
+ordre|Il faut mettre ses affaires en ordre avant de partir.|قبل از رفتن باید وسایلت را مرتب کنی.|Il faut mettre <nom> en ordre.
+ordre|Dans quel ordre faut-il faire les exercices ?|تمرین‌ها را به چه ترتیبی باید انجام داد؟|Dans quel ordre faut-il <verbe> ?
+étant|Étant donné le prix, je préfère attendre.|با توجه به قیمت، ترجیح می‌دهم صبر کنم.|Étant donné <nom>, <phrase>.
+but|Le but est de finir avant vendredi.|هدف این است که قبل از جمعه تمام شود.|Le but est de <verbe>.
+but|Il a marqué le but de la victoire.|او گل پیروزی را زد.|Il a marqué le but de <nom>.
+manière|De cette manière, tout le monde est content.|این‌طوری همه راضی‌اند.|De cette manière, <phrase>.
+mars|En mars, les jours rallongent enfin.|در مارس بالاخره روزها بلندتر می‌شوند.|En <mois>, <phrase>.
+truc|J'ai un truc à te dire.|یک چیزی هست که باید به تو بگویم.|J'ai un truc à te dire.
+agit|Il s'agit d'un simple malentendu.|موضوع یک سوءتفاهم ساده است.|Il s'agit de <nom>.
+ministre|Le ministre a répondu aux questions des journalistes.|وزیر به سؤال‌های خبرنگاران پاسخ داد.|<nom> a répondu à <nom>.
+sud|Dans le sud, l'été est très chaud.|در جنوب تابستان خیلی گرم است.|Dans le sud, <phrase>.
+vidéo|Envoie-moi la vidéo quand tu auras le temps.|هر وقت وقت کردی ویدیو را برایم بفرست.|Envoie-moi <nom> quand <phrase>.
+art|Je m'intéresse beaucoup à l'art moderne.|به هنر مدرن خیلی علاقه دارم.|Je m'intéresse à <nom>.
+région|Cette région est connue pour son vin.|این منطقه به شرابش معروف است.|<nom> est connue pour <nom>.
+entreprise|Elle travaille dans une petite entreprise familiale.|او در یک شرکت خانوادگی کوچک کار می‌کند.|Elle travaille dans <nom>.
+jeunes|Les jeunes partent souvent vivre en ville.|جوان‌ها اغلب برای زندگی به شهر می‌روند.|Les jeunes <verbe>.
+longtemps|Ça fait longtemps qu'on ne s'est pas vus.|خیلی وقت است همدیگر را ندیده‌ایم.|Ça fait longtemps que <phrase>.
+permet|Cette carte permet de voyager moins cher.|این کارت اجازه می‌دهد ارزان‌تر سفر کنی.|<nom> permet de <verbe>.
+voit|On voit bien que tu es fatigué.|معلوم است که خسته‌ای.|On voit bien que <phrase>.
+lorsque|Lorsque j'étais enfant, on vivait à la campagne.|وقتی بچه بودم در روستا زندگی می‌کردیم.|Lorsque <phrase>, <phrase>.
+peur|J'ai peur de rater mon train.|می‌ترسم قطارم را از دست بدهم.|J'ai peur de <verbe>.
+plein|Le parking est plein, cherchons ailleurs.|پارکینگ پر است، جای دیگری بگردیم.|<nom> est plein, <phrase>.
+plein|Il y a plein de choses à voir ici.|اینجا کلی چیز برای دیدن هست.|Il y a plein de <nom>.
+police|La police a fermé la rue pendant une heure.|پلیس خیابان را یک ساعت بست.|La police a <participe> <nom>.
+septembre|En septembre, tout le monde reprend le travail.|در سپتامبر همه دوباره سر کار برمی‌گردند.|En <mois>, <phrase>.
+sécurité|Pour votre sécurité, restez derrière la ligne.|برای ایمنی‌تان پشت خط بمانید.|Pour votre sécurité, <impératif>.
+série|J'ai regardé toute la série en un week-end.|کل سریال را در یک آخر هفته دیدم.|J'ai regardé <nom> en <durée>.
+ancien|Mon ancien collègue habite maintenant à Lyon.|همکار سابقم حالا در لیون زندگی می‌کند.|Mon ancien <nom> <verbe>.
+jouer|Les enfants veulent jouer dehors malgré la pluie.|بچه‌ها با وجود باران می‌خواهند بیرون بازی کنند.|<nom> veulent jouer <lieu>.
+membres|Tous les membres de la famille sont invités.|همهٔ اعضای خانواده دعوت‌اند.|Tous les membres de <nom> sont <adj.>.
+parmi|Parmi ces livres, lequel me conseilles-tu ?|از بین این کتاب‌ها، کدام را پیشنهاد می‌کنی؟|Parmi <nom>, lequel <phrase> ?
+peine|Ce n'est pas la peine d'attendre.|لازم نیست منتظر بمانی.|Ce n'est pas la peine de <verbe>.
+peine|Il a à peine dormi cette nuit.|او دیشب به زحمت خوابید.|Il a à peine <participe>.
+presque|J'ai presque terminé le rapport.|گزارش را تقریباً تمام کرده‌ام.|J'ai presque <participe> <nom>.
+tellement|Il parle tellement vite que je ne comprends rien.|آن‌قدر تند حرف می‌زند که هیچی نمی‌فهمم.|Il <verbe> tellement <adv.> que <phrase>.
+époque|À cette époque, il n'y avait pas de portable.|آن زمان موبایل نبود.|À cette époque, <phrase>.
+doute|Sans doute, il a oublié notre rendez-vous.|احتمالاً قرارمان را فراموش کرده.|Sans doute, <phrase>.
+doute|J'ai un doute sur l'heure du départ.|دربارهٔ ساعت حرکت شک دارم.|J'ai un doute sur <nom>.
+force|À force de pratiquer, tu vas progresser.|با تمرین مداوم پیشرفت می‌کنی.|À force de <verbe>, <phrase>.
+mot|Je n'ai pas compris un seul mot.|حتی یک کلمه هم نفهمیدم.|Je n'ai pas compris un seul mot.
+recherche|Je suis à la recherche d'un nouvel emploi.|دنبال شغل جدید می‌گردم.|Je suis à la recherche de <nom>.
+santé|Fumer est mauvais pour la santé.|سیگار برای سلامتی مضر است.|<nom> est mauvais pour la santé.
+seront|Les résultats seront publiés lundi prochain.|نتایج دوشنبهٔ آینده منتشر می‌شوند.|<nom> seront <participe> <temps>.
+voix|Elle a une très belle voix.|صدای خیلی قشنگی دارد.|Elle a une <adj.> voix.
+affaires|Il est parti en voyage d'affaires à Genève.|او برای سفر کاری به ژنو رفته.|Il est parti en voyage d'affaires à <lieu>.
+autour|On s'est assis autour de la table pour discuter.|دور میز نشستیم تا صحبت کنیم.|On s'est assis autour de <nom>.
+faites|Faites attention en traversant la rue.|موقع رد شدن از خیابان مواظب باشید.|Faites attention en <participe présent>.
+juillet|En juillet, il y a du monde partout.|در ژوئیه همه‌جا شلوغ است.|En <mois>, <phrase>.
+millions|Ce film a coûté plusieurs millions d'euros.|این فیلم چند میلیون یورو هزینه داشت.|<nom> a coûté <nombre> millions de <nom>.
+nombreux|De nombreux touristes visitent la ville en été.|گردشگران زیادی تابستان از شهر بازدید می‌کنند.|De nombreux <nom> <verbe>.
+propre|Chacun apporte son propre repas.|هر کس غذای خودش را می‌آورد.|Chacun apporte son propre <nom>.
+propre|La chambre était propre et calme.|اتاق تمیز و آرام بود.|<nom> était propre et <adj.>.
+environ|Le voyage dure environ deux heures.|سفر حدود دو ساعت طول می‌کشد.|<nom> dure environ <durée>.
+fond|Au fond, tu as raison.|ته دلم می‌دانم حق با توست.|Au fond, <phrase>.
+fond|La cuisine est au fond de la maison.|آشپزخانه ته خانه است.|<nom> est au fond de <nom>.
+mesure|Je suis en mesure de vous aider demain.|فردا می‌توانم به شما کمک کنم.|Je suis en mesure de <verbe>.
+affaire|Cette affaire ne te regarde pas.|این موضوع به تو ربطی ندارد.|<nom> ne te regarde pas.
+envie|J'ai envie d'une glace.|دلم بستنی می‌خواهد.|J'ai envie de <nom>.
+laquelle|La raison pour laquelle je pars est simple.|دلیلی که به خاطرش می‌روم ساده است.|La raison pour laquelle <phrase>.
+octobre|En octobre, les feuilles changent de couleur.|در اکتبر برگ‌ها رنگ عوض می‌کنند.|En <mois>, <phrase>.
+siècle|Ce château date du quinzième siècle.|این قلعه مال قرن پانزدهم است.|<nom> date du <nombre> siècle.
+terme|À long terme, c'est un bon investissement.|در درازمدت سرمایه‌گذاری خوبی است.|À long terme, <phrase>.
+avril|En avril, ne te découvre pas d'un fil.|در آوریل هنوز لباس گرم را کنار نگذار.|En <mois>, <phrase>.
+janvier|En janvier, on prend de bonnes résolutions.|در ژانویه تصمیم‌های خوب می‌گیریم.|En <mois>, <phrase>.
+jeux|Les jeux de société, c'est parfait pour un dimanche.|بازی‌های رومیزی برای یکشنبه عالی‌اند.|<nom>, c'est parfait pour <nom>.
+population|La population de la ville a doublé en vingt ans.|جمعیت شهر در بیست سال دو برابر شده.|La population de <nom> a <participe>.
+action|Il faut passer à l'action maintenant.|حالا باید دست به کار شد.|Il faut passer à l'action.
+club|Je me suis inscrit à un club de sport.|در یک باشگاه ورزشی ثبت‌نام کردم.|Je me suis inscrit à <nom>.
+cœur|J'ai le cœur qui bat vite avant l'examen.|قبل از امتحان قلبم تند می‌زند.|J'ai le cœur qui <verbe>.
+existe|Il existe plusieurs solutions à ce problème.|برای این مشکل چند راه‌حل وجود دارد.|Il existe <nom>.
+milieu|Au milieu de la nuit, le téléphone a sonné.|نیمه‌شب تلفن زنگ زد.|Au milieu de <nom>, <phrase>.
+propos|À propos, as-tu reçu mon message ?|راستی، پیامم را گرفتی؟|À propos, <question> ?
+route|La route est très longue jusqu'au village.|جاده تا روستا خیلی طولانی است.|La route est <adj.> jusqu'à <lieu>.
+doivent|Les étudiants doivent rendre le devoir avant lundi.|دانشجوها باید تکلیف را قبل از دوشنبه تحویل دهند.|<nom> doivent <verbe> avant <temps>.
+feu|Le feu est passé au rouge.|چراغ قرمز شد.|Le feu est passé au <couleur>.
+mots|Explique-moi avec tes propres mots.|با کلمات خودت برایم توضیح بده.|Explique-moi avec <nom>.
+mêmes|Nous avons les mêmes goûts en musique.|در موسیقی سلیقه‌های یکسانی داریم.|Nous avons les mêmes <nom>.
+période|C'est une période difficile pour lui.|دوران سختی برای اوست.|C'est une période <adj.> pour <nom>.
+tel|Un tel résultat, personne ne l'attendait.|چنین نتیجه‌ای را هیچ‌کس انتظار نداشت.|Un tel <nom>, <phrase>.
+armée|Son frère fait son service dans l'armée.|برادرش در ارتش خدمت می‌کند.|<nom> fait son service dans <nom>.
+chance|Tu as de la chance d'habiter près de la mer.|خوش‌شانسی که نزدیک دریا زندگی می‌کنی.|Tu as de la chance de <verbe>.
+croire|J'ai du mal à croire cette histoire.|باور این داستان برایم سخت است.|J'ai du mal à croire <nom>.
+décembre|En décembre, les rues sont illuminées.|در دسامبر خیابان‌ها چراغانی‌اند.|En <mois>, <phrase>.
+manque|Tu me manques beaucoup.|دلم خیلی برایت تنگ شده.|Tu me manques.
+manque|Il manque une page dans ce document.|یک صفحه از این سند کم است.|Il manque <nom> dans <nom>.
+mode|Le vélo revient à la mode en ville.|دوچرخه در شهر دوباره مد شده.|<nom> revient à la mode.
+novembre|En novembre, il pleut presque tous les jours.|در نوامبر تقریباً هر روز باران می‌بارد.|En <mois>, <phrase>.
+août|En août, le bureau est presque vide.|در اوت دفتر تقریباً خالی است.|En <mois>, <phrase>.
+aurais|J'aurais dû t'écouter.|باید به حرفت گوش می‌کردم.|J'aurais dû <verbe>.
+liste|Fais une liste avant d'aller au supermarché.|قبل از رفتن به سوپرمارکت لیست بنویس.|Fais une liste avant de <verbe>.
+rôle|Le sommeil joue un rôle essentiel dans la santé.|خواب نقش اساسی در سلامتی دارد.|<nom> joue un rôle <adj.> dans <nom>.
+bout|Au bout de dix minutes, il s'est endormi.|بعد از ده دقیقه خوابش برد.|Au bout de <durée>, <phrase>.
+bout|Va jusqu'au bout de la rue, puis à gauche.|تا آخر خیابان برو، بعد بپیچ چپ.|Va jusqu'au bout de <nom>.
+conditions|Il faut bien lire les conditions avant d'accepter.|قبل از پذیرفتن باید شرایط را خوب خواند.|Il faut lire <nom> avant de <verbe>.
+esprit|Garde l'esprit ouvert pendant le voyage.|در سفر ذهنت را باز نگه دار.|Garde l'esprit <adj.>.
+garde|Je garde toujours un parapluie dans mon sac.|همیشه یک چتر در کیفم دارم.|Je garde <nom> dans <nom>.
+intérêt|Quel est l'intérêt de se lever si tôt ?|این‌قدر زود بیدار شدن چه فایده‌ای دارد؟|Quel est l'intérêt de <verbe> ?
+mouvement|Il y a beaucoup de mouvement dans la rue ce soir.|امشب خیابان خیلی شلوغ و پرجنب‌وجوش است.|Il y a beaucoup de mouvement <lieu>.
+origine|Ce plat est d'origine italienne.|این غذا اصالتاً ایتالیایی است.|<nom> est d'origine <adj.>.
+présente|Je vous présente ma collègue Marie.|همکارم ماری را به شما معرفی می‌کنم.|Je vous présente <nom>.
+auteur|L'auteur de ce roman est très jeune.|نویسندهٔ این رمان خیلی جوان است.|L'auteur de <nom> est <adj.>.
+février|En février, il neige encore en montagne.|در فوریه هنوز در کوهستان برف می‌بارد.|En <mois>, <phrase>.
+justice|Il a décidé de porter l'affaire en justice.|تصمیم گرفت موضوع را به دادگاه ببرد.|Il a décidé de porter <nom> en justice.
+met|Elle met toujours du temps à se décider.|او همیشه برای تصمیم گرفتن وقت می‌گذارد.|Elle met du temps à <verbe>.
+occasion|J'ai acheté cette voiture d'occasion.|این ماشین را دست‌دوم خریدم.|J'ai acheté <nom> d'occasion.
+occasion|C'est l'occasion de pratiquer ton français.|این فرصتی است برای تمرین فرانسوی‌ات.|C'est l'occasion de <verbe>.
+qualité|Je préfère payer plus pour une meilleure qualité.|ترجیح می‌دهم برای کیفیت بهتر بیشتر بپردازم.|Je préfère payer plus pour <nom>.
+risque|Il y a un risque de pluie cet après-midi.|احتمال باران امروز بعدازظهر هست.|Il y a un risque de <nom>.
+scène|La scène finale m'a fait pleurer.|صحنهٔ آخر اشکم را درآورد.|<nom> m'a fait <verbe>.

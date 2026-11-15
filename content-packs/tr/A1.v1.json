@@ -1,0 +1,1612 @@
+{
+ "schema": 1,
+ "language": "tr",
+ "band": "A1",
+ "version": 1,
+ "generatedAt": "2026-11-15",
+ "source": "factory v1 · automatic gates · 10% sample review",
+ "sentences": [
+  {
+   "id": "tr-a1-001",
+   "text": "Kardeşim gibi konuşuyorsun.",
+   "fa": "مثل برادرم حرف می‌زنی.",
+   "pattern": "<isim> gibi <fiil>.",
+   "targetWords": [
+    "gibi"
+   ]
+  },
+  {
+   "id": "tr-a1-002",
+   "text": "Bugün yaz gibi sıcak.",
+   "fa": "امروز مثل تابستان گرم است.",
+   "pattern": "Bugün <isim> gibi <sıfat>.",
+   "targetWords": [
+    "gibi"
+   ]
+  },
+  {
+   "id": "tr-a1-003",
+   "text": "Çay gibi bir şey var mı?",
+   "fa": "چیزی مثل چای دارید؟",
+   "pattern": "<isim> gibi bir şey var mı?",
+   "targetWords": [
+    "gibi"
+   ]
+  },
+  {
+   "id": "tr-a1-004",
+   "text": "Masada olan kitap benim.",
+   "fa": "کتابی که روی میز است مال من است.",
+   "pattern": "<yer> olan <isim> benim.",
+   "targetWords": [
+    "olan"
+   ]
+  },
+  {
+   "id": "tr-a1-005",
+   "text": "Burada olan herkes öğrenci.",
+   "fa": "همهٔ کسانی که اینجا هستند دانشجو هستند.",
+   "pattern": "<yer> olan herkes <isim>.",
+   "targetWords": [
+    "olan"
+   ]
+  },
+  {
+   "id": "tr-a1-006",
+   "text": "Umarım ki gelirsin.",
+   "fa": "امیدوارم که بیایی.",
+   "pattern": "Umarım ki <cümle>.",
+   "targetWords": [
+    "ki"
+   ]
+  },
+  {
+   "id": "tr-a1-007",
+   "text": "Biliyorum ki yorgunsun.",
+   "fa": "می‌دانم که خسته‌ای.",
+   "pattern": "Biliyorum ki <cümle>.",
+   "targetWords": [
+    "ki"
+   ]
+  },
+  {
+   "id": "tr-a1-008",
+   "text": "Bu ilk dersim.",
+   "fa": "این اولین درس من است.",
+   "pattern": "Bu ilk <isim>.",
+   "targetWords": [
+    "ilk"
+   ]
+  },
+  {
+   "id": "tr-a1-009",
+   "text": "İlk önce kahvaltı yapalım.",
+   "fa": "اول صبحانه بخوریم.",
+   "pattern": "İlk önce <fiil>.",
+   "targetWords": [
+    "ilk"
+   ]
+  },
+  {
+   "id": "tr-a1-010",
+   "text": "Ben çay, o ise kahve istiyor.",
+   "fa": "من چای می‌خواهم، او اما قهوه.",
+   "pattern": "<A> <isim>, <B> ise <isim> istiyor.",
+   "targetWords": [
+    "ise"
+   ]
+  },
+  {
+   "id": "tr-a1-011",
+   "text": "Bir kelime bile bilmiyorum.",
+   "fa": "حتی یک کلمه هم نمی‌دانم.",
+   "pattern": "<isim> bile <fiil>.",
+   "targetWords": [
+    "bile"
+   ]
+  },
+  {
+   "id": "tr-a1-012",
+   "text": "O bile geldi.",
+   "fa": "حتی او هم آمد.",
+   "pattern": "<isim> bile geldi.",
+   "targetWords": [
+    "bile"
+   ]
+  },
+  {
+   "id": "tr-a1-013",
+   "text": "Böyle daha iyi.",
+   "fa": "این‌طوری بهتر است.",
+   "pattern": "Böyle daha <sıfat>.",
+   "targetWords": [
+    "böyle"
+   ]
+  },
+  {
+   "id": "tr-a1-014",
+   "text": "Neden böyle yorgunsun?",
+   "fa": "چرا این‌قدر خسته‌ای؟",
+   "pattern": "Neden böyle <sıfat>?",
+   "targetWords": [
+    "böyle"
+   ]
+  },
+  {
+   "id": "tr-a1-015",
+   "text": "Tek bir sorum var.",
+   "fa": "فقط یک سؤال دارم.",
+   "pattern": "Tek bir <isim> var.",
+   "targetWords": [
+    "tek"
+   ]
+  },
+  {
+   "id": "tr-a1-016",
+   "text": "Evde tek başımayım.",
+   "fa": "در خانه تنها هستم.",
+   "pattern": "<yer> tek başımayım.",
+   "targetWords": [
+    "tek"
+   ]
+  },
+  {
+   "id": "tr-a1-017",
+   "text": "Tüm gün evdeyim.",
+   "fa": "تمام روز خانه‌ام.",
+   "pattern": "Tüm <zaman> <yer>.",
+   "targetWords": [
+    "tüm"
+   ]
+  },
+  {
+   "id": "tr-a1-018",
+   "text": "Tüm arkadaşlarım burada.",
+   "fa": "همهٔ دوستانم اینجا هستند.",
+   "pattern": "Tüm <isim> <yer>.",
+   "targetWords": [
+    "tüm"
+   ]
+  },
+  {
+   "id": "tr-a1-019",
+   "text": "Doğru, sen haklısın.",
+   "fa": "درست است، حق با توست.",
+   "pattern": "Doğru, <cümle>.",
+   "targetWords": [
+    "doğru"
+   ]
+  },
+  {
+   "id": "tr-a1-020",
+   "text": "Bu yol doğru mu?",
+   "fa": "این راه درست است؟",
+   "pattern": "Bu <isim> doğru mu?",
+   "targetWords": [
+    "doğru"
+   ]
+  },
+  {
+   "id": "tr-a1-021",
+   "text": "Okula doğru yürüyorum.",
+   "fa": "به سمت مدرسه پیاده می‌روم.",
+   "pattern": "<yer>-e doğru yürüyorum.",
+   "targetWords": [
+    "doğru"
+   ]
+  },
+  {
+   "id": "tr-a1-022",
+   "text": "Hasta olduğunu bilmiyordum.",
+   "fa": "نمی‌دانستم مریض هستی.",
+   "pattern": "<sıfat> olduğunu bilmiyordum.",
+   "targetWords": [
+    "olduğunu"
+   ]
+  },
+  {
+   "id": "tr-a1-023",
+   "text": "Yorgunsun diye erken geldim.",
+   "fa": "چون خسته بودی زود آمدم.",
+   "pattern": "<cümle> diye <fiil>.",
+   "targetWords": [
+    "diye"
+   ]
+  },
+  {
+   "id": "tr-a1-024",
+   "text": "Evde olduğu için gelmedi.",
+   "fa": "چون خانه بود، نیامد.",
+   "pattern": "<yer> olduğu için <fiil>.",
+   "targetWords": [
+    "olduğu"
+   ]
+  },
+  {
+   "id": "tr-a1-025",
+   "text": "Diğer çanta daha ucuz.",
+   "fa": "کیف دیگر ارزان‌تر است.",
+   "pattern": "Diğer <isim> daha <sıfat>.",
+   "targetWords": [
+    "diğer"
+   ]
+  },
+  {
+   "id": "tr-a1-026",
+   "text": "Diğer gün görüşürüz.",
+   "fa": "روز دیگر می‌بینمت.",
+   "pattern": "Diğer <zaman> görüşürüz.",
+   "targetWords": [
+    "diğer"
+   ]
+  },
+  {
+   "id": "tr-a1-027",
+   "text": "Çok fazla tuz var.",
+   "fa": "نمک خیلی زیاد است.",
+   "pattern": "Çok fazla <isim> var.",
+   "targetWords": [
+    "fazla"
+   ]
+  },
+  {
+   "id": "tr-a1-028",
+   "text": "Fazla bekleme, gel.",
+   "fa": "زیاد منتظر نمان، بیا.",
+   "pattern": "Fazla <fiil>, <fiil>.",
+   "targetWords": [
+    "fazla"
+   ]
+  },
+  {
+   "id": "tr-a1-029",
+   "text": "Doktor olmak istiyorum.",
+   "fa": "می‌خواهم پزشک شوم.",
+   "pattern": "<meslek> olmak istiyorum.",
+   "targetWords": [
+    "olmak"
+   ]
+  },
+  {
+   "id": "tr-a1-030",
+   "text": "Mutlu olmak kolay.",
+   "fa": "خوشحال بودن آسان است.",
+   "pattern": "<sıfat> olmak <sıfat>.",
+   "targetWords": [
+    "olmak"
+   ]
+  },
+  {
+   "id": "tr-a1-031",
+   "text": "Geliyorum, ancak geç kalırım.",
+   "fa": "می‌آیم، اما دیر می‌رسم.",
+   "pattern": "<cümle>, ancak <cümle>.",
+   "targetWords": [
+    "ancak"
+   ]
+  },
+  {
+   "id": "tr-a1-032",
+   "text": "Ancak akşam müsaitim.",
+   "fa": "فقط عصر وقت دارم.",
+   "pattern": "Ancak <zaman> müsaitim.",
+   "targetWords": [
+    "ancak"
+   ]
+  },
+  {
+   "id": "tr-a1-033",
+   "text": "Biri kapıda bekliyor.",
+   "fa": "یکی دم در منتظر است.",
+   "pattern": "Biri <yer> bekliyor.",
+   "targetWords": [
+    "biri"
+   ]
+  },
+  {
+   "id": "tr-a1-034",
+   "text": "Arkadaşlarımdan biri doktor.",
+   "fa": "یکی از دوستانم پزشک است.",
+   "pattern": "<isim>-dan biri <meslek>.",
+   "targetWords": [
+    "biri"
+   ]
+  },
+  {
+   "id": "tr-a1-035",
+   "text": "Bunu çok istiyorum.",
+   "fa": "این را خیلی می‌خواهم.",
+   "pattern": "Bunu çok <fiil>.",
+   "targetWords": [
+    "bunu"
+   ]
+  },
+  {
+   "id": "tr-a1-036",
+   "text": "Bunu kim yaptı?",
+   "fa": "این را کی درست کرد؟",
+   "pattern": "Bunu kim yaptı?",
+   "targetWords": [
+    "bunu"
+   ]
+  },
+  {
+   "id": "tr-a1-037",
+   "text": "Öyle mi? Harika!",
+   "fa": "جدی؟ عالی!",
+   "pattern": "Öyle mi? <cümle>!",
+   "targetWords": [
+    "öyle"
+   ]
+  },
+  {
+   "id": "tr-a1-038",
+   "text": "Ben öyle düşünmüyorum.",
+   "fa": "من این‌طور فکر نمی‌کنم.",
+   "pattern": "Ben öyle <fiil>.",
+   "targetWords": [
+    "öyle"
+   ]
+  },
+  {
+   "id": "tr-a1-039",
+   "text": "Bu şekilde daha kolay.",
+   "fa": "این‌طوری آسان‌تر است.",
+   "pattern": "Bu şekilde daha <sıfat>.",
+   "targetWords": [
+    "şekilde"
+   ]
+  },
+  {
+   "id": "tr-a1-040",
+   "text": "Bütün gün çalıştım.",
+   "fa": "تمام روز کار کردم.",
+   "pattern": "Bütün <zaman> <fiil>.",
+   "targetWords": [
+    "bütün"
+   ]
+  },
+  {
+   "id": "tr-a1-041",
+   "text": "Bütün aile burada.",
+   "fa": "همهٔ خانواده اینجا هستند.",
+   "pattern": "Bütün <isim> <yer>.",
+   "targetWords": [
+    "bütün"
+   ]
+  },
+  {
+   "id": "tr-a1-042",
+   "text": "Dünya çok büyük.",
+   "fa": "دنیا خیلی بزرگ است.",
+   "pattern": "Dünya çok <sıfat>.",
+   "targetWords": [
+    "dünya"
+   ]
+  },
+  {
+   "id": "tr-a1-043",
+   "text": "Dünyanın en güzel şehri İstanbul.",
+   "fa": "زیباترین شهر دنیا استانبول است.",
+   "pattern": "Dünyanın en <sıfat> <isim> <isim>.",
+   "targetWords": [
+    "dünya"
+   ]
+  },
+  {
+   "id": "tr-a1-044",
+   "text": "Genel olarak iyiyim.",
+   "fa": "به‌طور کلی خوبم.",
+   "pattern": "Genel olarak <sıfat>.",
+   "targetWords": [
+    "genel"
+   ]
+  },
+  {
+   "id": "tr-a1-045",
+   "text": "Yine geç kaldın.",
+   "fa": "باز هم دیر کردی.",
+   "pattern": "Yine <fiil>.",
+   "targetWords": [
+    "yine"
+   ]
+  },
+  {
+   "id": "tr-a1-046",
+   "text": "Yarın yine görüşürüz.",
+   "fa": "فردا باز هم می‌بینمت.",
+   "pattern": "<zaman> yine görüşürüz.",
+   "targetWords": [
+    "yine"
+   ]
+  },
+  {
+   "id": "tr-a1-047",
+   "text": "Yardım eden kişi öğretmen.",
+   "fa": "کسی که کمک کرد معلم است.",
+   "pattern": "<isim> eden kişi <meslek>.",
+   "targetWords": [
+    "eden"
+   ]
+  },
+  {
+   "id": "tr-a1-048",
+   "text": "Film hakkında konuşalım.",
+   "fa": "دربارهٔ فیلم حرف بزنیم.",
+   "pattern": "<isim> hakkında konuşalım.",
+   "targetWords": [
+    "hakkında"
+   ]
+  },
+  {
+   "id": "tr-a1-049",
+   "text": "Sen hakkında ne düşünüyorsun?",
+   "fa": "تو در این باره چه فکر می‌کنی؟",
+   "pattern": "<isim> hakkında ne düşünüyorsun?",
+   "targetWords": [
+    "hakkında"
+   ]
+  },
+  {
+   "id": "tr-a1-050",
+   "text": "Bilet alan var mı?",
+   "fa": "کسی بلیت گرفته؟",
+   "pattern": "<isim> alan var mı?",
+   "targetWords": [
+    "alan"
+   ]
+  },
+  {
+   "id": "tr-a1-051",
+   "text": "Bazı günler erken kalkarım.",
+   "fa": "بعضی روزها زود بیدار می‌شوم.",
+   "pattern": "Bazı <zaman> <fiil>.",
+   "targetWords": [
+    "bazı"
+   ]
+  },
+  {
+   "id": "tr-a1-052",
+   "text": "Bazı insanlar kahve sevmez.",
+   "fa": "بعضی آدم‌ها قهوه دوست ندارند.",
+   "pattern": "Bazı insanlar <isim> sevmez.",
+   "targetWords": [
+    "bazı"
+   ]
+  },
+  {
+   "id": "tr-a1-053",
+   "text": "Hemen geri geliyorum.",
+   "fa": "الان برمی‌گردم.",
+   "pattern": "Hemen geri geliyorum.",
+   "targetWords": [
+    "geri"
+   ]
+  },
+  {
+   "id": "tr-a1-054",
+   "text": "Kitabı geri ver, lütfen.",
+   "fa": "کتاب را پس بده، لطفاً.",
+   "pattern": "<isim> geri ver, lütfen.",
+   "targetWords": [
+    "geri"
+   ]
+  },
+  {
+   "id": "tr-a1-055",
+   "text": "Yarın hava güzel olacak.",
+   "fa": "فردا هوا خوب می‌شود.",
+   "pattern": "<zaman> <isim> <sıfat> olacak.",
+   "targetWords": [
+    "olacak"
+   ]
+  },
+  {
+   "id": "tr-a1-056",
+   "text": "Her şey iyi olacak.",
+   "fa": "همه چیز خوب می‌شود.",
+   "pattern": "Her şey <sıfat> olacak.",
+   "targetWords": [
+    "olacak"
+   ]
+  },
+  {
+   "id": "tr-a1-057",
+   "text": "Kapıya gelen kim?",
+   "fa": "کی دم در آمده؟",
+   "pattern": "<yer>-a gelen kim?",
+   "targetWords": [
+    "gelen"
+   ]
+  },
+  {
+   "id": "tr-a1-058",
+   "text": "Dün gelen misafir amcam.",
+   "fa": "مهمانی که دیروز آمد عموی من است.",
+   "pattern": "<zaman> gelen <isim> <isim>.",
+   "targetWords": [
+    "gelen"
+   ]
+  },
+  {
+   "id": "tr-a1-059",
+   "text": "Onu iyi tanıyorum.",
+   "fa": "او را خوب می‌شناسم.",
+   "pattern": "Onu iyi <fiil>.",
+   "targetWords": [
+    "onu"
+   ]
+  },
+  {
+   "id": "tr-a1-060",
+   "text": "Onu her gün görüyorum.",
+   "fa": "او را هر روز می‌بینم.",
+   "pattern": "Onu her gün <fiil>.",
+   "targetWords": [
+    "onu"
+   ]
+  },
+  {
+   "id": "tr-a1-061",
+   "text": "Hem çay hem kahve var.",
+   "fa": "هم چای هست هم قهوه.",
+   "pattern": "Hem <A> hem <B> var.",
+   "targetWords": [
+    "hem"
+   ]
+  },
+  {
+   "id": "tr-a1-062",
+   "text": "Hem çalışıyor hem okuyor.",
+   "fa": "هم کار می‌کند هم درس می‌خواند.",
+   "pattern": "Hem <fiil> hem <fiil>.",
+   "targetWords": [
+    "hem"
+   ]
+  },
+  {
+   "id": "tr-a1-063",
+   "text": "Yani yarın gelmiyorsun?",
+   "fa": "یعنی فردا نمی‌آیی؟",
+   "pattern": "Yani <cümle>?",
+   "targetWords": [
+    "yani"
+   ]
+  },
+  {
+   "id": "tr-a1-064",
+   "text": "Yani, ben bilmiyorum.",
+   "fa": "یعنی، من نمی‌دانم.",
+   "pattern": "Yani, <cümle>.",
+   "targetWords": [
+    "yani"
+   ]
+  },
+  {
+   "id": "tr-a1-065",
+   "text": "Ayrıca su da alalım.",
+   "fa": "ضمناً آب هم بگیریم.",
+   "pattern": "Ayrıca <isim> da alalım.",
+   "targetWords": [
+    "ayrıca"
+   ]
+  },
+  {
+   "id": "tr-a1-066",
+   "text": "Bu eski bir ev.",
+   "fa": "این خانه‌ای قدیمی است.",
+   "pattern": "Bu eski bir <isim>.",
+   "targetWords": [
+    "eski"
+   ]
+  },
+  {
+   "id": "tr-a1-067",
+   "text": "Eski arkadaşımla buluştum.",
+   "fa": "با دوست قدیمی‌ام قرار گذاشتم.",
+   "pattern": "Eski <isim>-la buluştum.",
+   "targetWords": [
+    "eski"
+   ]
+  },
+  {
+   "id": "tr-a1-068",
+   "text": "Teklifi kabul ediyorum.",
+   "fa": "پیشنهاد را قبول می‌کنم.",
+   "pattern": "<isim> kabul ediyorum.",
+   "targetWords": [
+    "kabul"
+   ]
+  },
+  {
+   "id": "tr-a1-069",
+   "text": "Kabul, yarın görüşürüz.",
+   "fa": "قبول، فردا می‌بینمت.",
+   "pattern": "Kabul, <cümle>.",
+   "targetWords": [
+    "kabul"
+   ]
+  },
+  {
+   "id": "tr-a1-070",
+   "text": "Teşekkür etti ve gitti.",
+   "fa": "تشکر کرد و رفت.",
+   "pattern": "<isim> etti ve <fiil>.",
+   "targetWords": [
+    "etti"
+   ]
+  },
+  {
+   "id": "tr-a1-071",
+   "text": "Bu konuyla ilgili sorum var.",
+   "fa": "دربارهٔ این موضوع سؤال دارم.",
+   "pattern": "<isim>-la ilgili sorum var.",
+   "targetWords": [
+    "ilgili"
+   ]
+  },
+  {
+   "id": "tr-a1-072",
+   "text": "Bugün özel bir gün.",
+   "fa": "امروز روز خاصی است.",
+   "pattern": "Bugün özel bir <isim>.",
+   "targetWords": [
+    "özel"
+   ]
+  },
+  {
+   "id": "tr-a1-073",
+   "text": "Özel bir şey ister misin?",
+   "fa": "چیز خاصی می‌خواهی؟",
+   "pattern": "Özel bir şey ister misin?",
+   "targetWords": [
+    "özel"
+   ]
+  },
+  {
+   "id": "tr-a1-074",
+   "text": "Her evde bir mutfak vardır.",
+   "fa": "هر خانه‌ای یک آشپزخانه دارد.",
+   "pattern": "Her <yer> bir <isim> vardır.",
+   "targetWords": [
+    "vardır"
+   ]
+  },
+  {
+   "id": "tr-a1-075",
+   "text": "Geliyorum, fakat geç.",
+   "fa": "می‌آیم، اما دیر.",
+   "pattern": "<cümle>, fakat <zarf>.",
+   "targetWords": [
+    "fakat"
+   ]
+  },
+  {
+   "id": "tr-a1-076",
+   "text": "İki arabaya sahip.",
+   "fa": "او دو ماشین دارد.",
+   "pattern": "<isim>-e sahip.",
+   "targetWords": [
+    "sahip"
+   ]
+  },
+  {
+   "id": "tr-a1-077",
+   "text": "Fiyat çok yüksek.",
+   "fa": "قیمت خیلی بالاست.",
+   "pattern": "<isim> çok yüksek.",
+   "targetWords": [
+    "yüksek"
+   ]
+  },
+  {
+   "id": "tr-a1-078",
+   "text": "Yüksek sesle konuşma.",
+   "fa": "بلند حرف نزن.",
+   "pattern": "Yüksek sesle <fiil>.",
+   "targetWords": [
+    "yüksek"
+   ]
+  },
+  {
+   "id": "tr-a1-079",
+   "text": "Ben zaten biliyorum.",
+   "fa": "خودم می‌دانم.",
+   "pattern": "Ben zaten <fiil>.",
+   "targetWords": [
+    "zaten"
+   ]
+  },
+  {
+   "id": "tr-a1-080",
+   "text": "Zaten geç oldu.",
+   "fa": "دیگر دیر شده.",
+   "pattern": "Zaten <sıfat> oldu.",
+   "targetWords": [
+    "zaten"
+   ]
+  },
+  {
+   "id": "tr-a1-081",
+   "text": "Kitabı masanın üzerine koy.",
+   "fa": "کتاب را روی میز بگذار.",
+   "pattern": "<isim> <isim>-in üzerine koy.",
+   "targetWords": [
+    "üzerine"
+   ]
+  },
+  {
+   "id": "tr-a1-082",
+   "text": "Telefon masanın üzerinde.",
+   "fa": "تلفن روی میز است.",
+   "pattern": "<isim> <isim>-in üzerinde.",
+   "targetWords": [
+    "üzerinde"
+   ]
+  },
+  {
+   "id": "tr-a1-083",
+   "text": "Devlet okulunda okuyorum.",
+   "fa": "در مدرسهٔ دولتی درس می‌خوانم.",
+   "pattern": "Devlet <isim>-inde okuyorum.",
+   "targetWords": [
+    "devlet"
+   ]
+  },
+  {
+   "id": "tr-a1-084",
+   "text": "Bu farklı bir lezzet.",
+   "fa": "این طعم متفاوتی است.",
+   "pattern": "Bu farklı bir <isim>.",
+   "targetWords": [
+    "farklı"
+   ]
+  },
+  {
+   "id": "tr-a1-085",
+   "text": "Farklı bir renk var mı?",
+   "fa": "رنگ دیگری دارید؟",
+   "pattern": "Farklı bir <isim> var mı?",
+   "targetWords": [
+    "farklı"
+   ]
+  },
+  {
+   "id": "tr-a1-086",
+   "text": "Hep aynı şeyi söylüyorsun.",
+   "fa": "همیشه همان حرف را می‌زنی.",
+   "pattern": "Hep aynı <isim> <fiil>.",
+   "targetWords": [
+    "hep"
+   ]
+  },
+  {
+   "id": "tr-a1-087",
+   "text": "Ben hep buradayım.",
+   "fa": "من همیشه اینجا هستم.",
+   "pattern": "Ben hep <yer>.",
+   "targetWords": [
+    "hep"
+   ]
+  },
+  {
+   "id": "tr-a1-088",
+   "text": "Eğer istersen gelirim.",
+   "fa": "اگر بخواهی می‌آیم.",
+   "pattern": "Eğer <cümle> <fiil>.",
+   "targetWords": [
+    "eğer"
+   ]
+  },
+  {
+   "id": "tr-a1-089",
+   "text": "Eğer vaktin varsa gel.",
+   "fa": "اگر وقت داری بیا.",
+   "pattern": "Eğer <cümle> <fiil>.",
+   "targetWords": [
+    "eğer"
+   ]
+  },
+  {
+   "id": "tr-a1-090",
+   "text": "Herkes burada mı?",
+   "fa": "همه اینجا هستند؟",
+   "pattern": "Herkes <yer> mı?",
+   "targetWords": [
+    "herkes"
+   ]
+  },
+  {
+   "id": "tr-a1-091",
+   "text": "Herkes seni seviyor.",
+   "fa": "همه تو را دوست دارند.",
+   "pattern": "Herkes <isim> seviyor.",
+   "targetWords": [
+    "herkes"
+   ]
+  },
+  {
+   "id": "tr-a1-092",
+   "text": "Hala evde misin?",
+   "fa": "هنوز خانه‌ای؟",
+   "pattern": "Hala <yer> misin?",
+   "targetWords": [
+    "hala"
+   ]
+  },
+  {
+   "id": "tr-a1-093",
+   "text": "Ben hala açım.",
+   "fa": "من هنوز گرسنه‌ام.",
+   "pattern": "Ben hala <sıfat>.",
+   "targetWords": [
+    "hala"
+   ]
+  },
+  {
+   "id": "tr-a1-094",
+   "text": "Şu an müsait değilim.",
+   "fa": "الان وقت ندارم.",
+   "pattern": "Şu an <sıfat> değilim.",
+   "targetWords": [
+    "an"
+   ]
+  },
+  {
+   "id": "tr-a1-095",
+   "text": "Bir an bekle.",
+   "fa": "یک لحظه صبر کن.",
+   "pattern": "Bir an <fiil>.",
+   "targetWords": [
+    "an"
+   ]
+  },
+  {
+   "id": "tr-a1-096",
+   "text": "Söz veriyorum, geleceğim.",
+   "fa": "قول می‌دهم، می‌آیم.",
+   "pattern": "Söz veriyorum, <cümle>.",
+   "targetWords": [
+    "söz"
+   ]
+  },
+  {
+   "id": "tr-a1-097",
+   "text": "Bizi burada bekle.",
+   "fa": "اینجا منتظر ما بمان.",
+   "pattern": "Bizi <yer> <fiil>.",
+   "targetWords": [
+    "bizi"
+   ]
+  },
+  {
+   "id": "tr-a1-098",
+   "text": "Bizi arabayla aldı.",
+   "fa": "با ماشین ما را برد.",
+   "pattern": "Bizi <isim>-la aldı.",
+   "targetWords": [
+    "bizi"
+   ]
+  },
+  {
+   "id": "tr-a1-099",
+   "text": "Evde kimse yok.",
+   "fa": "کسی خانه نیست.",
+   "pattern": "<yer> kimse yok.",
+   "targetWords": [
+    "kimse"
+   ]
+  },
+  {
+   "id": "tr-a1-100",
+   "text": "Kimse cevap bilmiyor.",
+   "fa": "هیچ‌کس جواب را نمی‌داند.",
+   "pattern": "Kimse <isim> <fiil>.",
+   "targetWords": [
+    "kimse"
+   ]
+  },
+  {
+   "id": "tr-a1-101",
+   "text": "Çay yerine kahve alayım.",
+   "fa": "به جای چای قهوه بگیرم.",
+   "pattern": "<A> yerine <B> alayım.",
+   "targetWords": [
+    "yerine"
+   ]
+  },
+  {
+   "id": "tr-a1-102",
+   "text": "Hava çok kötü.",
+   "fa": "هوا خیلی بد است.",
+   "pattern": "<isim> çok kötü.",
+   "targetWords": [
+    "kötü"
+   ]
+  },
+  {
+   "id": "tr-a1-103",
+   "text": "Bugün kötü hissediyorum.",
+   "fa": "امروز حالم بد است.",
+   "pattern": "<zaman> kötü hissediyorum.",
+   "targetWords": [
+    "kötü"
+   ]
+  },
+  {
+   "id": "tr-a1-104",
+   "text": "Bak, otobüs geliyor.",
+   "fa": "ببین، اتوبوس دارد می‌آید.",
+   "pattern": "Bak, <cümle>.",
+   "targetWords": [
+    "bak"
+   ]
+  },
+  {
+   "id": "tr-a1-105",
+   "text": "Şuraya bir bak.",
+   "fa": "یک نگاه به آنجا بینداز.",
+   "pattern": "<yer>-e bir bak.",
+   "targetWords": [
+    "bak"
+   ]
+  },
+  {
+   "id": "tr-a1-106",
+   "text": "Acele etmek gerek.",
+   "fa": "باید عجله کرد.",
+   "pattern": "<fiil>-mek gerek.",
+   "targetWords": [
+    "gerek"
+   ]
+  },
+  {
+   "id": "tr-a1-107",
+   "text": "Gerek yok, teşekkürler.",
+   "fa": "لازم نیست، ممنون.",
+   "pattern": "Gerek yok, teşekkürler.",
+   "targetWords": [
+    "gerek"
+   ]
+  },
+  {
+   "id": "tr-a1-108",
+   "text": "Bu benim ikinci günüm.",
+   "fa": "این دومین روز من است.",
+   "pattern": "Bu benim ikinci <isim>.",
+   "targetWords": [
+    "ikinci"
+   ]
+  },
+  {
+   "id": "tr-a1-109",
+   "text": "Bu ikinci çayım.",
+   "fa": "این دومین چای من است.",
+   "pattern": "Bu ikinci <isim>.",
+   "targetWords": [
+    "ikinci"
+   ]
+  },
+  {
+   "id": "tr-a1-110",
+   "text": "Kısa bir yürüyüş yapalım.",
+   "fa": "یک پیاده‌روی کوتاه بکنیم.",
+   "pattern": "Kısa bir <isim> yapalım.",
+   "targetWords": [
+    "kısa"
+   ]
+  },
+  {
+   "id": "tr-a1-111",
+   "text": "Yol çok kısa.",
+   "fa": "راه خیلی کوتاه است.",
+   "pattern": "<isim> çok kısa.",
+   "targetWords": [
+    "kısa"
+   ]
+  },
+  {
+   "id": "tr-a1-112",
+   "text": "Ona dün söyledim.",
+   "fa": "دیروز به او گفتم.",
+   "pattern": "Ona <zaman> <fiil>.",
+   "targetWords": [
+    "ona"
+   ]
+  },
+  {
+   "id": "tr-a1-113",
+   "text": "Ona bir çay ver.",
+   "fa": "به او یک چای بده.",
+   "pattern": "Ona bir <isim> ver.",
+   "targetWords": [
+    "ona"
+   ]
+  },
+  {
+   "id": "tr-a1-114",
+   "text": "Birçok arkadaşım var.",
+   "fa": "دوستان زیادی دارم.",
+   "pattern": "Birçok <isim> var.",
+   "targetWords": [
+    "birçok"
+   ]
+  },
+  {
+   "id": "tr-a1-115",
+   "text": "Ne kadar süre kalıyorsun?",
+   "fa": "چه مدت می‌مانی؟",
+   "pattern": "Ne kadar süre <fiil>?",
+   "targetWords": [
+    "süre"
+   ]
+  },
+  {
+   "id": "tr-a1-116",
+   "text": "Kısa bir süre bekleyin.",
+   "fa": "مدت کوتاهی صبر کنید.",
+   "pattern": "Kısa bir süre <fiil>.",
+   "targetWords": [
+    "süre"
+   ]
+  },
+  {
+   "id": "tr-a1-117",
+   "text": "Yarın gelirim dedi.",
+   "fa": "گفت فردا می‌آیم.",
+   "pattern": "<cümle> dedi.",
+   "targetWords": [
+    "dedi"
+   ]
+  },
+  {
+   "id": "tr-a1-118",
+   "text": "Onun adı ne?",
+   "fa": "اسم او چیست؟",
+   "pattern": "Onun adı ne?",
+   "targetWords": [
+    "adı"
+   ]
+  },
+  {
+   "id": "tr-a1-119",
+   "text": "Kedinin adı Boncuk.",
+   "fa": "اسم گربه بونجوک است.",
+   "pattern": "<isim>-in adı <isim>.",
+   "targetWords": [
+    "adı"
+   ]
+  },
+  {
+   "id": "tr-a1-120",
+   "text": "Aslında çok yorgunum.",
+   "fa": "راستش خیلی خسته‌ام.",
+   "pattern": "Aslında <sıfat>.",
+   "targetWords": [
+    "aslında"
+   ]
+  },
+  {
+   "id": "tr-a1-121",
+   "text": "Aslında sen haklısın.",
+   "fa": "راستش حق با توست.",
+   "pattern": "Aslında <cümle>.",
+   "targetWords": [
+    "aslında"
+   ]
+  },
+  {
+   "id": "tr-a1-122",
+   "text": "Hadi yeniden deneyelim.",
+   "fa": "بیا دوباره امتحان کنیم.",
+   "pattern": "Hadi yeniden <fiil>.",
+   "targetWords": [
+    "yeniden"
+   ]
+  },
+  {
+   "id": "tr-a1-123",
+   "text": "Yeniden hoş geldiniz.",
+   "fa": "دوباره خوش آمدید.",
+   "pattern": "Yeniden hoş geldiniz.",
+   "targetWords": [
+    "yeniden"
+   ]
+  },
+  {
+   "id": "tr-a1-124",
+   "text": "Yol boyunca konuştuk.",
+   "fa": "در طول راه حرف زدیم.",
+   "pattern": "<isim> boyunca <fiil>.",
+   "targetWords": [
+    "boyunca"
+   ]
+  },
+  {
+   "id": "tr-a1-125",
+   "text": "Bu yol nereye gidiyor?",
+   "fa": "این راه به کجا می‌رود؟",
+   "pattern": "Bu yol nereye gidiyor?",
+   "targetWords": [
+    "yol"
+   ]
+  },
+  {
+   "id": "tr-a1-126",
+   "text": "Yol uzun, hadi gidelim.",
+   "fa": "راه طولانی است، برویم.",
+   "pattern": "Yol <sıfat>, <cümle>.",
+   "targetWords": [
+    "yol"
+   ]
+  },
+  {
+   "id": "tr-a1-127",
+   "text": "Buna ne dersin?",
+   "fa": "نظرت در این باره چیست؟",
+   "pattern": "Buna ne dersin?",
+   "targetWords": [
+    "buna"
+   ]
+  },
+  {
+   "id": "tr-a1-128",
+   "text": "Buna ihtiyacım var.",
+   "fa": "به این نیاز دارم.",
+   "pattern": "Buna ihtiyacım var.",
+   "targetWords": [
+    "buna"
+   ]
+  },
+  {
+   "id": "tr-a1-129",
+   "text": "Dikkat et, yol ıslak.",
+   "fa": "مواظب باش، جاده خیس است.",
+   "pattern": "Dikkat et, <cümle>.",
+   "targetWords": [
+    "dikkat"
+   ]
+  },
+  {
+   "id": "tr-a1-130",
+   "text": "Dikkat, kapı kapanıyor.",
+   "fa": "توجه، در بسته می‌شود.",
+   "pattern": "Dikkat, <cümle>.",
+   "targetWords": [
+    "dikkat"
+   ]
+  },
+  {
+   "id": "tr-a1-131",
+   "text": "Sonunda eve geldin!",
+   "fa": "بالاخره آمدی خانه!",
+   "pattern": "Sonunda <yer> <fiil>!",
+   "targetWords": [
+    "sonunda"
+   ]
+  },
+  {
+   "id": "tr-a1-132",
+   "text": "Yolun sonunda bir market var.",
+   "fa": "آخر خیابان یک سوپرمارکت است.",
+   "pattern": "<isim>-in sonunda bir <isim> var.",
+   "targetWords": [
+    "sonunda"
+   ]
+  },
+  {
+   "id": "tr-a1-133",
+   "text": "Hadi eve gidelim.",
+   "fa": "بیا برویم خانه.",
+   "pattern": "Hadi <yer> <fiil>.",
+   "targetWords": [
+    "hadi"
+   ]
+  },
+  {
+   "id": "tr-a1-134",
+   "text": "Hadi, geç kalıyoruz.",
+   "fa": "یالا، داریم دیر می‌کنیم.",
+   "pattern": "Hadi, <cümle>.",
+   "targetWords": [
+    "hadi"
+   ]
+  },
+  {
+   "id": "tr-a1-135",
+   "text": "Güzel şeyler oluyor.",
+   "fa": "اتفاق‌های خوبی می‌افتد.",
+   "pattern": "<sıfat> şeyler oluyor.",
+   "targetWords": [
+    "şeyler"
+   ]
+  },
+  {
+   "id": "tr-a1-136",
+   "text": "Bazı şeyler değişmez.",
+   "fa": "بعضی چیزها عوض نمی‌شوند.",
+   "pattern": "Bazı şeyler <fiil>.",
+   "targetWords": [
+    "şeyler"
+   ]
+  },
+  {
+   "id": "tr-a1-137",
+   "text": "Çocuklar oyun oynuyor.",
+   "fa": "بچه‌ها بازی می‌کنند.",
+   "pattern": "<isim> oyun oynuyor.",
+   "targetWords": [
+    "oyun"
+   ]
+  },
+  {
+   "id": "tr-a1-138",
+   "text": "Bu oyun çok eğlenceli.",
+   "fa": "این بازی خیلی سرگرم‌کننده است.",
+   "pattern": "Bu oyun çok <sıfat>.",
+   "targetWords": [
+    "oyun"
+   ]
+  },
+  {
+   "id": "tr-a1-139",
+   "text": "Yere oturma, lütfen.",
+   "fa": "روی زمین ننشین، لطفاً.",
+   "pattern": "Yere <fiil>, lütfen.",
+   "targetWords": [
+    "yere"
+   ]
+  },
+  {
+   "id": "tr-a1-140",
+   "text": "Başka bir yere gidelim.",
+   "fa": "جای دیگری برویم.",
+   "pattern": "Başka bir yere gidelim.",
+   "targetWords": [
+    "yere"
+   ]
+  },
+  {
+   "id": "tr-a1-141",
+   "text": "Yağmura rağmen geldi.",
+   "fa": "با وجود باران آمد.",
+   "pattern": "<isim>-a rağmen <fiil>.",
+   "targetWords": [
+    "rağmen"
+   ]
+  },
+  {
+   "id": "tr-a1-142",
+   "text": "Dün çok iş vardı.",
+   "fa": "دیروز کار زیادی بود.",
+   "pattern": "<zaman> çok <isim> vardı.",
+   "targetWords": [
+    "vardı"
+   ]
+  },
+  {
+   "id": "tr-a1-143",
+   "text": "Evde ekmek vardı.",
+   "fa": "در خانه نان بود.",
+   "pattern": "<yer> <isim> vardı.",
+   "targetWords": [
+    "vardı"
+   ]
+  },
+  {
+   "id": "tr-a1-144",
+   "text": "Annem kek yaptı.",
+   "fa": "مادرم کیک درست کرد.",
+   "pattern": "<isim> <isim> yaptı.",
+   "targetWords": [
+    "yaptı"
+   ]
+  },
+  {
+   "id": "tr-a1-145",
+   "text": "Bugün erken çıktı.",
+   "fa": "امروز زود رفت بیرون.",
+   "pattern": "<zaman> <zarf> çıktı.",
+   "targetWords": [
+    "çıktı"
+   ]
+  },
+  {
+   "id": "tr-a1-146",
+   "text": "Beraber yemek yiyelim.",
+   "fa": "با هم غذا بخوریم.",
+   "pattern": "Beraber <isim> yiyelim.",
+   "targetWords": [
+    "beraber"
+   ]
+  },
+  {
+   "id": "tr-a1-147",
+   "text": "Hep beraber gidiyoruz.",
+   "fa": "همه با هم می‌رویم.",
+   "pattern": "Hep beraber <fiil>.",
+   "targetWords": [
+    "beraber"
+   ]
+  },
+  {
+   "id": "tr-a1-148",
+   "text": "Dün niye gelmedin?",
+   "fa": "دیروز چرا نیامدی؟",
+   "pattern": "<zaman> niye <fiil>?",
+   "targetWords": [
+    "niye"
+   ]
+  },
+  {
+   "id": "tr-a1-149",
+   "text": "Niye bu kadar pahalı?",
+   "fa": "چرا این‌قدر گران است؟",
+   "pattern": "Niye bu kadar <sıfat>?",
+   "targetWords": [
+    "niye"
+   ]
+  },
+  {
+   "id": "tr-a1-150",
+   "text": "Bana adını söyledi.",
+   "fa": "اسمش را به من گفت.",
+   "pattern": "Bana <isim> söyledi.",
+   "targetWords": [
+    "söyledi"
+   ]
+  },
+  {
+   "id": "tr-a1-151",
+   "text": "Her şeyi anladım.",
+   "fa": "همه چیز را فهمیدم.",
+   "pattern": "Her şeyi <fiil>.",
+   "targetWords": [
+    "şeyi"
+   ]
+  },
+  {
+   "id": "tr-a1-152",
+   "text": "Bu şeyi istemiyorum.",
+   "fa": "این را نمی‌خواهم.",
+   "pattern": "Bu şeyi <fiil>.",
+   "targetWords": [
+    "şeyi"
+   ]
+  },
+  {
+   "id": "tr-a1-153",
+   "text": "Çay falan ister misin?",
+   "fa": "چای یا چیزی می‌خواهی؟",
+   "pattern": "<isim> falan ister misin?",
+   "targetWords": [
+    "falan"
+   ]
+  },
+  {
+   "id": "tr-a1-154",
+   "text": "Çay çok güçlü.",
+   "fa": "چای خیلی پررنگ است.",
+   "pattern": "<isim> çok güçlü.",
+   "targetWords": [
+    "güçlü"
+   ]
+  },
+  {
+   "id": "tr-a1-155",
+   "text": "O çok güçlü biri.",
+   "fa": "او آدم خیلی قوی‌ای است.",
+   "pattern": "O çok güçlü biri.",
+   "targetWords": [
+    "güçlü"
+   ]
+  },
+  {
+   "id": "tr-a1-156",
+   "text": "Suyunu iç, lütfen.",
+   "fa": "آبت را بخور، لطفاً.",
+   "pattern": "<isim> iç, lütfen.",
+   "targetWords": [
+    "iç"
+   ]
+  },
+  {
+   "id": "tr-a1-157",
+   "text": "Çayını sıcak iç.",
+   "fa": "چایت را داغ بخور.",
+   "pattern": "<isim> <sıfat> iç.",
+   "targetWords": [
+    "iç"
+   ]
+  },
+  {
+   "id": "tr-a1-158",
+   "text": "Bana bir çay verdi.",
+   "fa": "یک چای به من داد.",
+   "pattern": "Bana bir <isim> verdi.",
+   "targetWords": [
+    "verdi"
+   ]
+  },
+  {
+   "id": "tr-a1-159",
+   "text": "Cevap ver, lütfen.",
+   "fa": "لطفاً جواب بده.",
+   "pattern": "Cevap ver, lütfen.",
+   "targetWords": [
+    "cevap"
+   ]
+  },
+  {
+   "id": "tr-a1-160",
+   "text": "Doğru cevap bu.",
+   "fa": "جواب درست این است.",
+   "pattern": "Doğru cevap bu.",
+   "targetWords": [
+    "cevap"
+   ]
+  },
+  {
+   "id": "tr-a1-161",
+   "text": "Göz doktoruna gidiyorum.",
+   "fa": "پیش چشم‌پزشک می‌روم.",
+   "pattern": "Göz doktoruna gidiyorum.",
+   "targetWords": [
+    "göz"
+   ]
+  },
+  {
+   "id": "tr-a1-162",
+   "text": "Yaz çok sıcak.",
+   "fa": "تابستان خیلی گرم است.",
+   "pattern": "Yaz çok <sıfat>.",
+   "targetWords": [
+    "yaz"
+   ]
+  },
+  {
+   "id": "tr-a1-163",
+   "text": "Adını buraya yaz.",
+   "fa": "اسمت را اینجا بنویس.",
+   "pattern": "<isim> buraya yaz.",
+   "targetWords": [
+    "yaz"
+   ]
+  },
+  {
+   "id": "tr-a1-164",
+   "text": "Hangi ülke daha güzel?",
+   "fa": "کدام کشور قشنگ‌تر است؟",
+   "pattern": "Hangi ülke daha <sıfat>?",
+   "targetWords": [
+    "ülke"
+   ]
+  },
+  {
+   "id": "tr-a1-165",
+   "text": "Bu ülke çok güzel.",
+   "fa": "این کشور خیلی زیباست.",
+   "pattern": "Bu ülke çok <sıfat>.",
+   "targetWords": [
+    "ülke"
+   ]
+  },
+  {
+   "id": "tr-a1-166",
+   "text": "Annem ekmek aldı.",
+   "fa": "مادرم نان خرید.",
+   "pattern": "<isim> <isim> aldı.",
+   "targetWords": [
+    "aldı"
+   ]
+  },
+  {
+   "id": "tr-a1-167",
+   "text": "Şehir dışında yaşıyorum.",
+   "fa": "خارج از شهر زندگی می‌کنم.",
+   "pattern": "<isim> dışında yaşıyorum.",
+   "targetWords": [
+    "dışında"
+   ]
+  },
+  {
+   "id": "tr-a1-168",
+   "text": "Bunun dışında her şey iyi.",
+   "fa": "غیر از این، همه چیز خوب است.",
+   "pattern": "Bunun dışında her şey <sıfat>.",
+   "targetWords": [
+    "dışında"
+   ]
+  },
+  {
+   "id": "tr-a1-169",
+   "text": "Yaklaşık on dakika sürer.",
+   "fa": "حدود ده دقیقه طول می‌کشد.",
+   "pattern": "Yaklaşık <sayı> <isim> sürer.",
+   "targetWords": [
+    "yaklaşık"
+   ]
+  },
+  {
+   "id": "tr-a1-170",
+   "text": "Belli değil, bakarız.",
+   "fa": "معلوم نیست، می‌بینیم.",
+   "pattern": "Belli değil, <cümle>.",
+   "targetWords": [
+    "belli"
+   ]
+  },
+  {
+   "id": "tr-a1-171",
+   "text": "Saat belli mi?",
+   "fa": "ساعتش معلوم است؟",
+   "pattern": "<isim> belli mi?",
+   "targetWords": [
+    "belli"
+   ]
+  },
+  {
+   "id": "tr-a1-172",
+   "text": "Halk pazarı pazar günü açık.",
+   "fa": "بازار مردمی یکشنبه باز است.",
+   "pattern": "<isim> <zaman> açık.",
+   "targetWords": [
+    "halk"
+   ]
+  },
+  {
+   "id": "tr-a1-173",
+   "text": "Vaktin varsa gel.",
+   "fa": "اگر وقت داری بیا.",
+   "pattern": "<isim> varsa <fiil>.",
+   "targetWords": [
+    "varsa"
+   ]
+  },
+  {
+   "id": "tr-a1-174",
+   "text": "Sorun varsa söyle.",
+   "fa": "اگر مشکلی هست بگو.",
+   "pattern": "<isim> varsa söyle.",
+   "targetWords": [
+    "varsa"
+   ]
+  },
+  {
+   "id": "tr-a1-175",
+   "text": "Yemek konusunda sen seç.",
+   "fa": "در مورد غذا تو انتخاب کن.",
+   "pattern": "<isim> konusunda sen seç.",
+   "targetWords": [
+    "konusunda"
+   ]
+  },
+  {
+   "id": "tr-a1-176",
+   "text": "Sanki kış geldi.",
+   "fa": "انگار زمستان آمده.",
+   "pattern": "Sanki <cümle>.",
+   "targetWords": [
+    "sanki"
+   ]
+  },
+  {
+   "id": "tr-a1-177",
+   "text": "Tabi ki gelirim.",
+   "fa": "حتماً می‌آیم.",
+   "pattern": "Tabi ki <fiil>.",
+   "targetWords": [
+    "tabi"
+   ]
+  },
+  {
+   "id": "tr-a1-178",
+   "text": "Tabi, buyurun oturun.",
+   "fa": "البته، بفرمایید بنشینید.",
+   "pattern": "Tabi, <cümle>.",
+   "targetWords": [
+    "tabi"
+   ]
+  }
+ ]
+}

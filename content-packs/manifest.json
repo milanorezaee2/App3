@@ -16,6 +16,13 @@
       "sentences": 386
     },
     {
+      "language": "de",
+      "band": "B1",
+      "version": 1,
+      "path": "de/B1.v1.json",
+      "sentences": 154
+    },
+    {
       "language": "es",
       "band": "A1",
       "version": 1,
@@ -30,6 +37,13 @@
       "sentences": 184
     },
     {
+      "language": "es",
+      "band": "B1",
+      "version": 1,
+      "path": "es/B1.v1.json",
+      "sentences": 142
+    },
+    {
       "language": "fr",
       "band": "A1",
       "version": 1,
@@ -42,6 +56,13 @@
       "version": 1,
       "path": "fr/A2.v1.json",
       "sentences": 188
+    },
+    {
+      "language": "fr",
+      "band": "B1",
+      "version": 1,
+      "path": "fr/B1.v1.json",
+      "sentences": 140
     },
     {
       "language": "ru",
@@ -63,6 +84,13 @@
       "version": 1,
       "path": "ru/pre.v1.json",
       "sentences": 180
+    },
+    {
+      "language": "tr",
+      "band": "A1",
+      "version": 1,
+      "path": "tr/A1.v1.json",
+      "sentences": 178
     }
   ]
 }
