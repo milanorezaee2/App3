@@ -454,6 +454,16 @@ export default function StarterHome({course}: {course: StarterCourse}) {
               </View>
             </View>
             <View style={[styles.quickRow, compact && styles.quickRowCompact]}>
+              {course.id === 'de' ? (
+                <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push(`${course.home}/vocabulary` as never)}>
+                  <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Sparkles size={18} color={HomeColors.accent} /></View>
+                  <View style={styles.quickCopy}>
+                    <Text style={styles.quickTitle}>واژه‌خانهٔ آلمانی</Text>
+                    <Text style={styles.quickDesc}>۱۰۰ واژهٔ دوره؛ شنیدن، تکرار و گفتار با مرور فاصله‌دار</Text>
+                  </View>
+                  <ChevronLeft size={17} color={HomeColors.muted} />
+                </Pressable>
+              ) : null}
               <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push(`${course.home}/review` as never)}>
                 <View style={[styles.quickIcon, { backgroundColor: HomeColors.sageSoft }]}><RefreshCw size={18} color={HomeColors.sage} /></View>
                 <View style={styles.quickCopy}>
