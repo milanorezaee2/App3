@@ -30,8 +30,17 @@ const C = {
   danger: '#B91C1C',
 };
 
-/** Three steps only: می‌شنوی → تکرار می‌کنی → از فارسی به زبان مقصد. */
-type Phase = 'loading' | 'teach' | 'repeat' | 'reverse' | 'rate' | 'done';
+/**
+ * Two steps per word, not three: hear it once, then say it once.
+ *
+ * The earlier flow spoke the word twice, made the learner repeat it on a second screen and then asked
+ * for the very same word a third time on the reverse screen. That is three repetitions of one card and
+ * the reason the drill felt exhausting. Now a card is:
+ *   1. LISTEN  — the app says the word, then the Persian meaning («آلمانی → فارسی», no second pass).
+ *   2. SPEAK   — only the Persian is shown; one microphone attempt (retry and skip stay available).
+ * Then the spaced-repetition rating, and the next card follows immediately.
+ */
+type Phase = 'loading' | 'listen' | 'speak' | 'rate' | 'done';
 
 /** Resolve on the engine's own callback, never later than the cap (a silent engine must not hang the flow). */
 function speechPromise(start: (done: () => void, failed: () => void) => void, capMs: number): Promise<void> {
@@ -72,12 +81,15 @@ export interface VocabLabConfig<T extends { id: string }> {
   BottomNav: ComponentType;
 }
 
+/** Score that counts as «the learner produced the word»; used for the speaking-mastery flag only. */
+const SPOKEN_OK = 70;
+
 /**
- * The vocabulary lab itself: listen → repeat → produce from Persian → rate, with spaced repetition.
+ * The vocabulary lab itself: listen → say → rate, with spaced repetition.
  *
- * One implementation for every course keeps the Russian and German flows literally identical —
- * same phases, same thresholds, same one-automatic-pass-per-card rule — while the content, locale,
- * speech engine and progress store come from the course configuration.
+ * One implementation for every course keeps the Russian and German drills literally identical —
+ * same phases, same thresholds, same one-automatic-pass-per-card rule — while content, locale, speech
+ * engine and progress store come from the course configuration.
  */
 export default function VocabLab<T extends { id: string }>({ config }: { config: VocabLabConfig<T> }) {
   const { title, languageName, locale, words, target, gloss, note, hint, speech, store, homeRoute, BottomNav } = config;
@@ -88,8 +100,14 @@ export default function VocabLab<T extends { id: string }>({ config }: { config:
   const [queue, setQueue] = useState<readonly T[]>([]);
   const [index, setIndex] = useState(0);
   const [sessionInfo, setSessionInfo] = useState({ dueCount: 0, newCount: 0 });
-  const [reverseSpoken, setReverseSpoken] = useState(false);
-  const [reverseScore, setReverseScore] = useState<number | null>(null);
+  const [spokenOk, setSpokenOk] = useState(false);
+  const [score, setScore] = useState<number | null>(null);
+  /** Bumped to re-mount SpeakCheck for a deliberate retry only — never automatically. */
+  const [attempt, setAttempt] = useState(0);
+  /** Reveal the written word after a miss — the learner asked for it, we never show it unasked. */
+  const [revealed, setRevealed] = useState(false);
+  /** While a hint word is playing, the recogniser is unmounted so it cannot score our own speaker. */
+  const [hearing, setHearing] = useState(false);
   const [autoPlaying, setAutoPlaying] = useState(false);
   const [error, setError] = useState('');
   const autoToken = useRef(0);
@@ -112,7 +130,7 @@ export default function VocabLab<T extends { id: string }>({ config }: { config:
       setIndex(0);
       setSessionInfo({ dueCount: session.dueCount, newCount: session.newCount });
       // No «start» screen: entering the section means the first word is shown and spoken right away.
-      setPhase(session.queue.length ? 'teach' : 'done');
+      setPhase(session.queue.length ? 'listen' : 'done');
     })();
     return () => { alive = false; void speech.stop(); };
   }, [reloadToken, speech, store, words]);
@@ -121,8 +139,11 @@ export default function VocabLab<T extends { id: string }>({ config }: { config:
   const word = queue[index];
 
   const resetWord = useCallback(() => {
-    setReverseSpoken(false);
-    setReverseScore(null);
+    setSpokenOk(false);
+    setScore(null);
+    setAttempt(0);
+    setRevealed(false);
+    setHearing(false);
     setError('');
     autoToken.current += 1;
     // One owner for stopping the target-language audio: stop() also invalidates the callbacks,
@@ -134,28 +155,22 @@ export default function VocabLab<T extends { id: string }>({ config }: { config:
     resetWord();
     const next = index + 1;
     setIndex(next);
-    // «teach» renders the next card; the auto-pronunciation effect below speaks it immediately.
-    setPhase(next < queue.length ? 'teach' : 'done');
+    // «listen» renders the next card; the auto-pronunciation effect below speaks it immediately.
+    setPhase(next < queue.length ? 'listen' : 'done');
   }, [index, queue.length, resetWord]);
 
-  /** Target language → Persian → target language, exactly as promised, starting with the word itself. */
+  /** Target language → Persian, once. The second target-language pass was the extra repetition. */
   const autoSay = useCallback(async (item: T) => {
     const token = ++autoToken.current;
-    const spoken = target(item);
     setAutoPlaying(true);
     await speechPromise(
-      (done, failed) => { void speech.play(spoken, 0.62, failed, done); },
+      (done, failed) => { void speech.play(target(item), 0.6, failed, done); },
       5000,
     );
     if (token !== autoToken.current) return;
     await speechPromise(
-      (done, failed) => { speakPersian(gloss(item), 0.92, failed, done); },
-      3500,
-    );
-    if (token !== autoToken.current) return;
-    await speechPromise(
-      (done, failed) => { void speech.play(spoken, 0.55, failed, done); },
-      5000,
+      (done, failed) => { speakPersian(gloss(item), 0.95, failed, done); },
+      4500,
     );
     if (token !== autoToken.current) return;
     setAutoPlaying(false);
@@ -163,22 +178,41 @@ export default function VocabLab<T extends { id: string }>({ config }: { config:
 
   // The automatic pass: every card that appears is pronounced once, including the very first one.
   useEffect(() => {
-    if (phase !== 'teach' || !word) return;
+    if (phase !== 'listen' || !word) return;
     if (autoSpokenFor.current === word.id) return;
     autoSpokenFor.current = word.id;
     void autoSay(word);
   }, [phase, word, autoSay]);
 
+  const startSpeaking = useCallback(() => {
+    // The microphone must never open while the word is still being spoken.
+    autoToken.current += 1;
+    setAutoPlaying(false);
+    void speech.stop();
+    setPhase('speak');
+  }, [speech]);
+
+  /** Hear the answer once, then hand the microphone back: audio first, recognition after. */
+  const hearWord = useCallback(() => {
+    if (!word) return;
+    setHearing(true);
+    setError('');
+    const back = () => { setHearing(false); setAttempt(value => value + 1); };
+    void speech.play(target(word), 0.6, back, back);
+  }, [speech, target, word]);
+
   const rate = useCallback(async (rating: ReviewRating) => {
     if (!word || !progress) return;
-    const next = store.rate(progress, word.id, rating, reverseSpoken, new Date());
+    const next = store.rate(progress, word.id, rating, spokenOk, new Date());
     await store.save(next);
     setProgress(next);
-    if (reverseSpoken) void markPlanStep('speak').catch(() => undefined);
+    if (spokenOk) void markPlanStep('speak').catch(() => undefined);
     goNext();
-  }, [word, progress, reverseSpoken, goNext, store]);
+  }, [word, progress, spokenOk, goNext, store]);
 
   const home = homeRoute as never;
+  const position = queue.length ? `واژهٔ ${fa(index + 1)} از ${fa(queue.length)}` : '';
+  const progressPercent = queue.length ? Math.round(((index + 1) / queue.length) * 100) : 0;
 
   return (
     <View style={styles.root}>
@@ -188,32 +222,38 @@ export default function VocabLab<T extends { id: string }>({ config }: { config:
         </Pressable>
         <View style={styles.headerCopy}>
           <Text style={styles.headerTitle}>{title}</Text>
-          <Text style={styles.headerSub}>می‌شنوی، تکرار می‌کنی، از فارسی به {languageName} می‌گویی</Text>
+          <Text style={styles.headerSub}>می‌شنوی و معنی را می‌گیری، بعد خودت از فارسی به {languageName} می‌گویی</Text>
         </View>
         <Sparkles size={22} color={C.primary} />
       </View>
+
+      {(phase === 'listen' || phase === 'speak' || phase === 'rate') && word ? (
+        <View style={styles.progressStrip}>
+          <Text style={styles.progressText}>{position}</Text>
+          <View style={styles.progressTrack}><View style={[styles.progressFill, { width: `${Math.max(4, progressPercent)}%` }]} /></View>
+        </View>
+      ) : null}
 
       <ScrollView style={styles.scroll} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
         {phase === 'loading' ? (
           <View style={styles.centerCard}><ActivityIndicator color={C.primary} /><Text style={styles.bodyText}>در حال آماده کردن واژه‌ها…</Text></View>
         ) : null}
 
-        {phase === 'teach' && word ? (
+        {phase === 'listen' && word ? (
           <View style={styles.wordCard}>
-            <Text style={styles.stepLabel}>قدم ۱ از ۳ · می‌شنوی</Text>
+            <Text style={styles.stepLabel}>قدم ۱ از ۲ · می‌شنوی</Text>
             <Text keepColor style={styles.bigWord}>{target(word)}</Text>
             <Text style={styles.wordFaOnDark}>{gloss(word)}</Text>
             <View style={styles.autoBox}>
               <Volume2 size={16} color={C.primary} />
-              <Text style={styles.autoText}>{autoPlaying ? `${languageName} → فارسی → ${languageName}، خودکار…` : 'پخش تمام شد. اگر صدا را نشنیدی، «دوباره بشنو» را بزن.'}</Text>
+              <Text style={styles.autoText}>{autoPlaying ? `${languageName} → فارسی، خودکار…` : 'پخش تمام شد. اگر صدا را نشنیدی، «دوباره بشنو» را بزن.'}</Text>
             </View>
             {index === 0 ? (
               <View style={styles.guideBox}>
-                <Text style={styles.guideTitle}>سه قدم هر واژه</Text>
-                <Text style={styles.stepLine}>۱. اپ واژهٔ {languageName} را می‌گوید، بعد معنی فارسی، بعد دوباره {languageName}.</Text>
-                <Text style={styles.stepLine}>۲. تو همان واژه را تکرار می‌کنی.</Text>
-                <Text style={styles.stepLine}>۳. فقط فارسی را می‌بینی و {languageName}اش را می‌گویی.</Text>
-                <Text style={styles.smallText}>{fa(sessionInfo.newCount)} واژهٔ تازه · {fa(sessionInfo.dueCount)} مرور سررسید · هر واژه حدود نیم دقیقه</Text>
+                <Text style={styles.guideTitle}>هر واژه فقط دو قدم</Text>
+                <Text style={styles.stepLine}>۱. اپ واژهٔ {languageName} را می‌گوید، بعد معنی فارسی. یک بار، بدون تکرار پشت‌سرهم.</Text>
+                <Text style={styles.stepLine}>۲. فقط فارسی را می‌بینی و خودت {languageName}اش را می‌گویی؛ یک تلاش کافی است.</Text>
+                <Text style={styles.smallText}>{fa(sessionInfo.newCount)} واژهٔ تازه · {fa(sessionInfo.dueCount)} مرور سررسید · هر واژه حدود بیست ثانیه</Text>
                 {stats ? <Text style={styles.smallText}>معرفی‌شده: {fa(stats.introduced)} · مسلط گفتاری: {fa(stats.mastered)}</Text> : null}
               </View>
             ) : null}
@@ -221,67 +261,74 @@ export default function VocabLab<T extends { id: string }>({ config }: { config:
               <Pressable accessibilityRole="button" onPress={() => { void autoSay(word); }} style={({ pressed }) => [styles.ghostButton, pressed && styles.pressed]}>
                 <RefreshCw size={14} color={C.primaryDark} /><Text style={styles.ghostText}>دوباره بشنو</Text>
               </Pressable>
-              <Pressable accessibilityRole="button" onPress={() => { void speech.stop(); setPhase('repeat'); }} style={({ pressed }) => [styles.primary, styles.grow, pressed && styles.pressed]}>
-                <Text style={styles.primaryText}>حالا من می‌گویم</Text><ChevronLeft size={15} color="#FFFFFF" />
+              <Pressable accessibilityRole="button" onPress={startSpeaking} style={({ pressed }) => [styles.primary, styles.grow, pressed && styles.pressed]}>
+                <Text style={styles.primaryText}>حالا می‌گویم</Text><ChevronLeft size={15} color="#FFFFFF" />
               </Pressable>
             </View>
             {note(word) ? <Text style={styles.note}>{note(word)}</Text> : null}
           </View>
         ) : null}
 
-        {phase === 'repeat' && word ? (
+        {phase === 'speak' && word ? (
           <View style={styles.wordCard}>
-            <Text style={styles.stepLabel}>قدم ۲ از ۳ · تکرار می‌کنی</Text>
-            <Text keepColor style={styles.bigWordSmall}>{target(word)}</Text>
-            <Text style={styles.wordFa}>{gloss(word)}</Text>
-            <Pressable accessibilityRole="button" onPress={() => { void speech.play(target(word), 0.6, () => undefined); }} style={({ pressed }) => [styles.audioButton, pressed && styles.pressed]}>
-              <Volume2 size={15} color={C.primary} /><Text style={styles.audioButtonText}>اول بشنو</Text>
-            </Pressable>
-            <SpeakCheck
-              key={`${word.id}-repeat`}
-              text={target(word)}
-              locale={locale}
-              accent={C.success}
-              title="همان واژه را بگو"
-              autoStart
-              onResult={result => {
-                setError('');
-                if (result.score >= 55) setTimeout(() => setPhase('reverse'), 700);
-                else setError('نزدیک بود؛ یک بار دیگر آهسته‌تر بگو.');
-              }}
-            />
-            {!!error && <Text style={styles.hintError}>{error}</Text>}
-            <Pressable accessibilityRole="button" onPress={() => setPhase('reverse')} style={({ pressed }) => [styles.skipLink, pressed && styles.pressed]}>
-              <Text style={styles.skipText}>فعلاً رد کن؛ به قدم ۳ برو</Text>
-            </Pressable>
-          </View>
-        ) : null}
-
-        {phase === 'reverse' && word ? (
-          <View style={styles.wordCard}>
-            <Text style={styles.stepLabel}>قدم ۳ از ۳ · از فارسی به {languageName}</Text>
+            <Text style={styles.stepLabel}>قدم ۲ از ۲ · از فارسی به {languageName}</Text>
             <View style={styles.reversePrompt}>
               <Text style={styles.reverseLabel}>فقط معنی فارسی</Text>
               <Text style={styles.reverseFa}>{gloss(word)}</Text>
             </View>
+            {revealed ? <Text keepColor style={styles.bigWordSmall}>{target(word)}</Text> : null}
+            {hearing ? (
+              <View style={styles.hearingBox}><Volume2 size={16} color={C.primaryDark} /><Text style={styles.autoText}>اول گوش بده؛ بعد از پخش، میکروفن باز می‌شود.</Text></View>
+            ) : (
             <SpeakCheck
-              key={`${word.id}-reverse`}
+              key={`${word.id}-speak-${attempt}`}
               text={target(word)}
               locale={locale}
               accent={C.primary}
               title={`واژهٔ ${languageName} را بگو`}
+              autoStart
               onResult={result => {
-                setReverseScore(result.score);
-                if (result.score >= 70) setReverseSpoken(true);
+                setScore(result.score);
+                if (result.score >= SPOKEN_OK) {
+                  setSpokenOk(true);
+                  setError('');
+                  // One successful attempt is enough: go straight to the rating, no extra screen.
+                  setTimeout(() => setPhase('rate'), 700);
+                } else {
+                  setError('نزدیک بود؛ یک بار آهسته‌تر بگو یا با راهنما ادامه بده.');
+                }
               }}
             />
-            {reverseSpoken ? <View style={styles.okBox}><Check size={15} color={C.success} /><Text style={styles.okText}>درست گفتی؛ گفتار موفق ثبت شد.</Text></View> : null}
-            {!reverseSpoken && reverseScore !== null ? (
+            )}
+            {!!error && !spokenOk ? <Text style={styles.hintError}>{error}</Text> : null}
+            {spokenOk ? <View style={styles.okBox}><Check size={15} color={C.success} /><Text style={styles.okText}>درست گفتی؛ گفتار موفق ثبت شد.</Text></View> : null}
+            {!spokenOk && score !== null ? (
               <Text style={styles.hintWarm}>راهنمایی: {hint(word)} · دوباره بشنو و بعد بگو.</Text>
             ) : null}
-            <Pressable accessibilityRole="button" onPress={() => setPhase('rate')} style={({ pressed }) => [styles.primary, pressed && styles.pressed]}>
-              <Text style={styles.primaryText}>{reverseSpoken ? 'ادامه' : 'بعداً تمرین می‌کنم'}</Text><ChevronLeft size={15} color="#FFFFFF" />
-            </Pressable>
+            {!spokenOk ? (
+              <View style={styles.rowButtons}>
+                <Pressable accessibilityRole="button" onPress={hearWord} style={({ pressed }) => [styles.ghostButton, styles.grow, pressed && styles.pressed]}>
+                  <Volume2 size={14} color={C.primaryDark} /><Text style={styles.ghostText}>بشنو</Text>
+                </Pressable>
+                <Pressable accessibilityRole="button" onPress={() => { setError(''); setAttempt(value => value + 1); }} style={({ pressed }) => [styles.ghostButton, styles.grow, pressed && styles.pressed]}>
+                  <RefreshCw size={14} color={C.primaryDark} /><Text style={styles.ghostText}>یک بار دیگر</Text>
+                </Pressable>
+              </View>
+            ) : null}
+            {!spokenOk && !revealed ? (
+              <Pressable accessibilityRole="button" onPress={() => setRevealed(true)} style={({ pressed }) => [styles.skipLink, pressed && styles.pressed]}>
+                <Text style={styles.skipText}>نشانم بده</Text>
+              </Pressable>
+            ) : null}
+            {spokenOk ? (
+              <Pressable accessibilityRole="button" onPress={() => setPhase('rate')} style={({ pressed }) => [styles.primary, pressed && styles.pressed]}>
+                <Text style={styles.primaryText}>ادامه</Text><ChevronLeft size={15} color="#FFFFFF" />
+              </Pressable>
+            ) : (
+              <Pressable accessibilityRole="button" onPress={() => setPhase('rate')} style={({ pressed }) => [styles.skipLink, pressed && styles.pressed]}>
+                <Text style={styles.skipText}>بدون گفتار ادامه می‌دهم</Text>
+              </Pressable>
+            )}
           </View>
         ) : null}
 
@@ -292,8 +339,8 @@ export default function VocabLab<T extends { id: string }>({ config }: { config:
             <Text keepColor style={styles.bigWordSmall}>{target(word)}</Text>
             <Text style={styles.wordFa}>{gloss(word)}</Text>
             <Text style={styles.smallText}>چرا الان؟ {store.reason(progress?.cards[word.id])}</Text>
-            <ReviewRatingGrid saving={false} score={reverseScore} onRate={rating => void rate(rating)} />
-            {!reverseSpoken ? <Text style={styles.smallText}>بدون گفتار موفق، «تسلط گفتاری» ثبت نمی‌شود؛ کارت زودتر برمی‌گردد.</Text> : null}
+            <ReviewRatingGrid saving={false} score={score} onRate={rating => void rate(rating)} />
+            {!spokenOk ? <Text style={styles.smallText}>بدون گفتار موفق، «تسلط گفتاری» ثبت نمی‌شود؛ کارت زودتر برمی‌گردد.</Text> : null}
           </View>
         ) : null}
 
@@ -324,6 +371,10 @@ const styles = StyleSheet.create({
   headerCopy: { flex: 1, alignItems: 'flex-end', gap: 2 },
   headerTitle: { fontFamily: Typography.fontFamily, fontSize: 17, color: C.ink, textAlign: 'right', writingDirection: 'rtl' },
   headerSub: { fontFamily: Typography.fontFamily, fontSize: 10, color: C.muted, textAlign: 'right', writingDirection: 'rtl' },
+  progressStrip: { flexDirection: 'row-reverse', alignItems: 'center', gap: 10, paddingHorizontal: 16, paddingVertical: 8, backgroundColor: C.surface, borderBottomWidth: 1, borderBottomColor: C.border },
+  progressText: { fontFamily: Typography.fontFamily, fontSize: 10, color: C.muted, writingDirection: 'rtl' },
+  progressTrack: { flex: 1, height: 5, borderRadius: 999, backgroundColor: C.border, overflow: 'hidden' },
+  progressFill: { height: 5, borderRadius: 999, backgroundColor: C.primary },
   scroll: { flex: 1 },
   content: { padding: 16, paddingBottom: 32, gap: 12 },
   centerCard: { width: '100%', borderRadius: 22, padding: 22, backgroundColor: C.surface, borderWidth: 1, borderColor: C.border, alignItems: 'center', gap: 12 },
@@ -348,10 +399,9 @@ const styles = StyleSheet.create({
   primaryText: { fontFamily: Typography.fontFamily, fontSize: 13, color: '#FFFFFF', writingDirection: 'rtl' },
   ghostButton: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 46, paddingHorizontal: 14, borderRadius: 14, backgroundColor: C.surface, borderWidth: 1, borderColor: C.border },
   ghostText: { fontFamily: Typography.fontFamily, fontSize: 12, color: C.text, writingDirection: 'rtl' },
-  audioButton: { flexDirection: 'row-reverse', alignItems: 'center', alignSelf: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 7, borderRadius: 999, backgroundColor: C.primarySoft },
-  audioButtonText: { fontFamily: Typography.fontFamily, fontSize: 11, color: C.primaryDark },
   pressed: { opacity: 0.82 },
   note: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 19, color: C.warning, textAlign: 'right', writingDirection: 'rtl' },
+  hearingBox: { flexDirection: 'row-reverse', alignItems: 'center', gap: 7, padding: 10, borderRadius: 12, backgroundColor: C.primarySoft },
   hintError: { fontFamily: Typography.fontFamily, fontSize: 11, color: C.danger, textAlign: 'right', writingDirection: 'rtl' },
   hintWarm: { fontFamily: Typography.fontFamily, fontSize: 11, color: C.warning, textAlign: 'right', writingDirection: 'rtl' },
   skipLink: { alignSelf: 'center', padding: 6 },
