@@ -71,6 +71,75 @@ const units:Omit<Unit,'id'|'level'>[]=[
 ];
 const originalUnits:Unit[]=units.map((u,i)=>({...u,id:`foundation-${i+1}`,level:i<4?'Foundation':'A1',practice:u.practice.map((x,j)=>({...x,id:`foundation-${i+1}-practice-${j+1}`})),checkpoint:u.checkpoint.map((x,j)=>({...x,id:`foundation-${i+1}-check-${j+1}`}))}));
 const stableA1Units:Unit[]=ENGLISH_A1_UNITS.map(u=>({...u,practice:u.practice.map((x,j)=>({...x,id:`${u.id}-practice-${j+1}`})),checkpoint:u.checkpoint.map((x,j)=>({...x,id:`${u.id}-check-${j+1}`}))}));
+/**
+ * Pre-A1 goal checks. They never ask a beginner to type an English sentence: every task is a
+ * choice or a single-word gap fill, and each one is tied to a sentence the lesson already taught.
+ * Listening tasks carry an audio line so the check is 'heard it', not 'guessed it'.
+ */
+const preA1 = (lesson:string,id:string,skill:Skill,prompt:string,answer:string,explanation:string,extra:Partial<Task>={}):Task =>
+  ({ id:`prea1-${lesson}-${id}`, skill, prompt, answers:[answer], explanation, ...extra });
+export const PRE_A1_EVIDENCE: Readonly<Record<string,readonly Task[]>> = {
+  'prea1-01-hello': [
+    preA1('01','listen-morning','listening','کدام سلام را شنیدید؟','Good morning.','Good morning یعنی صبح بخیر؛ در عصر گفته نمی‌شود.',{ audio:'Good morning.', options:['Good evening.','Good morning.','Good night.'] }),
+    preA1('01','pick-evening','grammar','برای ساعت ۸ شب کدام سلام درست است؟','Good evening.','از غروب به بعد Good evening می‌گوییم.',{ options:['Good morning.','Good afternoon.','Good evening.'] }),
+    preA1('01','gap-name','grammar','جای خالی را کامل کنید: ___ , Sara.','Hello','برای سلام کردن با اسم، Hello یا Hi می‌آید.',{ source:'Hello, Sara.', options:['Hello','Goodbye','Sorry'] }),
+    preA1('01','read-meaning','reading','«Hi, Ali.» یعنی چه؟','سلام، علی.','Hi سلام دوستانه است.',{ source:'Hi, Ali.', options:['خداحافظ، علی.','سلام، علی.','شب بخیر، علی.'] }),
+  ],
+  'prea1-02-bye': [
+    preA1('02','listen-night','listening','کدام خداحافظی را شنیدید؟','Good night.','Good night مخصوص شب و موقع خواب است.',{ audio:'Good night.', options:['Good morning.','Good night.','See you later.'] }),
+    preA1('02','pick-tomorrow','grammar','«تا فردا» کدام است؟','See you tomorrow.','tomorrow یعنی فردا.',{ options:['See you tomorrow.','See you later.','Goodbye.'] }),
+    preA1('02','gap-goodnight','grammar','جای خالی را کامل کنید: Good ___.','night','night یعنی شب؛ Good night یعنی شب بخیر.',{ source:'Good night.', options:['night','morning','day'] }),
+    preA1('02','read-later','reading','«See you later.» یعنی چه؟','بعداً می‌بینمت.','later یعنی بعداً، نه فردا.',{ source:'See you later.', options:['تا فردا.','بعداً می‌بینمت.','شب بخیر.'] }),
+  ],
+  'prea1-03-yes-no': [
+    preA1('03','listen-yes-please','listening','شنیدید که طرف مقابل چه گفت؟','Yes, please.','Yes, please یعنی قبول می‌کنم، لطفاً.',{ audio:'Yes, please.', options:['No, thank you.','Yes, please.','Sorry.'] }),
+    preA1('03','pick-excuse','grammar','برای جلب توجه یک غریبه چه می‌گویید؟','Excuse me.','Excuse me برای شروع صحبت با غریبه است؛ Sorry برای اشتباه.',{ options:['Sorry.','Excuse me.','Goodbye.'] }),
+    preA1('03','gap-no-thankyou','grammar','جای خالی را کامل کنید: No, ___ you.','thank','No, thank you رد کردن مؤدبانه است.',{ source:'No, thank you.', options:['thank','please','sorry'] }),
+    preA1('03','read-refusal','reading','«No, thank you.» یعنی چه؟','نه، ممنون.','رد کردن همراه با تشکر است.',{ source:'No, thank you.', options:['بله، لطفاً.','نه، ممنون.','ببخشید.'] }),
+  ],
+  'prea1-04-i-am': [
+    preA1('04','listen-origin','listening','گوینده اهل کجاست؟','ایران','I am from Iran یعنی اهل ایرانم.',{ audio:'I am from Iran.', options:['تهران','ایران','ترکیه'] }),
+    preA1('04','pick-am','grammar','جای خالی را کامل کنید: I ___ a student.','am','با I همیشه am می‌آید.',{ options:['is','am','are'] }),
+    preA1('04','gap-from','grammar','جای خالی را کامل کنید: I am ___ Tehran.','from','from یعنی اهلِ.',{ source:'I am from Tehran.', options:['from','fine','a'] }),
+    preA1('04','read-feeling','reading','«I am tired.» یعنی چه؟','من خسته‌ام.','tired یعنی خسته.',{ source:'I am tired.', options:['من خوشحالم.','من خسته‌ام.','من خوبم.'] }),
+  ],
+  'prea1-05-numbers': [
+    preA1('05','listen-seven','listening','کدام عدد را شنیدید؟','seven','seven یعنی هفت.',{ audio:'Seven.', options:['six','seven','ten'] }),
+    preA1('05','pick-three','grammar','عدد «سه» کدام است؟','three','three یعنی سه؛ تلفظ آن «ثری» است.',{ options:['two','three','eight'] }),
+    preA1('05','gap-ten','grammar','شمارش را کامل کنید: Eight, nine, ___.','ten','بعد از nine عدد ten می‌آید.',{ source:'Eight, nine, ten.', options:['two','ten','five'] }),
+    preA1('05','read-countdown','reading','«Ten, nine, eight.» یعنی چه؟','ده، نه، هشت.','این شمارش از ده به پایین است.',{ source:'Ten, nine, eight.', options:['یک، دو، سه.','ده، نه، هشت.','هشت، نه، ده.'] }),
+  ],
+  'prea1-06-how-are-you': [
+    preA1('06','listen-question','listening','چه سؤالی پرسیده شد؟','How are you?','How are you? یعنی حال شما چطور است؟',{ audio:'How are you?', options:['What is this?','How are you?','See you later.'] }),
+    preA1('06','pick-andyou','grammar','بعد از جواب دادن، برای برگرداندن سؤال چه می‌گویید؟','And you?','And you? یعنی «شما چطورید؟».',{ options:['And you?','Thank you.','Excuse me.'] }),
+    preA1('06','gap-fine','grammar','جای خالی را کامل کنید: I am ___, thank you.','fine','fine یعنی خوب.',{ source:'I am fine, thank you.', options:['fine','book','ten'] }),
+    preA1('06','read-ok','reading','«I am OK.» یعنی چه؟','من خوبم.','OK یعنی خوب، اوکی.',{ source:'I am OK.', options:['من خسته‌ام.','من خوبم.','من گرسنه‌ام.'] }),
+  ],
+  'prea1-07-i-have': [
+    preA1('07','listen-have','listening','گوینده چه چیزی دارد؟','یک گوشی','I have a phone یعنی یک گوشی دارم.',{ audio:'I have a phone.', options:['یک کتاب','یک گوشی','یک خانه'] }),
+    preA1('07','pick-do','grammar','سؤال «خودکار داری؟» کدام است؟','Do you have a pen?','در سؤال از Do you have استفاده می‌کنیم.',{ options:['You have a pen?','Do you have a pen?','I have a pen?'] }),
+    preA1('07','gap-two','grammar','جای خالی را کامل کنید: I have ___ books.','two','two یعنی دو.',{ source:'I have two books.', options:['two','big','a'] }),
+    preA1('07','read-nohave','reading','«No, I do not.» یعنی چه؟','نه، ندارم.','این جواب منفی برای سؤال Do you have است.',{ source:'No, I do not.', options:['نه، ندارم.','بله، دارم.','خواهش می‌کنم.'] }),
+  ],
+  'prea1-08-please-thankyou': [
+    preA1('08','listen-request','listening','شنیدید طرف مقابل چه خواست؟','آب','Water, please یعنی آب، لطفاً.',{ audio:'Water, please.', options:['چای','آب','کتاب'] }),
+    preA1('08','pick-hereyouare','grammar','وقتی چیزی را به کسی می‌دهید چه می‌گویید؟','Here you are.','Here you are یعنی بفرمایید.',{ options:['Here you are.','You are welcome.','Excuse me.'] }),
+    preA1('08','gap-welcome','grammar','جواب «Thank you» چه می‌شود؟','You are welcome.','You are welcome یعنی خواهش می‌کنم.',{ options:['You are welcome.','Good night.','See you.'] }),
+    preA1('08','read-thankfor','reading','«Thank you for the water.» یعنی چه؟','برای آب ممنون.','for یعنی برای.',{ source:'Thank you for the water.', options:['برای آب ممنون.','آب می‌خواهم، لطفاً.','خواهش می‌کنم.'] }),
+  ],
+  'prea1-09-this-is': [
+    preA1('09','listen-what','listening','چه سؤالی پرسیده شد؟','What is this?','What is this? یعنی این چیست؟',{ audio:'What is this?', options:['How are you?','What is this?','Do you have a pen?'] }),
+    preA1('09','pick-thisis','grammar','«این یک کتاب است.» کدام است؟','This is a book.','This is a + اسم یعنی این یک … است.',{ options:['This is a book.','It is a book?','What is this?'] }),
+    preA1('09','gap-my','grammar','جای خالی را کامل کنید: This is ___ phone.','my','my یعنی مال من.',{ source:'This is my phone.', options:['my','a','is'] }),
+    preA1('09','read-thing','reading','«It is a book.» یعنی چه؟','یک کتاب است.','it برای اشاره به یک چیز است.',{ source:'It is a book.', options:['او یک کتاب است.','یک کتاب است.','این چیست؟'] }),
+  ],
+  'prea1-10-review': [
+    preA1('10','listen-greeting','listening','گوینده چه گفت؟','Good morning, Ali.','Good morning سلام صبح است.',{ audio:'Good morning, Ali.', options:['Good night, Ali.','Good morning, Ali.','See you, Ali.'] }),
+    preA1('10','pick-meet','grammar','بعد از معرفی دوست، برای خوش‌آمدگویی چه می‌گویید؟','Nice to meet you.','Nice to meet you یعنی از آشنایی خوشحالم.',{ options:['Nice to meet you.','Thank you for the water.','Good night.'] }),
+    preA1('10','gap-tomorrow','grammar','جای خالی را کامل کنید: See you ___.','tomorrow','tomorrow یعنی فردا.',{ source:'See you tomorrow.', options:['tomorrow','please','fine'] }),
+    preA1('10','read-friend','reading','«This is my friend, Ali.» یعنی چه؟','این دوست من، علی است.','friend یعنی دوست.',{ source:'This is my friend, Ali.', options:['این دوست من، علی است.','من علی هستم.','علی کجاست؟'] }),
+  ],
+};
 export const ENGLISH_SUPPLEMENT:Unit[]=[...originalUnits,...stableA1Units];
 export const ENGLISH_FOUNDATION_UNITS=ENGLISH_SUPPLEMENT.filter(unit=>unit.level==='Foundation');
 export const ENGLISH_A1_COURSE_UNITS=ENGLISH_SUPPLEMENT.filter(unit=>unit.level==='A1');

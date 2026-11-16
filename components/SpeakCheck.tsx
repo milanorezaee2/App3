@@ -131,9 +131,11 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
       ) : null}
       {listening && partial ? <Text keepColor style={styles.partial}>{partial}</Text> : null}
       {result ? <View style={styles.scoreRow}><Text style={styles.scoreLabel}>امتیاز</Text><Text keepColor style={[styles.scoreValue, { color: result.score >= 70 ? '#15803D' : result.score >= 40 ? '#B45309' : '#B91C1C' }]}>{fa(result.score)}٪</Text></View> : null}
+      {/* When the recogniser heard nothing, a percentage would be a fake zero. Say it plainly instead. */}
+      {result && !result.heard ? <Text style={styles.hint}>چیزی شنیده نشد. ابتدا نمونه را گوش بده و یک بار دیگر بگو.</Text> : null}
       {result && result.heard ? <Text style={styles.heard}>شنیده شد: <Text keepColor style={styles.heardText}>{result.heard}</Text></Text> : null}
       {result && missed.length ? <View style={styles.legendRow}>
-        <Pressable accessibilityRole="button" onPress={sayMissed} style={styles.missedButton}><Volume2 size={14} color="#B91C1C" /><Text keepColor style={styles.missedText}>{missed.length === 1 ? 'بشنو و فقط همین یکی را دوباره بگو' : `بشنو و فقط این ${fa(missed.length)} واژه را دوباره بگو`}</Text></Pressable>
+        <Pressable accessibilityRole="button" onPress={sayMissed} style={styles.missedButton}><Volume2 size={14} color="#B91C1C" /><Text keepColor style={styles.missedText}>{missed.length === 1 ? 'همین یک واژه را بشنو و دوباره بگو' : `این ${fa(missed.length)} واژه را بشنو و دوباره بگو`}</Text></Pressable>
 
       </View> : null}
       {!!error && <Text accessibilityRole="alert" keepColor style={styles.error}>{error}</Text>}
@@ -157,8 +159,9 @@ const styles = StyleSheet.create({
   buttonTextCompact: { fontSize: 13 },
   title: { fontSize: 15, fontWeight: '700', color: '#0F172A' },
   hint: { fontSize: 12.5, lineHeight: 20, color: '#475569', textAlign: 'center' },
-  wordsRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6, marginTop: 2 },
-  word: { fontSize: 17, fontWeight: '700', paddingHorizontal: 7, paddingVertical: 3, borderRadius: 8, overflow: 'hidden', writingDirection: 'ltr' },
+  wordsRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6, marginTop: 2, width: '100%' },
+  // «Thank» and «you.» must each stay whole: the chip may move to the next line, its letters may not.
+  word: { fontSize: 17, lineHeight: 24, fontWeight: '700', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, overflow: 'hidden', writingDirection: 'ltr', textAlign: 'left', flexShrink: 0 },
   wordOk: { color: '#15803D', backgroundColor: '#DCFCE7' },
   wordMiss: { color: '#B91C1C', backgroundColor: '#FEE2E2' },
   wordNear: { color: '#B45309', backgroundColor: '#FEF3C7' },
@@ -169,7 +172,7 @@ const styles = StyleSheet.create({
   partial: { fontSize: 14, color: '#64748B', fontStyle: 'italic', textAlign: 'center' },
   scoreRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   scoreLabel: { fontSize: 13, color: '#475569' },
-  scoreValue: { fontSize: 22, fontWeight: '800' },
+  scoreValue: { fontSize: 22, lineHeight: 30, fontWeight: '800', color: '#B91C1C', textAlign: 'right', writingDirection: 'rtl' },
   heard: { fontSize: 12, color: '#64748B', textAlign: 'center' },
   heardText: { color: '#334155', fontWeight: '700' },
   error: { fontSize: 12, lineHeight: 19, color: '#B91C1C', textAlign: 'center' },

@@ -63,6 +63,11 @@ export interface SentenceLesson {
   title: string;
   subtitle: string;
   situation: string;
+  /**
+   * Optional «how to learn this» note (goal + pronunciation + structure), shown on the situation
+   * stage. Populated for Pre-A1, where a beginner needs the method before the sentences.
+   */
+  teachingFa?: string;
   durationMinutes: number;
   sentences: CourseSentence[];
   dialogue: Array<{ speaker: 'learner' | 'partner'; text: string; fa: string }>;

@@ -6,6 +6,7 @@ import { C1_EVIDENCE } from './englishC1Evidence';
 import { B2_UPPER_INTERMEDIATE_EVIDENCE } from './englishB2UpperIntermediateEvidence';
 import { A2_FOUNDATION_EVIDENCE } from './englishA2FoundationEvidence';
 import { A2_SITUATIONS_EVIDENCE } from './englishA2SituationsEvidence';
+import { PRE_A1_EVIDENCE } from './englishSupplement/content';
 
 /** Goal-based checks for all ten active Foundation lessons. */
 const task = (
@@ -472,6 +473,8 @@ export interface FoundationEvidenceResult {
 }
 
 export const CORE_LESSON_EVIDENCE: Readonly<Record<string, readonly Task[]>> = {
+  // Pre-A1 first: absolute beginners get choice/gap questions and never a typed sentence.
+  ...PRE_A1_EVIDENCE,
   ...FOUNDATION_LESSON_EVIDENCE,
   ...SURVIVAL_LESSON_EVIDENCE,
   ...EVERYDAY_LESSON_EVIDENCE,

@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 117: Pre-A1 English rewritten (80 graded sentences, real dialogues, aimed beginner checks) + card/SpeakCheck display fixes
 # rev 116: six local learning events + simpler Russian word flow (auto RU→FA→RU)
 # rev 115: retention loop — daily study reminder, medals at lesson end, today plan, 10-sentence chunks
 # rev 114: Russian vocabulary lab — forced spoken reverse recall + word-level spaced review
@@ -111,6 +112,7 @@ on:
       - arena/9b089853-app3
       - arena/a87fc501-app3
       - arena/800d07a6-app3
+      - arena/35c34de5-app3
     paths:
       - '.github/workflows/apk-requested.yml'
 
