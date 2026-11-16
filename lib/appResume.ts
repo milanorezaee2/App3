@@ -17,7 +17,7 @@ export interface ResumeSnapshot {
 const allowedParams = new Set(['id', 'lessonId', 'level', 'name', 'language']);
 const learnRouteIds = LANGUAGE_IDS.join('|');
 const allowedPaths = new RegExp(
-  `^\\/(?:languages|lang(?:\\/[^?#]*)?|course(?:\\/[^?#]*)?|review(?:\\/[^?#]*)?|personal-sync|app-lock|learning-access|permissions|agent(?:\\/[^?#]*)?|admin(?:\\/[^?#]*)?|learn\\/(?:${learnRouteIds})(?:\\/[^?#]*)?|conversations(?:\\/[^?#]*)?)$`,
+  `^\\/(?:languages|lang(?:\\/[^?#]*)?|course(?:\\/[^?#]*)?|review(?:\\/[^?#]*)?|personal-sync|profile|foundation(?:\\/[^?#]*)?|app-lock|learning-access|permissions|agent(?:\\/[^?#]*)?|admin(?:\\/[^?#]*)?|learn\\/(?:${learnRouteIds})(?:\\/[^?#]*)?|conversations(?:\\/[^?#]*)?)$`,
 );
 
 export function resumeHref(pathname: string, params: ResumeParams): string | null {

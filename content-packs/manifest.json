@@ -1,0 +1,257 @@
+{
+  "schema": 1,
+  "packs": [
+    {
+      "language": "de",
+      "band": "A1",
+      "version": 7,
+      "path": "de/A1.v7.json",
+      "sentences": 266
+    },
+    {
+      "language": "de",
+      "band": "A2",
+      "version": 7,
+      "path": "de/A2.v7.json",
+      "sentences": 496
+    },
+    {
+      "language": "de",
+      "band": "B1",
+      "version": 7,
+      "path": "de/B1.v7.json",
+      "sentences": 424
+    },
+    {
+      "language": "de",
+      "band": "B2",
+      "version": 5,
+      "path": "de/B2.v5.json",
+      "sentences": 680
+    },
+    {
+      "language": "de",
+      "band": "C1",
+      "version": 5,
+      "path": "de/C1.v5.json",
+      "sentences": 1270
+    },
+    {
+      "language": "de",
+      "band": "pre",
+      "version": 6,
+      "path": "de/pre.v6.json",
+      "sentences": 50
+    },
+    {
+      "language": "en",
+      "band": "A1",
+      "version": 5,
+      "path": "en/A1.v5.json",
+      "sentences": 0
+    },
+    {
+      "language": "en",
+      "band": "A2",
+      "version": 5,
+      "path": "en/A2.v5.json",
+      "sentences": 0
+    },
+    {
+      "language": "en",
+      "band": "B1",
+      "version": 6,
+      "path": "en/B1.v6.json",
+      "sentences": 80
+    },
+    {
+      "language": "en",
+      "band": "B2",
+      "version": 5,
+      "path": "en/B2.v5.json",
+      "sentences": 330
+    },
+    {
+      "language": "en",
+      "band": "C1",
+      "version": 5,
+      "path": "en/C1.v5.json",
+      "sentences": 980
+    },
+    {
+      "language": "en",
+      "band": "pre",
+      "version": 6,
+      "path": "en/pre.v6.json",
+      "sentences": 40
+    },
+    {
+      "language": "es",
+      "band": "A1",
+      "version": 7,
+      "path": "es/A1.v7.json",
+      "sentences": 253
+    },
+    {
+      "language": "es",
+      "band": "A2",
+      "version": 7,
+      "path": "es/A2.v7.json",
+      "sentences": 314
+    },
+    {
+      "language": "es",
+      "band": "B1",
+      "version": 7,
+      "path": "es/B1.v7.json",
+      "sentences": 422
+    },
+    {
+      "language": "es",
+      "band": "B2",
+      "version": 5,
+      "path": "es/B2.v5.json",
+      "sentences": 590
+    },
+    {
+      "language": "es",
+      "band": "C1",
+      "version": 5,
+      "path": "es/C1.v5.json",
+      "sentences": 1060
+    },
+    {
+      "language": "es",
+      "band": "pre",
+      "version": 6,
+      "path": "es/pre.v6.json",
+      "sentences": 60
+    },
+    {
+      "language": "fr",
+      "band": "A1",
+      "version": 7,
+      "path": "fr/A1.v7.json",
+      "sentences": 258
+    },
+    {
+      "language": "fr",
+      "band": "A2",
+      "version": 7,
+      "path": "fr/A2.v7.json",
+      "sentences": 298
+    },
+    {
+      "language": "fr",
+      "band": "B1",
+      "version": 7,
+      "path": "fr/B1.v7.json",
+      "sentences": 420
+    },
+    {
+      "language": "fr",
+      "band": "B2",
+      "version": 5,
+      "path": "fr/B2.v5.json",
+      "sentences": 610
+    },
+    {
+      "language": "fr",
+      "band": "C1",
+      "version": 5,
+      "path": "fr/C1.v5.json",
+      "sentences": 1120
+    },
+    {
+      "language": "fr",
+      "band": "pre",
+      "version": 6,
+      "path": "fr/pre.v6.json",
+      "sentences": 50
+    },
+    {
+      "language": "ru",
+      "band": "A1",
+      "version": 7,
+      "path": "ru/A1.v7.json",
+      "sentences": 263
+    },
+    {
+      "language": "ru",
+      "band": "A2",
+      "version": 7,
+      "path": "ru/A2.v7.json",
+      "sentences": 292
+    },
+    {
+      "language": "ru",
+      "band": "B1",
+      "version": 6,
+      "path": "ru/B1.v6.json",
+      "sentences": 320
+    },
+    {
+      "language": "ru",
+      "band": "B2",
+      "version": 5,
+      "path": "ru/B2.v5.json",
+      "sentences": 620
+    },
+    {
+      "language": "ru",
+      "band": "C1",
+      "version": 5,
+      "path": "ru/C1.v5.json",
+      "sentences": 1170
+    },
+    {
+      "language": "ru",
+      "band": "pre",
+      "version": 7,
+      "path": "ru/pre.v7.json",
+      "sentences": 190
+    },
+    {
+      "language": "tr",
+      "band": "A1",
+      "version": 7,
+      "path": "tr/A1.v7.json",
+      "sentences": 218
+    },
+    {
+      "language": "tr",
+      "band": "A2",
+      "version": 6,
+      "path": "tr/A2.v6.json",
+      "sentences": 130
+    },
+    {
+      "language": "tr",
+      "band": "B1",
+      "version": 6,
+      "path": "tr/B1.v6.json",
+      "sentences": 240
+    },
+    {
+      "language": "tr",
+      "band": "B2",
+      "version": 5,
+      "path": "tr/B2.v5.json",
+      "sentences": 520
+    },
+    {
+      "language": "tr",
+      "band": "C1",
+      "version": 5,
+      "path": "tr/C1.v5.json",
+      "sentences": 1150
+    },
+    {
+      "language": "tr",
+      "band": "pre",
+      "version": 6,
+      "path": "tr/pre.v6.json",
+      "sentences": 59
+    }
+  ]
+}

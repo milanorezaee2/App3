@@ -96,7 +96,7 @@ export function AppResumeGuard() {
   useEffect(() => {
     if (disabled) return;
     const subscription = AppState.addEventListener('change', state => {
-      if (state === 'background') {
+      if (state === 'background' || state === 'inactive') {
         if (!active.current) return;
         active.current = false;
         if (ready.current && snapshot.current) {
@@ -113,8 +113,12 @@ export function AppResumeGuard() {
         active.current = true;
         const saved = snapshot.current;
         if (ready.current && saved) {
+          // A warm resume keeps the live navigation state untouched: the user is
+          // still exactly where they left. Only a stale session (away too long or
+          // a retired route) is redirected; anything else would move the user to a
+          // page they did not choose.
           const target = resumeDestination(saved, Date.now(), FEATURES.learnerLogin);
-          if (target !== currentHref.current) {
+          if (target !== saved.href && target !== currentHref.current) {
             setRestoring(true);
             pendingHref.current = target;
             router.replace(target as never);

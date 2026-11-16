@@ -67,6 +67,8 @@ export const ENGLISH_ENGINE_STEPS = [
   { id: 'grammar-through-usage', labelFa: 'دستور در کاربرد', labelEn: 'Grammar Through Usage' },
   { id: 'conversation', labelFa: 'مکالمه', labelEn: 'Conversation Practice' },
   { id: 'review', labelFa: 'مرور هوشمند', labelEn: 'Spaced Review' },
+  { id: 'short-assessment', labelFa: 'سنجش کوتاه', labelEn: 'Short Assessment' },
+  { id: 'speaking-check', labelFa: 'آزمون گفتاری', labelEn: 'Speaking Check' },
 ] as const;
 
 /** Existing data sources behind the requested relational learning model. */

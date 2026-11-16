@@ -63,6 +63,7 @@
     "expo-document-picker": "~14.0.0",
     "expo-file-system": "~19.0.24",
     "expo-font": "~14.0.8",
+    "expo-haptics": "~15.0.0",
     "expo-intent-launcher": "~13.0.0",
     "expo-linear-gradient": "~15.0.7",
     "expo-linking": "~8.0.8",

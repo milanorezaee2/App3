@@ -62,21 +62,30 @@ const build = () => {
   if (!admin && learnerLogin) {
     return {
       ...base,
-      name: 'MiloMultiLanguage.5',
+      name: 'MiloLang',
       android: { ...base.android, package: 'com.devicecontrol.milomultilang' },
       ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.milomultilang' },
+    };
+  }
+  if (!admin && process.env.EXPO_PUBLIC_LEARNER_ENGLISH_NOLOGIN === 'true') {
+    return {
+      ...base,
+      name: 'MiloLang',
+      scheme: 'miloenglish',
+      android: { ...base.android, package: 'com.devicecontrol.miloenglish' },
+      ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.miloenglish' },
     };
   }
   if (!admin && process.env.EXPO_PUBLIC_LEARNER_FIVE_NOLOGIN === 'true') {
     return {
       ...base,
-      name: 'MiloMultiLanguage.5',
+      name: 'MiloLang',
       scheme: 'milofive',
       android: { ...base.android, package: 'com.devicecontrol.milofive' },
       ios: { ...base.ios, bundleIdentifier: 'com.devicecontrol.milofive' },
     };
   }
-  if (!admin) return base;
+  if (!admin) return { ...base, name: 'MiloLang' };
   return {
     ...base,
     name: 'Admin App',
@@ -105,7 +114,12 @@ const build = () => {
 };
 
 module.exports = () => {
-  const config = withGoogleServices(build(), variant());
+  const built = withGoogleServices(build(), variant());
+  // Learner apps always resume on the page they left; admin only drops stale task intents.
+  const config = {
+    ...built,
+    plugins: [...(built.plugins || []), ['./plugins/withStaleDeepLinkGuard', { ignoreChatLinks: built.extra?.appRole !== 'admin' }]],
+  };
   // app.json already contains the project id; environment values only override it.
   // Android's native WebSocket service does not require an EAS or FCM project id.
   const projectId = process.env.EAS_PROJECT_ID

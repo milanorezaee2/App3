@@ -1,0 +1,155 @@
+# German B1 draft · format: targetWords | text | fa | pattern
+eigenen|Ich habe endlich meine eigene Wohnung gefunden.|بالاخره آپارتمان خودم را پیدا کردم.|Ich habe endlich <Akk.> gefunden.
+eigenen|Er fährt lieber mit dem eigenen Auto als mit dem Zug.|او ترجیح می‌دهد با ماشین خودش برود تا با قطار.|Er fährt lieber mit <Dat.> als mit <Dat.>.
+aller|Das ist die beste Pizza aller Zeiten.|این بهترین پیتزای تمام دوران است.|Das ist <Superlativ> aller Zeiten.
+aller|Trotz aller Probleme bin ich zufrieden.|با وجود همهٔ مشکلات راضی‌ام.|Trotz aller <Nomen> <Satz>.
+bestimmt|Du schaffst die Prüfung bestimmt.|حتماً امتحان را قبول می‌شوی.|Du schaffst <Akk.> bestimmt.
+bestimmt|Er hat bestimmt den Bus verpasst.|حتماً اتوبوس را از دست داده.|Er hat bestimmt <Akk.> verpasst.
+folge|Die Folge war, dass niemand mehr kam.|نتیجه این شد که دیگر کسی نیامد.|Die Folge war, dass <Satz>.
+folge|Ich habe die letzte Folge noch nicht gesehen.|قسمت آخر را هنوز ندیده‌ام.|Ich habe <Akk.> noch nicht gesehen.
+glück|Zum Glück war der Arzt noch da.|خوشبختانه دکتر هنوز آنجا بود.|Zum Glück <Satz>.
+glück|Viel Glück bei deinem Vorstellungsgespräch!|در مصاحبهٔ کاری‌ات موفق باشی!|Viel Glück bei <Dat.>!
+herr|Herr Müller, könnten Sie mich bitte zurückrufen?|آقای مولر، می‌شود لطفاً با من تماس بگیرید؟|Herr <Name>, könnten Sie <Verb>?
+mehrere|Ich habe mehrere Wohnungen angeschaut, aber keine passte.|چند آپارتمان دیدم، ولی هیچ‌کدام مناسب نبود.|Ich habe mehrere <Nomen> angeschaut.
+mehrere|Die Reparatur dauert mehrere Tage.|تعمیر چند روز طول می‌کشد.|<Nomen> dauert mehrere <Zeit>.
+niemand|Niemand hat mir gesagt, dass die Sitzung ausfällt.|هیچ‌کس به من نگفت که جلسه لغو شده.|Niemand hat mir gesagt, dass <Satz>.
+niemand|Als ich anrief, war niemand im Büro.|وقتی زنگ زدم، کسی در دفتر نبود.|Als <Satz>, war niemand <Ort>.
+politik|Über Politik streiten wir lieber nicht beim Essen.|سر غذا ترجیحاً دربارهٔ سیاست بحث نمی‌کنیم.|Über <Akk.> streiten wir lieber nicht.
+sache|Das ist eine Sache zwischen dir und ihm.|این موضوعی بین تو و اوست.|Das ist eine Sache zwischen <Dat.> und <Dat.>.
+sache|Zur Sache: Wann können Sie anfangen?|برویم سر اصل مطلب: کی می‌توانید شروع کنید؟|Zur Sache: <Frage>?
+scheint|Es scheint, dass der Zug Verspätung hat.|به نظر می‌رسد قطار تأخیر دارد.|Es scheint, dass <Satz>.
+scheint|Sie scheint mit der Lösung zufrieden zu sein.|به نظر می‌رسد او از راه‌حل راضی است.|Sie scheint <Adj.> zu sein.
+zunächst|Zunächst füllen Sie bitte dieses Formular aus.|ابتدا لطفاً این فرم را پر کنید.|Zunächst <Satz>.
+zunächst|Zunächst war ich unsicher, dann sehr zufrieden.|اول مطمئن نبودم، بعد خیلی راضی شدم.|Zunächst war ich <Adj.>, dann <Adj.>.
+alte|Meine alte Schule gibt es nicht mehr.|مدرسهٔ قدیمی‌ام دیگر وجود ندارد.|<Nomen> gibt es nicht mehr.
+fand|Ich fand den Film ehrlich gesagt langweilig.|راستش فیلم را کسل‌کننده یافتم.|Ich fand <Akk.> ehrlich gesagt <Adj.>.
+fand|Das Gespräch fand gestern Nachmittag statt.|گفت‌وگو دیروز بعدازظهر برگزار شد.|<Nomen> fand <Zeit> statt.
+regierung|Die Regierung hat neue Regeln für Mieter beschlossen.|دولت قوانین جدیدی برای مستأجران تصویب کرده.|<Nomen> hat <Akk.> beschlossen.
+schliesslich|Schliesslich haben wir uns für das kleinere Auto entschieden.|در نهایت ماشین کوچک‌تر را انتخاب کردیم.|Schliesslich haben wir uns für <Akk.> entschieden.
+dinge|Es gibt wichtigere Dinge als Geld.|چیزهای مهم‌تری از پول هست.|Es gibt wichtigere Dinge als <Nomen>.
+dinge|Nimm nur die wichtigsten Dinge mit.|فقط مهم‌ترین چیزها را با خودت ببر.|Nimm nur <Akk.> mit.
+geworden|Es ist spät geworden, ich muss los.|دیر شده، باید بروم.|Es ist <Adj.> geworden.
+geworden|Sie ist letztes Jahr Mutter geworden.|او پارسال مادر شد.|Sie ist <Zeit> <Nomen> geworden.
+prozent|Die Miete ist um zehn Prozent gestiegen.|اجاره ده درصد بالا رفته.|<Nomen> ist um <Zahl> Prozent gestiegen.
+sohn|Mein Sohn macht gerade seine Ausbildung.|پسرم الان دورهٔ کارآموزی‌اش را می‌گذراند.|<Nomen> macht gerade <Akk.>.
+spass|Hauptsache, die Arbeit macht Spass.|مهم این است که کار لذت‌بخش باشد.|Hauptsache, <Satz>.
+spass|Wir hatten trotz Regen viel Spass.|با وجود باران خیلی خوش گذشت.|Wir hatten trotz <Gen.> viel Spass.
+wort|Ich verstehe kein Wort, sprich bitte langsamer.|یک کلمه هم نمی‌فهمم، لطفاً آهسته‌تر حرف بزن.|Ich verstehe kein Wort.
+wort|Er hält immer sein Wort.|او همیشه سر حرفش می‌ماند.|Er hält sein Wort.
+ernst|Ist das dein Ernst?|جدی می‌گویی؟|Ist das dein Ernst?
+ernst|Nimm die Warnung bitte ernst.|لطفاً هشدار را جدی بگیر.|Nimm <Akk.> ernst.
+mädchen|Das Mädchen neben mir hat mir den Weg erklärt.|دختری که کنارم بود راه را برایم توضیح داد.|<Nomen> hat mir <Akk.> erklärt.
+zukunft|In Zukunft melde ich mich früher.|از این به بعد زودتر خبر می‌دهم.|In Zukunft <Satz>.
+zukunft|Niemand weiss, was die Zukunft bringt.|هیچ‌کس نمی‌داند آینده چه می‌آورد.|Niemand weiss, was <Satz>.
+darum|Es regnet, darum bleiben wir zu Hause.|باران می‌آید، به همین دلیل خانه می‌مانیم.|<Satz>, darum <Satz>.
+darum|Darum geht es gar nicht.|اصلاً موضوع این نیست.|Darum geht es nicht.
+form|Bitte schicken Sie die Anmeldung in schriftlicher Form.|لطفاً ثبت‌نام را به صورت کتبی بفرستید.|Bitte schicken Sie <Akk.> in <Adj.> Form.
+form|Ich bin heute nicht in Form.|امروز سرحال نیستم.|Ich bin nicht in Form.
+jedes|Jedes Mal vergisst er seinen Schlüssel.|هر بار کلیدش را فراموش می‌کند.|Jedes Mal <Satz>.
+jedes|Jedes Kind bekommt ein Geschenk.|هر بچه‌ای یک هدیه می‌گیرد.|Jedes <Nomen> bekommt <Akk.>.
+liegen|Die Unterlagen liegen auf meinem Schreibtisch.|مدارک روی میز کارم است.|<Nomen> liegen <Ort>.
+liegen|Die Gründe liegen auf der Hand.|دلایلش روشن است.|<Nomen> liegen auf der Hand.
+wert|Das Museum ist einen Besuch wert.|موزه ارزش دیدن دارد.|<Nomen> ist <Akk.> wert.
+wert|Ich lege Wert auf Pünktlichkeit.|برای من وقت‌شناسی مهم است.|Ich lege Wert auf <Akk.>.
+einzige|Das ist der einzige Nachteil der Wohnung.|این تنها عیب آپارتمان است.|Das ist der einzige <Nomen>.
+einzige|Sie war die Einzige, die geholfen hat.|او تنها کسی بود که کمک کرد.|Sie war die Einzige, die <Satz>.
+entwicklung|Die Entwicklung der Preise macht mir Sorgen.|روند قیمت‌ها نگرانم می‌کند.|<Nomen> macht mir Sorgen.
+folgen|Bitte folgen Sie mir zum Ausgang.|لطفاً دنبال من تا خروجی بیایید.|Bitte folgen Sie <Dat.> zu <Dat.>.
+folgen|Das wird Folgen haben.|این عواقبی خواهد داشت.|Das wird Folgen haben.
+führt|Dieser Weg führt direkt zum Bahnhof.|این راه مستقیم به ایستگاه می‌رسد.|<Nomen> führt zu <Dat.>.
+führt|Stress führt oft zu Kopfschmerzen.|استرس اغلب به سردرد منجر می‌شود.|<Nomen> führt zu <Dat.>.
+ziemlich|Die Wohnung ist ziemlich teuer für diese Gegend.|آپارتمان برای این منطقه نسبتاً گران است.|<Nomen> ist ziemlich <Adj.>.
+ziemlich|Ich war ziemlich überrascht über seine Antwort.|از جوابش حسابی تعجب کردم.|Ich war ziemlich <Adj.> über <Akk.>.
+dadurch|Dadurch sparen wir jeden Monat Geld.|از این طریق هر ماه پول پس‌انداز می‌کنیم.|Dadurch <Satz>.
+erfolg|Der Kurs war ein grosser Erfolg.|دوره موفقیت بزرگی بود.|<Nomen> war ein grosser Erfolg.
+erfolg|Viel Erfolg bei der Prüfung!|در امتحان موفق باشی!|Viel Erfolg bei <Dat.>!
+krieg|Meine Grosseltern haben den Krieg erlebt.|پدربزرگ و مادربزرگم جنگ را تجربه کرده‌اند.|<Nomen> haben <Akk.> erlebt.
+lage|Die Wohnung hat eine sehr gute Lage.|آپارتمان موقعیت خیلی خوبی دارد.|<Nomen> hat eine <Adj.> Lage.
+lage|In dieser Lage würde ich den Chef anrufen.|در این وضعیت من به رئیس زنگ می‌زدم.|In dieser Lage würde ich <Verb>.
+september|Im September beginnt das neue Semester.|ترم جدید در سپتامبر شروع می‌شود.|Im <Monat> beginnt <Nomen>.
+wieso|Wieso hast du nicht Bescheid gesagt?|چرا خبر ندادی؟|Wieso hast du nicht <Partizip>?
+aufgrund|Aufgrund des Wetters bleibt das Schwimmbad geschlossen.|به دلیل هوا استخر بسته می‌ماند.|Aufgrund <Gen.> <Satz>.
+innerhalb|Bitte antworten Sie innerhalb von drei Tagen.|لطفاً ظرف سه روز پاسخ دهید.|Bitte <Verb> Sie innerhalb von <Zeit>.
+nimmt|Sie nimmt jeden Morgen den Zug um sieben.|او هر صبح قطار ساعت هفت را می‌گیرد.|Sie nimmt <Akk.> um <Uhrzeit>.
+nimmt|Das nimmt zu viel Zeit in Anspruch.|این وقت زیادی می‌گیرد.|Das nimmt <Akk.> in Anspruch.
+rein|Komm rein, draussen ist es kalt.|بیا تو، بیرون سرد است.|Komm rein, <Satz>.
+rolle|Geld spielt dabei keine Rolle.|پول در این مورد نقشی ندارد.|<Nomen> spielt keine Rolle.
+tod|Nach dem Tod seines Vaters zog er nach Hamburg.|بعد از مرگ پدرش به هامبورگ نقل مکان کرد.|Nach dem Tod <Gen.> <Satz>.
+völlig|Du hast völlig recht.|کاملاً حق با توست.|Du hast völlig recht.
+völlig|Das ist mir völlig egal.|برایم اصلاً مهم نیست.|Das ist mir völlig egal.
+zudem|Die Wohnung ist klein und zudem ziemlich laut.|آپارتمان کوچک است و علاوه بر آن نسبتاً پرسروصدا.|<Satz> und zudem <Adj.>.
+ausser|Ausser dir weiss niemand davon.|جز تو کسی از این خبر ندارد.|Ausser <Dat.> weiss niemand davon.
+ausser|Ich esse alles ausser Fisch.|من همه چیز می‌خورم به جز ماهی.|Ich esse alles ausser <Dat.>.
+irgendwie|Irgendwie habe ich heute keine Lust.|یک جورایی امروز حوصله ندارم.|Irgendwie <Satz>.
+kirche|Die Kirche im Dorf ist über 500 Jahre alt.|کلیسای روستا بیش از ۵۰۰ سال قدمت دارد.|<Nomen> ist über <Zahl> Jahre alt.
+meist|Meist fahre ich mit dem Rad zur Arbeit.|بیشتر وقت‌ها با دوچرخه سر کار می‌روم.|Meist <Satz>.
+märz|Im März wird es langsam wärmer.|در مارس کم‌کم هوا گرم‌تر می‌شود.|Im <Monat> wird es <Komparativ>.
+na|Na, wie war dein Wochenende?|خب، آخر هفته‌ات چطور بود؟|Na, <Frage>?
+seines|Er verkauft das Haus seines Grossvaters.|او خانهٔ پدربزرگش را می‌فروشد.|Er verkauft <Akk.> seines <Gen.>.
+verschiedenen|Wir haben verschiedene Angebote verglichen.|پیشنهادهای مختلف را مقایسه کردیم.|Wir haben verschiedene <Nomen> verglichen.
+vorbei|Die schlimmste Zeit ist vorbei.|بدترین دوران گذشته.|<Nomen> ist vorbei.
+vorbei|Ich komme später kurz bei dir vorbei.|بعداً یک سر به تو می‌زنم.|Ich komme bei <Dat.> vorbei.
+blick|Vom Balkon hat man einen schönen Blick auf den See.|از بالکن منظرهٔ قشنگی به دریاچه دارد.|Man hat einen Blick auf <Akk.>.
+blick|Auf den ersten Blick sah alles gut aus.|در نگاه اول همه چیز خوب به نظر می‌رسید.|Auf den ersten Blick <Satz>.
+dagegen|Ich habe nichts dagegen, wenn du früher gehst.|مخالفتی ندارم اگر زودتر بروی.|Ich habe nichts dagegen, wenn <Satz>.
+ebenso|Er spricht ebenso gut Englisch wie Deutsch.|او انگلیسی را به خوبی آلمانی حرف می‌زند.|Er <Verb> ebenso <Adj.> wie <Nomen>.
+partei|Welche Partei hat die Wahl gewonnen?|کدام حزب انتخابات را برد؟|Welche Partei hat <Akk.> gewonnen?
+wobei|Ich habe zugesagt, wobei ich mir nicht sicher bin.|قبول کردم، هرچند مطمئن نیستم.|<Satz>, wobei <Satz>.
+jungen|Die jungen Leute ziehen in die Grossstädte.|جوان‌ها به شهرهای بزرگ می‌روند.|Die jungen <Nomen> <Verb>.
+video|Schick mir das Video, wenn du Zeit hast.|اگر وقت داشتی ویدیو را برایم بفرست.|Schick mir <Akk.>, wenn <Satz>.
+august|Im August ist die halbe Stadt im Urlaub.|در اوت نصف شهر در تعطیلات است.|Im <Monat> <Satz>.
+bilder|Die Bilder vom Urlaub sind wunderschön geworden.|عکس‌های سفر فوق‌العاده شده‌اند.|<Nomen> sind <Adj.> geworden.
+dachte|Ich dachte, du wärst schon weg.|فکر کردم دیگر رفته‌ای.|Ich dachte, <Konjunktiv-Satz>.
+dachte|Er dachte lange über das Angebot nach.|او مدتی طولانی دربارهٔ پیشنهاد فکر کرد.|Er dachte über <Akk.> nach.
+glauben|Ich kann kaum glauben, dass es schon Dezember ist.|باورم نمی‌شود که دسامبر شده.|Ich kann kaum glauben, dass <Satz>.
+mitte|Wir treffen uns Mitte nächster Woche.|اواسط هفتهٔ آینده همدیگر را می‌بینیم.|Wir treffen uns Mitte <Gen.>.
+november|Im November wird es früh dunkel.|در نوامبر زود هوا تاریک می‌شود.|Im <Monat> wird es <Adj.>.
+sowohl|Sie spricht sowohl Deutsch als auch Türkisch.|او هم آلمانی حرف می‌زند هم ترکی.|Sie <Verb> sowohl <A> als auch <B>.
+april|Im April ist das Wetter unberechenbar.|در آوریل هوا غیرقابل پیش‌بینی است.|Im <Monat> ist <Nomen> <Adj.>.
+insbesondere|Insbesondere am Wochenende ist der Park voll.|به‌خصوص آخر هفته پارک شلوغ است.|Insbesondere <Zeit> <Satz>.
+system|Das neue System ist einfacher zu bedienen.|سیستم جدید ساده‌تر کار می‌کند.|<Nomen> ist einfacher zu <Verb>.
+tatsächlich|Er hat tatsächlich die Prüfung bestanden.|او واقعاً امتحان را قبول شد.|Er hat tatsächlich <Akk.> bestanden.
+erreicht|Wir haben unser Ziel erreicht.|به هدفمان رسیدیم.|Wir haben <Akk.> erreicht.
+erreicht|Ich habe ihn telefonisch nicht erreicht.|تلفنی به او دسترسی پیدا نکردم.|Ich habe <Akk.> nicht erreicht.
+gemeinsam|Wir haben die Aufgabe gemeinsam gelöst.|مسئله را با هم حل کردیم.|Wir haben <Akk.> gemeinsam gelöst.
+juli|Im Juli fahren wir ans Meer.|در ژوئیه به دریا می‌رویم.|Im <Monat> fahren wir <Ort>.
+nämlich|Ich kann nicht kommen, ich arbeite nämlich.|نمی‌توانم بیایم، آخر کار دارم.|<Satz>, <Satz> nämlich.
+oktober|Im Oktober beginnt bei uns die Heizsaison.|در اکتبر فصل گرمایش ما شروع می‌شود.|Im <Monat> beginnt <Nomen>.
+schaffen|Wir schaffen das bis Freitag.|تا جمعه از پسش برمی‌آییم.|Wir schaffen das bis <Zeit>.
+schaffen|Ohne Hilfe schaffen wir das nicht rechtzeitig.|بدون کمک به‌موقع از پسش برنمی‌آییم.|Ohne <Akk.> schaffen wir das nicht.
+versucht|Ich habe mehrmals versucht, dich zu erreichen.|چند بار سعی کردم با تو تماس بگیرم.|Ich habe versucht, <Infinitiv>.
+einsatz|Danke für Ihren Einsatz im Team.|ممنون بابت تلاشتان در تیم.|Danke für <Akk.>.
+falls|Falls es regnet, bleiben wir einfach drinnen.|اگر باران بیاید، همین‌طوری داخل می‌مانیم.|Falls <Satz>, <Satz>.
+grosser|Das war ein grosser Fehler.|این اشتباه بزرگی بود.|Das war ein grosser <Nomen>.
+habt|Habt ihr schon eine Entscheidung getroffen?|شما تصمیم گرفته‌اید؟|Habt ihr schon <Akk.> getroffen?
+ihres|Sie hat den Namen ihres Chefs vergessen.|او اسم رئیسش را فراموش کرده.|Sie hat <Akk.> ihres <Gen.> vergessen.
+rahmen|Im Rahmen des Projekts lernen wir viel.|در چارچوب پروژه چیزهای زیادی یاد می‌گیریم.|Im Rahmen <Gen.> <Satz>.
+sachen|Lass deine Sachen nicht überall liegen.|وسایلت را همه‌جا پخش نکن.|Lass <Akk.> nicht liegen.
+fällt|Der Unterricht fällt heute aus.|کلاس امروز تشکیل نمی‌شود.|<Nomen> fällt aus.
+fällt|Mir fällt gerade sein Name nicht ein.|الان اسمش یادم نمی‌آید.|Mir fällt <Nomen> nicht ein.
+genommen|Hast du deine Tabletten genommen?|قرص‌هایت را خورده‌ای؟|Hast du <Akk.> genommen?
+höhe|Die Kosten liegen in Höhe von 200 Euro.|هزینه‌ها حدود ۲۰۰ یورو است.|<Nomen> liegen in Höhe von <Betrag>.
+job|Sie hat einen neuen Job in München gefunden.|او کار جدیدی در مونیخ پیدا کرده.|Sie hat einen neuen Job gefunden.
+liess|Er liess mich einfach nicht ausreden.|او اصلاً نگذاشت حرفم تمام شود.|Er liess mich nicht <Infinitiv>.
+tochter|Unsere Tochter studiert jetzt in Wien.|دخترمان حالا در وین درس می‌خواند.|<Nomen> studiert jetzt in <Ort>.
+wären|Wären Sie so nett, das Fenster zu schliessen?|لطف می‌کنید پنجره را ببندید؟|Wären Sie so nett, <Infinitiv>?
+zahl|Die Zahl der Besucher steigt jedes Jahr.|تعداد بازدیدکنندگان هر سال بیشتر می‌شود.|Die Zahl <Gen.> steigt.
+handelt|Es handelt sich um ein Missverständnis.|موضوع یک سوءتفاهم است.|Es handelt sich um <Akk.>.
+kunst|Ich interessiere mich sehr für moderne Kunst.|به هنر مدرن خیلی علاقه دارم.|Ich interessiere mich für <Akk.>.
+mitarbeiter|Alle Mitarbeiter sind zur Besprechung eingeladen.|همهٔ کارمندان به جلسه دعوت‌اند.|Alle Mitarbeiter sind <Partizip>.
+sah|Ich sah ihn zuletzt vor zwei Jahren.|آخرین بار دو سال پیش او را دیدم.|Ich sah <Akk.> zuletzt vor <Zeit>.
+verloren|Ich habe meinen Ausweis verloren.|کارت شناسایی‌ام را گم کرده‌ام.|Ich habe <Akk.> verloren.
+weise|Auf diese Weise sparen wir Zeit.|به این روش در وقت صرفه‌جویی می‌کنیم.|Auf diese Weise <Satz>.
+zumindest|Zumindest hat es nicht geregnet.|دست‌کم باران نیامد.|Zumindest <Satz>.
+übrigens|Übrigens, Anna lässt dich grüssen.|راستی، آنا سلام رساند.|Übrigens, <Satz>.
+chance|Das ist eine gute Chance für dich.|این فرصت خوبی برای توست.|Das ist eine gute Chance für <Akk.>.
+gebracht|Was hat dich auf diese Idee gebracht?|چه چیزی این فکر را به سرت انداخت؟|Was hat dich auf <Akk.> gebracht?
+hinaus|Darüber hinaus bietet die Firma flexible Arbeitszeiten.|علاوه بر این، شرکت ساعت کاری منعطف دارد.|Darüber hinaus <Satz>.
+menge|Ich habe noch eine Menge zu tun.|هنوز کلی کار دارم.|Ich habe eine Menge zu tun.
+meter|Der Bahnhof ist nur zweihundert Meter entfernt.|ایستگاه فقط دویست متر فاصله دارد.|<Nomen> ist <Zahl> Meter entfernt.
+mindestens|Du solltest mindestens acht Stunden schlafen.|باید دست‌کم هشت ساعت بخوابی.|Du solltest mindestens <Zeit> <Verb>.
+selber|Das kann ich selber reparieren.|این را خودم می‌توانم تعمیر کنم.|Das kann ich selber <Verb>.
+sicherheit|Zur Sicherheit nehme ich einen Regenschirm mit.|محض احتیاط چتر با خودم می‌برم.|Zur Sicherheit <Satz>.
+gleichen|Wir arbeiten in der gleichen Abteilung.|ما در یک بخش کار می‌کنیم.|Wir <Verb> in der gleichen <Nomen>.
+laufen|Die Verhandlungen laufen noch.|مذاکرات هنوز ادامه دارد.|<Nomen> laufen noch.
+laufen|Ich laufe jeden Morgen eine halbe Stunde.|هر صبح نیم ساعت می‌دوم.|Ich laufe <Zeit>.

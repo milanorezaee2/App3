@@ -159,7 +159,7 @@ export function ChatNotificationBridge() {
   }, [router]);
 
   useEffect(() => {
-    if (!isHumanConversation && pathname !== '/conversations') return;
+    if (!isHumanConversation && pathname !== '/conversations' && pathname !== '/feedback') return;
     setBanner(null);
     if (timerRef.current) clearTimeout(timerRef.current);
     void clearChatUnreadCount().then(() => updateNativeBadge(0));
@@ -171,7 +171,9 @@ export function ChatNotificationBridge() {
     setBanner(null);
     if (timerRef.current) clearTimeout(timerRef.current);
     void clearChatUnreadCount().then(() => updateNativeBadge(0));
-    if (targetConversationId) {
+    if (!MANAGEMENT_BUILD) {
+      router.push('/feedback' as never);
+    } else if (targetConversationId) {
       router.push({
         pathname: '/conversations/human/[conversationId]',
         params: { conversationId: targetConversationId },

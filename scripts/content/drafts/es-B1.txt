@@ -1,0 +1,143 @@
+# Spanish B1 draft · format: targetWords | text | fa | pattern
+gobierno|El gobierno ha anunciado nuevas ayudas para familias.|دولت کمک‌های جدیدی برای خانواده‌ها اعلام کرده.|<nombre> ha anunciado <nombre>.
+nacional|Mañana es fiesta nacional y todo está cerrado.|فردا تعطیل ملی است و همه‌جا بسته است.|<tiempo> es fiesta nacional.
+cual|No sé cuál de los dos elegir.|نمی‌دانم کدام‌یک از این دو را انتخاب کنم.|No sé cuál <verbo>.
+cual|Es la razón por la cual me fui.|این همان دلیلی است که به خاطرش رفتم.|Es la razón por la cual <frase>.
+sistema|El nuevo sistema es más fácil de usar.|سیستم جدید ساده‌تر کار می‌کند.|<nombre> es más fácil de <verbo>.
+presidente|El presidente del club dejó su cargo ayer.|رئیس باشگاه دیروز از سمتش کنار رفت.|El presidente de <nombre> <verbo>.
+pueblo|Mis abuelos viven en un pueblo pequeño.|پدربزرگ و مادربزرگم در روستای کوچکی زندگی می‌کنند.|<nombre> viven en un pueblo <adj.>.
+política|En casa evitamos hablar de política.|در خانه از حرف زدن دربارهٔ سیاست پرهیز می‌کنیم.|Evitamos hablar de <nombre>.
+guerra|Mis abuelos vivieron la guerra de niños.|پدربزرگ و مادربزرگم در کودکی جنگ را تجربه کردند.|<nombre> vivieron <nombre>.
+social|La vida social aquí es muy activa.|زندگی اجتماعی اینجا خیلی پرجنب‌وجوش است.|La vida social es <adj.>.
+siendo|Sigue siendo mi mejor amigo.|هنوز هم بهترین دوست من است.|Sigue siendo <nombre>.
+muerte|Tras la muerte de su padre, volvió al pueblo.|بعد از مرگ پدرش به روستا برگشت.|Tras la muerte de <nombre>, <frase>.
+tras|Tras varias horas de espera, nos atendieron.|بعد از چند ساعت انتظار، به ما رسیدگی کردند.|Tras <nombre>, <frase>.
+través|Lo conocí a través de una amiga.|از طریق یک دوست با او آشنا شدم.|<frase> a través de <nombre>.
+sociedad|La sociedad cambia más rápido que las leyes.|جامعه سریع‌تر از قوانین تغییر می‌کند.|<nombre> cambia más rápido que <nombre>.
+hacen|¿Qué hacen tus hijos los fines de semana?|بچه‌هایت آخر هفته‌ها چه می‌کنند؟|¿Qué hacen <nombre> <tiempo>?
+paso|Paso por tu casa a las siete.|ساعت هفت از خانه‌ات رد می‌شوم.|Paso por <lugar> a <hora>.
+paso|Vamos paso a paso, sin prisa.|قدم به قدم پیش می‌رویم، بدون عجله.|Vamos paso a paso.
+sigue|Sigue todo recto hasta la plaza.|مستقیم برو تا میدان.|Sigue todo recto hasta <lugar>.
+sigue|Mi hermano sigue viviendo con mis padres.|برادرم هنوز با پدر و مادرم زندگی می‌کند.|<nombre> sigue <gerundio>.
+cierto|Es cierto que llegué tarde, lo siento.|درست است که دیر رسیدم، ببخشید.|Es cierto que <frase>.
+cierto|Por cierto, ¿has visto mis llaves?|راستی، کلیدهایم را دیده‌ای؟|Por cierto, ¿<pregunta>?
+países|He visitado varios países de Europa.|چند کشور اروپایی را دیده‌ام.|He visitado varios países de <lugar>.
+mayoría|La mayoría de mis amigos trabaja desde casa.|بیشتر دوستانم از خانه کار می‌کنند.|La mayoría de <nombre> <verbo>.
+tierra|Mi familia tiene un poco de tierra en el campo.|خانواده‌ام کمی زمین در روستا دارند.|<nombre> tiene tierra en <lugar>.
+único|Es el único restaurante abierto a esta hora.|این تنها رستورانی است که این ساعت باز است.|Es el único <nombre> <adj.>.
+cuerpo|Después de correr me duele todo el cuerpo.|بعد از دویدن تمام بدنم درد می‌کند.|Me duele <nombre>.
+programa|¿A qué hora empieza el programa?|برنامه ساعت چند شروع می‌شود؟|¿A qué hora empieza <nombre>?
+universidad|Estudié economía en la universidad de Sevilla.|در دانشگاه سویا اقتصاد خواندم.|Estudié <nombre> en la universidad de <lugar>.
+haya|Espero que haya sitio en el tren.|امیدوارم در قطار جا باشد.|Espero que haya <nombre>.
+mil|El alquiler cuesta casi mil euros al mes.|اجاره تقریباً هزار یورو در ماه است.|<nombre> cuesta <número> euros al mes.
+palabras|No encuentro las palabras para explicarlo.|کلمه‌ای برای توضیحش پیدا نمی‌کنم.|No encuentro las palabras para <verbo>.
+pasar|¿Puedes pasar por la farmacia?|می‌توانی سر راه به داروخانه بروی؟|¿Puedes pasar por <lugar>?
+seguir|Hay que seguir las instrucciones del médico.|باید دستورات پزشک را دنبال کرد.|Hay que seguir <nombre>.
+siguiente|La siguiente parada es la nuestra.|ایستگاه بعدی ایستگاه ماست.|La siguiente <nombre> es <nombre>.
+educación|La educación pública es gratuita aquí.|آموزش عمومی اینجا رایگان است.|La educación <adj.> es <adj.>.
+proceso|El proceso de matrícula es bastante largo.|روند ثبت‌نام نسبتاً طولانی است.|El proceso de <nombre> es <adj.>.
+sentido|Esta frase no tiene sentido.|این جمله معنی ندارد.|<nombre> no tiene sentido.
+sentido|En ese sentido, estoy de acuerdo contigo.|از این نظر با تو موافقم.|En ese sentido, <frase>.
+cuanto|En cuanto llegue, te aviso.|به محض اینکه رسیدم خبرت می‌کنم.|En cuanto <frase>, <frase>.
+cuanto|Cuanto más practicas, mejor hablas.|هرچه بیشتر تمرین کنی، بهتر حرف می‌زنی.|Cuanto más <verbo>, mejor <verbo>.
+ello|Por ello decidí cambiar de trabajo.|به همین دلیل تصمیم گرفتم شغلم را عوض کنم.|Por ello <frase>.
+orden|Pon los documentos en orden, por favor.|لطفاً مدارک را مرتب کن.|Pon <nombre> en orden.
+puesto|He conseguido un puesto en una empresa pequeña.|در یک شرکت کوچک شغل گرفته‌ام.|He conseguido un puesto en <nombre>.
+realmente|Realmente no sé qué hacer.|واقعاً نمی‌دانم چه کار کنم.|Realmente no sé <frase>.
+demás|Los demás llegarán un poco más tarde.|بقیه کمی دیرتر می‌رسند.|Los demás <verbo>.
+dicen|Dicen que va a nevar este fin de semana.|می‌گویند این آخر هفته برف می‌آید.|Dicen que <frase>.
+lista|Siempre hago una lista antes de comprar.|همیشه قبل از خرید لیست می‌نویسم.|Hago una lista antes de <verbo>.
+medios|Los medios hablaron mucho del tema.|رسانه‌ها زیاد دربارهٔ موضوع حرف زدند.|Los medios hablaron de <nombre>.
+total|En total somos ocho personas para cenar.|در کل هشت نفر برای شام هستیم.|En total somos <número> personas.
+video|Te envío el video esta noche.|امشب ویدیو را برایت می‌فرستم.|Te envío <nombre> <tiempo>.
+base|La base de una buena relación es la confianza.|پایهٔ یک رابطهٔ خوب اعتماد است.|La base de <nombre> es <nombre>.
+digo|Te lo digo en serio.|جدی می‌گویم.|Te lo digo en serio.
+empresa|La empresa está cerca de la estación.|شرکت نزدیک ایستگاه است.|La empresa está cerca de <lugar>.
+especial|Hoy es un día especial para nosotros.|امروز روز خاصی برای ماست.|Hoy es un día especial para <nombre>.
+paz|Necesito un poco de paz después del trabajo.|بعد از کار کمی آرامش لازم دارم.|Necesito un poco de paz.
+policía|La policía cerró la calle durante una hora.|پلیس خیابان را یک ساعت بست.|La policía <verbo> <nombre>.
+sitio|¿Conoces un buen sitio para cenar?|جای خوبی برای شام سراغ داری؟|¿Conoces un buen sitio para <verbo>?
+cara|Tienes mala cara, ¿estás bien?|رنگت پریده، خوبی؟|Tienes mala cara.
+cara|Esta chaqueta es demasiado cara.|این کاپشن خیلی گران است.|<nombre> es demasiado cara.
+mundial|El equipo ganó el campeonato mundial.|تیم قهرمانی جهانی را برد.|<nombre> ganó <nombre> mundial.
+obra|Hay una obra en la calle y no se puede pasar.|در خیابان کار ساختمانی است و نمی‌شود رد شد.|Hay una obra en <lugar>.
+ojos|Cierra los ojos y respira despacio.|چشم‌هایت را ببند و آرام نفس بکش.|Cierra los ojos y <verbo>.
+sociales|Paso demasiado tiempo en las redes sociales.|وقت زیادی در شبکه‌های اجتماعی می‌گذرانم.|Paso tiempo en <nombre>.
+julio|En julio hace demasiado calor para viajar.|در ژوئیه برای سفر خیلی گرم است.|En <mes> hace <nombre>.
+pueda|Te llamo en cuanto pueda.|به محض اینکه بتوانم زنگ می‌زنم.|Te llamo en cuanto pueda.
+respecto|Con respecto a tu pregunta, aún no tengo respuesta.|در مورد سؤالت، هنوز جوابی ندارم.|Con respecto a <nombre>, <frase>.
+ve|Se ve que estás cansado.|معلوم است که خسته‌ای.|Se ve que <frase>.
+capital|La capital está a dos horas en tren.|پایتخت دو ساعت با قطار فاصله دارد.|<nombre> está a <tiempo> en <transporte>.
+casos|En algunos casos es mejor esperar.|در بعضی موارد بهتر است صبر کرد.|En algunos casos <frase>.
+población|La población del pueblo ha bajado mucho.|جمعیت روستا خیلی کم شده.|La población de <lugar> ha <participio>.
+quienes|Quienes lleguen tarde no podrán entrar.|کسانی که دیر برسند نمی‌توانند وارد شوند.|Quienes <frase> no podrán <verbo>.
+relación|Tenemos una buena relación con los vecinos.|با همسایه‌ها رابطهٔ خوبی داریم.|Tenemos una buena relación con <nombre>.
+suerte|Tuve suerte y encontré trabajo pronto.|شانس آوردم و زود کار پیدا کردم.|Tuve suerte y <frase>.
+varias|Lo he intentado varias veces sin éxito.|چند بار امتحان کردم بدون نتیجه.|Lo he intentado varias veces.
+bastante|La película es bastante larga pero interesante.|فیلم نسبتاً طولانی ولی جالب است.|<nombre> es bastante <adj.>.
+debido|El vuelo se retrasó debido al mal tiempo.|پرواز به خاطر هوای بد تأخیر داشت.|<frase> debido a <nombre>.
+fuerte|El café aquí es muy fuerte.|قهوهٔ اینجا خیلی غلیظ است.|<nombre> es muy fuerte.
+miedo|Tengo miedo de perder el último tren.|می‌ترسم آخرین قطار را از دست بدهم.|Tengo miedo de <verbo>.
+poner|¿Dónde puedo poner la maleta?|چمدان را کجا می‌توانم بگذارم؟|¿Dónde puedo poner <nombre>?
+apoyo|Gracias por tu apoyo en este momento difícil.|ممنون بابت حمایتت در این لحظهٔ سخت.|Gracias por tu apoyo.
+fuerza|No tengo fuerza para seguir hoy.|امروز توان ادامه دادن ندارم.|No tengo fuerza para <verbo>.
+manos|Lávate las manos antes de comer.|قبل از غذا دست‌هایت را بشور.|Lávate las manos antes de <verbo>.
+propio|Prefiero tener mi propio coche.|ترجیح می‌دهم ماشین خودم را داشته باشم.|Prefiero tener mi propio <nombre>.
+control|Perdí el control de la situación.|کنترل اوضاع از دستم خارج شد.|Perdí el control de <nombre>.
+deben|Los alumnos deben entregar el trabajo el lunes.|دانش‌آموزان باید کار را دوشنبه تحویل دهند.|<nombre> deben <verbo> <tiempo>.
+empresas|Muchas empresas permiten trabajar desde casa.|بسیاری از شرکت‌ها اجازهٔ دورکاری می‌دهند.|Muchas empresas <verbo>.
+marzo|En marzo empieza la primavera.|در مارس بهار شروع می‌شود.|En <mes> empieza <nombre>.
+peor|Lo peor ya ha pasado.|بدترینش دیگر گذشته.|Lo peor ya ha pasado.
+serie|Vimos toda la serie en un fin de semana.|کل سریال را در یک آخر هفته دیدیم.|Vimos <nombre> en <tiempo>.
+sur|En el sur hace más calor que aquí.|جنوب از اینجا گرم‌تر است.|En el sur hace más <nombre> que <lugar>.
+edad|¿A qué edad empezaste a trabajar?|از چه سنی شروع به کار کردی؟|¿A qué edad empezaste a <verbo>?
+futuro|En el futuro quiero vivir cerca del mar.|در آینده می‌خواهم نزدیک دریا زندگی کنم.|En el futuro quiero <verbo>.
+libertad|Trabajar por mi cuenta me da libertad.|کار مستقل به من آزادی می‌دهد.|<nombre> me da libertad.
+tampoco|Yo tampoco entendí la explicación.|من هم توضیح را نفهمیدم.|Yo tampoco <verbo>.
+allá|Más allá del río empieza otro país.|آن سوی رودخانه کشور دیگری شروع می‌شود.|Más allá de <nombre> <frase>.
+cantidad|Hay una gran cantidad de turistas en verano.|تابستان تعداد زیادی گردشگر هست.|Hay una gran cantidad de <nombre>.
+corazón|Me late el corazón muy rápido antes del examen.|قبل از امتحان قلبم خیلی تند می‌زند.|Me late el corazón <adv.>.
+diciembre|En diciembre las calles están llenas de luces.|در دسامبر خیابان‌ها پر از چراغ است.|En <mes> <frase>.
+existe|Existe una solución más sencilla.|راه‌حل ساده‌تری وجود دارد.|Existe <nombre>.
+imagen|La imagen de la ciudad ha mejorado mucho.|وجههٔ شهر خیلی بهتر شده.|La imagen de <nombre> ha <participio>.
+norte|El norte es más verde y más húmedo.|شمال سبزتر و مرطوب‌تر است.|El norte es más <adj.>.
+octubre|En octubre vuelve el frío.|در اکتبر سرما برمی‌گردد.|En <mes> vuelve <nombre>.
+político|No me gusta hablar de temas políticos.|دوست ندارم دربارهٔ موضوعات سیاسی حرف بزنم.|No me gusta hablar de <nombre>.
+propia|Cada uno trae su propia comida.|هر کس غذای خودش را می‌آورد.|Cada uno trae su propia <nombre>.
+voz|Habla en voz baja, el niño duerme.|آهسته حرف بزن، بچه خواب است.|Habla en voz baja.
+actual|Mi trabajo actual me gusta bastante.|از شغل فعلی‌ام نسبتاً راضی‌ام.|Mi <nombre> actual me gusta.
+ambos|Ambos tenéis razón en parte.|هر دوی شما تا حدی حق دارید.|Ambos <verbo>.
+elecciones|Las elecciones son el próximo domingo.|انتخابات یکشنبهٔ آینده است.|Las elecciones son <tiempo>.
+grupos|Trabajamos en grupos de cuatro personas.|در گروه‌های چهارنفره کار می‌کنیم.|Trabajamos en grupos de <número>.
+mira|Mira, ahí viene el autobús.|ببین، اتوبوس دارد می‌آید.|Mira, <frase>.
+modo|De este modo ahorramos tiempo y dinero.|این‌طوری در وقت و پول صرفه‌جویی می‌کنیم.|De este modo <frase>.
+palabra|No entendí ni una palabra de la película.|حتی یک کلمه از فیلم را نفهمیدم.|No entendí ni una palabra de <nombre>.
+sean|Quiero que sean puntuales mañana.|می‌خواهم فردا وقت‌شناس باشید.|Quiero que sean <adj.>.
+tenido|He tenido un día muy largo.|روز خیلی طولانی‌ای داشتم.|He tenido un día <adj.>.
+abril|En abril llueve casi todos los días.|در آوریل تقریباً هر روز باران می‌بارد.|En <mes> <frase>.
+hubiera|Si hubiera tiempo, iríamos al mar.|اگر وقت بود، به دریا می‌رفتیم.|Si hubiera <nombre>, <condicional>.
+joven|De joven viajaba mucho más.|جوان که بودم خیلی بیشتر سفر می‌کردم.|De joven <frase>.
+región|Esta región es famosa por su vino.|این منطقه به شرابش معروف است.|<nombre> es famosa por <nombre>.
+comunidad|Hay una comunidad iraní bastante grande aquí.|اینجا جامعهٔ ایرانی نسبتاً بزرگی هست.|Hay una comunidad <adj.> aquí.
+habían|Cuando llegamos, ya habían cerrado.|وقتی رسیدیم دیگر بسته بودند.|Cuando <frase>, ya habían <participio>.
+investigación|Trabaja en un centro de investigación.|او در یک مرکز تحقیقاتی کار می‌کند.|Trabaja en un centro de investigación.
+junio|En junio terminan las clases.|در ژوئن کلاس‌ها تمام می‌شود.|En <mes> terminan <nombre>.
+consejo|Te doy un consejo: no esperes más.|یک نصیحت می‌کنم: بیشتر صبر نکن.|Te doy un consejo: <frase>.
+dan|Me dan ganas de volver a empezar.|دلم می‌خواهد از نو شروع کنم.|Me dan ganas de <verbo>.
+movimiento|Hay mucho movimiento en la plaza hoy.|امروز میدان خیلی پرجنب‌وجوش است.|Hay mucho movimiento en <lugar>.
+noviembre|En noviembre los días son muy cortos.|در نوامبر روزها خیلی کوتاه‌اند.|En <mes> <frase>.
+papel|El sueño juega un papel importante en la salud.|خواب نقش مهمی در سلامتی دارد.|<nombre> juega un papel <adj.> en <nombre>.
+simplemente|Simplemente no tengo tiempo.|فقط وقت ندارم.|Simplemente no <verbo>.
+única|Es la única opción que nos queda.|این تنها گزینه‌ای است که برایمان مانده.|Es la única <nombre> que <frase>.
+agosto|En agosto la oficina está casi vacía.|در اوت دفتر تقریباً خالی است.|En <mes> <frase>.
+aun|Aun así, decidimos salir.|با این حال تصمیم گرفتیم بیرون برویم.|Aun así, <frase>.
+cargo|Yo me hago cargo de la cena.|شام با من.|Yo me hago cargo de <nombre>.
+cuales|Tengo dos primos, los cuales viven en Chile.|دو پسرعمو دارم که در شیلی زندگی می‌کنند.|<nombre>, los cuales <frase>.
+enero|En enero empiezo un curso de alemán.|در ژانویه یک دورهٔ آلمانی شروع می‌کنم.|En <mes> empiezo <nombre>.
+jefe|Mi jefe me ha pedido quedarme más tarde.|رئیسم از من خواسته بیشتر بمانم.|<nombre> me ha pedido <verbo>.
+miembros|Todos los miembros del equipo están de acuerdo.|همهٔ اعضای تیم موافق‌اند.|Todos los miembros de <nombre> <verbo>.
+pena|No vale la pena discutir por eso.|ارزش بحث کردن ندارد.|No vale la pena <verbo>.
+pena|Me da pena que te vayas tan pronto.|ناراحتم که این‌قدر زود می‌روی.|Me da pena que <frase>.
+siglo|Este edificio es del siglo pasado.|این ساختمان مال قرن گذشته است.|<nombre> es del siglo <adj.>.
+cabo|Al cabo de una hora, por fin llegó.|بعد از یک ساعت بالاخره رسید.|Al cabo de <tiempo>, <frase>.
+común|No tenemos nada en común.|هیچ وجه مشترکی نداریم.|No tenemos nada en común.

@@ -5,6 +5,9 @@ import { useCallback, useMemo, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
+import DailyPlanCard from '@/components/DailyPlanCard';
+import { buildDailyPlan, type DailyPlanStep } from '@/lib/dailyPlan';
+import { getStudyStreak } from '@/lib/studyStreak';
 import {
   BookOpen,
   Check,
@@ -20,12 +23,17 @@ import {
   Sparkles,
   RotateCcw,
   Volume2,
+  Award,
 } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
 import { TurkishBottomNav } from '@/components/TurkishBottomNav';
 import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '@/components/LearningHomeStyles';
 import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } from '@/components/EnglishUI';
 import { TURKISH_LEVELS, TURKISH_LESSONS, turkishProgress, type TurkishLevelId } from '@/lib/languages/turkish';
+const READINESS = courseReadiness('tr', auditLessonsFromLearning(TURKISH_LESSONS as ReadonlyArray<import('@/lib/languages/types').LearningLesson & { levelId: number }>));
+import LevelReadinessLine from '@/components/LevelReadinessLine';
+import PlacementCard from '@/components/PlacementCard';
+import { auditLessonsFromLearning, courseReadiness } from '@/lib/content/courseAudit';
 import { loadTurkishLessonSessionWithPresence } from '@/lib/languages/turkishStudyState';
 import type { CourseProgress } from '@/lib/courseProgress';
 import { toPersianDigits as fa } from '@/lib/format';
@@ -74,6 +82,8 @@ export default function TurkishHome() {
   const compact = width < 640;
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [dueCount, setDueCount] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [plan, setPlan] = useState<readonly DailyPlanStep[]>([]);
   const [showRoadmap, setShowRoadmap] = useState(false);
   const [error, setError] = useState('');
   const [retry, setRetry] = useState(0);
@@ -81,12 +91,22 @@ export default function TurkishHome() {
 
   useFocusEffect(useCallback(() => {
     let alive = true;
+    void getStudyStreak().then(value => { if (alive) setStreak(value); }).catch(() => undefined);
     void Promise.all([turkishProgress.getCourseProgress(), turkishProgress.getDueReviewCards()])
       .then(async ([nextProgress, cards]) => {
         if (!alive) return;
         setProgress(nextProgress);
         setDueCount(cards.length);
         setError('');
+        const now = new Date();
+        const todayKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+        void buildDailyPlan({
+          lessonDone: nextProgress.lastActiveDate === todayKey && nextProgress.completedLessonIds.length > 0,
+          reviewsDue: cards.length,
+          lessonRoute: '/learn/tr/lesson',
+          reviewRoute: '/learn/tr/review',
+          speakRoute: '/learn/tr/pronunciation',
+        }).then(steps => { if (alive) setPlan(steps); }).catch(() => undefined);
         const completed = new Set(nextProgress.completedLessonIds);
         const currentLesson = TURKISH_LESSONS.find(lesson => lesson.id === nextProgress.currentLessonId && !completed.has(lesson.id))
           ?? TURKISH_LESSONS.find(lesson => !completed.has(lesson.id));
@@ -245,6 +265,7 @@ export default function TurkishHome() {
                         </View>
                         <Text style={styles.levelDesc} numberOfLines={1}>{level.description || 'در نقشهٔ آیندهٔ دوره'}</Text>
                         <Text style={styles.levelStats}>{fa(count.completed)} از {fa(count.total)} درس · {level.status === 'planned' ? 'در نقشهٔ آینده' : 'محتوای موجود'}</Text>
+                        <LevelReadinessLine course={READINESS} levelId={level.id} color={level.color} />
                       </View>
                       <ChevronLeft size={18} color={HomeColors.muted} />
                     </Pressable>
@@ -265,6 +286,7 @@ export default function TurkishHome() {
 
           <FoundationA1Entry language="tr" />
 
+          <PlacementCard courseId={'tr'} href={'/learn/tr/placement'} hasProgress={hasStartedCourse} />
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#D94F64', '#E07A5F', '#D94F64']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
             <View style={styles.lessonMetaRow}>
@@ -280,7 +302,7 @@ export default function TurkishHome() {
             <View style={styles.lessonHeading}>
               <Text style={styles.lessonEyebrow}>ادامهٔ یادگیری ترکی استانبولی</Text>
               <Text style={styles.lessonTitle}>{nextLesson ? heroLesson.title : 'سطح‌های A1 و A2 ترکی استانبولی تکمیل شدند'}</Text>
-              <Text style={styles.lessonSubtitle}>{nextLesson ? heroLesson.subtitle : 'درس‌های Foundation، Survival و Everyday Turkish را مرور کن یا نقشهٔ سطح‌ها را ببین.'}</Text>
+              {nextLesson ? <Text style={styles.lessonSubtitle}>{heroLesson.subtitle}</Text> : null}
             </View>
 
             <View style={styles.sentenceCard}>
@@ -351,6 +373,13 @@ export default function TurkishHome() {
             </Pressable>
           </View>
 
+          {plan.length ? <View style={{ marginBottom: 12 }}>
+            <DailyPlanCard
+              steps={plan}
+              onOpen={step => router.push((step.id === 'lesson' ? `/learn/tr/lesson${resumeLesson ? `?id=${resumeLesson.id}` : ''}` : step.route) as never)}
+            />
+          </View> : null}
+
           <View style={styles.sectionHeader}>
             <View style={styles.sectionTitleBlock}>
               <Text style={styles.sectionTitle}>برنامهٔ امروز</Text>
@@ -359,6 +388,7 @@ export default function TurkishHome() {
               <Flame size={14} color={HomeColors.amber} />
               <Text style={styles.dailyGoalText}>{fa(dueCount)} جمله برای مرور</Text>
             </View>
+            {streak > 0 ? <View style={[styles.dailyGoalPill, { marginTop: 6 }]}><Flame size={14} color="#D97706" /><Text style={styles.dailyGoalText}>{fa(streak)} روز پیاپی</Text></View> : null}
           </View>
 
           <LinearGradient colors={['#FFFFFF', '#FAF9F5', '#F4F1EA']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
@@ -394,6 +424,14 @@ export default function TurkishHome() {
                 <View style={styles.quickCopy}>
                   <Text style={styles.quickTitle}>مرور جمله‌های ترکی</Text>
                   <Text style={styles.quickDesc}>کارت‌های زمان‌بندی‌شدهٔ ترکی استانبولی</Text>
+                </View>
+                <ChevronLeft size={17} color={HomeColors.muted} />
+              </Pressable>
+              <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push('/learn/tr/studio' as never)}>
+                <View style={[styles.quickIcon, { backgroundColor: '#FEF3C7' }]}><Award size={18} color="#D97706" /></View>
+                <View style={styles.quickCopy}>
+                  <Text style={styles.quickTitle}>آزمون و مسیر تکمیلی</Text>
+                  <Text style={styles.quickDesc}>آزمون پایان سطح و تمرین روزانهٔ هر سطح</Text>
                 </View>
                 <ChevronLeft size={17} color={HomeColors.muted} />
               </Pressable>

@@ -10,15 +10,10 @@ import { RussianBottomNav } from '@/components/RussianBottomNav';
 import { RUSSIAN_LESSONS, russianProgress } from '@/lib/languages/russian';
 import type { CourseProgress, ReviewRating, SentenceReviewCard } from '@/lib/courseProgress';
 import { toPersianDigits as fa } from '@/lib/format';
+import { ReviewRatingGrid, ReviewSpeakGate, reviewReason } from '@/components/ReviewRecall';
 import { Typography } from '@/lib/theme';
+import { markPlanStep } from '@/lib/dailyPlan';
 import { speechTagFor } from '@/lib/speechLanguage';
-
-const ratingOptions: Array<{ id: ReviewRating; label: string; hint: string; color: string }> = [
-  { id: 'again', label: 'فراموش کردم', hint: '۱۰ دقیقه', color: Palette.danger },
-  { id: 'hard', label: 'سخت بود', hint: 'فردا', color: Palette.warning },
-  { id: 'good', label: 'خوب بود', hint: 'زمان مناسب', color: Palette.primary },
-  { id: 'easy', label: 'آسان بود', hint: 'فاصلهٔ بیشتر', color: Palette.success },
-];
 
 function contentForCard(card: SentenceReviewCard) {
   const lesson = RUSSIAN_LESSONS.find(item => item.id === card.lessonId);
@@ -32,6 +27,7 @@ export default function RussianReview() {
   const [sessionCards, setSessionCards] = useState<SentenceReviewCard[]>([]);
   const [cardIndex, setCardIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
+  const [spokenScore, setSpokenScore] = useState<number | null>(null);
   const [sessionActive, setSessionActive] = useState(false);
   const [finished, setFinished] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -64,6 +60,7 @@ export default function RussianReview() {
     setSessionCards(dueCards.slice(0, 20));
     setCardIndex(0);
     setRevealed(false);
+    setSpokenScore(null);
     setFinished(false);
     setSessionActive(true);
   };
@@ -75,6 +72,7 @@ export default function RussianReview() {
     try {
       void Speech.stop();
       await russianProgress.rateReviewCard(currentCard.id, rating);
+      void markPlanStep('review').catch(() => undefined);
       if (cardIndex + 1 >= sessionCards.length) {
         setSessionActive(false);
         setFinished(true);
@@ -82,6 +80,7 @@ export default function RussianReview() {
       } else {
         setCardIndex(value => value + 1);
         setRevealed(false);
+        setSpokenScore(null);
       }
     } catch {
       setError('نتیجهٔ مرور ذخیره نشد؛ دوباره تلاش کنید.');
@@ -105,13 +104,14 @@ export default function RussianReview() {
         <Text style={styles.recallLabel}>جملهٔ روسی را به یاد بیاورید</Text>
         <View style={styles.reviewCard}>
           <Text style={styles.reviewFa}>{sentence.fa}</Text>
-          {!revealed ? <><Text style={styles.sayHint}>پاسخ روسی را با صدای بلند بگویید.</Text><Pressable accessibilityRole="button" style={styles.revealButton} onPress={() => setRevealed(true)}><Text style={styles.revealButtonText}>نمایش پاسخ</Text></Pressable></> : <View style={styles.answerArea}>
+          {!revealed ? <><ReviewSpeakGate text={sentence.text} locale={'ru-RU'} accent={Palette.success} onResult={result => { setSpokenScore(result.score); setRevealed(true); }} /><Pressable accessibilityRole="button" style={styles.revealButton} onPress={() => setRevealed(true)}><Text style={styles.revealButtonText}>میکروفون ندارم؛ نمایش پاسخ</Text></Pressable></> : <View style={styles.answerArea}>
             <View style={styles.answerDivider} /><Text style={styles.reviewRussian}>{sentence.text}</Text><Text style={styles.reviewPronunciation}>{sentence.pronunciation}</Text>
             <Pressable accessibilityRole="button" style={styles.soundButton} onPress={() => speak(sentence.text)}><Volume2 size={18} color={Palette.primary} /><Text style={styles.soundText}>پخش جمله</Text></Pressable>
             {vocabulary ? <View style={styles.vocabChip}><Sparkles size={13} color={Palette.warning} /><Text style={styles.vocabText}>{vocabulary}</Text></View> : null}
           </View>}
         </View>
-        {revealed ? <View style={styles.ratingArea}><Text style={styles.ratingTitle}>یادآوری این جمله چطور بود؟</Text><View style={styles.ratingGrid}>{ratingOptions.map(option => <Pressable key={option.id} disabled={saving} style={[styles.ratingButton, { borderColor: `${option.color}55` }]} onPress={() => void rate(option.id)}><Text style={[styles.ratingLabel, { color: option.color }]}>{saving ? 'در حال ذخیره…' : option.label}</Text><Text style={styles.ratingHint}>{option.hint}</Text></Pressable>)}</View></View> : null}
+        <Text style={{ fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 19, color: '#64748B', textAlign: 'right', writingDirection: 'rtl', width: '100%' }}>چرا این جمله اینجاست؟ {reviewReason(currentCard, lesson.title)}</Text>
+        {revealed ? <ReviewRatingGrid saving={saving} score={spokenScore} onRate={rating => void rate(rating)} /> : null}
       </ScrollView>
     </View>;
   }
@@ -129,16 +129,11 @@ export default function RussianReview() {
         <View style={styles.summaryActions}><Pressable accessibilityRole="button" disabled={!reviewCount || loading} style={[styles.startButton, (!reviewCount || loading) && styles.disabled]} onPress={startSession}><RefreshCw size={16} color={Palette.primaryDark} /><Text style={styles.startText}>شروع مرور امروز</Text></Pressable>{reviewCount ? <View style={styles.time}><Clock3 size={13} color="#D7D9FF" /><Text style={styles.timeText}>حدود {fa(Math.max(2, Math.ceil(reviewCount * .6)))} دقیقه</Text></View> : null}</View>
       </LinearGradient>
       <Text style={styles.sectionTitle}>مرور چگونه تنظیم می‌شود؟</Text>
-      <View style={styles.methodList}><Method num="۱" title="معنی را ببین و جمله را بگو" desc="پیش از دیدن پاسخ، جملهٔ روسی را با صدای بلند به یاد بیاورید." /><Method num="۲" title="پاسخ را ببین و بشنو" desc="متن روسی و آوانویسی تقریبی را با پاسخ خود مقایسه کنید." /><Method num="۳" title="میزان سختی را انتخاب کن" desc="برنامه زمان مرور بعدی را روی همین دستگاه تنظیم می‌کند." /></View>
-      <View style={styles.note}><CheckCircle2 size={18} color={Palette.success} /></View>
     </ScrollView>
     <RussianBottomNav />
   </View>;
 }
 
-function Method({ num, title, desc }: { num: string; title: string; desc: string }) {
-  return <View style={styles.method}><View style={styles.methodNum}><Text style={styles.methodNumText}>{num}</Text></View><View style={styles.methodText}><Text style={styles.methodTitle}>{title}</Text><Text style={styles.methodDesc}>{desc}</Text></View></View>;
-}
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Palette.canvas },

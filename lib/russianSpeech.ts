@@ -1,5 +1,7 @@
 import * as Speech from 'expo-speech';
+import { playPreferredRecording, playFallbackRecording, noteSpeechSuccess } from '@/lib/content/speechFallback';
 import { speechTagFor } from './speechLanguage';
+import { voiceFor } from './voiceRotation';
 
 // Serialize stop/start requests: an asynchronous stop must not cancel the next
 // sentence after it has started. Only the most recent request may speak.
@@ -11,21 +13,40 @@ function enqueue(operation: () => Promise<void>): Promise<void> {
   return queue;
 }
 
-export function playRussianSpeech(text: string, rate: number, onError?: () => void): Promise<void> {
+export function playRussianSpeech(text: string, rate: number, onError?: () => void, onDone?: () => void): Promise<void> {
   const request = ++requestId;
   return enqueue(async () => {
     if (request !== requestId) return;
     await Speech.stop().catch(() => undefined);
     if (request !== requestId) return;
-    try {
-      Speech.speak(text, {
-        language: speechTagFor('ru-RU'),
-        rate,
-        onError: () => { if (request === requestId) onError?.(); },
-      });
-    } catch {
-      if (request === requestId) onError?.();
-    }
+    // Content-pack recordings win over the device voice (same voice on every phone, no TTS dependency).
+    // Device TTS stays primary; recordings are used only on devices that opted in.
+    if (await playPreferredRecording(text, rate / 0.78)) { onDone?.(); return; }
+    if (request !== requestId) return;
+    const voice = await voiceFor('ru-RU', text).catch(() => undefined);
+    if (request !== requestId) return;
+    const say = (withVoice: boolean) => {
+      try {
+        Speech.speak(text, {
+          language: speechTagFor('ru-RU'),
+          ...(withVoice && voice ? { voice } : {}),
+          rate,
+          onDone: () => { if (request === requestId) { noteSpeechSuccess(); onDone?.(); } },
+          // A rotated voice that fails to start falls back to the device default once,
+          // then to a recording on devices whose engine is unreliable.
+          onError: () => {
+            if (request !== requestId) return;
+            if (withVoice && voice) { say(false); return; }
+            void playFallbackRecording(text, rate / 0.78).then(ok => { if (request === requestId && !ok) onError?.(); });
+          },
+        });
+      } catch {
+        if (request !== requestId) return;
+        if (withVoice && voice) { say(false); return; }
+        void playFallbackRecording(text, rate / 0.78).then(ok => { if (request === requestId && !ok) onError?.(); });
+      }
+    };
+    say(true);
   });
 }
 

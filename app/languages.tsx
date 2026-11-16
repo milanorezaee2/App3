@@ -1,16 +1,16 @@
 import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useState } from 'react';
-import { Alert, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { createAudioPlayer } from 'expo-audio';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { ArrowLeft, BookOpen, Headphones, LifeBuoy, LockKeyhole, MessageCircle } from 'lucide-react-native';
 import { MiloLanguageBrand } from '@/components/MiloLanguageBrand';
 import { ProfileIcon } from '@/components/ProfileIcon';
 import { ensureOpenLearnerRegistered } from '@/lib/openLearnerAccount';
+import { isLearnerRegistered } from '@/lib/registrationStatus';
+import { useCallback } from 'react';
 import { LANGUAGES } from '@/lib/languages/catalog';
-import { ensureSupportConversation } from '@/lib/conversations';
-import { readableSupabaseError } from '@/lib/errors';
 import { FEATURES, LANGUAGE_SCOPE, RUSSIAN_ONLY_BUILD } from '@/lib/features';
 
 const palette = {
@@ -51,6 +51,12 @@ export default function LanguagesHome() {
   const tiny = width < 370;
 
   useEffect(() => { void ensureOpenLearnerRegistered(); }, []);
+  const [registered, setRegistered] = useState(false);
+  useFocusEffect(useCallback(() => {
+    let active = true;
+    void isLearnerRegistered().then(value => { if (active) setRegistered(value); });
+    return () => { active = false; };
+  }, []));
 
   useEffect(() => {
     // Browsers block autoplay and expo-audio web leaves the play() promise unhandled; skip on web.
@@ -97,10 +103,8 @@ export default function LanguagesHome() {
   const openSupport = () => {
     if (openingSupport) return;
     setOpeningSupport(true);
-    ensureSupportConversation()
-      .then((conversationId) => router.push({ pathname: '/conversations/human/[conversationId]', params: { conversationId, name: 'پشتیبانی Milo' } } as never))
-      .catch((cause) => Alert.alert('پشتیبانی', readableSupabaseError(cause)))
-      .finally(() => setOpeningSupport(false));
+    router.push('/feedback' as never);
+    setOpeningSupport(false);
   };
 
   const languages = LANGUAGES.filter(language => LANGUAGE_SCOPE.includes(language.id)
@@ -128,15 +132,15 @@ export default function LanguagesHome() {
             <View style={styles.headerActions}>
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel="پروفایل من"
-                style={({ pressed }) => [styles.headerButton, styles.profileButton, pressed && styles.pressed]}
+                accessibilityLabel={registered ? 'پروفایل من (ثبت‌نام شده)' : 'پروفایل من'}
+                style={({ pressed }) => [styles.headerButton, styles.profileButton, registered && styles.profileButtonRegistered, pressed && styles.pressed]}
                 onPress={() => router.push('/profile' as never)}
               >
-                <ProfileIcon size={26} />
+                <ProfileIcon size={26} registered={registered} />
               </Pressable>
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel="گفتگو با پشتیبانی"
+                accessibilityLabel="انتقادات و پیشنهادات"
                 accessibilityState={{ disabled: openingSupport }}
                 disabled={openingSupport}
                 style={({ pressed }) => [styles.headerButton, pressed && styles.pressed]}
@@ -180,9 +184,13 @@ export default function LanguagesHome() {
           </ImageBackground>
 
           {(() => {
-            const baseLanguage = languages.find(language => language.id === 'en') ?? null;
-            const otherLanguages = languages.filter(language => language !== baseLanguage);
-            const wrap = otherLanguages.length > 2;
+            // Grid order: French first (rightmost on Android), English beside it, then the rest.
+            const pinned = ['fr', 'en'];
+            const ordered = [
+              ...pinned.map(id => languages.find(language => language.id === id)).filter((language): language is (typeof languages)[number] => !!language),
+              ...languages.filter(language => !pinned.includes(language.id)),
+            ];
+            const wrap = ordered.length > 2;
             const renderCard = (language: (typeof languages)[number], solo: boolean) => {
               const displayName = language.nativeName || language.name;
               const artwork = languageArtwork[language.id] ?? languageArtwork.en;
@@ -215,12 +223,10 @@ export default function LanguagesHome() {
             };
             return (
               <View style={styles.languageBlock}>
-                {/* The base course sits alone, centred, at the same card size as the grid. */}
-                {baseLanguage && <View style={styles.languageSoloRow}>{renderCard(baseLanguage, true)}</View>}
-                {otherLanguages.length === 1 && <View style={styles.languageSoloRow}>{renderCard(otherLanguages[0], true)}</View>}
-                {otherLanguages.length > 1 && (
+                {ordered.length === 1 && <View style={styles.languageSoloRow}>{renderCard(ordered[0], true)}</View>}
+                {ordered.length > 1 && (
                   <View style={[styles.languageList, wrap && styles.languageListWrap]}>
-                    {otherLanguages.map(language => renderCard(language, false))}
+                    {ordered.map(language => renderCard(language, false))}
                   </View>
                 )}
               </View>
@@ -276,6 +282,7 @@ const styles = StyleSheet.create({
   headerRtl: { flexDirection: 'row-reverse' },
   headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   profileButton: { borderColor: '#D7DECE', backgroundColor: '#F3F6EE' },
+  profileButtonRegistered: { borderColor: '#EAD0C1', backgroundColor: '#FBEFE6' },
   headerButton: { width: 38, height: 38, borderRadius: 13, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.paper, borderWidth: 1, borderColor: palette.border, shadowColor: '#554C3E', shadowOpacity: 0.06, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   hero: { minHeight: 196, justifyContent: 'center', padding: 20, borderRadius: 20, overflow: 'hidden', backgroundColor: '#ECE4D4', shadowColor: '#514433', shadowOpacity: 0.10, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
   heroImage: { borderRadius: 20 },

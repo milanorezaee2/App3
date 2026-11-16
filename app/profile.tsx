@@ -9,7 +9,7 @@ import * as Application from 'expo-application';
 import { useFocusEffect, useRouter } from 'expo-router';
 import {
   Activity, Award, BadgeCheck, BookOpenCheck, Brain, CalendarDays, ChevronLeft, Clock3, Cloud, Download, Flame, Fingerprint,
-  Languages, Layers, LogOut, Mail, Pencil, RefreshCw, Repeat, ShieldCheck, Smartphone, Sparkles, Target, Trophy, X,
+  Languages, Layers, LogOut, Mail, Pencil, RefreshCw, Repeat, ShieldCheck, Smartphone, Sparkles, Target, Trophy, Volume2, X,
 } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
 import { FEATURES } from '@/lib/features';
@@ -19,8 +19,11 @@ import { syncPersonalLearningData } from '@/lib/personalLearningSync';
 import { beginLocalProfile, clearLocalProfile, getLocalProfile, localProfileError, normalizeLocalCode, regenerateLocalCode, touchLocalProfile, updateLocalProfileName, verifyLocalProfile, type LocalProfile } from '@/lib/localProfile';
 import { ensureOpenLearnerRegistered, registerOpenLearnerOnServer } from '@/lib/openLearnerAccount';
 import { loadLearnerProfileSummary, nameInitials, type Achievement, type LanguageProfileStat, type LearnerProfileSummary } from '@/lib/learnerProfile';
+import StudyReminderCard from '@/components/StudyReminderCard';
+import LearningAnalyticsCard from '@/components/LearningAnalyticsCard';
 import { toPersianDigits as fa, timeAgo } from '@/lib/format';
 import { Typography } from '@/lib/theme';
+import { prefersRecordedSpeech, setPrefersRecordedSpeech } from '@/lib/content/speechFallback';
 
 const palette = {
   canvas: '#F7F2E8',
@@ -386,6 +389,9 @@ function OverviewTab({ summary, onReview }: { summary: LearnerProfileSummary; on
         <Text style={styles.cardText}>{level.next ? `${fa(level.remaining)} درس دیگر تا سطح «${level.next}».` : 'به بالاترین سطح رسیده‌اید؛ آفرین!'}</Text>
       </Section>
 
+      <View style={{ marginBottom: 12 }}><StudyReminderCard /></View>
+      <View style={{ marginBottom: 12 }}><LearningAnalyticsCard /></View>
+
       <Section icon={<Activity size={17} color={palette.forest} />} title="فعالیت هفتهٔ اخیر" subtitle={`${formatMinutes(summary.weekMinutes)} · ${fa(summary.activeDaysLast30)} روز فعال در ۳۰ روز گذشته`}>
         <View style={styles.chart}>
           {summary.week.map(day => (
@@ -621,6 +627,8 @@ function AccountTab({ local, deviceAccount, serverRegisteredAt, onRegister, loca
         ]} />
       </Section>
 
+      <RecordedSpeechSetting />
+
       <Section icon={<ShieldCheck size={17} color={palette.forest} />} title="مدیریت و امنیت">
         {!local && <ActionRow icon={<Mail size={16} color={palette.forest} />} title="مدیریت ایمیل و ورود" subtitle="تغییر ایمیل، دریافت کد تازه" onPress={onManage} />}
         <ActionRow icon={<Download size={16} color={palette.forest} />} title="پشتیبان محلی پیشرفت" subtitle="ذخیره و بازیابی فایل پشتیبان" onPress={onBackup} />
@@ -751,6 +759,27 @@ function StepDot({ index, active, done, label }: { index: number; active: boolea
   );
 }
 
+function RecordedSpeechSetting() {
+  const [useRecorded, setUseRecorded] = useState(false);
+  useEffect(() => { void prefersRecordedSpeech().then(setUseRecorded); }, []);
+  const toggle = () => {
+    const next = !useRecorded;
+    setUseRecorded(next);
+    void setPrefersRecordedSpeech(next);
+  };
+  return (
+    <Section icon={<Volume2 size={17} color={palette.forest} />} title="صدای جایگزین" subtitle="اگر صدای گوشی شما قطع یا منقطع میشود، پخش جملهها را به فایلهای ضبطشده بسپارید.">
+      <Pressable accessibilityRole="button" onPress={toggle} style={({ pressed }) => [{ flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', padding: 14, borderRadius: 16, borderWidth: 1, borderColor: palette.border, backgroundColor: useRecorded ? palette.forestSoft : palette.sage }, pressed && styles.pressed]}>
+        <Text keepColor style={{ fontSize: 14, color: palette.ink, fontWeight: '700' }}>{useRecorded ? 'صدای ضبطشده · روشن' : 'صدای گوشی · پیشفرض'}</Text>
+        <View style={{ width: 46, height: 26, borderRadius: 13, backgroundColor: useRecorded ? palette.forest : palette.muted, alignItems: useRecorded ? 'flex-end' : 'flex-start', justifyContent: 'center', paddingHorizontal: 3 }}>
+          <View style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: '#FFFFFF' }} />
+        </View>
+      </Pressable>
+      <Text style={styles.cardHint}>روی بیشتر گوشیها صدای خود دستگاه بهتر است؛ این گزینه فقط برای دستگاههایی است که صدایشان مشکل دارد. صداهای ضبطشده بعد از همگامسازی آفلاین هم پخش میشوند.</Text>
+    </Section>
+  );
+}
+
 /* ───────────────────────── Building blocks ───────────────────────── */
 
 function Section({ icon, title, subtitle, children }: { icon: ReactNode; title: string; subtitle?: string; children: ReactNode }) {
@@ -811,7 +840,7 @@ function KeyValueList({ rows }: { rows: Array<[string, string, boolean?]> }) {
       {rows.map(([label, value, ltr], index) => (
         <View key={label} style={[styles.kvListRow, index > 0 && styles.kvListRowBorder]}>
           <Text style={styles.kvListLabel}>{label}</Text>
-          <Text style={[styles.kvListValue, ltr && styles.kvListValueLtr]} numberOfLines={2}>{value}</Text>
+          <Text style={[styles.kvListValue, ltr && styles.kvListValueLtr]}>{value}</Text>
         </View>
       ))}
     </View>

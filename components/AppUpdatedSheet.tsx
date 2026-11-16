@@ -3,7 +3,7 @@ import { consumeJustUpdated, type InstalledUpdateInfo } from '@/lib/appUpdates';
 import { toPersianDigits as fa } from '@/lib/format';
 import { BadgeCheck, Sparkles } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
-import { Modal, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Modal, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 /** After an update is installed, the first launch shows what changed. */
 export function AppUpdatedSheet() {
@@ -24,6 +24,7 @@ export function AppUpdatedSheet() {
           <View style={s.iconWrap}><BadgeCheck size={28} color="#2F6B45" /></View>
           <Text style={s.title}>برنامه به‌روزرسانی شد</Text>
           <Text style={s.meta}>اکنون نسخهٔ {info.version_name} (ساخت {fa(info.version_code)}) را دارید.</Text>
+          <ScrollView style={s.body} contentContainerStyle={s.bodyContent} showsVerticalScrollIndicator persistentScrollbar bounces={false}>
           {lines.length > 0 ? (
             <View style={s.notesBox}>
               <View style={s.notesHead}><Sparkles size={14} color="#9A4B1E" /><Text style={s.notesTitle}>تغییرات این نسخه</Text></View>
@@ -34,6 +35,7 @@ export function AppUpdatedSheet() {
           ) : (
             <Text style={s.metaSmall}>بهبودهای پایداری و عملکرد.</Text>
           )}
+          </ScrollView>
           <Pressable accessibilityRole="button" onPress={() => setInfo(null)} style={({ pressed }) => [s.primary, pressed && { opacity: 0.8 }]}>
             <Text keepColor style={s.primaryText}>شروع</Text>
           </Pressable>
@@ -45,7 +47,9 @@ export function AppUpdatedSheet() {
 
 const s = StyleSheet.create({
   backdrop: { flex: 1, backgroundColor: 'rgba(15,23,42,0.45)', alignItems: 'center', justifyContent: 'center', padding: 20 },
-  sheet: { width: '100%', maxWidth: 420, backgroundColor: '#FFFFFF', borderRadius: 20, padding: 22, gap: 10 },
+  sheet: { width: '100%', maxWidth: 420, maxHeight: '85%', backgroundColor: '#FFFFFF', borderRadius: 20, padding: 22, gap: 10 },
+  body: { flexGrow: 0, flexShrink: 1 },
+  bodyContent: { gap: 10 },
   iconWrap: { width: 54, height: 54, borderRadius: 17, backgroundColor: '#E3EFE6', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end' },
   title: { fontFamily: 'Beiruti-Bold', fontSize: 20, color: '#0F172A', textAlign: 'right' },
   meta: { fontFamily: 'Beiruti-Bold', fontSize: 14, color: '#334155', textAlign: 'right' },

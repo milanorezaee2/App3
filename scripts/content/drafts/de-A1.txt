@@ -1,0 +1,227 @@
+# German A1 draft · format: targetWords | text | fa | pattern
+dass|Ich glaube, dass er kommt.|فکر می‌کنم که او می‌آید.|Ich glaube, dass <Satz>.
+dass|Ich weiss, dass du müde bist.|می‌دانم که خسته‌ای.|Ich weiss, dass <Satz>.
+dass|Schön, dass du da bist.|خوب شد که اینجایی.|Schön, dass <Satz>.
+war|Ich war gestern zu Hause.|دیروز خانه بودم.|Ich war <Zeit> <Ort>.
+war|Das Essen war sehr gut.|غذا خیلی خوب بود.|<Nomen> war <Adj.>.
+war|Wo war das Kind?|بچه کجا بود؟|Wo war <Nomen>?
+wenn|Wenn du willst, komme ich.|اگر بخواهی، می‌آیم.|Wenn du <Verb>, <Satz>.
+wenn|Ruf an, wenn du Zeit hast.|اگر وقت داشتی زنگ بزن.|<Imperativ>, wenn du <Nomen> hast.
+wird|Morgen wird es kalt.|فردا هوا سرد می‌شود.|Morgen wird es <Adj.>.
+wird|Das Kind wird bald drei.|بچه به‌زودی سه ساله می‌شود.|<Nomen> wird bald <Zahl>.
+werden|Wir werden morgen fahren.|ما فردا می‌رویم.|Wir werden <Zeit> <Verb>.
+werden|Die Tage werden länger.|روزها بلندتر می‌شوند.|<Nomen> werden <Komparativ>.
+einer|Einer von uns kommt mit.|یکی از ما همراه می‌آید.|Einer von uns <Verb>.
+einer|Hast du einer Freundin geschrieben?|به یک دوست پیام داده‌ای؟|Hast du einer <Dat.> geschrieben?
+über|Wir sprechen über das Wetter.|ما دربارهٔ هوا حرف می‌زنیم.|Wir sprechen über <Akk.>.
+über|Wir gehen über die Strasse.|از خیابان رد می‌شویم.|Wir gehen über <Akk.>.
+einem|Ich wohne in einem kleinen Haus.|من در یک خانهٔ کوچک زندگی می‌کنم.|Ich wohne in einem <Nomen>.
+einem|Sie sitzt an einem Tisch.|او پشت یک میز نشسته است.|Sie sitzt an einem <Nomen>.
+schon|Bist du schon fertig?|کارت تمام شده؟|Bist du schon <Adj.>?
+schon|Ich bin schon da.|من دیگر رسیده‌ام.|Ich bin schon <Ort>.
+mehr|Ich möchte mehr Wasser, bitte.|لطفاً کمی آب بیشتر می‌خواهم.|Ich möchte mehr <Nomen>.
+mehr|Wir haben kein Brot mehr.|دیگر نان نداریم.|Wir haben kein <Nomen> mehr.
+zur|Ich gehe zur Arbeit.|من سر کار می‌روم.|Ich gehe zur <Nomen>.
+zur|Wie komme ich zur Bank?|چطور به بانک بروم؟|Wie komme ich zur <Nomen>?
+durch|Wir gehen durch den Park.|از میان پارک رد می‌شویم.|Wir gehen durch <Akk.>.
+durch|Der Zug fährt durch die Stadt.|قطار از وسط شهر رد می‌شود.|<Nomen> fährt durch <Akk.>.
+doch|Komm doch mit!|خب بیا دیگر!|<Imperativ> doch!
+doch|Das ist doch einfach.|این که ساده است.|Das ist doch <Adj.>.
+immer|Ich trinke immer Tee.|من همیشه چای می‌نوشم.|Ich <Verb> immer <Nomen>.
+immer|Er kommt immer zu spät.|او همیشه دیر می‌آید.|Er kommt immer <Adv.>.
+wurde|Es wurde schnell dunkel.|زود هوا تاریک شد.|Es wurde <Adj.>.
+wieder|Bis bald, bis wieder!|به‌زودی می‌بینمت، تا بعد!|Bis <Zeit>!
+wieder|Ich bin wieder gesund.|دوباره سالم شدم.|Ich bin wieder <Adj.>.
+alle|Alle sind heute hier.|همه امروز اینجا هستند.|Alle sind <Zeit> <Ort>.
+alle|Ich kenne alle Namen.|همهٔ اسم‌ها را می‌شناسم.|Ich kenne alle <Nomen>.
+muss|Ich muss jetzt gehen.|من الان باید بروم.|Ich muss jetzt <Verb>.
+muss|Was muss ich machen?|چه کار باید بکنم؟|Was muss ich <Verb>?
+hatte|Ich hatte keine Zeit.|وقت نداشتم.|Ich hatte kein <Nomen>.
+hatte|Sie hatte eine Frage.|او یک سؤال داشت.|Sie hatte <Akk.>.
+gegen|Wir spielen gegen euch.|ما در برابر شما بازی می‌کنیم.|Wir spielen gegen <Akk.>.
+gegen|Ich komme gegen acht Uhr.|حدود ساعت هشت می‌آیم.|Ich komme gegen <Uhrzeit>.
+seine|Das ist seine Schwester.|این خواهر اوست.|Das ist seine <Nomen>.
+seine|Er sucht seine Schlüssel.|او دنبال کلیدهایش می‌گردد.|Er sucht seine <Nomen>.
+also|Also, wir gehen jetzt.|خب، ما الان می‌رویم.|Also, <Satz>.
+also|Also, ich nehme den Tee.|خب، من چای می‌گیرم.|Also, ich nehme <Akk.>.
+machen|Was machen wir heute?|امروز چه کار کنیم؟|Was machen wir <Zeit>?
+machen|Kinder machen viel Lärm.|بچه‌ها خیلی سروصدا می‌کنند.|<Nomen> machen <Nomen>.
+denn|Was ist denn los?|آخه چی شده؟|Was ist denn <Nomen>?
+denn|Ich bleibe, denn es regnet.|می‌مانم، چون باران می‌آید.|<Satz>, denn <Satz>.
+damit|Ich bin damit fertig.|کارم با آن تمام شد.|Ich bin damit <Adj.>.
+will|Ich will nach Hause.|می‌خواهم بروم خانه.|Ich will nach <Ort>.
+will|Was will er trinken?|او چه می‌خواهد بنوشد؟|Was will er <Verb>?
+beim|Ich bin beim Arzt.|من پیش دکترم.|Ich bin beim <Nomen>.
+beim|Wir sind beim Essen.|داریم غذا می‌خوریم.|Wir sind beim <Nomen>.
+waren|Wir waren im Kino.|ما سینما بودیم.|Wir waren im <Ort>.
+waren|Wo waren Sie gestern?|دیروز کجا بودید؟|Wo waren Sie <Zeit>?
+eines|Ich habe eines der Bücher.|یکی از کتاب‌ها دست من است.|Ich habe eines der <Nomen>.
+soll|Soll ich das Fenster öffnen?|پنجره را باز کنم؟|Soll ich <Akk.> <Verb>?
+soll|Was soll ich kaufen?|چی بخرم؟|Was soll ich <Verb>?
+selbst|Ich mache das selbst.|خودم انجامش می‌دهم.|Ich mache das selbst.
+menschen|Viele Menschen warten hier.|آدم‌های زیادی اینجا منتظرند.|Viele Menschen <Verb>.
+menschen|Die Menschen sind freundlich.|مردم مهربان هستند.|Die Menschen sind <Adj.>.
+hab|Ich hab heute frei.|امروز تعطیلم.|Ich hab <Zeit> frei.
+nun|Nun bin ich hier.|حالا من اینجا هستم.|Nun <Satz>.
+würde|Ich würde gern kommen.|دوست دارم بیایم.|Ich würde gern <Verb>.
+würde|Das würde ich nicht machen.|من این کار را نمی‌کردم.|Das würde ich nicht <Verb>.
+leben|Wir leben in Berlin.|ما در برلین زندگی می‌کنیم.|Wir leben in <Ort>.
+leben|Meine Eltern leben noch.|پدر و مادرم هنوز زنده‌اند.|<Nomen> leben noch.
+macht|Das macht zehn Euro.|می‌شود ده یورو.|Das macht <Preis>.
+macht|Was macht deine Mutter?|مادرت چه کار می‌کند؟|Was macht <Nomen>?
+ihm|Ich helfe ihm gern.|با کمال میل به او کمک می‌کنم.|Ich helfe ihm <Adv.>.
+ihm|Gib ihm das Buch.|کتاب را به او بده.|Gib ihm <Akk.>.
+jahr|Nächstes Jahr fahre ich nach Iran.|سال آینده به ایران می‌روم.|Nächstes Jahr <Verb> ich <Ort>.
+jahr|Das Jahr hat zwölf Monate.|سال دوازده ماه دارد.|<Nomen> hat <Zahl> <Nomen>.
+ob|Ich weiss nicht, ob er kommt.|نمی‌دانم که او می‌آید یا نه.|Ich weiss nicht, ob <Satz>.
+ihn|Ich kenne ihn nicht.|او را نمی‌شناسم.|Ich kenne ihn nicht.
+ihn|Siehst du ihn dort?|او را آنجا می‌بینی؟|Siehst du ihn <Ort>?
+seiner|Er wohnt bei seiner Oma.|او پیش مادربزرگش زندگی می‌کند.|Er wohnt bei seiner <Nomen>.
+zwischen|Ich sitze zwischen Anna und Tom.|من بین آنا و تام نشسته‌ام.|Ich sitze zwischen <Dat.> und <Dat.>.
+zwischen|Das Café ist zwischen Schule und Bank.|کافه بین مدرسه و بانک است.|<Nomen> ist zwischen <Dat.> und <Dat.>.
+wurden|Wir wurden nass.|خیس شدیم.|Wir wurden <Adj.>.
+dabei|Hast du Geld dabei?|پول همراهت هست؟|Hast du <Nomen> dabei?
+müssen|Wir müssen jetzt gehen.|ما باید الان برویم.|Wir müssen <Adv.> <Verb>.
+müssen|Müssen Sie heute arbeiten?|امروز باید کار کنید؟|Müssen Sie <Zeit> <Verb>?
+gerade|Ich esse gerade.|دارم غذا می‌خورم.|Ich <Verb> gerade.
+gerade|Er telefoniert gerade.|او الان دارد تلفن حرف می‌زند.|Er <Verb> gerade.
+neue|Ich habe eine neue Jacke.|یک کاپشن نو دارم.|Ich habe eine neue <Nomen>.
+neue|Das ist meine neue Nummer.|این شمارهٔ جدید من است.|Das ist meine neue <Nomen>.
+sondern|Nicht heute, sondern morgen.|نه امروز، بلکه فردا.|Nicht <A>, sondern <B>.
+erst|Es ist erst acht Uhr.|تازه ساعت هشت است.|Es ist erst <Uhrzeit>.
+erst|Ich komme erst am Montag.|من تازه دوشنبه می‌آیم.|Ich komme erst am <Tag>.
+ihrer|Sie spricht mit ihrer Mutter.|او با مادرش حرف می‌زند.|Sie spricht mit ihrer <Nomen>.
+lassen|Lassen Sie mich bitte durch.|لطفاً بگذارید رد شوم.|Lassen Sie mich <Verb>.
+lassen|Wir lassen das Auto hier.|ماشین را اینجا می‌گذاریم.|Wir lassen <Akk.> <Ort>.
+sollte|Ich sollte mehr Wasser trinken.|بهتر است بیشتر آب بنوشم.|Ich sollte mehr <Nomen> trinken.
+weiss|Ich weiss es nicht.|نمی‌دانم.|Ich weiss es nicht.
+weiss|Das Hemd ist weiss.|پیراهن سفید است.|<Nomen> ist <Farbe>.
+weiter|Gehen Sie bitte weiter.|لطفاً جلوتر بروید.|Gehen Sie weiter.
+weiter|Wir lesen morgen weiter.|فردا ادامه می‌دهیم.|Wir <Verb> <Zeit> weiter.
+wirklich|Das ist wirklich schön.|این واقعاً قشنگ است.|Das ist wirklich <Adj.>.
+wirklich|Kommst du wirklich?|واقعاً می‌آیی؟|<Verb> du wirklich?
+mann|Der Mann dort ist mein Chef.|آن مرد رئیس من است.|Der Mann <Ort> ist <Nomen>.
+mann|Ein alter Mann fragt nach dem Weg.|یک پیرمرد راه را می‌پرسد.|Ein <Adj.> Mann <Verb>.
+wohl|Ich fühle mich wohl hier.|اینجا احساس راحتی می‌کنم.|Ich fühle mich wohl <Ort>.
+seinen|Er hat seinen Schlüssel.|کلیدش دست اوست.|Er hat seinen <Nomen>.
+dazu|Möchten Sie Brot dazu?|نان هم با آن می‌خواهید؟|Möchten Sie <Nomen> dazu?
+euch|Ich sehe euch morgen.|فردا شما را می‌بینم.|Ich sehe euch <Zeit>.
+euch|Wie geht es euch?|حالتان چطور است؟|Wie geht es euch?
+dafür|Danke, ich habe keine Zeit dafür.|ممنون، برایش وقت ندارم.|Ich habe keine Zeit dafür.
+sagen|Was sagen Sie dazu?|شما در این باره چه می‌گویید؟|Was sagen Sie dazu?
+sagen|Kannst du das noch einmal sagen?|می‌شود یک بار دیگر بگویی؟|Kannst du das <Adv.> sagen?
+während|Während des Essens reden wir.|هنگام غذا حرف می‌زنیم.|Während <Gen.> <Satz>.
+bereits|Der Bus ist bereits weg.|اتوبوس دیگر رفته.|<Nomen> ist bereits <Adv.>.
+ende|Am Ende der Strasse ist ein Café.|آخر خیابان یک کافه است.|Am Ende <Gen.> ist <Nomen>.
+ende|Ende Mai habe ich Urlaub.|آخر ماه مه مرخصی دارم.|Ende <Monat> <Satz>.
+nie|Ich trinke nie Kaffee.|من هرگز قهوه نمی‌نوشم.|Ich <Verb> nie <Nomen>.
+nie|Er ist nie zu Hause.|او هیچ‌وقت خانه نیست.|Er ist nie <Ort>.
+wegen|Wegen des Regens bleiben wir.|به‌خاطر باران می‌مانیم.|Wegen <Gen.> <Satz>.
+besser|Heute geht es mir besser.|امروز حالم بهتر است.|Heute geht es mir besser.
+besser|Dieses Brot ist besser.|این نان بهتر است.|<Nomen> ist besser.
+welt|Die Welt ist gross.|دنیا بزرگ است.|Die Welt ist <Adj.>.
+gemacht|Ich habe das Essen gemacht.|من غذا را درست کردم.|Ich habe <Akk.> gemacht.
+gemacht|Das hast du gut gemacht.|خوب انجامش دادی.|Das hast du <Adv.> gemacht.
+genau|Genau, das stimmt.|دقیقاً، درست است.|Genau, <Satz>.
+genau|Wie spät ist es genau?|دقیقاً ساعت چند است؟|<Frage> genau?
+gar|Ich habe gar keinen Hunger.|اصلاً گرسنه نیستم.|Ich habe gar kein <Nomen>.
+konnte|Ich konnte nicht schlafen.|نتوانستم بخوابم.|Ich konnte nicht <Verb>.
+leute|Die Leute hier sind nett.|آدم‌های اینجا مهربان‌اند.|Die Leute <Ort> sind <Adj.>.
+leute|Viele Leute fahren Rad.|خیلی‌ها دوچرخه‌سواری می‌کنند.|Viele Leute <Verb>.
+geben|Geben Sie mir bitte ein Wasser.|لطفاً یک آب به من بدهید.|Geben Sie mir <Akk.>.
+geben|Kannst du mir das Salz geben?|می‌شود نمک را به من بدهی؟|Kannst du mir <Akk.> geben?
+geld|Ich habe kein Geld dabei.|پول همراهم نیست.|Ich habe kein Geld <Adv.>.
+geld|Wo kann ich Geld wechseln?|کجا می‌توانم پول عوض کنم؟|Wo kann ich <Akk.> <Verb>?
+gleich|Ich komme gleich.|الان می‌آیم.|Ich <Verb> gleich.
+gleich|Wir essen gleich.|الان غذا می‌خوریم.|Wir <Verb> gleich.
+lange|Wie lange dauert das?|چقدر طول می‌کشد؟|Wie lange <Verb> das?
+lange|Ich warte schon lange.|خیلی وقت است منتظرم.|Ich warte schon lange.
+sagt|Sie sagt nichts.|او چیزی نمی‌گوید.|Sie sagt <Akk.>.
+sagt|Was sagt der Arzt?|دکتر چه می‌گوید؟|Was sagt <Nomen>?
+teil|Ich möchte ein Teil davon.|من یک قسمت از آن را می‌خواهم.|Ich möchte ein Teil davon.
+beiden|Ich nehme beide Äpfel.|هر دو سیب را برمی‌دارم.|Ich nehme beide <Nomen>.
+davon|Ich habe nichts davon gehört.|چیزی از آن نشنیده‌ام.|Ich habe nichts davon <Partizip>.
+eigentlich|Was machst du eigentlich hier?|راستی اینجا چه کار می‌کنی؟|Was machst du eigentlich <Ort>?
+fast|Es ist fast zwölf Uhr.|تقریباً ساعت دوازده است.|Es ist fast <Uhrzeit>.
+fast|Ich bin fast fertig.|تقریباً تمام کرده‌ام.|Ich bin fast <Adj.>.
+richtig|Das ist richtig.|درست است.|Das ist richtig.
+richtig|Ist der Weg richtig?|راه درست است؟|Ist <Nomen> richtig?
+tun|Was kann ich für Sie tun?|چه کاری می‌توانم برایتان بکنم؟|Was kann ich für Sie tun?
+tun|Was tun wir jetzt?|حالا چه کار کنیم؟|Was tun wir <Zeit>?
+sieht|Sie sieht müde aus.|او خسته به نظر می‌رسد.|Sie sieht <Adj.> aus.
+sieht|Man sieht das Meer von hier.|از اینجا دریا دیده می‌شود.|Man sieht <Akk.> von hier.
+zurück|Ich komme gleich zurück.|الان برمی‌گردم.|Ich komme <Zeit> zurück.
+zurück|Wann fahren wir zurück?|کی برمی‌گردیم؟|Wann <Verb> wir zurück?
+klar|Alles klar, danke.|باشه، ممنون.|Alles klar, <Satz>.
+klar|Ist das klar?|روشن است؟|Ist das klar?
+paar|Ich brauche ein paar Minuten.|چند دقیقه وقت لازم دارم.|Ich brauche ein paar <Nomen>.
+paar|Wir kaufen ein paar Äpfel.|چند تا سیب می‌خریم.|Wir kaufen ein paar <Nomen>.
+wissen|Wissen Sie, wo die Post ist?|می‌دانید اداره پست کجاست؟|Wissen Sie, wo <Nomen> ist?
+wissen|Das wissen wir nicht.|این را نمی‌دانیم.|Das wissen wir nicht.
+sicher|Bist du sicher?|مطمئنی؟|Bist du sicher?
+sicher|Der Weg ist sicher.|راه امن است.|<Nomen> ist sicher.
+frauen|Zwei Frauen warten vor der Tür.|دو زن جلوی در منتظرند.|<Zahl> Frauen <Verb>.
+kam|Er kam spät nach Hause.|او دیر به خانه آمد.|Er kam <Adv.> <Ort>.
+darauf|Ich freue mich darauf.|برایش ذوق دارم.|Ich freue mich darauf.
+letzten|Letzten Sommer war ich in Köln.|تابستان گذشته در کلن بودم.|Letzten <Zeit> war ich <Ort>.
+letzten|Am letzten Tag regnet es.|روز آخر باران می‌آید.|Am letzten Tag <Satz>.
+sogar|Er spricht sogar Persisch.|او حتی فارسی حرف می‌زند.|Er <Verb> sogar <Nomen>.
+schnell|Komm bitte schnell!|لطفاً زود بیا!|<Imperativ> bitte schnell!
+schnell|Der Zug ist sehr schnell.|قطار خیلی سریع است.|<Nomen> ist sehr schnell.
+sollen|Sollen wir ein Taxi nehmen?|تاکسی بگیریم؟|Sollen wir <Akk.> nehmen?
+jemand|Ist hier jemand?|کسی اینجا هست؟|Ist <Ort> jemand?
+jemand|Jemand hat angerufen.|کسی زنگ زده.|Jemand hat <Partizip>.
+wollte|Ich wollte dich fragen.|می‌خواستم از تو بپرسم.|Ich wollte dich <Verb>.
+ganze|Ich arbeite den ganzen Tag.|تمام روز کار می‌کنم.|Ich <Verb> den ganzen Tag.
+gerne|Ich trinke gerne Kaffee.|قهوه را دوست دارم.|Ich <Verb> gerne <Nomen>.
+gerne|Gerne, kein Problem.|با کمال میل، مشکلی نیست.|Gerne, <Satz>.
+wenig|Ich habe wenig Zeit.|وقت کمی دارم.|Ich habe wenig <Nomen>.
+wenig|Ein wenig Milch, bitte.|کمی شیر، لطفاً.|Ein wenig <Nomen>, bitte.
+heisst|Wie heisst das auf Deutsch?|این به آلمانی چه می‌شود؟|Wie heisst <Nomen> auf Deutsch?
+heisst|Mein Bruder heisst Ali.|اسم برادرم علی است.|<Nomen> heisst <Name>.
+oft|Wie oft fährt der Bus?|اتوبوس چند وقت یک‌بار می‌رود؟|Wie oft <Verb> <Nomen>?
+oft|Ich bin oft müde.|من اغلب خسته‌ام.|Ich bin oft <Adj.>.
+sagte|Sie sagte nein.|او گفت نه.|Sie sagte <Antwort>.
+statt|Tee statt Kaffee, bitte.|به جای قهوه چای، لطفاً.|<A> statt <B>, bitte.
+gehört|Das gehört mir.|این مال من است.|Das gehört <Dat.>.
+gehört|Hast du das gehört?|این را شنیدی؟|Hast du <Akk.> gehört?
+besonders|Das Brot ist besonders gut.|این نان خیلی خوب است.|<Nomen> ist besonders <Adj.>.
+kurz|Haben Sie kurz Zeit?|یک لحظه وقت دارید؟|Haben Sie kurz Zeit?
+kurz|Der Film ist kurz.|فیلم کوتاه است.|<Nomen> ist kurz.
+sonst|Sonst noch etwas?|چیز دیگری هم می‌خواهید؟|Sonst noch etwas?
+bekommen|Was bekommen Sie?|چی میل دارید؟|Was bekommen Sie?
+bekommen|Ich habe eine E-Mail bekommen.|یک ایمیل دریافت کردم.|Ich habe <Akk.> bekommen.
+weniger|Bitte weniger Zucker.|لطفاً شکر کمتر.|Bitte weniger <Nomen>.
+ging|Ich ging zu Fuss.|پیاده رفتم.|Ich ging <Adv.>.
+bild|Das Bild ist sehr schön.|عکس خیلی قشنگ است.|Das Bild ist <Adj.>.
+je|Warst du je in Berlin?|تا حالا برلین بوده‌ای؟|Warst du je in <Ort>?
+gewesen|Ich bin noch nie dort gewesen.|هیچ‌وقت آنجا نبوده‌ام.|Ich bin noch nie <Ort> gewesen.
+glaube|Ich glaube ja.|فکر کنم بله.|Ich glaube <Antwort>.
+glaube|Ich glaube, es regnet.|فکر می‌کنم باران می‌آید.|Ich glaube, <Satz>.
+polizei|Wo ist die Polizei?|پلیس کجاست؟|Wo ist <Nomen>?
+beide|Beide Kinder schlafen.|هر دو بچه خواب‌اند.|Beide <Nomen> <Verb>.
+leider|Leider habe ich keine Zeit.|متأسفانه وقت ندارم.|Leider <Satz>.
+leider|Das geht leider nicht.|متأسفانه نمی‌شود.|Das geht leider nicht.
+musste|Ich musste früh gehen.|مجبور بودم زود بروم.|Ich musste <Adv.> <Verb>.
+tage|Ich bleibe drei Tage.|سه روز می‌مانم.|Ich bleibe <Zahl> Tage.
+tage|Die Tage sind kurz.|روزها کوتاه‌اند.|Die Tage sind <Adj.>.
+besten|Das ist der beste Platz.|این بهترین جاست.|Das ist der beste <Nomen>.
+grund|Es gibt keinen Grund.|دلیلی ندارد.|Es gibt keinen Grund.
+nacht|Gute Nacht, bis morgen!|شب بخیر، تا فردا!|Gute Nacht, bis <Zeit>!
+nacht|In der Nacht ist es still.|شب آرام است.|In der Nacht ist es <Adj.>.
+stunden|Ich arbeite acht Stunden.|من هشت ساعت کار می‌کنم.|Ich <Verb> <Zahl> Stunden.
+stunden|Der Flug dauert zwei Stunden.|پرواز دو ساعت طول می‌کشد.|<Nomen> dauert <Zahl> Stunden.
+genug|Das ist genug, danke.|کافی است، ممنون.|Das ist genug.
+genug|Haben wir genug Brot?|نان به اندازهٔ کافی داریم؟|Haben wir genug <Nomen>?
+allein|Ich wohne allein.|تنها زندگی می‌کنم.|Ich <Verb> allein.
+echt|Echt? Das ist toll!|جدی؟ عالیه!|Echt? <Satz>!
+halten|Bitte halten Sie hier.|لطفاً اینجا نگه دارید.|Bitte halten Sie <Ort>.
+lang|Der Weg ist lang.|راه طولانی است.|<Nomen> ist lang.
+lang|Die Pause ist zehn Minuten lang.|استراحت ده دقیقه است.|<Nomen> ist <Zeit> lang.
+pro|Zwei Euro pro Stück.|دو یورو هر دانه.|<Preis> pro <Einheit>.
+alten|Ich besuche meine alten Freunde.|دوستان قدیمی‌ام را می‌بینم.|Ich besuche meine alten <Nomen>.
+junge|Der junge Mann ist Student.|آن جوان دانشجوست.|Der junge <Nomen> ist <Beruf>.
+ort|Der Ort ist klein und ruhig.|اینجا کوچک و آرام است.|Der Ort ist <Adj.>.
+sofort|Ich komme sofort.|فوراً می‌آیم.|Ich <Verb> sofort.
+bringen|Können Sie mir die Rechnung bringen?|می‌شود صورت‌حساب را بیاورید؟|Können Sie mir <Akk.> bringen?
+bringen|Ich bringe dich nach Hause.|تو را به خانه می‌رسانم.|Ich bringe dich <Ort>.

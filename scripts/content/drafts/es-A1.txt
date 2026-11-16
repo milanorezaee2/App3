@@ -1,0 +1,204 @@
+# Spanish A1 draft · format: targetWords | text | fa | pattern
+como|Como pan por la mañana.|صبح‌ها نان می‌خورم.|Como <comida> por la mañana.
+como|¿Cómo se dice esto en español?|این به اسپانیایی چه می‌شود؟|¿Cómo se dice <X> en español?
+como|Trabajo como médico.|به عنوان پزشک کار می‌کنم.|Trabajo como <profesión>.
+si|Si quieres, vamos juntos.|اگر بخواهی، با هم می‌رویم.|Si quieres, <frase>.
+si|No sé si viene.|نمی‌دانم می‌آید یا نه.|No sé si <frase>.
+ya|Ya estoy aquí.|دیگر رسیده‌ام.|Ya estoy <lugar>.
+ya|Ya es tarde, vamos.|دیگر دیر شده، برویم.|Ya es <adj.>, <frase>.
+ha|Ella ha llegado tarde.|او دیر رسیده است.|Ella ha <participio>.
+ha|¿Qué ha pasado?|چه شده؟|¿Qué ha pasado?
+cuando|Cuando como, no hablo.|وقتی غذا می‌خورم، حرف نمی‌زنم.|Cuando <verbo>, <frase>.
+cuando|¿Cuándo empieza la clase?|کلاس کی شروع می‌شود؟|¿Cuándo <verbo> <nombre>?
+ser|Quiero ser profesor.|می‌خواهم معلم شوم.|Quiero ser <profesión>.
+ser|Puede ser mañana.|می‌تواند فردا باشد.|Puede ser <tiempo>.
+fue|Fue una buena idea.|فکر خوبی بود.|Fue una <adj.> <nombre>.
+fue|Mi padre fue médico.|پدرم پزشک بود.|<nombre> fue <profesión>.
+sobre|El libro está sobre la mesa.|کتاب روی میز است.|<nombre> está sobre <nombre>.
+sobre|Hablamos sobre el viaje.|دربارهٔ سفر حرف می‌زنیم.|Hablamos sobre <nombre>.
+así|Así es la vida.|زندگی همین است.|Así es <nombre>.
+así|No lo hagas así.|این‌طوری انجامش نده.|No lo hagas así.
+entre|La casa está entre dos calles.|خانه بین دو خیابان است.|<nombre> está entre <A> y <B>.
+entre|Entre semana trabajo mucho.|وسط هفته زیاد کار می‌کنم.|Entre semana <frase>.
+era|Era muy tarde.|خیلی دیر بود.|Era muy <adj.>.
+era|Mi abuela era profesora.|مادربزرگم معلم بود.|<nombre> era <profesión>.
+ni|No tengo ni tiempo ni dinero.|نه وقت دارم نه پول.|No tengo ni <A> ni <B>.
+donde|¿Dónde está el baño?|دستشویی کجاست؟|¿Dónde está <nombre>?
+donde|Vivo donde trabajo.|همان‌جا که کار می‌کنم زندگی می‌کنم.|Vivo donde <frase>.
+parte|¿De qué parte eres?|اهل کجایی؟|¿De qué parte eres?
+parte|Quiero una parte del pastel.|یک تکه از کیک می‌خواهم.|Quiero una parte de <nombre>.
+mejor|Hoy estoy mejor.|امروز بهترم.|Hoy estoy mejor.
+mejor|Es mejor ir en tren.|بهتر است با قطار برویم.|Es mejor <verbo>.
+mucho|Me gusta mucho esta ciudad.|این شهر را خیلی دوست دارم.|Me gusta mucho <nombre>.
+mucho|Trabajo mucho esta semana.|این هفته زیاد کار می‌کنم.|<verbo> mucho <tiempo>.
+tan|El café está tan caliente.|قهوه خیلی داغ است.|<nombre> está tan <adj.>.
+tan|No es tan fácil.|آن‌قدرها هم آسان نیست.|No es tan <adj.>.
+ver|Quiero ver la ciudad.|می‌خواهم شهر را ببینم.|Quiero ver <nombre>.
+ver|Vamos a ver una película.|می‌رویم فیلم ببینیم.|Vamos a ver <nombre>.
+vida|La vida aquí es tranquila.|زندگی اینجا آرام است.|La vida <lugar> es <adj.>.
+han|Han llegado mis amigos.|دوستانم رسیده‌اند.|Han <participio> <nombre>.
+han|¿Han comido ya?|غذا خورده‌اند؟|¿Han <participio> ya?
+siempre|Siempre desayuno a las ocho.|همیشه ساعت هشت صبحانه می‌خورم.|Siempre <verbo> a las <hora>.
+siempre|Él siempre llega tarde.|او همیشه دیر می‌رسد.|Él siempre <verbo>.
+gente|Hay mucha gente aquí.|اینجا خیلی شلوغ است.|Hay mucha gente <lugar>.
+gente|La gente es amable.|مردم مهربان‌اند.|La gente es <adj.>.
+estado|He estado enfermo.|مریض بوده‌ام.|He estado <adj.>.
+mundo|El mundo es grande.|دنیا بزرگ است.|El mundo es <adj.>.
+mundo|Todo el mundo está aquí.|همه اینجا هستند.|Todo el mundo <verbo>.
+año|Este año viajo a México.|امسال به مکزیک سفر می‌کنم.|Este año <frase>.
+año|Feliz año nuevo a todos.|سال نو بر همه مبارک.|Feliz año nuevo.
+les|Les doy las llaves.|کلیدها را به آن‌ها می‌دهم.|Les doy <nombre>.
+mas|Quiero ir, mas no puedo.|می‌خواهم بروم، اما نمی‌توانم.|<frase>, mas <frase>.
+otros|Los otros vienen después.|بقیه بعداً می‌آیند.|Los otros <verbo> <tiempo>.
+otros|¿Tienes otros colores?|رنگ‌های دیگری داری؟|¿Tienes otros <nombre>?
+cosas|Tengo muchas cosas que hacer.|کارهای زیادی دارم.|Tengo muchas cosas que hacer.
+cosas|¿Dónde están mis cosas?|وسایلم کجاست؟|¿Dónde están mis cosas?
+gran|Es una gran ciudad.|شهر بزرگی است.|Es una gran <nombre>.
+nunca|Nunca bebo café.|هرگز قهوه نمی‌نوشم.|Nunca <verbo> <nombre>.
+nunca|Él nunca está en casa.|او هیچ‌وقت خانه نیست.|Él nunca está <lugar>.
+tanto|No comas tanto.|آن‌قدر نخور.|No <verbo> tanto.
+tanto|Te quiero tanto.|خیلی دوستت دارم.|Te <verbo> tanto.
+antes|Llego antes de las nueve.|قبل از ساعت نه می‌رسم.|Llego antes de <hora>.
+antes|Antes vivía en Madrid.|قبلاً در مادرید زندگی می‌کردم.|Antes <frase>.
+sea|Que sea rápido, por favor.|لطفاً سریع باشد.|Que sea <adj.>.
+había|Había mucha gente en la calle.|خیابان خیلی شلوغ بود.|Había <nombre> <lugar>.
+había|No había pan en casa.|نان در خانه نبود.|No había <nombre> <lugar>.
+tener|Quiero tener un perro.|می‌خواهم یک سگ داشته باشم.|Quiero tener <nombre>.
+tener|Hay que tener paciencia.|باید صبر داشت.|Hay que tener <nombre>.
+durante|Durante la semana trabajo.|در طول هفته کار می‌کنم.|Durante <tiempo> <frase>.
+durante|Leo durante el día.|در طول روز می‌خوانم.|<verbo> durante <tiempo>.
+lugar|Es un lugar muy bonito.|جای خیلی قشنگی است.|Es un lugar <adj.>.
+lugar|En primer lugar, gracias.|اول از همه، ممنون.|En primer lugar, <frase>.
+creo|Creo que sí.|فکر می‌کنم بله.|Creo que <respuesta>.
+creo|Creo que va a llover.|فکر می‌کنم باران بیاید.|Creo que <frase>.
+hecho|¿Qué has hecho hoy?|امروز چه کار کردی؟|¿Qué has hecho <tiempo>?
+hecho|Está hecho a mano.|دست‌ساز است.|Está hecho a mano.
+sólo|Sólo quiero agua.|فقط آب می‌خواهم.|Sólo quiero <nombre>.
+aunque|Voy aunque llueva.|حتی اگر باران بیاید می‌روم.|<frase> aunque <frase>.
+contra|Jugamos contra ellos.|با آن‌ها بازی می‌کنیم.|Jugamos contra <nombre>.
+decir|¿Qué quieres decir?|منظورت چیست؟|¿Qué quieres decir?
+decir|Tengo algo que decir.|چیزی برای گفتن دارم.|Tengo algo que decir.
+todas|Todas las casas son blancas.|همهٔ خانه‌ها سفیدند.|Todas las <nombre> son <adj.>.
+forma|Es una forma fácil.|این یک روش ساده است.|Es una forma <adj.>.
+he|He perdido las llaves.|کلیدهایم را گم کرده‌ام.|He <participio> <nombre>.
+he|No he comido todavía.|هنوز غذا نخورده‌ام.|No he <participio> todavía.
+sido|Ha sido un buen día.|روز خوبی بوده.|Ha sido un <adj.> <nombre>.
+estaba|Estaba en casa ayer.|دیروز خانه بودم.|Estaba <lugar> <tiempo>.
+estaba|La comida estaba muy buena.|غذا خیلی خوب بود.|<nombre> estaba <adj.>.
+estar|Quiero estar contigo.|می‌خواهم با تو باشم.|Quiero estar con <persona>.
+estar|Es bueno estar aquí.|خوب است که اینجا باشم.|Es bueno estar <lugar>.
+alguien|¿Hay alguien en casa?|کسی خانه هست؟|¿Hay alguien <lugar>?
+alguien|Alguien ha llamado.|کسی زنگ زده.|Alguien ha <participio>.
+dice|¿Qué dice el médico?|دکتر چه می‌گوید؟|¿Qué dice <nombre>?
+dice|Ella dice que no.|او می‌گوید نه.|Ella dice que <respuesta>.
+quien|¿Quién es ese hombre?|آن مرد کیست؟|¿Quién es <nombre>?
+quien|No sé quién es.|نمی‌دانم کیست.|No sé quién es.
+toda|Trabajo toda la tarde.|تمام بعدازظهر کار می‌کنم.|<verbo> toda la <tiempo>.
+caso|En ese caso, me quedo.|در آن صورت، می‌مانم.|En ese caso, <frase>.
+parece|Parece muy fácil.|خیلی آسان به نظر می‌آید.|Parece muy <adj.>.
+parece|¿Qué te parece?|نظرت چیست؟|¿Qué te parece?
+poder|Quiero poder hablar bien.|می‌خواهم بتوانم خوب حرف بزنم.|Quiero poder <verbo>.
+pues|Pues, no sé.|خب، نمی‌دانم.|Pues, <frase>.
+verdad|Es verdad, tienes razón.|راست است، حق با توست.|Es verdad, <frase>.
+verdad|¿Verdad que es bonito?|قشنگ است، نه؟|¿Verdad que <frase>?
+historia|Es una historia larga.|داستانش طولانی است.|Es una historia <adj.>.
+mientras|Leo mientras espero.|در حالی که منتظرم، می‌خوانم.|<verbo> mientras <verbo>.
+nadie|No hay nadie aquí.|کسی اینجا نیست.|No hay nadie <lugar>.
+nadie|Nadie sabe la respuesta.|هیچ‌کس جواب را نمی‌داند.|Nadie sabe <nombre>.
+otras|Otras veces voy en bici.|بعضی وقت‌ها با دوچرخه می‌روم.|Otras veces <frase>.
+veces|A veces como fuera.|گاهی بیرون غذا می‌خورم.|A veces <frase>.
+veces|Voy dos veces por semana.|هفته‌ای دو بار می‌روم.|Voy <número> veces por <tiempo>.
+muchos|Tengo muchos amigos aquí.|اینجا دوستان زیادی دارم.|Tengo muchos <nombre>.
+debe|Debe de ser tarde.|باید دیر شده باشد.|Debe de ser <adj.>.
+debe|Usted debe esperar aquí.|شما باید اینجا منتظر بمانید.|Usted debe <verbo>.
+dijo|Él dijo que sí.|او گفت بله.|Él dijo que <respuesta>.
+entonces|Entonces, ¿vamos ahora?|پس، الان برویم؟|Entonces, ¿<frase>?
+entonces|Entonces no tengo tiempo.|آن موقع وقت ندارم.|Entonces <frase>.
+tipo|¿Qué tipo de música te gusta?|چه نوع موسیقی دوست داری؟|¿Qué tipo de <nombre> te gusta?
+algunos|Algunos días trabajo en casa.|بعضی روزها در خانه کار می‌کنم.|Algunos <nombre> <frase>.
+mayor|Mi hermano mayor vive en Lima.|برادر بزرگم در لیما زندگی می‌کند.|Mi <familiar> mayor <verbo>.
+además|Además, es barato.|به‌علاوه، ارزان است.|Además, <frase>.
+mal|Me siento mal.|حالم بد است.|Me siento mal.
+mal|No está mal.|بد نیست.|No está mal.
+según|Según el mapa, está cerca.|طبق نقشه، نزدیک است.|Según <nombre>, <frase>.
+cualquier|Cualquier día es bueno.|هر روزی خوب است.|Cualquier <nombre> es <adj.>.
+fueron|Fueron al cine ayer.|دیروز سینما رفتند.|Fueron <lugar> <tiempo>.
+manera|De esta manera es más fácil.|این‌طوری آسان‌تر است.|De esta manera <frase>.
+medio|Quiero medio kilo de pan.|نیم کیلو نان می‌خواهم.|Quiero medio kilo de <nombre>.
+medio|Vivo en medio de la ciudad.|وسط شهر زندگی می‌کنم.|Vivo en medio de <nombre>.
+fuera|Comemos fuera hoy.|امروز بیرون غذا می‌خوریم.|<verbo> fuera <tiempo>.
+hacia|Voy hacia la estación.|به سمت ایستگاه می‌روم.|Voy hacia <lugar>.
+sino|No es azul, sino verde.|آبی نیست، بلکه سبز است.|No es <A>, sino <B>.
+da|Me da igual.|برایم فرقی نمی‌کند.|Me da igual.
+da|El sol da calor.|خورشید گرما می‌دهد.|<nombre> da <nombre>.
+grupo|Somos un grupo de cinco.|ما یک گروه پنج‌نفره هستیم.|Somos un grupo de <número>.
+haber|Debe haber un error.|باید اشتباهی شده باشد.|Debe haber <nombre>.
+hombre|Ese hombre es mi vecino.|آن مرد همسایهٔ من است.|Ese hombre es <nombre>.
+mujer|Mi mujer trabaja en un banco.|همسرم در بانک کار می‌کند.|Mi mujer <verbo> <lugar>.
+mujer|Esa mujer es médica.|آن خانم پزشک است.|Esa mujer es <profesión>.
+será|Mañana será un buen día.|فردا روز خوبی خواهد بود.|<tiempo> será <nombre>.
+será|Será difícil, pero posible.|سخت خواهد بود، اما ممکن.|Será <adj.>, pero <adj.>.
+casi|Son casi las diez.|تقریباً ساعت ده است.|Son casi las <hora>.
+casi|Ya casi termino.|دیگر تقریباً تمام کرده‌ام.|Ya casi <verbo>.
+hizo|Hizo frío ayer.|دیروز هوا سرد بود.|Hizo <tiempo atmosférico> <tiempo>.
+pasado|El año pasado fui a Cuba.|پارسال به کوبا رفتم.|El <tiempo> pasado <frase>.
+ahí|Ahí está el banco.|بانک آنجاست.|Ahí está <nombre>.
+ahí|Pon el bolso ahí.|کیف را بگذار آنجا.|Pon <nombre> ahí.
+cosa|Una cosa más, por favor.|یک چیز دیگر، لطفاً.|Una cosa más, por favor.
+dentro|Las llaves están dentro.|کلیدها داخل هستند.|<nombre> está dentro.
+dentro|Vuelvo dentro de una hora.|تا یک ساعت دیگر برمی‌گردم.|Vuelvo dentro de <tiempo>.
+aún|Aún no he comido.|هنوز غذا نخورده‌ام.|Aún no he <participio>.
+misma|Es la misma calle.|همان خیابان است.|Es la misma <nombre>.
+tenía|Tenía mucha hambre.|خیلی گرسنه بودم.|Tenía mucha <nombre>.
+tenía|No tenía dinero.|پول نداشتم.|No tenía <nombre>.
+esos|Esos zapatos son caros.|آن کفش‌ها گران‌اند.|Esos <nombre> son <adj.>.
+final|Al final, todo bien.|آخرش همه چیز خوب شد.|Al final, <frase>.
+final|La tienda está al final de la calle.|مغازه آخر خیابان است.|<nombre> está al final de <nombre>.
+mujeres|Las mujeres hablan juntas.|زن‌ها با هم حرف می‌زنند.|Las mujeres <verbo>.
+punto|Son las tres en punto.|ساعت دقیقاً سه است.|Son las <hora> en punto.
+alguna|¿Tienes alguna pregunta?|سؤالی داری؟|¿Tienes alguna <nombre>?
+equipo|Nuestro equipo gana.|تیم ما می‌برد.|Nuestro equipo <verbo>.
+saber|Quiero saber la hora.|می‌خواهم ساعت را بدانم.|Quiero saber <nombre>.
+sé|No sé, la verdad.|راستش، نمی‌دانم.|No sé, <frase>.
+sé|Sé un poco de español.|کمی اسپانیایی بلدم.|Sé un poco de <idioma>.
+ante|Estamos ante la puerta.|ما جلوی در هستیم.|Estamos ante <nombre>.
+dar|¿Me puedes dar el pan?|می‌شود نان را به من بدهی؟|¿Me puedes dar <nombre>?
+dar|Voy a dar un paseo.|می‌روم قدم بزنم.|Voy a dar un paseo.
+embargo|Sin embargo, me gusta.|با این حال، خوشم می‌آید.|Sin embargo, <frase>.
+importante|Es muy importante.|خیلی مهم است.|Es muy importante.
+importante|Hoy tengo una reunión importante.|امروز جلسهٔ مهمی دارم.|Hoy tengo <nombre> importante.
+pasa|¿Qué pasa aquí?|اینجا چه خبر است؟|¿Qué pasa <lugar>?
+pasa|No pasa nada.|چیزی نیست.|No pasa nada.
+dinero|No tengo dinero.|پول ندارم.|No tengo dinero.
+dinero|¿Dónde cambio dinero?|کجا پول عوض کنم؟|¿Dónde cambio dinero?
+ejemplo|Por ejemplo, el lunes.|مثلاً دوشنبه.|Por ejemplo, <nombre>.
+horas|Trabajo ocho horas al día.|روزی هشت ساعت کار می‌کنم.|Trabajo <número> horas al día.
+horas|Tengo dos horas libres.|دو ساعت وقت آزاد دارم.|Tengo <número> horas libres.
+igual|Es igual, gracias.|فرقی نمی‌کند، ممنون.|Es igual, gracias.
+ti|Esto es para ti.|این برای توست.|Esto es para ti.
+ti|Pienso en ti.|به تو فکر می‌کنم.|Pienso en ti.
+algunas|Algunas personas no tienen tiempo.|بعضی‌ها وقت ندارند.|Algunas personas no tienen <nombre>.
+falta|Falta pan en casa.|در خانه نان کم است.|Falta <nombre> <lugar>.
+falta|Me falta una hora.|یک ساعت دیگر مانده.|Me falta <tiempo>.
+hombres|Dos hombres esperan fuera.|دو مرد بیرون منتظرند.|<número> hombres <verbo>.
+cambio|¿Tiene cambio de veinte?|بیست تا خرد دارید؟|¿Tiene cambio de <número>?
+cambio|Quiero un cambio de aire.|می‌خواهم آب‌وهوایم عوض شود.|Quiero un cambio de <nombre>.
+meses|Vivo aquí desde hace dos meses.|دو ماه است اینجا زندگی می‌کنم.|Vivo aquí desde hace <número> meses.
+podría|¿Podría ayudarme un momento?|می‌شود یک لحظه کمکم کنید؟|¿Podría <verbo> un momento?
+podría|¿Podría repetir, por favor?|می‌شود تکرار کنید، لطفاً؟|¿Podría <verbo>, por favor?
+realidad|En realidad, no me gusta.|راستش، خوشم نمی‌آید.|En realidad, <frase>.
+algún|¿Hay algún banco cerca?|بانکی این نزدیکی هست؟|¿Hay algún <nombre> cerca?
+amor|Te quiero, mi amor.|دوستت دارم، عشقم.|<frase>, mi amor.
+dicho|Ya te lo he dicho.|قبلاً به تو گفته‌ام.|Ya te lo he dicho.
+eran|Eran las cinco.|ساعت پنج بود.|Eran las <hora>.
+eran|Mis abuelos eran de Sevilla.|پدربزرگ و مادربزرگم اهل سویا بودند.|<nombre> eran de <lugar>.
+frente|La casa está frente al parque.|خانه روبه‌روی پارک است.|<nombre> está frente a <nombre>.
+incluso|Trabaja incluso los domingos.|حتی یکشنبه‌ها هم کار می‌کند.|<verbo> incluso <tiempo>.
+real|Es una historia real.|این یک داستان واقعی است.|Es <nombre> real.
+hijo|Mi hijo tiene cinco años.|پسرم پنج سال دارد.|Mi hijo tiene <número> años.
+tema|Es un tema difícil.|موضوع سختی است.|Es un tema <adj.>.
+varios|Tengo varios hermanos.|چند برادر و خواهر دارم.|Tengo varios <nombre>.
+nivel|¿Qué nivel de español tienes?|سطح اسپانیایی‌ات چقدر است؟|¿Qué nivel de <idioma> tienes?
+niños|Los niños juegan en el parque.|بچه‌ها در پارک بازی می‌کنند.|Los niños <verbo> <lugar>.
+seguro|¿Estás seguro de eso?|از این مطمئنی؟|¿Estás seguro de <nombre>?
+seguro|Es un barrio seguro.|محلهٔ امنی است.|Es un <nombre> seguro.

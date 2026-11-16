@@ -77,7 +77,7 @@ export function MiloLogoMotion({ size = 'intro', play = true, onDone }: Props) {
       </View>
       {isIntro && (
         <Animated.View style={{ width: wordWidth || undefined, opacity: tagline, alignItems: 'center' }}>
-          <Text style={[styles.tagline, { letterSpacing: subtitleSpacing, marginRight: -subtitleSpacing }]}>{SUBTITLE}</Text>
+          <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7} style={[styles.tagline, { letterSpacing: subtitleSpacing, marginRight: -subtitleSpacing }]}>{SUBTITLE}</Text>
         </Animated.View>
       )}
       {isIntro && (
@@ -100,6 +100,6 @@ const styles = StyleSheet.create({
   wrapHeader: { flexDirection: 'row', gap: 10 },
   word: { flexDirection: 'row', direction: 'ltr', alignItems: 'center' },
   letter: { fontFamily: Typography.latinFontFamily, color: '#211A68', letterSpacing: 1.5, writingDirection: 'ltr' },
-  tagline: { fontFamily: Typography.latinFontFamily, fontWeight: '700', fontSize: 13, color: '#6882A6', writingDirection: 'ltr', textAlign: 'center' },
+  tagline: { fontFamily: Typography.latinFontFamily, fontWeight: '700', fontSize: 12, color: '#6882A6', writingDirection: 'ltr', textAlign: 'center' },
   measureOnly: { position: 'absolute', opacity: 0, letterSpacing: 0 },
 });

@@ -29,6 +29,8 @@ import { a2Units } from './a2Units';
 import { a2ExpansionUnits } from './a2Expansion';
 import { b1Units } from './b1Units';
 import { b2Units } from './b2Units';
+import { labLessonsOf } from '../content/labLessons';
+import type { LabLesson } from '../content/labLessonTypes';
 import { STARTER_FOUNDATIONS, type FoundationMode, type FoundationSeed } from './starterFoundations';
 
 export type NewLanguageId = 'de' | 'fr' | 'es';
@@ -76,6 +78,21 @@ const pilotExtras: Record<NewLanguageId, SentenceSeed[][]> = {
     [['¿Y tú?','و تو؟','ای تو','tú','تو'], ['Muy bien, gracias.','خیلی خوبم، ممنون.','موی بیِن، گرا‌ثیاس','bien','خوب']],
   ],
 };
+function starterLabLesson(lab: LabLesson): StarterLesson {
+  return {
+    id: lab.id, levelId: lab.levelId, order: 0,
+    title: lab.title, subtitle: lab.subtitle, situation: lab.situation,
+    teachingFa: lab.teachingFa, durationMinutes: lab.durationMinutes,
+    sentences: lab.sentences.map((sentence, index) => ({
+      id: `${lab.id}-s${index + 1}`, text: sentence.text, fa: sentence.fa,
+      pronunciation: sentence.pronunciation,
+      ...(sentence.pattern ? { pattern: sentence.pattern } : {}),
+      vocabulary: sentence.vocabulary,
+    })),
+    dialogue: lab.dialogue, checks: lab.checks,
+  };
+}
+
 const labels = { de: {name:'آلمانی', native:'Deutsch', locale:'de-DE', brand:'GERMAN'}, fr:{name:'فرانسوی',native:'Français',locale:'fr-FR',brand:'FRENCH'}, es:{name:'اسپانیایی',native:'Español',locale:'es-ES',brand:'SPANISH'} } as const;
 const levelSeeds: Array<[CourseLevelId,string,string,string,string]> = [
   [-1,'Absolute Beginner','Pre-A1 · شروع از صفر','نخستین واژه‌ها و جمله‌ها','#94a3b8'], [1,'A1 · Foundation & Survival','A1 · پایه و کاربرد روزمره','دو بخش پایه و موقعیت‌های روزمره؛ محتوا در حال تدوین است','#27A1D6'], [2,'A2 · Foundation & Survival','A2 · ارتباط پایه','درس‌های مرتبط با سرفصل‌ها در دسترس‌اند؛ پوشش هر موضوع جزئی است','#19A88B'], [3,'B1 · Foundation & Survival','B1 · ارتباط مستقل','نقشه و درس‌های مرتبط؛ پوشش هر سرفصل جزئی است','#E4A436'], [4,'B2 · Foundation & Survival','B2 · ارتباط پیشرفته','نقشه و درس‌های مرتبط؛ پوشش سرفصل‌ها جزئی است','#9A68E8'], [5,'Advanced Communication','C1 · پیشرفته','بیان دقیق، ساختارهای پیشرفته و ارتباط مؤثر در موقعیت‌های حرفه‌ای و دانشگاهی','#D56788'],
@@ -174,6 +191,7 @@ function buildCourse(id: NewLanguageId) {
     ...a2ExpansionUnits(id).map(unit => buildA1(id, toTopicSeed(unit), 2)),
     ...b1Units(id).map(unit => buildA1(id, toTopicSeed(unit), 3)),
     ...b2Units(id).map(unit => buildA1(id, toTopicSeed(unit), 4)),
+    ...labLessonsOf(id).map(starterLabLesson),
   ];
   // Navigation follows the requested topic order; saved state remains keyed by ID.
   const a1Order = getA1Curriculum(id).flatMap(section => section.topics.flatMap(topic => [...topic.relatedLessonIds]));
@@ -184,6 +202,7 @@ function buildCourse(id: NewLanguageId) {
     ...lessons.filter(lesson => lesson.levelId === 2),
     ...lessons.filter(lesson => lesson.levelId === 3),
     ...lessons.filter(lesson => lesson.levelId === 4),
+    ...lessons.filter(lesson => lesson.levelId === 5),
   ].map((lesson, index) => ({...lesson, order: index + 1}));
   const b1Title: Record<NewLanguageId, string> = {fr:'B1 · Communication autonome', de:'B1 · Selbstständige Kommunikation', es:'B1 · Comunicación independiente'};
   const b2Title: Record<NewLanguageId, string> = {fr:'B2 · Communication avancée', de:'B2 · Selbstständige und differenzierte Kommunikation', es:'B2 · Comunicación avanzada'};

@@ -7,6 +7,13 @@ import { EVERYDAY_LESSONS_B } from './russianEverydayPartB';
 import { RUSSIAN_B1_LESSONS } from './russianB1';
 import { RUSSIAN_B2_LESSONS } from './russianB2';
 import { RUSSIAN_C1_LESSONS } from './russianC1';
+import { RUSSIAN_A2_EXPANSION_LESSONS } from './russianA2Expansion';
+import { RUSSIAN_PRE_A1_LESSONS, RUSSIAN_PRE_A1_MODULES, RUSSIAN_PRE_A1_SUBTITLES } from './russianPreA1';
+import { RUSSIAN_B1_EXPANSION_LESSONS } from './russianB1Expansion';
+import { RUSSIAN_B2_EXPANSION_LESSONS } from './russianB2Expansion';
+import { RUSSIAN_C1_EXPANSION_LESSONS } from './russianC1Expansion';
+import { labLessonsOf, insertLabLessons } from '../content/labLessons';
+import type { LabLesson } from '../content/labLessonTypes';
 
 /**
  * دورهٔ روسی برای فارسی‌زبان‌ها — طراحی‌شده بر پایهٔ بهترین روش‌های آموزش زبان انگلیسی
@@ -33,6 +40,8 @@ export const RUSSIAN_LESSON_STAGES = [
   { id: 'grammar-through-usage', labelFa: 'دستور در کاربرد', labelEn: 'Grammar Through Usage' },
   { id: 'conversation', labelFa: 'مکالمه', labelEn: 'Conversation Practice' },
   { id: 'review', labelFa: 'مرور هوشمند', labelEn: 'Spaced Review' },
+  { id: 'short-assessment', labelFa: 'سنجش کوتاه', labelEn: 'Short Assessment' },
+  { id: 'speaking-check', labelFa: 'آزمون گفتاری', labelEn: 'Speaking Check' },
 ] as const;
 
 const sentence = (
@@ -556,18 +565,23 @@ const SURVIVAL_LESSONS: readonly LearningLesson[] = [
 const EVERYDAY_LESSONS: readonly LearningLesson[] = [
   ...EVERYDAY_LESSONS_A,
   ...EVERYDAY_LESSONS_B,
+  ...RUSSIAN_A2_EXPANSION_LESSONS,
 ];
 
 const RUSSIAN_STARTER_LESSONS: readonly LearningLesson[] = [
+  ...RUSSIAN_PRE_A1_LESSONS,
   ...FOUNDATION_LESSONS,
   ...SURVIVAL_LESSONS,
   ...EVERYDAY_LESSONS,
   ...RUSSIAN_B1_LESSONS,
+  ...RUSSIAN_B1_EXPANSION_LESSONS,
   ...RUSSIAN_B2_LESSONS,
+  ...RUSSIAN_B2_EXPANSION_LESSONS,
   ...RUSSIAN_C1_LESSONS,
+  ...RUSSIAN_C1_EXPANSION_LESSONS,
 ];
 
-export type RussianLevelId = 0 | 1 | 2 | 3 | 4 | 5;
+export type RussianLevelId = -1 | 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface RussianCourseLevel {
   id: RussianLevelId;
@@ -587,9 +601,18 @@ export interface RussianCourseLesson extends LearningLesson {
 
 export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
   {
+    id: -1,
+    title: 'Absolute Beginner',
+    cefr: 'Pre-A1 · شروع از صفر',
+    description: 'بخش پیش‌مقدمهٔ کاملاً جدید برای کسانی که هیچ چیز بلد نیستند: اولین کلمه‌ها، سلام، بله/نه، اعداد، «من … هستم» و «من دارم»؛ الفبای سیریلیک قدم‌به‌قدم.',
+    color: '#94a3b8',
+    modules: RUSSIAN_PRE_A1_MODULES,
+    status: 'available',
+  },
+  {
     id: 0,
     title: 'Foundation',
-    cefr: 'سطح ۱ · شروع از صفر',
+    cefr: 'شروع از صفر',
     description: 'سلام تا جمله‌های کامل روزمره: معرفی، عددها تا صد، رنگ، غذا، آب‌وهوا، بدن، لباس، شغل، فعل‌های ساده و ضمیرها',
     color: '#6555E9',
     modules: [
@@ -627,7 +650,7 @@ export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
   {
     id: 1,
     title: 'Survival Russian',
-    cefr: 'سطح ۲ · کاربرد روزمره',
+    cefr: 'A1',
     description: 'زندگی روزمره در شهر: رستوران، خرید، تاکسی و اتوبوس، هتل، تلفن، قرار، داروخانه، گم‌شدن چیزها، دعوت و تاریخ',
     color: '#27A1D6',
     modules: [
@@ -658,7 +681,7 @@ export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
   {
     id: 2,
     title: 'Everyday Russian',
-    cefr: 'A2',
+    cefr: 'A2–B1',
     description: 'گذشته و آینده، قصد و برنامه، توصیف ظاهر، مقایسه، توصیه، نظر، کار، خانه، سفر، شرط، پزشک، تلفن، اداره و گفت‌وگوی روان',
     color: '#19A88B',
     modules: [
@@ -688,7 +711,7 @@ export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
   {
     id: 3,
     title: 'Communication Russian',
-    cefr: 'B1',
+    cefr: 'B1–B2',
     description: 'ساختار جمله، روایت، نظر و ارتباط در موقعیت‌های روزمره',
     color: '#E4A436',
     modules: ['Foundation · ساختار و جمله‌سازی', 'Survival · ارتباط در زندگی واقعی'],
@@ -696,8 +719,8 @@ export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
   },
   {
     id: 4,
-    title: 'Advanced Russian',
-    cefr: 'B2',
+    title: 'B2 — Upper-Intermediate Communication',
+    cefr: 'B2 · سطح ۴',
     description: 'روسی دقیق‌تر در موضوع‌های تخصصی و رسمی',
     color: '#9A68E8',
     modules: ['روسی حرفه‌ای', 'نوشتار رسمی', 'مطالعه و رسانه'],
@@ -705,8 +728,8 @@ export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
   },
   {
     id: 5,
-    title: 'Advanced Communication Russian',
-    cefr: 'C1',
+    title: 'C1 — Advanced Communication',
+    cefr: 'C1 · سطح ۵',
     description: 'تحلیل، استدلال و ارتباط حرفه‌ای با زبان دقیق‌تر',
     color: '#D56788',
     modules: ['Foundation · ساختار و سبک پیشرفته', 'Survival · تحلیل و ارتباط حرفه‌ای'],
@@ -715,6 +738,7 @@ export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
 ];
 
 const RUSSIAN_LESSON_LEVELS: Record<string, { levelId: RussianLevelId; subtitle: string }> = {
+  ...Object.fromEntries(RUSSIAN_PRE_A1_LESSONS.map(lesson => [lesson.id, { levelId: -1 as const, subtitle: RUSSIAN_PRE_A1_SUBTITLES[lesson.id] ?? lesson.situation }])),
   /* سطح ۱ */
   'ru-l1-greetings': { levelId: 0, subtitle: 'سلام، صبح/ظهر/عصر بخیر، خداحافظ و متشکرم' },
   'ru-l1-how-are-you': { levelId: 0, subtitle: 'احوال‌پرسی و پاسخ کوتاه با خوب / معمولی / بد' },
@@ -798,13 +822,37 @@ const RUSSIAN_LESSON_LEVELS: Record<string, { levelId: RussianLevelId; subtitle:
     levelId: 5 as const,
     subtitle: `${index < 10 ? 'Foundation' : 'Survival'} · ${lesson.situation}`,
   }])),
+  ...Object.fromEntries(RUSSIAN_A2_EXPANSION_LESSONS.map(lesson => [lesson.id, { levelId: 2 as const, subtitle: `تکمیلی · ${lesson.situation}` }])),
+  ...Object.fromEntries(RUSSIAN_B1_EXPANSION_LESSONS.map(lesson => [lesson.id, { levelId: 3 as const, subtitle: `تکمیلی · ${lesson.situation}` }])),
+  ...Object.fromEntries(RUSSIAN_B2_EXPANSION_LESSONS.map(lesson => [lesson.id, { levelId: 4 as const, subtitle: `تکمیلی · ${lesson.situation}` }])),
+  ...Object.fromEntries(RUSSIAN_C1_EXPANSION_LESSONS.map(lesson => [lesson.id, { levelId: 5 as const, subtitle: `تکمیلی · ${lesson.situation}` }])),
 };
 
-export const RUSSIAN_LESSONS: readonly RussianCourseLesson[] = RUSSIAN_STARTER_LESSONS.map((item, index) => {
+function russianLabLesson(lab: LabLesson): RussianCourseLesson {
+  return {
+    id: lab.id, levelId: lab.levelId, order: 0,
+    title: lab.title, subtitle: lab.subtitle, situation: lab.situation,
+    teachingFa: lab.teachingFa, durationMinutes: lab.durationMinutes,
+    sentences: lab.sentences.map((sentence, index) => ({
+      id: `${lab.id}-s${index + 1}`, text: sentence.text, fa: sentence.fa,
+      pronunciation: sentence.pronunciation,
+      ...(sentence.pattern ? { pattern: sentence.pattern } : {}),
+      vocabulary: sentence.vocabulary,
+    })),
+    dialogue: lab.dialogue, checks: lab.checks,
+  };
+}
+
+const russianBaseLessons: readonly RussianCourseLesson[] = RUSSIAN_STARTER_LESSONS.map((item, index) => {
   const level = RUSSIAN_LESSON_LEVELS[item.id];
   if (!level) throw new Error(`Russian lesson ${item.id} has no level assignment.`);
   return { ...item, ...level, order: index + 1 };
 });
+
+export const RUSSIAN_LESSONS: readonly RussianCourseLesson[] = insertLabLessons(
+  russianBaseLessons,
+  labLessonsOf('ru').map(russianLabLesson),
+).map((lesson, index) => ({ ...lesson, order: index + 1 }));
 
 export function findRussianLesson(id: string | undefined): RussianCourseLesson | undefined {
   return RUSSIAN_LESSONS.find(item => item.id === id);

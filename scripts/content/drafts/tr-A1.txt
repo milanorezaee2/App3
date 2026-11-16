@@ -1,0 +1,179 @@
+# Turkish A1 draft · format: targetWords | text | fa | pattern
+gibi|Kardeşim gibi konuşuyorsun.|مثل برادرم حرف می‌زنی.|<isim> gibi <fiil>.
+gibi|Bugün yaz gibi sıcak.|امروز مثل تابستان گرم است.|Bugün <isim> gibi <sıfat>.
+gibi|Çay gibi bir şey var mı?|چیزی مثل چای دارید؟|<isim> gibi bir şey var mı?
+olan|Masada olan kitap benim.|کتابی که روی میز است مال من است.|<yer> olan <isim> benim.
+olan|Burada olan herkes öğrenci.|همهٔ کسانی که اینجا هستند دانشجو هستند.|<yer> olan herkes <isim>.
+ki|Umarım ki gelirsin.|امیدوارم که بیایی.|Umarım ki <cümle>.
+ki|Biliyorum ki yorgunsun.|می‌دانم که خسته‌ای.|Biliyorum ki <cümle>.
+ilk|Bu ilk dersim.|این اولین درس من است.|Bu ilk <isim>.
+ilk|İlk önce kahvaltı yapalım.|اول صبحانه بخوریم.|İlk önce <fiil>.
+ise|Ben çay, o ise kahve istiyor.|من چای می‌خواهم، او اما قهوه.|<A> <isim>, <B> ise <isim> istiyor.
+bile|Bir kelime bile bilmiyorum.|حتی یک کلمه هم نمی‌دانم.|<isim> bile <fiil>.
+bile|O bile geldi.|حتی او هم آمد.|<isim> bile geldi.
+böyle|Böyle daha iyi.|این‌طوری بهتر است.|Böyle daha <sıfat>.
+böyle|Neden böyle yorgunsun?|چرا این‌قدر خسته‌ای؟|Neden böyle <sıfat>?
+tek|Tek bir sorum var.|فقط یک سؤال دارم.|Tek bir <isim> var.
+tek|Evde tek başımayım.|در خانه تنها هستم.|<yer> tek başımayım.
+tüm|Tüm gün evdeyim.|تمام روز خانه‌ام.|Tüm <zaman> <yer>.
+tüm|Tüm arkadaşlarım burada.|همهٔ دوستانم اینجا هستند.|Tüm <isim> <yer>.
+doğru|Doğru, sen haklısın.|درست است، حق با توست.|Doğru, <cümle>.
+doğru|Bu yol doğru mu?|این راه درست است؟|Bu <isim> doğru mu?
+doğru|Okula doğru yürüyorum.|به سمت مدرسه پیاده می‌روم.|<yer>-e doğru yürüyorum.
+olduğunu|Hasta olduğunu bilmiyordum.|نمی‌دانستم مریض هستی.|<sıfat> olduğunu bilmiyordum.
+diye|Yorgunsun diye erken geldim.|چون خسته بودی زود آمدم.|<cümle> diye <fiil>.
+olduğu|Evde olduğu için gelmedi.|چون خانه بود، نیامد.|<yer> olduğu için <fiil>.
+diğer|Diğer çanta daha ucuz.|کیف دیگر ارزان‌تر است.|Diğer <isim> daha <sıfat>.
+diğer|Diğer gün görüşürüz.|روز دیگر می‌بینمت.|Diğer <zaman> görüşürüz.
+fazla|Çok fazla tuz var.|نمک خیلی زیاد است.|Çok fazla <isim> var.
+fazla|Fazla bekleme, gel.|زیاد منتظر نمان، بیا.|Fazla <fiil>, <fiil>.
+olmak|Doktor olmak istiyorum.|می‌خواهم پزشک شوم.|<meslek> olmak istiyorum.
+olmak|Mutlu olmak kolay.|خوشحال بودن آسان است.|<sıfat> olmak <sıfat>.
+ancak|Geliyorum, ancak geç kalırım.|می‌آیم، اما دیر می‌رسم.|<cümle>, ancak <cümle>.
+ancak|Ancak akşam müsaitim.|فقط عصر وقت دارم.|Ancak <zaman> müsaitim.
+biri|Biri kapıda bekliyor.|یکی دم در منتظر است.|Biri <yer> bekliyor.
+biri|Arkadaşlarımdan biri doktor.|یکی از دوستانم پزشک است.|<isim>-dan biri <meslek>.
+bunu|Bunu çok istiyorum.|این را خیلی می‌خواهم.|Bunu çok <fiil>.
+bunu|Bunu kim yaptı?|این را کی درست کرد؟|Bunu kim yaptı?
+öyle|Öyle mi? Harika!|جدی؟ عالی!|Öyle mi? <cümle>!
+öyle|Ben öyle düşünmüyorum.|من این‌طور فکر نمی‌کنم.|Ben öyle <fiil>.
+şekilde|Bu şekilde daha kolay.|این‌طوری آسان‌تر است.|Bu şekilde daha <sıfat>.
+bütün|Bütün gün çalıştım.|تمام روز کار کردم.|Bütün <zaman> <fiil>.
+bütün|Bütün aile burada.|همهٔ خانواده اینجا هستند.|Bütün <isim> <yer>.
+dünya|Dünya çok büyük.|دنیا خیلی بزرگ است.|Dünya çok <sıfat>.
+dünya|Dünyanın en güzel şehri İstanbul.|زیباترین شهر دنیا استانبول است.|Dünyanın en <sıfat> <isim> <isim>.
+genel|Genel olarak iyiyim.|به‌طور کلی خوبم.|Genel olarak <sıfat>.
+yine|Yine geç kaldın.|باز هم دیر کردی.|Yine <fiil>.
+yine|Yarın yine görüşürüz.|فردا باز هم می‌بینمت.|<zaman> yine görüşürüz.
+eden|Yardım eden kişi öğretmen.|کسی که کمک کرد معلم است.|<isim> eden kişi <meslek>.
+hakkında|Film hakkında konuşalım.|دربارهٔ فیلم حرف بزنیم.|<isim> hakkında konuşalım.
+hakkında|Sen hakkında ne düşünüyorsun?|تو در این باره چه فکر می‌کنی؟|<isim> hakkında ne düşünüyorsun?
+alan|Bilet alan var mı?|کسی بلیت گرفته؟|<isim> alan var mı?
+bazı|Bazı günler erken kalkarım.|بعضی روزها زود بیدار می‌شوم.|Bazı <zaman> <fiil>.
+bazı|Bazı insanlar kahve sevmez.|بعضی آدم‌ها قهوه دوست ندارند.|Bazı insanlar <isim> sevmez.
+geri|Hemen geri geliyorum.|الان برمی‌گردم.|Hemen geri geliyorum.
+geri|Kitabı geri ver, lütfen.|کتاب را پس بده، لطفاً.|<isim> geri ver, lütfen.
+olacak|Yarın hava güzel olacak.|فردا هوا خوب می‌شود.|<zaman> <isim> <sıfat> olacak.
+olacak|Her şey iyi olacak.|همه چیز خوب می‌شود.|Her şey <sıfat> olacak.
+gelen|Kapıya gelen kim?|کی دم در آمده؟|<yer>-a gelen kim?
+gelen|Dün gelen misafir amcam.|مهمانی که دیروز آمد عموی من است.|<zaman> gelen <isim> <isim>.
+onu|Onu iyi tanıyorum.|او را خوب می‌شناسم.|Onu iyi <fiil>.
+onu|Onu her gün görüyorum.|او را هر روز می‌بینم.|Onu her gün <fiil>.
+hem|Hem çay hem kahve var.|هم چای هست هم قهوه.|Hem <A> hem <B> var.
+hem|Hem çalışıyor hem okuyor.|هم کار می‌کند هم درس می‌خواند.|Hem <fiil> hem <fiil>.
+yani|Yani yarın gelmiyorsun?|یعنی فردا نمی‌آیی؟|Yani <cümle>?
+yani|Yani, ben bilmiyorum.|یعنی، من نمی‌دانم.|Yani, <cümle>.
+ayrıca|Ayrıca su da alalım.|ضمناً آب هم بگیریم.|Ayrıca <isim> da alalım.
+eski|Bu eski bir ev.|این خانه‌ای قدیمی است.|Bu eski bir <isim>.
+eski|Eski arkadaşımla buluştum.|با دوست قدیمی‌ام قرار گذاشتم.|Eski <isim>-la buluştum.
+kabul|Teklifi kabul ediyorum.|پیشنهاد را قبول می‌کنم.|<isim> kabul ediyorum.
+kabul|Kabul, yarın görüşürüz.|قبول، فردا می‌بینمت.|Kabul, <cümle>.
+etti|Teşekkür etti ve gitti.|تشکر کرد و رفت.|<isim> etti ve <fiil>.
+ilgili|Bu konuyla ilgili sorum var.|دربارهٔ این موضوع سؤال دارم.|<isim>-la ilgili sorum var.
+özel|Bugün özel bir gün.|امروز روز خاصی است.|Bugün özel bir <isim>.
+özel|Özel bir şey ister misin?|چیز خاصی می‌خواهی؟|Özel bir şey ister misin?
+vardır|Her evde bir mutfak vardır.|هر خانه‌ای یک آشپزخانه دارد.|Her <yer> bir <isim> vardır.
+fakat|Geliyorum, fakat geç.|می‌آیم، اما دیر.|<cümle>, fakat <zarf>.
+sahip|İki arabaya sahip.|او دو ماشین دارد.|<isim>-e sahip.
+yüksek|Fiyat çok yüksek.|قیمت خیلی بالاست.|<isim> çok yüksek.
+yüksek|Yüksek sesle konuşma.|بلند حرف نزن.|Yüksek sesle <fiil>.
+zaten|Ben zaten biliyorum.|خودم می‌دانم.|Ben zaten <fiil>.
+zaten|Zaten geç oldu.|دیگر دیر شده.|Zaten <sıfat> oldu.
+üzerine|Kitabı masanın üzerine koy.|کتاب را روی میز بگذار.|<isim> <isim>-in üzerine koy.
+üzerinde|Telefon masanın üzerinde.|تلفن روی میز است.|<isim> <isim>-in üzerinde.
+devlet|Devlet okulunda okuyorum.|در مدرسهٔ دولتی درس می‌خوانم.|Devlet <isim>-inde okuyorum.
+farklı|Bu farklı bir lezzet.|این طعم متفاوتی است.|Bu farklı bir <isim>.
+farklı|Farklı bir renk var mı?|رنگ دیگری دارید؟|Farklı bir <isim> var mı?
+hep|Hep aynı şeyi söylüyorsun.|همیشه همان حرف را می‌زنی.|Hep aynı <isim> <fiil>.
+hep|Ben hep buradayım.|من همیشه اینجا هستم.|Ben hep <yer>.
+eğer|Eğer istersen gelirim.|اگر بخواهی می‌آیم.|Eğer <cümle> <fiil>.
+eğer|Eğer vaktin varsa gel.|اگر وقت داری بیا.|Eğer <cümle> <fiil>.
+herkes|Herkes burada mı?|همه اینجا هستند؟|Herkes <yer> mı?
+herkes|Herkes seni seviyor.|همه تو را دوست دارند.|Herkes <isim> seviyor.
+hala|Hala evde misin?|هنوز خانه‌ای؟|Hala <yer> misin?
+hala|Ben hala açım.|من هنوز گرسنه‌ام.|Ben hala <sıfat>.
+an|Şu an müsait değilim.|الان وقت ندارم.|Şu an <sıfat> değilim.
+an|Bir an bekle.|یک لحظه صبر کن.|Bir an <fiil>.
+söz|Söz veriyorum, geleceğim.|قول می‌دهم، می‌آیم.|Söz veriyorum, <cümle>.
+bizi|Bizi burada bekle.|اینجا منتظر ما بمان.|Bizi <yer> <fiil>.
+bizi|Bizi arabayla aldı.|با ماشین ما را برد.|Bizi <isim>-la aldı.
+kimse|Evde kimse yok.|کسی خانه نیست.|<yer> kimse yok.
+kimse|Kimse cevap bilmiyor.|هیچ‌کس جواب را نمی‌داند.|Kimse <isim> <fiil>.
+yerine|Çay yerine kahve alayım.|به جای چای قهوه بگیرم.|<A> yerine <B> alayım.
+kötü|Hava çok kötü.|هوا خیلی بد است.|<isim> çok kötü.
+kötü|Bugün kötü hissediyorum.|امروز حالم بد است.|<zaman> kötü hissediyorum.
+bak|Bak, otobüs geliyor.|ببین، اتوبوس دارد می‌آید.|Bak, <cümle>.
+bak|Şuraya bir bak.|یک نگاه به آنجا بینداز.|<yer>-e bir bak.
+gerek|Acele etmek gerek.|باید عجله کرد.|<fiil>-mek gerek.
+gerek|Gerek yok, teşekkürler.|لازم نیست، ممنون.|Gerek yok, teşekkürler.
+ikinci|Bu benim ikinci günüm.|این دومین روز من است.|Bu benim ikinci <isim>.
+ikinci|Bu ikinci çayım.|این دومین چای من است.|Bu ikinci <isim>.
+kısa|Kısa bir yürüyüş yapalım.|یک پیاده‌روی کوتاه بکنیم.|Kısa bir <isim> yapalım.
+kısa|Yol çok kısa.|راه خیلی کوتاه است.|<isim> çok kısa.
+ona|Ona dün söyledim.|دیروز به او گفتم.|Ona <zaman> <fiil>.
+ona|Ona bir çay ver.|به او یک چای بده.|Ona bir <isim> ver.
+birçok|Birçok arkadaşım var.|دوستان زیادی دارم.|Birçok <isim> var.
+süre|Ne kadar süre kalıyorsun?|چه مدت می‌مانی؟|Ne kadar süre <fiil>?
+süre|Kısa bir süre bekleyin.|مدت کوتاهی صبر کنید.|Kısa bir süre <fiil>.
+dedi|Yarın gelirim dedi.|گفت فردا می‌آیم.|<cümle> dedi.
+adı|Onun adı ne?|اسم او چیست؟|Onun adı ne?
+adı|Kedinin adı Boncuk.|اسم گربه بونجوک است.|<isim>-in adı <isim>.
+aslında|Aslında çok yorgunum.|راستش خیلی خسته‌ام.|Aslında <sıfat>.
+aslında|Aslında sen haklısın.|راستش حق با توست.|Aslında <cümle>.
+yeniden|Hadi yeniden deneyelim.|بیا دوباره امتحان کنیم.|Hadi yeniden <fiil>.
+yeniden|Yeniden hoş geldiniz.|دوباره خوش آمدید.|Yeniden hoş geldiniz.
+boyunca|Yol boyunca konuştuk.|در طول راه حرف زدیم.|<isim> boyunca <fiil>.
+yol|Bu yol nereye gidiyor?|این راه به کجا می‌رود؟|Bu yol nereye gidiyor?
+yol|Yol uzun, hadi gidelim.|راه طولانی است، برویم.|Yol <sıfat>, <cümle>.
+buna|Buna ne dersin?|نظرت در این باره چیست؟|Buna ne dersin?
+buna|Buna ihtiyacım var.|به این نیاز دارم.|Buna ihtiyacım var.
+dikkat|Dikkat et, yol ıslak.|مواظب باش، جاده خیس است.|Dikkat et, <cümle>.
+dikkat|Dikkat, kapı kapanıyor.|توجه، در بسته می‌شود.|Dikkat, <cümle>.
+sonunda|Sonunda eve geldin!|بالاخره آمدی خانه!|Sonunda <yer> <fiil>!
+sonunda|Yolun sonunda bir market var.|آخر خیابان یک سوپرمارکت است.|<isim>-in sonunda bir <isim> var.
+hadi|Hadi eve gidelim.|بیا برویم خانه.|Hadi <yer> <fiil>.
+hadi|Hadi, geç kalıyoruz.|یالا، داریم دیر می‌کنیم.|Hadi, <cümle>.
+şeyler|Güzel şeyler oluyor.|اتفاق‌های خوبی می‌افتد.|<sıfat> şeyler oluyor.
+şeyler|Bazı şeyler değişmez.|بعضی چیزها عوض نمی‌شوند.|Bazı şeyler <fiil>.
+oyun|Çocuklar oyun oynuyor.|بچه‌ها بازی می‌کنند.|<isim> oyun oynuyor.
+oyun|Bu oyun çok eğlenceli.|این بازی خیلی سرگرم‌کننده است.|Bu oyun çok <sıfat>.
+yere|Yere oturma, lütfen.|روی زمین ننشین، لطفاً.|Yere <fiil>, lütfen.
+yere|Başka bir yere gidelim.|جای دیگری برویم.|Başka bir yere gidelim.
+rağmen|Yağmura rağmen geldi.|با وجود باران آمد.|<isim>-a rağmen <fiil>.
+vardı|Dün çok iş vardı.|دیروز کار زیادی بود.|<zaman> çok <isim> vardı.
+vardı|Evde ekmek vardı.|در خانه نان بود.|<yer> <isim> vardı.
+yaptı|Annem kek yaptı.|مادرم کیک درست کرد.|<isim> <isim> yaptı.
+çıktı|Bugün erken çıktı.|امروز زود رفت بیرون.|<zaman> <zarf> çıktı.
+beraber|Beraber yemek yiyelim.|با هم غذا بخوریم.|Beraber <isim> yiyelim.
+beraber|Hep beraber gidiyoruz.|همه با هم می‌رویم.|Hep beraber <fiil>.
+niye|Dün niye gelmedin?|دیروز چرا نیامدی؟|<zaman> niye <fiil>?
+niye|Niye bu kadar pahalı?|چرا این‌قدر گران است؟|Niye bu kadar <sıfat>?
+söyledi|Bana adını söyledi.|اسمش را به من گفت.|Bana <isim> söyledi.
+şeyi|Her şeyi anladım.|همه چیز را فهمیدم.|Her şeyi <fiil>.
+şeyi|Bu şeyi istemiyorum.|این را نمی‌خواهم.|Bu şeyi <fiil>.
+falan|Çay falan ister misin?|چای یا چیزی می‌خواهی؟|<isim> falan ister misin?
+güçlü|Çay çok güçlü.|چای خیلی پررنگ است.|<isim> çok güçlü.
+güçlü|O çok güçlü biri.|او آدم خیلی قوی‌ای است.|O çok güçlü biri.
+iç|Suyunu iç, lütfen.|آبت را بخور، لطفاً.|<isim> iç, lütfen.
+iç|Çayını sıcak iç.|چایت را داغ بخور.|<isim> <sıfat> iç.
+verdi|Bana bir çay verdi.|یک چای به من داد.|Bana bir <isim> verdi.
+cevap|Cevap ver, lütfen.|لطفاً جواب بده.|Cevap ver, lütfen.
+cevap|Doğru cevap bu.|جواب درست این است.|Doğru cevap bu.
+göz|Göz doktoruna gidiyorum.|پیش چشم‌پزشک می‌روم.|Göz doktoruna gidiyorum.
+yaz|Yaz çok sıcak.|تابستان خیلی گرم است.|Yaz çok <sıfat>.
+yaz|Adını buraya yaz.|اسمت را اینجا بنویس.|<isim> buraya yaz.
+ülke|Hangi ülke daha güzel?|کدام کشور قشنگ‌تر است؟|Hangi ülke daha <sıfat>?
+ülke|Bu ülke çok güzel.|این کشور خیلی زیباست.|Bu ülke çok <sıfat>.
+aldı|Annem ekmek aldı.|مادرم نان خرید.|<isim> <isim> aldı.
+dışında|Şehir dışında yaşıyorum.|خارج از شهر زندگی می‌کنم.|<isim> dışında yaşıyorum.
+dışında|Bunun dışında her şey iyi.|غیر از این، همه چیز خوب است.|Bunun dışında her şey <sıfat>.
+yaklaşık|Yaklaşık on dakika sürer.|حدود ده دقیقه طول می‌کشد.|Yaklaşık <sayı> <isim> sürer.
+belli|Belli değil, bakarız.|معلوم نیست، می‌بینیم.|Belli değil, <cümle>.
+belli|Saat belli mi?|ساعتش معلوم است؟|<isim> belli mi?
+halk|Halk pazarı pazar günü açık.|بازار مردمی یکشنبه باز است.|<isim> <zaman> açık.
+varsa|Vaktin varsa gel.|اگر وقت داری بیا.|<isim> varsa <fiil>.
+varsa|Sorun varsa söyle.|اگر مشکلی هست بگو.|<isim> varsa söyle.
+konusunda|Yemek konusunda sen seç.|در مورد غذا تو انتخاب کن.|<isim> konusunda sen seç.
+sanki|Sanki kış geldi.|انگار زمستان آمده.|Sanki <cümle>.
+tabi|Tabi ki gelirim.|حتماً می‌آیم.|Tabi ki <fiil>.
+tabi|Tabi, buyurun oturun.|البته، بفرمایید بنشینید.|Tabi, <cümle>.

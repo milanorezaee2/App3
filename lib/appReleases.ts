@@ -3,6 +3,7 @@ export interface AppTarget { package: string; title: string; apk: string; hint: 
 export const APP_TARGETS: readonly AppTarget[] = Object.freeze([
   { package: 'com.devicecontrol.milofive', title: 'MiloMultiLanguage.5 — بدون ورود', apk: '5update.apk', hint: 'پنج زبان، بدون صفحهٔ ورود' },
   { package: 'com.devicecontrol.milomultilang', title: 'MiloMultiLanguage.5 — با ورود', apk: 'login.5update.apk', hint: 'پنج زبان، با ورود' },
+  { package: 'com.devicecontrol.miloenglish', title: 'MiloLang — فقط انگلیسی', apk: 'english.apk', hint: 'فقط انگلیسی، بدون ورود' },
   { package: 'com.devicecontrol.companion', title: 'MiloMultiLanguage — انگلیسی/روسی', apk: '2update.apk', hint: 'انگلیسی و روسی، بدون ورود' },
   { package: 'com.devicecontrol.miloadmin', title: 'Admin App', apk: 'AdminApp.apk', hint: 'پنل مدیریت' },
 ]);

@@ -2,7 +2,7 @@ import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { usePathname, useRouter } from 'expo-router';
-import { BookOpen, MessageCircle, RefreshCw, Volume2 } from 'lucide-react-native';
+import { BookOpen, Lightbulb, RefreshCw, Volume2 } from 'lucide-react-native';
 import { Radius, Typography } from '@/lib/theme';
 import { EnglishPalette as Palette } from '@/components/EnglishSupplementTask';
 import { getChatUnreadCount, subscribeToChatUnreadCount } from '@/lib/chatNotificationState';
@@ -10,7 +10,7 @@ import { getChatUnreadCount, subscribeToChatUnreadCount } from '@/lib/chatNotifi
 const items = [
   { path: '/lang', label: 'یادگیری', icon: BookOpen },
   { path: '/learn/en/pronunciation', label: 'تلفظ', icon: Volume2 },
-  { path: '/conversations', label: 'مکالمه', icon: MessageCircle },
+  { path: '/feedback', label: 'پیشنهادات', icon: Lightbulb },
   { path: '/review', label: 'مرور', icon: RefreshCw },
 ] as const;
 
@@ -30,7 +30,7 @@ export function AppBottomNav() {
           <Pressable key={item.path} accessibilityRole="button" accessibilityState={{ selected: active }} style={styles.item} onPress={() => router.replace(item.path as never)}>
             <View style={[styles.iconWrap, active && styles.iconWrapActive]}>
               <Icon size={19} color={active ? Palette.primary : Palette.muted} strokeWidth={active ? 2.4 : 2} />
-              {item.path === '/conversations' && chatUnreadCount > 0 && (
+              {item.path === '/feedback' && chatUnreadCount > 0 && (
                 <View accessibilityLabel={`${chatUnreadCount} پیام خوانده‌نشده`} style={styles.badge}>
                   <Text style={styles.badgeText}>{chatUnreadCount > 9 ? '۹+' : chatUnreadCount.toLocaleString('fa-IR')}</Text>
                 </View>

@@ -1,0 +1,152 @@
+name: Render offline TTS (no API key)
+
+# Zero credentials: audio is synthesised INSIDE the GitHub runner with open-source engines and
+# published as ordinary GitHub release assets. eSpeak NG (WASM) is always available; Piper neural
+# voices are an optional public-model upgrade. No TTS token, no paid service, no new secret.
+# The repo's SUPABASE_SERVICE_ROLE_KEY is OPTIONAL: if present the same files are mirrored to the
+# public `content-packs` bucket as well; if absent the release-asset path still works.
+#
+# On a feature branch `workflow_dispatch` is often not registered by GitHub, so a push to the
+# marker file also starts a run. Put "all espeak" (or "pilot auto") in tts-trigger.txt and push.
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: 'Which bands to render'
+        type: choice
+        options: [pilot, all]
+        default: pilot
+      engine:
+        description: 'Voice engine (auto tries public Piper models, then falls back to eSpeak NG)'
+        type: choice
+        options: [espeak, auto]
+        default: espeak
+      voice_map:
+        description: 'Optional JSON map of Piper voice paths (without .onnx), keyed by language'
+        type: string
+        default: ''
+  push:
+    branches:
+      - arena/800d07a6-app3
+    paths:
+      - '.github/workflows/tts-trigger.txt'
+
+permissions:
+  contents: write
+concurrency:
+  group: offline-tts-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Resolve run parameters
+        env:
+          INPUT_SCOPE: ${{ inputs.scope }}
+          INPUT_ENGINE: ${{ inputs.engine }}
+        run: |
+          SCOPE="$INPUT_SCOPE"; ENGINE="$INPUT_ENGINE"
+          if [ -z "$SCOPE" ] && [ -f .github/workflows/tts-trigger.txt ]; then
+            read -r SCOPE ENGINE < .github/workflows/tts-trigger.txt || true
+          fi
+          SCOPE="${SCOPE:-pilot}"; ENGINE="${ENGINE:-espeak}"
+          echo "SCOPE=$SCOPE" >> "$GITHUB_ENV"
+          echo "ENGINE=$ENGINE" >> "$GITHUB_ENV"
+          echo "Rendering scope=$SCOPE engine=$ENGINE"
+      - name: Install offline TTS dependencies
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          npm i --no-save --no-audit --no-fund espeak-ng@1.0.2 lamejs@1.2.1 tsx@4
+      - name: Optional Piper neural voices (public models, no token)
+        env:
+          VOICE_MAP: ${{ inputs.voice_map }}
+        run: |
+          [ "$ENGINE" = "auto" ] || { echo "engine=espeak (guaranteed offline voice)"; exit 0; }
+          python3 -m pip install --user piper-tts || true
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          mkdir -p /tmp/piper-voices
+          BASE="https://huggingface.co/rhasspy/piper-voices/resolve/main"
+          DEFAULT_MAP='{"en":"en/en_US/amy/medium/en_US-amy-medium","de":"de/de_DE/thorsten/medium/de_DE-thorsten-medium","fr":"fr/fr_FR/siwis/medium/fr_FR-siwis-medium","es":"es/es_ES/davefx/medium/es_ES-davefx-medium","tr":"tr/tr_TR/dfki/medium/tr_TR-dfki-medium","ru":"ru/ru_RU/irina/medium/ru_RU-irina-medium"}'
+          MAP="$VOICE_MAP"; [ -n "$MAP" ] || MAP="$DEFAULT_MAP"
+          echo "$MAP" > /tmp/voice-map.json
+          for lang in en de fr es tr ru; do
+            rel=$(node -p "require('/tmp/voice-map.json')['$lang'] || ''")
+            [ -n "$rel" ] || continue
+            onnx="/tmp/piper-voices/$lang.onnx"
+            if curl -fsSL --retry 2 --max-time 300 "$BASE/$rel.onnx" -o "$onnx" && \
+               curl -fsSL --retry 2 --max-time 60 "$BASE/$rel.onnx.json" -o "$onnx.json"; then
+              echo "PIPER_MODEL_$(echo $lang | tr a-z A-Z)=$onnx" >> "$GITHUB_ENV"
+              echo "Piper voice ready: $lang"
+            else
+              echo "Piper voice unavailable for $lang; eSpeak NG will be used."; rm -f "$onnx" "$onnx.json"
+            fi
+          done
+      - name: Render MP3 for every published sentence
+        env:
+          BASE: https://doagwkssxtxseuavrxnr.supabase.co/storage/v1/object/public/content-packs/audio
+        run: |
+          set -e
+          node scripts/content/renderOfflineAudio.mjs --scope "$SCOPE" --workers 8 --base "$BASE"
+          echo "MP3 files: $(find content-packs/audio -name '*.mp3' | wc -l)"
+      - name: Bundle MP3s into one file per non-empty pack (34 assets, no paid storage)
+        run: |
+          set -e
+          node scripts/content/packAudioBundles.mjs
+          echo "Bundles: $(find content-packs/audio-bundles -name '*.mp3' | wc -l)"
+      - name: Bump pack versions and rebuild the manifest / coverage index
+        run: |
+          set -e
+          node scripts/content/finalizeAudioPacks.mjs
+          NODE_OPTIONS="--require ./scripts/content/shim.cjs" node_modules/.bin/tsx scripts/content/genPackCoverage.ts --write
+          node scripts/content/buildContentRelease.mjs
+      - name: Publish bundles + packs as GitHub release assets (no secret required)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: milo-content-v1
+        run: |
+          set -e
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "Milo content packs and offline speech" \
+              --notes "Versioned content packs and concatenated eSpeak NG audio bundles. Public, key-free hosting."
+          gh release upload "$TAG" --repo "$GITHUB_REPOSITORY" --clobber \
+            content-packs/audio-bundles/*.mp3 content-packs/packs-all.json content-packs/manifest.json
+          echo "Published $(find content-packs/audio-bundles -name '*.mp3' | wc -l) bundles + packs-all.json + manifest.json"
+      - name: Mirror to Supabase Storage when the optional secret exists
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          set -e
+          [ -n "$SUPABASE_SERVICE_ROLE_KEY" ] || { echo "No SUPABASE_SERVICE_ROLE_KEY; release-asset hosting is sufficient, skipping mirror."; exit 0; }
+          URL="${SUPABASE_URL:-$(node -p "require('./config/supabase.public.json').EXPO_PUBLIC_SUPABASE_URL")}"
+          export URL SUPABASE_SERVICE_ROLE_KEY
+          code=$(curl -sS -o /dev/null -w '%{http_code}' -X POST "$URL/storage/v1/bucket" \
+            -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+            -H 'Content-Type: application/json' --data '{"id":"content-packs","name":"content-packs","public":true}')
+          echo "bucket: $code (409/412 = already there)"
+          find content-packs -type f \( -name '*.mp3' -o -name '*.json' \) -print0 | \
+            xargs -0 -P 8 -I{} bash -c '
+              f="$1"; rel="${f#content-packs/}"
+              case "$f" in *.mp3) ct="audio/mpeg";; *.json) ct="application/json";; esac
+              code=$(curl -sS --retry 3 --retry-delay 1 --max-time 120 -o /dev/null -w "%{http_code}" -X POST \
+                "$URL/storage/v1/object/content-packs/$rel" \
+                -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+                -H "Content-Type: $ct" -H "x-upsert: true" -H "cache-control: max-age=300" --data-binary "@$f")
+              case "$code" in 200|201) ;; *) echo "$code $rel" >&2; exit 1;; esac
+            ' _ {}
+          echo "Mirrored $(find content-packs -type f \( -name '*.mp3' -o -name '*.json' \) | wc -l) files"
+      - name: Commit the updated pack JSON (audio segments + versions)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A content-packs lib/content/packCoverage.generated.json
+          git diff --cached --quiet && { echo "nothing to commit"; exit 0; }
+          git commit -m "audio: offline TTS render ($SCOPE, $ENGINE) — no API key"
+          git push origin HEAD:${{ github.ref_name }}

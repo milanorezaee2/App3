@@ -1,4 +1,5 @@
 import * as Speech from 'expo-speech';
+import { playPreferredRecording, playFallbackRecording, noteSpeechSuccess } from '@/lib/content/speechFallback';
 import { speechTagFor } from './speechLanguage';
 
 let requestId = 0;
@@ -53,15 +54,21 @@ export function playStarterSpeech(locale: string, text: string, rate: number, on
     if (request !== requestId) return;
     await Speech.stop().catch(() => undefined);
     if (request !== requestId) return;
+    // Device TTS stays primary; recordings are used only on devices that opted in.
+    if (await playPreferredRecording(text, rate)) return;
+    if (request !== requestId) return;
     const candidates = await findVoices(locale);
     if (request !== requestId) return;
-    if (!candidates.length) { onError?.(); return; }
+    const fail = () => {
+      void playFallbackRecording(text, rate).then(ok => { if (request === requestId && !ok) onError?.(); });
+    };
+    if (!candidates.length) { fail(); return; }
 
     let index = 0;
     const attempt = () => {
       if (request !== requestId) return;
       const candidate = candidates[index++];
-      if (!candidate) { onError?.(); return; }
+      if (!candidate) { fail(); return; }
       let failed = false;
       const retry = () => {
         if (failed || request !== requestId) return;
@@ -76,6 +83,7 @@ export function playStarterSpeech(locale: string, text: string, rate: number, on
           ...(candidate.voice ? { voice: candidate.voice } : {}),
           rate,
           onStart: () => { if (!failed && request === requestId && candidate.fallback) onVoiceFallback?.(); },
+          onDone: () => { if (!failed && request === requestId) noteSpeechSuccess(); },
           onError: retry,
         });
       } catch { retry(); }

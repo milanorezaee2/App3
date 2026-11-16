@@ -4,15 +4,21 @@ import { formatSize, installedVersion } from '@/lib/appUpdates';
 import { toPersianDigits as fa } from '@/lib/format';
 import * as DocumentPicker from 'expo-document-picker';
 import { withAppLockSuspended } from '@/lib/appLock';
-import { Eye, EyeOff, FileUp, PackageOpen, Trash2, UploadCloud } from 'lucide-react-native';
+import { Eye, EyeOff, FileUp, Layers, PackageOpen, Trash2, UploadCloud } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 import { Platform, Pressable, Switch, View } from 'react-native';
 import { deleteRelease, fetchReleases, publishRelease, setReleasePublished, uploadApk, type AdminRelease, type PickedApk } from '../api';
 import { confirmAction, useAdmin, useAdminQuery } from '../store';
 import { AdminTheme as T } from '../theme';
-import { Avatar, Banner, Button, Card, Chip, EmptyState, ListRow, Loading, Page, Segmented, adminStyles as a, faDateTime, n } from '../ui';
+import { Avatar, Banner, Button, Card, Chip, EmptyState, Field, ListRow, Loading, Page, Segmented, adminStyles as a, faDateTime, n } from '../ui';
 
 type Source = 'upload' | 'link';
+
+/** GitHub repository that CI publishes every `milo-requested-N` release to. */
+const RELEASE_REPO = 'https://github.com/milanorezaee2/App3';
+/** CI versionCode = 100 + run number, and the tag is `milo-requested-<run number>`. */
+const codeFromTag = (tag: string): number | null => { const m = /^milo-requested-(\d+)$/.exec(tag.trim()); return m ? 100 + Number(m[1]) : null; };
+const LEARNER_PACKAGES = APP_TARGETS.filter(t => t.package !== 'com.devicecontrol.miloadmin').map(t => t.package);
 
 export function UpdatesScreen() {
   const { run, busy, invalidate, fail } = useAdmin();
@@ -26,6 +32,12 @@ export function UpdatesScreen() {
   const [notes, setNotes] = useState('');
   const [mandatory, setMandatory] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);
+  // Bulk publish from one GitHub release tag.
+  const [bulkTag, setBulkTag] = useState('');
+  const [bulkNotes, setBulkNotes] = useState('');
+  const [bulkMandatory, setBulkMandatory] = useState(false);
+  const [bulkPackages, setBulkPackages] = useState<string[]>(LEARNER_PACKAGES);
+  const [bulkDone, setBulkDone] = useState<{ ok: string[]; failed: { pkg: string; error: string }[] } | null>(null);
 
   const rows = releases.data || [];
   const latestByPackage = useMemo(() => {
@@ -75,13 +87,79 @@ export function UpdatesScreen() {
     if (ok) releases.setData(current => (current || []).filter(x => x.id !== r.id));
   }
 
+  const bulkCode = codeFromTag(bulkTag);
+  const bulkVersionName = bulkCode ? `1.0.${bulkCode}` : '';
+  const bulkStale = bulkCode ? bulkPackages.filter(pkg => (latestByPackage.get(pkg)?.version_code || 0) >= bulkCode) : [];
+  const canBulk = !busy && !!bulkCode && bulkPackages.length > 0 && bulkStale.length === 0;
+
+  async function publishBulk() {
+    if (!canBulk || !bulkCode) return;
+    const tag = bulkTag.trim();
+    const targets = APP_TARGETS.filter(t => bulkPackages.includes(t.package));
+    if (!(await confirmAction('انتشار گروهی', `${fa(targets.length)} اپ با نسخهٔ ${bulkVersionName} (ساخت ${fa(bulkCode)}) از Release «${tag}» منتشر شود؟`, 'انتشار'))) return;
+    const ok: string[] = []; const failed: { pkg: string; error: string }[] = [];
+    await run(async () => {
+      for (const target of targets) {
+        try {
+          await publishRelease({ packageName: target.package, versionName: bulkVersionName, versionCode: bulkCode, downloadUrl: `${RELEASE_REPO}/releases/download/${tag}/${target.apk}`, notes: bulkNotes.trim(), mandatory: bulkMandatory });
+          ok.push(target.package);
+        } catch (cause) { failed.push({ pkg: target.package, error: cause instanceof Error ? cause.message : String(cause) }); }
+      }
+      invalidate(['releases', 'audit']);
+      if (failed.length && !ok.length) throw new Error(failed[0].error);
+    }, failed.length ? `${fa(ok.length)} اپ منتشر شد؛ ${fa(failed.length)} مورد ناموفق.` : `${fa(ok.length)} اپ با یک کلیک منتشر شد.`);
+    setBulkDone({ ok, failed });
+    if (!failed.length) { setBulkTag(''); setBulkNotes(''); setBulkMandatory(false); }
+  }
+
   const me = installedVersion();
 
   return (
     <Page title="به‌روزرسانی اپ‌ها" subtitle="نسخهٔ جدید هر اپ را اینجا منتشر کنید؛ زبان‌آموزان داخل اپ پیام «نسخهٔ جدید» می‌بینند و با یک دکمه دانلود و نصب می‌کنند">
       {releases.error && <Banner kind="error" text={releases.error} />}
 
-      <Card title="انتشار نسخهٔ جدید">
+      <Card title="انتشار گروهی از Release گیت‌هاب" aside={<Layers size={16} color={T.color.textFaint} />}>
+        <Text style={a.muted}>برچسب Release را بنویسید (مثلاً milo-requested-97)؛ شمارهٔ ساخت و نام نسخه خودکار از آن ساخته می‌شود و همهٔ اپ‌های انتخاب‌شده با لینک مستقیم همان Release منتشر می‌شوند.</Text>
+        <View style={a.grid}>
+          <View style={{ flex: 2, minWidth: 200, gap: 4 }}>
+            <Text style={a.name}>برچسب Release</Text>
+            <TextInput value={bulkTag} onChangeText={v => { setBulkTag(v); setBulkDone(null); }} autoCapitalize="none" autoCorrect={false} placeholder="milo-requested-97" placeholderTextColor={T.color.textFaint} style={[a.input, { textAlign: 'left' }]} />
+          </View>
+          <View style={{ flex: 1, minWidth: 140 }}><Field label="شمارهٔ ساخت" value={bulkCode ? fa(bulkCode) : '—'} /></View>
+          <View style={{ flex: 1, minWidth: 140 }}><Field label="نام نسخه" value={bulkVersionName || '—'} /></View>
+        </View>
+        <View style={{ gap: 6 }}>
+          <Text style={a.name}>کدام اپ‌ها؟</Text>
+          <View style={a.actions}>
+            {APP_TARGETS.map(t => {
+              const active = bulkPackages.includes(t.package);
+              const latest = latestByPackage.get(t.package);
+              const stale = !!bulkCode && (latest?.version_code || 0) >= bulkCode;
+              return (
+                <Pressable key={t.package} accessibilityRole="button" accessibilityState={{ selected: active }} onPress={() => setBulkPackages(current => active ? current.filter(p => p !== t.package) : [...current, t.package])} style={{ borderWidth: 1, borderColor: active ? (stale ? T.color.danger : T.color.accent) : T.color.border, backgroundColor: active ? T.color.accentSoft : T.color.surface, borderRadius: 10, paddingHorizontal: 12, paddingVertical: 8, minWidth: 180, gap: 2 }}>
+                  <Text style={a.name}>{t.title}</Text>
+                  <Text style={a.muted}>{t.apk} · {latest ? `آخرین: ${latest.version_name} (${fa(latest.version_code)})` : 'هنوز نسخه‌ای منتشر نشده'}{stale ? ' · این نسخه قدیمی‌تر یا برابر است' : ''}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
+        <View style={{ gap: 4 }}>
+          <Text style={a.name}>چه چیزی تغییر کرده؟ (برای همهٔ اپ‌ها)</Text>
+          <TextInput value={bulkNotes} onChangeText={setBulkNotes} multiline numberOfLines={3} placeholder="مثلاً: دیالوگ شاخه‌دار، پل فارسی ترکی…" placeholderTextColor={T.color.textFaint} style={[a.input, { minHeight: 70, textAlignVertical: 'top' }]} />
+        </View>
+        {bulkStale.length > 0 && <Banner kind="warning" text={`برای ${fa(bulkStale.length)} اپ، نسخهٔ منتشرشده از این Release جدیدتر یا برابر است؛ آن‌ها را از انتخاب خارج کنید یا برچسب جدیدتر بدهید.`} />}
+        {bulkDone && bulkDone.failed.length > 0 && <Banner kind="error" text={bulkDone.failed.map(f => `${findAppTarget(f.pkg)?.title || f.pkg}: ${f.error}`).join('\n')} />}
+        <View style={[a.actions, { justifyContent: 'space-between' }]}>
+          <View style={a.actions}>
+            <Switch value={bulkMandatory} onValueChange={setBulkMandatory} trackColor={{ true: T.color.accent, false: T.color.border }} />
+            <Text style={a.name}>به‌روزرسانی ضروری</Text>
+          </View>
+          <Button icon={Layers} label={`انتشار ${fa(bulkPackages.length)} اپ`} onPress={() => void publishBulk()} disabled={!canBulk} />
+        </View>
+      </Card>
+
+      <Card title="انتشار نسخهٔ جدید (تکی)">
         <Text style={a.muted}>۱) اپ را انتخاب کنید · ۲) فایل APK را آپلود کنید یا لینک مستقیم بدهید · ۳) شمارهٔ نسخه و توضیح بنویسید · ۴) انتشار.</Text>
         <View style={{ gap: 6 }}>
           <Text style={a.name}>اپ هدف</Text>

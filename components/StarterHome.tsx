@@ -4,6 +4,9 @@ import { useCallback, useMemo, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
+import DailyPlanCard from '@/components/DailyPlanCard';
+import { buildDailyPlan, type DailyPlanStep } from '@/lib/dailyPlan';
+import { getStudyStreak } from '@/lib/studyStreak';
 import {
   BookOpen,
   Check,
@@ -19,6 +22,7 @@ import {
   Sparkles,
   RotateCcw,
   Volume2,
+  Award,
 } from 'lucide-react-native';
 import { PageNavigation } from '@/components/PageNavigation';
 import { StarterBottomNav } from '@/components/StarterBottomNav';
@@ -26,6 +30,9 @@ import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '
 import { EnglishLevelRail, EnglishProgressTrack, displayEnglishModuleLabel } from '@/components/EnglishUI';
 import { starterDisplayPronunciation } from '@/lib/languages/starterEditorial';
 import type { StarterCourse, StarterLesson } from '@/lib/languages/newCourses';
+import LevelReadinessLine from '@/components/LevelReadinessLine';
+import PlacementCard from '@/components/PlacementCard';
+import { auditLessonsFromLearning, courseReadiness } from '@/lib/content/courseAudit';
 import type { CourseLevelId as StarterLevelId } from '@/lib/courseContent';
 import type { CourseProgress } from '@/lib/courseProgress';
 import { toPersianDigits as fa } from '@/lib/format';
@@ -74,12 +81,13 @@ const starterOnlyStyles = StyleSheet.create({
 });
 
 const COURSE_WELCOME: Record<string, { title: string; text: string }> = {
-  de: { title: 'آلمانی؛ زبان دقت، دانش و فرصت', text: 'از نخستین سلام تا گفت‌وگوی روزمره، گام‌به‌گام و منظم؛ کلید تحصیل و کار در قلب اروپا.' },
-  fr: { title: 'فرانسوی؛ زبان فرهنگ، هنر و دیپلماسی', text: 'آوای ظریف فرانسه را با جمله‌های واقعی زندگی روزمره بیاموزید.' },
-  es: { title: 'اسپانیایی؛ زبان بیست کشور و نیم‌میلیارد انسان', text: 'گرم، روشن و پرکاربرد؛ از همین اولین جمله حرف بزنید.' },
+  de: { title: 'آلمانی', text: 'از نخستین سلام تا گفت‌وگوی روزمره.' },
+  fr: { title: 'فرانسوی', text: 'از نخستین سلام تا گفت‌وگوی روزمره.' },
+  es: { title: 'اسپانیایی', text: 'از نخستین سلام تا گفت‌وگوی روزمره.' },
 };
 
 export default function StarterHome({course}: {course: StarterCourse}) {
+  const readiness = useMemo(() => courseReadiness(course.id as 'de' | 'fr' | 'es', auditLessonsFromLearning(course.lessons as ReadonlyArray<import('@/lib/languages/types').LearningLesson & { levelId: number }>)), [course]);
   const {lessons, levels, progress: courseProgress} = course;
   const {loadStarterLessonSessionWithPresence} = course.sessions;
   const router = useRouter();
@@ -87,19 +95,31 @@ export default function StarterHome({course}: {course: StarterCourse}) {
   const compact = width < 640;
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [dueCount, setDueCount] = useState(0);
+  const [streak, setStreak] = useState(0);
   const [showRoadmap, setShowRoadmap] = useState(false);
   const [error, setError] = useState('');
   const [retry, setRetry] = useState(0);
   const [hasStartedCourse, setHasStartedCourse] = useState(false);
+  const [plan, setPlan] = useState<readonly DailyPlanStep[]>([]);
 
   useFocusEffect(useCallback(() => {
     let alive = true;
+    void getStudyStreak().then(value => { if (alive) setStreak(value); }).catch(() => undefined);
     void Promise.all([courseProgress.getCourseProgress(), courseProgress.getDueReviewCards()])
       .then(async ([nextProgress, cards]) => {
         if (!alive) return;
         setProgress(nextProgress);
         setDueCount(cards.length);
         setError('');
+        const now = new Date();
+        const todayKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+        void buildDailyPlan({
+          lessonDone: nextProgress.lastActiveDate === todayKey && nextProgress.completedLessonIds.length > 0,
+          reviewsDue: cards.length,
+          lessonRoute: `${course.home}/lesson`,
+          reviewRoute: `${course.home}/review`,
+          speakRoute: `${course.home}/pronunciation`,
+        }).then(steps => { if (alive) setPlan(steps); }).catch(() => undefined);
         const completed = new Set(nextProgress.completedLessonIds);
         const currentLesson = lessons.find(lesson => lesson.id === nextProgress.currentLessonId && !completed.has(lesson.id))
           ?? lessons.find(lesson => !completed.has(lesson.id));
@@ -175,7 +195,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
                 <Sparkles size={13} color={HomeColors.gold} />
               </View>
               <Text style={styles.welcomeTitle}>{COURSE_WELCOME[course.id]?.title ?? course.name}</Text>
-              <Text style={styles.welcomeDescription}>{COURSE_WELCOME[course.id]?.text ?? 'از نخستین سلام تا گفت‌وگوی روزمره، گام‌به‌گام.'}</Text>
+              <Text style={styles.welcomeDescription}>{COURSE_WELCOME[course.id]?.text ?? 'از نخستین سلام تا گفت‌وگوی روزمره.'}</Text>
               <View style={styles.welcomeTags}>
                 <View style={styles.welcomeTag}>
                   <BookOpen size={12} color={HomeColors.gold} />
@@ -261,6 +281,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
                         </View>
                         <Text style={styles.levelDesc} numberOfLines={1}>{level.description}</Text>
                         <Text style={styles.levelStats}>{fa(count.completed)} از {fa(count.total)} درس · {level.status === 'planned' ? 'در نقشهٔ آینده' : 'محتوای موجود'}</Text>
+                        <LevelReadinessLine course={readiness} levelId={level.id} color={level.color} />
                       </View>
                       <ChevronLeft size={18} color={HomeColors.muted} />
                     </Pressable>
@@ -300,6 +321,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             <Text style={starterOnlyStyles.foundationText}>۲۵ موضوع پایه و ۳۰ موقعیت پیشرفته؛ درس‌های مرتبط و سرفصل‌های در حال تدوین را ببینید.</Text>
           </Pressable>
 
+          <PlacementCard courseId={course.id} href={`/learn/${course.id}/placement`} hasProgress={hasStartedCourse} />
           <View style={styles.lessonCard}>
             <LinearGradient colors={['#4D9AF2', '#20C49A', '#4D9AF2']} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.lessonCardAccent} />
             <View style={styles.lessonMetaRow}>
@@ -315,7 +337,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             <View style={styles.lessonHeading}>
               <Text style={styles.lessonEyebrow}>ادامهٔ یادگیری این زبان</Text>
               <Text style={styles.lessonTitle}>{nextLesson ? heroLesson.title : 'درس‌های موجود تکمیل شد'}</Text>
-              <Text style={styles.lessonSubtitle}>{nextLesson ? heroLesson.subtitle : 'درس‌های موجود را مرور کن یا نقشهٔ سطح‌ها را ببین.'}</Text>
+              {nextLesson ? <Text style={styles.lessonSubtitle}>{heroLesson.subtitle}</Text> : null}
             </View>
 
             <View style={styles.sentenceCard}>
@@ -386,6 +408,13 @@ export default function StarterHome({course}: {course: StarterCourse}) {
             </Pressable>
           </View>
 
+          {plan.length ? <View style={{ marginBottom: 12 }}>
+            <DailyPlanCard
+              steps={plan}
+              onOpen={step => router.push((step.id === 'lesson' ? `${course.home}/lesson${resumeLesson ? `?id=${resumeLesson.id}` : ''}` : step.route) as never)}
+            />
+          </View> : null}
+
           <View style={styles.sectionHeader}>
             <View style={styles.sectionTitleBlock}>
               <Text style={styles.sectionTitle}>برنامهٔ امروز</Text>
@@ -394,6 +423,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
               <Flame size={14} color={HomeColors.amber} />
               <Text style={styles.dailyGoalText}>{fa(dueCount)} نمونه برای مرور</Text>
             </View>
+            {streak > 0 ? <View style={[styles.dailyGoalPill, { marginTop: 6 }]}><Flame size={14} color="#D97706" /><Text style={styles.dailyGoalText}>{fa(streak)} روز پیاپی</Text></View> : null}
           </View>
 
           <LinearGradient colors={['#FFFFFF', '#FAF9F5', '#F4F1EA']} start={{ x: .95, y: .05 }} end={{ x: .04, y: 1 }} style={styles.todayCard}>
@@ -429,6 +459,14 @@ export default function StarterHome({course}: {course: StarterCourse}) {
                 <View style={styles.quickCopy}>
                   <Text style={styles.quickTitle}>مرور آموخته‌های این زبان</Text>
                   <Text style={styles.quickDesc}>کارت‌های زمان‌بندی‌شدهٔ این زبان</Text>
+                </View>
+                <ChevronLeft size={17} color={HomeColors.muted} />
+              </Pressable>
+              <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push(`${course.home}/studio` as never)}>
+                <View style={[styles.quickIcon, { backgroundColor: '#FEF3C7' }]}><Award size={18} color="#D97706" /></View>
+                <View style={styles.quickCopy}>
+                  <Text style={styles.quickTitle}>آزمون و مسیر تکمیلی</Text>
+                  <Text style={styles.quickDesc}>آزمون پایان سطح و تمرین روزانهٔ هر سطح</Text>
                 </View>
                 <ChevronLeft size={17} color={HomeColors.muted} />
               </Pressable>

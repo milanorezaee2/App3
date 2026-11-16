@@ -4,7 +4,7 @@ import { checkForUpdateOnLaunch, downloadAndInstall, formatSize, installedVersio
 import { toPersianDigits as fa } from '@/lib/format';
 import { Download, RefreshCw } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, AppState, Modal, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, AppState, Modal, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 /**
  * Shows the "new version available" sheet once per launch (throttled in
@@ -46,7 +46,9 @@ export function UpdateSheet({ release, onClose }: { release: AppRelease; onClose
           <Text style={s.title}>نسخهٔ جدید آماده است</Text>
           <Text style={s.meta}>نسخهٔ {release.version_name} (ساخت {fa(release.version_code)}){release.file_size ? ` · ${formatSize(release.file_size)}` : ''}</Text>
           <Text style={s.metaSmall}>نسخهٔ فعلی شما: {installed.name} (ساخت {fa(installed.code)})</Text>
-          {!!release.release_notes && <Text style={s.notes}>{release.release_notes}</Text>}
+          <ScrollView style={s.body} contentContainerStyle={s.bodyContent} showsVerticalScrollIndicator persistentScrollbar bounces={false}>
+            {!!release.release_notes && <Text style={s.notes}>{release.release_notes}</Text>}
+          </ScrollView>
           {release.mandatory && <Text style={s.mandatory}>این به‌روزرسانی ضروری است.</Text>}
           {!!error && <Text accessibilityRole="alert" style={s.error}>{error}</Text>}
           {busy && (
@@ -75,7 +77,9 @@ export function UpdateSheet({ release, onClose }: { release: AppRelease; onClose
 
 const s = StyleSheet.create({
   backdrop: { flex: 1, backgroundColor: 'rgba(15,23,42,0.45)', alignItems: 'center', justifyContent: 'center', padding: 20 },
-  sheet: { width: '100%', maxWidth: 420, backgroundColor: '#FFFFFF', borderRadius: 20, padding: 22, gap: 8 },
+  sheet: { width: '100%', maxWidth: 420, maxHeight: '85%', backgroundColor: '#FFFFFF', borderRadius: 20, padding: 22, gap: 8 },
+  body: { flexGrow: 0, flexShrink: 1 },
+  bodyContent: { gap: 8 },
   iconWrap: { width: 52, height: 52, borderRadius: 16, backgroundColor: '#E0F2F7', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end' },
   title: { fontFamily: 'Beiruti-Bold', fontSize: 20, color: '#0F172A', textAlign: 'right' },
   meta: { fontFamily: 'Beiruti-Bold', fontSize: 14, color: '#334155', textAlign: 'right' },
