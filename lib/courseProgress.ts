@@ -234,12 +234,29 @@ function addDailyActivity(progress: CourseProgress, minutes: number, now = new D
   };
 }
 
+/**
+ * A blocked or unreachable Supabase host must never freeze a screen. Iran-hosted learners routinely
+ * reach the app without a VPN, where `*.supabase.co` stays pending; these bounds keep every caller local-first.
+ */
+const AUTH_BUDGET_MS = 2000;
+const CLOUD_BUDGET_MS = 2500;
+
+function within<T>(work: Promise<T>, ms: number): Promise<T | null> {
+  return Promise.race([
+    work.catch(() => null as T | null),
+    new Promise<null>(resolve => setTimeout(() => resolve(null), ms)),
+  ]);
+}
+
 async function progressUserId(): Promise<string | null> {
-  const { data: session } = await supabase.auth.getSession();
+  const session = await within(
+    supabase.auth.getSession().then(result => (result.data.session as { user: { id: string } } | null) ?? null),
+    AUTH_BUDGET_MS,
+  );
   // Do not silently create an anonymous identity for personal learning data.
   // Existing authenticated sessions (including a user who deliberately joined
   // an education workspace) continue to use their own RLS-protected row.
-  return session.session?.user.id ?? null;
+  return session?.user.id ?? null;
 }
 
 async function uploadProgress(progress: CourseProgress): Promise<void> {
@@ -258,47 +275,56 @@ async function uploadProgress(progress: CourseProgress): Promise<void> {
 
 async function saveProgress(progress: CourseProgress): Promise<CourseProgress> {
   await writeRaw(JSON.stringify(progress));
-  await uploadProgress(progress);
+  // The cloud copy is a background mirror, never a condition for finishing a lesson: awaiting it made
+  // every tap wait for a host that may be blocked on this network.
+  void uploadProgress(progress).catch(() => undefined);
   void import('./personalLearningSync')
     .then(({ schedulePersonalLearningSync }) => schedulePersonalLearningSync())
     .catch(() => undefined);
   return progress;
 }
 
+/** Merge this device's copy with the signed-in account's copy; never throws, never blocks longer than the budget. */
+async function mergeCloudCopy(local: CourseProgress): Promise<CourseProgress> {
+  try {
+    const userId = await progressUserId();
+    if (!userId) return local;
+    const { data } = await supabase
+      .from('learning_progress')
+      .select('progress,updated_at')
+      .eq('user_id', userId)
+      .maybeSingle();
+    if (!data?.progress) { await uploadProgress(local); return local; }
+    const remote = parseCourseProgressBackup(data.progress);
+    // A newly linked email account may already have progress from another
+    // device. Union completion/review evidence with this device instead of
+    // replacing one side based only on timestamps.
+    const merged = mergeSharedCourseProgress(local, remote);
+    if (JSON.stringify(merged) !== JSON.stringify(remote)) await uploadProgress(merged);
+    // The slow path still lands on disk, so the next open already starts from the merged copy.
+    if (JSON.stringify(merged) !== JSON.stringify(local)) {
+      try { await writeRaw(JSON.stringify(merged)); } catch { /* local copy stays as it was */ }
+    }
+    return merged;
+  } catch {
+    return local;
+  }
+}
+
 export async function getCourseProgress(): Promise<CourseProgress> {
+  let local: CourseProgress;
   try {
     const raw = await readRaw();
-    let progress = normalizeProgress(raw ? JSON.parse(raw) as Partial<CourseProgress> : {});
-    const userId = await progressUserId();
-    if (userId) {
-      const { data } = await supabase
-        .from('learning_progress')
-        .select('progress,updated_at')
-        .eq('user_id', userId)
-        .maybeSingle();
-      if (data?.progress) {
-        const remote = parseCourseProgressBackup(data.progress);
-        // A newly linked email account may already have progress from another
-        // device. Union completion/review evidence with this device instead of
-        // replacing one side based only on timestamps.
-        const merged = mergeSharedCourseProgress(progress, remote);
-        const changed = JSON.stringify(merged) !== JSON.stringify(remote);
-        progress = merged;
-        if (changed) await uploadProgress(progress);
-      } else {
-        await uploadProgress(progress);
-      }
-    }
-    await writeRaw(JSON.stringify(progress));
-    return progress;
+    local = normalizeProgress(raw ? JSON.parse(raw) as Partial<CourseProgress> : {});
   } catch {
-    try {
-      const raw = await readRaw();
-      return normalizeProgress(raw ? JSON.parse(raw) as Partial<CourseProgress> : {});
-    } catch {
-      return initialProgress();
-    }
+    local = initialProgress();
   }
+  // Local progress is authoritative and instant. The account copy is merged in the background and
+  // only adopted within a short budget, so opening a lesson never waits on an unreachable server.
+  const merged = await within(mergeCloudCopy(local), CLOUD_BUDGET_MS);
+  const progress = merged ?? local;
+  try { await writeRaw(JSON.stringify(progress)); } catch { /* keep the in-memory copy */ }
+  return progress;
 }
 
 /** Reset the resume point to a lesson without touching any content (used by "start over from the beginner level"). */

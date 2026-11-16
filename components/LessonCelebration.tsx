@@ -35,10 +35,17 @@ interface Props {
   levelFinished?: { title: string; lessons: number; onStart: () => void; /** Content readiness (0–100) of the level's CEFR band; keeps the message honest. */ readiness?: number };
   /** Medals unlocked by this specific lesson; shown right here instead of hiding them in the profile. */
   newAchievements?: ReadonlyArray<{ id: string; title: string; description: string }>;
+  /**
+   * Honest line about something that did not pass (e.g. a speaking check under its pass mark).
+   * Shown above the buttons so the card never congratulates a failed test.
+   */
+  notice?: string;
+  /** Offered instead of «درس بعدی» when the lesson may not advance yet. */
+  retry?: { label: string; onPress: () => void };
 }
 
 /** Shown once a lesson is saved as complete; the next lesson opens only when the learner taps. */
-export default function LessonCelebration({ visible, lessonTitle, stats, hasNextLesson, onContinue, dueReviews = 0, onReview, levelFinished, newAchievements = [] }: Props) {
+export default function LessonCelebration({ visible, lessonTitle, stats, hasNextLesson, onContinue, dueReviews = 0, onReview, levelFinished, newAchievements = [], notice, retry }: Props) {
   const scale = useRef(new Animated.Value(0.7)).current;
   const opacity = useRef(new Animated.Value(0)).current;
   useEffect(() => {
@@ -56,7 +63,8 @@ export default function LessonCelebration({ visible, lessonTitle, stats, hasNext
       <View style={styles.backdrop}>
         <Animated.View style={[styles.card, { opacity, transform: [{ scale }] }]}>
           <View style={styles.icon}><CheckCircle2 size={44} color={Palette.success} /></View>
-          <Text style={styles.title}>آفرین!</Text>
+          {/* «آفرین» is a pass. With an honest notice (e.g. a failed speaking check) the card says so instead. */}
+          <Text style={styles.title}>{notice ? 'درس تمام شد' : 'آفرین!'}</Text>
           <Text style={styles.subtitle}>درس «{lessonTitle}» تمام شد.</Text>
           <View style={styles.statsRow}>
             <View style={styles.stat}><Text style={styles.statValue}>{fa(stats.sentences)}</Text><Text style={styles.statLabel}>جمله</Text></View>
@@ -86,6 +94,8 @@ export default function LessonCelebration({ visible, lessonTitle, stats, hasNext
             <Text style={styles.levelText}>قبل از رفتن به سطح بعد، یک گرم‌کردن کامل: از هر {fa(levelFinished.lessons)} درس این سطح یک ضربه، به ترتیب.</Text>
             <Pressable accessibilityRole="button" onPress={levelFinished.onStart} style={styles.levelButton}><Flame size={16} color="#FFFFFF" /><Text style={styles.levelButtonText}>گرم‌کردن کامل سطح</Text></Pressable>
           </View> : null}
+          {notice ? <View style={styles.noticeBox}><Text style={styles.noticeText}>{notice}</Text></View> : null}
+          {retry ? <Pressable accessibilityRole="button" onPress={retry.onPress} style={styles.retryButton}><RefreshCw size={16} color="#FFFFFF" /><Text keepColor style={styles.retryText}>{retry.label}</Text></Pressable> : null}
           {dueReviews > 0 && onReview ? <Pressable accessibilityRole="button" onPress={onReview} style={styles.reviewButton}>
             <RefreshCw size={16} color={Palette.primaryDark} />
             <Text style={styles.reviewText}>{`مرور ${fa(dueReviews)} کارت سررسید · حدود ${fa(Math.max(1, Math.ceil(dueReviews / 4)))} دقیقه`}</Text>
@@ -118,6 +128,10 @@ const styles = StyleSheet.create({
   levelText: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: '#78350F', textAlign: 'right', writingDirection: 'rtl' },
   levelButton: { minHeight: 44, borderRadius: 12, backgroundColor: '#D97706', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8 },
   levelButtonText: { fontFamily: Typography.fontFamily, fontSize: 14, color: '#FFFFFF' },
+  noticeBox: { marginTop: 12, width: '100%', borderRadius: 14, backgroundColor: '#FEF3C7', borderWidth: 1, borderColor: '#FCD34D', padding: 12 },
+  noticeText: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: '#92400E', textAlign: 'right', writingDirection: 'rtl' },
+  retryButton: { marginTop: 12, width: '100%', minHeight: 48, borderRadius: 15, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: Palette.primaryDark },
+  retryText: { fontFamily: Typography.fontFamily, fontSize: 14, color: '#FFFFFF', writingDirection: 'rtl' },
   reviewButton: { marginTop: 12, width: '100%', minHeight: 46, borderRadius: 14, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF' },
   reviewText: { fontFamily: Typography.fontFamily, fontSize: 13, color: Palette.primaryDark, writingDirection: 'rtl' },
   streakHint: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 18, color: '#8A929E', textAlign: 'center', writingDirection: 'rtl' },

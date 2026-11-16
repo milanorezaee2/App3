@@ -78,6 +78,32 @@ const webSafeStorage = {
   },
 };
 
+/**
+ * Every Supabase request is bounded.
+ *
+ * In networks where `*.supabase.co` is filtered the connection does not fail fast — it stays pending
+ * for a minute or more. Screens that await the session (progress, popups, updates, sync) then look
+ * frozen and the app appears to need a VPN. With this timeout each request either answers or gives up,
+ * and the local-first paths around it take over.
+ */
+const REQUEST_TIMEOUT_MS = 8000;
+
+const boundedFetch: typeof fetch = (input, init) => {
+  if (typeof AbortController === 'undefined') return fetch(input, init);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  const caller = init?.signal;
+  const forwardAbort = () => controller.abort();
+  if (caller) {
+    if (caller.aborted) controller.abort();
+    else caller.addEventListener?.('abort', forwardAbort);
+  }
+  return fetch(input, { ...init, signal: controller.signal }).finally(() => {
+    clearTimeout(timer);
+    caller?.removeEventListener?.('abort', forwardAbort);
+  });
+};
+
 const authOptions = {
   persistSession: true,
   autoRefreshToken: true,
@@ -89,6 +115,7 @@ function createSafeClient() {
   try {
     return createClient(supabaseUrl, supabaseAnonKey, {
       auth: authOptions,
+      global: { fetch: boundedFetch },
     });
   } catch (error) {
     console.error(
@@ -97,6 +124,7 @@ function createSafeClient() {
     );
     return createClient(FALLBACK_URL, FALLBACK_KEY, {
       auth: authOptions,
+      global: { fetch: boundedFetch },
     });
   }
 }

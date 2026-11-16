@@ -8,6 +8,34 @@ import { toPersianDigits as fa } from '@/lib/format';
 import { scoreSpeech, tokens, type SpeakCheckResult, type SpeakWordState } from '@/lib/speechScore';
 export { scoreSpeech, type SpeakCheckResult, type SpeakWordState };
 
+/**
+ * One microphone for the whole screen.
+ *
+ * `expo-speech-recognition` reports every event on a single module, so each mounted SpeakCheck used to
+ * receive the *same* transcript. A vocabulary list with several «بگو» cards — or a lesson whose previous
+ * stage is still mounted — therefore scored each other's speech and looked like several tests joined into
+ * one. Only the instance that opened the mic listens now, and taking the mic releases the previous one.
+ */
+let micOwner: string | null = null;
+let micSequence = 0;
+const micReleases = new Map<string, () => void>();
+
+function claimMic(id: string) {
+  if (micOwner && micOwner !== id) {
+    try { micReleases.get(micOwner)?.(); } catch { /* the other card is already gone */ }
+  }
+  micOwner = id;
+}
+
+function releaseMic(id: string) {
+  if (micOwner === id) micOwner = null;
+  micReleases.delete(id);
+}
+
+function onDeviceSupported(): boolean {
+  try { return (ExpoSpeechRecognitionModule as { supportsOnDeviceRecognition?: () => boolean }).supportsOnDeviceRecognition?.() === true; } catch { return false; }
+}
+
 function feedbackFor(score: number, nearCount = 0) {
   if (score >= 90) return 'عالی! همهٔ واژه‌ها واضح شنیده شد.';
   if (score >= 70) return 'خوب بود؛ قرمزها را دوباره بگویید.';
@@ -41,12 +69,31 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
   const lastHeardRef = useRef('');
   const targetRef = useRef(text);
   targetRef.current = text;
+  const idRef = useRef('');
+  if (!idRef.current) idRef.current = `speakcheck-${++micSequence}`;
+  /** Ignore the tail of a cancelled session (events of the previous owner arrive on the same module). */
+  const ignoreUntil = useRef(0);
+  /** Whether the current attempt asks the device for offline recognition. */
+  const onDeviceRef = useRef(false);
 
   useEffect(() => { setResult(null); setPartial(''); setError(''); finalRef.current = ''; lastHeardRef.current = ''; }, [text]);
-  useEffect(() => () => { void ExpoSpeechRecognitionModule.abort?.(); }, []);
+
+  const listeningRef = useRef(false);
+  useEffect(() => { listeningRef.current = listening; }, [listening]);
+
+  useEffect(() => {
+    const id = idRef.current;
+    micReleases.set(id, () => { listeningRef.current = false; setListening(false); setPartial(''); });
+    return () => {
+      // Never abort the recogniser of another card: that used to cut off the test the learner was using.
+      if (micOwner === id) { try { ExpoSpeechRecognitionModule.abort?.(); } catch { /* already released */ } }
+      releaseMic(id);
+    };
+  }, []);
+
   /** One-tap flow: the word was just spoken, so the mic may open by itself (still cancellable). */
   const autoStartedFor = useRef('');
-  const startRef = useRef<null | (() => Promise<void>)>(null);
+  const startRef = useRef<null | ((preferOnDevice?: boolean) => Promise<void>)>(null);
   useEffect(() => {
     if (!autoStart || !text || autoStartedFor.current === text) return;
     autoStartedFor.current = text;
@@ -60,10 +107,11 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
     onResult?.(scored);
   }, [onResult]);
 
-  const listeningRef = useRef(false);
-  useEffect(() => { listeningRef.current = listening; }, [listening]);
-  useSpeechRecognitionEvent('start', () => { setListening(true); setError(''); });
+  const owned = () => micOwner === idRef.current;
+
+  useSpeechRecognitionEvent('start', () => { if (!owned()) return; setListening(true); setError(''); });
   useSpeechRecognitionEvent('result', event => {
+    if (!owned() || Date.now() < ignoreUntil.current) return;
     const alternatives = (event.results ?? []).map(item => item.transcript).filter(Boolean);
     const transcript = alternatives[0] ?? '';
     // Pick the alternative that matches the target best; recognisers rank homophones arbitrarily.
@@ -77,26 +125,34 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
     } else setPartial(transcript);
   });
   useSpeechRecognitionEvent('end', () => {
+    if (!owned() || Date.now() < ignoreUntil.current) return;
     setListening(false);
     setPartial('');
     finish(finalRef.current || lastHeardRef.current);
   });
   useSpeechRecognitionEvent('error', event => {
+    if (!owned()) return;
     setListening(false);
     setPartial('');
     const code = event.error;
     if (code === 'no-speech') { finish(''); return; }
     if (code === 'aborted') return;
+    // Online recognition is served by Google; where that host is unreachable the device can still
+    // transcribe on its own once, so a failed network attempt is retried on-device automatically.
+    if (code === 'network' && !onDeviceRef.current && onDeviceSupported()) {
+      setTimeout(() => { void startRef.current?.(true); }, 260);
+      return;
+    }
     setError(code === 'not-allowed' || code === 'service-not-allowed'
       ? 'اجازهٔ میکروفن یا تشخیص گفتار داده نشده است؛ از تنظیمات دستگاه فعالش کنید.'
       : code === 'language-not-supported'
         ? 'تشخیص گفتار این زبان روی دستگاه شما در دسترس نیست.'
         : code === 'network'
-          ? 'برای تشخیص گفتار این زبان، اتصال اینترنت لازم است.'
+          ? 'تشخیص گفتار آنلاین به اینترنتِ باز نیاز دارد. اگر بستهٔ زبانِ آفلاین روی دستگاه نصب باشد، حالت آفلاین خودکار امتحان شد؛ در غیر این صورت نمونه را گوش بده و بلند تکرار کن.'
           : 'تشخیص گفتار در دسترس نیست؛ سرویس گفتار گوگل را روی دستگاه بررسی کنید.');
   });
 
-  const start = useCallback(async () => {
+  const start = useCallback(async (preferOnDevice = false) => {
     setError('');
     setResult(null);
     finalRef.current = '';
@@ -108,7 +164,11 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
       }
       const permission = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
       if (!permission.granted) { setError('برای تمرین گفتاری، اجازهٔ میکروفن لازم است.'); return; }
-      ExpoSpeechRecognitionModule.start({ lang: locale, interimResults: true, continuous: false, maxAlternatives: 5, contextualStrings: [text], requiresOnDeviceRecognition: false, addsPunctuation: false });
+      claimMic(idRef.current);
+      onDeviceRef.current = preferOnDevice;
+      // The previous owner's cancelled session still emits «end»; do not score that as this attempt.
+      ignoreUntil.current = Date.now() + 320;
+      ExpoSpeechRecognitionModule.start({ lang: locale, interimResults: true, continuous: false, maxAlternatives: 5, contextualStrings: [text], requiresOnDeviceRecognition: preferOnDevice, addsPunctuation: false });
     } catch {
       setError('تشخیص گفتار در دسترس نیست؛ سرویس گفتار گوگل را روی دستگاه بررسی کنید.');
     }

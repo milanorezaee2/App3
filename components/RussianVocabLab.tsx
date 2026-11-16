@@ -2,12 +2,11 @@ import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import * as Speech from 'expo-speech';
-import { ArrowRight, Check, ChevronLeft, Mic2, Play, RefreshCw, Sparkles, Volume2 } from 'lucide-react-native';
+import { ArrowRight, Check, ChevronLeft, Play, RefreshCw, Sparkles, Volume2 } from 'lucide-react-native';
 import { RussianBottomNav } from '@/components/RussianBottomNav';
 import SpeakCheck from '@/components/SpeakCheck';
 import { ReviewRatingGrid } from '@/components/ReviewRecall';
-import { playRussianSpeech, stopRussianSpeech } from '@/lib/russianSpeech';
+import { playRussianSpeech, stopRussianSpeech, warmRussianSpeech } from '@/lib/russianSpeech';
 import { speakPersian } from '@/lib/persianSpeech';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
@@ -41,8 +40,23 @@ const C = {
   danger: '#B91C1C',
 };
 
-/** Three steps only: تعارف → تکرار من → از فارسی به روسی. */
-type Phase = 'loading' | 'intro' | 'teach' | 'repeat' | 'reverse' | 'rate' | 'done';
+/** Three steps only: می‌شنوی → تکرار می‌کنی → از فارسی به روسی. */
+type Phase = 'loading' | 'teach' | 'repeat' | 'reverse' | 'rate' | 'done';
+
+/** Resolve on the engine's own callback, never later than the cap (a silent engine must not hang the flow). */
+function speechPromise(start: (done: () => void, failed: () => void) => void, capMs: number): Promise<void> {
+  return new Promise<void>(resolve => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve();
+    };
+    const timer = setTimeout(finish, capMs);
+    try { start(finish, finish); } catch { finish(); }
+  });
+}
 
 export default function RussianVocabLab() {
   const router = useRouter();
@@ -54,11 +68,17 @@ export default function RussianVocabLab() {
   const [sessionInfo, setSessionInfo] = useState({ dueCount: 0, newCount: 0 });
   const [reverseSpoken, setReverseSpoken] = useState(false);
   const [reverseScore, setReverseScore] = useState<number | null>(null);
-  const [autoPlaying, setAutoPlaying] = useState(true);
+  const [autoPlaying, setAutoPlaying] = useState(false);
   const [error, setError] = useState('');
   const autoToken = useRef(0);
+  /** Word whose automatic pronunciation already ran in this session — one automatic pass per card. */
+  const autoSpokenFor = useRef('');
 
   useEffect(() => {
+    // Start the TTS engine while the saved progress and the queue are being read, so the first word
+    // is audible the moment it appears instead of after the engine's cold start.
+    warmRussianSpeech();
+    autoSpokenFor.current = '';
     let alive = true;
     void (async () => {
       const stored = await loadVocabProgress();
@@ -69,7 +89,8 @@ export default function RussianVocabLab() {
       setQueue(session.queue);
       setIndex(0);
       setSessionInfo({ dueCount: session.dueCount, newCount: session.newCount });
-      setPhase(session.queue.length ? 'intro' : 'done');
+      // No «start» screen: entering the section means the first word is shown and spoken right away.
+      setPhase(session.queue.length ? 'teach' : 'done');
     })();
     return () => { alive = false; void stopRussianSpeech(); };
   }, [reloadToken]);
@@ -82,30 +103,49 @@ export default function RussianVocabLab() {
     setReverseScore(null);
     setError('');
     autoToken.current += 1;
+    // One owner for stopping Russian audio: stopRussianSpeech() also invalidates the callbacks,
+    // so a late onDone from the previous card cannot move this one forward.
     void stopRussianSpeech();
-    void Speech.stop();
   }, []);
 
   const goNext = useCallback(() => {
     resetWord();
     const next = index + 1;
     setIndex(next);
+    // «teach» renders the next card; the auto-pronunciation effect below speaks it immediately.
     setPhase(next < queue.length ? 'teach' : 'done');
   }, [index, queue.length, resetWord]);
 
-  /** Automatic Russian → Persian → Russian: no button press needed, exactly as promised. */
+  /** Russian → Persian → Russian, exactly as promised, starting with the word itself. */
   const autoSay = useCallback(async (item: RussianVocabWord) => {
     const token = ++autoToken.current;
     setAutoPlaying(true);
-    await new Promise<void>(resolve => { playRussianSpeech(spokenTarget(item), 0.62, () => resolve(), resolve); setTimeout(resolve, 4000); });
+    await speechPromise(
+      (done, failed) => { void playRussianSpeech(spokenTarget(item), 0.62, failed, done); },
+      5000,
+    );
     if (token !== autoToken.current) return;
-    await new Promise<void>(resolve => { speakPersian(item.fa); setTimeout(resolve, 1400); });
+    await speechPromise(
+      (done, failed) => { speakPersian(item.fa, 0.92, failed, done); },
+      3500,
+    );
     if (token !== autoToken.current) return;
-    await new Promise<void>(resolve => { playRussianSpeech(spokenTarget(item), 0.55, () => resolve(), resolve); setTimeout(resolve, 4000); });
+    await speechPromise(
+      (done, failed) => { void playRussianSpeech(spokenTarget(item), 0.55, failed, done); },
+      5000,
+    );
     if (token !== autoToken.current) return;
     setAutoPlaying(false);
-    setPhase('repeat');
   }, []);
+
+  // The automatic pass: every card that appears is pronounced once, including the very first one
+  // (previously the first word waited for a button and later words were never spoken at all).
+  useEffect(() => {
+    if (phase !== 'teach' || !word) return;
+    if (autoSpokenFor.current === word.id) return;
+    autoSpokenFor.current = word.id;
+    void autoSay(word);
+  }, [phase, word, autoSay]);
 
   const rate = useCallback(async (rating: ReviewRating) => {
     if (!word || !progress) return;
@@ -134,24 +174,6 @@ export default function RussianVocabLab() {
           <View style={styles.centerCard}><ActivityIndicator color={C.primary} /><Text style={styles.bodyText}>در حال آماده کردن واژه‌ها…</Text></View>
         ) : null}
 
-        {phase === 'intro' && word ? (
-          <View style={styles.centerCard}>
-            <View style={styles.bigIcon}><Sparkles size={30} color={C.primary} /></View>
-            <Text style={styles.title}>سه قدم ساده</Text>
-            <View style={styles.stepList}>
-              <Text style={styles.stepLine}>۱. اپ واژهٔ روسی را می‌گوید، بعد معنی فارسی، بعد دوباره روسی.</Text>
-              <Text style={styles.stepLine}>۲. تو همان واژه را تکرار می‌کنی.</Text>
-              <Text style={styles.stepLine}>۳. فقط فارسی را می‌بینی و روسی‌اش را می‌گویی.</Text>
-            </View>
-            <Text style={styles.smallText}>{fa(sessionInfo.newCount)} واژهٔ تازه · {fa(sessionInfo.dueCount)} مرور سررسید · هر واژه حدود نیم دقیقه</Text>
-            {stats ? <Text style={styles.smallText}>معرفی‌شده: {fa(stats.introduced)} · مسلط گفتاری: {fa(stats.mastered)}</Text> : null}
-            <Pressable accessibilityRole="button" onPress={() => { setPhase('teach'); void autoSay(word); }} style={({ pressed }) => [styles.primary, pressed && styles.pressed]}>
-              <Play size={16} color="#FFFFFF" />
-              <Text style={styles.primaryText}>شروع؛ خودش می‌گوید</Text>
-            </Pressable>
-          </View>
-        ) : null}
-
         {phase === 'teach' && word ? (
           <View style={styles.wordCard}>
             <Text style={styles.stepLabel}>قدم ۱ از ۳ · می‌شنوی</Text>
@@ -159,10 +181,20 @@ export default function RussianVocabLab() {
             <Text style={styles.wordFaOnDark}>{word.fa}</Text>
             <View style={styles.autoBox}>
               <Volume2 size={16} color={C.primary} />
-              <Text style={styles.autoText}>{autoPlaying ? 'روسی → فارسی → روسی، خودکار…' : 'پخش تمام شد.'}</Text>
+              <Text style={styles.autoText}>{autoPlaying ? 'روسی → فارسی → روسی، خودکار…' : 'پخش تمام شد. اگر صدا را نشنیدی، «دوباره بشنو» را بزن.'}</Text>
             </View>
+            {index === 0 ? (
+              <View style={styles.guideBox}>
+                <Text style={styles.guideTitle}>سه قدم هر واژه</Text>
+                <Text style={styles.stepLine}>۱. اپ واژهٔ روسی را می‌گوید، بعد معنی فارسی، بعد دوباره روسی.</Text>
+                <Text style={styles.stepLine}>۲. تو همان واژه را تکرار می‌کنی.</Text>
+                <Text style={styles.stepLine}>۳. فقط فارسی را می‌بینی و روسی‌اش را می‌گویی.</Text>
+                <Text style={styles.smallText}>{fa(sessionInfo.newCount)} واژهٔ تازه · {fa(sessionInfo.dueCount)} مرور سررسید · هر واژه حدود نیم دقیقه</Text>
+                {stats ? <Text style={styles.smallText}>معرفی‌شده: {fa(stats.introduced)} · مسلط گفتاری: {fa(stats.mastered)}</Text> : null}
+              </View>
+            ) : null}
             <View style={styles.rowButtons}>
-              <Pressable accessibilityRole="button" onPress={() => void autoSay(word)} style={({ pressed }) => [styles.ghostButton, pressed && styles.pressed]}>
+              <Pressable accessibilityRole="button" onPress={() => { void autoSay(word); }} style={({ pressed }) => [styles.ghostButton, pressed && styles.pressed]}>
                 <RefreshCw size={14} color={C.primaryDark} /><Text style={styles.ghostText}>دوباره بشنو</Text>
               </Pressable>
               <Pressable accessibilityRole="button" onPress={() => { void stopRussianSpeech(); setPhase('repeat'); }} style={({ pressed }) => [styles.primary, styles.grow, pressed && styles.pressed]}>
@@ -178,7 +210,7 @@ export default function RussianVocabLab() {
             <Text style={styles.stepLabel}>قدم ۲ از ۳ · تکرار می‌کنی</Text>
             <Text keepColor style={styles.bigWordSmall}>{word.ru}</Text>
             <Text style={styles.wordFa}>{word.fa}</Text>
-            <Pressable accessibilityRole="button" onPress={() => { playRussianSpeech(spokenTarget(word), 0.6, () => undefined); }} style={({ pressed }) => [styles.audioButton, pressed && styles.pressed]}>
+            <Pressable accessibilityRole="button" onPress={() => { void playRussianSpeech(spokenTarget(word), 0.6, () => undefined); }} style={({ pressed }) => [styles.audioButton, pressed && styles.pressed]}>
               <Volume2 size={15} color={C.primary} /><Text style={styles.audioButtonText}>اول بشنو</Text>
             </Pressable>
             <SpeakCheck
@@ -248,7 +280,7 @@ export default function RussianVocabLab() {
             <Text style={styles.bodyText}>{fa(sessionInfo.newCount)} واژهٔ تازه و {fa(sessionInfo.dueCount)} مرور انجام شد.</Text>
             {stats ? <Text style={styles.smallText}>معرفی‌شده: {fa(stats.introduced)} · مسلط گفتاری: {fa(stats.mastered)} · سررسید: {fa(stats.due)}</Text> : null}
             <Pressable accessibilityRole="button" onPress={() => setReloadToken(value => value + 1)} style={({ pressed }) => [styles.primary, pressed && styles.pressed]}>
-              <RefreshCw size={15} color="#FFFFFF" /><Text style={styles.primaryText}>یک دور دیگر</Text>
+              <Play size={15} color="#FFFFFF" /><Text style={styles.primaryText}>یک دور دیگر</Text>
             </Pressable>
             <Pressable accessibilityRole="button" onPress={() => router.replace('/learn/ru' as never)} style={({ pressed }) => [styles.ghostButton, pressed && styles.pressed]}>
               <Text style={styles.ghostText}>بازگشت به خانه</Text>
@@ -279,12 +311,14 @@ const styles = StyleSheet.create({
   stepLabel: { fontFamily: Typography.fontFamily, fontSize: 11, color: C.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
   stepList: { width: '100%', gap: 6 },
   stepLine: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: C.text, textAlign: 'right', writingDirection: 'rtl' },
+  guideBox: { width: '100%', borderRadius: 14, padding: 12, gap: 5, backgroundColor: C.bg, borderWidth: 1, borderColor: C.border },
+  guideTitle: { fontFamily: Typography.fontFamily, fontSize: 12, color: C.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
   bigWord: { fontFamily: 'Times New Roman', fontSize: 36, lineHeight: 46, fontWeight: '800', color: C.ink, textAlign: 'center', writingDirection: 'ltr' },
   bigWordSmall: { fontFamily: 'Times New Roman', fontSize: 26, lineHeight: 36, fontWeight: '800', color: C.ink, textAlign: 'center', writingDirection: 'ltr' },
   wordFa: { fontFamily: Typography.fontFamily, fontSize: 17, color: C.text, textAlign: 'center', writingDirection: 'rtl' },
   wordFaOnDark: { fontFamily: Typography.fontFamily, fontSize: 16, color: C.primaryDark, textAlign: 'center', writingDirection: 'rtl' },
   autoBox: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, padding: 10, borderRadius: 12, backgroundColor: C.primarySoft },
-  autoText: { fontFamily: Typography.fontFamily, fontSize: 11, color: C.primaryDark, writingDirection: 'rtl' },
+  autoText: { flex: 1, fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 18, color: C.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
   rowButtons: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
   grow: { flex: 1 },
   primary: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 46, paddingHorizontal: 18, borderRadius: 14, backgroundColor: C.primary },

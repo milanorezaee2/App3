@@ -73,6 +73,13 @@ import { A2_FOUNDATION_LESSONS } from '@/lib/courseContentA2Foundation';
 
 const stages = ENGLISH_ENGINE_STEPS;
 
+/**
+ * Pass mark for the closing speaking check. It matches the mark the drill itself calls «خوب» (60٪):
+ * below it the lesson is not advanced automatically, so a failed speaking test no longer drops the
+ * learner on the next lesson (or on the «آفرین» card) as if the test had been passed.
+ */
+const SPEAKING_PASS_SCORE = 60;
+
 export default function SentenceLessonScreen() {
   const router = useRouter();
   const { id, fromStart } = useLocalSearchParams<{ id: string; fromStart?: string }>();
@@ -90,6 +97,10 @@ export default function SentenceLessonScreen() {
   ), [practiceLesson, packVariations, lesson.levelId]);
   const [practiceDone, setPracticeDone] = useState(false);
   const speakResult = useRef<SpeakDrillResult | null>(null);
+  /** Set when the closing speaking check scored below the pass mark; blocks the free ride to the next lesson. */
+  const [speakGate, setSpeakGate] = useState<{ average: number } | null>(null);
+  /** Bumped to remount the drill for a clean retry. */
+  const [speakDrillRun, setSpeakDrillRun] = useState(0);
   useEffect(() => { setPracticeDone(false); }, [lesson.id]);
   const practiceStats = useRef<PracticeStats>({ total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 });
   const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
@@ -97,7 +108,13 @@ export default function SentenceLessonScreen() {
   const speakPractice = useCallback((text: string) => { playResponsiveSpeech({ text, locale: 'en-US', rate: ENGLISH_NORMAL_SPEECH_RATE, onError: () => undefined }); }, []);
   const [chunkCelebration, setChunkCelebration] = useState<{ chunk: number; total: number; done: number; nextStart: number } | null>(null);
   const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void; levelFinished?: { title: string; lessons: number; onStart: () => void; readiness?: number };
-    newAchievements?: ReadonlyArray<{ id: string; title: string; description: string }> } | null>(null);
+    newAchievements?: ReadonlyArray<{ id: string; title: string; description: string }>;
+    /** False when the speaking check failed: the next lesson stays locked. */
+    nextUnlocked?: boolean;
+    /** Honest note shown on the card (e.g. a speaking score under the pass mark). */
+    notice?: string;
+    /** Retry offered instead of «درس بعدی». */
+    retry?: { label: string; onPress: () => void } } | null>(null);
   const practiceBlocks = practiceItems.length > 0 && !practiceDone;
   const [completionError, setCompletionError] = useState('');
   const [saving, setSaving] = useState(false);
@@ -158,6 +175,8 @@ export default function SentenceLessonScreen() {
     resettingRef.current = false;
     setAudioNotice('');
     setSessionError('');
+    speakResult.current = null;
+    setSpeakGate(null);
     setResetting(false);
     setSessionReady(false);
     setInvalidLesson(!!id && !getSentenceLesson(id));
@@ -387,33 +406,62 @@ export default function SentenceLessonScreen() {
       return;
     }
     if (saving) return;
-    completing.current=true;
+    const drill = speakResult.current;
+    // A failed speaking check is never a pass: the lesson stays here and the learner decides.
+    if (drill && drill.average < SPEAKING_PASS_SCORE) {
+      setSpeakGate({ average: drill.average });
+      return;
+    }
+    await finishLesson(true);
+  };
+
+  /** Fresh drill on this lesson's speaking stage, without touching the saved session. */
+  const retrySpeaking = () => {
+    setCelebration(null);
+    setSpeakGate(null);
+    speakResult.current = null;
+    setSpeakDrillRun(value => value + 1);
+    setStage(stages.length - 1);
+  };
+
+  /**
+   * Close the lesson. `passed` is false only when the learner explicitly chose to finish with a
+   * speaking score under the pass mark: the lesson is saved, but the next one is not unlocked.
+   */
+  const finishLesson = async (passed: boolean) => {
+    if (saving || completing.current) return;
+    completing.current = true;
     setSaving(true);
     setCompletionError('');
+    setSpeakGate(null);
     try {
-    const nextLesson = nextLessonInOrder(SENTENCE_LESSONS, lesson.id);
-    // Persist both the completed path and its final session before navigating.
-    await completeSentenceLesson(lesson.id, nextLesson?.id);
+      const nextLesson = nextLessonInOrder(SENTENCE_LESSONS, lesson.id);
+      // Persist both the completed path and its final session before navigating.
+      await completeSentenceLesson(lesson.id, passed ? nextLesson?.id : lesson.id);
       const weak = weakSpokenSentences(speakResult.current ? { ...speakResult.current, at: '' } : null);
       for (const sentenceId of weak) await addSentenceToReview(sentenceId, lesson.id).catch(() => undefined);
 
-    await saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed, attempt: attempt.current, attemptEvidence });
-    void stopResponsiveSpeech();
-    const streak = await recordStudyDay();
-    trackLessonCompleted('en', lesson.id);
-    const rewards = await finishLessonRewards().catch(() => ({ medals: [], studiedDay: '' }));
+      await saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed, attempt: attempt.current, attemptEvidence });
+      void stopResponsiveSpeech();
+      const streak = await recordStudyDay();
+      trackLessonCompleted('en', lesson.id);
+      const rewards = await finishLessonRewards().catch(() => ({ medals: [], studiedDay: '' }));
       const dueReviews = await getDueReviewCards().then(cards => cards.length).catch(() => 0);
-    setCelebration({
-      stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceFirstTry: practiceStats.current.firstTryCorrect, practiceSeconds: practiceStats.current.seconds, speakingAverage: speakResult.current?.average, streak: streak.count, streakExtendedToday: streak.extendedToday },
-      next: () => { if (nextLesson) router.replace({ pathname: '/course/lesson', params: { id: nextLesson.id } } as never); else router.replace('/lang' as never); },
-      dueReviews,
-      review: () => router.replace('/review' as never),
-      newAchievements: rewards.medals,
-      levelFinished: (!nextLesson || nextLesson.levelId !== lesson.levelId) ? { readiness: bandReadinessForLevel(courseReadiness('en', auditLessonsFromEnglish(SENTENCE_LESSONS)), lesson.levelId)?.readiness, title: COURSE_LEVELS.find(item => item.id === lesson.levelId)?.title ?? '', lessons: SENTENCE_LESSONS.filter(item => item.levelId === lesson.levelId).length, onStart: () => router.replace({ pathname: '/learn/en/studio', params: { level: String(lesson.levelId), mode: 'warmup' } } as never) } : undefined,
-    });
+      setCelebration({
+        stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceFirstTry: practiceStats.current.firstTryCorrect, practiceSeconds: practiceStats.current.seconds, speakingAverage: speakResult.current?.average, streak: streak.count, streakExtendedToday: streak.extendedToday },
+        next: () => { if (passed && nextLesson) router.replace({ pathname: '/course/lesson', params: { id: nextLesson.id } } as never); else router.replace('/lang' as never); },
+        dueReviews,
+        review: () => router.replace('/review' as never),
+        newAchievements: rewards.medals,
+        nextUnlocked: passed && !!nextLesson,
+        notice: passed ? undefined : `نمرهٔ آزمون گفتاری ${toPersianDigits(speakResult.current?.average ?? 0)}٪ بود و به حد قبولی (${toPersianDigits(SPEAKING_PASS_SCORE)}٪) نرسید؛ درس بعدی باز نشد.`,
+        retry: passed ? undefined : { label: 'آزمون گفتاری را دوباره بگو', onPress: retrySpeaking },
+        levelFinished: passed && (!nextLesson || nextLesson.levelId !== lesson.levelId) ? { readiness: bandReadinessForLevel(courseReadiness('en', auditLessonsFromEnglish(SENTENCE_LESSONS)), lesson.levelId)?.readiness, title: COURSE_LEVELS.find(item => item.id === lesson.levelId)?.title ?? '', lessons: SENTENCE_LESSONS.filter(item => item.levelId === lesson.levelId).length, onStart: () => router.replace({ pathname: '/learn/en/studio', params: { level: String(lesson.levelId), mode: 'warmup' } } as never) } : undefined,
+      });
     } catch { setCompletionError('پایان درس ذخیره نشد؛ دوباره تلاش کنید.'); }
-    finally { completing.current=false; setSaving(false); }
+    finally { completing.current = false; setSaving(false); }
   };
+
 
   const goToPreviousSentence = () => {
     if (!sessionReady || saving || !!sessionError || stage !== 1) return;
@@ -605,7 +653,7 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
                         {(() => { const finalSections: FinalSection[] = [
               { id: 'blitz', title: 'دور سریع', subtitle: `${toPersianDigits(practiceItems.length)} ضربه؛ بدون نمره.`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="" intro="" items={practiceItems} source={practiceLesson} onSpeak={speakPractice} courseId={'en'} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} summary={practiceStats.current} foreignStyle={styles.practiceForeign} accent={Colors.primary[500]} /></> },
-              { id: 'speak', title: 'آزمون گفتاری', subtitle: `${toPersianDigits(lesson.sentences.length)} جمله؛ هر کدام را بلند بگو و امتیاز بگیر.`, render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} onFinish={result => { speakResult.current = result; void saveLessonOutcome('en', lesson.id, { speaking: { ...result, at: new Date().toISOString() } }); }} /></> },
+              { id: 'speak', title: 'آزمون گفتاری', subtitle: `${toPersianDigits(lesson.sentences.length)} جمله؛ هر کدام را بلند بگو و امتیاز بگیر.`, render: () => <><SpeakDrill key={`${lesson.id}-drill-${speakDrillRun}`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} onFinish={result => { speakResult.current = result; setSpeakGate(null); void saveLessonOutcome('en', lesson.id, { speaking: { ...result, at: new Date().toISOString() } }); }} /></> },
               { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش از همین درس؛ بدون نمره، با توضیح.', render: () => <>
             {false ? null : evidencePassed
               ? CORE_LESSON_EVIDENCE[lesson.id]
@@ -614,6 +662,18 @@ export default function SentenceLessonScreen() {
               : <EnglishLessonEvidence key={`${lesson.id}-${attempt.current?.id ?? 'legacy'}`} lesson={lesson} attemptEvidence={attemptEvidence} onAttemptResult={(taskId, correct) => { if (!resettingRef.current) setAttemptEvidence(previous => previous ? { ...previous, [taskId]: correct } : previous); }} onPassed={() => { if (!resettingRef.current) setEvidencePassed(true); }} />}
               </> },
             ]; return <>{stage === 8 ? <LessonFinalHub only="blitz" sections={finalSections} /> : null}{stage === 9 ? <LessonFinalHub only="checks" sections={finalSections} /> : null}{stage === 10 ? <LessonFinalHub only="speak" sections={finalSections} /> : null}</>; })()}
+            {stage === stages.length - 1 && speakGate ? (
+              <View style={styles.speakGate}>
+                <Text style={styles.speakGateTitle}>آزمون گفتاری به حد قبولی نرسید</Text>
+                <Text style={styles.speakGateBody}>نمرهٔ این دور {toPersianDigits(speakGate.average)}٪ بود؛ حد قبولی {toPersianDigits(SPEAKING_PASS_SCORE)}٪ است. درس بعدی باز نشد تا این آزمون یک بار دیگر گفته شود.</Text>
+                <Pressable accessibilityRole="button" onPress={retrySpeaking} style={({ pressed }) => [styles.speakGatePrimary, pressed && { opacity: .85 }]}>
+                  <Mic2 size={17} color={Colors.onColor} /><Text keepColor style={styles.speakGatePrimaryText}>آزمون گفتاری را دوباره بگو</Text>
+                </Pressable>
+                <Pressable accessibilityRole="button" onPress={() => { void finishLesson(false); }} style={({ pressed }) => [styles.speakGateSecondary, pressed && { opacity: .85 }]}>
+                  <Text style={styles.speakGateSecondaryText}>پایان درس با همین نمره (درس بعدی باز نمی‌شود)</Text>
+                </Pressable>
+              </View>
+            ) : null}
           </View>
         )}
         {!!completionError && <Text style={styles.stageDesc}>{completionError}</Text>}
@@ -646,7 +706,7 @@ export default function SentenceLessonScreen() {
           </View>
         </View>
       ) : null}
-      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(SENTENCE_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} dueReviews={celebration?.dueReviews ?? 0} onReview={() => { const go = celebration?.review; setCelebration(null); go?.(); }} newAchievements={celebration?.newAchievements}
+      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={celebration?.nextUnlocked ?? false} notice={celebration?.notice} retry={celebration?.retry ? { label: celebration.retry.label, onPress: () => { const go = celebration.retry?.onPress; setCelebration(null); go?.(); } } : undefined} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} dueReviews={celebration?.dueReviews ?? 0} onReview={() => { const go = celebration?.review; setCelebration(null); go?.(); }} newAchievements={celebration?.newAchievements}
       levelFinished={celebration?.levelFinished ? { ...celebration.levelFinished, onStart: () => { const go = celebration.levelFinished!.onStart; setCelebration(null); go(); } } : undefined} />
     </View>
   );
@@ -702,6 +762,13 @@ const styles = StyleSheet.create({
   chunkDot: { flex: 1, height: 5, borderRadius: 3, backgroundColor: '#E2E8F0' },
   chunkDotDone: { backgroundColor: '#15803D' },
   chunkDotNow: { backgroundColor: '#4338CA' },
+  speakGate: { width: '100%', marginTop: 14, borderRadius: 18, padding: 16, gap: 8, backgroundColor: Palette.warningSoft, borderWidth: 1, borderColor: '#FCD34D' },
+  speakGateTitle: { fontFamily: Typography.fontFamily, fontSize: 15, color: '#92400E', textAlign: 'right', writingDirection: 'rtl' },
+  speakGateBody: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 21, color: '#78350F', textAlign: 'right', writingDirection: 'rtl' },
+  speakGatePrimary: { minHeight: 48, borderRadius: 14, backgroundColor: Palette.primary, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8 },
+  speakGatePrimaryText: { fontFamily: Typography.fontFamily, fontSize: 13, color: Colors.onColor, writingDirection: 'rtl' },
+  speakGateSecondary: { minHeight: 42, borderRadius: 12, borderWidth: 1, borderColor: '#D97706', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 10 },
+  speakGateSecondaryText: { fontFamily: Typography.fontFamily, fontSize: 11.5, color: '#92400E', textAlign: 'center', writingDirection: 'rtl' },
   chunkOverlay: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: 'rgba(15,23,42,0.5)', alignItems: 'center', justifyContent: 'center', padding: 24, zIndex: 40 },
   chunkCard: { width: '100%', maxWidth: 360, borderRadius: 22, backgroundColor: '#FFFFFF', padding: 20, gap: 10, alignItems: 'stretch' },
   chunkTitle: { fontFamily: Typography.fontFamily, fontSize: 18, color: '#0F172A', textAlign: 'center', writingDirection: 'rtl' },
