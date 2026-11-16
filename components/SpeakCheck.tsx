@@ -15,14 +15,23 @@ function feedbackFor(score: number, nearCount = 0) {
   return 'واضح شنیده نشد؛ ابتدا نمونه را گوش دهید و دوباره بگویید.';
 }
 
-type Props = { text: string; locale: string; accent?: string; compact?: boolean; title?: string; onResult?: (result: SpeakCheckResult) => void };
+type Props = {
+  text: string;
+  locale: string;
+  accent?: string;
+  compact?: boolean;
+  title?: string;
+  onResult?: (result: SpeakCheckResult) => void;
+  /** Opens the microphone by itself once (used right after the app pronounced the word). */
+  autoStart?: boolean;
+};
 
 /**
  * «بگو» — the learner says the sentence aloud; the device speech recogniser transcribes it and
  * each expected word is shown green (heard) or red (missed) together with a percentage.
  * Works on Android/iOS through the native recogniser and on web through the browser's Web Speech API.
  */
-export default function SpeakCheck({ text, locale, accent = '#2563EB', compact = false, title, onResult }: Props) {
+export default function SpeakCheck({ text, locale, accent = '#2563EB', compact = false, title, onResult, autoStart = false }: Props) {
   const [listening, setListening] = useState(false);
   const [partial, setPartial] = useState('');
   const [result, setResult] = useState<SpeakCheckResult | null>(null);
@@ -35,6 +44,15 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
 
   useEffect(() => { setResult(null); setPartial(''); setError(''); finalRef.current = ''; lastHeardRef.current = ''; }, [text]);
   useEffect(() => () => { void ExpoSpeechRecognitionModule.abort?.(); }, []);
+  /** One-tap flow: the word was just spoken, so the mic may open by itself (still cancellable). */
+  const autoStartedFor = useRef('');
+  const startRef = useRef<null | (() => Promise<void>)>(null);
+  useEffect(() => {
+    if (!autoStart || !text || autoStartedFor.current === text) return;
+    autoStartedFor.current = text;
+    const handle = setTimeout(() => { void startRef.current?.(); }, 420);
+    return () => clearTimeout(handle);
+  }, [autoStart, text]);
 
   const finish = useCallback((heard: string) => {
     const scored = scoreSpeech(targetRef.current, heard);
@@ -96,6 +114,7 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
     }
   }, [locale, text]);
 
+  startRef.current = start;
   const stop = useCallback(() => { ExpoSpeechRecognitionModule.stop(); }, []);
   const sayWord = useCallback((word: string) => { try { Speech.stop(); Speech.speak(word, { language: locale, rate: 0.6 }); } catch { /* no tts */ } }, [locale]);
   const missed = result ? result.words.filter(w => w.state !== 'ok' && tokens(w.word).length) : [];

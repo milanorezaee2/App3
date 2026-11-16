@@ -20,6 +20,7 @@ import { beginLocalProfile, clearLocalProfile, getLocalProfile, localProfileErro
 import { ensureOpenLearnerRegistered, registerOpenLearnerOnServer } from '@/lib/openLearnerAccount';
 import { loadLearnerProfileSummary, nameInitials, type Achievement, type LanguageProfileStat, type LearnerProfileSummary } from '@/lib/learnerProfile';
 import StudyReminderCard from '@/components/StudyReminderCard';
+import LearningAnalyticsCard from '@/components/LearningAnalyticsCard';
 import { toPersianDigits as fa, timeAgo } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 import { prefersRecordedSpeech, setPrefersRecordedSpeech } from '@/lib/content/speechFallback';
@@ -389,6 +390,7 @@ function OverviewTab({ summary, onReview }: { summary: LearnerProfileSummary; on
       </Section>
 
       <View style={{ marginBottom: 12 }}><StudyReminderCard /></View>
+      <View style={{ marginBottom: 12 }}><LearningAnalyticsCard /></View>
 
       <Section icon={<Activity size={17} color={palette.forest} />} title="فعالیت هفتهٔ اخیر" subtitle={`${formatMinutes(summary.weekMinutes)} · ${fa(summary.activeDaysLast30)} روز فعال در ۳۰ روز گذشته`}>
         <View style={styles.chart}>

@@ -7,6 +7,7 @@ import { Typography } from '@/lib/theme';
 import { toPersianDigits as fa } from '@/lib/format';
 import { buildRetryItem, practiceBudgetSeconds, type PracticeItem, type PracticeKind, type PracticeStats } from '@/lib/lessonPractice';
 import { hapticCorrect, hapticTap, hapticWrong } from '@/lib/haptics';
+import { trackPracticeRetry } from '@/lib/analyticsSession';
 import { scoreWritten, type WrittenCheck } from '@/lib/writtenScore';
 import type { LearningLesson } from '@/lib/languages/types';
 
@@ -33,6 +34,8 @@ interface Props {
   exam?: boolean;
   foreignStyle: object;
   accent?: string;
+  /** Which course this round belongs to, so a retry can be recorded without touching the caller. */
+  courseId?: string;
 }
 
 const KIND_LABEL: Record<PracticeKind, string> = {
@@ -44,7 +47,7 @@ const KIND_LABEL: Record<PracticeKind, string> = {
   write: 'بنویس: این جمله به زبان درس چه می‌شود؟',
 };
 
-export default function LessonPracticeBlock({ title, intro, items, source, retryKinds, onSpeak, onComplete, completed, onSkip, exam, foreignStyle, accent = Palette.primary, summary }: Props) {
+export default function LessonPracticeBlock({ title, intro, items, source, retryKinds, onSpeak, onComplete, completed, onSkip, exam, foreignStyle, accent = Palette.primary, summary, courseId }: Props) {
   const [queue, setQueue] = useState<PracticeItem[]>(items);
   const [resolved, setResolved] = useState<null | boolean>(null); // null = unanswered, true/false = outcome
   const [done, setDone] = useState(0);
@@ -102,6 +105,7 @@ export default function LessonPracticeBlock({ title, intro, items, source, retry
     setQueue(value => {
       const [head, ...rest] = value;
       if (ok || head.retry || exam) return rest;
+      if (courseId) trackPracticeRetry(courseId, source.id, current?.kind ?? 'retry');
       const retry = buildRetryItem(source.id, head, source, retryKinds);
       return retry ? [...rest, retry] : rest;
     });

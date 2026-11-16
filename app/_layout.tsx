@@ -26,6 +26,7 @@ import { AppUpdatedSheet } from '@/components/AppUpdatedSheet';
 import { AppPopupPrompt } from '@/components/AppPopupPrompt';
 import { AndroidBackHistory } from '@/components/AndroidBackHistory';
 import { WebStatusBarSpacer } from '@/components/WebStatusBarSpacer';
+import { initAnalytics, watchAppStateForAbandonment } from '@/lib/analyticsSession';
 import { ChatNotificationBridge } from '@/components/ChatNotificationBridge';
 import { disableBackgroundChatChecks, reconcileBackgroundChatChecks } from '@/lib/backgroundChatChecks';
 import * as Notifications from 'expo-notifications';
@@ -106,6 +107,11 @@ function CompanionRuntime() {
  */
 export default function RootLayout() {
   useFrameworkReady();
+  // Six local events only: no network, no SDK, no token. They turn «is this fun?» into a number.
+  useEffect(() => {
+    initAnalytics();
+    return watchAppStateForAbandonment();
+  }, []);
   const [introComplete, setIntroComplete] = useState(Platform.OS === 'web');
   const [fontsLoaded, fontError] = useFonts({
     // Bundle Beiruti locally so Persian typography and numerals stay identical

@@ -13,7 +13,7 @@ function enqueue(operation: () => Promise<void>): Promise<void> {
   return queue;
 }
 
-export function playRussianSpeech(text: string, rate: number, onError?: () => void): Promise<void> {
+export function playRussianSpeech(text: string, rate: number, onError?: () => void, onDone?: () => void): Promise<void> {
   const request = ++requestId;
   return enqueue(async () => {
     if (request !== requestId) return;
@@ -21,7 +21,7 @@ export function playRussianSpeech(text: string, rate: number, onError?: () => vo
     if (request !== requestId) return;
     // Content-pack recordings win over the device voice (same voice on every phone, no TTS dependency).
     // Device TTS stays primary; recordings are used only on devices that opted in.
-    if (await playPreferredRecording(text, rate / 0.78)) return;
+    if (await playPreferredRecording(text, rate / 0.78)) { onDone?.(); return; }
     if (request !== requestId) return;
     const voice = await voiceFor('ru-RU', text).catch(() => undefined);
     if (request !== requestId) return;
@@ -31,7 +31,7 @@ export function playRussianSpeech(text: string, rate: number, onError?: () => vo
           language: speechTagFor('ru-RU'),
           ...(withVoice && voice ? { voice } : {}),
           rate,
-          onDone: () => { if (request === requestId) noteSpeechSuccess(); },
+          onDone: () => { if (request === requestId) { noteSpeechSuccess(); onDone?.(); } },
           // A rotated voice that fails to start falls back to the device default once,
           // then to a recording on devices whose engine is unreliable.
           onError: () => {

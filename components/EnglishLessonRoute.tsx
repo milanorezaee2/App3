@@ -8,6 +8,7 @@ import LessonFinalHub, { type FinalSection } from '@/components/LessonFinalHub';
 import BlindListeningList from '@/components/BlindListeningList';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
 import { finishLessonRewards } from '@/lib/lessonRewards';
+import { trackLessonCompleted, trackLessonStarted, trackStageReached } from '@/lib/analyticsSession';
 import { CHUNK_THRESHOLD, lessonChunks, loadCompletedChunks, markChunkDone } from '@/lib/lessonChunks';
 import { recordStudyDay } from '@/lib/studyStreak';
 import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -185,6 +186,7 @@ export default function SentenceLessonScreen() {
       setCompletionError('');
       loadedLesson.current = lesson.id;
       setSessionReady(true);
+      trackLessonStarted('en', lesson.id);
       if (startFromBeginning) router.setParams({ fromStart: undefined });
     }).catch(() => {
       if (alive) setSessionError(startFromBeginning
@@ -364,7 +366,7 @@ export default function SentenceLessonScreen() {
     }
     if (stage === 8 && practiceBlocks) return;
     if (stage < stages.length - 1) {
-      setStage((value) => value + 1);
+      setStage((value) => { trackStageReached('en', lesson.id, value + 1); return value + 1; });
       setSentenceIndex(0);
       setRevealed(false);
       return;
@@ -383,6 +385,7 @@ export default function SentenceLessonScreen() {
     await saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed, attempt: attempt.current, attemptEvidence });
     void stopResponsiveSpeech();
     const streak = await recordStudyDay();
+    trackLessonCompleted('en', lesson.id);
     const rewards = await finishLessonRewards().catch(() => ({ medals: [], studiedDay: '' }));
       const dueReviews = await getDueReviewCards().then(cards => cards.length).catch(() => 0);
     setCelebration({
@@ -580,7 +583,7 @@ export default function SentenceLessonScreen() {
         {stage >= 8 && (
           <View style={styles.centerStage}>
                         {(() => { const finalSections: FinalSection[] = [
-              { id: 'blitz', title: 'دور سریع', subtitle: `${toPersianDigits(practiceItems.length)} ضربه؛ بدون نمره.`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="" intro="" items={practiceItems} source={practiceLesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} summary={practiceStats.current} foreignStyle={styles.practiceForeign} accent={Colors.primary[500]} /></> },
+              { id: 'blitz', title: 'دور سریع', subtitle: `${toPersianDigits(practiceItems.length)} ضربه؛ بدون نمره.`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="" intro="" items={practiceItems} source={practiceLesson} onSpeak={speakPractice} courseId={'en'} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} summary={practiceStats.current} foreignStyle={styles.practiceForeign} accent={Colors.primary[500]} /></> },
               { id: 'speak', title: 'آزمون گفتاری', subtitle: `${toPersianDigits(lesson.sentences.length)} جمله؛ هر کدام را بلند بگو و امتیاز بگیر.`, render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa }))} locale="en-US" accent={Colors.success[400]} onSpeak={text => speak(text)} onFinish={result => { speakResult.current = result; void saveLessonOutcome('en', lesson.id, { speaking: { ...result, at: new Date().toISOString() } }); }} /></> },
               { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش از همین درس؛ بدون نمره، با توضیح.', render: () => <>
             {false ? null : evidencePassed

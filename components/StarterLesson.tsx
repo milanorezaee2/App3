@@ -55,6 +55,7 @@ import LessonFinalHub, { type FinalSection } from '@/components/LessonFinalHub';
 import BlindListeningList from '@/components/BlindListeningList';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
 import { finishLessonRewards } from '@/lib/lessonRewards';
+import { trackLessonCompleted, trackLessonStarted, trackStageReached } from '@/lib/analyticsSession';
 import { recordStudyDay } from '@/lib/studyStreak';
 import { nextLessonInOrder, previousSentenceIndex } from '@/lib/englishLessonNavigation';
 
@@ -213,6 +214,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
       setShowCheckAnswers(saved.showCheckAnswers);
       setSpeechError('');
       setSessionReady(true);
+      trackLessonStarted(course.id, lesson.id);
     }).catch(() => {
       if (!alive) return;
       restartPending.current = false;
@@ -292,6 +294,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
     if (stage === 8 && practiceBlocks) return;
     if (stage < stages.length - 1) {
       const nextStage = stage + 1;
+      trackStageReached(course.id, lesson.id, nextStage);
       setStage(nextStage);
       setSentenceIndex(0);
       setRevealed(false);
@@ -318,6 +321,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
 
       if (!preserveExistingSession.current) await clearStarterLessonSession(lesson.id);
       const streak = await recordStudyDay();
+    trackLessonCompleted(course.id, lesson.id);
     const rewards = await finishLessonRewards().catch(() => ({ medals: [], studiedDay: '' }));
       const dueReviews = await courseProgress.getDueReviewCards().then(cards => cards.length).catch(() => 0);
       setCelebration({
@@ -469,7 +473,7 @@ export default function StarterLessonView({ course, lesson, fromStart }: { cours
 
         {stage >= 8 && <View style={styles.centerStage}>
                     {(() => { const finalSections: FinalSection[] = [
-            { id: 'blitz', title: 'دور سریع', subtitle: `${fa(practiceItems.length)} ضربه؛ بدون نمره.`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="" intro="" items={practiceItems} source={lesson} onSpeak={speakPractice} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} summary={practiceStats.current} foreignStyle={styles.practiceForeign} accent={Palette.primary} /></> },
+            { id: 'blitz', title: 'دور سریع', subtitle: `${fa(practiceItems.length)} ضربه؛ بدون نمره.`, done: !practiceBlocks, render: () => <><LessonPracticeBlock title="" intro="" items={practiceItems} source={lesson} onSpeak={speakPractice} courseId={course.id} onComplete={markPracticeDone} onSkip={skipPractice} completed={practiceDone} summary={practiceStats.current} foreignStyle={styles.practiceForeign} accent={Palette.primary} /></> },
             { id: 'speak', title: 'آزمون گفتاری', subtitle: `${fa(lesson.sentences.length)} جمله؛ هر کدام را بلند بگو و امتیاز بگیر.`, render: () => <><SpeakDrill key={`${lesson.id}-drill`} items={lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.text, fa: sentence.fa }))} locale={course.locale} accent={Palette.success} onSpeak={text => speak(text)} onFinish={result => { speakResult.current = result; void saveLessonOutcome(course.id, lesson.id, { speaking: { ...result, at: new Date().toISOString() } }); }} /></> },
             { id: 'checks', title: 'سنجش کوتاه', subtitle: 'چند پرسش از همین درس؛ بدون نمره، با توضیح.', render: () => <>
           {false ? null : <View style={styles.evidenceCard}>
