@@ -133,6 +133,30 @@ export const PRE_A1_EVIDENCE: Readonly<Record<string,readonly Task[]>> = {
     preA1('09','gap-my','grammar','جای خالی را کامل کنید: This is ___ phone.','my','my یعنی مال من.',{ source:'This is my phone.', options:['my','a','is'] }),
     preA1('09','read-thing','reading','«It is a book.» یعنی چه؟','یک کتاب است.','it برای اشاره به یک چیز است.',{ source:'It is a book.', options:['او یک کتاب است.','یک کتاب است.','این چیست؟'] }),
   ],
+  'prea1-11-at-home': [
+    preA1('11','listen-comein','listening','شنیدید چه گفت؟','Come in.','Come in یعنی «بیا داخل».',{ audio:'Come in.', options:['Sit down.','Come in.','Look at this.'] }),
+    preA1('11','pick-these','grammar','برای چند کتاب کدام جمله درست است؟','These are my books.','these are برای چند چیز است.',{ options:['This is my books.','These are my books.','This are my book.'] }),
+    preA1('11','gap-want','grammar','جای خالی را کامل کنید: I ___ water, please.','want','want یعنی می‌خواهم.',{ source:'I want water, please.', options:['want','am','is'] }),
+    preA1('11','read-mine','reading','«This is my house.» یعنی چه؟','این خانهٔ من است.','my یعنی مالِ من.',{ source:'This is my house.', options:['این خانهٔ تو است.','این خانهٔ من است.','این خانهٔ او است.'] }),
+  ],
+  'prea1-12-people': [
+    preA1('12','listen-teacher','listening','گوینده چه گفت؟','She is my teacher.','she برای یک زن است.',{ audio:'She is my teacher.', options:['He is my teacher.','She is my teacher.','They are teachers.'] }),
+    preA1('12','pick-his','grammar','جای خالی را کامل کنید: ___ name is Reza.','His','برای مرد از his استفاده می‌کنیم.',{ options:['His','Her','They'] }),
+    preA1('12','pick-her','grammar','جای خالی را کامل کنید: ___ name is Sara.','Her','برای زن از her استفاده می‌کنیم.',{ options:['His','Her','He'] }),
+    preA1('12','read-they','reading','«They are students.» یعنی چه؟','آن‌ها دانش‌آموز هستند.','they یعنی آن‌ها.',{ source:'They are students.', options:['او دانش‌آموز است.','آن‌ها دانش‌آموز هستند.','من دانش‌آموزم.'] }),
+  ],
+  'prea1-13-every-day': [
+    preA1('13','listen-work','listening','گوینده کجا می‌رود؟','سر کار','go to work یعنی سر کار رفتن.',{ audio:'I go to work.', options:['خانه','سر کار','مدرسه'] }),
+    preA1('13','pick-home','grammar','«من به خانه می‌روم» کدام است؟','I go home.','با home حرف اضافه نمی‌آید.',{ options:['I go to home.','I go home.','I go at home.'] }),
+    preA1('13','gap-help','grammar','جای خالی را کامل کنید: I need ___.','help','help یعنی کمک.',{ source:'I need help.', options:['help','time','day'] }),
+    preA1('13','read-notime','reading','«I have no time.» یعنی چه؟','من وقت ندارم.','no یعنی هیچ.',{ source:'I have no time.', options:['من وقت دارم.','من وقت ندارم.','من کار ندارم.'] }),
+  ],
+  'prea1-14-i-like': [
+    preA1('14','listen-like','listening','گوینده چه چیزی را دوست دارد؟','چای','I like tea یعنی چای دوست دارم.',{ audio:'I like tea.', options:['آب','چای','کتاب'] }),
+    preA1('14','pick-where','grammar','«گوشی من کجاست؟» کدام است؟','Where is my phone?','where یعنی کجا.',{ options:['Who is my phone?','Where is my phone?','Is it good?'] }),
+    preA1('14','gap-for','grammar','جای خالی را کامل کنید: It is ___ you.','for','for یعنی برای.',{ source:'It is for you.', options:['for','to','at'] }),
+    preA1('14','read-who','reading','«Who is this?» یعنی چه؟','این کیست؟','who یعنی چه کسی.',{ source:'Who is this?', options:['این چیست؟','این کیست؟','این کجاست؟'] }),
+  ],
   'prea1-10-review': [
     preA1('10','listen-greeting','listening','گوینده چه گفت؟','Good morning, Ali.','Good morning سلام صبح است.',{ audio:'Good morning, Ali.', options:['Good night, Ali.','Good morning, Ali.','See you, Ali.'] }),
     preA1('10','pick-meet','grammar','بعد از معرفی دوست، برای خوش‌آمدگویی چه می‌گویید؟','Nice to meet you.','Nice to meet you یعنی از آشنایی خوشحالم.',{ options:['Nice to meet you.','Thank you for the water.','Good night.'] }),

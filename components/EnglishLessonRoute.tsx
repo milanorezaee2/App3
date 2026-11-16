@@ -72,6 +72,8 @@ import { B2_GUIDANCE, B2_PRODUCTION } from '@/lib/englishB2Practice';
 import { A2_FOUNDATION_LESSONS } from '@/lib/courseContentA2Foundation';
 
 const stages = ENGLISH_ENGINE_STEPS;
+/** The only practice formats an absolute beginner can do before reading English is comfortable. */
+export const PRE_A1_PRACTICE_KINDS: PracticeKind[] = ['fill', 'listen', 'truefalse', 'match'];
 
 export default function SentenceLessonScreen() {
   const router = useRouter();
@@ -86,7 +88,7 @@ export default function SentenceLessonScreen() {
   // hear → choose, read → choose, right/wrong, and pair words with meanings. No reordering, no typing.
   const practiceItems = useMemo(() => buildLessonPractice(
     packVariations.length ? { id: practiceLesson.id, sentences: [...practiceLesson.sentences, ...asLessonSentences(packVariations)] } : practiceLesson,
-    { count: 6 + Math.min(2, packVariations.length), write: lesson.levelId >= 2, ...(lesson.levelId <= -1 ? { kinds: ['fill', 'listen', 'truefalse', 'match'] as PracticeKind[] } : {}) },
+    { count: 6 + Math.min(2, packVariations.length), write: lesson.levelId >= 2, ...(lesson.levelId <= -1 ? { kinds: PRE_A1_PRACTICE_KINDS } : {}) },
   ), [practiceLesson, packVariations, lesson.levelId]);
   const [practiceDone, setPracticeDone] = useState(false);
   const speakResult = useRef<SpeakDrillResult | null>(null);

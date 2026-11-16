@@ -719,6 +719,7 @@ const baseSentenceLessons: SentenceLesson[] = [
 export const SENTENCE_LESSONS: SentenceLesson[] = insertLabLessons(
   baseSentenceLessons,
   labLessonsOf('en').map(englishLabLesson),
+  'en',
 ).map((lesson, index) => ({ ...lesson, order: index + 1 }));
 
 export const getSentenceLesson = (id: string) => SENTENCE_LESSONS.find((lesson) => lesson.id === id);
