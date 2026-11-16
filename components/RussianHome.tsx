@@ -29,6 +29,8 @@ import { RUSSIAN_LEVELS, RUSSIAN_LESSONS, russianProgress, type RussianLevelId }
 const READINESS = courseReadiness('ru', auditLessonsFromLearning(RUSSIAN_LESSONS as ReadonlyArray<import('@/lib/languages/types').LearningLesson & { levelId: number }>));
 import LevelReadinessLine from '@/components/LevelReadinessLine';
 import PlacementCard from '@/components/PlacementCard';
+import DailyPlanCard from '@/components/DailyPlanCard';
+import { buildDailyPlan, type DailyPlanStep } from '@/lib/dailyPlan';
 import { auditLessonsFromLearning, courseReadiness } from '@/lib/content/courseAudit';
 import { loadRussianLessonSessionWithPresence } from '@/lib/languages/russianStudyState';
 import type { CourseProgress } from '@/lib/courseProgress';
@@ -79,6 +81,7 @@ export default function RussianHome() {
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [dueCount, setDueCount] = useState(0);
   const [streak, setStreak] = useState(0);
+  const [plan, setPlan] = useState<readonly DailyPlanStep[]>([]);
   const [showRoadmap, setShowRoadmap] = useState(false);
   const [error, setError] = useState('');
   const [retry, setRetry] = useState(0);
@@ -93,6 +96,16 @@ export default function RussianHome() {
         setProgress(nextProgress);
         setDueCount(cards.length);
         setError('');
+        const now = new Date();
+        const todayKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+        const lessonDoneToday = nextProgress.lastActiveDate === todayKey && nextProgress.completedLessonIds.length > 0;
+        void buildDailyPlan({
+          lessonDone: lessonDoneToday,
+          reviewsDue: cards.length,
+          lessonRoute: '/learn/ru/lesson',
+          reviewRoute: '/learn/ru/review',
+          speakRoute: '/learn/ru/vocabulary',
+        }).then(next => { if (alive) setPlan(next); }).catch(() => undefined);
         const completed = new Set(nextProgress.completedLessonIds);
         const currentLesson = RUSSIAN_LESSONS.find(lesson => lesson.id === nextProgress.currentLessonId && !completed.has(lesson.id))
           ?? RUSSIAN_LESSONS.find(lesson => !completed.has(lesson.id));
@@ -388,6 +401,13 @@ export default function RussianHome() {
               <Text style={styles.todayFootnoteText}>{fa(sentenceCount)} جملهٔ آموزشی · {fa(uniqueWords)} واژه/عبارت یکتا</Text>
             </View>
           </LinearGradient>
+
+          {plan.length ? <View style={{ marginBottom: 12 }}>
+            <DailyPlanCard
+              steps={plan}
+              onOpen={step => router.push((step.id === 'lesson' ? (nextLesson ? `/learn/ru/lesson?id=${nextLesson.id}` : '/learn/ru/library') : step.route) as never)}
+            />
+          </View> : null}
 
           <View style={styles.quickSection}>
             <View style={styles.sectionHeading}>

@@ -19,6 +19,7 @@ import { syncPersonalLearningData } from '@/lib/personalLearningSync';
 import { beginLocalProfile, clearLocalProfile, getLocalProfile, localProfileError, normalizeLocalCode, regenerateLocalCode, touchLocalProfile, updateLocalProfileName, verifyLocalProfile, type LocalProfile } from '@/lib/localProfile';
 import { ensureOpenLearnerRegistered, registerOpenLearnerOnServer } from '@/lib/openLearnerAccount';
 import { loadLearnerProfileSummary, nameInitials, type Achievement, type LanguageProfileStat, type LearnerProfileSummary } from '@/lib/learnerProfile';
+import StudyReminderCard from '@/components/StudyReminderCard';
 import { toPersianDigits as fa, timeAgo } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 import { prefersRecordedSpeech, setPrefersRecordedSpeech } from '@/lib/content/speechFallback';
@@ -386,6 +387,8 @@ function OverviewTab({ summary, onReview }: { summary: LearnerProfileSummary; on
         <View style={styles.levelTrack}><View style={[styles.levelFill, { width: `${Math.round(level.progress * 100)}%` }]} /></View>
         <Text style={styles.cardText}>{level.next ? `${fa(level.remaining)} درس دیگر تا سطح «${level.next}».` : 'به بالاترین سطح رسیده‌اید؛ آفرین!'}</Text>
       </Section>
+
+      <View style={{ marginBottom: 12 }}><StudyReminderCard /></View>
 
       <Section icon={<Activity size={17} color={palette.forest} />} title="فعالیت هفتهٔ اخیر" subtitle={`${formatMinutes(summary.weekMinutes)} · ${fa(summary.activeDaysLast30)} روز فعال در ۳۰ روز گذشته`}>
         <View style={styles.chart}>

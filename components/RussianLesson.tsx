@@ -38,6 +38,7 @@ import LessonPracticeBlock from '@/components/LessonPracticeBlock';
 import LessonFinalHub, { type FinalSection } from '@/components/LessonFinalHub';
 import BlindListeningList from '@/components/BlindListeningList';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
+import { finishLessonRewards } from '@/lib/lessonRewards';
 import { PersianBridgeCard, RuleCard } from '@/components/PersianBridgeCard';
 import { bridgeRulesForLesson } from '@/lib/languages/russianPersianBridge';
 import { recordStudyDay } from '@/lib/studyStreak';
@@ -116,7 +117,8 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
   useEffect(() => { setPracticeDone(false); }, [lesson.id]);
   const practiceStats = useRef<PracticeStats>({ total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 });
   const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
-  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void; levelFinished?: { title: string; lessons: number; onStart: () => void; readiness?: number } } | null>(null);
+  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void; levelFinished?: { title: string; lessons: number; onStart: () => void; readiness?: number };
+    newAchievements?: ReadonlyArray<{ id: string; title: string; description: string }> } | null>(null);
   const skipPractice = useCallback(() => { practiceStats.current = { total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 }; setPracticeDone(true); }, []);
   const speakPractice = useCallback((text: string) => { void playRussianSpeech(text, NORMAL_SPEECH_RATE, () => setSpeechError('صدای روسی دستگاه در دسترس نیست؛ متن و راهنمای خوانش همچنان دیده می‌شوند.')); }, []);
   const practiceBlocks = practiceItems.length > 0 && !practiceDone;
@@ -278,12 +280,14 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
 
       if (!preserveExistingSession.current) await clearRussianLessonSession(lesson.id);
       const streak = await recordStudyDay();
+    const rewards = await finishLessonRewards().catch(() => ({ medals: [], studiedDay: '' }));
       const dueReviews = await russianProgress.getDueReviewCards().then(cards => cards.length).catch(() => 0);
       setCelebration({
         stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceFirstTry: practiceStats.current.firstTryCorrect, practiceSeconds: practiceStats.current.seconds, speakingAverage: speakResult.current?.average, assessmentCorrect, assessmentTotal, streak: streak.count, streakExtendedToday: streak.extendedToday },
         next: () => { if (nextLesson) router.replace({ pathname: '/learn/ru/lesson', params: { id: nextLesson.id } } as never); else router.replace('/learn/ru' as never); },
         dueReviews,
         review: () => router.replace('/learn/ru/review' as never),
+        newAchievements: rewards.medals,
         levelFinished: (!nextLesson || nextLesson.levelId !== lesson.levelId) ? { readiness: bandReadinessForLevel(courseReadiness('ru', auditLessonsFromLearning(RUSSIAN_LESSONS as ReadonlyArray<import('@/lib/languages/types').LearningLesson & { levelId: number }>)), lesson.levelId)?.readiness, title: RUSSIAN_LEVELS.find(item => item.id === lesson.levelId)?.title ?? '', lessons: RUSSIAN_LESSONS.filter(item => item.levelId === lesson.levelId).length, onStart: () => router.replace({ pathname: '/learn/ru/studio', params: { level: String(lesson.levelId), mode: 'warmup' } } as never) } : undefined,
       });
     } catch {
@@ -455,7 +459,8 @@ export default function RussianLesson({ lesson, fromStart = false }: { lesson: R
           </Pressable>
         </View>
       </View>
-      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(RUSSIAN_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} dueReviews={celebration?.dueReviews ?? 0} onReview={() => { const go = celebration?.review; setCelebration(null); go?.(); }} levelFinished={celebration?.levelFinished ? { ...celebration.levelFinished, onStart: () => { const go = celebration.levelFinished!.onStart; setCelebration(null); go(); } } : undefined} />
+      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(RUSSIAN_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} dueReviews={celebration?.dueReviews ?? 0} onReview={() => { const go = celebration?.review; setCelebration(null); go?.(); }} newAchievements={celebration?.newAchievements}
+      levelFinished={celebration?.levelFinished ? { ...celebration.levelFinished, onStart: () => { const go = celebration.levelFinished!.onStart; setCelebration(null); go(); } } : undefined} />
     </View>
   );
 }

@@ -9,6 +9,7 @@ import { speechTagFor } from '@/lib/speechLanguage';
 import { AppBottomNav } from '@/components/AppBottomNav';
 import { PageNavigation } from '@/components/PageNavigation';
 import { SENTENCE_LESSONS } from '@/lib/courseContent';
+import { markPlanStep } from '@/lib/dailyPlan';
 import {
   getCourseProgress,
   getDueReviewCards,
@@ -68,6 +69,7 @@ export default function ReviewHome() {
     if (!currentCard || saving) return;
     setSaving(true);
     await rateReviewCard(currentCard.id, rating);
+    void markPlanStep('review').catch(() => undefined);
     if (cardIndex + 1 >= sessionCards.length) {
       setSessionActive(false);
       setFinished(true);

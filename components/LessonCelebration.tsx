@@ -33,10 +33,12 @@ interface Props {
   onReview?: () => void;
   /** Set when this lesson was the last one of its level: offers the full level warm-up. */
   levelFinished?: { title: string; lessons: number; onStart: () => void; /** Content readiness (0–100) of the level's CEFR band; keeps the message honest. */ readiness?: number };
+  /** Medals unlocked by this specific lesson; shown right here instead of hiding them in the profile. */
+  newAchievements?: ReadonlyArray<{ id: string; title: string; description: string }>;
 }
 
 /** Shown once a lesson is saved as complete; the next lesson opens only when the learner taps. */
-export default function LessonCelebration({ visible, lessonTitle, stats, hasNextLesson, onContinue, dueReviews = 0, onReview, levelFinished }: Props) {
+export default function LessonCelebration({ visible, lessonTitle, stats, hasNextLesson, onContinue, dueReviews = 0, onReview, levelFinished, newAchievements = [] }: Props) {
   const scale = useRef(new Animated.Value(0.7)).current;
   const opacity = useRef(new Animated.Value(0)).current;
   useEffect(() => {
@@ -67,6 +69,18 @@ export default function LessonCelebration({ visible, lessonTitle, stats, hasNext
             <Flame size={16} color="#D97706" />
             <Text style={styles.streakText}>{stats.streak > 0 ? `روز ${fa(stats.streak)} پیاپی ✓` : 'روز اول ✓'}</Text>
           </View>
+          {newAchievements.length ? <View style={styles.medalBox}>
+            <View style={styles.medalHead}><Trophy size={16} color="#B45309" /><Text style={styles.medalTitle}>{newAchievements.length === 1 ? 'یک نشان تازه گرفتی' : `${fa(newAchievements.length)} نشان تازه گرفتی`}</Text></View>
+            {newAchievements.map(item => (
+              <View key={item.id} style={styles.medalRow}>
+                <View style={styles.medalIcon}><Trophy size={15} color="#B45309" /></View>
+                <View style={styles.medalCopy}>
+                  <Text style={styles.medalName}>{item.title}</Text>
+                  <Text style={styles.medalDesc}>{item.description}</Text>
+                </View>
+              </View>
+            ))}
+          </View> : null}
           {levelFinished ? <View style={styles.levelBox}>
             <View style={styles.levelHead}><Trophy size={18} color="#B45309" /><Text style={styles.levelTitle}>{levelFinished.readiness !== undefined && levelFinished.readiness < 100 ? `درس‌های آمادهٔ سطح «${levelFinished.title}» تمام شد (${fa(levelFinished.readiness)}٪ محتوا)` : `سطح «${levelFinished.title}» تمام شد!`}</Text></View>
             <Text style={styles.levelText}>قبل از رفتن به سطح بعد، یک گرم‌کردن کامل: از هر {fa(levelFinished.lessons)} درس این سطح یک ضربه، به ترتیب.</Text>
@@ -107,6 +121,14 @@ const styles = StyleSheet.create({
   reviewButton: { marginTop: 12, width: '100%', minHeight: 46, borderRadius: 14, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF' },
   reviewText: { fontFamily: Typography.fontFamily, fontSize: 13, color: Palette.primaryDark, writingDirection: 'rtl' },
   streakHint: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 18, color: '#8A929E', textAlign: 'center', writingDirection: 'rtl' },
+  medalBox: { marginTop: 10, width: '100%', borderRadius: 16, backgroundColor: '#FFF7ED', borderWidth: 1, borderColor: '#FED7AA', padding: 12, gap: 8 },
+  medalHead: { flexDirection: 'row-reverse', alignItems: 'center', gap: 6 },
+  medalTitle: { fontFamily: Typography.fontFamily, fontSize: 13, color: '#9A3412', writingDirection: 'rtl' },
+  medalRow: { flexDirection: 'row-reverse', alignItems: 'center', gap: 8 },
+  medalIcon: { width: 30, height: 30, borderRadius: 15, backgroundColor: '#FFEDD5', alignItems: 'center', justifyContent: 'center' },
+  medalCopy: { flex: 1, alignItems: 'flex-end', gap: 1 },
+  medalName: { fontFamily: Typography.fontFamily, fontSize: 13, color: '#7C2D12', writingDirection: 'rtl' },
+  medalDesc: { fontFamily: Typography.fontFamily, fontSize: 10, lineHeight: 16, color: '#9A3412', textAlign: 'right', writingDirection: 'rtl' },
   button: { marginTop: 14, width: '100%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: Palette.primary, borderRadius: 16, paddingVertical: 14 },
   buttonText: { fontFamily: Typography.fontFamily, fontSize: 15, color: '#FFFFFF' },
 });

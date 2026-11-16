@@ -12,6 +12,7 @@ import type { CourseProgress, ReviewRating, SentenceReviewCard } from '@/lib/cou
 import { toPersianDigits as fa } from '@/lib/format';
 import { ReviewRatingGrid, ReviewSpeakGate, reviewReason } from '@/components/ReviewRecall';
 import { Typography } from '@/lib/theme';
+import { markPlanStep } from '@/lib/dailyPlan';
 import { speechTagFor } from '@/lib/speechLanguage';
 
 function contentForCard(card: SentenceReviewCard) {
@@ -71,6 +72,7 @@ export default function RussianReview() {
     try {
       void Speech.stop();
       await russianProgress.rateReviewCard(currentCard.id, rating);
+      void markPlanStep('review').catch(() => undefined);
       if (cardIndex + 1 >= sessionCards.length) {
         setSessionActive(false);
         setFinished(true);

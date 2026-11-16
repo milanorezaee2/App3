@@ -7,6 +7,8 @@ import LessonPracticeBlock from '@/components/LessonPracticeBlock';
 import LessonFinalHub, { type FinalSection } from '@/components/LessonFinalHub';
 import BlindListeningList from '@/components/BlindListeningList';
 import LessonCelebration, { type CelebrationStats } from '@/components/LessonCelebration';
+import { finishLessonRewards } from '@/lib/lessonRewards';
+import { CHUNK_THRESHOLD, lessonChunks, loadCompletedChunks, markChunkDone } from '@/lib/lessonChunks';
 import { recordStudyDay } from '@/lib/studyStreak';
 import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { FitScrollView, lessonScrollOffset } from '@/components/FitScrollView';
@@ -87,7 +89,9 @@ export default function SentenceLessonScreen() {
   const markPracticeDone = useCallback((stats: PracticeStats) => { practiceStats.current = stats; setPracticeDone(true); }, []);
   const skipPractice = useCallback(() => { practiceStats.current = { total: 0, retries: 0, seconds: 0, firstTryCorrect: 0 }; setPracticeDone(true); }, []);
   const speakPractice = useCallback((text: string) => { playResponsiveSpeech({ text, locale: 'en-US', rate: ENGLISH_NORMAL_SPEECH_RATE, onError: () => undefined }); }, []);
-  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void; levelFinished?: { title: string; lessons: number; onStart: () => void; readiness?: number } } | null>(null);
+  const [chunkCelebration, setChunkCelebration] = useState<{ chunk: number; total: number; done: number; nextStart: number } | null>(null);
+  const [celebration, setCelebration] = useState<{ stats: CelebrationStats; next: (() => void); dueReviews: number; review: () => void; levelFinished?: { title: string; lessons: number; onStart: () => void; readiness?: number };
+    newAchievements?: ReadonlyArray<{ id: string; title: string; description: string }> } | null>(null);
   const practiceBlocks = practiceItems.length > 0 && !practiceDone;
   const [completionError, setCompletionError] = useState('');
   const [saving, setSaving] = useState(false);
@@ -204,6 +208,20 @@ export default function SentenceLessonScreen() {
   const [evaluatingSpeech, setEvaluatingSpeech] = useState(false);
   const [speechResult, setSpeechResult] = useState<SpeechEvaluation | null>(null);
   const [speechError, setSpeechError] = useState<string | null>(null);
+  // Long lessons are walked in 10-sentence chunks so a 50-sentence lesson becomes five wins,
+  // not one wall. Short lessons keep their original single-pass behaviour.
+  const [doneChunks, setDoneChunks] = useState<number[]>([]);
+  useEffect(() => {
+    let alive = true;
+    void loadCompletedChunks(lesson.id).then(value => { if (alive) setDoneChunks(value); }).catch(() => undefined);
+    return () => { alive = false; };
+  }, [lesson.id]);
+  const chunks = lessonChunks(lesson.id, lesson.sentences.length, doneChunks);
+  useEffect(() => {
+    // Land on the first unfinished chunk; never move a learner who is inside a chunk they opened.
+    if (chunks.chunked && sentenceIndex < chunks.start) setSentenceIndex(chunks.start);
+  }, [chunks.chunked, chunks.start, lesson.id]);
+  const chunkLastIndex = chunks.chunked ? chunks.end - 1 : lesson.sentences.length - 1;
   const current = lesson.sentences[sentenceIndex];
   const vocabulary = getLessonVocabulary(lesson);
   const grammarPatterns = getLessonPatterns(lesson);
@@ -332,9 +350,16 @@ export default function SentenceLessonScreen() {
 
   const next = async () => {
     if (!sessionReady || sessionError || completing.current || resettingRef.current) return;
-    if (stage === 1 && sentenceIndex < lesson.sentences.length - 1) {
+    if (stage === 1 && sentenceIndex < chunkLastIndex) {
       setSentenceIndex((value) => value + 1);
       setRevealed(false);
+      return;
+    }
+    // End of the current chunk of a long lesson: save the chunk and hand the win back right away.
+    if (stage === 1 && chunks.chunked && chunks.end < lesson.sentences.length) {
+      const nextDone = await markChunkDone(lesson.id, chunks.current).catch(() => doneChunks);
+      setDoneChunks(nextDone);
+      setChunkCelebration({ chunk: chunks.current, total: chunks.total, done: lesson.sentences.length, nextStart: chunks.end });
       return;
     }
     if (stage === 8 && practiceBlocks) return;
@@ -358,12 +383,14 @@ export default function SentenceLessonScreen() {
     await saveLessonSession(lesson.id, { stage, sentenceIndex, revealed, evidencePassed, attempt: attempt.current, attemptEvidence });
     void stopResponsiveSpeech();
     const streak = await recordStudyDay();
+    const rewards = await finishLessonRewards().catch(() => ({ medals: [], studiedDay: '' }));
       const dueReviews = await getDueReviewCards().then(cards => cards.length).catch(() => 0);
     setCelebration({
       stats: { sentences: lesson.sentences.length, practiceTotal: practiceStats.current.total, practiceFirstTry: practiceStats.current.firstTryCorrect, practiceSeconds: practiceStats.current.seconds, speakingAverage: speakResult.current?.average, streak: streak.count, streakExtendedToday: streak.extendedToday },
       next: () => { if (nextLesson) router.replace({ pathname: '/course/lesson', params: { id: nextLesson.id } } as never); else router.replace('/lang' as never); },
       dueReviews,
       review: () => router.replace('/review' as never),
+      newAchievements: rewards.medals,
       levelFinished: (!nextLesson || nextLesson.levelId !== lesson.levelId) ? { readiness: bandReadinessForLevel(courseReadiness('en', auditLessonsFromEnglish(SENTENCE_LESSONS)), lesson.levelId)?.readiness, title: COURSE_LEVELS.find(item => item.id === lesson.levelId)?.title ?? '', lessons: SENTENCE_LESSONS.filter(item => item.levelId === lesson.levelId).length, onStart: () => router.replace({ pathname: '/learn/en/studio', params: { level: String(lesson.levelId), mode: 'warmup' } } as never) } : undefined,
     });
     } catch { setCompletionError('پایان درس ذخیره نشد؛ دوباره تلاش کنید.'); }
@@ -410,6 +437,10 @@ export default function SentenceLessonScreen() {
         <View style={styles.stepSegments}>
           {stages.map((item, index) => <View key={item.id} accessibilityLabel={`${item.labelEn} ${index + 1} از ${stages.length}`} style={[styles.stepSegment, index <= stage && styles.stepSegmentDone, index === stage && styles.stepSegmentCurrent]} />)}
         </View>
+        {chunks.chunked ? <View style={styles.chunkBar}>
+          <Text style={styles.chunkText}>بخش {toPersianDigits(chunks.current)} از {toPersianDigits(chunks.total)} · جملهٔ {toPersianDigits(sentenceIndex + 1)} تا {toPersianDigits(chunks.end)}</Text>
+          <View style={styles.chunkTrack}>{Array.from({ length: chunks.total }).map((_, index) => <View key={index} style={[styles.chunkDot, doneChunks.includes(index + 1) && styles.chunkDotDone, index + 1 === chunks.current && styles.chunkDotNow]} />)}</View>
+        </View> : null}
       </View>
 
       {!!(sessionError || timer.error) && <Text style={styles.speechError}>{sessionError || timer.error}</Text>}
@@ -577,7 +608,22 @@ export default function SentenceLessonScreen() {
           </Pressable>
         </View>
       </View>
-      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(SENTENCE_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} dueReviews={celebration?.dueReviews ?? 0} onReview={() => { const go = celebration?.review; setCelebration(null); go?.(); }} levelFinished={celebration?.levelFinished ? { ...celebration.levelFinished, onStart: () => { const go = celebration.levelFinished!.onStart; setCelebration(null); go(); } } : undefined} />
+      {chunkCelebration ? (
+        <View style={styles.chunkOverlay}>
+          <View style={styles.chunkCard}>
+            <Text style={styles.chunkTitle}>بخش {toPersianDigits(chunkCelebration.chunk)} از {toPersianDigits(chunkCelebration.total)} تمام شد</Text>
+            <Text style={styles.chunkBody}>یک برد واقعی گرفتی. اگر وقت داری بخش بعدی را ادامه بده؛ اگر نه، همین‌جا بمان و فردا از بخش بعد شروع کن.</Text>
+            <Pressable accessibilityRole="button" style={styles.chunkPrimary} onPress={() => { setChunkCelebration(null); setSentenceIndex(chunkCelebration.nextStart); }}>
+              <Text style={styles.chunkPrimaryText}>ادامهٔ بخش بعدی</Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" style={styles.chunkSecondary} onPress={() => { setChunkCelebration(null); void markChunkDone(lesson.id, chunkCelebration.chunk).then(setDoneChunks).catch(() => undefined); router.replace('/lang' as never); }}>
+              <Text style={styles.chunkSecondaryText}>ذخیره و بازگشت به خانه</Text>
+            </Pressable>
+          </View>
+        </View>
+      ) : null}
+      <LessonCelebration visible={!!celebration} lessonTitle={lesson.title} stats={celebration?.stats ?? { sentences: 0, practiceTotal: 0, practiceFirstTry: 0, practiceSeconds: 0, streak: 0, streakExtendedToday: false }} hasNextLesson={!!nextLessonInOrder(SENTENCE_LESSONS, lesson.id)} onContinue={() => { const go = celebration?.next; setCelebration(null); go?.(); }} dueReviews={celebration?.dueReviews ?? 0} onReview={() => { const go = celebration?.review; setCelebration(null); go?.(); }} newAchievements={celebration?.newAchievements}
+      levelFinished={celebration?.levelFinished ? { ...celebration.levelFinished, onStart: () => { const go = celebration.levelFinished!.onStart; setCelebration(null); go(); } } : undefined} />
     </View>
   );
 }
@@ -626,6 +672,20 @@ const styles = StyleSheet.create({
   stepperNowEn: { fontFamily: 'Times New Roman', color: Palette.primaryDark, fontSize: 9, fontWeight: '800', writingDirection: 'ltr' },
   stepperNowFa: { fontFamily: Typography.fontFamily, color: Palette.muted, fontSize: 10, fontWeight: '400', writingDirection: 'rtl' },
   stepSegments: { flexDirection: 'row-reverse', gap: 4 },
+  chunkBar: { marginTop: 10, gap: 6 },
+  chunkText: { fontFamily: Typography.fontFamily, fontSize: 11, color: '#475569', textAlign: 'right', writingDirection: 'rtl' },
+  chunkTrack: { flexDirection: 'row-reverse', gap: 5 },
+  chunkDot: { flex: 1, height: 5, borderRadius: 3, backgroundColor: '#E2E8F0' },
+  chunkDotDone: { backgroundColor: '#15803D' },
+  chunkDotNow: { backgroundColor: '#4338CA' },
+  chunkOverlay: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: 'rgba(15,23,42,0.5)', alignItems: 'center', justifyContent: 'center', padding: 24, zIndex: 40 },
+  chunkCard: { width: '100%', maxWidth: 360, borderRadius: 22, backgroundColor: '#FFFFFF', padding: 20, gap: 10, alignItems: 'stretch' },
+  chunkTitle: { fontFamily: Typography.fontFamily, fontSize: 18, color: '#0F172A', textAlign: 'center', writingDirection: 'rtl' },
+  chunkBody: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: '#475569', textAlign: 'center', writingDirection: 'rtl' },
+  chunkPrimary: { minHeight: 44, borderRadius: 12, backgroundColor: '#4338CA', alignItems: 'center', justifyContent: 'center' },
+  chunkPrimaryText: { fontFamily: Typography.fontFamily, fontSize: 13, color: '#FFFFFF', writingDirection: 'rtl' },
+  chunkSecondary: { minHeight: 40, borderRadius: 12, borderWidth: 1, borderColor: '#E2E8F0', alignItems: 'center', justifyContent: 'center' },
+  chunkSecondaryText: { fontFamily: Typography.fontFamily, fontSize: 12, color: '#475569', writingDirection: 'rtl' },
   stepSegment: { flex: 1, height: 5, borderRadius: 999, backgroundColor: Palette.border },
   stepSegmentDone: { backgroundColor: Palette.primary },
   stepSegmentCurrent: { height: 8, marginTop: -1.5, backgroundColor: Palette.teal },

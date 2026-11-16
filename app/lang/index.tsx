@@ -39,6 +39,9 @@ import { getCourseProgress, setCurrentLesson, type CourseProgress } from '@/lib/
 import { syncPersonalLearningData } from '@/lib/personalLearningSync';
 import { FEATURES } from '@/lib/features';
 import { LearningHomeColors as HomeColors, learningHomeStyles as styles } from '@/components/LearningHomeStyles';
+import DailyPlanCard from '@/components/DailyPlanCard';
+import { buildDailyPlan, type DailyPlanStep } from '@/lib/dailyPlan';
+import { getDueReviewCards } from '@/lib/courseProgress';
 import { toPersianDigits } from '@/lib/format';
 import { loadStudy, studyDay } from '@/lib/englishStudyState';
 import { ENGLISH_ENGINE_BLUEPRINT, getEnglishLevelMetrics } from '@/lib/englishLearningEngine';
@@ -57,6 +60,7 @@ export default function LearningHome() {
   useFocusEffect(useCallback(() => { let alive = true; void getStudyStreak().then(value => { if (alive) setStreak(value); }).catch(() => undefined); return () => { alive = false; }; }, []));
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [hasStartedCourse, setHasStartedCourse] = useState(false);
+  const [plan, setPlan] = useState<readonly DailyPlanStep[]>([]);
 
   // Paint the home shell first, then fetch/parse the lesson route in the
   // background so the first lesson is warm when the learner taps Start.
@@ -103,6 +107,24 @@ export default function LearningHome() {
   const completed = completedIds.length;
   const levelMetrics = getEnglishLevelMetrics(currentLevel.id, completedIds);
   const currentBlueprint = ENGLISH_ENGINE_BLUEPRINT.find(level => level.levelId === currentLevel.id);
+  useEffect(() => {
+    let alive = true;
+    void (async () => {
+      const due = await getDueReviewCards().then(cards => cards.length).catch(() => 0);
+      const now = new Date();
+      const todayKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+      const lessonDoneToday = progress?.lastActiveDate === todayKey && (progress?.completedLessonIds.length ?? 0) > 0;
+      const steps = await buildDailyPlan({
+        lessonDone: lessonDoneToday,
+        reviewsDue: due,
+        lessonRoute: '/course/lesson',
+        reviewRoute: '/review',
+        speakRoute: '/learn/en/pronunciation',
+      }).catch(() => [] as DailyPlanStep[]);
+      if (alive) setPlan(steps);
+    })();
+    return () => { alive = false; };
+  }, [progress?.lastActiveDate, progress?.completedLessonIds.length, completed]);
   const dailyGoal = progress?.dailyGoalMinutes ?? 10;
   const dailyPct = Math.min(100, dailyGoal ? (measuredMinutes / dailyGoal) * 100 : 0);
   const levelCounts = Object.fromEntries(COURSE_LEVELS.map(level => {
@@ -326,6 +348,13 @@ export default function LearningHome() {
               <Text style={styles.startFromBeginningText}>شروع مجدد از سطح ابتدایی</Text>
             </Pressable>
           </View>
+
+          {plan.length ? <View style={{ marginBottom: 12 }}>
+            <DailyPlanCard
+              steps={plan}
+              onOpen={step => router.push((step.id === 'lesson' ? `/course/lesson?id=${currentLesson.id}` : step.route) as never)}
+            />
+          </View> : null}
 
           <View style={styles.sectionHeader}>
             <View style={styles.sectionTitleBlock}>

@@ -10,6 +10,7 @@ import { playRussianSpeech, stopRussianSpeech } from '@/lib/russianSpeech';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 import { scoreWritten } from '@/lib/writtenScore';
+import { markPlanStep } from '@/lib/dailyPlan';
 import type { ReviewRating } from '@/lib/courseProgress';
 import {
   RUSSIAN_VOCAB_WORDS,
@@ -218,6 +219,7 @@ export default function RussianVocabLab() {
   const rate = useCallback(async (rating: ReviewRating) => {
     if (!word || !progress) return;
     const next = rateVocabCard(progress, word.id, rating, lastOutcome?.spoken ?? false, new Date());
+    if (lastOutcome?.spoken) void markPlanStep('speak').catch(() => undefined);
     await saveVocabProgress(next);
     setProgress(next);
     goNext();

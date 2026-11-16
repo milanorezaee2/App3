@@ -4,6 +4,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
+import DailyPlanCard from '@/components/DailyPlanCard';
+import { buildDailyPlan, type DailyPlanStep } from '@/lib/dailyPlan';
 import { getStudyStreak } from '@/lib/studyStreak';
 import {
   BookOpen,
@@ -98,6 +100,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
   const [error, setError] = useState('');
   const [retry, setRetry] = useState(0);
   const [hasStartedCourse, setHasStartedCourse] = useState(false);
+  const [plan, setPlan] = useState<readonly DailyPlanStep[]>([]);
 
   useFocusEffect(useCallback(() => {
     let alive = true;
@@ -108,6 +111,15 @@ export default function StarterHome({course}: {course: StarterCourse}) {
         setProgress(nextProgress);
         setDueCount(cards.length);
         setError('');
+        const now = new Date();
+        const todayKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+        void buildDailyPlan({
+          lessonDone: nextProgress.lastActiveDate === todayKey && nextProgress.completedLessonIds.length > 0,
+          reviewsDue: cards.length,
+          lessonRoute: `${course.home}/lesson`,
+          reviewRoute: `${course.home}/review`,
+          speakRoute: `${course.home}/pronunciation`,
+        }).then(steps => { if (alive) setPlan(steps); }).catch(() => undefined);
         const completed = new Set(nextProgress.completedLessonIds);
         const currentLesson = lessons.find(lesson => lesson.id === nextProgress.currentLessonId && !completed.has(lesson.id))
           ?? lessons.find(lesson => !completed.has(lesson.id));
@@ -395,6 +407,13 @@ export default function StarterHome({course}: {course: StarterCourse}) {
               <Text style={styles.startFromBeginningText}>مرور از ابتدای سطح</Text>
             </Pressable>
           </View>
+
+          {plan.length ? <View style={{ marginBottom: 12 }}>
+            <DailyPlanCard
+              steps={plan}
+              onOpen={step => router.push((step.id === 'lesson' ? `${course.home}/lesson${resumeLesson ? `?id=${resumeLesson.id}` : ''}` : step.route) as never)}
+            />
+          </View> : null}
 
           <View style={styles.sectionHeader}>
             <View style={styles.sectionTitleBlock}>
