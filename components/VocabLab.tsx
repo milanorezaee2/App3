@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 import { ArrowRight, Check, ChevronLeft, Play, RefreshCw, Sparkles, Volume2 } from 'lucide-react-native';
 import SpeakCheck from '@/components/SpeakCheck';
 import { ReviewRatingGrid } from '@/components/ReviewRecall';
-import { speakPersian } from '@/lib/persianSpeech';
+import { hasPersianVoice, resetPersianVoiceCheck, speakPersian, warmPersianVoice } from '@/lib/persianSpeech';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 import { markPlanStep } from '@/lib/dailyPlan';
@@ -100,6 +100,8 @@ export default function VocabLab<T extends { id: string }>({ config }: { config:
   const [queue, setQueue] = useState<readonly T[]>([]);
   const [index, setIndex] = useState(0);
   const [sessionInfo, setSessionInfo] = useState({ dueCount: 0, newCount: 0 });
+  /** null while the device is being asked, then whether a Persian voice is really installed. */
+  const [persianVoice, setPersianVoice] = useState<boolean | null>(null);
   const [spokenOk, setSpokenOk] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   /** Bumped to re-mount SpeakCheck for a deliberate retry only — never automatically. */
@@ -118,6 +120,8 @@ export default function VocabLab<T extends { id: string }>({ config }: { config:
     // Start the TTS engine while the saved progress and the queue are being read, so the first word
     // is audible the moment it appears instead of after the engine's cold start.
     speech.warm();
+    warmPersianVoice();
+    void hasPersianVoice().then(setPersianVoice);
     autoSpokenFor.current = '';
     let alive = true;
     void (async () => {
@@ -168,13 +172,25 @@ export default function VocabLab<T extends { id: string }>({ config }: { config:
       5000,
     );
     if (token !== autoToken.current) return;
-    await speechPromise(
-      (done, failed) => { speakPersian(gloss(item), 0.95, failed, done); },
-      4500,
-    );
-    if (token !== autoToken.current) return;
+    // Only promise a Persian gloss when the device actually has a Persian voice; otherwise the drill
+    // would sit in silence (or read Persian with the German voice) after every word.
+    if (persianVoice !== false) {
+      await speechPromise(
+        (done, failed) => { speakPersian(gloss(item), 0.95, failed, done); },
+        4500,
+      );
+      if (token !== autoToken.current) return;
+    }
     setAutoPlaying(false);
-  }, [speech, target, gloss]);
+  }, [speech, target, gloss, persianVoice]);
+
+  /** After installing a Persian voice in the phone settings, re-check without leaving the drill. */
+  const recheckPersianVoice = useCallback(async () => {
+    resetPersianVoiceCheck();
+    const available = await hasPersianVoice();
+    setPersianVoice(available);
+    if (available && word) { void autoSay(word); }
+  }, [autoSay, word]);
 
   // The automatic pass: every card that appears is pronounced once, including the very first one.
   useEffect(() => {
@@ -246,8 +262,20 @@ export default function VocabLab<T extends { id: string }>({ config }: { config:
             <Text style={styles.wordFaOnDark}>{gloss(word)}</Text>
             <View style={styles.autoBox}>
               <Volume2 size={16} color={C.primary} />
-              <Text style={styles.autoText}>{autoPlaying ? `${languageName} → فارسی، خودکار…` : 'پخش تمام شد. اگر صدا را نشنیدی، «دوباره بشنو» را بزن.'}</Text>
+              <Text style={styles.autoText}>
+                {autoPlaying
+                  ? (persianVoice === false ? `${languageName} → فارسی نوشتاری (بدون صدای فارسی)…` : `${languageName} → فارسی، خودکار…`)
+                  : 'پخش تمام شد. اگر صدا را نشنیدی، «دوباره بشنو» را بزن.'}
+              </Text>
             </View>
+            {persianVoice === false ? (
+              <View style={styles.voiceBox}>
+                <Text style={styles.voiceText}>صدای فارسی روی این دستگاه نصب نیست، پس معنی فقط نوشته می‌شود. برای شنیدن معنی: تنظیمات گوشی › زبان و ورودی › تبدیل متن به گفتار › نصب فارسی. بعد دوباره بررسی کن.</Text>
+                <Pressable accessibilityRole="button" onPress={() => { void recheckPersianVoice(); }} style={({ pressed }) => [styles.ghostButton, pressed && styles.pressed]}>
+                  <RefreshCw size={14} color={C.primaryDark} /><Text style={styles.ghostText}>بررسی دوباره</Text>
+                </Pressable>
+              </View>
+            ) : null}
             {index === 0 ? (
               <View style={styles.guideBox}>
                 <Text style={styles.guideTitle}>هر واژه فقط دو قدم</Text>
@@ -401,6 +429,8 @@ const styles = StyleSheet.create({
   ghostText: { fontFamily: Typography.fontFamily, fontSize: 12, color: C.text, writingDirection: 'rtl' },
   pressed: { opacity: 0.82 },
   note: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 19, color: C.warning, textAlign: 'right', writingDirection: 'rtl' },
+  voiceBox: { width: '100%', borderRadius: 14, padding: 12, gap: 8, backgroundColor: C.warningSoft, borderWidth: 1, borderColor: '#FDE68A' },
+  voiceText: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 19, color: C.warning, textAlign: 'right', writingDirection: 'rtl' },
   hearingBox: { flexDirection: 'row-reverse', alignItems: 'center', gap: 7, padding: 10, borderRadius: 12, backgroundColor: C.primarySoft },
   hintError: { fontFamily: Typography.fontFamily, fontSize: 11, color: C.danger, textAlign: 'right', writingDirection: 'rtl' },
   hintWarm: { fontFamily: Typography.fontFamily, fontSize: 11, color: C.warning, textAlign: 'right', writingDirection: 'rtl' },
