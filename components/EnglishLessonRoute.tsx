@@ -2,7 +2,7 @@ import { MiloGlobeHeadphoneMark } from '@/components/MiloBrandMark';
 import { lessonUnit } from '@/lib/lessonUnits';
 import { LocalizedText as Text, PERSIAN_TRANSLATION_COLOR } from '@/components/LocalizedText';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { buildLessonPractice, type PracticeStats } from '@/lib/lessonPractice';
+import { buildLessonPractice, type PracticeKind, type PracticeStats } from '@/lib/lessonPractice';
 import LessonPracticeBlock from '@/components/LessonPracticeBlock';
 import LessonFinalHub, { type FinalSection } from '@/components/LessonFinalHub';
 import BlindListeningList from '@/components/BlindListeningList';
@@ -82,7 +82,12 @@ export default function SentenceLessonScreen() {
   const practiceLesson = useMemo(() => ({ id: lesson.id, sentences: lesson.sentences.map(sentence => ({ id: sentence.id, text: sentence.en, fa: sentence.fa, pronunciation: sentence.pronunciation, vocabulary: sentence.vocabulary })) }), [lesson]);
   const packVariations = usePackVariations('en', useMemo(() => ({ id: lesson.id, levelId: lesson.levelId, sentences: practiceLesson.sentences }), [lesson, practiceLesson]));
   // Content-pack sentences join the blitz pool (up to two extra strikes) so the learner meets the pattern with new words.
-  const practiceItems = useMemo(() => buildLessonPractice(packVariations.length ? { id: practiceLesson.id, sentences: [...practiceLesson.sentences, ...asLessonSentences(packVariations)] } : practiceLesson, { count: 6 + Math.min(2, packVariations.length), write: lesson.levelId >= 2 }), [practiceLesson, packVariations]);
+  // Pre-A1 learners cannot yet hold a word order in their head, so the round is recognition only:
+  // hear → choose, read → choose, right/wrong, and pair words with meanings. No reordering, no typing.
+  const practiceItems = useMemo(() => buildLessonPractice(
+    packVariations.length ? { id: practiceLesson.id, sentences: [...practiceLesson.sentences, ...asLessonSentences(packVariations)] } : practiceLesson,
+    { count: 6 + Math.min(2, packVariations.length), write: lesson.levelId >= 2, ...(lesson.levelId <= -1 ? { kinds: ['fill', 'listen', 'truefalse', 'match'] as PracticeKind[] } : {}) },
+  ), [practiceLesson, packVariations, lesson.levelId]);
   const [practiceDone, setPracticeDone] = useState(false);
   const speakResult = useRef<SpeakDrillResult | null>(null);
   useEffect(() => { setPracticeDone(false); }, [lesson.id]);
@@ -226,7 +231,17 @@ export default function SentenceLessonScreen() {
   const chunkLastIndex = chunks.chunked ? chunks.end - 1 : lesson.sentences.length - 1;
   const current = lesson.sentences[sentenceIndex];
   const vocabulary = getLessonVocabulary(lesson);
-  const grammarPatterns = getLessonPatterns(lesson);
+  // One pattern per slot: the same «I am + feeling» repeated eight times is noise, not teaching.
+  // Pre-A1 lessons are built around 1–2 slots, so the grammar stage shows each slot once.
+  const grammarPatterns = useMemo(() => {
+    const seen = new Set<string>();
+    return getLessonPatterns(lesson).filter(item => {
+      const key = item.pattern.trim().toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }, [lesson]);
   const lessonTopics = B1_INDEPENDENT_UNITS.find(unit => unit.id === lesson.id)?.topics
     ?? B2_UPPER_INTERMEDIATE_UNITS.find(unit => unit.id === lesson.id)?.topics
     ?? C1_ADVANCED_UNITS.find(unit => unit.id === lesson.id)?.topics.map(topic => topic[0]);
@@ -455,6 +470,10 @@ export default function SentenceLessonScreen() {
             <Text style={styles.stageTitle}>{lesson.title}</Text>
             <Text style={styles.situation}>{lesson.situation}</Text>
             {lesson.levelId >= 3 ? <ReadingFirstBlock lessonId={lesson.id} lines={lesson.dialogue.map(line => ({ speaker: line.speaker === 'learner' ? 'You' : 'Partner', text: line.text, fa: line.fa }))} onSpeak={text => speak(text)} foreignStyle={styles.practiceForeign} accent={Colors.primary[500]} /> : null}
+            {lesson.teachingFa ? <View style={styles.teachingCard}>
+              <Text style={styles.teachingTitle}>چطور این درس را یاد بگیریم</Text>
+              {lesson.teachingFa.split('\n').map(line => <Text key={line} style={styles.teachingLine}>{line}</Text>)}
+            </View> : null}
             {lessonTopics && <View style={styles.promiseCard}>
               <Text style={styles.promiseTitle}>موضوع‌های این درس</Text>
               {lessonTopics.map(topic => <Text key={topic} style={styles.promiseText}>• {topic}</Text>)}
@@ -470,7 +489,9 @@ export default function SentenceLessonScreen() {
                 <Volume2 size={25} color={Colors.onColor} />
               </Pressable>
               <Text style={styles.english}>{current.en}</Text>
-              <Text style={[styles.pronunciation,current.pronunciation.startsWith('/ ')&&{fontFamily: 'Times New Roman',textAlign:'left',writingDirection:'ltr'}]}>{current.pronunciation}</Text>
+              {/* Respelling sits under the sentence as ONE RTL line, so the phrase stays
+                  readable as a single Persian text instead of a centred, wrapped fragment. */}
+              <Text style={styles.pronunciation}>{current.pronunciation}</Text>
               <View style={styles.divider} />
               {lesson.levelId >= 3 ? <RevealText text={current.fa} style={styles.persian} resetKey={current.id} /> : <Text keepColor style={styles.persian}>{current.fa}</Text>}
               {current.pattern ? <View style={styles.pattern}><Text style={styles.patternLabel}>الگو</Text><Text style={styles.patternEnglish}>{current.pattern}</Text></View> : null}
@@ -521,8 +542,8 @@ export default function SentenceLessonScreen() {
           <View style={styles.centerStage}>
             <View style={styles.bigIcon}><RotateCcw size={33} color={Colors.success[400]} /></View>
             <Text style={styles.stageTitle}>ساخت جمله</Text>
-            {showHint && <Text style={styles.stageDesc}>معنی را بخوانید و واژه‌ها را به ترتیب بچینید.</Text>}
-            <EnglishSentenceBuilder sentence={current} />
+            {showHint && <Text style={styles.stageDesc}>{(lesson.levelId <= -1) ? 'جمله را ببینید و واژه‌ها را به همان ترتیب بچینید.' : 'معنی را بخوانید و واژه‌ها را به ترتیب بچینید.'}</Text>}
+            <EnglishSentenceBuilder sentence={current} guided={lesson.levelId <= -1} />
             <View style={styles.dots}>
               {lesson.sentences.map((sentence, index) => (
                 <Pressable key={sentence.id} accessibilityRole="button" accessibilityLabel={`جمله ${index + 1}`} onPress={() => setSentenceIndex(index)} style={[styles.dot, index === sentenceIndex && styles.dotActive]} />
@@ -703,6 +724,9 @@ const styles = StyleSheet.create({
   stageDesc: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', lineHeight: 23, marginTop: Spacing.sm },
   situation: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.md + 2, fontWeight: '400', color: Palette.text, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch', lineHeight: 27, marginTop: Spacing.md },
   promiseCard: { width: '100%', borderRadius: Radius.xl, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: '#DDE2FF', padding: Spacing.lg, marginTop: Spacing.xl },
+  teachingCard: { width: '100%', borderRadius: Radius.xl, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: Palette.border, padding: Spacing.lg, marginTop: Spacing.lg },
+  teachingTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 3, fontWeight: '400', color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
+  teachingLine: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.text, textAlign: 'right', writingDirection: 'rtl', lineHeight: 24, marginTop: 6 },
   promiseTitle: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl' },
   promiseText: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.text, textAlign: 'right', writingDirection: 'rtl', lineHeight: 23, marginTop: 5 },
   sentenceStage: { alignItems: 'center', paddingTop: 10, width: '100%' },
@@ -714,7 +738,9 @@ const styles = StyleSheet.create({
   replayDisabled: { opacity: .45 },
   soundButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
   english: { fontFamily: 'Times New Roman', width: '100%', fontSize: 25, lineHeight: 36, fontWeight: '800', color: Palette.ink, textAlign: 'left', writingDirection: 'ltr' },
-  pronunciation: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'center', writingDirection: 'rtl', marginTop: 8 },
+  // Full width + right alignment keeps the Persian respelling glued under the English line
+  // (previously a narrow, centred strip that wrapped and looked detached from the word).
+  pronunciation: { fontFamily: Typography.fontFamily, width: '100%', fontSize: Typography.sizes.sm + 2, fontWeight: '400', color: Palette.primaryDark, textAlign: 'right', writingDirection: 'rtl', lineHeight: 24, marginTop: 6 },
   divider: { width: '70%', height: 1, backgroundColor: Palette.border, marginVertical: 12 },
   persian: { fontFamily: Typography.fontFamily, fontSize: Typography.sizes.lg + 2, fontWeight: '400', color: PERSIAN_TRANSLATION_COLOR, textAlign: 'right', writingDirection: 'rtl', alignSelf: 'stretch' },
   pattern: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start', gap: 8, alignSelf: 'flex-end', backgroundColor: Palette.warningSoft, paddingHorizontal: 10, paddingVertical: 6, borderRadius: Radius.full, marginTop: Spacing.md },

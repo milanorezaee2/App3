@@ -15,7 +15,12 @@ function shuffleByRotation(tokens: string[]) {
   return rotated.every((token, index) => token === tokens[index]) ? [...tokens].reverse() : rotated;
 }
 
-export function EnglishSentenceBuilder({ sentence }: { sentence: CourseSentence }) {
+/**
+ * `guided` is the absolute-beginner mode: the ENGLISH sentence stays visible above the word bank,
+ * so the first task a learner ever does is «copy the order I can see», not «reconstruct a sentence
+ * in a language I cannot read yet». The Persian meaning is still shown, and the check still runs.
+ */
+export function EnglishSentenceBuilder({ sentence, guided = false }: { sentence: CourseSentence; guided?: boolean }) {
   const tokens = useMemo(() => sentence.en.trim().split(/\s+/).filter(Boolean), [sentence.en]);
   const shuffled = useMemo(() => shuffleByRotation(tokens), [tokens]);
   const [chosen, setChosen] = useState<number[]>([]);
@@ -42,6 +47,10 @@ export function EnglishSentenceBuilder({ sentence }: { sentence: CourseSentence 
 
   return <View style={styles.card}>
     <Text style={styles.kicker}>ساخت جمله از واژه‌های همین درس</Text>
+    {guided ? <View style={styles.guidedCard}>
+      <Text style={styles.guidedLabel}>جملهٔ درست</Text>
+      <Text style={styles.guidedSentence}>{sentence.en}</Text>
+    </View> : null}
     <Text style={styles.translation}>{sentence.fa}</Text>
     <View accessibilityLabel="جملهٔ ساخته‌شده" style={styles.answerArea}>
       {chosen.length ? chosen.map((tokenIndex, position) => <Pressable key={`${tokenIndex}-${position}`} accessibilityRole="button" accessibilityLabel={`حذف واژهٔ ${shuffled[tokenIndex]}`} onPress={() => remove(position)} style={styles.answerChip}>
@@ -72,6 +81,9 @@ export function EnglishSentenceBuilder({ sentence }: { sentence: CourseSentence 
 
 const styles = StyleSheet.create({
   card: { width: '100%', backgroundColor: Palette.surface, borderRadius: 18, borderWidth: 1, borderColor: Palette.border, padding: 16, gap: 12 },
+  guidedCard: { borderRadius: 12, backgroundColor: Palette.primarySoft, borderWidth: 1, borderColor: Palette.border, paddingHorizontal: 12, paddingVertical: 10, gap: 4 },
+  guidedLabel: { fontFamily: 'Beiruti', fontSize: 11, fontWeight: '400' as const, color: Palette.primary, textAlign: 'right' as const, writingDirection: 'rtl' as const },
+  guidedSentence: { fontFamily: 'Times New Roman', fontSize: 18, lineHeight: 26, fontWeight: '800' as const, color: Palette.ink, textAlign: 'left' as const, writingDirection: 'ltr' as const },
   kicker: { fontFamily: 'Beiruti', fontSize: 12, fontWeight: '400' as const, color: Palette.primary, textAlign: 'right' as const, writingDirection: 'rtl' as const },
   translation: { fontFamily: 'Beiruti', fontSize: 17, lineHeight: 28, color: Palette.ink, textAlign: 'right' as const, writingDirection: 'rtl' as const },
   answerArea: { minHeight: 76, borderRadius: 13, borderWidth: 1, borderColor: Palette.primary, backgroundColor: Palette.primarySoft, padding: 10, flexDirection: 'row' as const, flexWrap: 'wrap' as const, gap: 7, alignItems: 'center' as const },
