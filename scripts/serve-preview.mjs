@@ -464,7 +464,9 @@ const server = http.createServer((req, res) => {
     }
     // Expo's static export stores dynamic language routes under [language].
     // Serve that shell for valid URL shapes after checking concrete routes first.
-    if (!resolved && /^\/learn\/[^/]+(?:\/(?:lesson|library|review|pronunciation))?\/?$/.test(pathname)) {
+    // English and Russian do not get every concrete route in the web export;
+    // placement, studio and vocabulary must fall back to the [language] shell too.
+    if (!resolved && /^\/learn\/[^/]+(?:\/(?:lesson|library|review|pronunciation|placement|studio|vocabulary))?\/?$/.test(pathname)) {
       const dynamicPath = pathname.replace(/^\/learn\/[^/]+/, '/learn/[language]').replace(/\/$/, '');
       const dynamicFile = path.join(dist, dynamicPath + (dynamicPath.endsWith('[language]') ? '/index.html' : '.html'));
       if (fs.existsSync(dynamicFile)) resolved = dynamicFile;

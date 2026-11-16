@@ -1,5 +1,6 @@
 name: Build requested APKs
 
+# rev 114: Russian vocabulary lab — forced spoken reverse recall + word-level spaced review
 # rev 113: per-device recorded-audio fallback + key-free release-hosted bundles
 # rev 76: page-targeted pop-ups (any number per page) with a redesigned card
 # rev 75: learner pop-ups checked on every launch and return (1-min quiet period)

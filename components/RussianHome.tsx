@@ -404,6 +404,14 @@ export default function RussianHome() {
                 </View>
                 <ChevronLeft size={17} color={HomeColors.muted} />
               </Pressable>
+              <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push('/learn/ru/vocabulary' as never)}>
+                <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Sparkles size={18} color={HomeColors.accent} /></View>
+                <View style={styles.quickCopy}>
+                  <Text style={styles.quickTitle}>واژهخانهٔ روسی</Text>
+                  <Text style={styles.quickDesc}>ببین، بشنو، بگو و برعکس بگو</Text>
+                </View>
+                <ChevronLeft size={17} color={HomeColors.muted} />
+              </Pressable>
               <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push('/learn/ru/studio' as never)}>
                 <View style={[styles.quickIcon, { backgroundColor: '#FEF3C7' }]}><Award size={18} color="#D97706" /></View>
                 <View style={styles.quickCopy}>

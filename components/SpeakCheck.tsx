@@ -115,7 +115,7 @@ export default function SpeakCheck({ text, locale, accent = '#2563EB', compact =
       {result && result.heard ? <Text style={styles.heard}>شنیده شد: <Text keepColor style={styles.heardText}>{result.heard}</Text></Text> : null}
       {result && missed.length ? <View style={styles.legendRow}>
         <Pressable accessibilityRole="button" onPress={sayMissed} style={styles.missedButton}><Volume2 size={14} color="#B91C1C" /><Text keepColor style={styles.missedText}>{missed.length === 1 ? 'بشنو و فقط همین یکی را دوباره بگو' : `بشنو و فقط این ${fa(missed.length)} واژه را دوباره بگو`}</Text></Pressable>
-        
+
       </View> : null}
       {!!error && <Text accessibilityRole="alert" keepColor style={styles.error}>{error}</Text>}
       <Pressable
