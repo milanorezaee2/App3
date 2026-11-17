@@ -168,7 +168,7 @@ export const GERMAN_PRE_A1: readonly StarterLesson[] = [
     },
     [
       r('Entschuldigung, ist hier frei?', 'ببخشید، اینجا آزاد است؟', 'اِنت‌شولدِگونگ، ایست هیر فرای', 'frei', 'آزاد'),
-      r('Ja, bitte, setzen Sie sich.', 'بله، لطفاً بنشینید.', 'یا، بیتِه، زِتسِن زی میش', 'setzen', 'نشستن'),
+      r('Nehmen Sie bitte hier Platz.', 'لطفاً همین‌جا بنشینید.', 'نِمِن زی بیتِه هیر پلاتس', 'Platz', 'جا'),
       r('Vielen Dank für Ihre Zeit.', 'خیلی ممنون از وقتی که گذاشتید.', 'فیلِن دانک فیور ایرِه تسایت', 'Dank', 'تشکر'),
       r('Bitte sehr, gern.', 'خواهش می‌کنم، با کمال میل.', 'بیتِه زِر، گِرن', 'gern', 'با کمال میل'),
       r('Es tut mir leid.', 'متأسفم.', 'اِس توت میر لاید', 'leid', 'متأسف'),

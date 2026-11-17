@@ -1,5 +1,6 @@
 import { RUSSIAN_LESSONS } from './russian';
 import { NEW_COURSES } from './newCourses';
+import { CORE_WORDS } from './wordLabCore';
 import ruFrequency from '@/lib/content/frequency/ru.json';
 import deFrequency from '@/lib/content/frequency/de.json';
 
@@ -30,6 +31,10 @@ export interface WordLabWord {
   /** Rank in the language's open frequency list, when the word is in it. */
   frequencyRank: number | null;
   levelId: number;
+  /** Persian respelling of the example sentence, when the card has one (curated core words). */
+  examplePronunciation?: string;
+  /** True for the curated «واژه‌های مهم» cards that open the lab. */
+  curated?: boolean;
 }
 
 export const WORD_LAB_SESSION_SIZE = 12;
@@ -180,9 +185,39 @@ function buildLab(language: WordLabLanguage): readonly WordLabWord[] {
   });
 }
 
+/**
+ * The curated core comes first, in teaching order, then the rest of the course vocabulary by frequency.
+ * A word that is in both lists appears once, with the curated sentence — that is the sentence the lab
+ * asks the learner to say back, so it must be a real one.
+ */
+function withCore(language: WordLabLanguage, words: readonly WordLabWord[]): readonly WordLabWord[] {
+  const core = CORE_WORDS[language];
+  if (!core.length) return words;
+  const curated = new Set(core.map(word => normalizeWord(word.target)));
+  const coreCards: WordLabWord[] = core.map((word, index) => ({
+    // Same id shape the frequency list used, so a learner who already knows «Hallo» keeps that card.
+    id: `${language}-word-${normalizeWord(word.target).replace(/\s+/g, '-')}`,
+    target: word.target,
+    fa: word.fa,
+    exampleTarget: word.sentence,
+    exampleFa: word.sentenceFa,
+    note: word.note || `از درس «${word.lessonTitle}»`,
+    order: index + 1,
+    frequencyRank: null,
+    levelId: word.levelId,
+    // The curated card always carries the full example sentence and its own Persian respelling.
+    examplePronunciation: word.sentencePronunciation,
+    curated: true,
+  } as WordLabWord));
+  const rest = words
+    .filter(word => !curated.has(normalizeWord(word.target)))
+    .map((word, index) => ({ ...word, order: coreCards.length + index + 1 }));
+  return [...coreCards, ...rest];
+}
+
 export const WORD_LAB_WORDS: Record<WordLabLanguage, readonly WordLabWord[]> = {
-  ru: buildLab('ru'),
-  de: buildLab('de'),
+  ru: withCore('ru', buildLab('ru')),
+  de: withCore('de', buildLab('de')),
 };
 
 export const WORD_LAB_LOCALE: Record<WordLabLanguage, string> = { ru: 'ru-RU', de: 'de-DE' };
@@ -197,4 +232,27 @@ export function spokenTarget(word: WordLabWord): string {
 export function firstLetterHint(word: WordLabWord): string {
   const clean = spokenTarget(word).replace(/[´`’']/g, '');
   return clean ? `${clean.slice(0, 1)}…` : '…';
+}
+
+/**
+ * What the learner says out loud in the lab.
+ *
+ * A curated card is practised as its *sentence* — the word is heard first, then the sentence, then the
+ * learner says the sentence — because a single word with a microphone open teaches pronunciation, not
+ * use. Cards outside the curated core keep the word itself.
+ */
+export function spokenSentence(word: WordLabWord): string {
+  const raw = word.curated && word.exampleTarget ? word.exampleTarget : word.target;
+  return raw.replace(/[«»„“”]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+/** The sentence card is only offered when there is a real sentence to say, not the bare word again. */
+export function hasSpokenSentence(word: WordLabWord): boolean {
+  return !!word.exampleTarget && normalizeWord(word.exampleTarget) !== normalizeWord(word.target)
+    && word.exampleTarget.replace(/[^\p{L}\p{N}]/gu, '').length > word.target.replace(/[^\p{L}\p{N}]/gu, '').length + 2;
+}
+
+/** A cue for the sentence itself: its Persian translation and, when available, its respelling. */
+export function sentenceHint(word: WordLabWord): { fa: string; pronunciation?: string } {
+  return { fa: word.exampleFa, pronunciation: word.examplePronunciation };
 }

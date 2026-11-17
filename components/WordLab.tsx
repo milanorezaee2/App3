@@ -2,13 +2,13 @@ import { LocalizedText as Text } from '@/components/LocalizedText';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Check, ChevronLeft, RefreshCw, Sparkles, Volume2, ArrowRight, Play, Mic2 } from 'lucide-react-native';
+import { Check, ChevronLeft, RefreshCw, Sparkles, Volume2, ArrowRight, Play, Mic2, MessageSquareQuote } from 'lucide-react-native';
 import SpeakCheck from '@/components/SpeakCheck';
 import { ReviewRatingGrid } from '@/components/ReviewRecall';
 import { speakPersian } from '@/lib/persianSpeech';
 import { playRussianSpeech, stopRussianSpeech } from '@/lib/russianSpeech';
 import { playStarterSpeech, stopStarterSpeech } from '@/lib/starterSpeech';
-import { firstLetterHint, spokenTarget, WORD_LAB_LOCALE, WORD_LAB_NAME, WORD_LAB_WORDS, type WordLabLanguage, type WordLabWord } from '@/lib/languages/wordLab';
+import { firstLetterHint, hasSpokenSentence, spokenSentence, spokenTarget, WORD_LAB_LOCALE, WORD_LAB_NAME, WORD_LAB_WORDS, type WordLabLanguage, type WordLabWord } from '@/lib/languages/wordLab';
 import { buildWordSession, loadWordProgress, rateWordCard, saveWordProgress, wordReason, wordStats, type WordProgress } from '@/lib/wordLabProgress';
 import { markPlanStep } from '@/lib/dailyPlan';
 import type { ReviewRating } from '@/lib/courseProgress';
@@ -34,16 +34,18 @@ const C = {
 };
 
 /**
- * Two screens per word, and the word is spoken once per screen:
+ * Three screens per card, all of them spoken by the phone's own voice (a recorded voice is opt-in):
  *
- *   1. «می‌بینی و می‌شنوی» — the word is played once in the target language, then its Persian meaning is
- *      played once. Nothing repeats the word and no microphone is opened on this screen.
- *   2. «از فارسی می‌گویی» — only the Persian meaning is on screen; the learner says the word, and the
- *      check opens by itself. A weak attempt shows a one-letter hint and lets the same screen try again.
+ *   1. «می‌بینی و می‌شنوی» — the word is played once in the target language, then its Persian meaning.
+ *   2. «جمله را می‌شنوی» — the course sentence that uses the word is played once, with its Persian
+ *      translation and respelling on screen.
+ *   3. «حالا تو می‌گویی» — the Persian meaning is the prompt, the microphone opens by itself, and the
+ *      learner says the *sentence*. A weak attempt shows the first word as a hint and lets them retry.
  *
- * then one rating card, then the next word. There is no third playback and no second repeat screen.
+ * then one rating card, then the next word. Every step is also reachable by a button, so a learner who
+ * muted the phone is never stuck.
  */
-type Phase = 'loading' | 'intro' | 'listen' | 'recall' | 'rate' | 'done';
+type Phase = 'loading' | 'intro' | 'listen' | 'sentence' | 'recall' | 'rate' | 'done';
 
 export default function WordLab({ language }: { language: WordLabLanguage }) {
   const router = useRouter();
@@ -127,6 +129,25 @@ export default function WordLab({ language }: { language: WordLabLanguage }) {
     });
   }, [language, locale]);
 
+  /** The example sentence goes through the same device voice, only slower: the learner must hear every word. */
+  const saySentence = useCallback(async (item: WordLabWord, rate: number) => {
+    if (!hasSpokenSentence(item)) return;
+    setVoiceError('');
+    const text = spokenSentence(item);
+    const onError = () => setVoiceError('صدای این دستگاه برای این زبان در دسترس نیست؛ متن و ترجمه همچنان دیده می‌شوند.');
+    if (language === 'ru') {
+      await new Promise<void>(resolve => {
+        playRussianSpeech(text, rate, onError, () => resolve());
+        setTimeout(resolve, 6000);
+      });
+      return;
+    }
+    await new Promise<void>(resolve => {
+      playStarterSpeech(locale, text, rate, onError);
+      setTimeout(resolve, 6000);
+    });
+  }, [language, locale]);
+
   /** One pass only: target language, then Persian. The word is never played twice in a row. */
   const playOnce = useCallback(async (item: WordLabWord) => {
     const token = ++playback.current;
@@ -134,6 +155,14 @@ export default function WordLab({ language }: { language: WordLabLanguage }) {
     if (token !== playback.current) return;
     await new Promise<void>(resolve => { speakPersian(item.fa); setTimeout(resolve, Math.min(3200, 900 + item.fa.length * 90)); });
   }, [sayTarget]);
+
+  /** Step 2: the sentence itself, once, followed by its Persian meaning. */
+  const playSentence = useCallback(async (item: WordLabWord) => {
+    const token = ++playback.current;
+    await saySentence(item, 0.68);
+    if (token !== playback.current) return;
+    await new Promise<void>(resolve => { speakPersian(item.exampleFa); setTimeout(resolve, Math.min(3600, 900 + item.exampleFa.length * 90)); });
+  }, [saySentence]);
 
   const resetWord = useCallback(() => {
     setSpoken(false);
@@ -166,6 +195,16 @@ export default function WordLab({ language }: { language: WordLabLanguage }) {
     if (word) void playOnce(word);
   };
 
+  /** Move from hearing the word to hearing its sentence, without the learner losing the word on screen. */
+  const goToSentence = useCallback(() => {
+    stopAll();
+    setPhase('sentence');
+    if (word) void playSentence(word);
+  }, [playSentence, stopAll, word]);
+
+  /** The microphone step is always for the sentence when the card has one. */
+  const practiceText = word ? (hasSpokenSentence(word) ? spokenSentence(word) : spokenTarget(word)) : '';
+
   return (
     <View style={styles.root}>
       <View style={styles.header}>
@@ -187,11 +226,13 @@ export default function WordLab({ language }: { language: WordLabLanguage }) {
         {phase === 'intro' && word ? (
           <View style={styles.centerCard}>
             <View style={styles.bigIcon}><Sparkles size={30} color={C.primary} /></View>
-            <Text style={styles.title}>دو قدم برای هر واژه</Text>
+            <Text style={styles.title}>سه قدم برای هر واژه</Text>
             <View style={styles.stepList}>
-              <Text style={styles.stepLine}>۱. واژه را یک بار می‌شنوی، بعد معنی فارسی‌اش.</Text>
-              <Text style={styles.stepLine}>۲. فقط معنی فارسی را می‌بینی و خودت واژه را می‌گویی.</Text>
+              <Text style={styles.stepLine}>۱. واژه را می‌شنوی و معنی فارسی‌اش را می‌بینی.</Text>
+              <Text style={styles.stepLine}>۲. یک جملهٔ واقعی با همان واژه می‌شنوی.</Text>
+              <Text style={styles.stepLine}>۳. خودت همان جمله را می‌گویی؛ میکروفن خودش باز می‌شود.</Text>
             </View>
+            <Text style={styles.smallText}>همه‌چیز با صدای گوشی خوانده می‌شود؛ اگر صدای ضبط‌شده را ترجیح می‌دهید، در قدم اول انتخابش کنید.</Text>
             <Text style={styles.smallText}>{fa(sessionInfo.newCount)} واژهٔ تازه · {fa(sessionInfo.dueCount)} مرور سررسید · هر واژه حدود نیم دقیقه</Text>
             {stats ? <Text style={styles.smallText}>معرفی‌شده: {fa(stats.introduced)} از {fa(stats.total)} · مسلط گفتاری: {fa(stats.mastered)}</Text> : null}
             <Pressable accessibilityRole="button" onPress={startLearning} style={({ pressed }) => [styles.primary, pressed && styles.pressed]}>
@@ -203,7 +244,7 @@ export default function WordLab({ language }: { language: WordLabLanguage }) {
 
         {phase === 'listen' && word ? (
           <View style={styles.wordCard}>
-            <Text style={styles.stepLabel}>قدم ۱ از ۲ · می‌بینی و می‌شنوی</Text>
+            <Text style={styles.stepLabel}>قدم ۱ از ۳ · می‌بینی و می‌شنوی</Text>
             <Text keepColor style={styles.bigWord}>{word.target}</Text>
             <Text style={styles.wordFa}>{word.fa}</Text>
             <View style={styles.autoBox}>
@@ -234,6 +275,34 @@ export default function WordLab({ language }: { language: WordLabLanguage }) {
               <Pressable accessibilityRole="button" onPress={() => void playOnce(word)} style={({ pressed }) => [styles.ghostButton, pressed && styles.pressed]}>
                 <RefreshCw size={14} color={C.primaryDark} /><Text style={styles.ghostText}>دوباره بشنو</Text>
               </Pressable>
+              <Pressable accessibilityRole="button" onPress={goToSentence} style={({ pressed }) => [styles.primary, styles.grow, pressed && styles.pressed]}>
+                <MessageSquareQuote size={15} color="#FFFFFF" /><Text style={styles.primaryText}>جمله را بشنو</Text><ChevronLeft size={15} color="#FFFFFF" />
+              </Pressable>
+            </View>
+          </View>
+        ) : null}
+
+        {phase === 'sentence' && word ? (
+          <View style={styles.wordCard}>
+            <Text style={styles.stepLabel}>قدم ۲ از ۳ · جمله را می‌شنوی</Text>
+            <View style={styles.sentenceBox}>
+              <Text keepColor style={styles.sentenceTarget}>{hasSpokenSentence(word) ? word.exampleTarget : word.target}</Text>
+              <Text style={styles.sentenceFa}>{hasSpokenSentence(word) ? word.exampleFa : word.fa}</Text>
+              {word.examplePronunciation ? <Text style={styles.sentencePronunciation}>{word.examplePronunciation}</Text> : null}
+            </View>
+            <View style={styles.wordChip}>
+              <Text keepColor style={styles.wordChipTarget}>{word.target}</Text>
+              <Text style={styles.wordChipFa}>{word.fa}</Text>
+            </View>
+            <View style={styles.autoBox}>
+              <Volume2 size={16} color={C.primary} />
+              <Text style={styles.autoText}>جمله یک بار با صدای گوشی، بعد معنی فارسی‌اش</Text>
+            </View>
+            {!!voiceError && <Text style={styles.hintWarm}>{voiceError}</Text>}
+            <View style={styles.rowButtons}>
+              <Pressable accessibilityRole="button" onPress={() => void playSentence(word)} style={({ pressed }) => [styles.ghostButton, pressed && styles.pressed]}>
+                <RefreshCw size={14} color={C.primaryDark} /><Text style={styles.ghostText}>دوباره بشنو</Text>
+              </Pressable>
               <Pressable accessibilityRole="button" onPress={() => { stopAll(); setPhase('recall'); }} style={({ pressed }) => [styles.primary, styles.grow, pressed && styles.pressed]}>
                 <Mic2 size={15} color="#FFFFFF" /><Text style={styles.primaryText}>حالا من می‌گویم</Text><ChevronLeft size={15} color="#FFFFFF" />
               </Pressable>
@@ -243,17 +312,18 @@ export default function WordLab({ language }: { language: WordLabLanguage }) {
 
         {phase === 'recall' && word ? (
           <View style={styles.wordCard}>
-            <Text style={styles.stepLabel}>قدم ۲ از ۲ · از فارسی به {languageName}</Text>
+            <Text style={styles.stepLabel}>قدم ۳ از ۳ · جمله را تو می‌گویی</Text>
             <View style={styles.reversePrompt}>
-              <Text style={styles.reverseLabel}>فقط معنی فارسی</Text>
-              <Text style={styles.reverseFa}>{word.fa}</Text>
+              <Text style={styles.reverseLabel}>معنی فارسی جمله</Text>
+              <Text style={styles.reverseFa}>{hasSpokenSentence(word) ? word.exampleFa : word.fa}</Text>
+              {hasSpokenSentence(word) ? <Text style={styles.reverseWord}>با واژهٔ «{word.target}»</Text> : null}
             </View>
             <SpeakCheck
               key={`${word.id}-recall`}
-              text={spokenTarget(word)}
+              text={practiceText}
               locale={locale}
               accent={C.primary}
-              title={`واژهٔ ${languageName} را بگو`}
+              title={hasSpokenSentence(word) ? `جملهٔ ${languageName} را بگو` : `واژهٔ ${languageName} را بگو`}
               autoStart
               onResult={result => {
                 setError('');
@@ -262,6 +332,14 @@ export default function WordLab({ language }: { language: WordLabLanguage }) {
                 else setError('نزدیک بود؛ یک بار دیگر آهسته‌تر و واضح‌تر بگو.');
               }}
             />
+            <View style={styles.rowButtons}>
+              <Pressable accessibilityRole="button" onPress={() => void playSentence(word)} style={({ pressed }) => [styles.ghostButton, pressed && styles.pressed]}>
+                <Volume2 size={14} color={C.primaryDark} /><Text style={styles.ghostText}>جمله را بشنو</Text>
+              </Pressable>
+              <Pressable accessibilityRole="button" onPress={() => void playOnce(word)} style={({ pressed }) => [styles.ghostButton, pressed && styles.pressed]}>
+                <Volume2 size={14} color={C.primaryDark} /><Text style={styles.ghostText}>واژه را بشنو</Text>
+              </Pressable>
+            </View>
             {spoken ? <View style={styles.okBox}><Check size={15} color={C.success} /><Text style={styles.okText}>درست گفتی؛ گفتار موفق ثبت شد.</Text></View> : null}
             {!spoken && spokenScore !== null ? <Text style={styles.hintWarm}>راهنمایی: {firstLetterHint(word)} · آهسته‌تر بگو یا این واژه را بعداً تمرین کن.</Text> : null}
             {!!error && <Text style={styles.hintError}>{error}</Text>}
@@ -278,6 +356,7 @@ export default function WordLab({ language }: { language: WordLabLanguage }) {
             <Text style={styles.title}>این واژه چطور بود؟</Text>
             <Text keepColor style={styles.bigWordSmall}>{word.target}</Text>
             <Text style={styles.wordFa}>{word.fa}</Text>
+            {hasSpokenSentence(word) ? <Text keepColor style={styles.exampleTarget}>{word.exampleTarget}</Text> : null}
             <Text style={styles.smallText}>چرا الان؟ {wordReason(progress?.cards[word.id])}</Text>
             <ReviewRatingGrid saving={saving} score={spokenScore} onRate={rating => void rate(rating)} />
             {!spoken ? <Text style={styles.smallText}>بدون گفتار موفق، «تسلط گفتاری» ثبت نمی‌شود؛ کارت زودتر برمی‌گردد.</Text> : null}
@@ -329,6 +408,14 @@ const styles = StyleSheet.create({
   stepLine: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: C.text, textAlign: 'right', writingDirection: 'rtl' },
   bigWord: { fontFamily: 'Times New Roman', fontSize: 36, lineHeight: 46, fontWeight: '800', color: C.ink, textAlign: 'center', writingDirection: 'ltr' },
   bigWordSmall: { fontFamily: 'Times New Roman', fontSize: 26, lineHeight: 36, fontWeight: '800', color: C.ink, textAlign: 'center', writingDirection: 'ltr' },
+  sentenceBox: { width: '100%', gap: 6, padding: 14, borderRadius: 16, backgroundColor: C.primarySoft },
+  sentenceTarget: { fontFamily: 'Times New Roman', fontSize: 21, lineHeight: 32, fontWeight: '700', color: C.ink, textAlign: 'center', writingDirection: 'ltr' },
+  sentenceFa: { fontFamily: Typography.fontFamily, fontSize: 13, lineHeight: 22, color: C.text, textAlign: 'center', writingDirection: 'rtl' },
+  sentencePronunciation: { fontFamily: Typography.fontFamily, fontSize: 11, lineHeight: 20, color: C.muted, textAlign: 'center', writingDirection: 'rtl' },
+  wordChip: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 8 },
+  wordChipTarget: { fontFamily: 'Times New Roman', fontSize: 16, fontWeight: '700', color: C.primaryDark, writingDirection: 'ltr' },
+  wordChipFa: { fontFamily: Typography.fontFamily, fontSize: 12, color: C.muted, writingDirection: 'rtl' },
+  reverseWord: { fontFamily: Typography.fontFamily, fontSize: 11, color: C.primaryDark, textAlign: 'center', writingDirection: 'rtl' },
   wordFa: { fontFamily: Typography.fontFamily, fontSize: 17, color: C.text, textAlign: 'center', writingDirection: 'rtl' },
   autoBox: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, padding: 10, borderRadius: 12, backgroundColor: C.primarySoft },
   autoText: { fontFamily: Typography.fontFamily, fontSize: 11, color: C.primaryDark, writingDirection: 'rtl', textAlign: 'right' },
