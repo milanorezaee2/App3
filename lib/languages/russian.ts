@@ -815,6 +815,7 @@ const russianBaseLessons: readonly RussianCourseLesson[] = RUSSIAN_STARTER_LESSO
 export const RUSSIAN_LESSONS: readonly RussianCourseLesson[] = insertLabLessons(
   russianBaseLessons,
   labLessonsOf('ru').map(russianLabLesson),
+  'ru', // Pre-A1 is exempt: that band is hand-written now (see EXEMPT_LEVELS in ./content/labLessons).
 ).map((lesson, index) => ({ ...lesson, order: index + 1 }));
 
 export function findRussianLesson(id: string | undefined): RussianCourseLesson | undefined {

@@ -25,6 +25,10 @@ export function labLessonsOf(language: LabLanguage): readonly LabLesson[] {
  */
 const EXEMPT_LEVELS: Partial<Record<LabLanguage, ReadonlySet<number>>> = {
   en: new Set([0]),
+  // Russian Pre-A1 now has seventeen authored lesson of its own, the same way German does. The four
+  // generated review lessons left there were frequency frames that quoted single words («в», «и»,
+  // «на») inside «Урок объясняет … понятно» — unreadable for somebody just meeting Cyrillic.
+  ru: new Set([0]),
 };
 
 /** Insert extra lessons immediately after the last existing lesson of the same level. */
