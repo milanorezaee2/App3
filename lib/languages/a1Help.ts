@@ -33,7 +33,7 @@ export const A1_HELP: Record<NewLanguageId,A1Seed> = {
       ['Ja, es ist in meiner Tasche!','بله، در کیف من است!','یا، اِس ایست این ماینِر تاشِه','in meiner Tasche','در کیف من'],
       ['Sehr gut!','خیلی خوب!','زِر گوت','Sehr gut','خیلی خوب'],
       ['Können Sie mir helfen?','می‌توانید به من کمک کنید؟ (رسمی)','کِنِن زی میر هِلفِن','helfen','کمک کردن'],
-      ['Ich verstehe nicht.','متوجه نمی‌شوم.','ایش فِرشتِهِه نیشت','verstehe','متوجه می‌شوم'],
+      ['Ich habe es nicht verstanden.','آن را نفهمیدم.','ایش هابِه اِس نیشت فِرشتاندِن','verstanden','فهمیدم'],
       ['Können Sie langsamer sprechen?','می‌توانید آهسته‌تر صحبت کنید؟ (رسمی)','کِنِن زی لانگزامِر اِشپرِخِن','langsamer','آهسته‌تر'],
       ['Können Sie das wiederholen?','می‌توانید آن را تکرار کنید؟ (رسمی)','کِنِن زی داس ویدِرهولِن','wiederholen','تکرار کردن'],
       ['Mein Handy funktioniert nicht.','تلفن من کار نمی‌کند.','ماین هِندی فونکْتسیونیرت نیشت','funktioniert nicht','کار نمی‌کند'],

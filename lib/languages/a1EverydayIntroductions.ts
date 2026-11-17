@@ -43,7 +43,7 @@ export const A1_EVERYDAY_INTROS: Record<NewLanguageId,TopicIntro[]> = {
   ],
   de:[
     {slug:'location',title:'مکان و موقعیت مکانی',subtitle:'اینجا، آنجا و نزدیک',situation:'جای کتاب و کیف را در کلاس می‌پرسید.',teachingFa:'wo مکان را می‌پرسد؛ hier یعنی اینجا و dort یعنی آنجا. in der Nähe و weit نزدیکی و دوری را نشان می‌دهند. آوانویسی تقریبی است.',rows:[
-      ['Wo ist das Buch?','کتاب کجاست؟','وو ایست داس بوخ','Wo','کجا'],['Es ist hier.','اینجاست.','اِس ایست هیر','hier','اینجا'],
+      ['Wo ist die Küche?','آشپزخانه کجاست؟','وو ایست دی کوخِه','Küche','آشپزخانه'],['Sie ist oben.','بالاست.','زی ایست اوبِن','oben','بالا'],
       ['Wo ist deine Tasche?','کیف تو کجاست؟','وو ایست داینِه تاشِه','deine Tasche','کیف تو'],['Sie ist dort.','آنجاست.','زی ایست دورت','dort','آنجا'],
       ['Der Bahnhof ist in der Nähe.','ایستگاه نزدیک است.','دِر بانهوف ایست این دِر نِهِه','in der Nähe','نزدیک'],['Die Schule ist weit weg.','مدرسه دور است.','دی شولِه ایست وایت وِک','weit weg','دور'],
       ['Wir sind im Kurs.','ما در کلاس هستیم.','ویر زیند ایم کورس','im Kurs','در کلاس'],['Der Tisch steht vor der Tür.','میز جلوی در قرار دارد.','دِر تیش اشتِت فور دِر تور','vor','جلو'],
@@ -75,7 +75,7 @@ export const A1_EVERYDAY_INTROS: Record<NewLanguageId,TopicIntro[]> = {
     {slug:'connectors',title:'اتصال جمله‌های ساده',subtitle:'و، اما، یا',situation:'دوستتان دربارهٔ برنامه و نوشیدنی از شما سؤال می‌کند.',teachingFa:'und یعنی و، aber یعنی اما و oder یعنی یا. در این نمونه‌ها پس از aber و und ترتیب جملهٔ خبری حفظ می‌شود. آوانویسی تقریبی است.',rows:[
       ['Möchtest du Tee oder Kaffee?','چای می‌خواهی یا قهوه؟','مِشتِست دو تِه اودِر کافه','oder','یا'],['Ich möchte Tee, danke.','چای می‌خواهم، ممنون.','ایش مِشتِه تِه، دانکِه','Tee','چای'],
       ['Arbeitest und lernst du?','کار می‌کنی و درس می‌خوانی؟','آربایتِست اوند لِرنست دو','und','و'],['Ja, ich arbeite und lerne.','بله، کار می‌کنم و درس می‌خوانم.','یا، ایش آربایتِه اوند لِرنِه','lerne','درس می‌خوانم'],
-      ['Ich spreche Deutsch und Englisch.','من آلمانی و انگلیسی صحبت می‌کنم.','ایش اِشپرِشِه دویچ اوند اِنگلیش','und','و'],['Ich möchte kommen, aber ich arbeite.','می‌خواهم بیایم، اما کار می‌کنم.','ایش مِشتِه کومِن، آبِر ایش آربایتِه','aber','اما'],
+      ['Ich trinke Tee und Wasser.','من چای و آب می‌نوشم.','ایش تْرینکِه تِه اوند واسِر','und','و'],['Ich möchte kommen, aber ich arbeite.','می‌خواهم بیایم، اما کار می‌کنم.','ایش مِشتِه کومِن، آبِر ایش آربایتِه','aber','اما'],
       ['Das Buch ist klein, aber interessant.','کتاب کوچک اما جالب است.','داس بوخ ایست کلاین، آبِر اینتِرِسانت','interessant','جالب'],['Wir gehen zu Fuß oder nehmen den Bus.','پیاده می‌رویم یا اتوبوس می‌گیریم.','ویر گِهِن تسو فوس اودِر نِمِن دِن بوس','oder','یا'],
     ]},
   ],

@@ -19,7 +19,7 @@ import type { SentenceLesson } from './courseContent';
 export const PRE_A1_LESSONS: SentenceLesson[] = [
   {
     id: 'prea1-01-hello',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'سلام کردن',
     subtitle: 'از سلام صبح تا سلام شب',
@@ -45,7 +45,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'prea1-02-bye',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'خداحافظی',
     subtitle: 'پایان گفتگو، بدون سکوت',
@@ -71,7 +71,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'prea1-03-yes-no',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'بله و نه',
     subtitle: 'پاسخ کوتاه و مؤدبانه',
@@ -97,7 +97,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'prea1-04-i-am',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'من هستم (I am)',
     subtitle: 'اولین جملهٔ کامل',
@@ -110,8 +110,8 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
       { id: 'prea1-04-s3', en: 'I am fine.', fa: 'من خوبم.', pronunciation: 'آی اَم فاین.', pattern: 'I am + fine', vocabulary: [{ word: 'fine', meaning: 'خوب' }] },
       { id: 'prea1-04-s4', en: 'I am happy.', fa: 'من خوشحالم.', pronunciation: 'آی اَم هاپی.', pattern: 'I am + feeling', vocabulary: [{ word: 'happy', meaning: 'خوشحال' }] },
       { id: 'prea1-04-s5', en: 'I am tired.', fa: 'من خسته‌ام.', pronunciation: 'آی اَم تایِرد.', pattern: 'I am + feeling', vocabulary: [{ word: 'tired', meaning: 'خسته' }] },
-      { id: 'prea1-04-s6', en: 'I am a student.', fa: 'من دانش‌آموزم.', pronunciation: 'آی اَم اَ استیودِنت.', pattern: 'I am a + job', vocabulary: [{ word: 'student', meaning: 'دانش‌آموز' }] },
-      { id: 'prea1-04-s7', en: 'I am from Iran.', fa: 'من اهل ایرانم.', pronunciation: 'آی اَم فرام ایران.', pattern: 'I am from + country', vocabulary: [{ word: 'from', meaning: 'از، اهلِ' }, { word: 'iran', meaning: 'ایران' }] },
+      { id: 'prea1-04-s6', en: 'I am a teacher.', fa: 'من معلمم.', pronunciation: 'آی اَم اَ تیچِر.', pattern: 'I am a + job', vocabulary: [{ word: 'teacher', meaning: 'معلم' }] },
+      { id: 'prea1-04-s7', en: 'I am from Turkey.', fa: 'من اهل ترکیه‌ام.', pronunciation: 'آی اَم فرام تِرکی.', pattern: 'I am from + country', vocabulary: [{ word: 'from', meaning: 'از، اهلِ' }, { word: 'turkey', meaning: 'ترکیه' }] },
       { id: 'prea1-04-s8', en: 'I am from Tehran.', fa: 'من اهل تهرانم.', pronunciation: 'آی اَم فرام تِهران.', pattern: 'I am from + city', vocabulary: [{ word: 'tehran', meaning: 'تهران' }] },
     ],
     dialogue: [
@@ -123,7 +123,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'prea1-05-numbers',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'اعداد یک تا ده',
     subtitle: 'شمردن، بالا و پایین',
@@ -149,7 +149,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'prea1-06-how-are-you',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'حال شما چطور است؟',
     subtitle: 'پرسیدن و جواب دادن',
@@ -162,7 +162,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
       { id: 'prea1-06-s3', en: 'I am good.', fa: 'من خوبم.', pronunciation: 'آی اَم گود.', pattern: 'I am + good', vocabulary: [{ word: 'good', meaning: 'خوب' }] },
       { id: 'prea1-06-s4', en: 'I am OK.', fa: 'من خوبم. (اوکی)', pronunciation: 'آی اَم اوکِی.', pattern: 'I am + OK', vocabulary: [{ word: 'ok', meaning: 'خوب، اوکی' }] },
       { id: 'prea1-06-s5', en: 'I am a little tired.', fa: 'کمی خسته‌ام.', pronunciation: 'آی اَم اَ لیتِل تایِرد.', pattern: 'I am a little + adjective', vocabulary: [{ word: 'little', meaning: 'کمی' }, { word: 'tired', meaning: 'خسته' }] },
-      { id: 'prea1-06-s6', en: 'And you?', fa: 'شما چطورید؟', pronunciation: 'اَند یو؟', vocabulary: [{ word: 'and', meaning: 'و' }] },
+      { id: 'prea1-06-s6', en: 'How about you?', fa: 'شما چطور؟', pronunciation: 'هاو اَباوت یو؟', pattern: 'How about + pronoun?', vocabulary: [{ word: 'about', meaning: 'دربارهٔ' }] },
       { id: 'prea1-06-s7', en: 'How are you, Sara?', fa: 'حال تو چطور است، سارا؟', pronunciation: 'هاو آر یو، سارا؟', pattern: 'How are you, + name?', vocabulary: [{ word: 'how', meaning: 'چطور' }] },
       { id: 'prea1-06-s8', en: 'I am fine. And you?', fa: 'من خوبم. شما چطورید؟', pronunciation: 'آی اَم فاین. اَند یو؟', pattern: 'I am fine. + And you?', vocabulary: [{ word: 'fine', meaning: 'خوب' }] },
     ],
@@ -175,7 +175,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'prea1-07-i-have',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'من دارم (I have)',
     subtitle: 'چیزهایی که دارید',
@@ -201,7 +201,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'prea1-08-please-thankyou',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'لطفاً و ممنون',
     subtitle: 'درخواست کردن و تشکر',
@@ -227,7 +227,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'prea1-09-this-is',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'این ... است (This is)',
     subtitle: 'اشاره کردن و پرسیدن',
@@ -253,7 +253,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'prea1-10-review',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'مرور و اولین گفتگو',
     subtitle: 'همهٔ این سطح در یک گفتگو',
@@ -280,7 +280,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
 
   {
     id: 'prea1-11-at-home',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'در خانه',
     subtitle: 'چیزهای اطراف و مالکیت',
@@ -306,7 +306,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'prea1-12-people',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'آدم‌ها',
     subtitle: 'او، آن‌ها و اسم‌ها',
@@ -314,25 +314,25 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
     teachingFa: 'هدف: معرفی آدم‌ها با he / she / they و پرسیدن اسم.\nتلفظ: he را «هی» و she را «شی» بگویید؛ با هم اشتباه نشوند.\nنکته: his برای مرد و her برای زن است.',
     durationMinutes: 6,
     sentences: [
-      { id: 'prea1-12-s1', en: 'He is my friend.', fa: 'او دوست من است.', pronunciation: 'هی ایز مای فرِند.', pattern: 'He is my + noun', vocabulary: [{ word: 'he', meaning: 'او (مرد)' }] },
+      { id: 'prea1-12-s1', en: 'He is my father.', fa: 'او پدر من است.', pronunciation: 'هی ایز مای فاذِر.', pattern: 'He is my + noun', vocabulary: [{ word: 'he', meaning: 'او (مرد)' }] },
       { id: 'prea1-12-s2', en: 'She is my teacher.', fa: 'او معلم من است.', pronunciation: 'شی ایز مای تیچِر.', pattern: 'She is my + noun', vocabulary: [{ word: 'she', meaning: 'او (زن)' }, { word: 'teacher', meaning: 'معلم' }] },
       { id: 'prea1-12-s3', en: 'They are students.', fa: 'آن‌ها دانش‌آموز هستند.', pronunciation: 'ذِی آر استیودِنتس.', pattern: 'They are + plural noun', vocabulary: [{ word: 'they', meaning: 'آن‌ها' }, { word: 'students', meaning: 'دانش‌آموزان' }] },
-      { id: 'prea1-12-s4', en: 'His name is Reza.', fa: 'اسم او رضاست.', pronunciation: 'هیز نِیم ایز رضا.', pattern: 'His name is + name', vocabulary: [{ word: 'his', meaning: 'مالِ او (مرد)' }] },
-      { id: 'prea1-12-s5', en: 'Her name is Sara.', fa: 'اسم او ساراست.', pronunciation: 'هَر نِیم ایز سارا.', pattern: 'Her name is + name', vocabulary: [{ word: 'her', meaning: 'مالِ او (زن)' }] },
+      { id: 'prea1-12-s4', en: 'His name is Karim.', fa: 'اسم او کریم است.', pronunciation: 'هیز نِیم ایز کریم.', pattern: 'His name is + name', vocabulary: [{ word: 'his', meaning: 'مالِ او (مرد)' }] },
+      { id: 'prea1-12-s5', en: 'Her name is Laleh.', fa: 'اسم او لاله است.', pronunciation: 'هَر نِیم ایز لاله.', pattern: 'Her name is + name', vocabulary: [{ word: 'her', meaning: 'مالِ او (زن)' }] },
       { id: 'prea1-12-s6', en: 'We are here.', fa: 'ما اینجا هستیم.', pronunciation: 'وی آر هیر.', pattern: 'We are + place', vocabulary: [{ word: 'here', meaning: 'اینجا' }] },
       { id: 'prea1-12-s7', en: 'Is this your pen?', fa: 'این خودکار تو است؟', pronunciation: 'ایز ذیز یور پِن؟', pattern: 'Is this + your + noun?', vocabulary: [{ word: 'is', meaning: 'است' }] },
       { id: 'prea1-12-s8', en: 'Yes, it is my pen.', fa: 'بله، خودکار من است.', pronunciation: 'یِس، ایت ایز مای پِن.', pattern: 'Yes, it is + my + noun', vocabulary: [{ word: 'it', meaning: 'آن (برای چیز)' }] },
     ],
     dialogue: [
       { speaker: 'partner', text: 'Who is this?', fa: 'این کیست؟' },
-      { speaker: 'learner', text: 'He is my friend. His name is Reza.', fa: 'او دوست من است. اسمش رضاست.' },
+      { speaker: 'learner', text: 'He is my father. His name is Karim.', fa: 'او پدر من است. اسمش کریم است.' },
       { speaker: 'partner', text: 'And this?', fa: 'و این؟' },
-      { speaker: 'learner', text: 'She is my teacher. Her name is Sara.', fa: 'او معلم من است. اسمش ساراست.' },
+      { speaker: 'learner', text: 'She is my teacher. Her name is Laleh.', fa: 'او معلم من است. اسمش لاله است.' },
     ],
   },
   {
     id: 'prea1-13-every-day',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'هر روز',
     subtitle: 'کارهای روزانه و وقت',
@@ -347,7 +347,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
       { id: 'prea1-13-s5', en: 'I am at home now.', fa: 'من الان در خانه هستم.', pronunciation: 'آی اَم اَت هوم ناو.', pattern: 'I am at + place + now', vocabulary: [{ word: 'now', meaning: 'الان' }] },
       { id: 'prea1-13-s6', en: 'See you after work.', fa: 'بعد از کار می‌بینمت.', pronunciation: 'سی یو آفتِر وِرک.', pattern: 'See you after + noun', vocabulary: [{ word: 'after', meaning: 'بعد از' }] },
       { id: 'prea1-13-s7', en: 'I need help.', fa: 'من کمک لازم دارم.', pronunciation: 'آی نید هِلپ.', pattern: 'I need + noun', vocabulary: [{ word: 'need', meaning: 'لازم داشتن' }, { word: 'help', meaning: 'کمک' }] },
-      { id: 'prea1-13-s8', en: 'Can you help me?', fa: 'می‌توانی به من کمک کنی؟', pronunciation: 'کَن یو هِلپ می؟', pattern: 'Can you + verb + me?', vocabulary: [{ word: 'can', meaning: 'توانستن' }] },
+      { id: 'prea1-13-s8', en: 'Can you call me?', fa: 'می‌توانی به من زنگ بزنی؟', pronunciation: 'کَن یو کال می؟', pattern: 'Can you + verb + me?', vocabulary: [{ word: 'call', meaning: 'زنگ زدن' }] },
     ],
     dialogue: [
       { speaker: 'partner', text: 'Do you have time now?', fa: 'الان وقت داری؟' },
@@ -358,7 +358,7 @@ export const PRE_A1_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'prea1-14-i-like',
-    levelId: -1,
+    levelId: 0,
     order: 0,
     title: 'چیزهایی که دوست دارم',
     subtitle: 'خواستن، دوست داشتن و پرسیدن',

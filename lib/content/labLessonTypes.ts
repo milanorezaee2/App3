@@ -16,7 +16,7 @@ export interface LabCheck {
 }
 export interface LabLesson {
   id: string;
-  levelId: -1 | 0 | 1 | 2 | 3 | 4 | 5;
+  levelId: 0 | 1 | 2 | 3 | 4 | 5;
   band: string;
   title: string;
   subtitle: string;

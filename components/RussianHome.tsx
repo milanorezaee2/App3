@@ -428,7 +428,7 @@ export default function RussianHome() {
                 <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Sparkles size={18} color={HomeColors.accent} /></View>
                 <View style={styles.quickCopy}>
                   <Text style={styles.quickTitle}>واژهخانهٔ روسی</Text>
-                  <Text style={styles.quickDesc}>ببین، بشنو، بگو و برعکس بگو</Text>
+                  <Text style={styles.quickDesc}>ببین، یک بار بشنو، بعد از فارسی بگو</Text>
                 </View>
                 <ChevronLeft size={17} color={HomeColors.muted} />
               </Pressable>

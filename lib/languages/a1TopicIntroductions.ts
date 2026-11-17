@@ -60,8 +60,8 @@ export const A1_TOPIC_INTROS: Record<NewLanguageId,TopicIntro[]> = {
   ],
   de:[
     {slug:'nouns-gender-plural',title:'اسم‌ها، جنسیت و جمع',subtitle:'اسم‌های مذکر، مؤنث، خنثی و جمع',situation:'در کلاس دربارهٔ کتاب‌ها و کیف‌ها صحبت می‌کنید.',teachingFa:'جنس دستوری اسم را همراه حرف تعریف یاد بگیرید: der Tisch مذکر، die Tasche مؤنث و das Buch خنثی است. حرف تعریف معین جمع در حالت فاعلی die است؛ شکل جمع هر اسم را جداگانه یاد بگیرید. تلفظ فارسی تقریبی است.',rows:[
-      ['Ist das ein Buch?','این یک کتاب است؟','ایست داس آین بوخ','Buch','کتاب'],
-      ['Ja, das ist ein Buch.','بله، این یک کتاب است.','یا، داس ایست آین بوخ','ein Buch','یک کتاب'],
+      ['Ist das eine Tasche?','این یک کیف است؟','ایست داس اینِه تاشِه','Tasche','کیف'],
+      ['Ja, das ist eine Tasche.','بله، این یک کیف است.','یا، داس ایست اینِه تاشِه','eine Tasche','یک کیف'],
       ['Sind das Bücher?','این‌ها کتاب هستند؟','زیند داس بوشِر','Bücher','کتاب‌ها'],
       ['Ja, das sind Bücher.','بله، این‌ها کتاب هستند.','یا، داس زیند بوشِر','Bücher','کتاب‌ها'],
       ['Der Tisch ist hier.','میز اینجاست.','دِر تیش ایست هیر','Der Tisch','میز، مذکر'],

@@ -98,9 +98,9 @@ export const PRE_A1_EVIDENCE: Readonly<Record<string,readonly Task[]>> = {
     preA1('03','read-refusal','reading','«No, thank you.» یعنی چه؟','نه، ممنون.','رد کردن همراه با تشکر است.',{ source:'No, thank you.', options:['بله، لطفاً.','نه، ممنون.','ببخشید.'] }),
   ],
   'prea1-04-i-am': [
-    preA1('04','listen-origin','listening','گوینده اهل کجاست؟','ایران','I am from Iran یعنی اهل ایرانم.',{ audio:'I am from Iran.', options:['تهران','ایران','ترکیه'] }),
-    preA1('04','pick-am','grammar','جای خالی را کامل کنید: I ___ a student.','am','با I همیشه am می‌آید.',{ options:['is','am','are'] }),
-    preA1('04','gap-from','grammar','جای خالی را کامل کنید: I am ___ Tehran.','from','from یعنی اهلِ.',{ source:'I am from Tehran.', options:['from','fine','a'] }),
+    preA1('04','listen-origin','listening','گوینده اهل کجاست؟','ترکیه','I am from Turkey یعنی اهل ترکیه‌ام.',{ audio:'I am from Turkey.', options:['تهران','ایران','ترکیه'] }),
+    preA1('04','pick-am','grammar','جای خالی را کامل کنید: I ___ a teacher.','am','با I همیشه am می‌آید.',{ options:['is','am','are'] }),
+    preA1('04','gap-from','grammar','جای خالی را کامل کنید: I am ___ Turkey.','from','from یعنی اهلِ.',{ source:'I am from Turkey.', options:['from','fine','a'] }),
     preA1('04','read-feeling','reading','«I am tired.» یعنی چه؟','من خسته‌ام.','tired یعنی خسته.',{ source:'I am tired.', options:['من خوشحالم.','من خسته‌ام.','من خوبم.'] }),
   ],
   'prea1-05-numbers': [
@@ -111,7 +111,7 @@ export const PRE_A1_EVIDENCE: Readonly<Record<string,readonly Task[]>> = {
   ],
   'prea1-06-how-are-you': [
     preA1('06','listen-question','listening','چه سؤالی پرسیده شد؟','How are you?','How are you? یعنی حال شما چطور است؟',{ audio:'How are you?', options:['What is this?','How are you?','See you later.'] }),
-    preA1('06','pick-andyou','grammar','بعد از جواب دادن، برای برگرداندن سؤال چه می‌گویید؟','And you?','And you? یعنی «شما چطورید؟».',{ options:['And you?','Thank you.','Excuse me.'] }),
+    preA1('06','pick-andyou','grammar','بعد از جواب دادن، برای برگرداندن سؤال چه می‌گویید؟','How about you?','How about you? یعنی «شما چطور؟».',{ options:['How about you?','Thank you.','Excuse me.'] }),
     preA1('06','gap-fine','grammar','جای خالی را کامل کنید: I am ___, thank you.','fine','fine یعنی خوب.',{ source:'I am fine, thank you.', options:['fine','book','ten'] }),
     preA1('06','read-ok','reading','«I am OK.» یعنی چه؟','من خوبم.','OK یعنی خوب، اوکی.',{ source:'I am OK.', options:['من خسته‌ام.','من خوبم.','من گرسنه‌ام.'] }),
   ],

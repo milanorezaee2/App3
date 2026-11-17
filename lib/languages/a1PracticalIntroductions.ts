@@ -57,12 +57,12 @@ export const A1_PRACTICAL_INTROS: Record<NewLanguageId,TopicIntro[]> = {
     {slug:'work-study',title:'مکالمات ساده در محل کار و تحصیل',subtitle:'کار، کلاس و استراحت',situation:'در کلاس یا محل کار با یک همکار صحبت می‌کنید.',teachingFa:'Ich arbeite یعنی کار می‌کنم و Ich lerne یعنی یاد می‌گیرم. Wann برای پرسیدن زمان استفاده می‌شود. آوانویسی تقریبی است.',rows:[
       ['Arbeitest du hier?','اینجا کار می‌کنی؟','آربایتِست دو هیر','Arbeitest','کار می‌کنی'],['Ja, ich arbeite hier.','بله، اینجا کار می‌کنم.','یا، ایش آربایتِه هیر','arbeite','کار می‌کنم'],
       ['Beginnt der Kurs um neun Uhr?','کلاس ساعت نه شروع می‌شود؟','بِگینت دِر کورس اوم نویِن اور','Beginnt','شروع می‌شود'],['Ja, um neun Uhr.','بله، ساعت نه.','یا، اوم نویِن اور','neun Uhr','ساعت نه'],
-      ['Ich lerne Deutsch.','آلمانی یاد می‌گیرم.','ایش لِرنِه دویچ','lerne','یاد می‌گیرم'],['Wir haben eine Pause.','ما استراحت داریم.','ویر هابِن آینِه پاوزِه','Pause','استراحت'],
-      ['Das Treffen ist morgen.','جلسه فرداست.','داس تْرِفِن ایست مورگِن','Treffen','جلسه'],['Ich arbeite mit Lena.','من با لنا کار می‌کنم.','ایش آربایتِه میت لِنا','mit','با'],
+      ['Ich lerne jeden Tag Deutsch.','هر روز آلمانی یاد می‌گیرم.','ایش لِرنِه یِدِن تاک دویچ','jeden Tag','هر روز'],['Wir haben eine Pause.','ما استراحت داریم.','ویر هابِن آینِه پاوزِه','Pause','استراحت'],
+      ['Ich arbeite im Büro.','من در دفتر کار می‌کنم.','ایش آربایتِه ایم بیورو','Büro','دفتر'],['Ich arbeite mit Lena.','من با لنا کار می‌کنم.','ایش آربایتِه میت لِنا','mit','با'],
     ]},
     {slug:'forms-information',title:'پرسیدن اطلاعات و تکمیل فرم',subtitle:'نام، کشور و راه تماس',situation:'در یک دفتر برای تکمیل فرم نمونه سؤال می‌پرسید.',teachingFa:'Vorname نام کوچک و Nachname نام خانوادگی است. اطلاعات مثال خیالی‌اند؛ فقط در صورت نیاز و اطمینان از مقصد، دادهٔ شخصی وارد کنید. آوانویسی تقریبی است.',rows:[
       ['Wie ist Ihr Vorname?','نام کوچک شما چیست؟','وی ایست ایر فورنامِه','Vorname','نام کوچک'],['Mein Vorname ist Sara.','نام کوچک من سارا است.','ماین فورنامِه ایست سارا','Mein Vorname','نام کوچک من'],
-      ['Aus welchem Land kommen Sie?','شما اهل کدام کشور هستید؟','آوس وِلشِم لانت کومِن زی','Land','کشور'],['Ich komme aus dem Iran.','من اهل ایران هستم.','ایش کومِه آوس دِم ایران','Iran','ایران'],
+      ['Aus welchem Land kommen Sie?','شما اهل کدام کشور هستید؟','آوس وِلشِم لانت کومِن زی','Land','کشور'],['Ich komme aus Österreich.','من اهل اتریش هستم.','ایش کومِه آوس اوستِررایش','Österreich','اتریش'],
       ['Wo schreibe ich meinen Namen?','نامم را کجا بنویسم؟','وو شرایبِه ایش ماینِن نامِن','Namen','نام'],['Schreiben Sie bitte hier.','اینجا بنویسید، لطفاً.','شرایبِن زی بیتِه هیر','Schreiben','نوشتن'],
       ['Wie ist Ihre Adresse?','نشانی شما چیست؟','وی ایست ایرِه آدرِسِه','Adresse','نشانی'],['Ich verstehe dieses Formular nicht.','این فرم را متوجه نمی‌شوم.','ایش فِرشتِهِه دیزِس فورمولار نیشت','Formular','فرم'],
     ]},

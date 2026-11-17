@@ -70,7 +70,7 @@ const units:readonly Unit[] = [
  ['موزه ساعت ده باز می‌شود.','ساعت ده',['Le musée ouvre à dix heures.','لُ موزِه اووْغ آ دیز اُغ','dix heures'],['Das Museum öffnet um zehn Uhr.','داس موزِئوم اوفنِت اوم تسِین اور','zehn Uhr'],['El museo abre a las diez.','اِل موسِئو آبرِه آ لاس دیِث','las diez']],
  ['آیا نقشهٔ شهر دارید؟','نقشه',['Vous avez un plan de la ville ?','وو زاوه اَن پْلان دُ لا ویل','un plan'],['Haben Sie einen Stadtplan?','هابِن زی آینِن شتات‌پلان','Stadtplan'],['¿Tiene un plano de la ciudad?','تیِنِه اون پلانو دِ لا سیوداد','un plano']],
  ['بلیت برای دو نفر چقدر است؟','دو نفر',['Combien coûte le billet pour deux personnes ?','کُنبین کوت لُ بیه پور دو پِغسون','deux personnes'],['Wie viel kosten die Karten für zwei Personen?','وی فیل کوستِن دی کارتِن فیور تسوای پِرزونِن','zwei Personen'],['¿Cuánto cuestan las entradas para dos personas?','کوانتو کوئِستان لاس اِنتراداس پارا دوس پِرسوناس','dos personas']],
- ['ممنون از راهنمایی شما.','راهنمایی',['Merci pour votre aide.','مِغسی پور ووتر اِد','votre aide'],['Danke für Ihre Hilfe.','دانکِه فیور ایرِه هیلفِه','Ihre Hilfe'],['Gracias por su ayuda.','گراسیاس پور سو آیودا','su ayuda']],
+ ['ممنون از توضیحاتتان.','توضیح',['Merci pour vos explications.','مِغسی پور ووز اِکسپلیکاسیون','explications'],['Danke für Ihre Erklärung.','دانکِه فیور ایرِه اِرکلِرونگ','Erklärung'],['Gracias por su explicación.','گراثیاس پور سو اِکسپلیکاسیون','explicación']],
  ],
  messages:[
  ['پس از مستقیم رفتن به کدام طرف می‌پیچید؟','چپ','راست','برنمی‌گردد','Allez tout droit, puis tournez à gauche près de la gare.','Gehen Sie geradeaus und biegen Sie an der Kirche links ab.','Siga recto y gire a la izquierda cerca de la plaza.'],
@@ -102,7 +102,7 @@ const units:readonly Unit[] = [
  ['باید این متن را بخوانیم.','این متن',['Il faut lire ce texte.','ایل فو لیغ سُ تِکست','ce texte'],['Wir müssen diesen Text lesen.','ویر موسِن دیزِن تِکست لِزِن','diesen Text'],['Hay que leer este texto.','آی کِه لِئِر اِستِه تِکستو','este texto']],
  ['تکلیف را فردا تحویل می‌دهیم.','فردا',['Nous rendons le devoir demain.','نو غاندون لُ دُووار دُمَن','demain'],['Wir geben die Hausaufgabe morgen ab.','ویر گِبِن دی هاوس‌آوفگابِه مورگِن آپ','morgen'],['Entregamos los deberes mañana.','اِنترِگاموس لوس دِبِرِس مانیانا','mañana']],
  ['می‌توانی سؤال را تکرار کنی؟','تکرار',['Tu peux répéter la question ?','تو پُ غِپِته لا کِستیون','répéter'],['Kannst du die Frage wiederholen?','کانست دو دی فراگِه ویدِرهولِن','wiederholen'],['¿Puedes repetir la pregunta?','پوئِدِس رِپِتیر لا پْرِگونتا','repetir']],
- ['بله، البته.','البته',['Oui, bien sûr.','وی بیَن سور','bien sûr'],['Ja, natürlich.','یا ناتورلیش','natürlich'],['Sí, claro.','سی کلارو','claro']],
+ ['بله، البته.','البته',['Oui, bien sûr.','وی بیَن سور','bien sûr'],['Ja, sicher.','یا زیخر','sicher'],['Sí, claro.','سی کلارو','claro']],
  ],
  messages:[
  ['دوره چه روزی است؟','چهارشنبه','پنج‌شنبه','جمعه','Le cours est mercredi. Il commence à neuf heures.','Der Kurs ist am Mittwoch. Er beginnt um neun Uhr.','El curso es el miércoles. Empieza a las nueve.'],

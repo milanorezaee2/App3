@@ -43,7 +43,7 @@ const seeds: Record<NewLanguageId, LessonSeed[]> = {
       ['Hallo!','سلام!','هالو','Hallo','سلام'], ['Guten Morgen!','صبح بخیر!','گوتِن مورگِن','Morgen','صبح'], ['Guten Tag!','روز بخیر!','گوتِن تاک','Tag','روز'], ['Guten Abend!','عصر بخیر!','گوتِن آبِنت','Abend','عصر'], ['Tschüss!','خداحافظ! (دوستانه)','چوس','Tschüss','خداحافظ'], ['Auf Wiedersehen!','خداحافظ! (رسمی)','آوف ویدِرزِهِن','Auf Wiedersehen','خداحافظ رسمی']
     ], check:['برای خداحافظی رسمی کدام را می‌گوییم؟',5,'Auf Wiedersehen خداحافظی رسمی است.'] },
     { title:'معرفی و احوال‌پرسی', subtitle:'گفت‌وگوی کوتاه', situation:'نام خود را می‌گویید و حال طرف مقابل را می‌پرسید.', teachingFa:'در آلمانی حالت رسمی Sie با حرف بزرگ نوشته می‌شود. «Ich heiße …» برای گفتن نام است.', sentences:[
-      ['Ich heiße Sara.','اسم من سارا است.','ایش هایسِه سارا','heiße','نام دارم','Ich heiße …'], ['Wie heißt du?','اسم تو چیست؟','وی هایست دو','wie','چگونه'], ['Ich bin Sara.','من سارا هستم.','ایش بین سارا','bin','هستم','Ich bin …'], ['Wie geht es dir?','حالت چطور است؟','وی گیت اِس دیر','dir','به تو'], ['Mir geht es gut.','حالم خوب است.','میر گیت اِس گوت','gut','خوب'], ['Danke, gut.','ممنون، خوبم.','دانکِه گوت','Danke','ممنون']
+      ['Ich heiße Sara.','اسم من سارا است.','ایش هایسِه سارا','heiße','نام دارم','Ich heiße …'], ['Wie heißt du?','اسم تو چیست؟','وی هایست دو','wie','چگونه'], ['Ich bin Sara.','من سارا هستم.','ایش بین سارا','bin','هستم','Ich bin …'], ['Wie geht\'s dir?','حالت چطوره؟','وی گیتس دیر','dir','به تو'], ['Mir geht es gut.','حالم خوب است.','میر گیت اِس گوت','gut','خوب'], ['Danke, gut.','ممنون، خوبم.','دانکِه گوت','Danke','ممنون']
     ], check:['برای گفتن «اسم من سارا است» کدام را می‌گوییم؟',0,'Ich heiße Sara یعنی اسم من سارا است.'] },
   ],
   fr: [
@@ -66,8 +66,8 @@ const seeds: Record<NewLanguageId, LessonSeed[]> = {
 
 const pilotExtras: Record<NewLanguageId, SentenceSeed[][]> = {
   de: [
-    [['Bis bald!','به‌زودی می‌بینمت!','بیس بالت','bald','به‌زودی'], ['Hallo zusammen!','سلام به همه!','هالو تسوزامِن','zusammen','همه با هم']],
-    [['Und du?','و تو؟','اوند دو','du','تو'], ['Mir geht es gut, danke.','حالم خوب است، ممنون.','میر گیت اِس گوت، دانکِه','danke','ممنون']],
+    [['Gute Nacht!','شب بخیر!','گوتِه ناخت','Nacht','شب'], ['Hallo zusammen!','سلام به همه!','هالو تسوزامِن','zusammen','همه با هم']],
+    [['Danke, sehr gut!','ممنون، خیلی خوبم!','دانکِه، زِر گوت','sehr','خیلی'], ['Schönen Tag noch!','روز خوبی داشته باشید!','شونِن تاک نوخ','schön','خوب']],
   ],
   fr: [
     [['Bonne soirée !','عصر خوبی داشته باشید!','بُن سواره','soirée','عصر'], ['À demain !','فردا می‌بینمت!','آ دُمَن','demain','فردا']],
@@ -95,8 +95,38 @@ function starterLabLesson(lab: LabLesson): StarterLesson {
 
 const labels = { de: {name:'آلمانی', native:'Deutsch', locale:'de-DE', brand:'GERMAN'}, fr:{name:'فرانسوی',native:'Français',locale:'fr-FR',brand:'FRENCH'}, es:{name:'اسپانیایی',native:'Español',locale:'es-ES',brand:'SPANISH'} } as const;
 const levelSeeds: Array<[CourseLevelId,string,string,string,string]> = [
-  [-1,'Absolute Beginner','Pre-A1 · شروع از صفر','نخستین واژه‌ها و جمله‌ها','#94a3b8'], [1,'A1 · Foundation & Survival','A1 · پایه و کاربرد روزمره','دو بخش پایه و موقعیت‌های روزمره؛ محتوا در حال تدوین است','#27A1D6'], [2,'A2 · Foundation & Survival','A2 · ارتباط پایه','درس‌های مرتبط با سرفصل‌ها در دسترس‌اند؛ پوشش هر موضوع جزئی است','#19A88B'], [3,'B1 · Foundation & Survival','B1 · ارتباط مستقل','نقشه و درس‌های مرتبط؛ پوشش هر سرفصل جزئی است','#E4A436'], [4,'B2 · Foundation & Survival','B2 · ارتباط پیشرفته','نقشه و درس‌های مرتبط؛ پوشش سرفصل‌ها جزئی است','#9A68E8'], [5,'Advanced Communication','C1 · پیشرفته','بیان دقیق، ساختارهای پیشرفته و ارتباط مؤثر در موقعیت‌های حرفه‌ای و دانشگاهی','#D56788'],
+  [0,'Absolute Beginner','Pre-A1','نخستین واژه‌ها و جمله‌ها','#94a3b8'], [1,'A1 · Foundation & Survival','A1 · پایه و کاربرد روزمره','بخش پایه و موقعیت‌های روزمره در یک سطح','#27A1D6'], [2,'A2 · Foundation & Survival','A2 · ارتباط پایه','درس‌های مرتبط با سرفصل‌ها در دسترس‌اند؛ پوشش هر موضوع جزئی است','#19A88B'], [3,'B1 · Foundation & Survival','B1 · ارتباط مستقل','نقشه و درس‌های مرتبط؛ پوشش هر سرفصل جزئی است','#E4A436'], [4,'B2 · Foundation & Survival','B2 · ارتباط پیشرفته','نقشه و درس‌های مرتبط؛ پوشش سرفصل‌ها جزئی است','#9A68E8'], [5,'Advanced Communication','C1 · پیشرفته','بیان دقیق، ساختارهای پیشرفته و ارتباط مؤثر در موقعیت‌های حرفه‌ای و دانشگاهی','#D56788'],
 ];
+/**
+ * German overlaps fixed at the source (rev 119 review).
+ *
+ * The beginner band shipped six «foundation» word lists and then twenty-one numbered lessons that
+ * repeated the same six greetings, politeness words and object names, and three A1 lessons re-taught
+ * the «Woher kommst du?» / «Ich wohne in Berlin» block word for word. Instead of hiding the repeats:
+ *
+ *   • the foundation lists are now word-only (a word, not the same greeting as a sentence), so they
+ *     teach spelling and sound, which is what they are named for;
+ *   • four new bridge lessons at the end of Pre-A1 take the *situations* that were missing (numbers
+ *     21–100 and age, the time of day, rooms and furniture, weather) — no sentence is reused;
+ *   • the three duplicated A1 sentences in «پروفایل و کشورها» and «ملیت و زبان» are replaced with the
+ *     questions and answers those lessons actually need.
+ * IDs and sentence indexes stay identical, so saved progress and review cards remain valid.
+ */
+const DE_PRE_A1_BRIDGE: LessonSeed[] = [
+  { title:'اعداد ۲۱ تا ۱۰۰ و سن', subtitle:'شماردن تا صد', situation:'سن و شماره‌های بزرگ‌تر را می‌گویید و می‌پرسید.', teachingFa:'عددهای ۲۱ به بعد را آلمانی با «یکان + und + دهگان» می‌سازد: einundzwanzig = ۲۱. برای سن «Ich bin … Jahre alt» می‌گوییم.', check:['کدام عدد یعنی «چهل»؟',3,'Vierzig یعنی چهل.'], dialogue:[0,1,2,3], sentences:[
+      ['Wie alt bist du?','چند سالت است؟','وی آلت بیست دو','alt','سن'], ['Ich bin dreißig Jahre alt.','من سی سال دارم.','ایش بین درایسیش یاره آلت','Jahre','سال'], ['Wie viel kostet das?','این چند است؟','وی فیل کوستِت داس','kostet','قیمت دارد'], ['Vierzig Euro.','چهل یورو.','فیرتسیش اویو','vierzig','چهل'], ['Das kostet zwanzig Euro.','این بیست یورو است.','داس کوستِت تسوانتسیش اویو','zwanzig','بیست'], ['Meine Nummer ist dreiundfünfzig.','شمارهٔ من پنجاه‌وسه است.','ماینه نومِر ایست درایونت فونفتسیش','Nummer','شماره'], ['Hundert.','صد.','هوندِرت','hundert','صد'], ['Neunundneunzig.','نود‌و‌نه.','نوینونت نوینتسیش','neunzig','نود']
+    ] },
+  { title:'ساعت و وقت روز', subtitle:'چه ساعتی؟', situation:'ساعت را می‌پرسید و وقت قرار را می‌گویید.', teachingFa:'برای پرسیدن ساعت «Wie spät ist es?» می‌گوییم. ساعت کامل با «Es ist … Uhr» و نیم با «halb» گفته می‌شود.', check:['برای پرسیدن ساعت کدام را می‌گوییم؟',1,'Wie spät ist es? یعنی چه ساعتی است؟'], dialogue:[0,1,2,3], sentences:[
+      ['Wie spät ist es?','چه ساعتی است؟','وی شپِت ایست اِس','spät','دیر / چه‌قدر گذشته'], ['Es ist acht Uhr.','ساعت هشت است.','اِس ایست آخت اور','Uhr','ساعت'], ['Um wie viel Uhr?','چه ساعتی؟','اوم وی فیل اور','um','در ساعت'], ['Um halb neun.','هشت‌و‌نیم.','اوم هالپ نوین','halb','نیم'], ['Der Termin ist um zehn.','قرار ساعت ده است.','دِر تِرمین ایست اوم تسین','Termin','قرار'], ['Heute Abend.','امشب.','هویته آبِنت','Abend','شب'], ['Am Morgen.','صبح.','آم مورگِن','Morgen','صبح'], ['Bis morgen!','تا فردا!','بیس مورگِن','morgen','فردا']
+    ] },
+  { title:'اتاق‌ها و وسایل خانه', subtitle:'در خانه', situation:'اتاق‌های خانه و چند وسیله را نام می‌برید و می‌گویید کجاست.', teachingFa:'نام اتاق‌ها با حرف تعریف می‌آید: das Wohnzimmer، die Küche، das Badezimmer. برای پرسیدن جا «Wo ist …?» می‌پرسیم.', check:['کدام یعنی «آشپزخانه»؟',2,'Küche یعنی آشپزخانه.'], dialogue:[0,1,2,3], sentences:[
+      ['Das ist mein Zimmer.','این اتاق من است.','داس ایست ماین تسیمِر','Zimmer','اتاق'], ['Wo ist die Küche?','آشپزخانه کجاست؟','وو ایست دی کوخِه','Küche','آشپزخانه'], ['Die Küche ist dort.','آشپزخانه آنجاست.','دی کوخِه ایست دورت','dort','آنجا'], ['Das Wohnzimmer ist groß.','اتاق نشیمن بزرگ است.','داس وونزیمِر ایست گروس','Wohnzimmer','اتاق نشیمن'], ['Im Bad.','در حمام.','ایم باد','Bad','حمام'], ['Der Tisch ist neu.','میز نو است.','دِر تیش ایست نوی','Tisch','میز'], ['Der Stuhl ist alt.','صندلی کهنه است.','دِر شتول ایست آلت','Stuhl','صندلی'], ['Das Bett ist klein.','تخت کوچک است.','داس بِت ایست کلایْن','Bett','تخت']
+    ] },
+  { title:'هوا و فصل‌ها', subtitle:'امروز چه هوایی است؟', situation:'هوا را توصیف می‌کنید و دربارهٔ فصل حرف می‌زنید.', teachingFa:'برای هوا «Wie ist das Wetter?» می‌پرسیم و با «Es ist …» جواب می‌دهیم. فصل‌ها: Frühling، Sommer، Herbst، Winter.', check:['کدام یعنی «هوا آفتابی است»؟',0,'Die Sonne scheint یعنی خورشید می‌تابد.'], dialogue:[0,1,2,3], sentences:[
+      ['Wie ist das Wetter?','هوا چطور است؟','وی ایست داس وِتِر','Wetter','هوا'], ['Die Sonne scheint.','خورشید می‌تابد.','دی زونِه شایْنْت','Sonne','خورشید'], ['Es regnet.','باران می‌آید.','اِس رِگنِت','regnet','باران می‌آید'], ['Es ist kalt.','هوا سرد است.','اِس ایست کالت','kalt','سرد'], ['Es ist warm.','هوا گرم است.','اِس ایست وارم','warm','گرم'], ['Im Winter ist es kalt.','در زمستان هوا سرد است.','ایم وینتِر ایست اِس کالت','Winter','زمستان'], ['Der Sommer ist warm.','تابستان گرم است.','دِر زومِر ایست وارم','Sommer','تابستان'], ['Im Herbst regnet es.','در پاییز باران می‌آید.','ایم هِرپست رِگنِت اِس','Herbst','پاییز']
+    ] },
+];
+
 export function isNewLanguage(value: string | undefined): value is NewLanguageId { return value === 'de' || value === 'fr' || value === 'es'; }
 function buildFoundation(id: NewLanguageId, seed: FoundationSeed): StarterLesson {
   const lessonId = `${id}-foundation-${seed.id}`;
@@ -118,7 +148,7 @@ function buildFoundation(id: NewLanguageId, seed: FoundationSeed): StarterLesson
     };
   };
   return {
-    id: lessonId, levelId: -1, order: 0, learningMode: seed.mode,
+    id: lessonId, levelId: 0, order: 0, learningMode: seed.mode,
     title: seed.title, subtitle: seed.subtitle, situation: seed.situation,
     teachingFa: seed.teachingFa, durationMinutes: 6, sentences,
     dialogue: [], checks: [check(0, true), check(3, false), check(6, true)],
@@ -140,7 +170,8 @@ function buildA1(id: NewLanguageId, seed: A1Seed, level: 1 | 2 | 3 | 4 = 1): Sta
 }
 
 function buildCourse(id: NewLanguageId) {
-  const allSeeds = [...seeds[id], ...PRE_A1_EXPANSION[id], ...PRE_A1_MORE[id]];
+  const bridgeSeeds = id === 'de' ? DE_PRE_A1_BRIDGE : [];
+  const allSeeds = [...seeds[id], ...PRE_A1_EXPANSION[id], ...PRE_A1_MORE[id], ...bridgeSeeds];
   const legacy: StarterLesson[] = allSeeds.map((seed, n) => {
     const sentenceSeeds = n < 2 ? [...seed.sentences, ...pilotExtras[id][n]] : seed.sentences;
     const sentences = sentenceSeeds.map(([text,fa,pronunciation,word,meaning,pattern], i) => ({ id:`${id}-pre${n+1}-s${i+1}`, text, fa, pronunciation, vocabulary:[{word,meaning}], ...(pattern ? {pattern} : {}) }));
@@ -158,7 +189,7 @@ function buildCourse(id: NewLanguageId) {
         checks.push({promptFa:`«${sentence.fa}» به این زبان کدام است؟`, choices, correctIndex:secondIndex, explanationFa:`${sentence.text} یعنی ${sentence.fa}`});
       }
     }
-    return { id:`${id}-pre-${n+1}`, levelId:-1 as const, order:n+1, title:seed.title, subtitle:seed.subtitle, situation:seed.situation, teachingFa:seed.teachingFa, durationMinutes:8, sentences, dialogue: (seed.dialogue ?? (n === 0 ? [0,0,4,4] : [1,0,3,4])).map((idx, i) => ({speaker:i % 2 === 1 ? 'همراه' : 'زبان‌آموز', text:sentences[idx].text, fa:sentences[idx].fa})), checks };
+    return { id:`${id}-pre-${n+1}`, levelId:0 as const, order:n+1, title:seed.title, subtitle:seed.subtitle, situation:seed.situation, teachingFa:seed.teachingFa, durationMinutes:8, sentences, dialogue: (seed.dialogue ?? (n === 0 ? [0,0,4,4] : [1,0,3,4])).map((idx, i) => ({speaker:i % 2 === 1 ? 'همراه' : 'زبان‌آموز', text:sentences[idx].text, fa:sentences[idx].fa})), checks };
   });
   // The original records retain every ID, sentence, check and review card.
   // Only their presentation order changes; returning learners keep their saved
@@ -197,7 +228,7 @@ function buildCourse(id: NewLanguageId) {
   const a1Order = getA1Curriculum(id).flatMap(section => section.topics.flatMap(topic => [...topic.relatedLessonIds]));
   const a1Rank = new Map(a1Order.map((lessonId, index) => [lessonId, index]));
   const orderedLessons = [
-    ...lessons.filter(lesson => lesson.levelId === -1),
+    ...lessons.filter(lesson => lesson.levelId === 0),
     ...lessons.filter(lesson => lesson.levelId === 1).sort((a,b) => (a1Rank.get(a.id) ?? Number.MAX_SAFE_INTEGER) - (a1Rank.get(b.id) ?? Number.MAX_SAFE_INTEGER)),
     ...lessons.filter(lesson => lesson.levelId === 2),
     ...lessons.filter(lesson => lesson.levelId === 3),
@@ -207,7 +238,7 @@ function buildCourse(id: NewLanguageId) {
   const b1Title: Record<NewLanguageId, string> = {fr:'B1 · Communication autonome', de:'B1 · Selbstständige Kommunikation', es:'B1 · Comunicación independiente'};
   const b2Title: Record<NewLanguageId, string> = {fr:'B2 · Communication avancée', de:'B2 · Selbstständige und differenzierte Kommunikation', es:'B2 · Comunicación avanzada'};
   const c1Title: Record<NewLanguageId, string> = {fr:'C1 · Communication avancée', de:'C1 · Fortgeschrittene Kommunikation', es:'C1 · Comunicación avanzada'};
-  const levels = levelSeeds.map(([levelId,title,cefr,description,color])=>({ id:levelId,title: levelId === 5 ? c1Title[id] : levelId === 4 ? b2Title[id] : levelId === 3 ? b1Title[id] : title,cefr,description,color,modules:orderedLessons.filter(l=>l.levelId===levelId).map(l=>l.title),status:(levelId === -1 || levelId === 1 || levelId === 2 || levelId === 3 || levelId === 4 || levelId === 5 ? 'available' : 'planned') as 'available'|'planned' }));
+  const levels = levelSeeds.map(([levelId,title,cefr,description,color])=>({ id:levelId,title: levelId === 5 ? c1Title[id] : levelId === 4 ? b2Title[id] : levelId === 3 ? b1Title[id] : title,cefr,description,color,modules:orderedLessons.filter(l=>l.levelId===levelId).map(l=>l.title),status:(levelId === 0 || levelId === 1 || levelId === 2 || levelId === 3 || levelId === 4 || levelId === 5 ? 'available' : 'planned') as 'available'|'planned' }));
   const progress = createCourseProgressStore({key:`sentence_course_progress_${id}_starter_v1`,lessons:orderedLessons,cloudSync:false,recordEstimatedTime:false,markVocabularyOnCompletion:false});
   return { id,...labels[id], lessons:orderedLessons,levels,progress,sessions:createStarterSessions(id,orderedLessons), home:`/learn/${id}` };
 }

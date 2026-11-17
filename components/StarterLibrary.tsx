@@ -188,7 +188,7 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
 
             <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[selected.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.levelHero}>
               <View pointerEvents="none" style={styles.levelHeroOrb} />
-              <View style={styles.levelHeroTop}><View style={styles.levelHeroTag}><Text style={styles.levelHeroTagText}>{selected.id === -1 ? 'PRE-A1' : `LEVEL ${selected.id}`} </Text></View><Text style={styles.levelHeroBand}>{selected.cefr}</Text></View>
+              <View style={styles.levelHeroTop}><View style={styles.levelHeroTag}><Text style={styles.levelHeroTagText}>{selected.id === 0 ? 'PRE-A1' : `LEVEL ${selected.id}`} </Text></View><Text style={styles.levelHeroBand}>{selected.cefr}</Text></View>
               <Text style={styles.selectedTitle}>{selected.title}</Text>
               <Text style={styles.selectedDescription}>{selected.description}</Text>
               {selected.id !== 5 && <><View style={styles.selectedProgressHeading}><Text style={styles.selectedProgressLabel}>{selected.id === 1 || selected.id === 2 || selected.id === 3 || selected.id === 4 ? 'پیشرفت درس‌های موجود' : 'پیشرفت این سطح'}</Text><Text style={styles.selectedProgressValue}>{fa(countFor(selected.id).completed)} از {fa(selectedLessons.length)} درس</Text></View>

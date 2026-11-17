@@ -10,7 +10,7 @@ export const SURVIVAL_COMPLETION_PART_C = {
     ['health-temperature-reading', 'My temperature is thirty-eight degrees.', 'دمای بدنم سی‌وهشت درجه است.', 'مای تِمپِرِچِر ایز ثِرتی اِیت دِگریز.', 'My temperature is + number + degrees.', [['temperature', 'دما'], ['thirty-eight degrees', 'سی‌وهشت درجه']]],
     ['health-pain-started', 'The pain started this morning.', 'درد از صبح شروع شد.', 'ذِ پِین اِستارتِد ذیس مورنینگ.', 'The pain started + time.', [['pain', 'درد'], ['started', 'شروع شد']]],
     ['health-cough-three-days', 'My cough started three days ago.', 'سرفه‌ام سه روز پیش شروع شد.', 'مای کاف اِستارتِد ثری دِیز اَگو.', 'My + symptom + started + time + ago.', [['cough', 'سرفه'], ['three days ago', 'سه روز پیش']]],
-    ['health-bottle-water', 'I need a bottle of water.', 'یک بطری آب لازم دارم.', 'آی نید اَ باتِل آو واتِر.', 'I need + a bottle of + drink.', [['bottle of water', 'بطری آب']]],
+    ['health-bottle-water', 'I need two bottles of water.', 'دو بطری آب لازم دارم.', 'آی نید تو باتِلز آو واتِر.', 'I need + number + bottles of + drink.', [['bottle of water', 'بطری آب'], ['two', 'دو']]],
     ['health-pain-medicine', 'Do you have pain medicine?', 'داروی ضددرد دارید؟', 'دو یو هَو پِین مِدِسِن؟', 'Do you have + type of medicine?', [['pain medicine', 'داروی ضددرد']]],
     ['health-buy-thermometer', 'Can I buy a thermometer here?', 'می‌توانم اینجا دماسنج بخرم؟', 'کَن آی بای اَ ثِرمامِتِر هیر؟', 'Can I buy + medical item + place?', [['thermometer', 'دماسنج']]],
     ['health-label-instructions', 'The label says to take one tablet with food.', 'روی برچسب نوشته یک قرص را همراه غذا مصرف کنید.', 'ذِ لِیبِل سِز تو تِیک وان تَبلِت ویذ فود.', 'The label says to + verb + dose + with + food.', [['label', 'برچسب'], ['tablet', 'قرص']]],

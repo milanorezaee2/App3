@@ -32,7 +32,7 @@ import {
 
 export { COMMUNICATION_COURSE_LESSON_IDS, COMMUNICATION_LESSON_UNIT, COMMUNICATION_MODULES };
 
-export type CourseLevelId = -1 | 0 | 1 | 2 | 3 | 4 | 5;
+export type CourseLevelId = 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface CourseSentence {
   id: string;
@@ -86,35 +86,36 @@ export interface CourseLevel {
   modules: string[];
 }
 
+/**
+ * The English ladder, one card per CEFR level: Pre-A1, A1, A2, B1, B2, C1.
+ *
+ * The old build had two beginner cards — «Pre-A1» (fourteen hand-written beginner lessons) and a
+ * foundation card of ten ordinary fifty-sentence lessons. They taught the same greetings,
+ * introductions and numbers twice, which is exactly the overlap the learner reported. There is now
+ * one Pre-A1 card, and the ten foundation lessons moved up into A1 where their sentence load belongs.
+ * Every lesson keeps its ID, sentences and order, so saved progress and review cards stay valid.
+ */
 export const COURSE_LEVELS: CourseLevel[] = [
   {
-    id: -1,
+    id: 0,
     title: 'Absolute Beginner',
-    cefr: 'Pre-A1 · شروع از صفر',
-    description: 'بخش پیش‌مقدمهٔ کاملاً جدید برای کسانی که هیچ چیز بلد نیستند: حروف، سلام، اعداد، ضمیرها و افعال خیلی رایج',
+    cefr: 'Pre-A1',
+    description: 'آغاز از صفر: نخستین واژه‌ها، سلام و خداحافظی، بله و نه، «من هستم» و «من دارم»، عددها و جمله‌های کوتاه — یک بخش یکپارچه، بدون تکرار',
     color: '#94a3b8',
     modules: PRE_A1_LESSONS.map(lesson => lesson.title),
   },
   {
-    id: 0,
-    title: 'Foundation',
-    cefr: 'شروع از صفر',
-    description: 'صداها، الفبا و جمله‌های روزمره برای آغاز از صفر',
-    color: '#6366f1',
-    modules: ['معرفی و احوال‌پرسی', 'درخواست کمک', 'خرید و قیمت‌ها', 'الفبا و هجی‌کردن', 'ضمیرها و فعل be', 'عددها و اطلاعات تماس', 'خانواده و مالکیت', 'زمان و تقویم', 'کارهای روزمره', 'وسایل و مکان‌ها'],
-  },
-  {
     id: 1,
-    title: 'Survival English',
+    title: 'A1 · Foundation & Survival',
     cefr: 'A1',
-    description: 'مکالمه در موقعیت‌های ضروری روزمره',
+    description: 'پایه و کاربرد روزمره: معرفی خود، درخواست کمک، خرید، الفبا، ضمیرها و فعل be، عددها، خانواده، زمان، کارهای روزمره و موقعیت‌های ضروری',
     color: '#0ea5e9',
-    modules: ['موقعیت‌های اصلی', 'الگوهای جمله', 'شنیدن و صحبت‌کردن'],
+    modules: ['معرفی و احوال‌پرسی', 'درخواست کمک', 'خرید و قیمت‌ها', 'الفبا و هجی‌کردن', 'ضمیرها و فعل be', 'عددها و اطلاعات تماس', 'خانواده و مالکیت', 'زمان و تقویم', 'کارهای روزمره', 'وسایل و مکان‌ها', 'موقعیت‌های اصلی', 'الگوهای جمله', 'شنیدن و صحبت‌کردن'],
   },
   {
     id: 2,
     title: 'Everyday English',
-    cefr: 'A2–B1',
+    cefr: 'A2',
     description: 'انگلیسی طبیعی برای زندگی روزمره',
     color: '#10b981',
     modules: ['موقعیت‌های واقعی', 'گفتگوها', 'خواندن و نوشتن'],
@@ -122,21 +123,21 @@ export const COURSE_LEVELS: CourseLevel[] = [
   {
     id: 3,
     title: 'Communication English',
-    cefr: 'B1–B2',
+    cefr: 'B1',
     description: 'روانی در گفتگو، نظر دادن و داستان‌گویی',
     color: '#f59e0b',
     modules: COMMUNICATION_MODULES.map(unit => unit.titleFa),
   },
   {
     id: 4,
-    title: 'B2 — Upper-Intermediate Communication',
-    cefr: 'B2 · سطح ۴',
+    title: 'B2 — Upper-Intermediate',
+    cefr: 'B2',
     description: 'ارتباط پیشرفته‌تر، گفت‌وگو و استدلال؛ همراه با درس‌های پیشین پیشرفته',
     color: '#8b5cf6',
     modules: ['روایت و زمان‌های پیشرفته', 'فرضیه و شرط ترکیبی', 'بازگویی، مجهول و سببی', 'استدلال و نگارش', 'ارتباط حرفه‌ای و اجتماعی', 'درس‌های پیشین پیشرفته'],
   },
   {
-    id: 5, title: 'C1 — Advanced Communication', cefr: 'C1 · سطح ۵',
+    id: 5, title: 'C1 — Advanced Communication', cefr: 'C1',
     description: 'ارتباط دقیق، تحلیل و استدلال در موقعیت‌های تخصصی و حرفه‌ای', color: '#b55369',
     modules: ['مفاهیم انتزاعی و روایت', 'ساختارهای پیشرفته و دقت بیان', 'تحلیل و ترکیب منابع', 'مذاکره، ارائه و حل تعارض', 'رسانه، پژوهش و ارتباط بین‌فرهنگی'],
   },
@@ -145,7 +146,7 @@ export const COURSE_LEVELS: CourseLevel[] = [
 const CORE_SENTENCE_LESSONS: SentenceLesson[] = [
   {
     id: 'foundation-introducing-yourself',
-    levelId: 0,
+    levelId: 1,
     order: 1,
     title: 'معرفی خود',
     subtitle: 'اولین گفتگوی ساده و واقعی',
@@ -204,7 +205,7 @@ const CORE_SENTENCE_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'foundation-asking-for-help',
-    levelId: 0,
+    levelId: 1,
     order: 2,
     title: 'درخواست کمک',
     subtitle: 'جمله‌های ضروری وقتی کمک می‌خواهید',
@@ -234,7 +235,7 @@ const CORE_SENTENCE_LESSONS: SentenceLesson[] = [
   },
   {
     id: 'foundation-buying-something',
-    levelId: 0,
+    levelId: 1,
     order: 3,
     title: 'خرید ساده',
     subtitle: 'پرسیدن قیمت و خرید یک کالا',
@@ -574,7 +575,9 @@ const COURSE_LESSONS_BEFORE_SURVIVAL_COMPLETION: SentenceLesson[] = [
 ].sort((a, b) => a.order - b.order);
 
 const survivalLessonIds = new Set<string>(SURVIVAL_COURSE_LESSON_IDS);
-const survivalLessonsBeforeCompletion = COURSE_LESSONS_BEFORE_SURVIVAL_COMPLETION.filter(lesson => lesson.levelId === 1);
+// Filter by course membership, not by level: A1 now also contains the foundation lessons, which are
+// not part of the 19-lesson Survival sequence.
+const survivalLessonsBeforeCompletion = COURSE_LESSONS_BEFORE_SURVIVAL_COMPLETION.filter(lesson => survivalLessonIds.has(lesson.id));
 const survivalCompletionIds = Object.keys(SURVIVAL_COMPLETION_SENTENCES);
 if (survivalLessonsBeforeCompletion.map(lesson => lesson.id).join('|') !== SURVIVAL_COURSE_LESSON_IDS.join('|')
   || survivalCompletionIds.length !== SURVIVAL_COURSE_LESSON_IDS.length
@@ -655,7 +658,7 @@ export const EXISTING_SENTENCE_LESSONS: SentenceLesson[] = COURSE_LESSONS_BEFORE
     return { ...lesson, durationMinutes: 35, sentences };
   }
 
-  if (lesson.levelId !== 1) return lesson;
+  if (!survivalLessonIds.has(lesson.id)) return lesson;
 
   const additions = SURVIVAL_COMPLETION_SENTENCES[lesson.id];
   if (!additions || lesson.sentences.length + additions.length !== 50) {

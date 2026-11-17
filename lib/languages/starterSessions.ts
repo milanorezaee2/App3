@@ -1,11 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import type { StarterLesson, NewLanguageId } from './newCourses';
+import { ENGLISH_ENGINE_STEPS } from '../englishLearningEngine';
+import { LESSON_STAGE_VERSION, resumeStage } from '../lessonStages';
 
 
 
 export interface StarterLessonSession {
   stage: number;
+  /** 2 = the current ladder without the removed blitz round; absent on legacy saves. */
+  stageVersion?: number;
   sentenceIndex: number;
   revealed: boolean;
   answers: Record<string, number>;
@@ -19,9 +23,9 @@ interface StarterStudyState {
 
 export function createStarterSessions(language: NewLanguageId, lessons: readonly StarterLesson[]) {
 const storageKey = `${language}_starter_lesson_sessions_v1`;
-const stages = { length: 9 };
+const stages = { length: ENGLISH_ENGINE_STEPS.length };
 function freshStarterLessonSession(): StarterLessonSession {
-  return { stage: 0, sentenceIndex: 0, revealed: false, answers: {}, showCheckAnswers: false };
+  return { stage: 0, stageVersion: LESSON_STAGE_VERSION, sentenceIndex: 0, revealed: false, answers: {}, showCheckAnswers: false };
 }
 
 async function readRaw(): Promise<string | null> {
@@ -51,7 +55,8 @@ function validateSession(lessonId: string, value: unknown): StarterLessonSession
   const lesson = lessons.find(item => item.id === lessonId);
   if (!lesson || !value || typeof value !== 'object' || Array.isArray(value)) throw new Error('جلسهٔ این زبان برای این درس معتبر نیست.');
   const session = value as Partial<StarterLessonSession>;
-  if (!Number.isInteger(session.stage) || session.stage! < 0 || session.stage! >= stages.length
+  const stage = resumeStage(Number(session.stage), session.stageVersion, stages.length);
+  if (stage === null
     || !Number.isInteger(session.sentenceIndex) || session.sentenceIndex! < 0 || session.sentenceIndex! >= lesson.sentences.length
     || typeof session.revealed !== 'boolean' || typeof session.showCheckAnswers !== 'boolean'
     || !session.answers || typeof session.answers !== 'object' || Array.isArray(session.answers)) {
@@ -67,7 +72,8 @@ function validateSession(lessonId: string, value: unknown): StarterLessonSession
     answers[key] = answer!;
   }
   return {
-    stage: session.stage!,
+    stage,
+    stageVersion: LESSON_STAGE_VERSION,
     sentenceIndex: session.sentenceIndex!,
     revealed: session.revealed,
     answers,

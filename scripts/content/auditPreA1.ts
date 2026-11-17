@@ -14,7 +14,7 @@ import { CORE_LESSON_EVIDENCE } from '@/lib/englishFoundationEvidence';
 import { isCorrect } from '@/lib/englishSupplement/content';
 import { scoreSpeech } from '@/lib/speechScore';
 
-const pre = (SENTENCE_LESSONS as any[]).filter(l => l.levelId === -1);
+const pre = (SENTENCE_LESSONS as any[]).filter(l => l.levelId === 0);
 const cyr = /[\u0400-\u04ff]/, cjk = /[\u3040-\u30ff\u4e00-\u9fff]/, persian = /[\u0600-\u06FF]/;
 const latin = /^[\p{Script=Latin}\p{N}\s.,!?'’\-–:;()]+$/u;
 const problems: string[] = [];

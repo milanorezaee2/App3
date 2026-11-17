@@ -73,9 +73,9 @@ export const FOUNDATION_LESSON_EVIDENCE: Readonly<Record<string, readonly Task[]
     ),
     task(
       foundationTask('asking-for-help', 'directions-reading'), 'reading',
-      'برای رسیدن به ایستگاه، اول چه‌کار می‌کنید؟', 'Go straight for two blocks.',
-      'راهنما ابتدا می‌گوید دو بلوک مستقیم بروید.',
-      { source: 'Go straight for two blocks. Turn right at the corner. The station is across from the bank.', options: ['Go straight for two blocks.', 'Turn right first.', 'Take a taxi.'] },
+      'برای رسیدن به ایستگاه، اول چه‌کار می‌کنید؟', 'Go straight along this street.',
+      'راهنما ابتدا می‌گوید همین خیابان را مستقیم بروید.',
+      { source: 'Go straight along this street. Turn right at the corner. The station is across from the bank.', options: ['Go straight along this street.', 'Turn right first.', 'Take a taxi.'] },
     ),
   ],
   'foundation-buying-something': [
@@ -225,9 +225,9 @@ export const FOUNDATION_LESSON_EVIDENCE: Readonly<Record<string, readonly Task[]
   'foundation-family-and-possessions': [
     task(
       foundationTask('family-and-possessions', 'family-listening'), 'listening',
-      'نام مادر گوینده چیست؟', 'Laleh',
-      'گوینده می‌گوید نام مادرش Laleh است.',
-      { audio: 'This is my mother. Her name is Laleh.', options: ['Laleh', 'Sara', 'Mina'] },
+      'نام مادر گوینده چیست؟', 'Narges',
+      'گوینده می‌گوید نام مادرش Narges است.',
+      { audio: 'This is my mother. Her name is Narges.', options: ['Narges', 'Sara', 'Mina'] },
     ),
     task(
       foundationTask('family-and-possessions', 'siblings-listening'), 'listening',

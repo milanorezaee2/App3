@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import type { Skill } from './englishSupplement/content';
 import { ENGLISH_ENGINE_STEPS } from './englishLearningEngine';
+import { LESSON_STAGE_VERSION, resumeStage } from './lessonStages';
 
 export const STUDY_KEY = 'english_study_state_v1';
 
@@ -13,6 +14,8 @@ export interface LessonAttempt {
 
 export interface LessonSession {
   stage: number;
+  /** 2 = the current ladder without the removed blitz round; absent on legacy saves. */
+  stageVersion?: number;
   sentenceIndex: number;
   revealed: boolean;
   evidencePassed: boolean;
@@ -39,7 +42,7 @@ export interface StudyState {
 export const studyDay = (date = new Date()) =>
   `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
-export const freshSession = (): LessonSession => ({ stage: 0, sentenceIndex: 0, revealed: false, evidencePassed: false });
+export const freshSession = (): LessonSession => ({ stage: 0, stageVersion: LESSON_STAGE_VERSION, sentenceIndex: 0, revealed: false, evidencePassed: false });
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === 'object' && !Array.isArray(value);
@@ -52,8 +55,8 @@ export function parseStudy(raw: string | null): StudyState {
   const parsed = JSON.parse(raw) as Partial<StudyState> | null;
   if (!parsed || parsed.version !== 1 || !isRecord(parsed.sessions) || !isRecord(parsed.days)
     || Object.values(parsed.days).some(value => typeof value !== 'number' || !Number.isFinite(value) || value < 0)
-    || Object.values(parsed.sessions).some(value => !value || !Number.isInteger(value.stage)
-      || value.stage < 0 || value.stage >= ENGLISH_ENGINE_STEPS.length
+    || Object.values(parsed.sessions).some(value => !value
+      || resumeStage(Number(value.stage), (value as { stageVersion?: unknown }).stageVersion, ENGLISH_ENGINE_STEPS.length) === null
       || !Number.isInteger(value.sentenceIndex) || value.sentenceIndex < 0
       || typeof value.revealed !== 'boolean' || typeof value.evidencePassed !== 'boolean'
       || (value.attempt !== undefined && (!isRecord(value.attempt)
@@ -73,10 +76,16 @@ export function parseStudy(raw: string | null): StudyState {
     throw Error('سنجش درس معتبر نیست؛ داده‌های قبلی بازنویسی نشدند.');
   }
 
+  const sessions: Record<string, LessonSession> = {};
+  for (const [id, value] of Object.entries(parsed.sessions as Record<string, LessonSession>)) {
+    const stage = resumeStage(value.stage, value.stageVersion, ENGLISH_ENGINE_STEPS.length);
+    if (stage === null) continue;
+    sessions[id] = { ...value, stage, stageVersion: LESSON_STAGE_VERSION };
+  }
   return {
     ...parsed,
     version: 1,
-    sessions: parsed.sessions as Record<string, LessonSession>,
+    sessions,
     days: parsed.days as Record<string, number>,
     lessonEvidence: lessonEvidence as Record<string, Record<string, CourseLessonEvidence>>,
   };

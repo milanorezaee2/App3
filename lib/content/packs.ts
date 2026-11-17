@@ -16,8 +16,8 @@ import { CONTENT_RELEASE_PACKS } from '@/lib/content/audioRelease';
  *
  * The app keeps the last good copy of every pack locally (AsyncStorage / localStorage) and only downloads
  * a pack whose version changed, so lessons work fully offline after the first sync. Pack sentences are
- * attached to the lesson they fit best (explicit `lesson` or word overlap) and surface as extra «دور سریع»
- * items; if a sentence carries `audio`, that recording plays instead of the device TTS voice.
+ * attached to the lesson they fit best (explicit `lesson` or word overlap) and feed the level practice
+ * rounds; if a sentence carries `audio`, that recording plays instead of the device TTS voice.
  */
 
 export interface PackSentence {

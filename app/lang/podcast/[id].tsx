@@ -240,7 +240,7 @@ export default function EnglishPodcastPlayer() {
           <View style={styles.headerTop}>
             <View style={styles.headerIcon}><Podcast size={22} color={P.white} /></View>
             <View style={styles.headerCopy}>
-              <Text style={styles.headerEyebrow}>EPISODE {episode.number} · {episode.levelId === -1 ? 'PRE-A1' : `LEVEL ${episode.levelId}`}</Text>
+              <Text style={styles.headerEyebrow}>EPISODE {episode.number} · {episode.levelId === 0 ? 'PRE-A1' : `LEVEL ${episode.levelId}`}</Text>
               <Text style={styles.headerTitle}>{episode.title}</Text>
               <Text style={styles.headerSub}>{fa(sentenceCount)} جمله · حدود {fa(episode.estimatedMinutes)} دقیقه{completed ? ' · شنیده‌شده' : ''}</Text>
             </View>

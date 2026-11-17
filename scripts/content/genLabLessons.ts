@@ -25,7 +25,7 @@ import { lessonsOf } from './courses';
 const write = process.argv.includes('--write');
 const LANGS: LabLanguage[] = ['en', 'de', 'fr', 'es', 'tr', 'ru'];
 const STRUCTURE_TARGET = 0.92;
-const levelIdFor: Record<CefrBand, -1 | 0 | 1 | 2 | 3 | 4 | 5> = { pre: -1, A1: 1, A2: 2, B1: 3, B2: 4, C1: 5 };
+const levelIdFor: Record<CefrBand, 0 | 1 | 2 | 3 | 4 | 5> = { pre: 0, A1: 1, A2: 2, B1: 3, B2: 4, C1: 5 };
 const norm = (text: string) => tokenize(text).join(' ');
 
 function packTexts(lang: CourseLanguage): Set<string> {

@@ -31,12 +31,16 @@ export const COURSE_SPEC: Record<CefrBand, BandSpec> = {
 };
 
 /**
- * Internal course level ids → CEFR band. English/Russian/Turkish use 0 = Foundation and 1 = Survival,
- * which together form A1; the newer courses (de/fr/es) start A1 at id 1.
+ * Internal course level ids → CEFR band.
+ *
+ * Every course now shares one ladder: 0 = Pre-A1, 1 = A1, 2 = A2, 3 = B1, 4 = B2, 5 = C1.
+ * Before rev 119 English/Russian/Turkish also had a separate beginner level 0 whose lessons were
+ * ordinary fifty-sentence A1 lessons; that card is gone and its lessons are part of A1.
+ * Negative ids are still read as Pre-A1 so saved sessions from older builds stay valid.
  */
 export function bandOfLevel(levelId: number): CefrBand {
-  if (levelId <= -1) return 'pre';
-  if (levelId <= 1) return 'A1';
+  if (levelId <= 0) return 'pre';
+  if (levelId === 1) return 'A1';
   if (levelId === 2) return 'A2';
   if (levelId === 3) return 'B1';
   if (levelId === 4) return 'B2';

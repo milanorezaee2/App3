@@ -9,7 +9,10 @@ import type { LabLanguage, LabLesson } from './labLessonTypes';
  * `computeReadiness` counts lessons per band, not downloaded pack sentences.
  */
 export function labLessonsOf(language: LabLanguage): readonly LabLesson[] {
-  return LAB_LESSONS[language] ?? [];
+  const lessons = LAB_LESSONS[language] ?? [];
+  // The bundled data was generated when Pre-A1 had id -1. The ladder now starts at 0, so map on read
+  // instead of rewriting the generated file (its ids, sentences and checks stay untouched).
+  return lessons.map(lesson => (lesson.levelId as number) < 0 ? { ...lesson, levelId: 0 as const } : lesson);
 }
 
 /**
@@ -21,7 +24,7 @@ export function labLessonsOf(language: LabLanguage): readonly LabLesson[] {
  * generated is inserted there.
  */
 const EXEMPT_LEVELS: Partial<Record<LabLanguage, ReadonlySet<number>>> = {
-  en: new Set([-1]),
+  en: new Set([0]),
 };
 
 /** Insert extra lessons immediately after the last existing lesson of the same level. */
