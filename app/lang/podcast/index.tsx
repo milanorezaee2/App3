@@ -72,7 +72,7 @@ export default function EnglishPodcastList() {
                 <Pressable accessibilityRole="button" accessibilityState={{ expanded: open }} style={styles.levelHeader} onPress={() => setOpenLevel(open ? null : level.id)}>
                   <View style={[styles.levelDot, { backgroundColor: level.color }]} />
                   <View style={styles.levelCopy}>
-                    <Text style={styles.levelEyebrow}>{level.id === -1 ? 'PRE-A1' : `LEVEL ${level.id}`} · {level.title.toUpperCase()}</Text>
+                    <Text style={styles.levelEyebrow}>{level.id === 0 ? 'PRE-A1' : `LEVEL ${level.id}`} · {level.title.toUpperCase()}</Text>
                     <Text style={styles.levelTitle}>{level.cefr}</Text>
                     <Text style={styles.levelMeta}>{fa(episodes.length)} اپیزود · {fa(done)} شنیده‌شده</Text>
                   </View>

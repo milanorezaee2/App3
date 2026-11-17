@@ -163,7 +163,7 @@ export default function StarterHome({course}: {course: StarterCourse}) {
   const replayBeginnerLevel = () => router.push({ pathname: `${course.home}/lesson`, params: { id: lessons[0].id, levelReplay: '1' } } as never);
   const openNextLesson = () => {
     if (resumeLesson) router.push(`${course.home}/lesson?id=${encodeURIComponent(resumeLesson.id)}` as never);
-    else openLevel(-1);
+    else openLevel(0);
   };
 
   return (
@@ -462,6 +462,16 @@ export default function StarterHome({course}: {course: StarterCourse}) {
                 </View>
                 <ChevronLeft size={17} color={HomeColors.muted} />
               </Pressable>
+              {course.id === 'de' ? (
+                <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push(`${course.home}/vocabulary` as never)}>
+                  <View style={[styles.quickIcon, { backgroundColor: HomeColors.accentSoft }]}><Sparkles size={18} color={HomeColors.accent} /></View>
+                  <View style={styles.quickCopy}>
+                    <Text style={styles.quickTitle}>واژه‌های آلمانی</Text>
+                    <Text style={styles.quickDesc}>ببین، یک بار بشنو، بعد از فارسی بگو</Text>
+                  </View>
+                  <ChevronLeft size={17} color={HomeColors.muted} />
+                </Pressable>
+              ) : null}
               <Pressable accessibilityRole="button" style={styles.quickCard} onPress={() => router.push(`${course.home}/studio` as never)}>
                 <View style={[styles.quickIcon, { backgroundColor: '#FEF3C7' }]}><Award size={18} color="#D97706" /></View>
                 <View style={styles.quickCopy}>

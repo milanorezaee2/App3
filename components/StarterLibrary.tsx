@@ -74,8 +74,13 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
   };
 
   useEffect(() => setHydrated(true), []);
-  // Retired empty placeholder: old bookmarks open the course overview instead.
-  useEffect(() => { if (hydrated && level === '0') router.replace(`${course.home}/library` as never); }, [hydrated, level, router, course.home]);
+  // Pre-A1 now has real lessons in every new course, so `?level=0` opens it like any other level.
+  // Only the retired *negative* placeholder ids (older bookmarks) still fall back to the overview.
+  useEffect(() => {
+    if (!hydrated) return;
+    const retired = level !== undefined && Number(level) < 0;
+    if (retired) router.replace(`${course.home}/library` as never);
+  }, [hydrated, level, router, course.home]);
   const selected = hydrated ? levels.find(item => String(item.id) === String(level)) : undefined;
   const selectedLessons = useMemo(() => selected ? lessons.filter(item => item.levelId === selected.id) : [], [selected?.id]);
   const lessonGroups = useMemo(() => {
@@ -188,7 +193,7 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
 
             <LinearGradient colors={ENGLISH_LEVEL_GRADIENTS[selected.id]} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={styles.levelHero}>
               <View pointerEvents="none" style={styles.levelHeroOrb} />
-              <View style={styles.levelHeroTop}><View style={styles.levelHeroTag}><Text style={styles.levelHeroTagText}>{selected.id === -1 ? 'PRE-A1' : `LEVEL ${selected.id}`} </Text></View><Text style={styles.levelHeroBand}>{selected.cefr}</Text></View>
+              <View style={styles.levelHeroTop}><View style={styles.levelHeroTag}><Text style={styles.levelHeroTagText}>{selected.id === 0 ? 'PRE-A1' : `LEVEL ${selected.id}`} </Text></View><Text style={styles.levelHeroBand}>{selected.cefr}</Text></View>
               <Text style={styles.selectedTitle}>{selected.title}</Text>
               <Text style={styles.selectedDescription}>{selected.description}</Text>
               {selected.id !== 5 && <><View style={styles.selectedProgressHeading}><Text style={styles.selectedProgressLabel}>{selected.id === 1 || selected.id === 2 || selected.id === 3 || selected.id === 4 ? 'پیشرفت درس‌های موجود' : 'پیشرفت این سطح'}</Text><Text style={styles.selectedProgressValue}>{fa(countFor(selected.id).completed)} از {fa(selectedLessons.length)} درس</Text></View>

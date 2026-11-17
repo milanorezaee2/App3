@@ -32,6 +32,7 @@ import { b2Units } from './b2Units';
 import { labLessonsOf } from '../content/labLessons';
 import type { LabLesson } from '../content/labLessonTypes';
 import { STARTER_FOUNDATIONS, type FoundationMode, type FoundationSeed } from './starterFoundations';
+import { GERMAN_PRE_A1 } from './germanPreA1';
 
 export type NewLanguageId = 'de' | 'fr' | 'es';
 export type StarterLesson = LearningLesson & { levelId: CourseLevelId; order: number; subtitle: string; learningMode?: FoundationMode };
@@ -43,7 +44,7 @@ const seeds: Record<NewLanguageId, LessonSeed[]> = {
       ['Hallo!','سلام!','هالو','Hallo','سلام'], ['Guten Morgen!','صبح بخیر!','گوتِن مورگِن','Morgen','صبح'], ['Guten Tag!','روز بخیر!','گوتِن تاک','Tag','روز'], ['Guten Abend!','عصر بخیر!','گوتِن آبِنت','Abend','عصر'], ['Tschüss!','خداحافظ! (دوستانه)','چوس','Tschüss','خداحافظ'], ['Auf Wiedersehen!','خداحافظ! (رسمی)','آوف ویدِرزِهِن','Auf Wiedersehen','خداحافظ رسمی']
     ], check:['برای خداحافظی رسمی کدام را می‌گوییم؟',5,'Auf Wiedersehen خداحافظی رسمی است.'] },
     { title:'معرفی و احوال‌پرسی', subtitle:'گفت‌وگوی کوتاه', situation:'نام خود را می‌گویید و حال طرف مقابل را می‌پرسید.', teachingFa:'در آلمانی حالت رسمی Sie با حرف بزرگ نوشته می‌شود. «Ich heiße …» برای گفتن نام است.', sentences:[
-      ['Ich heiße Sara.','اسم من سارا است.','ایش هایسِه سارا','heiße','نام دارم','Ich heiße …'], ['Wie heißt du?','اسم تو چیست؟','وی هایست دو','wie','چگونه'], ['Ich bin Sara.','من سارا هستم.','ایش بین سارا','bin','هستم','Ich bin …'], ['Wie geht es dir?','حالت چطور است؟','وی گیت اِس دیر','dir','به تو'], ['Mir geht es gut.','حالم خوب است.','میر گیت اِس گوت','gut','خوب'], ['Danke, gut.','ممنون، خوبم.','دانکِه گوت','Danke','ممنون']
+      ['Ich heiße Sara.','اسم من سارا است.','ایش هایسِه سارا','heiße','نام دارم','Ich heiße …'], ['Wie heißt du?','اسم تو چیست؟','وی هایست دو','wie','چگونه'], ['Ich bin Sara.','من سارا هستم.','ایش بین سارا','bin','هستم','Ich bin …'], ['Wie geht\'s dir?','حالت چطوره؟','وی گیتس دیر','dir','به تو'], ['Mir geht es gut.','حالم خوب است.','میر گیت اِس گوت','gut','خوب'], ['Danke, gut.','ممنون، خوبم.','دانکِه گوت','Danke','ممنون']
     ], check:['برای گفتن «اسم من سارا است» کدام را می‌گوییم؟',0,'Ich heiße Sara یعنی اسم من سارا است.'] },
   ],
   fr: [
@@ -64,11 +65,9 @@ const seeds: Record<NewLanguageId, LessonSeed[]> = {
   ],
 };
 
-const pilotExtras: Record<NewLanguageId, SentenceSeed[][]> = {
-  de: [
-    [['Bis bald!','به‌زودی می‌بینمت!','بیس بالت','bald','به‌زودی'], ['Hallo zusammen!','سلام به همه!','هالو تسوزامِن','zusammen','همه با هم']],
-    [['Und du?','و تو؟','اوند دو','du','تو'], ['Mir geht es gut, danke.','حالم خوب است، ممنون.','میر گیت اِس گوت، دانکِه','danke','ممنون']],
-  ],
+// Two extra pilot sentences for the first two French/Spanish lessons; German teaches the same ideas
+// inside the authored `germanPreA1.ts` instead.
+const pilotExtras: Partial<Record<NewLanguageId, SentenceSeed[][]>> = {
   fr: [
     [['Bonne soirée !','عصر خوبی داشته باشید!','بُن سواره','soirée','عصر'], ['À demain !','فردا می‌بینمت!','آ دُمَن','demain','فردا']],
     [['Et toi ?','و تو؟','اِ توا','toi','تو'], ['Bien, merci.','خوبم، ممنون.','بیَن، مِرسی','merci','ممنون']],
@@ -95,8 +94,23 @@ function starterLabLesson(lab: LabLesson): StarterLesson {
 
 const labels = { de: {name:'آلمانی', native:'Deutsch', locale:'de-DE', brand:'GERMAN'}, fr:{name:'فرانسوی',native:'Français',locale:'fr-FR',brand:'FRENCH'}, es:{name:'اسپانیایی',native:'Español',locale:'es-ES',brand:'SPANISH'} } as const;
 const levelSeeds: Array<[CourseLevelId,string,string,string,string]> = [
-  [-1,'Absolute Beginner','Pre-A1 · شروع از صفر','نخستین واژه‌ها و جمله‌ها','#94a3b8'], [1,'A1 · Foundation & Survival','A1 · پایه و کاربرد روزمره','دو بخش پایه و موقعیت‌های روزمره؛ محتوا در حال تدوین است','#27A1D6'], [2,'A2 · Foundation & Survival','A2 · ارتباط پایه','درس‌های مرتبط با سرفصل‌ها در دسترس‌اند؛ پوشش هر موضوع جزئی است','#19A88B'], [3,'B1 · Foundation & Survival','B1 · ارتباط مستقل','نقشه و درس‌های مرتبط؛ پوشش هر سرفصل جزئی است','#E4A436'], [4,'B2 · Foundation & Survival','B2 · ارتباط پیشرفته','نقشه و درس‌های مرتبط؛ پوشش سرفصل‌ها جزئی است','#9A68E8'], [5,'Advanced Communication','C1 · پیشرفته','بیان دقیق، ساختارهای پیشرفته و ارتباط مؤثر در موقعیت‌های حرفه‌ای و دانشگاهی','#D56788'],
+  [0,'Absolute Beginner','Pre-A1','نخستین واژه‌ها و جمله‌ها','#94a3b8'], [1,'A1 · Foundation & Survival','A1 · پایه و کاربرد روزمره','بخش پایه و موقعیت‌های روزمره در یک سطح','#27A1D6'], [2,'A2 · Foundation & Survival','A2 · ارتباط پایه','درس‌های مرتبط با سرفصل‌ها در دسترس‌اند؛ پوشش هر موضوع جزئی است','#19A88B'], [3,'B1 · Foundation & Survival','B1 · ارتباط مستقل','نقشه و درس‌های مرتبط؛ پوشش هر سرفصل جزئی است','#E4A436'], [4,'B2 · Foundation & Survival','B2 · ارتباط پیشرفته','نقشه و درس‌های مرتبط؛ پوشش سرفصل‌ها جزئی است','#9A68E8'], [5,'Advanced Communication','C1 · پیشرفته','بیان دقیق، ساختارهای پیشرفته و ارتباط مؤثر در موقعیت‌های حرفه‌ای و دانشگاهی','#D56788'],
 ];
+/**
+ * German overlaps fixed at the source (rev 119 review).
+ *
+ * The beginner band shipped six «foundation» word lists and then twenty-one numbered lessons that
+ * repeated the same six greetings, politeness words and object names, and three A1 lessons re-taught
+ * the «Woher kommst du?» / «Ich wohne in Berlin» block word for word. Instead of hiding the repeats:
+ *
+ *   • the foundation lists are now word-only (a word, not the same greeting as a sentence), so they
+ *     teach spelling and sound, which is what they are named for;
+ *   • four new bridge lessons at the end of Pre-A1 take the *situations* that were missing (numbers
+ *     21–100 and age, the time of day, rooms and furniture, weather) — no sentence is reused;
+ *   • the three duplicated A1 sentences in «پروفایل و کشورها» and «ملیت و زبان» are replaced with the
+ *     questions and answers those lessons actually need.
+ * IDs and sentence indexes stay identical, so saved progress and review cards remain valid.
+ */
 export function isNewLanguage(value: string | undefined): value is NewLanguageId { return value === 'de' || value === 'fr' || value === 'es'; }
 function buildFoundation(id: NewLanguageId, seed: FoundationSeed): StarterLesson {
   const lessonId = `${id}-foundation-${seed.id}`;
@@ -118,7 +132,7 @@ function buildFoundation(id: NewLanguageId, seed: FoundationSeed): StarterLesson
     };
   };
   return {
-    id: lessonId, levelId: -1, order: 0, learningMode: seed.mode,
+    id: lessonId, levelId: 0, order: 0, learningMode: seed.mode,
     title: seed.title, subtitle: seed.subtitle, situation: seed.situation,
     teachingFa: seed.teachingFa, durationMinutes: 6, sentences,
     dialogue: [], checks: [check(0, true), check(3, false), check(6, true)],
@@ -139,10 +153,16 @@ function buildA1(id: NewLanguageId, seed: A1Seed, level: 1 | 2 | 3 | 4 = 1): Sta
   };
 }
 
+/**
+ * German Pre-A1 is authored as one set in `germanPreA1.ts`: the same lesson and sentence ids the level
+ * already published, but one sequence with no repeated sentence, no alphabet detour at the start and
+ * no single-word row inside a lesson the engine plays as a sentence lesson. The seed batches below
+ * still build French and Spanish, and German's own A1 band is untouched.
+ */
 function buildCourse(id: NewLanguageId) {
-  const allSeeds = [...seeds[id], ...PRE_A1_EXPANSION[id], ...PRE_A1_MORE[id]];
+  const allSeeds = [...seeds[id], ...(PRE_A1_EXPANSION[id] ?? []), ...(PRE_A1_MORE[id] ?? [])];
   const legacy: StarterLesson[] = allSeeds.map((seed, n) => {
-    const sentenceSeeds = n < 2 ? [...seed.sentences, ...pilotExtras[id][n]] : seed.sentences;
+    const sentenceSeeds = n < 2 ? [...seed.sentences, ...(pilotExtras[id]?.[n] ?? [])] : seed.sentences;
     const sentences = sentenceSeeds.map(([text,fa,pronunciation,word,meaning,pattern], i) => ({ id:`${id}-pre${n+1}-s${i+1}`, text, fa, pronunciation, vocabulary:[{word,meaning}], ...(pattern ? {pattern} : {}) }));
     const [promptFa, correctIndex, explanationFa] = seed.check;
     // Choices use actual sentences from the lesson; no generated or cross-language content.
@@ -158,15 +178,17 @@ function buildCourse(id: NewLanguageId) {
         checks.push({promptFa:`«${sentence.fa}» به این زبان کدام است؟`, choices, correctIndex:secondIndex, explanationFa:`${sentence.text} یعنی ${sentence.fa}`});
       }
     }
-    return { id:`${id}-pre-${n+1}`, levelId:-1 as const, order:n+1, title:seed.title, subtitle:seed.subtitle, situation:seed.situation, teachingFa:seed.teachingFa, durationMinutes:8, sentences, dialogue: (seed.dialogue ?? (n === 0 ? [0,0,4,4] : [1,0,3,4])).map((idx, i) => ({speaker:i % 2 === 1 ? 'همراه' : 'زبان‌آموز', text:sentences[idx].text, fa:sentences[idx].fa})), checks };
+    return { id:`${id}-pre-${n+1}`, levelId:0 as const, order:n+1, title:seed.title, subtitle:seed.subtitle, situation:seed.situation, teachingFa:seed.teachingFa, durationMinutes:8, sentences, dialogue: (seed.dialogue ?? (n === 0 ? [0,0,4,4] : [1,0,3,4])).map((idx, i) => ({speaker:i % 2 === 1 ? 'همراه' : 'زبان‌آموز', text:sentences[idx].text, fa:sentences[idx].fa})), checks };
   });
   // The original records retain every ID, sentence, check and review card.
   // Only their presentation order changes; returning learners keep their saved
   // current lesson and may optionally visit the new foundations.
   const legacyOrder = [11, 1, 3, 4, 5, 2, 7, 6, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+  const preA1: StarterLesson[] = id === 'de'
+    ? [...STARTER_FOUNDATIONS[id].map(seed => buildFoundation(id, seed)), ...GERMAN_PRE_A1]
+    : [...STARTER_FOUNDATIONS[id].map(seed => buildFoundation(id, seed)), ...legacyOrder.map(number => legacy[number - 1])];
   const lessons: StarterLesson[] = [
-    ...STARTER_FOUNDATIONS[id].map(seed => buildFoundation(id, seed)),
-    ...legacyOrder.map(number => legacy[number - 1]),
+    ...preA1,
     buildA1(id, A1_GREETINGS[id]),
     buildA1(id, A1_FIRST_UNITS[id][0]),
     ...A1_CORE_UNITS[id].map(seed => buildA1(id, seed)),
@@ -197,7 +219,7 @@ function buildCourse(id: NewLanguageId) {
   const a1Order = getA1Curriculum(id).flatMap(section => section.topics.flatMap(topic => [...topic.relatedLessonIds]));
   const a1Rank = new Map(a1Order.map((lessonId, index) => [lessonId, index]));
   const orderedLessons = [
-    ...lessons.filter(lesson => lesson.levelId === -1),
+    ...lessons.filter(lesson => lesson.levelId === 0),
     ...lessons.filter(lesson => lesson.levelId === 1).sort((a,b) => (a1Rank.get(a.id) ?? Number.MAX_SAFE_INTEGER) - (a1Rank.get(b.id) ?? Number.MAX_SAFE_INTEGER)),
     ...lessons.filter(lesson => lesson.levelId === 2),
     ...lessons.filter(lesson => lesson.levelId === 3),
@@ -207,7 +229,7 @@ function buildCourse(id: NewLanguageId) {
   const b1Title: Record<NewLanguageId, string> = {fr:'B1 · Communication autonome', de:'B1 · Selbstständige Kommunikation', es:'B1 · Comunicación independiente'};
   const b2Title: Record<NewLanguageId, string> = {fr:'B2 · Communication avancée', de:'B2 · Selbstständige und differenzierte Kommunikation', es:'B2 · Comunicación avanzada'};
   const c1Title: Record<NewLanguageId, string> = {fr:'C1 · Communication avancée', de:'C1 · Fortgeschrittene Kommunikation', es:'C1 · Comunicación avanzada'};
-  const levels = levelSeeds.map(([levelId,title,cefr,description,color])=>({ id:levelId,title: levelId === 5 ? c1Title[id] : levelId === 4 ? b2Title[id] : levelId === 3 ? b1Title[id] : title,cefr,description,color,modules:orderedLessons.filter(l=>l.levelId===levelId).map(l=>l.title),status:(levelId === -1 || levelId === 1 || levelId === 2 || levelId === 3 || levelId === 4 || levelId === 5 ? 'available' : 'planned') as 'available'|'planned' }));
+  const levels = levelSeeds.map(([levelId,title,cefr,description,color])=>({ id:levelId,title: levelId === 5 ? c1Title[id] : levelId === 4 ? b2Title[id] : levelId === 3 ? b1Title[id] : title,cefr,description,color,modules:orderedLessons.filter(l=>l.levelId===levelId).map(l=>l.title),status:(levelId === 0 || levelId === 1 || levelId === 2 || levelId === 3 || levelId === 4 || levelId === 5 ? 'available' : 'planned') as 'available'|'planned' }));
   const progress = createCourseProgressStore({key:`sentence_course_progress_${id}_starter_v1`,lessons:orderedLessons,cloudSync:false,recordEstimatedTime:false,markVocabularyOnCompletion:false});
   return { id,...labels[id], lessons:orderedLessons,levels,progress,sessions:createStarterSessions(id,orderedLessons), home:`/learn/${id}` };
 }

@@ -79,7 +79,7 @@ export default function TurkishLibrary() {
     return { total: lessons.length, completed: lessons.filter(item => completedIds.includes(item.id)).length };
   };
   const sentenceCount = selectedLessons.reduce((count, lesson) => count + lesson.sentences.length, 0);
-  const selectedUnitLabel = selected?.id === -1 ? 'واحد آموزشی' : 'جمله';
+  const selectedUnitLabel = selected?.id === 0 ? 'واحد آموزشی' : 'جمله';
   const words = new Set(selectedLessons.flatMap(lesson => lesson.sentences.flatMap(sentence => sentence.vocabulary.map(item => item.word))));
   const patternCount = selectedLessons.reduce((count, lesson) => count + lesson.sentences.filter(sentence => !!sentence.pattern).length, 0);
   const allWords = new Set(TURKISH_LESSONS.flatMap(lesson => lesson.sentences.flatMap(sentence => sentence.vocabulary.map(item => item.word))));
@@ -129,7 +129,7 @@ export default function TurkishLibrary() {
                   <View style={styles.levelOptionContent}>
                     <View style={styles.levelOptionTitleRow}><Text style={styles.levelOptionTitle}>{item.title}</Text><Text style={[styles.levelOptionBand, { color: item.color }]}>{item.cefr}</Text></View>
                     <Text style={styles.levelOptionDescription}>{item.description || 'در نقشهٔ آیندهٔ دوره'}</Text>
-                    <View style={styles.levelOptionMeta}><Text style={styles.levelOptionMetaText}>{fa(stats.total)} درس</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{fa(sentenceTotal)} {item.id === -1 ? 'مورد آموزشی' : 'جمله'}</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{item.status === 'planned' ? 'در نقشهٔ آینده' : `${fa(stats.completed)} تکمیل`}</Text></View>
+                    <View style={styles.levelOptionMeta}><Text style={styles.levelOptionMetaText}>{fa(stats.total)} درس</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{fa(sentenceTotal)} {item.id === 0 ? 'مورد آموزشی' : 'جمله'}</Text><View style={styles.metaDot} /><Text style={styles.levelOptionMetaText}>{item.status === 'planned' ? 'در نقشهٔ آینده' : `${fa(stats.completed)} تکمیل`}</Text></View>
                     <EnglishProgressTrack value={pct} color={item.color} height={5} />
                   </View>
                   <ChevronLeft size={19} color={Palette.muted} />
@@ -170,7 +170,7 @@ export default function TurkishLibrary() {
               <View style={styles.focusHeadingRow}><View style={styles.focusIcon}><Sparkles size={17} color={Palette.primary} /></View><View style={styles.focusHeadingCopy}><Text style={styles.focusTitle}>موضوعات این سطح</Text></View></View>
               <Text style={styles.focusDescription}>{selected.description || 'برای این سطح هنوز سرفصلی منتشر نشده است.'}</Text>
               {selected.modules.length > 0 ? <View style={styles.moduleGrid}>{selected.modules.map((module, index) => <View key={`${index}-${module}`} style={styles.moduleChip}><View style={[styles.moduleDot, { backgroundColor: selected.color }]} /><Text style={styles.moduleText}>{displayEnglishModuleLabel(module)}</Text></View>)}</View> : null}
-              <Text style={styles.focusFootnote}>{selected.status === 'planned' ? 'این سطح بخشی از نقشهٔ آینده است؛ تا زمان تدوین، درس یا محتوای آموزشی به شمار محتوای موجود اضافه نمی‌شود.' : selected.id === -1 ? 'Pre-A1 از واژه‌های مستقل به ترکیب‌ها و جمله‌ها می‌رسد؛ این نقشه سنجش رسمی CEFR نیست.' : 'محتوای منتشرشده بر پایهٔ جمله‌های ترکی استانبولی و راهنمای فارسی است؛ این نقشه سنجش رسمی CEFR نیست.'}</Text>
+              <Text style={styles.focusFootnote}>{selected.status === 'planned' ? 'این سطح بخشی از نقشهٔ آینده است؛ تا زمان تدوین، درس یا محتوای آموزشی به شمار محتوای موجود اضافه نمی‌شود.' : selected.id === 0 ? 'Pre-A1 از واژه‌های مستقل به ترکیب‌ها و جمله‌ها می‌رسد؛ این نقشه سنجش رسمی CEFR نیست.' : 'محتوای منتشرشده بر پایهٔ جمله‌های ترکی استانبولی و راهنمای فارسی است؛ این نقشه سنجش رسمی CEFR نیست.'}</Text>
             </View>
 
             <View style={styles.lessonSectionHeading}><View><Text style={styles.lessonSectionTitle}>درس‌ها، به ترتیب</Text></View><View style={styles.lessonCountPill}><BookOpen size={13} color={Palette.primary} /><Text style={styles.lessonCountText}>{fa(selectedLessons.length)} درس</Text></View></View>

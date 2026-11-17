@@ -10,43 +10,37 @@ import {
 /** Structural roadmap requested for the English engine; lesson copy stays in courseContent. */
 export const ENGLISH_ENGINE_BLUEPRINT = [
   {
-    levelId: -1,
-    title: 'Absolute Beginner',
-    band: 'Pre-A1 · شروع از صفر',
-    modules: ['سلام کردن', 'خداحافظی', 'بله و نه', 'من هستم (I am)', 'اعداد یک تا ده', 'حال شما چطور است؟', 'من دارم (I have)', 'لطفاً و ممنون', 'این ... است (This is)', 'مرور و اولین گفتگو'],
-  },
-  {
     levelId: 0,
-    title: 'Foundation',
-    band: 'Level 0',
-    modules: ['Introducing Yourself & Greetings', 'Asking for Help', 'Shopping & Prices', 'Alphabet & Spelling', 'Pronouns & Be', 'Numbers & Contact Details', 'Family & Possessions', 'Time & Calendar', 'Everyday Routines', 'Objects & Places'],
+    title: 'Absolute Beginner',
+    band: 'Pre-A1',
+    modules: ['سلام کردن', 'خداحافظی', 'بله و نه', 'من هستم (I am)', 'اعداد یک تا ده', 'حال شما چطور است؟', 'من دارم (I have)', 'لطفاً و ممنون', 'این ... است (This is)', 'مرور و اولین گفتگو', 'در خانه', 'آدم‌ها', 'هر روز', 'چیزهایی که دوست دارم'],
   },
   {
     levelId: 1,
-    title: 'Survival English',
-    band: 'Level 1 · A1',
-    modules: ['Core Daily Situations', 'Useful Sentence Patterns', 'Basic Vocabulary', 'Basic Grammar Through Sentences', 'Listening Practice', 'Speaking Practice', 'Daily Conversations']
+    title: 'A1 · Foundation & Survival',
+    band: 'A1',
+    modules: ['Introducing Yourself & Greetings', 'Asking for Help', 'Shopping & Prices', 'Alphabet & Spelling', 'Pronouns & Be', 'Numbers & Contact Details', 'Family & Possessions', 'Time & Calendar', 'Everyday Routines', 'Objects & Places', 'Core Daily Situations', 'Useful Sentence Patterns', 'Listening & Speaking'],
   },
   {
     levelId: 2,
     title: 'Everyday English',
-    band: 'Level 2 · A2–B1',
-    modules: ['Real-Life Situations', '1000+ Sentence Patterns', 'Vocabulary Expansion', 'Grammar in Context', 'Dialogues', 'Reading', 'Writing Basics', 'Conversation Practice'],
+    band: 'A2',
+    modules: ['Real-Life Situations', 'Sentence Patterns', 'Vocabulary Expansion', 'Grammar in Context', 'Dialogues', 'Reading', 'Writing Basics', 'Conversation Practice'],
   },
   {
     levelId: 3,
     title: 'Communication English',
-    band: 'Level 3 · B1–B2',
+    band: 'B1',
     modules: COMMUNICATION_MODULES.map(unit => unit.titleEn),
   },
   {
     levelId: 4,
-    title: 'B2 — Upper-Intermediate Communication',
-    band: 'Level 4 · B2 و درس‌های پیشین',
+    title: 'B2 — Upper-Intermediate',
+    band: 'B2',
     modules: ['Advanced Tenses & Narratives', 'Hypotheses & Mixed Conditionals', 'Reporting, Passive & Causative', 'Arguments, Synthesis & Writing', 'Professional & Social Communication', 'Previous Advanced Lessons'],
   },
   {
-    levelId: 5, title: 'C1 — Advanced Communication', band: 'Level 5 · C1',
+    levelId: 5, title: 'C1 — Advanced Communication', band: 'C1',
     modules: ['Abstract Concepts & Complex Narratives', 'Advanced Structures & Nuance', 'Argument, Sources & Synthesis', 'Professional Negotiation & Presentations', 'Research, Media & Intercultural Communication'],
   },
 ] as const satisfies ReadonlyArray<{
@@ -66,7 +60,6 @@ export const ENGLISH_ENGINE_STEPS = [
   { id: 'vocabulary', labelFa: 'واژگان از جمله', labelEn: 'Vocabulary From Sentences' },
   { id: 'grammar-through-usage', labelFa: 'دستور در کاربرد', labelEn: 'Grammar Through Usage' },
   { id: 'conversation', labelFa: 'مکالمه', labelEn: 'Conversation Practice' },
-  { id: 'review', labelFa: 'مرور هوشمند', labelEn: 'Spaced Review' },
   { id: 'short-assessment', labelFa: 'سنجش کوتاه', labelEn: 'Short Assessment' },
   { id: 'speaking-check', labelFa: 'آزمون گفتاری', labelEn: 'Speaking Check' },
 ] as const;

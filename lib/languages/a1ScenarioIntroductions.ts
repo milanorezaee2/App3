@@ -64,7 +64,7 @@ export const A1_SCENARIO_INTROS: Record<NewLanguageId,TopicIntro[]> = {
       ['Ist Käse im Sandwich?','آیا در ساندویچ پنیر هست؟','ایست کِزِه ایم سَندویچ','Käse','پنیر'],
       ['Ich bin Vegetarierin.','من گیاه‌خوار هستم. (گوینده زن)','ایش بین وِگِتاریرین','Vegetarierin','گیاه‌خوار، زن'],
       ['Ich hätte gern eine warme Suppe.','یک سوپ گرم می‌خواهم.','ایش هِتِه گِرن آینِه وارمِه زوپِه','warme Suppe','سوپ گرم'],
-      ['Das ist alles, danke.','همین کافی است، ممنون.','داس ایست آلِس، دانکِه','alles','همه'],
+      ['Das ist alles, bitte.','همین کافی است، لطفاً.','داس ایست آلِس، بیتِه','alles','همه'],
     ]},
     {slug:'travel-tickets',title:'سفر و خرید بلیت',subtitle:'خرید بلیت قطار',situation:'در ایستگاه دربارهٔ بلیت قطار کلن می‌پرسید.',teachingFa:'Eine einfache Fahrt بلیت یک‌طرفه و Hin- und Rückfahrt رفت‌وبرگشت است. Nach Köln یعنی به مقصد کلن. پیش از سفر جزئیات و شرایط بلیت را بررسی کنید. آوانویسی تقریبی است.',rows:[
       ['Eine Fahrkarte nach Köln, bitte.','یک بلیت به کلن، لطفاً.','آینِه فارکارتِه ناخ کُلن، بیتِه','eine Fahrkarte','یک بلیت'],
@@ -77,7 +77,7 @@ export const A1_SCENARIO_INTROS: Record<NewLanguageId,TopicIntro[]> = {
       ['Von welchem Gleis fährt der Zug?','قطار از کدام سکو حرکت می‌کند؟','فون وِلشِم گلایس فِرت دِر تسوگ','Gleis','سکو'],
     ]},
     {slug:'hotel-stay',title:'رزرو هتل و اقامت',subtitle:'ورود و پرسیدن امکانات',situation:'در پذیرش هتل دربارهٔ رزرو و زمان صبحانه صحبت می‌کنید.',teachingFa:'Ich habe eine Reservierung یعنی رزرو دارم. Zimmer یعنی اتاق و Frühstück یعنی صبحانه. این گفت‌وگو تمرین زبان است و رزروی انجام نمی‌دهد. آوانویسی تقریبی است.',rows:[
-      ['Guten Tag, ich habe eine Reservierung.','روز بخیر، من رزرو دارم.','گوتِن تاک، ایش هابِه آینِه رِزِرویرونگ','Reservierung','رزرو'],
+      ['Guten Abend, ich habe eine Reservierung.','عصر بخیر، من رزرو دارم.','گوتِن آبِنت، ایش هابِه آینِه رِزِرویرونگ','Abend','عصر'],
       ['Auf welchen Namen, bitte?','به چه نامی، لطفاً؟','آوف وِلشِن نامِن، بیتِه','Namen','نام'],
       ['Auf den Namen Sara Ali.','به نام سارا علی.','آوف دِن نامِن سارا علی','Auf den Namen','به نام'],
       ['Hier ist Ihr Zimmerschlüssel.','بفرمایید، کلید اتاق شما.','هیر ایست ایر تسیمرشْلوسِل','Zimmerschlüssel','کلید اتاق'],
@@ -92,7 +92,7 @@ export const A1_SCENARIO_INTROS: Record<NewLanguageId,TopicIntro[]> = {
       ['Seit heute Morgen.','از امروز صبح.','زایت هویتِه مورگِن','heute Morgen','امروز صبح'],
       ['Gut. Haben Sie Fieber?','متوجه شدم. تب دارید؟','گوت. هابِن زی فیبِر','Fieber','تب'],
       ['Ja, ich habe Fieber.','بله، تب دارم.','یا، ایش هابِه فیبِر','habe','دارم'],
-      ['Nein, ich habe kein Fieber.','نه، تب ندارم.','ناین، ایش هابِه کاین فیبِر','kein Fieber','بدون تب'],
+      ['Nein, ich habe nur Husten.','نه، فقط سرفه دارم.','ناین، ایش هابِه نور هوستِن','nur','فقط'],
       ['Ich habe Bauchschmerzen.','شکمم درد می‌کند.','ایش هابِه باوخ‌شمِرتسِن','Bauchschmerzen','درد شکم'],
       ['Können Sie langsam sprechen?','می‌توانید آهسته صحبت کنید؟','کِنِن زی لانگزام اِشپرِخِن','langsam','آهسته'],
     ]},

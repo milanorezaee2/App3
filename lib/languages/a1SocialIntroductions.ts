@@ -52,7 +52,7 @@ export const A1_SOCIAL_INTROS: Record<NewLanguageId,TopicIntro[]> = {
       ['Könnten Sie mir bitte helfen?','می‌توانید لطفاً به من کمک کنید؟','کِنتِن زی میر بیتِه هِلفِن','helfen','کمک کردن'],['Ja, natürlich.','بله، البته.','یا، ناتورلیش','natürlich','البته'],
       ['Darf ich hereinkommen?','می‌توانم وارد شوم؟','دارف ایش هِراینکومِن','Darf ich','اجازه دارم'],['Ja, kommen Sie herein.','بله، وارد شوید.','یا، کومِن زی هِراین','herein','داخل'],
       ['Entschuldigung, wo ist der Tisch?','ببخشید، میز کجاست؟','اِنتشولدگونگ، وو ایست دِر تیش','Entschuldigung','ببخشید'],['Ich hätte gern eine Auskunft.','اطلاعاتی می‌خواهم.','ایش هِتِه گِرن آینِه آوسکونفت','Auskunft','اطلاعات'],
-      ['Danke für Ihre Hilfe.','از کمک شما ممنونم.','دانکِه فور ایرِه هیلفِه','Ihre Hilfe','کمک شما'],['Gern geschehen.','خواهش می‌کنم.','گِرن گِشِهِن','Gern geschehen','خواهش می‌کنم'],
+      ['Danke für den Kaffee.','برای قهوه ممنون.','دانکِه فور دِن کافِه','Kaffee','قهوه'],['Gern geschehen.','خواهش می‌کنم.','گِرن گِشِهِن','Gern geschehen','خواهش می‌کنم'],
     ]},
   ],
   es:[

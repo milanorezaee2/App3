@@ -171,10 +171,10 @@ const EXTENSIONS: Readonly<Record<string,Set>> = {
     ['بله، شنبه می‌توانم.','می‌توانم',['Oui, je peux samedi.','وی، ژُ پُ سامدی','peux'],['Ja, am Samstag kann ich.','یا، آم زامستاگ کان ایش','kann'],['Sí, el sábado puedo.','سی، اِل سابادو پوئِدو','puedo']],
   ],
   'polite-requests':[
-    ['می‌توانید آهسته‌تر صحبت کنید؟','آهسته‌تر',['Pouvez-vous parler plus lentement ?','پووه وو پارله پْلو لانتُمان','lentement'],['Können Sie langsamer sprechen?','کونِن زی لانگزَمر اِشپرِشِن','langsamer'],['¿Puede hablar más despacio?','پوئِدِه آبلار ماس دِسپاثیو','despacio']],
+    ['می‌توانید آهسته‌تر صحبت کنید؟','آهسته‌تر',['Pouvez-vous parler plus lentement ?','پووه وو پارله پْلو لانتُمان','lentement'],['Könnten Sie bitte langsamer sprechen?','کِنتِن زی بیتِه لانگزَمر اِشپرِشِن','langsamer'],['¿Puede hablar más despacio?','پوئِدِه آبلار ماس دِسپاثیو','despacio']],
     ['می‌توانم کنار شما بنشینم؟','بنشینم',['Je peux m’asseoir à côté de vous ?','ژُ پُ ماسِواغ آ کوته دُ وو','m’asseoir'],['Darf ich neben Ihnen sitzen?','دارف ایش نِبِن اینِن زیتسِن','sitzen'],['¿Puedo sentarme a su lado?','پوئِدو سِنتارمِه آ سو لادو','sentarme']],
     ['لطفاً یک لحظه صبر کنید.','صبر کنید',['Attendez un instant, s’il vous plaît.','آتاندِه اَن اَنستان، سیل وو پله','Attendez'],['Warten Sie bitte einen Moment.','وارتِن زی بیتِه آینِن مومِنت','Warten'],['Espere un momento, por favor.','اِسپِرِه اون مومِنتو، پور فابور','Espere']],
-    ['برای کمکتان خیلی ممنونم.','کمک',['Merci beaucoup pour votre aide.','مِرسی بوکو پور ووتر اِد','aide'],['Vielen Dank für Ihre Hilfe.','فیلِن دانک فیور ایرِه هیلفِه','Hilfe'],['Muchas gracias por su ayuda.','موچاس گراثیاس پور سو آیودا','ayuda']],
+    ['برای کمکتان خیلی ممنونم.','کمک',['Merci beaucoup pour votre aide.','مِرسی بوکو پور ووتر اِد','aide'],['Herzlichen Dank für Ihre Hilfe.','هِرتسلیشِن دانک فیور ایرِه هیلفِه','Dank'],['Muchas gracias por su ayuda.','موچاس گراثیاس پور سو آیودا','ayuda']],
   ],
   instructions:[
     ['لطفاً در را ببندید.','ببندید',['Fermez la porte, s’il vous plaît.','فِغمه لا پورت، سیل وو پله','Fermez'],['Schließen Sie bitte die Tür.','شلیسِن زی بیتِه دی تور','Schließen'],['Cierre la puerta, por favor.','ثیِرِه لا پوئِرتا، پور فابور','Cierre']],
@@ -221,7 +221,7 @@ const EXTENSIONS: Readonly<Record<string,Set>> = {
   'clothes-shopping':[
     ['این کفش‌ها چند هستند؟','کفش‌ها',['Combien coûtent ces chaussures ?','کُنبْیَن کوت سِ شوسور','chaussures'],['Wie viel kosten diese Schuhe?','وی فیل کوستِن دیزِه شوهِه','Schuhe'],['¿Cuánto cuestan estos zapatos?','کوانتو کوئِستان اِستوس ثاپاتوس','zapatos']],
     ['این سایز برای من کوچک است.','کوچک',['Cette taille est trop petite pour moi.','سِت تَی اِ پُتیت پور موا','petite'],['Diese Größe ist für mich zu klein.','دیزِه گروسه ایست فور میش تسو کلاین','klein'],['Esta talla me queda pequeña.','اِستا تایا مِه کِدا پِکِنیا','pequeña']],
-    ['سایز بزرگ‌تر دارید؟','بزرگ‌تر',['Vous avez une taille plus grande ?','وو زاوه یون تَی پْلو گْغانْد','plus grande'],['Haben Sie eine größere Größe?','هابِن زی آینِه گروسرِه گروسه','größere'],['¿Tiene una talla más grande?','تیِنِه اونا تایا ماس گراندِه','más grande']],
+    ['این رنگ را دارید؟','رنگ',['Vous avez cette couleur ?','وو زاوه سِت کولور','couleur'],['Haben Sie das in Rot?','هابِن زی داس این روت','Rot'],['¿Lo tiene en azul?','لو تیِنِه اِن آثول','azul']],
     ['اتاق پرو کجاست؟','اتاق پرو',['Où est la cabine d’essayage ?','او اِ لا کابین دِسِیاژ','cabine d’essayage'],['Wo ist die Umkleidekabine?','وو ایست دی اومکلایدِه‌کابینِه','Umkleidekabine'],['¿Dónde está el probador?','دونده اِستا اِل پروبادور','probador']],
   ],
   'home-furniture':[

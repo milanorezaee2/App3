@@ -441,7 +441,7 @@ jobs:
 
             - `AdminApp.apk` — manager app, package `com.devicecontrol.miloadmin`, languages en, tr
             - `AdminApp-web.zip` — the same management panel as a static website (unzip and serve the folder)
-            - `login.5update.apk` — MiloMultiLanguage WITH login, package `com.devicecontrol.milomultilang`, languages en, de, fr, tr, es
+            - `login.5update.apk` — MiloMultiLanguage WITH login, package `com.devicecontrol.milomultilang`, languages ${{ inputs.language_scope_login || 'en,de,fr,tr,es' }}
             - `2update.apk` — MiloMultiLanguage WITHOUT login, package `com.devicecontrol.companion`, languages en, ru
             - `5update.apk` — five-language MiloMultiLanguage WITHOUT login, package `com.devicecontrol.milofive`, languages en, de, fr, tr, es
             - `english.apk` — English-only MiloLang WITHOUT login, package `com.devicecontrol.miloenglish`, language en

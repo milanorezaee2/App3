@@ -1,11 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import type { StarterLesson, NewLanguageId } from './newCourses';
+import { ENGLISH_ENGINE_STEPS } from '../englishLearningEngine';
+import { LESSON_STAGE_VERSION, resumeStage } from '../lessonStages';
 
 
 
 export interface StarterLessonSession {
   stage: number;
+  /** 2 = the current ladder without the removed blitz round; absent on legacy saves. */
+  stageVersion?: number;
   sentenceIndex: number;
   revealed: boolean;
   answers: Record<string, number>;
@@ -19,9 +23,9 @@ interface StarterStudyState {
 
 export function createStarterSessions(language: NewLanguageId, lessons: readonly StarterLesson[]) {
 const storageKey = `${language}_starter_lesson_sessions_v1`;
-const stages = { length: 9 };
+const stages = { length: ENGLISH_ENGINE_STEPS.length };
 function freshStarterLessonSession(): StarterLessonSession {
-  return { stage: 0, sentenceIndex: 0, revealed: false, answers: {}, showCheckAnswers: false };
+  return { stage: 0, stageVersion: LESSON_STAGE_VERSION, sentenceIndex: 0, revealed: false, answers: {}, showCheckAnswers: false };
 }
 
 async function readRaw(): Promise<string | null> {
@@ -47,11 +51,48 @@ function parseState(raw: string | null): StarterStudyState {
   return { schema: 1, sessions: state.sessions as Record<string, StarterLessonSession> };
 }
 
+/**
+ * Read a saved attempt. Writes stay strict (`validateSession`), but a *read* tolerates the two fields
+ * a content rewrite can legitimately invalidate: a sentence index past the end of the lesson and an
+ * answer slot whose choice list changed length. German Pre-A1 was re-authored with the same lesson and
+ * sentence ids but three checks of four options instead of the old one-or-two checks of eight, so a
+ * learner who had answered the old checks must still open the lesson (clamped, answers dropped) rather
+ * than be told that their saved data is corrupt.
+ */
+function readSession(lessonId: string, value: unknown): StarterLessonSession {
+  const lesson = lessons.find(item => item.id === lessonId);
+  if (!lesson || !value || typeof value !== 'object' || Array.isArray(value)) throw new Error('جلسهٔ این زبان برای این درس معتبر نیست.');
+  const session = value as Partial<StarterLessonSession>;
+  const stage = resumeStage(Number(session.stage), session.stageVersion, stages.length);
+  if (stage === null
+    || !Number.isInteger(session.sentenceIndex)
+    || typeof session.revealed !== 'boolean' || typeof session.showCheckAnswers !== 'boolean'
+    || !session.answers || typeof session.answers !== 'object' || Array.isArray(session.answers)) {
+    throw new Error('وضعیت ذخیره‌شدهٔ درس این زبان معتبر نیست؛ دادهٔ اصلی تغییر نکرده است.');
+  }
+  const answers: Record<string, number> = {};
+  for (const [key, answer] of Object.entries(session.answers)) {
+    const checkIndex = Number(key);
+    const check = lesson.checks?.[checkIndex];
+    if (!Number.isInteger(checkIndex) || !check || !Number.isInteger(answer) || answer! < 0 || answer! >= check.choices.length) continue;
+    answers[key] = answer!;
+  }
+  return {
+    stage,
+    stageVersion: LESSON_STAGE_VERSION,
+    sentenceIndex: Math.min(Math.max(0, session.sentenceIndex!), lesson.sentences.length - 1),
+    revealed: session.revealed,
+    answers,
+    showCheckAnswers: session.showCheckAnswers,
+  };
+}
+
 function validateSession(lessonId: string, value: unknown): StarterLessonSession {
   const lesson = lessons.find(item => item.id === lessonId);
   if (!lesson || !value || typeof value !== 'object' || Array.isArray(value)) throw new Error('جلسهٔ این زبان برای این درس معتبر نیست.');
   const session = value as Partial<StarterLessonSession>;
-  if (!Number.isInteger(session.stage) || session.stage! < 0 || session.stage! >= stages.length
+  const stage = resumeStage(Number(session.stage), session.stageVersion, stages.length);
+  if (stage === null
     || !Number.isInteger(session.sentenceIndex) || session.sentenceIndex! < 0 || session.sentenceIndex! >= lesson.sentences.length
     || typeof session.revealed !== 'boolean' || typeof session.showCheckAnswers !== 'boolean'
     || !session.answers || typeof session.answers !== 'object' || Array.isArray(session.answers)) {
@@ -67,7 +108,8 @@ function validateSession(lessonId: string, value: unknown): StarterLessonSession
     answers[key] = answer!;
   }
   return {
-    stage: session.stage!,
+    stage,
+    stageVersion: LESSON_STAGE_VERSION,
     sentenceIndex: session.sentenceIndex!,
     revealed: session.revealed,
     answers,
@@ -80,7 +122,7 @@ function loadStarterLessonSessionWithPresence(lessonId: string): Promise<{ sessi
     if (!lessons.some(item => item.id === lessonId)) throw new Error('درس این زبان پیدا نشد.');
     const state = parseState(await readRaw());
     const saved = state.sessions[lessonId];
-    return { session: saved === undefined ? freshStarterLessonSession() : validateSession(lessonId, saved), hasSavedSession: saved !== undefined };
+    return { session: saved === undefined ? freshStarterLessonSession() : readSession(lessonId, saved), hasSavedSession: saved !== undefined };
   });
 }
 

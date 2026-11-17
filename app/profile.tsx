@@ -768,14 +768,14 @@ function RecordedSpeechSetting() {
     void setPrefersRecordedSpeech(next);
   };
   return (
-    <Section icon={<Volume2 size={17} color={palette.forest} />} title="صدای جایگزین" subtitle="اگر صدای گوشی شما قطع یا منقطع میشود، پخش جملهها را به فایلهای ضبطشده بسپارید.">
+    <Section icon={<Volume2 size={17} color={palette.forest} />} title="گویندهٔ صدا" subtitle="پیش‌فرض، صدای خود گوشی است؛ اگر این صدا برایتان ناخوشایند یا منقطع بود، صدای ضبط‌شده را انتخاب کنید.">
       <Pressable accessibilityRole="button" onPress={toggle} style={({ pressed }) => [{ flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', padding: 14, borderRadius: 16, borderWidth: 1, borderColor: palette.border, backgroundColor: useRecorded ? palette.forestSoft : palette.sage }, pressed && styles.pressed]}>
         <Text keepColor style={{ fontSize: 14, color: palette.ink, fontWeight: '700' }}>{useRecorded ? 'صدای ضبطشده · روشن' : 'صدای گوشی · پیشفرض'}</Text>
         <View style={{ width: 46, height: 26, borderRadius: 13, backgroundColor: useRecorded ? palette.forest : palette.muted, alignItems: useRecorded ? 'flex-end' : 'flex-start', justifyContent: 'center', paddingHorizontal: 3 }}>
           <View style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: '#FFFFFF' }} />
         </View>
       </Pressable>
-      <Text style={styles.cardHint}>روی بیشتر گوشیها صدای خود دستگاه بهتر است؛ این گزینه فقط برای دستگاههایی است که صدایشان مشکل دارد. صداهای ضبطشده بعد از همگامسازی آفلاین هم پخش میشوند.</Text>
+      <Text style={styles.cardHint}>همین انتخاب در بخش «واژه‌ها» هم دیده می‌شود و در هر دو جا یکسان ذخیره می‌شود. صدای گوشی همیشه پیش‌فرض است؛ فقط اگر خودتان صدای ضبط‌شده را روشن کنید (یا صدای گوشی چند بار پخش نشود) فایل‌های ضبط‌شده به کار می‌روند.</Text>
     </Section>
   );
 }

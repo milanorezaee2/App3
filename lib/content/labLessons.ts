@@ -9,14 +9,39 @@ import type { LabLanguage, LabLesson } from './labLessonTypes';
  * `computeReadiness` counts lessons per band, not downloaded pack sentences.
  */
 export function labLessonsOf(language: LabLanguage): readonly LabLesson[] {
-  return LAB_LESSONS[language] ?? [];
+  const lessons = LAB_LESSONS[language] ?? [];
+  // The bundled data was generated when Pre-A1 had id -1. The ladder now starts at 0, so map on read
+  // instead of rewriting the generated file (its ids, sentences and checks stay untouched).
+  return lessons.map(lesson => (lesson.levelId as number) < 0 ? { ...lesson, levelId: 0 as const } : lesson);
 }
 
+/**
+ * Inserted extra lessons, per language.
+ *
+ * Pre-A1 is exempt: the generated review lessons that once filled that band were frequency frames
+ * («In class we read «of» today.») — unusable for somebody who cannot read English yet. English
+ * Pre-A1 now carries hand-written review lessons of its own (`courseContentPreA1.ts`), so nothing
+ * generated is inserted there.
+ */
+const EXEMPT_LEVELS: Partial<Record<LabLanguage, ReadonlySet<number>>> = {
+  en: new Set([0]),
+  // Russian Pre-A1 now has seventeen authored lesson of its own, the same way German does. The four
+  // generated review lessons left there were frequency frames that quoted single words («в», «и»,
+  // «на») inside «Урок объясняет … понятно» — unreadable for somebody just meeting Cyrillic.
+  ru: new Set([0]),
+};
+
 /** Insert extra lessons immediately after the last existing lesson of the same level. */
-export function insertLabLessons<T extends { levelId: number }>(base: readonly T[], extras: readonly T[]): T[] {
+export function insertLabLessons<T extends { levelId: number }>(
+  base: readonly T[],
+  extras: readonly T[],
+  language?: LabLanguage,
+): T[] {
   const out: T[] = [...base];
   const groups = new Map<number, T[]>();
+  const skip = language ? EXEMPT_LEVELS[language] : undefined;
   for (const extra of extras) {
+    if (skip?.has(extra.levelId)) continue;
     const list = groups.get(extra.levelId) ?? [];
     list.push(extra);
     groups.set(extra.levelId, list);

@@ -70,7 +70,7 @@ function withChoices(correct: string, distractors: string[], random: () => numbe
   return { choices, correctIndex: choices.indexOf(correct) };
 }
 
-/** Recognition formats; «write» is added explicitly by callers (lesson blitz from A2 up). */
+/** Recognition formats; «write» is added explicitly by callers that want typed production. */
 const ALL_KINDS: PracticeKind[] = ['order', 'fill', 'listen', 'truefalse', 'match'];
 
 function makeItem(kind: PracticeKind, sentence: Sentence, all: Sentence[], random: () => number, retry = false): PracticeItem | null {

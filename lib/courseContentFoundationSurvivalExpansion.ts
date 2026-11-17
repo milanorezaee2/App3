@@ -34,11 +34,11 @@ const lesson = (
 
 /** Curated additive Foundation and Survival lessons for the sentence course; the separate 24-unit guided course remains untouched. */
 export const FOUNDATION_SURVIVAL_EXPANSION_LESSONS: SentenceLesson[] = [
-  lesson('foundation-alphabet-and-spelling', 0, 2, 'الفبا و هجی‌کردن', 'نام‌ها و واژه‌های کوتاه را روشن بگویید و بنویسید', 'در کلاس یا هنگام ثبت نام، لازم است نام و چند واژهٔ ساده را هجی کنید.', [
+  lesson('foundation-alphabet-and-spelling', 1, 2, 'الفبا و هجی‌کردن', 'نام‌ها و واژه‌های کوتاه را روشن بگویید و بنویسید', 'در کلاس یا هنگام ثبت نام، لازم است نام و چند واژهٔ ساده را هجی کنید.', [
     sentence('s1', 'What is the first letter of your name?', 'حرف اول نام شما چیست؟', 'وات ایز ذِ فِرست لِتِر آو یور نِیم؟', 'What is the first letter of + noun?', [['first', 'اول'], ['letter', 'حرف']]),
     sentence('s2', 'My name starts with S.', 'نام من با حرف S شروع می‌شود.', 'مای نِیم اِستارتس ویذ اِس.', 'My name starts with + letter.', [['start with', 'با ... شروع شدن']]),
-    sentence('s3', 'How do you spell your name?', 'نامتان را چطور هجی می‌کنید؟', 'هاو دو یو اِسپِل یور نِیم؟', 'How do you spell + noun?', [['spell', 'هجی کردن']]),
-    sentence('s4', 'I spell it S-A-R-A.', 'آن را S-A-R-A هجی می‌کنم.', 'آی اِسپِل ایت اِس اِی آر اِی.', 'I spell it + letters.', [['spell', 'هجی کردن']]),
+    sentence('s3', 'How do you spell your last name?', 'نام خانوادگی‌تان را چطور هجی می‌کنید؟', 'هاو دو یو اِسپِل یور لَست نِیم؟', 'How do you spell your + noun?', [['spell', 'هجی کردن'], ['last name', 'نام خانوادگی']]),
+    sentence('s4', 'I spell it S-A-R-A-H.', 'آن را S-A-R-A-H هجی می‌کنم.', 'آی اِسپِل ایت اِس اِی آر اِی اِیچ.', 'I spell it + letters.', [['spell', 'هجی کردن']]),
     sentence('s5', 'Can you say that letter again?', 'می‌توانید آن حرف را دوباره بگویید؟', 'کَن یو سِی ذَت لِتِر اَگِن؟', 'Can you + base verb + object + again?', [['say', 'گفتن'], ['again', 'دوباره']]),
     sentence('s6', 'This is a capital B.', 'این حرف B بزرگ است.', 'ذیس ایز اَ کَپیتِل بی.', 'This is a capital + letter.', [['capital letter', 'حرف بزرگ']]),
     sentence('s7', 'That is a small b.', 'آن حرف b کوچک است.', 'ذَت ایز اَ اِسمال بی.', 'That is a small + letter.', [['small letter', 'حرف کوچک']]),
@@ -46,8 +46,8 @@ export const FOUNDATION_SURVIVAL_EXPANSION_LESSONS: SentenceLesson[] = [
     sentence('s9', 'Please write your name here.', 'لطفاً نامتان را اینجا بنویسید.', 'پلیز رایت یور نِیم هیر.', 'Please + base verb + object + place.', [['write', 'نوشتن'], ['here', 'اینجا']]),
     sentence('s10', 'I can read this short word.', 'می‌توانم این واژهٔ کوتاه را بخوانم.', 'آی کَن رید ذیس شورت وِرد.', 'I can + base verb + this + adjective + noun.', [['read', 'خواندن'], ['short', 'کوتاه']]),
   ], [
-    turn('partner', 'How do you spell your name?', 'نامتان را چطور هجی می‌کنید؟'),
-    turn('learner', 'I spell it S-A-R-A.', 'آن را S-A-R-A هجی می‌کنم.'),
+    turn('partner', 'How do you spell your last name?', 'نام خانوادگی‌تان را چطور هجی می‌کنید؟'),
+    turn('learner', 'I spell it S-A-R-A-H.', 'آن را S-A-R-A-H هجی می‌کنم.'),
     turn('partner', 'What is the first letter?', 'حرف اول چیست؟'),
     turn('learner', 'My name starts with S.', 'نام من با حرف S شروع می‌شود.'),
     turn('partner', 'Can you read this word?', 'می‌توانید این واژه را بخوانید؟'),
@@ -55,7 +55,7 @@ export const FOUNDATION_SURVIVAL_EXPANSION_LESSONS: SentenceLesson[] = [
     turn('partner', 'Please write your name here.', 'لطفاً نامتان را اینجا بنویسید.'),
     turn('learner', 'Of course.', 'حتماً.'),
   ]),
-  lesson('foundation-pronouns-and-be', 0, 3, 'ضمیرها و فعل be', 'دربارهٔ خود و دیگران جمله‌های پایه بسازید', 'در کلاس یا گفت‌وگوی کوتاه، می‌خواهید بگویید چه کسی هستید و دیگران کجا یا چگونه‌اند.', [
+  lesson('foundation-pronouns-and-be', 1, 3, 'ضمیرها و فعل be', 'دربارهٔ خود و دیگران جمله‌های پایه بسازید', 'در کلاس یا گفت‌وگوی کوتاه، می‌خواهید بگویید چه کسی هستید و دیگران کجا یا چگونه‌اند.', [
     sentence('s1', 'I am new here.', 'من اینجا تازه‌وارد هستم.', 'آی اَم نیو هیر.', 'I am + adjective / place phrase.', [['new', 'تازه'], ['here', 'اینجا']]),
     sentence('s2', 'You are my classmate.', 'تو هم‌کلاسی من هستی.', 'یو آر مای کِلَس‌مِیت.', 'You are my + person.', [['classmate', 'هم‌کلاسی']]),
     sentence('s3', 'He is my brother.', 'او برادر من است.', 'هی ایز مای براذِر.', 'He is my + person.', [['brother', 'برادر']]),
@@ -76,7 +76,7 @@ export const FOUNDATION_SURVIVAL_EXPANSION_LESSONS: SentenceLesson[] = [
     turn('partner', 'Are you ready for class?', 'برای کلاس آماده‌ای؟'),
     turn('learner', 'Yes, we are ready.', 'بله، ما آماده هستیم.'),
   ]),
-  lesson('foundation-numbers-and-contact', 0, 4, 'عددها و اطلاعات تماس', 'عددهای روزمره و اطلاعات ساده را بفهمید و بگویید', 'برای ثبت‌نام یا تماس، باید شماره، سن و نشانی ساده را بپرسید یا اعلام کنید.', [
+  lesson('foundation-numbers-and-contact', 1, 4, 'عددها و اطلاعات تماس', 'عددهای روزمره و اطلاعات ساده را بفهمید و بگویید', 'برای ثبت‌نام یا تماس، باید شماره، سن و نشانی ساده را بپرسید یا اعلام کنید.', [
     sentence('s1', 'How old are you?', 'چند سال دارید؟', 'هاو اُلد آر یو؟', 'How old are you?', [['old', 'ساله']]),
     sentence('s2', 'I am twenty years old.', 'من بیست سال دارم.', 'آی اَم توِنتی ییرز اُلد.', 'I am + number + years old.', [['twenty', 'بیست'], ['years old', 'ساله']]),
     sentence('s3', 'What is your phone number?', 'شمارهٔ تلفنتان چیست؟', 'وات ایز یور فون نامبِر؟', 'What is your + noun?', [['phone number', 'شمارهٔ تلفن']]),
@@ -97,11 +97,11 @@ export const FOUNDATION_SURVIVAL_EXPANSION_LESSONS: SentenceLesson[] = [
     turn('partner', 'Thank you.', 'ممنون.'),
     turn('learner', 'You are welcome.', 'خواهش می‌کنم.'),
   ]),
-  lesson('foundation-family-and-possessions', 0, 5, 'خانواده و مالکیت', 'دربارهٔ اعضای خانواده و چیزهای متعلق به آن‌ها بگویید', 'در یک گفت‌وگوی آشنایی، می‌خواهید دربارهٔ خانواده و وسایل ساده سؤال کنید.', [
+  lesson('foundation-family-and-possessions', 1, 5, 'خانواده و مالکیت', 'دربارهٔ اعضای خانواده و چیزهای متعلق به آن‌ها بگویید', 'در یک گفت‌وگوی آشنایی، می‌خواهید دربارهٔ خانواده و وسایل ساده سؤال کنید.', [
     sentence('s1', 'I have one brother and two sisters.', 'من یک برادر و دو خواهر دارم.', 'آی هَو وان براذِر اَند تو سیستِرز.', 'I have + number + family noun.', [['have', 'داشتن'], ['brother', 'برادر'], ['sister', 'خواهر']]),
     sentence('s2', 'Do you have a big family?', 'خانوادهٔ پرجمعیتی دارید؟', 'دو یو هَو اَ بیگ فَمِلی؟', 'Do you have + a/an + adjective + noun?', [['family', 'خانواده'], ['big', 'بزرگ']]),
     sentence('s3', 'This is my mother.', 'این مادر من است.', 'ذیس ایز مای ماذِر.', 'This is my + person.', [['mother', 'مادر']]),
-    sentence('s4', 'Her name is Laleh.', 'نام او لاله است.', 'هِر نِیم ایز لاله.', 'Her + noun + is + name.', [['her', 'مال او / ـش']]),
+    sentence('s4', 'Her name is Narges.', 'نام او نرگس است.', 'هِر نِیم ایز نَرگِس.', 'Her + noun + is + name.', [['her', 'مال او / ـش']]),
     sentence('s5', 'His room is next to mine.', 'اتاق او کنار اتاق من است.', 'هیز روم ایز نِکست تو ماین.', 'His + noun + is next to + noun.', [['his', 'مال او / ـش'], ['next to', 'کنارِ']]),
     sentence('s6', 'Are these your keys?', 'آیا این‌ها کلیدهای تو هستند؟', 'آر ذیز یور کیز؟', 'Are these your + plural noun?', [['these', 'این‌ها'], ['keys', 'کلیدها']]),
     sentence('s7', 'Those are my father’s glasses.', 'آن‌ها عینک پدر من هستند.', 'ذوز آر مای فاذِرز گِلَسِز.', 'Those are my + person’s + noun.', [['those', 'آن‌ها'], ['glasses', 'عینک']]),
@@ -112,11 +112,11 @@ export const FOUNDATION_SURVIVAL_EXPANSION_LESSONS: SentenceLesson[] = [
     turn('partner', 'Do you have a big family?', 'خانوادهٔ پرجمعیتی دارید؟'),
     turn('learner', 'I have one brother and two sisters.', 'من یک برادر و دو خواهر دارم.'),
     turn('partner', 'Who is this?', 'این چه کسی است؟'),
-    turn('learner', 'This is my mother. Her name is Laleh.', 'این مادر من است. نام او لاله است.'),
+    turn('learner', 'This is my mother. Her name is Narges.', 'این مادر من است. نام او نرگس است.'),
     turn('partner', 'Do you visit your grandparents often?', 'زیاد به دیدن پدربزرگ و مادربزرگتان می‌روید؟'),
     turn('learner', 'We visit them on Sunday.', 'یکشنبه به دیدنشان می‌رویم.'),
   ]),
-  lesson('foundation-time-and-calendar', 0, 6, 'زمان و تقویم', 'روز، ساعت و تاریخ‌های ساده را بپرسید و بگویید', 'برای هماهنگی کلاس یا قرار، باید روز و ساعت را بفهمید.', [
+  lesson('foundation-time-and-calendar', 1, 6, 'زمان و تقویم', 'روز، ساعت و تاریخ‌های ساده را بپرسید و بگویید', 'برای هماهنگی کلاس یا قرار، باید روز و ساعت را بفهمید.', [
     sentence('s1', 'What day is it today?', 'امروز چه روزی است؟', 'وات دِی ایز ایت تودِی؟', 'What day is it + time expression?', [['day', 'روز'], ['today', 'امروز']]),
     sentence('s2', 'Today is Monday.', 'امروز دوشنبه است.', 'تودِی ایز ماندِی.', 'Today is + day.', [['Monday', 'دوشنبه']]),
     sentence('s3', 'What time is it?', 'ساعت چند است؟', 'وات تایم ایز ایت؟', 'What time is it?', [['time', 'زمان / ساعت']]),
@@ -135,7 +135,7 @@ export const FOUNDATION_SURVIVAL_EXPANSION_LESSONS: SentenceLesson[] = [
     turn('partner', 'Can we meet after class?', 'می‌توانیم بعد از کلاس همدیگر را ببینیم؟'),
     turn('learner', 'Yes. We can meet at noon.', 'بله. می‌توانیم ظهر همدیگر را ببینیم.'),
   ]),
-  lesson('foundation-everyday-routine', 0, 7, 'کارهای روزمره', 'دربارهٔ عادت‌ها و برنامهٔ معمولتان جمله بسازید', 'در یک گفت‌وگوی کوتاه می‌خواهید دربارهٔ کارهای هر روزتان بگویید.', [
+  lesson('foundation-everyday-routine', 1, 7, 'کارهای روزمره', 'دربارهٔ عادت‌ها و برنامهٔ معمولتان جمله بسازید', 'در یک گفت‌وگوی کوتاه می‌خواهید دربارهٔ کارهای هر روزتان بگویید.', [
     sentence('s1', 'I get up at seven.', 'ساعت هفت از خواب بیدار می‌شوم.', 'آی گِت اَپ اَت سِوِن.', 'I + base verb + at + time.', [['get up', 'از خواب بیدار شدن'], ['seven', 'هفت']]),
     sentence('s2', 'I have breakfast at home.', 'در خانه صبحانه می‌خورم.', 'آی هَو بِرِکفَست اَت هوم.', 'I have + meal + at + place.', [['breakfast', 'صبحانه']]),
     sentence('s3', 'She goes to work by bus.', 'او با اتوبوس به محل کار می‌رود.', 'شی گوز تو وِرک بای باس.', 'She + verb-s + to + place + by + transport.', [['go', 'رفتن'], ['by bus', 'با اتوبوس']]),
@@ -154,7 +154,7 @@ export const FOUNDATION_SURVIVAL_EXPANSION_LESSONS: SentenceLesson[] = [
     turn('partner', 'What do you do after dinner?', 'بعد از شام چه‌کار می‌کنید؟'),
     turn('learner', 'I usually take a short walk.', 'معمولاً کمی پیاده‌روی می‌کنم.'),
   ]),
-  lesson('foundation-objects-and-places', 0, 8, 'وسایل و مکان‌های نزدیک', 'چیزهای ساده و جای آن‌ها را توصیف کنید', 'در کلاس یا محله می‌خواهید بپرسید چیزی کجاست و چه چیزهایی اطرافتان هستند.', [
+  lesson('foundation-objects-and-places', 1, 8, 'وسایل و مکان‌های نزدیک', 'چیزهای ساده و جای آن‌ها را توصیف کنید', 'در کلاس یا محله می‌خواهید بپرسید چیزی کجاست و چه چیزهایی اطرافتان هستند.', [
     sentence('s1', 'This is my notebook.', 'این دفتر من است.', 'ذیس ایز مای نوت‌بوک.', 'This is my + singular noun.', [['notebook', 'دفتر']]),
     sentence('s2', 'That is an old map.', 'آن یک نقشهٔ قدیمی است.', 'ذَت ایز اَن اُلد مَپ.', 'That is a/an + adjective + noun.', [['old', 'قدیمی'], ['map', 'نقشه']]),
     sentence('s3', 'These are two new books.', 'این‌ها دو کتاب تازه هستند.', 'ذیز آر تو نیو بوکس.', 'These are + number + adjective + plural noun.', [['these', 'این‌ها'], ['book', 'کتاب']]),
@@ -415,7 +415,7 @@ export const FOUNDATION_SURVIVAL_EXPANSION_LESSONS: SentenceLesson[] = [
     sentence('s7', 'My room key does not work.', 'کلید اتاقم کار نمی‌کند.', 'مای روم کی داز نات وِرک.', 'My + noun + does not + base verb.', [['key', 'کلید'], ['work', 'کار کردن']]),
     sentence('s8', 'Could you call a taxi for me?', 'ممکن است برایم تاکسی بگیرید؟', 'کود یو کال اَ تَکسی فور می؟', 'Could you + verb + service + for me?', [['call', 'تماس گرفتن / خبر کردن']]),
     sentence('s9', 'I would like to leave my bag here.', 'می‌خواهم کیفم را اینجا بگذارم.', 'آی وود لایک تو لیو مای بَگ هیر.', 'I would like to + verb + object + place.', [['leave', 'گذاشتن / جا گذاشتن'], ['bag', 'کیف']]),
-    sentence('s10', 'Thank you for your help.', 'برای کمکتان ممنونم.', 'ثَنک یو فور یور هِلپ.', 'Thank you for + noun.', [['help', 'کمک']]),
+    sentence('s10', 'Thank you for your patience.', 'برای صبرتان ممنونم.', 'ثَنک یو فور یور پِیشِنس.', 'Thank you for + noun.', [['patience', 'صبر']]),
   ], [
     turn('partner', 'Good evening. Do you have a reservation?', 'عصر بخیر. رزرو دارید؟'),
     turn('learner', 'Yes, I have a reservation for tonight.', 'بله، برای امشب رزرو دارم.'),
@@ -452,7 +452,7 @@ export const FOUNDATION_SURVIVAL_EXPANSION_LESSONS: SentenceLesson[] = [
     sentence('s6', 'The service desk is on the first floor.', 'بخش خدمات در طبقهٔ اول است.', 'ذِ سِرویس دِسک ایز آن ذِ فِرست فلور.', 'The + service point + is on + floor.', [['service desk', 'بخش خدمات'], ['floor', 'طبقه']]),
     sentence('s7', 'What time does the office close?', 'اداره چه ساعتی تعطیل می‌شود؟', 'وات تایم داز ذِ آفیس کلوز؟', 'What time does + place + base verb?', [['close', 'تعطیل شدن']]),
     sentence('s8', 'It closes at five thirty.', 'ساعت پنج‌ونیم تعطیل می‌شود.', 'ایت کلوزِز اَت فایو ثِرتی.', 'It closes at + time.', [['close', 'تعطیل شدن']]),
-    sentence('s9', 'Please keep the receipt.', 'لطفاً رسید را نگه دارید.', 'پلیز کیپ ذِ ریسیت.', 'Please + base verb + object.', [['keep', 'نگه داشتن'], ['receipt', 'رسید']]),
+    sentence('s9', 'Please give me a receipt.', 'لطفاً رسید را به من بدهید.', 'پلیز گیو می اَ ریسیت.', 'Please + verb + object.', [['receipt', 'رسید']]),
     sentence('s10', 'The package should arrive tomorrow.', 'بسته احتمالاً فردا می‌رسد.', 'ذِ پَکِج شود اَرایو تومارو.', 'The + item + should + base verb + time.', [['arrive', 'رسیدن'], ['tomorrow', 'فردا']]),
   ], [
     turn('partner', 'How can I help you?', 'چطور می‌توانم کمکتان کنم؟'),

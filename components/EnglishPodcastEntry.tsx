@@ -44,7 +44,7 @@ export default function EnglishPodcastEntry() {
           <LinearGradient colors={['#1E1B4B', '#312E81', '#4338CA']} start={{ x: .95, y: 0 }} end={{ x: .05, y: 1 }} style={StyleSheet.absoluteFillObject} />
           <View style={s.playButton}><Play size={20} color={C.accent} fill={C.accent} /></View>
           <View style={s.playerCopy}>
-            <Text style={s.playerEyebrow}>EPISODE {episode.number}{level ? ` · ${level.id === -1 ? 'PRE-A1' : `LEVEL ${level.id}`}` : ''}</Text>
+            <Text style={s.playerEyebrow}>EPISODE {episode.number}{level ? ` · ${level.id === 0 ? 'PRE-A1' : `LEVEL ${level.id}`}` : ''}</Text>
             <Text style={s.playerTitle} numberOfLines={1}>{episode.title}</Text>
             <Text style={s.playerMeta}>{started ? `ادامه از ${fa(percent)}٪` : 'شروع اپیزود'} · حدود {fa(episode.estimatedMinutes)} دقیقه</Text>
             <View style={s.track}><View style={[s.fill, { width: `${percent}%` }]} /></View>

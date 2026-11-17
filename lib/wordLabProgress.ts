@@ -1,22 +1,22 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import type { ReviewRating } from './courseProgress';
-import type { RussianVocabWord } from './languages/russianVocab';
+import type { WordLabLanguage, WordLabWord } from './languages/wordLab';
 
 /**
- * Local, word-level spaced repetition for «آزمایشگاه واژهٔ روسی».
+ * Local, word-level spaced repetition for the «واژه‌ها» lab of each language (Russian, German).
  *
- * This is deliberately separate from the sentence review cards: a word is not a lesson sentence,
- * and spoken production has to be recorded on its own. No Supabase, token or service-role key.
+ * A word is not a lesson sentence, and spoken production is recorded on its own. Everything stays on
+ * the device: no Supabase, no token, no service-role key.
  */
-export const RUSSIAN_VOCAB_STORAGE_KEY = 'milo.ru.vocab.v1';
-export const NEW_VOCAB_PER_SESSION = 5;
-export const DUE_VOCAB_PER_SESSION = 10;
+export const VOCAB_STORAGE_PREFIX = 'milo.wordlab.v1';
+export const NEW_WORDS_PER_SESSION = 8;
+export const DUE_WORDS_PER_SESSION = 8;
 
 const MINUTE = 60 * 1000;
 const DAY = 24 * 60 * MINUTE;
 
-export interface RussianVocabCard {
+export interface WordCard {
   id: string;
   dueAt: string;
   intervalDays: number;
@@ -24,67 +24,79 @@ export interface RussianVocabCard {
   repetitions: number;
   lapses: number;
   spokenSuccess: number;
-  writtenOnly: number;
+  listened: number;
   introducedAt: string;
   lastReviewedAt?: string;
 }
 
-export interface RussianVocabProgress {
-  cards: Record<string, RussianVocabCard>;
+export interface WordProgress {
+  cards: Record<string, WordCard>;
 }
 
-export interface VocabSession {
-  queue: readonly RussianVocabWord[];
+export interface WordSession {
+  queue: readonly WordLabWord[];
   dueCount: number;
   newCount: number;
-  introduced: RussianVocabProgress;
+  introduced: WordProgress;
 }
 
-const emptyProgress = (): RussianVocabProgress => ({ cards: {} });
+const emptyProgress = (): WordProgress => ({ cards: {} });
 
-function validCard(value: unknown): value is RussianVocabCard {
+export function vocabStorageKey(language: WordLabLanguage): string {
+  return `${VOCAB_STORAGE_PREFIX}.${language}`;
+}
+
+function validCard(value: unknown): value is WordCard {
   if (!value || typeof value !== 'object') return false;
-  const card = value as Partial<RussianVocabCard>;
+  const card = value as Partial<WordCard>;
   return typeof card.id === 'string'
     && typeof card.dueAt === 'string' && Number.isFinite(Date.parse(card.dueAt))
     && typeof card.introducedAt === 'string' && Number.isFinite(Date.parse(card.introducedAt))
-    && [card.intervalDays, card.ease, card.repetitions, card.lapses, card.spokenSuccess, card.writtenOnly]
+    && [card.intervalDays, card.ease, card.repetitions, card.lapses, card.spokenSuccess, card.listened]
       .every(n => typeof n === 'number' && Number.isFinite(n) && n >= 0)
     && (card.ease ?? 0) >= 1.3 && (card.ease ?? 0) <= 3;
 }
 
-export async function loadVocabProgress(): Promise<RussianVocabProgress> {
+/** The Russian lab used this key before the two-step redesign; those cards stay valid and are migrated once. */
+const LEGACY_KEYS: Partial<Record<WordLabLanguage, string>> = { ru: 'milo.ru.vocab.v1' };
+
+async function readRaw(key: string): Promise<string | null> {
+  return Platform.OS === 'web' ? window.localStorage.getItem(key) : AsyncStorage.getItem(key);
+}
+
+export async function loadWordProgress(language: WordLabLanguage): Promise<WordProgress> {
+  const key = vocabStorageKey(language);
   try {
-    const raw = Platform.OS === 'web'
-      ? window.localStorage.getItem(RUSSIAN_VOCAB_STORAGE_KEY)
-      : await AsyncStorage.getItem(RUSSIAN_VOCAB_STORAGE_KEY);
+    const legacy = LEGACY_KEYS[language];
+    const raw = await readRaw(key) ?? (legacy ? await readRaw(legacy) : null);
     if (!raw) return emptyProgress();
-    const parsed = JSON.parse(raw) as Partial<RussianVocabProgress>;
-    const cards: Record<string, RussianVocabCard> = {};
+    const parsed = JSON.parse(raw) as Partial<WordProgress>;
+    const cards: Record<string, WordCard> = {};
     for (const [id, card] of Object.entries(parsed.cards ?? {})) {
       if (validCard(card) && card.id === id) cards[id] = card;
     }
+    // A migrated legacy store is rewritten under the new key on the next save; nothing is deleted.
     return { cards };
   } catch {
     return emptyProgress();
   }
 }
 
-export async function saveVocabProgress(progress: RussianVocabProgress): Promise<void> {
+export async function saveWordProgress(language: WordLabLanguage, progress: WordProgress): Promise<void> {
   try {
     const raw = JSON.stringify(progress);
-    if (Platform.OS === 'web') window.localStorage.setItem(RUSSIAN_VOCAB_STORAGE_KEY, raw);
-    else await AsyncStorage.setItem(RUSSIAN_VOCAB_STORAGE_KEY, raw);
+    if (Platform.OS === 'web') window.localStorage.setItem(vocabStorageKey(language), raw);
+    else await AsyncStorage.setItem(vocabStorageKey(language), raw);
   } catch {
     /* Local-only progress; a storage failure must never block the drill. */
   }
 }
 
-export function introduceVocabWords(
-  progress: RussianVocabProgress,
+export function introduceWords(
+  progress: WordProgress,
   ids: readonly string[],
   now = new Date(),
-): RussianVocabProgress {
+): WordProgress {
   const cards = { ...progress.cards };
   let changed = false;
   for (const id of ids) {
@@ -97,7 +109,7 @@ export function introduceVocabWords(
       repetitions: 0,
       lapses: 0,
       spokenSuccess: 0,
-      writtenOnly: 0,
+      listened: 0,
       introducedAt: now.toISOString(),
     };
     changed = true;
@@ -105,11 +117,11 @@ export function introduceVocabWords(
   return changed ? { cards } : progress;
 }
 
-export function dueVocabWords(
-  words: readonly RussianVocabWord[],
-  progress: RussianVocabProgress,
+export function dueWords(
+  words: readonly WordLabWord[],
+  progress: WordProgress,
   now = new Date(),
-): RussianVocabWord[] {
+): WordLabWord[] {
   return words
     .filter(word => {
       const card = progress.cards[word.id];
@@ -118,22 +130,22 @@ export function dueVocabWords(
     .sort((a, b) => Date.parse(progress.cards[a.id].dueAt) - Date.parse(progress.cards[b.id].dueAt));
 }
 
-export function newVocabWords(
-  words: readonly RussianVocabWord[],
-  progress: RussianVocabProgress,
-  limit = NEW_VOCAB_PER_SESSION,
-): RussianVocabWord[] {
+export function newWords(
+  words: readonly WordLabWord[],
+  progress: WordProgress,
+  limit = NEW_WORDS_PER_SESSION,
+): WordLabWord[] {
   return words.filter(word => !progress.cards[word.id]).slice(0, limit);
 }
 
-export function buildVocabSession(
-  words: readonly RussianVocabWord[],
-  progress: RussianVocabProgress,
+export function buildWordSession(
+  words: readonly WordLabWord[],
+  progress: WordProgress,
   now = new Date(),
-): VocabSession {
-  const due = dueVocabWords(words, progress, now).slice(0, DUE_VOCAB_PER_SESSION);
-  const fresh = newVocabWords(words, progress);
-  const introduced = introduceVocabWords(progress, fresh.map(word => word.id), now);
+): WordSession {
+  const due = dueWords(words, progress, now).slice(0, DUE_WORDS_PER_SESSION);
+  const fresh = newWords(words, progress);
+  const introduced = introduceWords(progress, fresh.map(word => word.id), now);
   return {
     queue: [...due, ...fresh],
     dueCount: due.length,
@@ -142,13 +154,14 @@ export function buildVocabSession(
   };
 }
 
-export function rateVocabCard(
-  progress: RussianVocabProgress,
+/** `spoken` = the learner produced the word from Persian and the recogniser accepted it. */
+export function rateWordCard(
+  progress: WordProgress,
   id: string,
   rating: ReviewRating,
   spoken: boolean,
   now = new Date(),
-): RussianVocabProgress {
+): WordProgress {
   const current = progress.cards[id] ?? {
     id,
     dueAt: now.toISOString(),
@@ -157,7 +170,7 @@ export function rateVocabCard(
     repetitions: 0,
     lapses: 0,
     spokenSuccess: 0,
-    writtenOnly: 0,
+    listened: 0,
     introducedAt: now.toISOString(),
   };
   let intervalDays = current.intervalDays;
@@ -183,34 +196,34 @@ export function rateVocabCard(
         : Math.max(3, Math.round(intervalDays * ease));
     dueInMs = intervalDays * DAY;
   }
-  const card: RussianVocabCard = {
+  const card: WordCard = {
     ...current,
     intervalDays,
     ease,
     repetitions: rating === 'again' ? 0 : current.repetitions + 1,
     lapses: rating === 'again' ? current.lapses + 1 : current.lapses,
+    listened: current.listened + 1,
     spokenSuccess: current.spokenSuccess + (spoken && rating !== 'again' ? 1 : 0),
-    writtenOnly: current.writtenOnly + (!spoken ? 1 : 0),
     lastReviewedAt: now.toISOString(),
     dueAt: new Date(now.getTime() + dueInMs).toISOString(),
   };
   return { cards: { ...progress.cards, [id]: card } };
 }
 
-export function isVocabMastered(card: RussianVocabCard | undefined): boolean {
+export function isWordMastered(card: WordCard | undefined): boolean {
   return !!card && card.repetitions >= 3 && card.spokenSuccess >= 1 && card.intervalDays >= 3;
 }
 
-export function vocabStats(words: readonly RussianVocabWord[], progress: RussianVocabProgress) {
+export function wordStats(words: readonly WordLabWord[], progress: WordProgress) {
   const introduced = Object.keys(progress.cards).length;
-  const mastered = words.filter(word => isVocabMastered(progress.cards[word.id])).length;
-  const due = dueVocabWords(words, progress).length;
+  const mastered = words.filter(word => isWordMastered(progress.cards[word.id])).length;
+  const due = dueWords(words, progress).length;
   return { introduced, mastered, due, total: words.length };
 }
 
-export function vocabReason(card: RussianVocabCard | undefined): string {
-  if (!card) return 'تازه معرفی شده؛ امروز باید آن را بلند بگویی.';
-  if (card.lapses > 0) return 'چندبار یادآوریاش سخت بوده، برای همین زودتر برگشته.';
+export function wordReason(card: WordCard | undefined): string {
+  if (!card) return 'تازه معرفی شده؛ امروز باید از فارسی بگویی‌اش.';
+  if (card.lapses > 0) return 'چندبار یادآوری‌اش سخت بوده، برای همین زودتر برگشته.';
   if (card.repetitions === 0) return 'اولین مرور بعد از معرفی؛ هنوز گفتاری ثبت نشده.';
-  return `نوبت مرور فاصلهدار بعد از ${card.intervalDays} روز؛ تکرار گفتاری دوباره لازم است.`;
+  return `نوبت مرور فاصله‌دار بعد از ${card.intervalDays} روز؛ گفتن دوباره لازم است.`;
 }

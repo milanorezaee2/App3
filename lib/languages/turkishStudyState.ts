@@ -1,11 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
+import { LESSON_STAGE_VERSION, resumeStage } from '../lessonStages';
 import { TURKISH_LESSONS, TURKISH_LESSON_STAGES } from './turkish';
 
 export const TURKISH_STUDY_STORAGE_KEY = 'turkish_lesson_sessions_v1';
 
 export interface TurkishLessonSession {
   stage: number;
+  /** 2 = the current ladder without the removed blitz round; absent on legacy saves. */
+  stageVersion?: number;
   sentenceIndex: number;
   revealed: boolean;
   answers: Record<string, number>;
@@ -18,7 +21,7 @@ interface TurkishStudyState {
 }
 
 export function freshTurkishLessonSession(): TurkishLessonSession {
-  return { stage: 0, sentenceIndex: 0, revealed: false, answers: {}, showCheckAnswers: false };
+  return { stage: 0, stageVersion: LESSON_STAGE_VERSION, sentenceIndex: 0, revealed: false, answers: {}, showCheckAnswers: false };
 }
 
 async function readRaw(): Promise<string | null> {
@@ -52,8 +55,9 @@ function validateSession(lessonId: string, value: unknown): TurkishLessonSession
     throw new Error('جلسهٔ ترکی برای این درس معتبر نیست.');
   }
   const session = value as Partial<TurkishLessonSession>;
+  const stage = resumeStage(Number(session.stage), session.stageVersion, TURKISH_LESSON_STAGES.length);
   if (
-    !Number.isInteger(session.stage) || session.stage! < 0 || session.stage! >= TURKISH_LESSON_STAGES.length
+    stage === null
     || !Number.isInteger(session.sentenceIndex) || session.sentenceIndex! < 0 || session.sentenceIndex! >= lesson.sentences.length
     || typeof session.revealed !== 'boolean' || typeof session.showCheckAnswers !== 'boolean'
     || !session.answers || typeof session.answers !== 'object' || Array.isArray(session.answers)
@@ -70,7 +74,8 @@ function validateSession(lessonId: string, value: unknown): TurkishLessonSession
     answers[key] = answer!;
   }
   return {
-    stage: session.stage!,
+    stage,
+    stageVersion: LESSON_STAGE_VERSION,
     sentenceIndex: session.sentenceIndex!,
     revealed: session.revealed,
     answers,

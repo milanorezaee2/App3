@@ -39,7 +39,6 @@ export const RUSSIAN_LESSON_STAGES = [
   { id: 'vocabulary', labelFa: 'واژگان از جمله', labelEn: 'Vocabulary From Sentences' },
   { id: 'grammar-through-usage', labelFa: 'دستور در کاربرد', labelEn: 'Grammar Through Usage' },
   { id: 'conversation', labelFa: 'مکالمه', labelEn: 'Conversation Practice' },
-  { id: 'review', labelFa: 'مرور هوشمند', labelEn: 'Spaced Review' },
   { id: 'short-assessment', labelFa: 'سنجش کوتاه', labelEn: 'Short Assessment' },
   { id: 'speaking-check', labelFa: 'آزمون گفتاری', labelEn: 'Speaking Check' },
 ] as const;
@@ -65,7 +64,7 @@ const lesson = (
 ): LearningLesson => ({ id, title, situation, durationMinutes: 8, sentences, dialogue, checks, ...(teachingFa ? { teachingFa } : {}) });
 
 /* ===========================================================================
- *  سطح ۱ — FOUNDATION (شروع از صفر: ۱۰ درس)
+ *  سطح A1 — FOUNDATION (درس‌های پایه: ۱۰ درس)
  *  جمله‌ها فوق‌العاده ساده و پرکاربرد؛ دقیقاً به سبک نخستین درس‌های انگلیسی.
  * ========================================================================= */
 
@@ -581,7 +580,7 @@ const RUSSIAN_STARTER_LESSONS: readonly LearningLesson[] = [
   ...RUSSIAN_C1_EXPANSION_LESSONS,
 ];
 
-export type RussianLevelId = -1 | 0 | 1 | 2 | 3 | 4 | 5;
+export type RussianLevelId = 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface RussianCourseLevel {
   id: RussianLevelId;
@@ -601,79 +600,43 @@ export interface RussianCourseLesson extends LearningLesson {
 
 export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
   {
-    id: -1,
+    id: 0,
     title: 'Absolute Beginner',
-    cefr: 'Pre-A1 · شروع از صفر',
-    description: 'بخش پیش‌مقدمهٔ کاملاً جدید برای کسانی که هیچ چیز بلد نیستند: اولین کلمه‌ها، سلام، بله/نه، اعداد، «من … هستم» و «من دارم»؛ الفبای سیریلیک قدم‌به‌قدم.',
+    cefr: 'Pre-A1',
+    description: 'آغاز از صفر: نخستین کلمه‌ها، سلام، بله/نه، اعداد، «من … هستم» و «من دارم»؛ الفبای سیریلیک قدم‌به‌قدم — یک بخش یکپارچه، بدون تکرار',
     color: '#94a3b8',
     modules: RUSSIAN_PRE_A1_MODULES,
     status: 'available',
   },
   {
-    id: 0,
-    title: 'Foundation',
-    cefr: 'شروع از صفر',
-    description: 'سلام تا جمله‌های کامل روزمره: معرفی، عددها تا صد، رنگ، غذا، آب‌وهوا، بدن، لباس، شغل، فعل‌های ساده و ضمیرها',
-    color: '#6555E9',
+    id: 1,
+    title: 'A1 · Foundation & Survival',
+    cefr: 'A1',
+    description: 'پایه و کاربرد روزمره در یک سطح: از سلام و معرفی و عددها تا رستوران، خرید، مسیر، هتل، داروخانه و قرار',
+    color: '#27A1D6',
     modules: [
       'سلام و خداحافظی',
       'احوال‌پرسی ساده',
       'معرفی خود',
       'کلمه‌های مؤدبانه',
       'بله/نه/متوجه‌نشدم',
-      'عددها ۱ تا ۸',
-      'عدد ۹-۱۰ و خانواده',
+      'عددها و خانواده',
       'اشیای ساده',
       'پرسیدن کجا',
       'خواستن و نیاز داشتن',
-      'رنگ‌ها',
-      'غذا',
-      'نوشیدنی',
-      'دوست داشتن',
-      'آب‌وهوا',
-      'امروز، فردا، دیروز',
-      'صفت‌های ساده',
-      'عددهای بیست تا صد',
-      'قیمت‌ها',
-      'اعضای بدن',
-      'لباس',
-      'جاهای شهر',
-      'حمل‌ونقل',
-      'شغل‌ها',
-      'فعل‌های روزمره',
-      'کلمه‌های پرسشی',
-      'مال من و مال تو',
-      'ما، آن‌ها و شما',
-    ],
-    status: 'available',
-  },
-  {
-    id: 1,
-    title: 'Survival Russian',
-    cefr: 'A1',
-    description: 'زندگی روزمره در شهر: رستوران، خرید، تاکسی و اتوبوس، هتل، تلفن، قرار، داروخانه، گم‌شدن چیزها، دعوت و تاریخ',
-    color: '#27A1D6',
-    modules: [
+      'رنگ‌ها و صفت‌های ساده',
+      'غذا و نوشیدنی',
+      'آب‌وهوا و زمان',
+      'قیمت‌ها و خرید',
+      'اعضای بدن و لباس',
+      'جاهای شهر و حمل‌ونقل',
+      'شغل‌ها و فعل‌های روزمره',
+      'کلمه‌های پرسشی و ضمیرها',
       'کافه و رستوران',
-      'خرید کردن',
       'آدرس و مسیر',
-      'ساعت و زمان',
-      'روزهای هفته',
-      'کارهای روزمره',
       'سلامتی و کمک فوری',
-      'سفارش غذا در رستوران',
-      'پرداخت صورت‌حساب',
-      'لباس، اندازه و پرو',
-      'خرید مواد غذایی',
-      'تاکسی و آدرس',
-      'بلیت و اتوبوس',
-      'هتل و اتاق',
-      'تماس تلفنی',
-      'قرار ملاقات',
-      'داروخانه و دارو',
-      'گم‌شدن چیزها',
-      'برنامهٔ آخر هفته',
-      'دعوت به خانه',
+      'هتل، تلفن و قرار',
+      'دعوت و برنامهٔ آخر هفته',
       'ماه‌ها و تاریخ',
     ],
     status: 'available',
@@ -681,7 +644,7 @@ export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
   {
     id: 2,
     title: 'Everyday Russian',
-    cefr: 'A2–B1',
+    cefr: 'A2',
     description: 'گذشته و آینده، قصد و برنامه، توصیف ظاهر، مقایسه، توصیه، نظر، کار، خانه، سفر، شرط، پزشک، تلفن، اداره و گفت‌وگوی روان',
     color: '#19A88B',
     modules: [
@@ -711,7 +674,7 @@ export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
   {
     id: 3,
     title: 'Communication Russian',
-    cefr: 'B1–B2',
+    cefr: 'B1',
     description: 'ساختار جمله، روایت، نظر و ارتباط در موقعیت‌های روزمره',
     color: '#E4A436',
     modules: ['Foundation · ساختار و جمله‌سازی', 'Survival · ارتباط در زندگی واقعی'],
@@ -720,7 +683,7 @@ export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
   {
     id: 4,
     title: 'B2 — Upper-Intermediate Communication',
-    cefr: 'B2 · سطح ۴',
+    cefr: 'B2',
     description: 'روسی دقیق‌تر در موضوع‌های تخصصی و رسمی',
     color: '#9A68E8',
     modules: ['روسی حرفه‌ای', 'نوشتار رسمی', 'مطالعه و رسانه'],
@@ -729,7 +692,7 @@ export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
   {
     id: 5,
     title: 'C1 — Advanced Communication',
-    cefr: 'C1 · سطح ۵',
+    cefr: 'C1',
     description: 'تحلیل، استدلال و ارتباط حرفه‌ای با زبان دقیق‌تر',
     color: '#D56788',
     modules: ['Foundation · ساختار و سبک پیشرفته', 'Survival · تحلیل و ارتباط حرفه‌ای'],
@@ -738,36 +701,36 @@ export const RUSSIAN_LEVELS: readonly RussianCourseLevel[] = [
 ];
 
 const RUSSIAN_LESSON_LEVELS: Record<string, { levelId: RussianLevelId; subtitle: string }> = {
-  ...Object.fromEntries(RUSSIAN_PRE_A1_LESSONS.map(lesson => [lesson.id, { levelId: -1 as const, subtitle: RUSSIAN_PRE_A1_SUBTITLES[lesson.id] ?? lesson.situation }])),
+  ...Object.fromEntries(RUSSIAN_PRE_A1_LESSONS.map(lesson => [lesson.id, { levelId: 0 as const, subtitle: RUSSIAN_PRE_A1_SUBTITLES[lesson.id] ?? lesson.situation }])),
   /* سطح ۱ */
-  'ru-l1-greetings': { levelId: 0, subtitle: 'سلام، صبح/ظهر/عصر بخیر، خداحافظ و متشکرم' },
-  'ru-l1-how-are-you': { levelId: 0, subtitle: 'احوال‌پرسی و پاسخ کوتاه با خوب / معمولی / بد' },
-  'ru-l1-introductions': { levelId: 0, subtitle: 'گفتن نام، پرسیدن نام و گفتن اهل کجا هستید' },
-  'ru-l1-polite-words': { levelId: 0, subtitle: 'لطفاً، متشکرم، ببخشید و درخواست کمک مؤدبانه' },
-  'ru-l1-yes-no-understand': { levelId: 0, subtitle: 'بله، نه، متوجه‌نشدم و درخواست تکرار' },
-  'ru-l1-numbers-1-10': { levelId: 0, subtitle: 'عدد‌های ۱ تا ۸ برای قیمت، سن و شماره' },
-  'ru-l1-numbers-family': { levelId: 0, subtitle: 'عدد ۹-۱۰ و معرفی اعضای خانواده' },
-  'ru-l1-objects-this-is': { levelId: 0, subtitle: 'این چیست؟ و اشاره به اشیای ساده' },
-  'ru-l1-where-is': { levelId: 0, subtitle: 'پرسش «کجا؟» برای مکان‌های ضروری (توالت، مترو، خروجی)' },
-  'ru-l1-basic-wants-needs': { levelId: 0, subtitle: 'الگوی «من می‌خواهم / لازم دارم»' },
-  'ru-l1-colors': { levelId: 0, subtitle: 'رنگ‌ها و پرسش «چه رنگی است؟»' },
-  'ru-l1-food': { levelId: 0, subtitle: 'غذاهای اصلی و «من ... می‌خورم»' },
-  'ru-l1-drinks': { levelId: 0, subtitle: 'نوشیدنی‌ها، «نمی‌نوشم» و درخواست مؤدبانه' },
-  'ru-l1-likes': { levelId: 0, subtitle: 'دوست داشتن و خوشم آمدن' },
-  'ru-l1-weather': { levelId: 0, subtitle: 'پرسیدن و توصیف آب‌وهوا' },
-  'ru-l1-time-words': { levelId: 0, subtitle: 'امروز، فردا، دیروز، الان' },
-  'ru-l1-adjectives': { levelId: 0, subtitle: 'صفت‌های ساده: بزرگ، کوچک، خوب، گران' },
-  'ru-l1-numbers-20-100': { levelId: 0, subtitle: 'عددهای بیست تا صد و گفتن سن' },
-  'ru-l1-prices': { levelId: 0, subtitle: 'پرسیدن قیمت، گران و ارزان' },
-  'ru-l1-body-parts': { levelId: 0, subtitle: 'اعضای بدن و گفتن درد' },
-  'ru-l1-clothes': { levelId: 0, subtitle: 'اسم لباس‌ها و «کجاست؟»' },
-  'ru-l1-places': { levelId: 0, subtitle: 'جاهای مهم شهر' },
-  'ru-l1-transport': { levelId: 0, subtitle: 'وسیله‌های حمل‌ونقل و «با ... می‌روم»' },
-  'ru-l1-jobs': { levelId: 0, subtitle: 'گفتن شغل و محل کار' },
-  'ru-l1-everyday-verbs': { levelId: 0, subtitle: 'فعل‌های ساده روزمره با «من» و «ما»' },
-  'ru-l1-question-words': { levelId: 0, subtitle: 'کی، چرا، چطور، چقدر، کجا، کدام' },
-  'ru-l1-my-your': { levelId: 0, subtitle: 'مال من، مال تو، مال شما' },
-  'ru-l1-we-they': { levelId: 0, subtitle: 'ما، آن‌ها و شما' },
+  'ru-l1-greetings': { levelId: 1, subtitle: 'سلام، صبح/ظهر/عصر بخیر، خداحافظ و متشکرم' },
+  'ru-l1-how-are-you': { levelId: 1, subtitle: 'احوال‌پرسی و پاسخ کوتاه با خوب / معمولی / بد' },
+  'ru-l1-introductions': { levelId: 1, subtitle: 'گفتن نام، پرسیدن نام و گفتن اهل کجا هستید' },
+  'ru-l1-polite-words': { levelId: 1, subtitle: 'لطفاً، متشکرم، ببخشید و درخواست کمک مؤدبانه' },
+  'ru-l1-yes-no-understand': { levelId: 1, subtitle: 'بله، نه، متوجه‌نشدم و درخواست تکرار' },
+  'ru-l1-numbers-1-10': { levelId: 1, subtitle: 'عدد‌های ۱ تا ۸ برای قیمت، سن و شماره' },
+  'ru-l1-numbers-family': { levelId: 1, subtitle: 'عدد ۹-۱۰ و معرفی اعضای خانواده' },
+  'ru-l1-objects-this-is': { levelId: 1, subtitle: 'این چیست؟ و اشاره به اشیای ساده' },
+  'ru-l1-where-is': { levelId: 1, subtitle: 'پرسش «کجا؟» برای مکان‌های ضروری (توالت، مترو، خروجی)' },
+  'ru-l1-basic-wants-needs': { levelId: 1, subtitle: 'الگوی «من می‌خواهم / لازم دارم»' },
+  'ru-l1-colors': { levelId: 1, subtitle: 'رنگ‌ها و پرسش «چه رنگی است؟»' },
+  'ru-l1-food': { levelId: 1, subtitle: 'غذاهای اصلی و «من ... می‌خورم»' },
+  'ru-l1-drinks': { levelId: 1, subtitle: 'نوشیدنی‌ها، «نمی‌نوشم» و درخواست مؤدبانه' },
+  'ru-l1-likes': { levelId: 1, subtitle: 'دوست داشتن و خوشم آمدن' },
+  'ru-l1-weather': { levelId: 1, subtitle: 'پرسیدن و توصیف آب‌وهوا' },
+  'ru-l1-time-words': { levelId: 1, subtitle: 'امروز، فردا، دیروز، الان' },
+  'ru-l1-adjectives': { levelId: 1, subtitle: 'صفت‌های ساده: بزرگ، کوچک، خوب، گران' },
+  'ru-l1-numbers-20-100': { levelId: 1, subtitle: 'عددهای بیست تا صد و گفتن سن' },
+  'ru-l1-prices': { levelId: 1, subtitle: 'پرسیدن قیمت، گران و ارزان' },
+  'ru-l1-body-parts': { levelId: 1, subtitle: 'اعضای بدن و گفتن درد' },
+  'ru-l1-clothes': { levelId: 1, subtitle: 'اسم لباس‌ها و «کجاست؟»' },
+  'ru-l1-places': { levelId: 1, subtitle: 'جاهای مهم شهر' },
+  'ru-l1-transport': { levelId: 1, subtitle: 'وسیله‌های حمل‌ونقل و «با ... می‌روم»' },
+  'ru-l1-jobs': { levelId: 1, subtitle: 'گفتن شغل و محل کار' },
+  'ru-l1-everyday-verbs': { levelId: 1, subtitle: 'فعل‌های ساده روزمره با «من» و «ما»' },
+  'ru-l1-question-words': { levelId: 1, subtitle: 'کی، چرا، چطور، چقدر، کجا، کدام' },
+  'ru-l1-my-your': { levelId: 1, subtitle: 'مال من، مال تو، مال شما' },
+  'ru-l1-we-they': { levelId: 1, subtitle: 'ما، آن‌ها و شما' },
   /* سطح ۲ */
   'ru-l2-cafe': { levelId: 1, subtitle: 'منو، سفارش چای/قهوه و صورت‌حساب' },
   'ru-l2-shopping': { levelId: 1, subtitle: 'قیمت، اندازه، پروکردن و پرداخت' },
@@ -852,6 +815,7 @@ const russianBaseLessons: readonly RussianCourseLesson[] = RUSSIAN_STARTER_LESSO
 export const RUSSIAN_LESSONS: readonly RussianCourseLesson[] = insertLabLessons(
   russianBaseLessons,
   labLessonsOf('ru').map(russianLabLesson),
+  'ru', // Pre-A1 is exempt: that band is hand-written now (see EXEMPT_LEVELS in ./content/labLessons).
 ).map((lesson, index) => ({ ...lesson, order: index + 1 }));
 
 export function findRussianLesson(id: string | undefined): RussianCourseLesson | undefined {

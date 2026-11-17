@@ -39,12 +39,11 @@ export const TURKISH_LESSON_STAGES = [
   { id: 'vocabulary', labelFa: 'واژگان از جمله', labelEn: 'Vocabulary From Sentences' },
   { id: 'grammar-through-usage', labelFa: 'دستور در کاربرد', labelEn: 'Grammar Through Usage' },
   { id: 'conversation', labelFa: 'مکالمه', labelEn: 'Conversation Practice' },
-  { id: 'review', labelFa: 'مرور هوشمند', labelEn: 'Spaced Review' },
   { id: 'short-assessment', labelFa: 'سنجش کوتاه', labelEn: 'Short Assessment' },
   { id: 'speaking-check', labelFa: 'آزمون گفتاری', labelEn: 'Speaking Check' },
 ] as const;
 
-export type TurkishLevelId = -1 | 0 | 1 | 2 | 3 | 4 | 5;
+export type TurkishLevelId = 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface TurkishCourseLevel {
   id: TurkishLevelId;
@@ -103,36 +102,27 @@ const ADVANCED_COMMUNICATION_C1_RAW = [
 
 export const TURKISH_LEVELS: readonly TurkishCourseLevel[] = [
   {
-    id: -1,
+    id: 0,
     title: 'Absolute Beginner',
-    cefr: 'Pre-A1 · شروع از صفر',
-    description: 'مسیر مستقل ترکی استانبولی برای شروع از صفر: واژه‌های منفرد و دسته‌بندی‌شده، سپس ترکیب‌های کوتاه و در پایان جمله و مکالمه؛ بدون وابستگی به محتوای انگلیسی',
+    cefr: 'Pre-A1',
+    description: 'مسیر مستقل ترکی استانبولی برای شروع از صفر: واژه‌های منفرد و دسته‌بندی‌شده، سپس ترکیب‌های کوتاه و در پایان جمله و مکالمه؛ بدون وابستگی به محتوای انگلیسی — یک بخش یکپارچه، بدون تکرار',
     color: '#94a3b8',
     modules: TURKISH_PRE_A1_LESSONS.map(item => item.title),
     status: 'available',
   },
   {
-    id: 0,
-    title: 'Foundation',
-    cefr: 'A1 · ساختار زبان و جمله‌سازی',
-    description: 'الفبا و تلفظ حروف ویژه، ضمایر، پسوندهای شخصی و ملکی، حال استمراری، حالت‌های چهارگانهٔ اسم، توانایی، هماهنگی واکه‌ها و ترتیب کلمات در جمله',
-    color: '#6555E9',
-    modules: FOUNDATION_RAW.map(item => item.title),
-    status: 'available',
-  },
-  {
     id: 1,
-    title: 'Survival Turkish',
-    cefr: 'A1 · مکالمه و ارتباط روزمره',
-    description: 'مکالمه در موقعیت‌های واقعی روزمره: خرید، رستوران و کافه، آدرس و حمل‌ونقل، سفر و هتل، پزشک، کار و تحصیل، دعوت، ترجیح، مقایسه و گفتگوی پیوسته',
+    title: 'A1 · Foundation & Survival',
+    cefr: 'A1',
+    description: 'یک سطح A1 کامل: الفبا و تلفظ، ضمایر و پسوندهای شخصی، حال استمراری، حالت‌های اسم، توانایی و ترتیب کلمات، همراه با مکالمه و موقعیت‌های روزمره',
     color: '#27A1D6',
-    modules: SURVIVAL_RAW.map(item => item.title),
+    modules: [...FOUNDATION_RAW.map(item => item.title), ...SURVIVAL_RAW.map(item => item.title)],
     status: 'available',
   },
   {
     id: 2,
     title: 'Everyday Turkish',
-    cefr: 'A2 · ارتباط پایه و مکالمهٔ روزمره',
+    cefr: 'A2',
     description: 'سطح کامل A2 در دو بخش Foundation و Survival: زمان‌های گذشتهٔ قطعی و نقلی، عادت، آینده، شرط، وجوبی، بازگویی گفته‌ها، خرید، سفر، سلامت، کار، مسکن و مکالمه‌های طولانی‌تر',
     color: '#19A88B',
     modules: EVERYDAY_A2_RAW.map(item => item.title),
@@ -141,7 +131,7 @@ export const TURKISH_LEVELS: readonly TurkishCourseLevel[] = [
   {
     id: 3,
     title: 'Communication Turkish',
-    cefr: 'B1 · ارتباط مستقل',
+    cefr: 'B1',
     description: 'سطح کامل B1 در دو بخش Foundation و Survival: زمان‌های گذشتهٔ دقیق، شرط‌های واقعی و فرضی، استدلال و مذاکره، جمله‌های موصولی، مجهول، خلاصه‌سازی، ارائهٔ کوتاه و مدیریت مستقل مکالمه در موقعیت‌های ناآشنا',
     color: '#E4A436',
     modules: COMMUNICATION_B1_RAW.map(item => item.title),
@@ -150,7 +140,7 @@ export const TURKISH_LEVELS: readonly TurkishCourseLevel[] = [
   {
     id: 4,
     title: 'Advanced Turkish',
-    cefr: 'B2 · ارتباط upper-intermediate',
+    cefr: 'B2',
     description: 'سطح کامل B2 در دو بخش Foundation و Survival: روایت تحلیلی رویدادها، استدلال و استنتاج، فرضیه و سناریوهای خلاف واقع، ساختارهای نحوی پیچیده، و مکالمهٔ حرفه‌ای: مناظره، مذاکره، ارائه و موقعیت‌های اجتماعی',
     color: '#9A68E8',
     modules: UPPER_INTERMEDIATE_B2_RAW.map(item => item.title),
@@ -159,7 +149,7 @@ export const TURKISH_LEVELS: readonly TurkishCourseLevel[] = [
   {
     id: 5,
     title: 'Advanced Communication Turkish',
-    cefr: 'C1 · ارتباط master-level',
+    cefr: 'C1',
     description: 'سطح کامل C1 در دو بخش Foundation و Survival: تحلیل انتقادی و استدلال چندوجهی، فرضیه‌های پیچیده، ساختارهای زبانی و گفتمانی پیشرفته، و مدیریت مستقل مکالمه در موقعیت‌های حرفه‌ای، اجتماعی و دانشگاهی',
     color: '#D56788',
     modules: ADVANCED_COMMUNICATION_C1_RAW.map(item => item.title),
@@ -170,12 +160,12 @@ export const TURKISH_LEVELS: readonly TurkishCourseLevel[] = [
 const TURKISH_BASE_LESSONS: readonly TurkishCourseLesson[] = [
   ...TURKISH_PRE_A1_LESSONS.map((lesson, idx): TurkishCourseLesson => ({
     ...lesson,
-    levelId: -1,
+    levelId: 0,
     order: idx + 1,
   })),
   ...FOUNDATION_RAW.map((lesson, idx): TurkishCourseLesson => ({
     ...lesson,
-    levelId: 0,
+    levelId: 1,
     order: TURKISH_PRE_A1_LESSONS.length + idx + 1,
   })),
   ...SURVIVAL_RAW.map((lesson, idx): TurkishCourseLesson => ({
