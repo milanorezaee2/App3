@@ -12,6 +12,7 @@ import { firstLetterHint, spokenTarget, WORD_LAB_LOCALE, WORD_LAB_NAME, WORD_LAB
 import { buildWordSession, loadWordProgress, rateWordCard, saveWordProgress, wordReason, wordStats, type WordProgress } from '@/lib/wordLabProgress';
 import { markPlanStep } from '@/lib/dailyPlan';
 import type { ReviewRating } from '@/lib/courseProgress';
+import { prefersRecordedSpeech, setPrefersRecordedSpeech, subscribeSpeechSource } from '@/lib/content/speechFallback';
 import { toPersianDigits as fa } from '@/lib/format';
 import { Typography } from '@/lib/theme';
 
@@ -58,6 +59,9 @@ export default function WordLab({ language }: { language: WordLabLanguage }) {
   const [index, setIndex] = useState(0);
   const [sessionInfo, setSessionInfo] = useState({ dueCount: 0, newCount: 0 });
   const [spoken, setSpoken] = useState(false);
+  /** The phone's own voice is the default narrator; a recorded pack voice is an opt-in choice. */
+  const [useRecorded, setUseRecorded] = useState(false);
+  const [autoSwitched, setAutoSwitched] = useState(false);
   const [spokenScore, setSpokenScore] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -83,6 +87,21 @@ export default function WordLab({ language }: { language: WordLabLanguage }) {
       void stopLabSpeech(language);
     };
   }, [language, reloadToken, words]);
+
+  // Read the saved choice and follow later automatic switches, so the label always tells the truth.
+  useEffect(() => {
+    let alive = true;
+    void prefersRecordedSpeech().then(value => { if (alive) setUseRecorded(value); });
+    const unsubscribe = subscribeSpeechSource(value => { if (alive) { setUseRecorded(value); setAutoSwitched(true); } });
+    return () => { alive = false; unsubscribe(); };
+  }, []);
+
+  const chooseVoice = useCallback(async (recorded: boolean) => {
+    setAutoSwitched(false);
+    setUseRecorded(recorded);
+    setVoiceError('');
+    await setPrefersRecordedSpeech(recorded);
+  }, []);
 
   const stats = useMemo(() => progress ? wordStats(words, progress) : null, [progress, words]);
   const word = queue[index];
@@ -190,6 +209,18 @@ export default function WordLab({ language }: { language: WordLabLanguage }) {
             <View style={styles.autoBox}>
               <Volume2 size={16} color={C.primary} />
               <Text style={styles.autoText}>{languageName} یک بار، بعد فارسی — بدون تکرار</Text>
+            </View>
+            <View style={styles.voiceBox}>
+              <Text style={styles.voiceLabel}>گوینده: {useRecorded ? 'صدای ضبط‌شده' : 'صدای گوشی'}</Text>
+              <View style={styles.voiceRow}>
+                <Pressable accessibilityRole="button" accessibilityState={{ selected: !useRecorded }} onPress={() => void chooseVoice(false)} style={[styles.voiceButton, !useRecorded && styles.voiceButtonActive]}>
+                  <Text style={[styles.voiceText, !useRecorded && styles.voiceTextActive]}>صدای گوشی</Text>
+                </Pressable>
+                <Pressable accessibilityRole="button" accessibilityState={{ selected: useRecorded }} onPress={() => void chooseVoice(true)} style={[styles.voiceButton, useRecorded && styles.voiceButtonActive]}>
+                  <Text style={[styles.voiceText, useRecorded && styles.voiceTextActive]}>صدای ضبط‌شده</Text>
+                </Pressable>
+              </View>
+              {autoSwitched ? <Text style={styles.voiceHint}>صدای گوشی چند بار پخش نشد؛ موقتاً ضبط‌شده روشن شد. هر زمان خواستید «صدای گوشی» را بزنید.</Text> : null}
             </View>
             {word.exampleTarget && word.exampleTarget !== word.target ? (
               <View style={styles.exampleBox}>
@@ -301,6 +332,14 @@ const styles = StyleSheet.create({
   wordFa: { fontFamily: Typography.fontFamily, fontSize: 17, color: C.text, textAlign: 'center', writingDirection: 'rtl' },
   autoBox: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', gap: 7, padding: 10, borderRadius: 12, backgroundColor: C.primarySoft },
   autoText: { fontFamily: Typography.fontFamily, fontSize: 11, color: C.primaryDark, writingDirection: 'rtl', textAlign: 'right' },
+  voiceBox: { width: '100%', gap: 7, padding: 11, borderRadius: 14, backgroundColor: C.bg, borderWidth: 1, borderColor: C.border },
+  voiceLabel: { fontFamily: Typography.fontFamily, fontSize: 11, color: C.muted, textAlign: 'right', writingDirection: 'rtl' },
+  voiceRow: { flexDirection: 'row-reverse', gap: 8 },
+  voiceButton: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', borderRadius: 11, borderWidth: 1, borderColor: C.border, backgroundColor: C.surface },
+  voiceButtonActive: { borderColor: C.primary, backgroundColor: C.primarySoft },
+  voiceText: { fontFamily: Typography.fontFamily, fontSize: 12, color: C.text, writingDirection: 'rtl' },
+  voiceTextActive: { color: C.primaryDark },
+  voiceHint: { fontFamily: Typography.fontFamily, fontSize: 10, lineHeight: 17, color: C.warning, textAlign: 'right', writingDirection: 'rtl' },
   exampleBox: { width: '100%', gap: 4, padding: 12, borderRadius: 14, backgroundColor: C.bg, borderWidth: 1, borderColor: C.border },
   exampleTarget: { fontFamily: 'Times New Roman', fontSize: 16, lineHeight: 26, color: C.ink, textAlign: 'center', writingDirection: 'ltr' },
   exampleFa: { fontFamily: Typography.fontFamily, fontSize: 12, lineHeight: 20, color: C.muted, textAlign: 'center', writingDirection: 'rtl' },

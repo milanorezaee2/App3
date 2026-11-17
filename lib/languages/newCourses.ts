@@ -32,6 +32,7 @@ import { b2Units } from './b2Units';
 import { labLessonsOf } from '../content/labLessons';
 import type { LabLesson } from '../content/labLessonTypes';
 import { STARTER_FOUNDATIONS, type FoundationMode, type FoundationSeed } from './starterFoundations';
+import { GERMAN_PRE_A1 } from './germanPreA1';
 
 export type NewLanguageId = 'de' | 'fr' | 'es';
 export type StarterLesson = LearningLesson & { levelId: CourseLevelId; order: number; subtitle: string; learningMode?: FoundationMode };
@@ -64,11 +65,9 @@ const seeds: Record<NewLanguageId, LessonSeed[]> = {
   ],
 };
 
-const pilotExtras: Record<NewLanguageId, SentenceSeed[][]> = {
-  de: [
-    [['Gute Nacht!','شب بخیر!','گوتِه ناخت','Nacht','شب'], ['Hallo zusammen!','سلام به همه!','هالو تسوزامِن','zusammen','همه با هم']],
-    [['Danke, sehr gut!','ممنون، خیلی خوبم!','دانکِه، زِر گوت','sehr','خیلی'], ['Schönen Tag noch!','روز خوبی داشته باشید!','شونِن تاک نوخ','schön','خوب']],
-  ],
+// Two extra pilot sentences for the first two French/Spanish lessons; German teaches the same ideas
+// inside the authored `germanPreA1.ts` instead.
+const pilotExtras: Partial<Record<NewLanguageId, SentenceSeed[][]>> = {
   fr: [
     [['Bonne soirée !','عصر خوبی داشته باشید!','بُن سواره','soirée','عصر'], ['À demain !','فردا می‌بینمت!','آ دُمَن','demain','فردا']],
     [['Et toi ?','و تو؟','اِ توا','toi','تو'], ['Bien, merci.','خوبم، ممنون.','بیَن، مِرسی','merci','ممنون']],
@@ -112,21 +111,6 @@ const levelSeeds: Array<[CourseLevelId,string,string,string,string]> = [
  *     questions and answers those lessons actually need.
  * IDs and sentence indexes stay identical, so saved progress and review cards remain valid.
  */
-const DE_PRE_A1_BRIDGE: LessonSeed[] = [
-  { title:'اعداد ۲۱ تا ۱۰۰ و سن', subtitle:'شماردن تا صد', situation:'سن و شماره‌های بزرگ‌تر را می‌گویید و می‌پرسید.', teachingFa:'عددهای ۲۱ به بعد را آلمانی با «یکان + und + دهگان» می‌سازد: einundzwanzig = ۲۱. برای سن «Ich bin … Jahre alt» می‌گوییم.', check:['کدام عدد یعنی «چهل»؟',3,'Vierzig یعنی چهل.'], dialogue:[0,1,2,3], sentences:[
-      ['Wie alt bist du?','چند سالت است؟','وی آلت بیست دو','alt','سن'], ['Ich bin dreißig Jahre alt.','من سی سال دارم.','ایش بین درایسیش یاره آلت','Jahre','سال'], ['Wie viel kostet das?','این چند است؟','وی فیل کوستِت داس','kostet','قیمت دارد'], ['Vierzig Euro.','چهل یورو.','فیرتسیش اویو','vierzig','چهل'], ['Das kostet zwanzig Euro.','این بیست یورو است.','داس کوستِت تسوانتسیش اویو','zwanzig','بیست'], ['Meine Nummer ist dreiundfünfzig.','شمارهٔ من پنجاه‌وسه است.','ماینه نومِر ایست درایونت فونفتسیش','Nummer','شماره'], ['Hundert.','صد.','هوندِرت','hundert','صد'], ['Neunundneunzig.','نود‌و‌نه.','نوینونت نوینتسیش','neunzig','نود']
-    ] },
-  { title:'ساعت و وقت روز', subtitle:'چه ساعتی؟', situation:'ساعت را می‌پرسید و وقت قرار را می‌گویید.', teachingFa:'برای پرسیدن ساعت «Wie spät ist es?» می‌گوییم. ساعت کامل با «Es ist … Uhr» و نیم با «halb» گفته می‌شود.', check:['برای پرسیدن ساعت کدام را می‌گوییم؟',1,'Wie spät ist es? یعنی چه ساعتی است؟'], dialogue:[0,1,2,3], sentences:[
-      ['Wie spät ist es?','چه ساعتی است؟','وی شپِت ایست اِس','spät','دیر / چه‌قدر گذشته'], ['Es ist acht Uhr.','ساعت هشت است.','اِس ایست آخت اور','Uhr','ساعت'], ['Um wie viel Uhr?','چه ساعتی؟','اوم وی فیل اور','um','در ساعت'], ['Um halb neun.','هشت‌و‌نیم.','اوم هالپ نوین','halb','نیم'], ['Der Termin ist um zehn.','قرار ساعت ده است.','دِر تِرمین ایست اوم تسین','Termin','قرار'], ['Heute Abend.','امشب.','هویته آبِنت','Abend','شب'], ['Am Morgen.','صبح.','آم مورگِن','Morgen','صبح'], ['Bis morgen!','تا فردا!','بیس مورگِن','morgen','فردا']
-    ] },
-  { title:'اتاق‌ها و وسایل خانه', subtitle:'در خانه', situation:'اتاق‌های خانه و چند وسیله را نام می‌برید و می‌گویید کجاست.', teachingFa:'نام اتاق‌ها با حرف تعریف می‌آید: das Wohnzimmer، die Küche، das Badezimmer. برای پرسیدن جا «Wo ist …?» می‌پرسیم.', check:['کدام یعنی «آشپزخانه»؟',2,'Küche یعنی آشپزخانه.'], dialogue:[0,1,2,3], sentences:[
-      ['Das ist mein Zimmer.','این اتاق من است.','داس ایست ماین تسیمِر','Zimmer','اتاق'], ['Wo ist die Küche?','آشپزخانه کجاست؟','وو ایست دی کوخِه','Küche','آشپزخانه'], ['Die Küche ist dort.','آشپزخانه آنجاست.','دی کوخِه ایست دورت','dort','آنجا'], ['Das Wohnzimmer ist groß.','اتاق نشیمن بزرگ است.','داس وونزیمِر ایست گروس','Wohnzimmer','اتاق نشیمن'], ['Im Bad.','در حمام.','ایم باد','Bad','حمام'], ['Der Tisch ist neu.','میز نو است.','دِر تیش ایست نوی','Tisch','میز'], ['Der Stuhl ist alt.','صندلی کهنه است.','دِر شتول ایست آلت','Stuhl','صندلی'], ['Das Bett ist klein.','تخت کوچک است.','داس بِت ایست کلایْن','Bett','تخت']
-    ] },
-  { title:'هوا و فصل‌ها', subtitle:'امروز چه هوایی است؟', situation:'هوا را توصیف می‌کنید و دربارهٔ فصل حرف می‌زنید.', teachingFa:'برای هوا «Wie ist das Wetter?» می‌پرسیم و با «Es ist …» جواب می‌دهیم. فصل‌ها: Frühling، Sommer، Herbst، Winter.', check:['کدام یعنی «هوا آفتابی است»؟',0,'Die Sonne scheint یعنی خورشید می‌تابد.'], dialogue:[0,1,2,3], sentences:[
-      ['Wie ist das Wetter?','هوا چطور است؟','وی ایست داس وِتِر','Wetter','هوا'], ['Die Sonne scheint.','خورشید می‌تابد.','دی زونِه شایْنْت','Sonne','خورشید'], ['Es regnet.','باران می‌آید.','اِس رِگنِت','regnet','باران می‌آید'], ['Es ist kalt.','هوا سرد است.','اِس ایست کالت','kalt','سرد'], ['Es ist warm.','هوا گرم است.','اِس ایست وارم','warm','گرم'], ['Im Winter ist es kalt.','در زمستان هوا سرد است.','ایم وینتِر ایست اِس کالت','Winter','زمستان'], ['Der Sommer ist warm.','تابستان گرم است.','دِر زومِر ایست وارم','Sommer','تابستان'], ['Im Herbst regnet es.','در پاییز باران می‌آید.','ایم هِرپست رِگنِت اِس','Herbst','پاییز']
-    ] },
-];
-
 export function isNewLanguage(value: string | undefined): value is NewLanguageId { return value === 'de' || value === 'fr' || value === 'es'; }
 function buildFoundation(id: NewLanguageId, seed: FoundationSeed): StarterLesson {
   const lessonId = `${id}-foundation-${seed.id}`;
@@ -169,11 +153,16 @@ function buildA1(id: NewLanguageId, seed: A1Seed, level: 1 | 2 | 3 | 4 = 1): Sta
   };
 }
 
+/**
+ * German Pre-A1 is authored as one set in `germanPreA1.ts`: the same lesson and sentence ids the level
+ * already published, but one sequence with no repeated sentence, no alphabet detour at the start and
+ * no single-word row inside a lesson the engine plays as a sentence lesson. The seed batches below
+ * still build French and Spanish, and German's own A1 band is untouched.
+ */
 function buildCourse(id: NewLanguageId) {
-  const bridgeSeeds = id === 'de' ? DE_PRE_A1_BRIDGE : [];
-  const allSeeds = [...seeds[id], ...PRE_A1_EXPANSION[id], ...PRE_A1_MORE[id], ...bridgeSeeds];
+  const allSeeds = [...seeds[id], ...(PRE_A1_EXPANSION[id] ?? []), ...(PRE_A1_MORE[id] ?? [])];
   const legacy: StarterLesson[] = allSeeds.map((seed, n) => {
-    const sentenceSeeds = n < 2 ? [...seed.sentences, ...pilotExtras[id][n]] : seed.sentences;
+    const sentenceSeeds = n < 2 ? [...seed.sentences, ...(pilotExtras[id]?.[n] ?? [])] : seed.sentences;
     const sentences = sentenceSeeds.map(([text,fa,pronunciation,word,meaning,pattern], i) => ({ id:`${id}-pre${n+1}-s${i+1}`, text, fa, pronunciation, vocabulary:[{word,meaning}], ...(pattern ? {pattern} : {}) }));
     const [promptFa, correctIndex, explanationFa] = seed.check;
     // Choices use actual sentences from the lesson; no generated or cross-language content.
@@ -195,9 +184,11 @@ function buildCourse(id: NewLanguageId) {
   // Only their presentation order changes; returning learners keep their saved
   // current lesson and may optionally visit the new foundations.
   const legacyOrder = [11, 1, 3, 4, 5, 2, 7, 6, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+  const preA1: StarterLesson[] = id === 'de'
+    ? [...STARTER_FOUNDATIONS[id].map(seed => buildFoundation(id, seed)), ...GERMAN_PRE_A1]
+    : [...STARTER_FOUNDATIONS[id].map(seed => buildFoundation(id, seed)), ...legacyOrder.map(number => legacy[number - 1])];
   const lessons: StarterLesson[] = [
-    ...STARTER_FOUNDATIONS[id].map(seed => buildFoundation(id, seed)),
-    ...legacyOrder.map(number => legacy[number - 1]),
+    ...preA1,
     buildA1(id, A1_GREETINGS[id]),
     buildA1(id, A1_FIRST_UNITS[id][0]),
     ...A1_CORE_UNITS[id].map(seed => buildA1(id, seed)),

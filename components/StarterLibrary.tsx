@@ -74,8 +74,13 @@ export default function StarterLibrary({course}: {course: StarterCourse}) {
   };
 
   useEffect(() => setHydrated(true), []);
-  // Retired empty placeholder: old bookmarks open the course overview instead.
-  useEffect(() => { if (hydrated && level === '0') router.replace(`${course.home}/library` as never); }, [hydrated, level, router, course.home]);
+  // Pre-A1 now has real lessons in every new course, so `?level=0` opens it like any other level.
+  // Only the retired *negative* placeholder ids (older bookmarks) still fall back to the overview.
+  useEffect(() => {
+    if (!hydrated) return;
+    const retired = level !== undefined && Number(level) < 0;
+    if (retired) router.replace(`${course.home}/library` as never);
+  }, [hydrated, level, router, course.home]);
   const selected = hydrated ? levels.find(item => String(item.id) === String(level)) : undefined;
   const selectedLessons = useMemo(() => selected ? lessons.filter(item => item.levelId === selected.id) : [], [selected?.id]);
   const lessonGroups = useMemo(() => {

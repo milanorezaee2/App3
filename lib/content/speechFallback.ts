@@ -5,20 +5,36 @@ import { tryPlayRecorded } from './packAudio';
 /**
  * Per-device speech fallback.
  *
- * The device TTS engine sounds excellent on most phones, so it stays the primary voice. A small
- * share of devices have a broken / choppy engine (missing voice data, network voices, engine bugs).
- * Those devices can switch to the pre-rendered pack recordings:
- *   • manually — a toggle in Profile → حساب,
- *   • automatically — after three hard failures (onError or a playback cut short), persisted.
+ * The device TTS engine (the phone's own voice) is the DEFAULT narrator everywhere, including the
+ * German word lab: a word is spoken once by the phone, then its Persian meaning. Pre-rendered pack
+ * recordings are an OPTION, never the starting point:
+ *   • the learner can pick them at any time — the «صدا» control in the word lab or Profile → حساب,
+ *   • a device whose engine fails three times in a row is switched over as a safety net, and the UI
+ *     is told through `subscribeSpeechSource` so the choice is visible instead of silent.
  *
- * A "choppy but playing" engine cannot be detected reliably from JavaScript, which is why the
- * manual toggle is the dependable fix and the auto-switch is only a safety net.
+ * A "choppy but playing" engine cannot be detected reliably from JavaScript, which is why the manual
+ * choice is the dependable fix and the auto-switch is only a safety net.
  */
 const KEY = 'milo_recorded_speech_v1';
 const FAILURES_TO_SWITCH = 3;
 
 let cached: boolean | null = null;
 let consecutiveFailures = 0;
+
+type SpeechSourceListener = (useRecorded: boolean) => void;
+const listeners = new Set<SpeechSourceListener>();
+
+/** Screens that show a «صدا» choice subscribe here so an automatic switch is never invisible. */
+export function subscribeSpeechSource(listener: SpeechSourceListener): () => void {
+  listeners.add(listener);
+  return () => { listeners.delete(listener); };
+}
+
+function publish(useRecorded: boolean): void {
+  for (const listener of [...listeners]) {
+    try { listener(useRecorded); } catch { /* a screen that unmounted must not break playback */ }
+  }
+}
 
 async function read(): Promise<boolean> {
   try {
@@ -38,6 +54,7 @@ export async function prefersRecordedSpeech(): Promise<boolean> {
 export async function setPrefersRecordedSpeech(value: boolean): Promise<void> {
   cached = value;
   if (value) consecutiveFailures = FAILURES_TO_SWITCH;
+  publish(value);
   try {
     if (Platform.OS === 'web') window.localStorage.setItem(KEY, value ? '1' : '0');
     else await AsyncStorage.setItem(KEY, value ? '1' : '0');
